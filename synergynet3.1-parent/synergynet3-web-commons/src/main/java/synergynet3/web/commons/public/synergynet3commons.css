@@ -1,0 +1,55 @@
+.simpleListBox {
+	padding: 2px;
+	margin: 2px;
+	border: 1px solid grey;
+	cursor: default;
+}
+
+.simpleListBoxPlain {
+	padding: 2px;
+	margin: 2px;
+	cursor: default;	
+	width: 95%;
+}
+
+.simpleListBoxItem {
+	cursor: default;
+	width: 100%;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+
+.simpleListBoxItem-selected {
+	background-color: #00f;
+	color: #fff;
+}
+
+
+.fixedSizeScrollableListBox {
+	border: 1px solid grey;
+}
+
+
+
+.verticalPanelListEntry {
+	width: 200px;
+	margin: 0px;
+	padding: 0px;
+	background-color: #ddd;
+	border-top: 1px solid grey;
+	vertical-align: middle;
+	text-align: center;
+	color: #333;
+}
+
+.verticalPanelListEntry-selectable {
+	cursor: pointer;
+}
+
+.verticalPanelListEntry-selected {
+	cursor: pointer;
+	background-color: #ddb;
+}

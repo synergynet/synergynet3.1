@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module>
+  <!-- Inherit the core Web Toolkit stuff.                        -->
+  <inherits name='com.google.gwt.user.User'/>
+
+  <!-- Inherit the default GWT style sheet.  You can change       -->
+  <!-- the theme of your GWT application by uncommenting          -->
+  <!-- any one of the following lines.                            -->
+  
+  <inherits name='com.google.gwt.user.theme.standard.Standard'/>
+  <inherits name='synergynet3.web.commons.SynergyNetWebCommons'/>
+  <!-- <inherits name='com.google.gwt.user.theme.chrome.Chrome'/> -->
+  <!-- <inherits name='com.google.gwt.user.theme.dark.Dark'/>     -->
+
+  <!-- Other module inherits                                      -->
+
+  <!-- inherits name="numbernet.comms.common.datamodel"/> -->
+
+  <!-- Specify the app entry point class.                         -->
+  <entry-point class='synergynet3.web.appsystem.client.SynergyNetAppSystemEntryPoint'/>
+
+  <!-- Specify the paths for translatable code                    -->
+  <source path='client'/>
+
+</module>

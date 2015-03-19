@@ -1,0 +1,20 @@
+.expressionTableHeader {
+	background-color: #aaa;
+	color: #fff;
+}
+
+.incorrectExpression {
+	background-color: #faa;
+}
+
+.correctExpression {
+	background-color: #afa;	
+}
+
+.expressionCollectionBox {
+	border: 1px solid grey;
+}
+
+.operatorFrequencyTable {
+	border: 1px solid grey;
+}

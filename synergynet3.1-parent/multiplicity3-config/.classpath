@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-input"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/lwjgl-3.0.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/lwjgl-natives-3.0.0-SNAPSHOT.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

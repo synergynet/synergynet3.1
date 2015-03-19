@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+  
+  <!-- Servlets -->
+  
+  <!-- Default page to serve -->
+  <welcome-file-list>
+    <welcome-file>ActivityPack1.html</welcome-file>
+  </welcome-file-list>
+  
+  <servlet>
+  	<servlet-name>GravitySimService</servlet-name>
+  	<servlet-class>synergynet3.activitypack1.web.server.GravitySimServiceImpl</servlet-class>
+  </servlet>
+  <servlet-mapping>
+  	<servlet-name>GravitySimService</servlet-name>
+  	<url-pattern>/synergynet3.activitypack1.web.ActivityPack1/GravitySimService</url-pattern>
+  </servlet-mapping>
+
+</web-app>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src/main/java"/>
+	<classpathentry kind="src" path="src/main/resources"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-appsystem"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-commons"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-config"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-contentsystem"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-input"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-jme3contentsystem"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

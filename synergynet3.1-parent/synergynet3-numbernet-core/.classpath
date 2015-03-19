@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry including="**/*.java" kind="src" output="target/classes" path="src/main/java">
+		<attributes>
+			<attribute name="optional" value="true"/>
+			<attribute name="maven.pomderived" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-appsystem-core"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-cluster"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-config"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/hazelcast-1.9.3.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/gwt-user-2.2.0.jar"/>
+	<classpathentry kind="output" path="target/classes"/>
+</classpath>

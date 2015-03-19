@@ -1,0 +1,45 @@
+*.class
+
+.settings
+
+# Generated binaries
+lwjgl*.*
+OpenAL*.dll*
+lwjgl.*
+OpenAL.dll*
+
+# Mobile Tools for Java (J2ME)
+.mtj.tmp/
+
+# Package Files #
+*.war
+*.ear
+*/classes/*
+
+# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+hs_err_pid*
+
+# gwt caches and compiled units #
+war/gwt_bree/
+gwt-unitCache/
+gwtloc
+
+# boilerplate generated classes #
+.apt_generated/
+
+# more caches and things from deploy #
+war/WEB-INF/deploy/
+war/WEB-INF/classes/
+war/WEB-INF/lib/gwt-servlet.jar
+
+#compilation logs
+.gwt/
+
+#caching for already compiled files
+gwt-unitCache/
+
+#gwt junit compilation files
+www-test/
+
+#old GWT (1.5) created this dir
+.gwt-tmp/

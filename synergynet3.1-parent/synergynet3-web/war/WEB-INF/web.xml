@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE web-app
+    PUBLIC "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
+    "http://java.sun.com/dtd/web-app_2_3.dtd">
+
+<web-app>
+
+	<!-- Servlets -->
+
+	<!-- Default page to serve -->
+	<welcome-file-list>
+		<welcome-file>SynergyNetWeb.html</welcome-file>
+	</welcome-file-list>
+
+	<servlet>
+		<servlet-name>SynergyNetWebService</servlet-name>
+		<servlet-class>synergynet3.web.server.SynergyNetWebServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SynergyNetWebService</servlet-name>
+		<url-pattern>synergynet3.web.SynergyNetWeb/SynergyNetWebService</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>NumberNetService</servlet-name>
+		<servlet-class>synergynet3.web.apps.numbernet.server.NumberNetServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>NumberNetService</servlet-name>
+		<url-pattern>synergynet3.web.SynergyNetWeb/NumberNetService</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SynergyNetAppSystemService</servlet-name>
+		<servlet-class>synergynet3.web.appsystem.server.SynergyNetAppSystemServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SynergyNetAppSystemService</servlet-name>
+		<url-pattern>synergynet3.web.SynergyNetWeb/SynergyNetAppSystemService</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>SynergyNetWebCommonsService</servlet-name>
+		<servlet-class>synergynet3.web.commons.server.SynergyNetWebCommonsServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>SynergyNetWebCommonsService</servlet-name>
+		<url-pattern>synergynet3.web.SynergyNetWeb/SynergyNetWebCommonsService</url-pattern>
+	</servlet-mapping>
+
+	<servlet>
+		<servlet-name>GravitySimService</servlet-name>
+		<servlet-class>synergynet3.activitypack1.web.server.GravitySimServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>GravitySimService</servlet-name>
+		<url-pattern>/synergynet3.web.SynergyNetWeb/GravitySimService</url-pattern>
+	</servlet-mapping>
+
+
+	<servlet>
+		<servlet-name>EarlyYearsService</servlet-name>
+		<servlet-class>synergynet3.web.earlyyears.server.EarlyYearsServiceImpl</servlet-class>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>EarlyYearsService</servlet-name>
+		<url-pattern>/synergynet3.web.SynergyNetWeb/EarlyYearsService</url-pattern>
+	</servlet-mapping>
+
+
+
+</web-app>
