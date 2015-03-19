@@ -20,6 +20,7 @@ import javax.swing.SwingConstants;
 
 import synergynet3.museum.table.settingsapp.SettingsUtil;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class AppearanceConfigPanel extends JPanel {
 	
 	private static final long serialVersionUID = -2406804492643797288L;

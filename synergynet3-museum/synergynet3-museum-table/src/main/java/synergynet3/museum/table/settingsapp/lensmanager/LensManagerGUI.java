@@ -25,6 +25,7 @@ import synergynet3.additionalUtils.IgnoreDoubleClick;
 import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
 import synergynet3.museum.table.utils.LensUtils;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class LensManagerGUI {
 
 	private static String contentFolderLoc;	

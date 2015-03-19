@@ -21,6 +21,7 @@ import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
 import synergynet3.museum.table.settingsapp.SettingsUtil;
 import synergynet3.museum.table.utils.LensUtils;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class LensCreatorGUI{
 		
 	protected JFrame jf;	

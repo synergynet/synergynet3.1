@@ -19,6 +19,7 @@ import synergynet3.museum.table.settingsapp.entitymanager.EntityManagerGUI;
 import synergynet3.museum.table.settingsapp.entitymanager.creationguis.EntityCreatorGUI;
 import synergynet3.museum.table.utils.Entity;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class LinkCreationGUI {
 	
 	public LinkCreationGUI(final String linkedTo, final EntityCreatorGUI parentGUI){		

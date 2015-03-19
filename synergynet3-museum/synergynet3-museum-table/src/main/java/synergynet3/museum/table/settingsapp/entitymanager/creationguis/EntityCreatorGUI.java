@@ -31,7 +31,6 @@ import javax.swing.ListSelectionModel;
 import javax.swing.SwingConstants;
 
 import multiplicity3.input.events.MultiTouchCursorEvent;
-
 import synergynet3.additionalUtils.IgnoreDoubleClick;
 import synergynet3.museum.table.mainapp.EntityManager;
 import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
@@ -45,6 +44,7 @@ import synergynet3.museum.table.settingsapp.entitymanager.creationguis.mappositi
 import synergynet3.museum.table.utils.Entity;
 import synergynet3.museum.table.utils.EntityType;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class EntityCreatorGUI implements ModifiableXandYFields{
 		
 	protected JFrame jf;

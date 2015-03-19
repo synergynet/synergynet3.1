@@ -17,6 +17,7 @@ import javax.swing.SwingConstants;
 
 import synergynet3.museum.table.utils.LensUtils;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class LensSelectorGUI {
 	
 	public LensSelectorGUI(final EntityCreatorGUI parentGUI){		

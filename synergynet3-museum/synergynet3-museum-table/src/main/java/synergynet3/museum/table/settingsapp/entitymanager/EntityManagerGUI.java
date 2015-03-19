@@ -17,6 +17,7 @@ import java.util.HashMap;
 //import java.util.Iterator;
 //import java.util.Map.Entry;
 
+
 import javax.swing.DefaultListCellRenderer;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -37,6 +38,7 @@ import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
 import synergynet3.museum.table.settingsapp.entitymanager.creationguis.*;
 import synergynet3.museum.table.utils.Entity;
 
+@SuppressWarnings({ "rawtypes", "unchecked" })
 public class EntityManagerGUI {
 	
 	private static final AudioSearchType AUDIO_CHECK = new AudioSearchType();
