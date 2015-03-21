@@ -3,10 +3,14 @@
 .settings
 
 # Generated binaries
-lwjgl*.*
-OpenAL*.dll*
-lwjgl.*
-OpenAL.dll*
+lwjgl*.dll
+OpenAL*.dll
+lwjgl.dll
+OpenAL.dll
+lwjgl*.so
+OpenAL*.so
+lwjgl.so
+OpenAL.so
 
 # Mobile Tools for Java (J2ME)
 .mtj.tmp/

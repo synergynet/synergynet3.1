@@ -3,7 +3,11 @@ war/WEB-INF/deploy/
 war/synergynet3.*
 
 # Generated binaries
-lwjgl*.*
-OpenAL*.dll*
-lwjgl.*
-OpenAL.dll*
+lwjgl*.dll
+OpenAL*.dll
+lwjgl.dll
+OpenAL.dll
+lwjgl*.so
+OpenAL*.so
+lwjgl.so
+OpenAL.so
