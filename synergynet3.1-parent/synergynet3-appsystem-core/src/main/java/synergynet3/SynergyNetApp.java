@@ -67,6 +67,9 @@ abstract public class SynergyNetApp implements IMultiplicityApp, IScreenShotter,
 	/**If set to false no calls to SynergyNetCluster will be made, allowing for apps to be used without OpenFire running. */
 	public static boolean NETWORKING = true;
 	
+	/**If set to false no threads for searching identified drives will be started. */
+	public static boolean MEDIA_SEARCH = true;
+	
 	/**If set to true only one piece of media will be able play at a time. */
 	public static boolean ONE_MEDIA_AT_A_TIME= false;
 	
@@ -193,7 +196,7 @@ abstract public class SynergyNetApp implements IMultiplicityApp, IScreenShotter,
 	}
 	
 	/**
-	* Log in any students who were still present when the previously application was closed.
+	* Log in any students who were still present when the previous application was closed.
 	**/
 	private void loginOnStartup(){
 		for (String[] ID: joiningIDs){
@@ -235,16 +238,20 @@ abstract public class SynergyNetApp implements IMultiplicityApp, IScreenShotter,
 	* Starts threads for listening for new media.
 	**/
 	private void initiateMediaDetectors(){
-				
-		removableMediaDetector.addSearchTypeTarget(SearchType.IMAGE);
-		removableMediaDetector.addSearchTypeTarget(SearchType.VIDEO);
-		removableMediaDetector.addSearchTypeTarget(SearchType.AUDIO);
-		removableMediaDetector.initialiseRemovableMediaListener(this);      
 		
-		serverMediaDetector.addSearchTypeTarget(SearchType.IMAGE);
-		serverMediaDetector.addSearchTypeTarget(SearchType.VIDEO);
-		serverMediaDetector.addSearchTypeTarget(SearchType.AUDIO);
-		serverMediaDetector.initialiseDirectoryListener(new File(CacheOrganisation.getSpecificTableDir(tableIdentity)), this);	
+		if (MEDIA_SEARCH){
+					
+			removableMediaDetector.addSearchTypeTarget(SearchType.IMAGE);
+			removableMediaDetector.addSearchTypeTarget(SearchType.VIDEO);
+			removableMediaDetector.addSearchTypeTarget(SearchType.AUDIO);
+			removableMediaDetector.initialiseRemovableMediaListener(this);      
+			
+			serverMediaDetector.addSearchTypeTarget(SearchType.IMAGE);
+			serverMediaDetector.addSearchTypeTarget(SearchType.VIDEO);
+			serverMediaDetector.addSearchTypeTarget(SearchType.AUDIO);
+			serverMediaDetector.initialiseDirectoryListener(new File(CacheOrganisation.getSpecificTableDir(tableIdentity)), this);	
+			
+		}
 	}
 	
 	/**
