@@ -7,102 +7,204 @@ import multiplicity3.input.IMultiTouchEventListener;
 import multiplicity3.input.events.MultiTouchCursorEvent;
 import multiplicity3.input.events.MultiTouchObjectEvent;
 
+/**
+ * The Class MultiTouchEventDispatcher.
+ */
 public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 
-	protected List<IMultiTouchEventListener> items = new CopyOnWriteArrayList<IMultiTouchEventListener>();
+	/** The enabled. */
 	private boolean enabled = true;
 
-	public void setEnabled(boolean b) {		
-		this.enabled = b;
-	}
-	
-	public boolean isEnabled() {
-		return enabled;
-	}
-	
+	/** The items. */
+	protected List<IMultiTouchEventListener> items = new CopyOnWriteArrayList<IMultiTouchEventListener>();
+
+	/**
+	 * Adds the listener.
+	 *
+	 * @param listener the listener
+	 */
 	public void addListener(IMultiTouchEventListener listener) {
-		if(listener != null && !items.contains(listener)) {
+		if ((listener != null) && !items.contains(listener)) {
 			items.add(listener);
 		}
 	}
 
-	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if(!enabled) return;
-		for(IMultiTouchEventListener item : items) {
-			item.cursorPressed(event);
+	/**
+	 * Adds the listeners.
+	 *
+	 * @param listeners the listeners
+	 */
+	public void addListeners(List<IMultiTouchEventListener> listeners) {
+		for (IMultiTouchEventListener l : listeners) {
+			addListener(l);
 		}
 	}
 
-	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if(!enabled) return;
-        for(IMultiTouchEventListener item : items) {
-            item.cursorReleased(event);
-        }
-	}	
-
-	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
-		if(!enabled) return;
-		for(IMultiTouchEventListener item : items) {
-			item.cursorClicked(event);
-		}
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#cursorChanged(multiplicity3
+	 * .input.events.MultiTouchCursorEvent)
+	 */
 	@Override
 	public void cursorChanged(MultiTouchCursorEvent event) {
-		if(!enabled) return;
-		for(IMultiTouchEventListener item : items) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
 			item.cursorChanged(event);
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#cursorClicked(multiplicity3
+	 * .input.events.MultiTouchCursorEvent)
+	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
-		if(!enabled) return;
-		for(IMultiTouchEventListener item : items) {
-			item.objectAdded(event);
+	public void cursorClicked(MultiTouchCursorEvent event) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
+			item.cursorClicked(event);
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#cursorPressed(multiplicity3
+	 * .input.events.MultiTouchCursorEvent)
+	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
-		if(!enabled) return;
-		for(IMultiTouchEventListener item : items) {
-			item.objectRemoved(event);
+	public void cursorPressed(MultiTouchCursorEvent event) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
+			item.cursorPressed(event);
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#cursorReleased(multiplicity3
+	 * .input.events.MultiTouchCursorEvent)
+	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
-		if(!enabled) return;
-		for(IMultiTouchEventListener item : items) {
-			item.objectChanged(event);
+	public void cursorReleased(MultiTouchCursorEvent event) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
+			item.cursorReleased(event);
 		}
 	}
-	
-	public String toString() {
-		return MultiTouchEventDispatcher.class.getName() + " containing " + items;
-	}
 
+	/**
+	 * Gets the listeners.
+	 *
+	 * @return the listeners
+	 */
 	public List<IMultiTouchEventListener> getListeners() {
 		return items;
 	}
 
-	public void addListeners(List<IMultiTouchEventListener> listeners) {
-		for(IMultiTouchEventListener l : listeners) {
-			addListener(l);
-		}		
+	/**
+	 * Checks if is enabled.
+	 *
+	 * @return true, if is enabled
+	 */
+	public boolean isEnabled() {
+		return enabled;
 	}
 
-	public void remove(IMultiTouchEventListener listener) {
-		items.remove(listener);		
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#objectAdded(multiplicity3
+	 * .input.events.MultiTouchObjectEvent)
+	 */
+	@Override
+	public void objectAdded(MultiTouchObjectEvent event) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
+			item.objectAdded(event);
+		}
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#objectChanged(multiplicity3
+	 * .input.events.MultiTouchObjectEvent)
+	 */
+	@Override
+	public void objectChanged(MultiTouchObjectEvent event) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
+			item.objectChanged(event);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.input.IMultiTouchEventListener#objectRemoved(multiplicity3
+	 * .input.events.MultiTouchObjectEvent)
+	 */
+	@Override
+	public void objectRemoved(MultiTouchObjectEvent event) {
+		if (!enabled) {
+			return;
+		}
+		for (IMultiTouchEventListener item : items) {
+			item.objectRemoved(event);
+		}
+	}
+
+	/**
+	 * Removes the.
+	 *
+	 * @param listener the listener
+	 */
+	public void remove(IMultiTouchEventListener listener) {
+		items.remove(listener);
+	}
+
+	/**
+	 * Removes the listeners.
+	 *
+	 * @param listeners the listeners
+	 */
 	public void removeListeners(List<IMultiTouchEventListener> listeners) {
-		for(IMultiTouchEventListener l : listeners) {
+		for (IMultiTouchEventListener l : listeners) {
 			remove(l);
-		}		
+		}
+	}
+
+	/**
+	 * Sets the enabled.
+	 *
+	 * @param b the new enabled
+	 */
+	public void setEnabled(boolean b) {
+		this.enabled = b;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	public String toString() {
+		return MultiTouchEventDispatcher.class.getName() + " containing "
+				+ items;
 	}
 }

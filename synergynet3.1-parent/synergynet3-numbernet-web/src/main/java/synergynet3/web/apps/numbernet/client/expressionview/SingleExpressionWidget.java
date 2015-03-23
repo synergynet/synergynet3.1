@@ -5,13 +5,29 @@ import synergynet3.web.apps.numbernet.shared.Expression;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+/**
+ * The Class SingleExpressionWidget.
+ */
 public class SingleExpressionWidget extends HorizontalPanel {
-	private Label lblTable;
-	private Label lblName;
+
+	/** The lbl expression. */
 	private Label lblExpression;
-	private Label lblValue;
+
+	/** The lbl name. */
+	private Label lblName;
+
+	/** The lbl table. */
+	private Label lblTable;
+
+	/** The lbl target. */
 	private Label lblTarget;
 
+	/** The lbl value. */
+	private Label lblValue;
+
+	/**
+	 * Instantiates a new single expression widget.
+	 */
 	public SingleExpressionWidget() {
 		super();
 		setSize("394px", "22px");
@@ -38,12 +54,24 @@ public class SingleExpressionWidget extends HorizontalPanel {
 		lblTarget.setWidth("33px");
 	}
 
+	/**
+	 * Sets the expression.
+	 *
+	 * @param e the new expression
+	 */
 	public void setExpression(Expression e) {
-		if(e == null) return;
+		if (e == null) {
+			return;
+		}
 		setExpressionProperties(e);
 		updateStyles(e);
 	}
 
+	/**
+	 * Sets the expression properties.
+	 *
+	 * @param e the new expression properties
+	 */
 	private void setExpressionProperties(Expression e) {
 		lblTable.setText(e.getCreatedOnTable());
 		lblName.setText(e.getCreatedBy());
@@ -51,11 +79,16 @@ public class SingleExpressionWidget extends HorizontalPanel {
 		lblValue.setText(e.getValue() + "");
 		lblTarget.setText(e.getTarget() + "");
 	}
-	
+
+	/**
+	 * Update styles.
+	 *
+	 * @param e the e
+	 */
 	private void updateStyles(Expression e) {
-		if(e.isCorrect()) {
-			this.setStyleName("correctExpression");	
-		}else{
+		if (e.isCorrect()) {
+			this.setStyleName("correctExpression");
+		} else {
 			this.setStyleName("incorrectExpression");
 		}
 	}

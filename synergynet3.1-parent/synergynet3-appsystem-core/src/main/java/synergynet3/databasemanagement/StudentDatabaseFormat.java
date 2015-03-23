@@ -2,43 +2,40 @@ package synergynet3.databasemanagement;
 
 import java.util.ArrayList;
 
+/**
+ * The Class StudentDatabaseFormat.
+ */
 public class StudentDatabaseFormat {
-	
-	private String name = "";
-	private String studentID = "";
+
+	/** The classname. */
 	private String classname = "";
+
+	/** The colour. */
 	private String colour = "white";
+
+	/** The gallery items. */
 	private ArrayList<GalleryItemDatabaseFormat> galleryItems = new ArrayList<GalleryItemDatabaseFormat>();
-	
-	public StudentDatabaseFormat(String name, String studentID, String classname, String colour){
+
+	/** The name. */
+	private String name = "";
+
+	/** The student id. */
+	private String studentID = "";
+
+	/**
+	 * Instantiates a new student database format.
+	 *
+	 * @param name the name
+	 * @param studentID the student id
+	 * @param classname the classname
+	 * @param colour the colour
+	 */
+	public StudentDatabaseFormat(String name, String studentID,
+			String classname, String colour) {
 		this.name = name;
 		this.studentID = studentID;
 		this.classname = classname;
 		this.colour = colour;
-	}
-
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setStudentId(String studentID) {
-		this.studentID = studentID;
-	}
-
-	public String getStudentID() {
-		return studentID;
-	}
-
-	public void setClassname(String classname) {
-		this.classname = classname;
-	}
-
-	public String getClassName() {
-		return classname;
 	}
 
 	/**
@@ -49,10 +46,53 @@ public class StudentDatabaseFormat {
 	}
 
 	/**
+	 * Gets the class name.
+	 *
+	 * @return the class name
+	 */
+	public String getClassName() {
+		return classname;
+	}
+
+	/**
+	 * @return the colour
+	 */
+	public String getColour() {
+		return colour;
+	}
+
+	/**
 	 * @return the galleryItems
 	 */
 	public ArrayList<GalleryItemDatabaseFormat> getGalleryItems() {
 		return galleryItems;
+	}
+
+	/**
+	 * Gets the name.
+	 *
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * Gets the student id.
+	 *
+	 * @return the student id
+	 */
+	public String getStudentID() {
+		return studentID;
+	}
+
+	/**
+	 * Sets the classname.
+	 *
+	 * @param classname the new classname
+	 */
+	public void setClassname(String classname) {
+		this.classname = classname;
 	}
 
 	/**
@@ -63,10 +103,21 @@ public class StudentDatabaseFormat {
 	}
 
 	/**
-	 * @return the colour
+	 * Sets the name.
+	 *
+	 * @param name the new name
 	 */
-	public String getColour() {
-		return colour;
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	/**
+	 * Sets the student id.
+	 *
+	 * @param studentID the new student id
+	 */
+	public void setStudentId(String studentID) {
+		this.studentID = studentID;
 	}
 
 }

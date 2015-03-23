@@ -9,10 +9,22 @@ import synergynet3.cluster.xmpp.messaging.appcontrol.AppControlMessage;
 import synergynet3.cluster.xmpp.messaging.appcontrol.SwitchToApplication;
 import synergynet3.table.appcontrol.AppFactory;
 
-public class SwitchToApplicationMessageHandler implements AppControlMessageHandler {
-	
-	private static final Logger log = Logger.getLogger(SwitchToApplicationMessageHandler.class.getName());
+/**
+ * The Class SwitchToApplicationMessageHandler.
+ */
+public class SwitchToApplicationMessageHandler implements
+		AppControlMessageHandler {
 
+	/** The Constant log. */
+	private static final Logger log = Logger
+			.getLogger(SwitchToApplicationMessageHandler.class.getName());
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.table.appcontrol.handlers.AppControlMessageHandler#handleMessage
+	 * (synergynet3.cluster.xmpp.messaging.appcontrol.AppControlMessage)
+	 */
 	@Override
 	public void handleMessage(AppControlMessage msg) {
 		SwitchToApplication switchMessage = (SwitchToApplication) msg;

@@ -8,65 +8,127 @@ import synergynet3.mediadetection.MediaDetection;
 import synergynet3.mediadetection.MediaDetection.Ordering;
 import synergynet3.mediadetection.mediasearchtypes.MediaSearchType;
 
+/**
+ * The Class SearchThread.
+ */
+public abstract class SearchThread implements Runnable {
 
-public abstract class SearchThread implements Runnable{
-	
-	private boolean run = false;
-	
+	/** The Constant WAIT_TIME. */
 	private static final int WAIT_TIME = 5000;
-	
-	private IMediaSearcher mediaSearcher;
-	protected MediaSearchType[] mediaSearchTypes;
-	protected Ordering order;
-	protected int numberToReturn;
+
+	/** The initialised. */
 	private boolean initialised = false;
-	
-	public void initialize(IMediaSearcher mediaSearcher, MediaSearchType[] mediaSearchTypes, Ordering order, int numberToReturn){
+
+	/** The media searcher. */
+	private IMediaSearcher mediaSearcher;
+
+	/** The run. */
+	private boolean run = false;
+
+	/** The media search types. */
+	protected MediaSearchType[] mediaSearchTypes;
+
+	/** The number to return. */
+	protected int numberToReturn;
+
+	/** The order. */
+	protected Ordering order;
+
+	/**
+	 * Initialize.
+	 *
+	 * @param mediaSearcher the media searcher
+	 * @param mediaSearchTypes the media search types
+	 * @param order the order
+	 * @param numberToReturn the number to return
+	 */
+	public void initialize(IMediaSearcher mediaSearcher,
+			MediaSearchType[] mediaSearchTypes, Ordering order,
+			int numberToReturn) {
 		this.mediaSearcher = mediaSearcher;
-		this.mediaSearchTypes= mediaSearchTypes;
+		this.mediaSearchTypes = mediaSearchTypes;
 		this.order = order;
 		this.numberToReturn = numberToReturn;
 		checkInitialDirectories();
 		initialised = true;
 	}
-	
-	public boolean isInitialised(){
+
+	/**
+	 * Checks if is initialised.
+	 *
+	 * @return true, if is initialised
+	 */
+	public boolean isInitialised() {
 		return initialised;
 	}
-	
+
+	/**
+	 * Reload discovered contents.
+	 *
+	 * @return the file[]
+	 */
+	public File[] reloadDiscoveredContents() {
+		return new File[0];
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see java.lang.Runnable#run()
+	 */
 	@Override
 	public void run() {
-		if (initialised){
+		if (initialised) {
 			run = true;
-			while (run){
-				try {					
+			while (run) {
+				try {
 					Thread.sleep(WAIT_TIME);
 					checkForNewDirectories();
 				} catch (InterruptedException e) {
-					MediaDetection.logMediaDetectionError(Level.SEVERE, "Interruption Exception.", e);
+					MediaDetection.logMediaDetectionError(Level.SEVERE,
+							"Interruption Exception.", e);
 				}
 			}
-		}else{
-			MediaDetection.logMediaDetectionError(Level.SEVERE, "Search thread has not been initialised yet.", null);
+		} else {
+			MediaDetection.logMediaDetectionError(Level.SEVERE,
+					"Search thread has not been initialised yet.", null);
 		}
 	}
-		
-	public void stop(){
-		run = false;
-	}
-	
-	protected void filesFound(File[] files){
-		mediaSearcher.onFind(files);
-	}
-	
+
+	/**
+	 * Start.
+	 */
 	public void start() {
 		Thread workerThread = new Thread(this);
 		workerThread.setDaemon(true);
 		workerThread.start();
 	}
 
-	public File[] reloadDiscoveredContents(){return new File[0];}
-	protected void checkForNewDirectories(){}	
-	protected void checkInitialDirectories(){}
+	/**
+	 * Stop.
+	 */
+	public void stop() {
+		run = false;
+	}
+
+	/**
+	 * Check for new directories.
+	 */
+	protected void checkForNewDirectories() {
+	}
+
+	/**
+	 * Check initial directories.
+	 */
+	protected void checkInitialDirectories() {
+	}
+
+	/**
+	 * Files found.
+	 *
+	 * @param files the files
+	 */
+	protected void filesFound(File[] files) {
+		mediaSearcher.onFind(files);
+	}
 
 }

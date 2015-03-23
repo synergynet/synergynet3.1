@@ -10,8 +10,16 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-appsystem"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-appsystem-core"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar"/>
-	<classpathentry kind="lib" path="lib/commons-io-1.3.2.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://javadoc.jmonkeyengine.org/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="lib/commons-io-1.3.2.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://commons.apache.org/proper/commons-io/javadocs/api-1.3.2/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-contentsystem"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-input"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-config"/>

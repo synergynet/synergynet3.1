@@ -14,36 +14,77 @@ import org.apache.poi.hslf.model.Picture;
 
 import synergynet3.activitypack1.core.lightbox.lightboxmodel.items.ImageItem;
 
-
-
+/**
+ * The Class ImageItemConvertor.
+ */
 public class ImageItemConvertor extends Convertor {
-	private static final Logger log = Logger.getLogger(ImageItemConvertor.class.getName());
 
-	public static ImageItem convertPictureShape(Picture shape, Dimension slideSize, File lightboxDirectory) {
-		return new ImageItemConvertor(shape, slideSize, lightboxDirectory).convert();
-	}
+	/** The Constant log. */
+	private static final Logger log = Logger.getLogger(ImageItemConvertor.class
+			.getName());
 
-	private Picture shape;
-	private File lightboxDirectory;
+	/** The image file. */
 	private File imageFile;
-	private Float imageSize;
+
+	/** The image position. */
 	private Float imagePosition;
+
+	/** The image size. */
+	private Float imageSize;
+
+	/** The is moveable. */
 	private boolean isMoveable;
-	
-	public ImageItemConvertor(Picture shape, Dimension slideSize, File lightboxDirectory) {
+
+	/** The lightbox directory. */
+	private File lightboxDirectory;
+
+	/** The shape. */
+	private Picture shape;
+
+	/**
+	 * Instantiates a new image item convertor.
+	 *
+	 * @param shape the shape
+	 * @param slideSize the slide size
+	 * @param lightboxDirectory the lightbox directory
+	 */
+	public ImageItemConvertor(Picture shape, Dimension slideSize,
+			File lightboxDirectory) {
 		super(shape, slideSize);
 		this.shape = shape;
 		this.lightboxDirectory = lightboxDirectory;
 		this.lightboxDirectory.mkdirs();
 	}
 
+	/**
+	 * Convert picture shape.
+	 *
+	 * @param shape the shape
+	 * @param slideSize the slide size
+	 * @param lightboxDirectory the lightbox directory
+	 * @return the image item
+	 */
+	public static ImageItem convertPictureShape(Picture shape,
+			Dimension slideSize, File lightboxDirectory) {
+		return new ImageItemConvertor(shape, slideSize, lightboxDirectory)
+				.convert();
+	}
+
+	/**
+	 * Convert.
+	 *
+	 * @return the image item
+	 */
 	private ImageItem convert() {
-		extractData();		
+		extractData();
 		ImageItem imageItem = new ImageItem();
 		populateImageItemWithData(imageItem);
 		return imageItem;
 	}
 
+	/**
+	 * Extract data.
+	 */
 	private void extractData() {
 		try {
 			extractImageData();
@@ -54,40 +95,69 @@ public class ImageItemConvertor extends Convertor {
 		this.imageSize = super.getSizeFromShapeBounds();
 		this.imagePosition = super.getPositionFromShapeBounds();
 	}
-	
+
+	/**
+	 * Extract image data.
+	 *
+	 * @throws IOException Signals that an I/O exception has occurred.
+	 */
+	private void extractImageData() throws IOException {
+		String fileExtension = getExtension();
+		String imageFileName = getUniqueFileName() + fileExtension;
+		this.imageFile = new File(lightboxDirectory, imageFileName);
+		OutputStream imageFileOutputStream = new FileOutputStream(
+				this.imageFile);
+		imageFileOutputStream.write(shape.getPictureData().getData());
+		imageFileOutputStream.close();
+	}
+
+	/**
+	 * Gets the extension.
+	 *
+	 * @return the extension
+	 */
+	private String getExtension() {
+		String extension = ".unknown";
+		switch (shape.getPictureData().getType()) {
+			case Picture.JPEG:
+				extension = ".jpg";
+				break;
+			case Picture.PNG:
+				extension = ".png";
+				break;
+			case Picture.WMF:
+				extension = ".wmf";
+				break;
+			case Picture.EMF:
+				extension = ".emf";
+				break;
+			case Picture.PICT:
+				extension = ".pict";
+				break;
+		}
+		return extension;
+	}
+
+	/**
+	 * Gets the unique file name.
+	 *
+	 * @return the unique file name
+	 */
+	private String getUniqueFileName() {
+		UUID randomUUID = UUID.randomUUID();
+		return randomUUID.toString();
+	}
+
+	/**
+	 * Populate image item with data.
+	 *
+	 * @param imageItem the image item
+	 */
 	private void populateImageItemWithData(ImageItem imageItem) {
 		imageItem.setImageFileName(this.imageFile.getName());
 		imageItem.setSize(this.imageSize);
 		imageItem.setPosition(this.imagePosition);
 		imageItem.setMoveable(this.isMoveable);
 	}
-	
-	private void extractImageData() throws IOException {
-		String fileExtension = getExtension();
-		String imageFileName = getUniqueFileName() + fileExtension;
-		this.imageFile = new File(lightboxDirectory, imageFileName);
-		OutputStream imageFileOutputStream = new FileOutputStream(this.imageFile);
-		imageFileOutputStream.write(shape.getPictureData().getData());
-		imageFileOutputStream.close();
-	}
-	
-	private String getExtension() {
-		String extension = ".unknown";
-		switch (shape.getPictureData().getType()){
-	      case Picture.JPEG: extension=".jpg"; break;
-	      case Picture.PNG: extension=".png"; break;
-	      case Picture.WMF: extension=".wmf"; break;
-	      case Picture.EMF: extension=".emf"; break;
-	      case Picture.PICT: extension=".pict"; break;
-	    }
-		return extension;
-	}
-
-	private String getUniqueFileName() {
-		UUID randomUUID = UUID.randomUUID();
-		return randomUUID.toString();
-	}
-
-
 
 }

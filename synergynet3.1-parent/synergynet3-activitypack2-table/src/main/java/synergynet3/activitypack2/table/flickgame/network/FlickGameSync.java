@@ -7,29 +7,50 @@ import synergynet3.cluster.sharedmemory.DistributedPropertyChangedAction;
 
 import com.hazelcast.core.Member;
 
+/**
+ * The Class FlickGameSync.
+ */
 public class FlickGameSync {
-	private FlickGameApp flickGame;
+
+	/** The c. */
 	private FlickGameDeviceControl c;
-	
+
+	/** The flick game. */
+	private FlickGameApp flickGame;
+
+	/** The score changed action. */
 	private DistributedPropertyChangedAction<FlickGameScore> scoreChangedAction = new DistributedPropertyChangedAction<FlickGameScore>() {
 		@Override
-		public void distributedPropertyDidChange(Member member,	FlickGameScore oldValue, FlickGameScore newValue) {
-			flickGame.updateScore(newValue);				
+		public void distributedPropertyDidChange(Member member,
+				FlickGameScore oldValue, FlickGameScore newValue) {
+			flickGame.updateScore(newValue);
 		}
 	};
-	
+
+	/**
+	 * Instantiates a new flick game sync.
+	 *
+	 * @param c the c
+	 * @param flickGame the flick game
+	 */
 	public FlickGameSync(FlickGameDeviceControl c, FlickGameApp flickGame) {
 		this.c = c;
 		this.flickGame = flickGame;
 		addSync();
 	}
-	
-	public void stop(){
-		c.getScore().unregisterChangeListener(scoreChangedAction);		
+
+	/**
+	 * Stop.
+	 */
+	public void stop() {
+		c.getScore().unregisterChangeListener(scoreChangedAction);
 	}
 
+	/**
+	 * Adds the sync.
+	 */
 	private void addSync() {
-		c.getScore().registerChangeListener(scoreChangedAction);	
+		c.getScore().registerChangeListener(scoreChangedAction);
 	}
 
 }

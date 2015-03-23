@@ -18,50 +18,149 @@ import org.xml.sax.SAXException;
 
 import synergynet3.museum.table.settingsapp.entitymanager.EntityXmlParser;
 
+/**
+ * The Class Entity.
+ */
 public class Entity {
-	
+
+	/** The entity file. */
 	public static String ENTITY_FILE = "entity.xml";
-	
-	private String location = "";
-	private EntityType type = EntityType.Free;
-	
-	private String name = "";
-	private float x = 0.5f;
-	private float y = 0.5f;
+
+	/** The end date. */
 	private int endDate = 0;
+
+	/** The facts. */
+	private ArrayList<String> facts = new ArrayList<String>();
+
+	/** The lenses. */
+	private ArrayList<String> lenses = new ArrayList<String>();
+
+	/** The linked. */
+	private ArrayList<String> linked = new ArrayList<String>();
+
+	/** The location. */
+	private String location = "";
+
+	/** The name. */
+	private String name = "";
+
+	/** The start date. */
 	private int startDate = 0;
 
-	private ArrayList<String> facts = new ArrayList<String>();
-	private ArrayList<String> linked = new ArrayList<String>();
-	private ArrayList<String> lenses = new ArrayList<String>();
-	
-	public Entity(String location){
+	/** The type. */
+	private EntityType type = EntityType.Free;
+
+	/** The x. */
+	private float x = 0.5f;
+
+	/** The y. */
+	private float y = 0.5f;
+
+	/**
+	 * Instantiates a new entity.
+	 *
+	 * @param location the location
+	 */
+	public Entity(String location) {
 		this.setLocation(location);
 		regenerate();
 	}
-	
-	public void regenerate(){
+
+	/**
+	 * @return the endDate
+	 */
+	public int getEndDate() {
+		return endDate;
+	}
+
+	/**
+	 * @return the facts
+	 */
+	public ArrayList<String> getFacts() {
+		return facts;
+	}
+
+	/**
+	 * @return the lenses
+	 */
+	public ArrayList<String> getLensValues() {
+		return lenses;
+	}
+
+	/**
+	 * @return the linked
+	 */
+	public ArrayList<String> getLinked() {
+		return linked;
+	}
+
+	/**
+	 * @return the location
+	 */
+	public String getLocation() {
+		return location;
+	}
+
+	/**
+	 * @return the name
+	 */
+	public String getName() {
+		return name;
+	}
+
+	/**
+	 * @return the startDate
+	 */
+	public int getStartDate() {
+		return startDate;
+	}
+
+	/**
+	 * @return the type
+	 */
+	public EntityType getType() {
+		return type;
+	}
+
+	/**
+	 * @return the x
+	 */
+	public float getX() {
+		return x;
+	}
+
+	/**
+	 * @return the y
+	 */
+	public float getY() {
+		return y;
+	}
+
+	/**
+	 * Regenerate.
+	 */
+	public void regenerate() {
 		File f = new File(location);
-		if (f.isDirectory()){
+		if (f.isDirectory()) {
 			File entityFile = new File(location + File.separator + ENTITY_FILE);
-			if (entityFile.exists()){	
+			if (entityFile.exists()) {
 				try {
 					SAXParserFactory factory = SAXParserFactory.newInstance();
 					SAXParser saxParser = factory.newSAXParser();
-					
+
 					EntityXmlParser handler = new EntityXmlParser();
 					saxParser.parse(entityFile, handler);
-					
+
 					setType(handler.getEntityType());
-					
+
 					setName(handler.getName());
 					setX(handler.getX());
 					setY(handler.getY());
-					
+
 					setLinked(handler.getLinked());
-					setFacts(handler.getFacts());	
-					setLenses(handler.getLenses());							
-					
+					setFacts(handler.getFacts());
+					setLenses(handler.getLenses());
+
 				} catch (ParserConfigurationException e) {
 					e.printStackTrace();
 				} catch (SAXException e) {
@@ -73,171 +172,99 @@ public class Entity {
 		}
 	}
 
+	/**
+	 * Save xml.
+	 */
 	public void saveXML() {
 		File entityFile = new File(location + File.separator + ENTITY_FILE);
 		try {
-			if (!entityFile.exists()){
+			if (!entityFile.exists()) {
 				entityFile.createNewFile();
-			}				
+			}
 
 			OutputStream outputStream = new FileOutputStream(entityFile);
 
-			XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(new OutputStreamWriter(outputStream, "utf-8"));
+			XMLStreamWriter out = XMLOutputFactory.newInstance()
+					.createXMLStreamWriter(
+							new OutputStreamWriter(outputStream, "utf-8"));
 			out.writeStartDocument();
 			out.writeCharacters("\n");
 			out.writeStartElement(EntityXmlFields.ENTITY_NODE);
 			out.writeCharacters("\n");
-			
+
 			out.writeStartElement(EntityXmlFields.NAME);
 			out.writeCharacters(name);
 			out.writeEndElement();
 			out.writeCharacters("\n");
-			
+
 			out.writeStartElement(EntityXmlFields.ENTITY_TYPE);
 			out.writeCharacters(type.toString());
 			out.writeEndElement();
 			out.writeCharacters("\n");
-			
-			switch (type){
-				case LensedPOI:					
+
+			switch (type) {
+				case LensedPOI:
 					out.writeStartElement(EntityXmlFields.X);
 					out.writeCharacters("" + x);
 					out.writeEndElement();
 					out.writeCharacters("\n");
-					
+
 					out.writeStartElement(EntityXmlFields.Y);
 					out.writeCharacters("" + y);
 					out.writeEndElement();
 					out.writeCharacters("\n");
-					
-					for (String lens: lenses){
+
+					for (String lens : lenses) {
 						out.writeStartElement(EntityXmlFields.LENS);
 						out.writeCharacters(lens);
 						out.writeEndElement();
 						out.writeCharacters("\n");
-					}						
-									
+					}
+
 					break;
-				case POI:		
-				
+				case POI:
+
 					out.writeStartElement(EntityXmlFields.X);
 					out.writeCharacters("" + x);
 					out.writeEndElement();
 					out.writeCharacters("\n");
-					
+
 					out.writeStartElement(EntityXmlFields.Y);
 					out.writeCharacters("" + y);
 					out.writeEndElement();
 					out.writeCharacters("\n");
-			
+
 					break;
-			default:
-				break;
+				default:
+					break;
 			}
-			
-			for (String fact: facts){
+
+			for (String fact : facts) {
 				out.writeStartElement(EntityXmlFields.FACT);
 				out.writeCharacters(fact);
 				out.writeEndElement();
 				out.writeCharacters("\n");
 			}
-						
-			for (String link: linked){
+
+			for (String link : linked) {
 				out.writeStartElement(EntityXmlFields.LINK);
 				out.writeCharacters(link);
 				out.writeEndElement();
 				out.writeCharacters("\n");
 			}
-			
+
 			out.writeEndElement();
 			out.writeEndDocument();
 
-			out.close();			
-			
+			out.close();
+
 			outputStream.close();
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * @return the location
-	 */
-	public String getLocation() {
-		return location;
-	}
-
-	/**
-	 * @param location the location to set
-	 */
-	public void setLocation(String location) {
-		this.location = location;
-	}
-
-	/**
-	 * @return the type
-	 */
-	public EntityType getType() {
-		return type;
-	}
-
-	/**
-	 * @param type the type to set
-	 */
-	public void setType(EntityType type) {
-		this.type = type;
-	}
-
-	/**
-	 * @return the name
-	 */
-	public String getName() {
-		return name;
-	}
-
-	/**
-	 * @param name the name to set
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * @return the x
-	 */
-	public float getX() {
-		return x;
-	}
-
-	/**
-	 * @param x the x to set
-	 */
-	public void setX(float x) {
-		this.x = x;
-	}
-
-	/**
-	 * @return the y
-	 */
-	public float getY() {
-		return y;
-	}
-
-	/**
-	 * @param y the y to set
-	 */
-	public void setY(float y) {
-		this.y = y;
-	}
-
-	/**
-	 * @return the endDate
-	 */
-	public int getEndDate() {
-		return endDate;
 	}
 
 	/**
@@ -248,24 +275,17 @@ public class Entity {
 	}
 
 	/**
-	 * @return the startDate
+	 * @param facts the facts to set
 	 */
-	public int getStartDate() {
-		return startDate;
+	public void setFacts(ArrayList<String> facts) {
+		this.facts = facts;
 	}
 
 	/**
-	 * @param startDate the startDate to set
+	 * @param lenses the lenses to set
 	 */
-	public void setStartDate(int startDate) {
-		this.startDate = startDate;
-	}
-
-	/**
-	 * @return the linked
-	 */
-	public ArrayList<String> getLinked() {
-		return linked;
+	public void setLenses(ArrayList<String> lenses) {
+		this.lenses = lenses;
 	}
 
 	/**
@@ -276,31 +296,45 @@ public class Entity {
 	}
 
 	/**
-	 * @return the facts
+	 * @param location the location to set
 	 */
-	public ArrayList<String> getFacts() {
-		return facts;
+	public void setLocation(String location) {
+		this.location = location;
 	}
 
 	/**
-	 * @param facts the facts to set
+	 * @param name the name to set
 	 */
-	public void setFacts(ArrayList<String> facts) {
-		this.facts = facts;
-	}
-	
-	/**
-	 * @param lenses the lenses to set
-	 */
-	public void setLenses(ArrayList<String> lenses) {
-		this.lenses = lenses;
+	public void setName(String name) {
+		this.name = name;
 	}
 
 	/**
-	 * @return the lenses
+	 * @param startDate the startDate to set
 	 */
-	public ArrayList<String> getLensValues() {
-		return lenses;
-	}		
+	public void setStartDate(int startDate) {
+		this.startDate = startDate;
+	}
+
+	/**
+	 * @param type the type to set
+	 */
+	public void setType(EntityType type) {
+		this.type = type;
+	}
+
+	/**
+	 * @param x the x to set
+	 */
+	public void setX(float x) {
+		this.x = x;
+	}
+
+	/**
+	 * @param y the y to set
+	 */
+	public void setY(float y) {
+		this.y = y;
+	}
 
 }

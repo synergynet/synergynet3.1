@@ -3,34 +3,43 @@ package synergynet3.tracking.network.shared;
 import java.io.Serializable;
 import java.util.ArrayList;
 
-public class UserLocations implements Serializable{
-	
+/**
+ * The Class UserLocations.
+ */
+public class UserLocations implements Serializable {
+
+	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5757410165005878179L;
-	
-	private ArrayList<UserLocation> userLocations = new ArrayList<UserLocation>();
+
+	/** The source. */
 	private String source = "";
-	
-	public UserLocations(String source){
+
+	/** The user locations. */
+	private ArrayList<UserLocation> userLocations = new ArrayList<UserLocation>();
+
+	/**
+	 * Instantiates a new user locations.
+	 *
+	 * @param source the source
+	 */
+	public UserLocations(String source) {
 		this.source = source;
 	}
-	
-	public void add(UserLocation userLocation){
+
+	/**
+	 * Adds the.
+	 *
+	 * @param userLocation the user location
+	 */
+	public void add(UserLocation userLocation) {
 		userLocations.add(userLocation);
 	}
-	
-	public void remove(UserLocation userLocation){
-		userLocations.remove(userLocation);
-	}
 
-	public void clear() {
-		userLocations.clear();		
-	}
-	
 	/**
-	 * @return the userLocations
+	 * Clear.
 	 */
-	public ArrayList<UserLocation> getUserLocations() {
-		return userLocations;
+	public void clear() {
+		userLocations.clear();
 	}
 
 	/**
@@ -39,7 +48,23 @@ public class UserLocations implements Serializable{
 	public String getSource() {
 		return source;
 	}
-	
+
+	/**
+	 * @return the userLocations
+	 */
+	public ArrayList<UserLocation> getUserLocations() {
+		return userLocations;
+	}
+
+	/**
+	 * Removes the.
+	 *
+	 * @param userLocation the user location
+	 */
+	public void remove(UserLocation userLocation) {
+		userLocations.remove(userLocation);
+	}
+
 	/**
 	 * @param source the source to set
 	 */

@@ -3,7 +3,14 @@ package synergynet3.web.apps.numbernet.client.expressionview;
 import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
 
+/**
+ * The Class ExpressionTableHeader.
+ */
 public class ExpressionTableHeader extends HorizontalPanel {
+
+	/**
+	 * Instantiates a new expression table header.
+	 */
 	public ExpressionTableHeader() {
 		super();
 		setSize("394px", "22px");
@@ -28,7 +35,7 @@ public class ExpressionTableHeader extends HorizontalPanel {
 		Label lblTarget = new Label("Target");
 		add(lblTarget);
 		lblTarget.setWidth("33px");
-		
+
 		this.setStylePrimaryName("expressionTableHeader");
 	}
 }

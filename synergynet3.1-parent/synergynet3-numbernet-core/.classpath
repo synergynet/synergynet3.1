@@ -10,7 +10,15 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-cluster"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-config"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/hazelcast-1.9.3.jar"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/gwt-user-2.2.0.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/hazelcast-1.9.3.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://docs.hazelcast.org/docs/1.9/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/gwt-user-2.2.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.gwtproject.org/javadoc/latest/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

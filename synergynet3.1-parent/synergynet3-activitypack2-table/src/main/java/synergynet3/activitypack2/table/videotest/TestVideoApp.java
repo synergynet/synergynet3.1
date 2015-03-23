@@ -4,6 +4,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import multiplicity3.appsystem.MultiplicityClient;
+import multiplicity3.csys.factory.ContentTypeNotBoundException;
+import multiplicity3.csys.items.item.IItem;
 import synergynet3.SynergyNetApp;
 import synergynet3.additionalUtils.AdditionalSynergyNetUtilities;
 import synergynet3.additionalitems.interfaces.IMediaPlayer;
@@ -14,53 +17,65 @@ import synergynet3.feedbacksystem.defaultfeedbacktypes.SmilieFeedback;
 import synergynet3.feedbacksystem.defaultfeedbacktypes.YesOrNoFeedback;
 import synergynet3.projector.network.ProjectorTransferUtilities;
 
-import multiplicity3.appsystem.MultiplicityClient;
-import multiplicity3.csys.factory.ContentTypeNotBoundException;
-import multiplicity3.csys.items.item.IItem;
+/**
+ * The Class TestVideoApp.
+ */
+public class TestVideoApp extends SynergyNetApp {
 
-public class TestVideoApp extends SynergyNetApp {	
-	
+	/** The media sources. */
 	private static ArrayList<String> mediaSources = new ArrayList<String>();
-	
-	@Override
-	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException {	            
-		
-		ProjectorTransferUtilities.get().setDecelerationOnArrival(-1);		
-		feedbackTypes.add(SimpleTrafficLightFeedback.class);
-		feedbackTypes.add(AudioFeedback.class);
-		feedbackTypes.add(SmilieFeedback.class);
-		feedbackTypes.add(YesOrNoFeedback.class);		
-		
-		this.enableNetworkFlick();
-		
-		IItem[] items = new IItem[mediaSources.size()];
-		
-		for (int i = 0; i < mediaSources.size(); i++){			
-			IMediaPlayer mediaPlayer = stage.getContentFactory().create(IMediaPlayer.class, "vid", UUID.randomUUID());
-			mediaPlayer.setDeceleration(deceleration);
-			mediaPlayer.setRemoteResource(mediaSources.get(i), false, true, stage);
-			mediaPlayer.setSize(640, 385);			
-			stage.addItem(mediaPlayer);
-			items[i] = mediaPlayer;
-			FeedbackSystem.registerAsFeedbackEligible(mediaPlayer, 640, 385, stage);	
-			mediaPlayer.setVisible(false);
-			mediaPlayer.setVisible(true);
-		}		
 
-		AdditionalSynergyNetUtilities.pile(items, 0, 0, 20, 0);	
-		
-	}		
-	
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
 	public static void main(String[] args) {
-		for (String arg: args){
+		for (String arg : args) {
 			mediaSources.add(arg);
 		}
-		
+
 		MultiplicityClient client = MultiplicityClient.get();
 		client.start();
 		TestVideoApp app = new TestVideoApp();
 		client.setCurrentApp(app);
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
+	 */
+	@Override
+	protected void loadDefaultContent() throws IOException,
+			ContentTypeNotBoundException {
+
+		ProjectorTransferUtilities.get().setDecelerationOnArrival(-1);
+		feedbackTypes.add(SimpleTrafficLightFeedback.class);
+		feedbackTypes.add(AudioFeedback.class);
+		feedbackTypes.add(SmilieFeedback.class);
+		feedbackTypes.add(YesOrNoFeedback.class);
+
+		this.enableNetworkFlick();
+
+		IItem[] items = new IItem[mediaSources.size()];
+
+		for (int i = 0; i < mediaSources.size(); i++) {
+			IMediaPlayer mediaPlayer = stage.getContentFactory().create(
+					IMediaPlayer.class, "vid", UUID.randomUUID());
+			mediaPlayer.setDeceleration(deceleration);
+			mediaPlayer.setRemoteResource(mediaSources.get(i), false, true,
+					stage);
+			mediaPlayer.setSize(640, 385);
+			stage.addItem(mediaPlayer);
+			items[i] = mediaPlayer;
+			FeedbackSystem.registerAsFeedbackEligible(mediaPlayer, 640, 385,
+					stage);
+			mediaPlayer.setVisible(false);
+			mediaPlayer.setVisible(true);
+		}
+
+		AdditionalSynergyNetUtilities.pile(items, 0, 0, 20, 0);
+
+	}
 
 }

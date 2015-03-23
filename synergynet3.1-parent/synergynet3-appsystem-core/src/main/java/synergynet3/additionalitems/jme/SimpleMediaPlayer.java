@@ -8,19 +8,12 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import com.jme3.asset.AssetManager;
-import com.jme3.material.Material;
-import com.jme3.material.RenderState.BlendMode;
-import com.jme3.material.RenderState.FaceCullMode;
-import com.jme3.math.FastMath;
-import com.jme3.scene.Geometry;
-import com.jme3.scene.Node;
-import com.jme3.scene.Spatial;
-import com.jme3.texture.Image;
-import com.jme3.texture.Texture2D;
-import com.jme3.texture.Image.Format;
-import com.sun.jna.Memory;
-
+import multiplicity3.appsystem.MultiplicityClient;
+import multiplicity3.csys.annotations.ImplementsContentItem;
+import multiplicity3.jme3csys.geometry.CenteredQuad;
+import multiplicity3.jme3csys.items.IInitable;
+import multiplicity3.jme3csys.items.item.JMEItem;
+import multiplicity3.jme3csys.picking.ItemMap;
 import synergynet3.additionalitems.interfaces.IActionOnVideoEndListener;
 import synergynet3.additionalitems.interfaces.ISimpleMediaPlayer;
 import uk.co.caprica.vlcj.discovery.NativeDiscovery;
@@ -33,91 +26,152 @@ import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
 import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 
-import multiplicity3.appsystem.MultiplicityClient;
-import multiplicity3.csys.annotations.ImplementsContentItem;
-import multiplicity3.jme3csys.geometry.CenteredQuad;
-import multiplicity3.jme3csys.items.IInitable;
-import multiplicity3.jme3csys.items.item.JMEItem;
-import multiplicity3.jme3csys.picking.ItemMap;
+import com.jme3.asset.AssetManager;
+import com.jme3.material.Material;
+import com.jme3.material.RenderState.BlendMode;
+import com.jme3.material.RenderState.FaceCullMode;
+import com.jme3.math.FastMath;
+import com.jme3.scene.Geometry;
+import com.jme3.scene.Node;
+import com.jme3.scene.Spatial;
+import com.jme3.texture.Image;
+import com.jme3.texture.Image.Format;
+import com.jme3.texture.Texture2D;
+import com.sun.jna.Memory;
 
+/**
+ * The Class SimpleMediaPlayer.
+ */
 @ImplementsContentItem(target = ISimpleMediaPlayer.class)
-public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer, IInitable, RenderCallback, BufferFormatCallback {
-	private static final Logger log = Logger.getLogger(SimpleMediaPlayer.class.getName());
-	
-	public static ArrayList<SimpleMediaPlayer> mediaPlayers = new ArrayList<SimpleMediaPlayer>();
-	
-	private IActionOnVideoEndListener actionOnVideoEndListener = null;
-	
-	public static final String CACHABLE_TYPE = "CACHABLE_VIDEO";
-    private static final int WIDTH = 320;
-    private static final int HEIGHT = 240;
-	
-    private static Format TEXTURE_FORMAT = Format.RGBA16;
-	
-    private static float vidWidth = 12;
-    private static float vidHeight = 7;
+public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
+		IInitable, RenderCallback, BufferFormatCallback {
 
-    private CenteredQuad quad;
-    private Geometry quadGeometry;
-	private Material mat;
-	
-	private boolean autostart = false;
-	
-    private MediaPlayerFactory mediaPlayerFactory;
-    public DirectMediaPlayer mediaPlayer;
-	
-    private Image videoImage;
-    private Texture2D videoTexture;
-	
-	private boolean firstClick = false;
-    
-    private SimpleMediaPlayer instance;
-
-	private String videoURL = null;
-	
-	private boolean repeat = false;
-	private boolean atEnd = false;	
-	
-	private boolean hasStarted = false;
-	
-    static{    	
-    	boolean found = false;    	
-   		String vlcLib = ManagementFactory.getRuntimeMXBean().getSystemProperties().get("vlc");
-    	if (vlcLib != null)found = true;
-        if(!found) found = new NativeDiscovery().discover();
-        if(!found){
-        	log.warning("Cannot play videos.  VLC is either not installed or located in an unexpected directory.  " + 
-        			"If VLC is installed in an unexpected directory you can provide the path to its library " + 
-        			"location with the argument: '-Dvlc=\"...\""); 
-        }
-    }    
-    
+	/**
+	 * The Class VidThread.
+	 */
 	class VidThread extends Thread {
-		
-		private ArrayList<MediaPlayerEventAdapter> eventHandlersToAdd = new ArrayList<MediaPlayerEventAdapter>(); 
-		
-		private boolean playing = false;
+
+		/** The event handlers to add. */
+		private ArrayList<MediaPlayerEventAdapter> eventHandlersToAdd = new ArrayList<MediaPlayerEventAdapter>();
+
+		/** The initiated. */
 		private boolean initiated = false;
+
+		/** The playing. */
+		private boolean playing = false;
+
+		/** The start pos. */
 		private float startPos = 0;
-		public VidThread () {
+
+		/**
+		 * Instantiates a new vid thread.
+		 */
+		public VidThread() {
 			super();
 		}
-		
-		public void start () {
-			super.start();
+
+		/**
+		 * Adds the media player event listener.
+		 *
+		 * @param mediaPlayerEventAdapter the media player event adapter
+		 */
+		public void addMediaPlayerEventListener(
+				MediaPlayerEventAdapter mediaPlayerEventAdapter) {
+			if (initiated) {
+				mediaPlayer
+						.addMediaPlayerEventListener(mediaPlayerEventAdapter);
+			} else {
+				eventHandlersToAdd.add(mediaPlayerEventAdapter);
+			}
 		}
-		
-		public void run () {
-			try{
-				mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show", "--quiet");
-				mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(instance,instance);
-				addMediaPlayerEventListener(new MediaPlayerEventAdapter(){
+
+		/**
+		 * At end.
+		 */
+		public void atEnd() {
+			playing = false;
+			if (actionOnVideoEndListener != null) {
+				actionOnVideoEndListener.onVideoEnd();
+			}
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Thread#destroy()
+		 */
+		public void destroy() {
+			initiated = false;
+		}
+
+		/**
+		 * Gets the position.
+		 *
+		 * @return the position
+		 */
+		public float getPosition() {
+			if (!initiated) {
+				return 0;
+			} else {
+				return mediaPlayer.getPosition();
+			}
+		}
+
+		/**
+		 * Checks if is playing.
+		 *
+		 * @return true, if is playing
+		 */
+		public boolean isPlaying() {
+			return playing;
+		}
+
+		/**
+		 * Pause vid.
+		 */
+		public void pauseVid() {
+			if (playing) {
+				mediaPlayer.setPause(true);
+				playing = false;
+			}
+		}
+
+		/**
+		 * Play vid.
+		 */
+		public void playVid() {
+			if (initiated) {
+				mediaPlayer.play();
+				playing = true;
+			}
+		}
+
+		/**
+		 * Restart.
+		 */
+		public void restart() {
+			mediaPlayer.prepareMedia(videoURL, "");
+			mediaPlayer.play();
+			playing = true;
+			atEnd = false;
+		}
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Thread#run()
+		 */
+		public void run() {
+			try {
+				mediaPlayerFactory = new MediaPlayerFactory(
+						"--no-video-title-show", "--quiet");
+				mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(instance,
+						instance);
+				addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
 					@Override
 					public void finished(MediaPlayer mediaPlayer) {
 						atEnd = true;
-						if (vidThread != null){	
+						if (vidThread != null) {
 							vidThread.atEnd();
-							if (repeat){
+							if (repeat) {
 								vidThread.restart();
 							}
 						}
@@ -127,306 +181,497 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer, II
 				mediaPlayer.mute(true);
 				mediaPlayer.prepareMedia(videoURL, "");
 				mediaPlayer.play();
-				while(!mediaPlayer.isPlaying()){
-					Thread.sleep(100);		
+				while (!mediaPlayer.isPlaying()) {
+					Thread.sleep(100);
 				}
 				initiated = true;
 				playing = true;
 				mediaPlayer.setPosition(startPos);
 				mediaPlayer.mute(false);
-				if (!autostart){
+				if (!autostart) {
 					pauseVid();
-					while (!firstClick){
-						if (mediaPlayer.isPlaying()){
-							Thread.sleep(100);	
-							if (!firstClick){
+					while (!firstClick) {
+						if (mediaPlayer.isPlaying()) {
+							Thread.sleep(100);
+							if (!firstClick) {
 								mediaPlayer.setPause(true);
 								mediaPlayer.setPosition(startPos);
 							}
 						}
 					}
 				}
-				for (MediaPlayerEventAdapter eventHandler : eventHandlersToAdd){
+				for (MediaPlayerEventAdapter eventHandler : eventHandlersToAdd) {
 					mediaPlayer.addMediaPlayerEventListener(eventHandler);
 				}
-			}catch(RuntimeException e){
-				log.log(Level.SEVERE, "Video won't play.  VLC may not be installed or the same architecture (32/64bit) as the java platform used).", e);
+			} catch (RuntimeException e) {
+				log.log(Level.SEVERE,
+						"Video won't play.  VLC may not be installed or the same architecture (32/64bit) as the java platform used).",
+						e);
 			} catch (InterruptedException e) {
 
 			}
-		}	
-		
-		public void addMediaPlayerEventListener(MediaPlayerEventAdapter mediaPlayerEventAdapter){
-			if (initiated){
-				mediaPlayer.addMediaPlayerEventListener(mediaPlayerEventAdapter);				
-			}else{
-				eventHandlersToAdd.add(mediaPlayerEventAdapter);
+		}
+
+		/**
+		 * Sets the position.
+		 *
+		 * @param pos the new position
+		 */
+		public void setPosition(float pos) {
+			if (initiated) {
+				mediaPlayer.setPosition(pos);
+			} else {
+				startPos = pos;
 			}
 		}
-		
-		public void playVid() {
-			if (initiated){ 
-				mediaPlayer.play();
-				playing = true;
-			}
-		}	
-		
+
+		/*
+		 * (non-Javadoc)
+		 * @see java.lang.Thread#start()
+		 */
+		public void start() {
+			super.start();
+		}
+
+		/**
+		 * Stop vid.
+		 */
 		public void stopVid() {
-			if (playing){ 
+			if (playing) {
 				mediaPlayer.stop();
 				playing = false;
 			}
-		}		
-		
-		public void pauseVid() {
-			if (playing){ 				
-				mediaPlayer.setPause(true);
-				playing = false;
-			}
 		}
-		
+
+		/**
+		 * Unpause vid.
+		 */
 		public void unpauseVid() {
-			if (atEnd){
+			if (atEnd) {
 				restart();
-			}else if (!playing){
+			} else if (!playing) {
 				mediaPlayer.setPause(false);
 				playing = true;
 			}
 		}
-		
-		public void atEnd(){
-			playing = false;
-			if (actionOnVideoEndListener != null){
-				actionOnVideoEndListener.onVideoEnd();
-			}
-		}
-		
-		public boolean isPlaying(){
-			return playing;
-		}
-		
-		public float getPosition(){
-			if (!initiated){
-				return 0;
-			}else{
-				return mediaPlayer.getPosition();
-			}
-		}
-
-		public void setPosition(float pos) {
-			if (initiated){
-				mediaPlayer.setPosition(pos);	
-			}else{
-				startPos = pos;
-			}
-		}
-		
-		public void restart(){
-			mediaPlayer.prepareMedia(videoURL, "");
-			mediaPlayer.play();
-			playing = true;
-			atEnd = false;
-		}
-		
-		public void destroy(){
-			initiated = false;
-		}
 
 	}
-	
-	private VidThread vidThread = null;	
-	
+
+	/** The Constant CACHABLE_TYPE. */
+	public static final String CACHABLE_TYPE = "CACHABLE_VIDEO";
+
+	/** The media players. */
+	public static ArrayList<SimpleMediaPlayer> mediaPlayers = new ArrayList<SimpleMediaPlayer>();
+
+	/** The Constant HEIGHT. */
+	private static final int HEIGHT = 240;
+
+	/** The Constant log. */
+	private static final Logger log = Logger.getLogger(SimpleMediaPlayer.class
+			.getName());
+
+	/** The texture format. */
+	private static Format TEXTURE_FORMAT = Format.RGBA16;
+
+	/** The vid height. */
+	private static float vidHeight = 7;
+
+	/** The vid width. */
+	private static float vidWidth = 12;
+
+	/** The Constant WIDTH. */
+	private static final int WIDTH = 320;
+
+	/** The media player. */
+	public DirectMediaPlayer mediaPlayer;
+
+	/** The action on video end listener. */
+	private IActionOnVideoEndListener actionOnVideoEndListener = null;
+
+	/** The at end. */
+	private boolean atEnd = false;
+
+	/** The autostart. */
+	private boolean autostart = false;
+
+	/** The first click. */
+	private boolean firstClick = false;
+
+	/** The has started. */
+	private boolean hasStarted = false;
+
+	/** The instance. */
+	private SimpleMediaPlayer instance;
+
+	/** The mat. */
+	private Material mat;
+
+	/** The media player factory. */
+	private MediaPlayerFactory mediaPlayerFactory;
+
+	/** The quad. */
+	private CenteredQuad quad;
+
+	/** The quad geometry. */
+	private Geometry quadGeometry;
+
+	/** The repeat. */
+	private boolean repeat = false;
+
+	/** The video image. */
+	private Image videoImage;
+
+	/** The video texture. */
+	private Texture2D videoTexture;
+
+	/** The video url. */
+	private String videoURL = null;
+
+	/** The vid thread. */
+	private VidThread vidThread = null;
+
+	/**
+	 * Instantiates a new simple media player.
+	 *
+	 * @param name the name
+	 * @param uuid the uuid
+	 */
 	public SimpleMediaPlayer(String name, UUID uuid) {
-		super(name, uuid);		
+		super(name, uuid);
 	}
-	
+
+	static {
+		boolean found = false;
+		String vlcLib = ManagementFactory.getRuntimeMXBean()
+				.getSystemProperties().get("vlc");
+		if (vlcLib != null) {
+			found = true;
+		}
+		if (!found) {
+			found = new NativeDiscovery().discover();
+		}
+		if (!found) {
+			log.warning("Cannot play videos.  VLC is either not installed or located in an unexpected directory.  "
+					+ "If VLC is installed in an unexpected directory you can provide the path to its library "
+					+ "location with the argument: '-Dvlc=\"...\"");
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#
+	 * addMediaPlayerEventListener
+	 * (uk.co.caprica.vlcj.player.MediaPlayerEventAdapter)
+	 */
+	public void addMediaPlayerEventListener(
+			MediaPlayerEventAdapter mediaPlayerEventAdapter) {
+		if (vidThread != null) {
+			vidThread.addMediaPlayerEventListener(mediaPlayerEventAdapter);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#destroy()
+	 */
+	public void destroy() {
+		if (vidThread != null) {
+			vidThread.destroy();
+			if (mediaPlayer != null) {
+				unpause();
+				mediaPlayer.stop();
+				mediaPlayer.release();
+			}
+			if (mediaPlayerFactory != null) {
+				mediaPlayerFactory.release();
+			}
+			if (mediaPlayers.contains(this)) {
+				mediaPlayers.remove(this);
+			}
+			vidThread.interrupt();
+
+			vidThread = null;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * uk.co.caprica.vlcj.player.direct.RenderCallback#display(uk.co.caprica
+	 * .vlcj.player.direct.DirectMediaPlayer, com.sun.jna.Memory[],
+	 * uk.co.caprica.vlcj.player.direct.BufferFormat)
+	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {		
+	public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers,
+			BufferFormat bufferFormat) {
+		ByteBuffer buffer = nativeBuffers[0].getByteBuffer(0,
+				bufferFormat.getWidth() * bufferFormat.getHeight() * 4);
+		videoImage.setData(buffer);
+		videoTexture.setImage(videoImage);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * uk.co.caprica.vlcj.player.direct.BufferFormatCallback#getBufferFormat
+	 * (int, int)
+	 */
+	@Override
+	public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
+		return new RV32BufferFormat(WIDTH, HEIGHT);
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getHeight()
+	 */
+	public float getHeight() {
+		return vidHeight;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
+	 */
+	@Override
+	public Spatial getManipulableSpatial() {
+		return quadGeometry;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getPosition()
+	 */
+	public float getPosition() {
+		if (vidThread != null) {
+			return vidThread.getPosition();
+		} else {
+			return 0;
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getRepeat()
+	 */
+	@Override
+	public boolean getRepeat() {
+		return repeat;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getWidth()
+	 */
+	public float getWidth() {
+		return vidWidth;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * multiplicity3.jme3csys.items.IInitable#initializeGeometry(com.jme3.asset
+	 * .AssetManager)
+	 */
+	@Override
+	public void initializeGeometry(AssetManager assetManager) {
 		this.instance = this;
-		
+
 		videoImage = new Image(TEXTURE_FORMAT, WIDTH, HEIGHT, null);
-        videoTexture = new Texture2D(videoImage);        
-		
-        quad = new CenteredQuad(vidWidth, vidHeight);	
-        quadGeometry = new Geometry("quad_geom", quad);
-        mat = new Material(MultiplicityClient.assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
-        mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
-        mat.setTexture("ColorMap", videoTexture);
-        mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Front);
-        quadGeometry.setMaterial(mat);
-        
-        Node transformNode = new Node();
-        transformNode.attachChild(quadGeometry);     		
-        
-        transformNode.rotate(0f,0f,FastMath.DEG_TO_RAD * 180f);
-        transformNode.rotate(0f,FastMath.DEG_TO_RAD * 180f,0f);
-        
-        this.setVisible(false);
-		
+		videoTexture = new Texture2D(videoImage);
+
+		quad = new CenteredQuad(vidWidth, vidHeight);
+		quadGeometry = new Geometry("quad_geom", quad);
+		mat = new Material(MultiplicityClient.assetManager,
+				"Common/MatDefs/Misc/Unshaded.j3md");
+		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
+		mat.setTexture("ColorMap", videoTexture);
+		mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Front);
+		quadGeometry.setMaterial(mat);
+
+		Node transformNode = new Node();
+		transformNode.attachChild(quadGeometry);
+
+		transformNode.rotate(0f, 0f, FastMath.DEG_TO_RAD * 180f);
+		transformNode.rotate(0f, FastMath.DEG_TO_RAD * 180f, 0f);
+
+		this.setVisible(false);
+
 		ItemMap.register(quadGeometry, this);
 		log.fine("Attaching image quad geometry!");
-		attachChild(transformNode);			
+		attachChild(transformNode);
 		hasStarted = true;
 	}
-	
-	private void initialise(){		
-		vidThread = new VidThread();
-		vidThread.start();
-    	mediaPlayers.add(this);	    	
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#isPlaying()
+	 */
+	public boolean isPlaying() {
+		if (vidThread != null) {
+			return vidThread.isPlaying();
+		} else {
+			return false;
+		}
 	}
 
-	public void setLocalResource(File file, boolean autostart){
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#pause()
+	 */
+	public void pause() {
+		if (vidThread != null) {
+			vidThread.pauseVid();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#play()
+	 */
+	public void play() {
+		if (vidThread != null) {
+			vidThread.playVid();
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#
+	 * setActionOnVideoEndListener
+	 * (synergynet3.additionalitems.interfaces.IActionOnVideoEndListener)
+	 */
+	@Override
+	public void setActionOnVideoEndListener(
+			IActionOnVideoEndListener actionOnVideoEndListener) {
+		this.actionOnVideoEndListener = actionOnVideoEndListener;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setLocalResource
+	 * (java.io.File, boolean)
+	 */
+	public void setLocalResource(File file, boolean autostart) {
 		this.autostart = autostart;
 		videoURL = file.toString();
 	}
-	
-	public void setLocalResource(String localPath, boolean autostart){
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setLocalResource
+	 * (java.lang.String, boolean)
+	 */
+	public void setLocalResource(String localPath, boolean autostart) {
 		this.autostart = autostart;
 		videoURL = localPath;
-	}	
-	
-	public void setRemoteResource(String remotePath, boolean autostart){
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setPosition
+	 * (float)
+	 */
+	public void setPosition(float pos) {
+		if (vidThread != null) {
+			vidThread.setPosition(pos);
+		}
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setRemoteResource
+	 * (java.lang.String, boolean)
+	 */
+	public void setRemoteResource(String remotePath, boolean autostart) {
 		this.autostart = autostart;
 		videoURL = remotePath;
 	}
-	
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setRepeat(boolean
+	 * )
+	 */
+	@Override
+	public void setRepeat(boolean repeat) {
+		this.repeat = repeat;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see
+	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setSize(float,
+	 * float)
+	 */
 	public void setSize(float width, float height) {
 		vidWidth = width;
 		vidHeight = height;
 		quad = new CenteredQuad(width, height);
 		quadGeometry.setMesh(quad);
 	}
-	
-	public float getWidth(){
-		return vidWidth;
-	}
-	
-	public float getHeight(){
-		return vidHeight;
-	}
-	
-	public void addMediaPlayerEventListener(MediaPlayerEventAdapter mediaPlayerEventAdapter){
-		if (vidThread != null){
-			vidThread.addMediaPlayerEventListener(mediaPlayerEventAdapter);
-		}
-	}
-	
-    public void play(){
-    	if (vidThread != null){
-    		vidThread.playVid();
-    	}
-    }
-    
-    public void stop(){   
-    	if (vidThread != null){
-    		vidThread.stopVid();
-    	}
-    }
-    
-    public void pause(){     
-    	if (vidThread != null){
-    		vidThread.pauseVid();
-    	}
-    }
-    
-    public void unpause(){  
-    	if (vidThread != null){
-	    	vidThread.unpauseVid();
-	    	if (!firstClick){
-	    		firstClick = true;
-	    	}
-    	}
-    }
-    
-    public boolean isPlaying(){
-    	if (vidThread != null){
-    		return vidThread.isPlaying();
-    	}else{
-    		return false;
-    	}
-    }	
-    
-	public float getPosition(){
-		if (vidThread != null){
-			return vidThread.getPosition();
-		}else{
-			return 0;
-		}
-	}
-	
-	public void setPosition(float pos){
-		if (vidThread != null){
-			vidThread.setPosition(pos);
-		}
-	}
-    
-	public void destroy() {
-		if (vidThread != null){
-			vidThread.destroy();
-			if (mediaPlayer != null){
-				unpause();
-				mediaPlayer.stop();
-				mediaPlayer.release();
+
+	/*
+	 * (non-Javadoc)
+	 * @see multiplicity3.jme3csys.items.item.JMEItem#setVisible(boolean)
+	 */
+	@Override
+	public void setVisible(boolean isVisible) {
+		if (!hasStarted) {
+			super.setVisible(isVisible);
+			if (!isVisible) {
+				if (this.getParentItem() != null) {
+					this.setInteractionEnabled(false);
+				}
 			}
-			if (mediaPlayerFactory != null){
-				mediaPlayerFactory.release();
+		} else {
+			if (!isVisible) {
+				super.setVisible(isVisible);
+				destroy();
+			} else {
+				initialise();
+				super.setVisible(isVisible);
 			}
-			if (mediaPlayers.contains(this))mediaPlayers.remove(this);
-			vidThread.interrupt();
-	
-			vidThread = null;
 		}
-	}	
-		
-	@Override
-	public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat) {
-		ByteBuffer buffer = nativeBuffers[0].getByteBuffer(0, (int) bufferFormat.getWidth() * (int) bufferFormat.getHeight() * 4);
-		videoImage.setData(buffer);
-		videoTexture.setImage(videoImage);		
 	}
 
-	@Override
-	public Spatial getManipulableSpatial() {
-		return quadGeometry;
+	/**
+	 * Stop.
+	 */
+	public void stop() {
+		if (vidThread != null) {
+			vidThread.stopVid();
+		}
 	}
 
-	@Override
-	public void setRepeat(boolean repeat) {
-		this.repeat = repeat;		
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#unpause()
+	 */
+	public void unpause() {
+		if (vidThread != null) {
+			vidThread.unpauseVid();
+			if (!firstClick) {
+				firstClick = true;
+			}
+		}
 	}
 
-	@Override
-	public boolean getRepeat() {
-		return repeat;
-	}
-	
-    @Override
-    public void setVisible(boolean isVisible) {
-    	if (!hasStarted){
-            super.setVisible(isVisible);
-            if(!isVisible){
-                    if (this.getParentItem() != null){
-                            this.setInteractionEnabled(false);
-                    }
-            }
-    	}else{
-    		if(!isVisible){
-    			super.setVisible(isVisible);
-    			destroy();
-    		}else{
-    			initialise();
-    			super.setVisible(isVisible);
-    		}
-    	}
-    }
-    
-	@Override
-	public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-	    return new RV32BufferFormat(WIDTH, HEIGHT);
-	}
-
-	@Override
-	public void setActionOnVideoEndListener(IActionOnVideoEndListener actionOnVideoEndListener) {
-		this.actionOnVideoEndListener = actionOnVideoEndListener;		
+	/**
+	 * Initialise.
+	 */
+	private void initialise() {
+		vidThread = new VidThread();
+		vidThread.start();
+		mediaPlayers.add(this);
 	}
 }

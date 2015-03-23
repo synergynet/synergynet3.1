@@ -1,5 +1,14 @@
 package synergynet3.museum.table.utils;
 
+/**
+ * The Enum EntityType.
+ */
 public enum EntityType {
-	POI, LensedPOI, Free
+
+	/** The Free. */
+	Free,
+	/** The Lensed poi. */
+	LensedPOI,
+	/** The poi. */
+	POI
 }

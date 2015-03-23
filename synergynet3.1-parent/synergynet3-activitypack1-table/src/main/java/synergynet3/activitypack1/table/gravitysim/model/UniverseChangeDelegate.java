@@ -1,7 +1,28 @@
 package synergynet3.activitypack1.table.gravitysim.model;
 
+/**
+ * The Interface UniverseChangeDelegate.
+ */
 public interface UniverseChangeDelegate {
-	public void bodyRemoved(Body b);
+
+	/**
+	 * Body added.
+	 *
+	 * @param b the b
+	 */
 	public void bodyAdded(Body b);
+
+	/**
+	 * Body position changed.
+	 *
+	 * @param body the body
+	 */
 	public void bodyPositionChanged(Body body);
+
+	/**
+	 * Body removed.
+	 *
+	 * @param b the b
+	 */
+	public void bodyRemoved(Body b);
 }

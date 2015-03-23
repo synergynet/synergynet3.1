@@ -8,67 +8,133 @@ import java.util.logging.Level;
 import synergynet3.mediadetection.MediaDetection;
 import synergynet3.mediadetection.mediasearch.Searcher;
 
-
+/**
+ * The Class SearchDirectoryThread.
+ */
 public class SearchDirectoryThread extends SearchThread {
-	
-	private File directory;	
-	private File[] roots;
+
+	/** The directory. */
+	private File directory;
+
+	/** The directory set. */
 	private boolean directorySet = false;
+
+	/** The is detecting new drives. */
 	private boolean isDetectingNewDrives = false;
-	
-	public void setDetectingNewDrives(){
+
+	/** The roots. */
+	private File[] roots;
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.mediadetection.mediasearch.threads.SearchThread#
+	 * reloadDiscoveredContents()
+	 */
+	@Override
+	public File[] reloadDiscoveredContents() {
+		return Searcher.searchDirectoryTree(directory, mediaSearchTypes, order,
+				numberToReturn);
+	}
+
+	/**
+	 * Sets the detecting new drives.
+	 */
+	public void setDetectingNewDrives() {
 		isDetectingNewDrives = true;
 	}
-	
-	public void setDirectory(File directoryFile){
+
+	/**
+	 * Sets the directory.
+	 *
+	 * @param directoryFile the new directory
+	 */
+	public void setDirectory(File directoryFile) {
 		directory = directoryFile;
-		if (directory != null){
-			if (directory.isDirectory()){
+		if (directory != null) {
+			if (directory.isDirectory()) {
 				directorySet = true;
-			}else{
-				MediaDetection.logMediaDetectionError(Level.SEVERE, "Location given is not a directory.", null);
+			} else {
+				MediaDetection.logMediaDetectionError(Level.SEVERE,
+						"Location given is not a directory.", null);
 			}
 		}
 	}
 
-	public void setDirectory(String directoryAddress, boolean isURI){
-		if (isURI){
+	/**
+	 * Sets the directory.
+	 *
+	 * @param directoryAddress the directory address
+	 * @param isURI the is uri
+	 */
+	public void setDirectory(String directoryAddress, boolean isURI) {
+		if (isURI) {
 			try {
 				directory = new File(new URI(directoryAddress));
 			} catch (URISyntaxException e) {
-				MediaDetection.logMediaDetectionError(Level.SEVERE, "Location given is not a valid address.", e);
+				MediaDetection.logMediaDetectionError(Level.SEVERE,
+						"Location given is not a valid address.", e);
 			}
-		}else{
+		} else {
 			directory = new File(directoryAddress);
 		}
-		if (directory != null){
-			if (directory.isDirectory()){
+		if (directory != null) {
+			if (directory.isDirectory()) {
 				directorySet = true;
-			}else{
-				MediaDetection.logMediaDetectionError(Level.SEVERE, "Location given is not a directory.", null);
+			} else {
+				MediaDetection.logMediaDetectionError(Level.SEVERE,
+						"Location given is not a directory.", null);
 			}
 		}
 	}
-	
-	@Override
-	protected void checkInitialDirectories() {
-		if (directorySet){
-			roots = directory.listFiles();
-		}else{
-			MediaDetection.logMediaDetectionError(Level.SEVERE, "Directory to search has not been set yet.", null);
+
+	/**
+	 * Find files.
+	 *
+	 * @param f the f
+	 */
+	private void findFiles(File f) {
+		File[] foundFiles = null;
+		foundFiles = Searcher.searchDirectoryTree(f, mediaSearchTypes, order,
+				numberToReturn);
+		if (foundFiles != null) {
+			if (foundFiles.length > 0) {
+				filesFound(foundFiles);
+			}
 		}
 	}
-	
+
+	/**
+	 * Checks if is not present in roots.
+	 *
+	 * @param f the f
+	 * @return true, if is not present in roots
+	 */
+	private boolean isNotPresentInRoots(File f) {
+		boolean isNotPresent = true;
+		for (File r : roots) {
+			if (r.equals(f)) {
+				isNotPresent = false;
+				break;
+			}
+		}
+		return isNotPresent;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.mediadetection.mediasearch.threads.SearchThread#
+	 * checkForNewDirectories()
+	 */
 	@Override
-	protected void checkForNewDirectories(){
-		if (roots.length != directory.listFiles().length){
-			if (roots.length < directory.listFiles().length){
-				if (!isDetectingNewDrives){
+	protected void checkForNewDirectories() {
+		if (roots.length != directory.listFiles().length) {
+			if (roots.length < directory.listFiles().length) {
+				if (!isDetectingNewDrives) {
 					findFiles(directory);
 				}
-				for (File f : directory.listFiles()){					
-					if (isNotPresentInRoots(f)){
-						if (f.isDirectory()){
+				for (File f : directory.listFiles()) {
+					if (isNotPresentInRoots(f)) {
+						if (f.isDirectory()) {
 							findFiles(f);
 						}
 					}
@@ -79,30 +145,19 @@ public class SearchDirectoryThread extends SearchThread {
 		}
 	}
 
-	private void findFiles(File f){
-		File[] foundFiles = null;
-		foundFiles = Searcher.searchDirectoryTree(f, mediaSearchTypes, order, numberToReturn);
-		if (foundFiles != null){
-			if (foundFiles.length > 0){
-				filesFound(foundFiles);
-			}
-		}
-	}
-
-	private boolean isNotPresentInRoots(File f) {
-		boolean isNotPresent = true;
-		for (File r : roots){
-			if (r.equals(f)){
-				isNotPresent = false;
-				break;
-			}
-		}
-		return isNotPresent;
-	}
-	
+	/*
+	 * (non-Javadoc)
+	 * @see synergynet3.mediadetection.mediasearch.threads.SearchThread#
+	 * checkInitialDirectories()
+	 */
 	@Override
-	public File[] reloadDiscoveredContents(){
-		return Searcher.searchDirectoryTree(directory, mediaSearchTypes, order, numberToReturn);
+	protected void checkInitialDirectories() {
+		if (directorySet) {
+			roots = directory.listFiles();
+		} else {
+			MediaDetection.logMediaDetectionError(Level.SEVERE,
+					"Directory to search has not been set yet.", null);
+		}
 	}
 
 }

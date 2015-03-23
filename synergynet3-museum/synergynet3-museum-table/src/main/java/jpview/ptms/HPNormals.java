@@ -1,7 +1,5 @@
 /*
- * ColorChannelOp.java
- *
- * Created on September 5, 2004, 9:41 PM
+ * ColorChannelOp.java Created on September 5, 2004, 9:41 PM
  */
 
 package jpview.ptms;
@@ -15,17 +13,19 @@ import jpview.graphics.Vec3f;
  */
 public class HPNormals {
 
+	/** The Constant zerotol. */
 	public static final double zerotol = 1.0e-5;
 
+	/** The Constant eps. */
 	public static final double eps = zerotol;
 
-	public static double evalPoly(double[] a, double t) {
-		double u = 2 * t / (1 + t * t);
-		double v = (1 - t * t) / (1 + t * t);
-		return a[0] * u * u + a[1] * v * v + a[2] * u * v + a[3] * u + a[4] * v
-				+ a[5];
-	}
-
+	/**
+	 * Compute maximum on circle.
+	 *
+	 * @param a the a
+	 * @param normal the normal
+	 * @return the int
+	 */
 	public static int computeMaximumOnCircle(double[] a, double[] normal) {
 		double db0, db1, db2, db3, db4;
 		double val1;
@@ -37,14 +37,14 @@ public class HPNormals {
 		nroots = -1;
 
 		db0 = a[2] - a[3];
-		db1 = 4 * a[1] - 2 * a[4] - 4 * a[0];
+		db1 = (4 * a[1]) - (2 * a[4]) - (4 * a[0]);
 		db2 = -6 * a[2];
-		db3 = -4 * a[1] - 2 * a[4] + 4 * a[0];
+		db3 = ((-4 * a[1]) - (2 * a[4])) + (4 * a[0]);
 		db4 = a[2] + a[3];
 
 		/** polynomial is constant on circle, pick (0,1) as a solution */
-		if (Math.abs(db0) < zerotol && Math.abs(db1) < zerotol
-				&& Math.abs(db2) < zerotol && Math.abs(db3) < zerotol) {
+		if ((Math.abs(db0) < zerotol) && (Math.abs(db1) < zerotol)
+				&& (Math.abs(db2) < zerotol) && (Math.abs(db3) < zerotol)) {
 			normal[0] = 0.0;
 			normal[1] = 1.0;
 			return 1;
@@ -66,15 +66,15 @@ public class HPNormals {
 		}
 
 		switch (nroots) {
-		case 1:
-			index = 0;
-			break;
-		default:
-			double[] vals = new double[nroots];
-			for (int i = 0; i < vals.length; i++) {
-				vals[i] = evalPoly(a, zeros[i]);
-			}
-			index = Utils.indexOfMax(vals);
+			case 1:
+				index = 0;
+				break;
+			default:
+				double[] vals = new double[nroots];
+				for (int i = 0; i < vals.length; i++) {
+					vals[i] = evalPoly(a, zeros[i]);
+				}
+				index = Utils.indexOfMax(vals);
 		}
 
 		/**
@@ -85,9 +85,9 @@ public class HPNormals {
 		 * from 260 degress to 280 degrees (270 degrees being the limit point).
 		 */
 
-		normal[0] = 2 * zeros[index] / (1 + zeros[index] * zeros[index]);
-		normal[1] = (1 - zeros[index] * zeros[index])
-				/ (1 + zeros[index] * zeros[index]);
+		normal[0] = (2 * zeros[index]) / (1 + (zeros[index] * zeros[index]));
+		normal[1] = (1 - (zeros[index] * zeros[index]))
+				/ (1 + (zeros[index] * zeros[index]));
 
 		/**
 		 * test the correctness of solution:
@@ -96,12 +96,12 @@ public class HPNormals {
 		maxval = -1000;
 
 		for (int k = 0; k <= 20; k++) {
-			inc = (1 / 9.0) / 20 * k;
-			arg = Math.PI * (26.0 / 18.0 + inc);
+			inc = ((1 / 9.0) / 20) * k;
+			arg = Math.PI * ((26.0 / 18.0) + inc);
 			u = Math.cos(arg);
 			v = Math.sin(arg);
-			polyval = a[0] * u * u + a[1] * v * v + a[2] * u * v + a[3] * u
-					+ a[4] * v + a[5];
+			polyval = (a[0] * u * u) + (a[1] * v * v) + (a[2] * u * v)
+					+ (a[3] * u) + (a[4] * v) + a[5];
 			if (maxval < polyval) {
 				maxval = polyval;
 				maxu = u;
@@ -117,10 +117,26 @@ public class HPNormals {
 		return 1;
 	}
 
-	public static Vec3f[] getNormals(LRGBPTM ptm) {
-		return HPNormals.getNormals(ptm.getCoefficients());
+	/**
+	 * Eval poly.
+	 *
+	 * @param a the a
+	 * @param t the t
+	 * @return the double
+	 */
+	public static double evalPoly(double[] a, double t) {
+		double u = (2 * t) / (1 + (t * t));
+		double v = (1 - (t * t)) / (1 + (t * t));
+		return (a[0] * u * u) + (a[1] * v * v) + (a[2] * u * v) + (a[3] * u)
+				+ (a[4] * v) + a[5];
 	}
 
+	/**
+	 * Gets the normals.
+	 *
+	 * @param coeff the coeff
+	 * @return the normals
+	 */
 	public static Vec3f[] getNormals(int[][] coeff) {
 
 		Vec3f[] normals = new Vec3f[coeff.length];
@@ -133,12 +149,12 @@ public class HPNormals {
 		for (int i = 0; i < normals.length; i++) {
 			double[] normal = new double[3];
 			a = new double[6];
-			a[0] = (double) coeff[i][0];
-			a[1] = (double) coeff[i][1];
-			a[2] = (double) coeff[i][2];
-			a[3] = (double) coeff[i][3];
-			a[4] = (double) coeff[i][4];
-			a[5] = (double) coeff[i][5];
+			a[0] = coeff[i][0];
+			a[1] = coeff[i][1];
+			a[2] = coeff[i][2];
+			a[3] = coeff[i][3];
+			a[4] = coeff[i][4];
+			a[5] = coeff[i][5];
 
 			/* now remove factor of 256 in scaling values */
 			a[0] /= 256;
@@ -154,29 +170,29 @@ public class HPNormals {
 			 */
 			/* Derivation in lab notebook 2951-43 */
 			/*
-			 * normal[0] = (2 * a[1] * a[3] - (a[4] / a[2]) ) / (1.0 - 4 * a[0] *
-			 * a[1]);
+			 * normal[0] = (2 * a[1] * a[3] - (a[4] / a[2]) ) / (1.0 - 4 * a[0]
+			 * * a[1]);
 			 */
 
 			/** zero denominator in upcoming computations */
-			if (Math.abs(a[2] * a[2] - 4 * a[1] * a[0]) < zerotol) {
+			if (Math.abs((a[2] * a[2]) - (4 * a[1] * a[0])) < zerotol) {
 				normal[0] = 0;
 				normal[1] = 0;
 			} else {
 				if (Math.abs(a[2]) < zerotol) {
-					normal[0] = -1.0 * a[3] / (2.0 * a[0]);
-					normal[1] = -1.0 * a[4] / (2.0 * a[1]);
+					normal[0] = (-1.0 * a[3]) / (2.0 * a[0]);
+					normal[1] = (-1.0 * a[4]) / (2.0 * a[1]);
 				} else {
-					normal[0] = (2.0 * a[1] * a[3] - a[2] * a[4])
-							/ (a[2] * a[2] - 4.0 * a[1] * a[0]);
-					normal[1] = (-2.0 * a[0] * normal[0] - a[3]) / a[2];
+					normal[0] = ((2.0 * a[1] * a[3]) - (a[2] * a[4]))
+							/ ((a[2] * a[2]) - (4.0 * a[1] * a[0]));
+					normal[1] = ((-2.0 * a[0] * normal[0]) - a[3]) / a[2];
 				}
 			}
 
 			/** polynomial is constant we are done, set normal to be at 0,0,1 */
-			if (Math.abs(a[0]) < zerotol && Math.abs(a[1]) < zerotol
-					&& Math.abs(a[2]) < zerotol && Math.abs(a[3]) < zerotol
-					&& Math.abs(a[4]) < zerotol) {
+			if ((Math.abs(a[0]) < zerotol) && (Math.abs(a[1]) < zerotol)
+					&& (Math.abs(a[2]) < zerotol) && (Math.abs(a[3]) < zerotol)
+					&& (Math.abs(a[4]) < zerotol)) {
 				normal[0] = 0.0;
 				normal[1] = 0.0;
 				normal[2] = 1.0;
@@ -187,17 +203,19 @@ public class HPNormals {
 			 * greater than 1
 			 */
 			else {
-				length2d = normal[0] * normal[0] + normal[1] * normal[0];
+				length2d = (normal[0] * normal[0]) + (normal[1] * normal[0]);
 
 				/*
 				 * Add check for saddle or minimum. if p_uu >0 and/or
 				 * p_uu*p_vv-p_uv*p_uv <0 -> saddle or minimum if this is the
 				 * case then we should always look at boundary
 				 */
-				if (4 * a[0] * a[1] - a[2] * a[2] > eps && a[0] < -eps)
+				if ((((4 * a[0] * a[1]) - (a[2] * a[2])) > eps)
+						&& (a[0] < -eps)) {
 					maxfound = 1;
-				else
+				} else {
 					maxfound = 0;
+				}
 
 				/**
 				 * Changed by Hans J. Wolters 12-11-99: instead of clipping, we
@@ -212,7 +230,7 @@ public class HPNormals {
 				 * lab book
 				 */
 
-				if (length2d > 1 - eps || maxfound == 0) {
+				if ((length2d > (1 - eps)) || (maxfound == 0)) {
 					stat = computeMaximumOnCircle(a, normal);
 					if (stat == -1) // failed
 					{
@@ -223,7 +241,7 @@ public class HPNormals {
 						}
 					}
 				}
-				disc = 1.0 - normal[0] * normal[0] - normal[1] * normal[1];
+				disc = 1.0 - (normal[0] * normal[0]) - (normal[1] * normal[1]);
 				if (disc < 0.0) {
 					normal[2] = 0;
 				} else {
@@ -235,5 +253,15 @@ public class HPNormals {
 					(float) normal[2]);
 		}
 		return normals;
+	}
+
+	/**
+	 * Gets the normals.
+	 *
+	 * @param ptm the ptm
+	 * @return the normals
+	 */
+	public static Vec3f[] getNormals(LRGBPTM ptm) {
+		return HPNormals.getNormals(ptm.getCoefficients());
 	}
 }

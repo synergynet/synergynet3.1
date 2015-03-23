@@ -7,29 +7,83 @@ import com.google.gwt.core.client.GWT;
 import com.google.gwt.user.client.rpc.RemoteService;
 import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
 
+/**
+ * The Interface EarlyYearsService.
+ */
 @RemoteServiceRelativePath("EarlyYearsService")
 public interface EarlyYearsService extends RemoteService {
 
-	//App functions
-	public void setActivity(EarlyYearsActivity scenario, String[]tables);
-	
-	//Railway app functions
-	public void setRailwayCornerNum(int i, String[] tables);
-	public void setRailwayCrossNum(int i, String[] tables);
-	public void setRailwayStraightNum(int i, String[] tables);
-	public void setRoadMode(PerformActionMessage b, String[] tables);
-	
-	//Explorer app functions
-	public void showExplorerTeacherConsole(PerformActionMessage b, String[] deviceToSendTo);
-	
+	/**
+	 * The Class Util.
+	 */
 	public static class Util {
+
+		/** The instance. */
 		private static EarlyYearsServiceAsync instance;
-		public static EarlyYearsServiceAsync get(){
+
+		/**
+		 * Gets the.
+		 *
+		 * @return the early years service async
+		 */
+		public static EarlyYearsServiceAsync get() {
 			if (instance == null) {
 				instance = GWT.create(EarlyYearsService.class);
 			}
 			return instance;
 		}
 	}
+
+	// App functions
+	/**
+	 * Sets the activity.
+	 *
+	 * @param scenario the scenario
+	 * @param tables the tables
+	 */
+	public void setActivity(EarlyYearsActivity scenario, String[] tables);
+
+	// Railway app functions
+	/**
+	 * Sets the railway corner num.
+	 *
+	 * @param i the i
+	 * @param tables the tables
+	 */
+	public void setRailwayCornerNum(int i, String[] tables);
+
+	/**
+	 * Sets the railway cross num.
+	 *
+	 * @param i the i
+	 * @param tables the tables
+	 */
+	public void setRailwayCrossNum(int i, String[] tables);
+
+	/**
+	 * Sets the railway straight num.
+	 *
+	 * @param i the i
+	 * @param tables the tables
+	 */
+	public void setRailwayStraightNum(int i, String[] tables);
+
+	/**
+	 * Sets the road mode.
+	 *
+	 * @param b the b
+	 * @param tables the tables
+	 */
+	public void setRoadMode(PerformActionMessage b, String[] tables);
+
+	// Explorer app functions
+	/**
+	 * Show explorer teacher console.
+	 *
+	 * @param b the b
+	 * @param deviceToSendTo the device to send to
+	 */
+	public void showExplorerTeacherConsole(PerformActionMessage b,
+			String[] deviceToSendTo);
 
 }

@@ -14,55 +14,96 @@ import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 
+/**
+ * The Class RecorderButton.
+ */
 public class RecorderButton {
-	
-	private static final float TEXTSCALE = 0.5f;
+
+	/** The Constant IMAGESCALE. */
 	private static final float IMAGESCALE = 0.75f;
-	
-	private static final ColorRGBA INVIS = new ColorRGBA(0,0,0,0);
+
+	/** The Constant INVIS. */
+	private static final ColorRGBA INVIS = new ColorRGBA(0, 0, 0, 0);
+
+	/** The Constant RESOURCE_DIR. */
 	private static final String RESOURCE_DIR = "synergynet3/museum/table/userrecorder/";
-	
+
+	/** The Constant TEXTSCALE. */
+	private static final float TEXTSCALE = 0.5f;
+
+	/** The button container. */
 	private IContainer buttonContainer;
+
+	/** The listener. */
 	private IImage listener;
-	
-	public RecorderButton(IStage stage, String imageName, String text, boolean active) throws ContentTypeNotBoundException{
-		buttonContainer = stage.getContentFactory().create(IContainer.class, "buttonContainer", UUID.randomUUID());
-		
-		FontColour fontCol = MuseumAppPreferences.getRecorderActiveButtonFontColour();
-		ColorRGBA borderCol = MuseumAppPreferences.getRecorderActiveButtonBorderColour();
-		
-		if (!active){
-			fontCol = MuseumAppPreferences.getRecorderInactiveButtonFontColour();
-			borderCol = MuseumAppPreferences.getRecorderInactiveButtonBorderColour();
+
+	/**
+	 * Instantiates a new recorder button.
+	 *
+	 * @param stage the stage
+	 * @param imageName the image name
+	 * @param text the text
+	 * @param active the active
+	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 */
+	public RecorderButton(IStage stage, String imageName, String text,
+			boolean active) throws ContentTypeNotBoundException {
+		buttonContainer = stage.getContentFactory().create(IContainer.class,
+				"buttonContainer", UUID.randomUUID());
+
+		FontColour fontCol = MuseumAppPreferences
+				.getRecorderActiveButtonFontColour();
+		ColorRGBA borderCol = MuseumAppPreferences
+				.getRecorderActiveButtonBorderColour();
+
+		if (!active) {
+			fontCol = MuseumAppPreferences
+					.getRecorderInactiveButtonFontColour();
+			borderCol = MuseumAppPreferences
+					.getRecorderInactiveButtonBorderColour();
 		}
-		
-		IImage buttonImage = stage.getContentFactory().create(IImage.class, "buttonImage", UUID.randomUUID());
+
+		IImage buttonImage = stage.getContentFactory().create(IImage.class,
+				"buttonImage", UUID.randomUUID());
 		buttonImage.setImage(RESOURCE_DIR + imageName + ".png");
-		buttonImage.setSize(UserRecorder.BUTTON_WIDTH, UserRecorder.BUTTON_HEIGHT);		
+		buttonImage.setSize(UserRecorder.BUTTON_WIDTH,
+				UserRecorder.BUTTON_HEIGHT);
 		buttonImage.setRelativeScale(IMAGESCALE);
-		buttonImage.setRelativeLocation(new Vector2f(0, UserRecorder.BUTTON_HEIGHT/2 - (UserRecorder.BUTTON_HEIGHT * IMAGESCALE)/2 - 5f));
-		buttonContainer.addItem(buttonImage);	
-			
-		ITextbox textLabel = stage.getContentFactory().create(ITextbox.class, "textLabel", UUID.randomUUID());
+		buttonImage
+				.setRelativeLocation(new Vector2f(
+						0,
+						(UserRecorder.BUTTON_HEIGHT / 2)
+								- ((UserRecorder.BUTTON_HEIGHT * IMAGESCALE) / 2)
+								- 5f));
+		buttonContainer.addItem(buttonImage);
+
+		ITextbox textLabel = stage.getContentFactory().create(ITextbox.class,
+				"textLabel", UUID.randomUUID());
 		textLabel.setColours(INVIS, INVIS, fontCol);
 		textLabel.setWidth(UserRecorder.BUTTON_WIDTH / TEXTSCALE);
-		textLabel.setHeight(UserRecorder.BUTTON_HEIGHT/4);
-		textLabel.setText(text, stage);		
+		textLabel.setHeight(UserRecorder.BUTTON_HEIGHT / 4);
+		textLabel.setText(text, stage);
 		textLabel.setRelativeScale(TEXTSCALE);
-		textLabel.setRelativeLocation(new Vector2f(0, -(UserRecorder.BUTTON_HEIGHT/2) + (textLabel.getHeight() * TEXTSCALE)/2));
+		textLabel.setRelativeLocation(new Vector2f(0,
+				-(UserRecorder.BUTTON_HEIGHT / 2)
+						+ ((textLabel.getHeight() * TEXTSCALE) / 2)));
 		textLabel.setMovable(false);
-		buttonContainer.addItem(textLabel);	
-		
-		IRoundedBorder textBorder = stage.getContentFactory().create(IRoundedBorder.class, "textBorder", UUID.randomUUID());		
+		buttonContainer.addItem(textLabel);
+
+		IRoundedBorder textBorder = stage.getContentFactory().create(
+				IRoundedBorder.class, "textBorder", UUID.randomUUID());
 		textBorder.setBorderWidth(3);
-		textBorder.setSize(UserRecorder.BUTTON_WIDTH, UserRecorder.BUTTON_HEIGHT);
-		textBorder.setColor(borderCol);	
-		buttonContainer.addItem(textBorder);	
-		
-		if (active){
-			listener = stage.getContentFactory().create(IImage.class, "listenBlock", UUID.randomUUID());
-			listener.setSize(UserRecorder.BUTTON_WIDTH, UserRecorder.BUTTON_HEIGHT);				
-			buttonContainer.addItem(listener);	
+		textBorder.setSize(UserRecorder.BUTTON_WIDTH,
+				UserRecorder.BUTTON_HEIGHT);
+		textBorder.setColor(borderCol);
+		buttonContainer.addItem(textBorder);
+
+		if (active) {
+			listener = stage.getContentFactory().create(IImage.class,
+					"listenBlock", UUID.randomUUID());
+			listener.setSize(UserRecorder.BUTTON_WIDTH,
+					UserRecorder.BUTTON_HEIGHT);
+			buttonContainer.addItem(listener);
 		}
 	}
 
@@ -74,17 +115,17 @@ public class RecorderButton {
 	}
 
 	/**
-	 * @param buttonContainer the buttonContainer to set
-	 */
-	public void setButtonContainer(IContainer buttonContainer) {
-		this.buttonContainer = buttonContainer;
-	}
-
-	/**
 	 * @return the listener
 	 */
 	public IImage getListener() {
 		return listener;
+	}
+
+	/**
+	 * @param buttonContainer the buttonContainer to set
+	 */
+	public void setButtonContainer(IContainer buttonContainer) {
+		this.buttonContainer = buttonContainer;
 	}
 
 	/**

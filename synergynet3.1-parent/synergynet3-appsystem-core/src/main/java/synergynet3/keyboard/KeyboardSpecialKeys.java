@@ -1,5 +1,12 @@
 package synergynet3.keyboard;
 
+/**
+ * The Enum KeyboardSpecialKeys.
+ */
 public enum KeyboardSpecialKeys {
-	BACKSPACE, ENTER
+
+	/** The backspace. */
+	BACKSPACE,
+	/** The enter. */
+	ENTER
 }

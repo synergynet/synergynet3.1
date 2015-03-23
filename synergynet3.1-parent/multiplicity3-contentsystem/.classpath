@@ -8,7 +8,11 @@
 	</classpathentry>
 	<classpathentry kind="src" path="src/main/resources"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-input"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://javadoc.jmonkeyengine.org/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

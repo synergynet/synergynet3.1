@@ -1,59 +1,63 @@
 /*
- * LRGBReader.java
- *
- * Created on July 3, 2004, 11:41 PM
+ * LRGBReader.java Created on July 3, 2004, 11:41 PM
  */
 
 package jpview.io;
 
-//import java.io.BufferedReader;
+// import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-//import java.io.InputStreamReader;
+// import java.io.InputStreamReader;
 
 import jpview.Utils;
 import jpview.ptms.LRGBPTM;
 import jpview.ptms.PTM;
 
 /**
- * 
  * @author Default
  */
 public class LRGBReader implements PTMReader {
 
-	private LRGBPTM ptm;
-
-	private String version = null;
-
+	/** The __in. */
 	private InputStream __in;
 
+	/** The debug. */
 	private boolean DEBUG = false;
 
+	/** The ptm. */
+	private LRGBPTM ptm;
+
+	/** The reset. */
 	private boolean reset = true; /* assume a complete input stream */
 
-	protected void reset(boolean b) {
-		reset = b;
-	}
+	/** The version. */
+	private String version = null;
 
 	/** Creates a new instance of LRGBReader */
 	public LRGBReader(InputStream in) {
 		__in = in;
 	}
 
-	public void setVersion(String s) {
-		version = s;
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	public static void main(String args[]) {
+		try {
+			LRGBReader me = new LRGBReader(new FileInputStream(
+					new File(args[0])));
+			me.readPTM();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 	}
 
-	public void setDebug(boolean b) {
-		DEBUG = b;
-	}
-
-	private void debug(String s) {
-		if (DEBUG)
-			System.out.println(s);
-	}
-
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.io.PTMReader#readPTM()
+	 */
 	public PTM readPTM() throws java.io.IOException {
 
 		ptm = new LRGBPTM();
@@ -68,7 +72,8 @@ public class LRGBReader implements PTMReader {
 		}
 
 		/* read headers from this stream */
-//		BufferedReader reader = new BufferedReader(new InputStreamReader(__in));
+		// BufferedReader reader = new BufferedReader(new
+		// InputStreamReader(__in));
 
 		/* dimensions */
 		ptm.setWidth(Integer.parseInt(PTMIO.getLine(__in)));
@@ -82,16 +87,18 @@ public class LRGBReader implements PTMReader {
 		/* scale */
 		sa = PTMIO.getLine(__in).split(" ");
 		float[] scale = new float[sa.length];
-		for (int i = 0; i < sa.length; i++)
+		for (int i = 0; i < sa.length; i++) {
 			scale[i] = Float.parseFloat(sa[i]);
+		}
 
 		debug("Scale: " + Utils.asString(scale));
 
 		/* bias */
 		sa = PTMIO.getLine(__in).split(" ");
 		int[] bias = new int[sa.length];
-		for (int i = 0; i < sa.length; i++)
+		for (int i = 0; i < sa.length; i++) {
 			bias[i] = Integer.parseInt(sa[i]);
+		}
 
 		debug("Bias: " + Utils.asString(bias));
 
@@ -105,7 +112,7 @@ public class LRGBReader implements PTMReader {
 		/* coefficients */
 		for (int h = ptm.getHeight() - 1; h >= 0; h--) {
 			for (int w = 0; w < ptm.getWidth(); w++) {
-				offset = h * ptm.getWidth() + w;
+				offset = (h * ptm.getWidth()) + w;
 				int[] raw = new int[6];
 				for (int i = 0; i < 6; i++) {
 					int c = __in.read();
@@ -117,7 +124,7 @@ public class LRGBReader implements PTMReader {
 					r = __in.read() & 0xff;
 					g = __in.read() & 0xff;
 					b = __in.read() & 0xff;
-					rgb[offset] = r << 16 | g << 8 | b;
+					rgb[offset] = (r << 16) | (g << 8) | b;
 				}
 			}
 		}
@@ -150,11 +157,11 @@ public class LRGBReader implements PTMReader {
 		if (version.equals("PTM_1.2")) {
 			for (int h = ptm.getHeight() - 1; h >= 0; h--) {
 				for (int w = 0; w < ptm.getWidth(); w++) {
-					offset = h * ptm.getWidth() + w;
+					offset = (h * ptm.getWidth()) + w;
 					r = __in.read() & 0xff;
 					g = __in.read() & 0xff;
 					b = __in.read() & 0xff;
-					rgb[offset] = r << 16 | g << 8 | b;
+					rgb[offset] = (r << 16) | (g << 8) | b;
 				}
 			}
 		}
@@ -186,14 +193,42 @@ public class LRGBReader implements PTMReader {
 
 	}
 
-	public static void main(String args[]) {
-		try {
-			LRGBReader me = new LRGBReader(new FileInputStream(
-					new File(args[0])));
-			me.readPTM();
-		} catch (Exception e) {
-			e.printStackTrace();
+	/**
+	 * Sets the debug.
+	 *
+	 * @param b the new debug
+	 */
+	public void setDebug(boolean b) {
+		DEBUG = b;
+	}
+
+	/**
+	 * Sets the version.
+	 *
+	 * @param s the new version
+	 */
+	public void setVersion(String s) {
+		version = s;
+	}
+
+	/**
+	 * Debug.
+	 *
+	 * @param s the s
+	 */
+	private void debug(String s) {
+		if (DEBUG) {
+			System.out.println(s);
 		}
+	}
+
+	/**
+	 * Reset.
+	 *
+	 * @param b the b
+	 */
+	protected void reset(boolean b) {
+		reset = b;
 	}
 
 }

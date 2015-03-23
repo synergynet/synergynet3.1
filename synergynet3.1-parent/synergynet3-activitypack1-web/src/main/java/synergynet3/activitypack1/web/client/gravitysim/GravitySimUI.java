@@ -4,17 +4,24 @@ import synergynet3.activitypack1.web.client.service.GravitySimService;
 import synergynet3.activitypack1.web.shared.UniverseScenario;
 import synergynet3.web.commons.client.dialogs.MessageDialogBox;
 
+import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.event.dom.client.ClickHandler;
 import com.google.gwt.user.client.rpc.AsyncCallback;
-import com.google.gwt.user.client.ui.VerticalPanel;
-import com.google.gwt.user.client.ui.DisclosurePanel;
-import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Button;
 import com.google.gwt.user.client.ui.CaptionPanel;
+import com.google.gwt.user.client.ui.DisclosurePanel;
+import com.google.gwt.user.client.ui.HorizontalPanel;
 import com.google.gwt.user.client.ui.Label;
-import com.google.gwt.event.dom.client.ClickHandler;
-import com.google.gwt.event.dom.client.ClickEvent;
+import com.google.gwt.user.client.ui.VerticalPanel;
 
+/**
+ * The Class GravitySimUI.
+ */
 public class GravitySimUI extends VerticalPanel {
+
+	/**
+	 * Instantiates a new gravity sim ui.
+	 */
 	public GravitySimUI() {
 		super();
 
@@ -40,14 +47,19 @@ public class GravitySimUI extends VerticalPanel {
 		Button btnSunAndMoons = new Button("Activate");
 		btnSunAndMoons.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setScenario(UniverseScenario.SUN_AND_MOONS, new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().setScenario(
+						UniverseScenario.SUN_AND_MOONS,
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		verticalPanel_2.add(btnSunAndMoons);
@@ -66,39 +78,49 @@ public class GravitySimUI extends VerticalPanel {
 		Button btnMoonsonly = new Button("Activate");
 		btnMoonsonly.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setScenario(UniverseScenario.MOONS_ONLY, new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().setScenario(
+						UniverseScenario.MOONS_ONLY, new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		verticalPanel_3.add(btnMoonsonly);
-		
-		CaptionPanel cptnpnlBinaryStarSystem = new CaptionPanel("Binary Star System");
+
+		CaptionPanel cptnpnlBinaryStarSystem = new CaptionPanel(
+				"Binary Star System");
 		verticalPanel_1.add(cptnpnlBinaryStarSystem);
-		
+
 		VerticalPanel verticalPanel_5 = new VerticalPanel();
 		cptnpnlBinaryStarSystem.setContentWidget(verticalPanel_5);
 		verticalPanel_5.setSize("5cm", "48px");
-		
+
 		Label lblTwoStarsIn = new Label("Two stars in circular co-orbit");
 		verticalPanel_5.add(lblTwoStarsIn);
-		
+
 		Button btnBinaryStarScenario = new Button("Activate");
 		btnBinaryStarScenario.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setScenario(UniverseScenario.BINARY_STAR_SYSTEM, new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().setScenario(
+						UniverseScenario.BINARY_STAR_SYSTEM,
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		verticalPanel_5.add(btnBinaryStarScenario);
@@ -115,14 +137,18 @@ public class GravitySimUI extends VerticalPanel {
 		Button btnClearAllBodies = new Button("Clear All Bodies");
 		btnClearAllBodies.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().clearAllBodies(new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().clearAllBodies(
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		verticalPanel_4.add(btnClearAllBodies);
@@ -134,14 +160,18 @@ public class GravitySimUI extends VerticalPanel {
 		Button btnIncreaseGravity = new Button("Increase Gravity");
 		btnIncreaseGravity.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().increaseGravity(new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().increaseGravity(
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_1.add(btnIncreaseGravity);
@@ -149,14 +179,18 @@ public class GravitySimUI extends VerticalPanel {
 		Button btnDecreaseGravity = new Button("Decrease Gravity");
 		btnDecreaseGravity.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().decreaseGravity(new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().decreaseGravity(
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_1.add(btnDecreaseGravity);
@@ -168,30 +202,38 @@ public class GravitySimUI extends VerticalPanel {
 		Button btnIncreaseSimulationSpeed = new Button("Increase Sim Speed");
 		btnIncreaseSimulationSpeed.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().increaseSimulationSpeed(new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().increaseSimulationSpeed(
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
-		
+
 		horizontalPanel_2.add(btnIncreaseSimulationSpeed);
 
 		Button btnDecreaseSimSpeed = new Button("Decrease Sim Speed");
 		btnDecreaseSimSpeed.addClickHandler(new ClickHandler() {
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().decreaseSimulationSpeed(new AsyncCallback<Void>() {
-					@Override public void onSuccess(Void result) {}
+				GravitySimService.Util.get().decreaseSimulationSpeed(
+						new AsyncCallback<Void>() {
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_2.add(btnDecreaseSimSpeed);
@@ -204,73 +246,85 @@ public class GravitySimUI extends VerticalPanel {
 		horizontalPanel_3.add(lblLimitBodies);
 
 		Button buttonLimit4 = new Button("4");
-		buttonLimit4.addClickHandler(new ClickHandler() {			
+		buttonLimit4.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setBodyLimit(4, new AsyncCallback<Void>() {
+				GravitySimService.Util.get().setBodyLimit(4,
+						new AsyncCallback<Void>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onSuccess(Void result) {}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_3.add(buttonLimit4);
 
 		Button btnLimit10 = new Button("10");
-		btnLimit10.addClickHandler(new ClickHandler() {			
+		btnLimit10.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setBodyLimit(10, new AsyncCallback<Void>() {
+				GravitySimService.Util.get().setBodyLimit(10,
+						new AsyncCallback<Void>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onSuccess(Void result) {}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_3.add(btnLimit10);
 
 		Button btnLimit100 = new Button("100");
-		btnLimit100.addClickHandler(new ClickHandler() {			
+		btnLimit100.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setBodyLimit(100, new AsyncCallback<Void>() {
+				GravitySimService.Util.get().setBodyLimit(100,
+						new AsyncCallback<Void>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onSuccess(Void result) {}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_3.add(btnLimit100);
 
 		Button btnLimit1000 = new Button("1000");
-		btnLimit1000.addClickHandler(new ClickHandler() {			
+		btnLimit1000.addClickHandler(new ClickHandler() {
 			@Override
 			public void onClick(ClickEvent event) {
-				GravitySimService.Util.get().setBodyLimit(1000, new AsyncCallback<Void>() {
+				GravitySimService.Util.get().setBodyLimit(1000,
+						new AsyncCallback<Void>() {
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+							@Override
+							public void onFailure(Throwable caught) {
+								new MessageDialogBox(caught.getMessage())
+										.show();
+							}
 
-					@Override
-					public void onSuccess(Void result) {}
-				});
+							@Override
+							public void onSuccess(Void result) {
+							}
+						});
 			}
 		});
 		horizontalPanel_3.add(btnLimit1000);

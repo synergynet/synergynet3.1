@@ -4,11 +4,35 @@ import java.io.File;
 
 import multiplicity3.csys.items.item.IItem;
 
+/**
+ * The Interface IAudioPlayer.
+ */
 public interface IAudioPlayer extends IItem {
 
-	public void setAudioRecording(File recording);
-	public void makeMovable();
-	public int getWidth();
+	/**
+	 * Gets the height.
+	 *
+	 * @return the height
+	 */
 	public int getHeight();
-	
+
+	/**
+	 * Gets the width.
+	 *
+	 * @return the width
+	 */
+	public int getWidth();
+
+	/**
+	 * Make movable.
+	 */
+	public void makeMovable();
+
+	/**
+	 * Sets the audio recording.
+	 *
+	 * @param recording the new audio recording
+	 */
+	public void setAudioRecording(File recording);
+
 }

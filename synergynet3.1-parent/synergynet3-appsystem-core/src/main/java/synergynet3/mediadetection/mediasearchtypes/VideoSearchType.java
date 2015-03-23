@@ -1,7 +1,13 @@
 package synergynet3.mediadetection.mediasearchtypes;
 
+/**
+ * The Class VideoSearchType.
+ */
 public class VideoSearchType extends MediaSearchType {
-		
+
+	/**
+	 * Instantiates a new video search type.
+	 */
 	public VideoSearchType() {
 		extensions = new String[5];
 		extensions[0] = "mp4";

@@ -1,19 +1,16 @@
 /*
- * ColorChannelOp.java
- *
- * Created on September 5, 2004, 9:41 PM
+ * ColorChannelOp.java Created on September 5, 2004, 9:41 PM
  */
 
 package jpview.transforms;
 
-//import java.awt.image.BufferedImage;
+// import java.awt.image.BufferedImage;
 
-//import jpview.Utils;
-//import jpview.graphics.Vec3f;
+// import jpview.Utils;
+// import jpview.graphics.Vec3f;
 import jpview.ptms.PTM;
 
 /**
- * 
  * @author clyon
  */
 public class EnvironmentMapOp implements PixelTransformOp {
@@ -22,18 +19,45 @@ public class EnvironmentMapOp implements PixelTransformOp {
 	public EnvironmentMapOp() {
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.transforms.PixelTransformOp#clearCache()
+	 */
+	public void clearCache() {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.transforms.PixelTransformOp#forceUpdate()
+	 */
+	public void forceUpdate() {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.transforms.PixelTransformOp#release()
+	 */
+	public void release() {
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
+	 * jpview.ptms.PTM)
+	 */
 	public void transformPixels(int[] pixels, PTM ptm) {
 		int[] localPixels = pixels;
 		PTM localPtm = ptm;
 		int length = localPixels.length;
-//		Vec3f eye = new Vec3f(0, 0, 1);
-//		BufferedImage tmp = new BufferedImage(ptm.getWidth(), ptm.getHeight(), BufferedImage.TYPE_INT_RGB);
-//		int[] buf = Utils.grabPixels(tmp);
-//		int[] map = null;
-//		int[] rotatedEnv = ptm.getEnvironmentMap().rotatedMap();
-//		if (ptm.getEnvironmentMap() != null) {
-//			map = ptm.getEnvironmentMapMap();
-//		}
+		// Vec3f eye = new Vec3f(0, 0, 1);
+		// BufferedImage tmp = new BufferedImage(ptm.getWidth(),
+		// ptm.getHeight(), BufferedImage.TYPE_INT_RGB);
+		// int[] buf = Utils.grabPixels(tmp);
+		// int[] map = null;
+		// int[] rotatedEnv = ptm.getEnvironmentMap().rotatedMap();
+		// if (ptm.getEnvironmentMap() != null) {
+		// map = ptm.getEnvironmentMapMap();
+		// }
 
 		for (int i = 0; i < length; i++) {
 			// localPixels[i] = rotatedEnv[map[i]];
@@ -54,16 +78,16 @@ public class EnvironmentMapOp implements PixelTransformOp {
 			// // int pixel = localPtm.getEnvironmentMap().getPixel(u,v);
 			// buf[i] = R.toPixel();
 			// }
-			//                
+			//
 			// float sum = (2+4+5+4+2)*2 + (4+9+12+9+4)*2 + 5+12+15+12+5;
-			//        
+			//
 			// float[] elements = {
 			// 2f/sum, 4f/sum, 5f/sum, 4.0f/sum, 2.0f/sum,
 			// 4f/sum, 9f/sum, 12f/sum, 9f/sum, 4f/sum,
 			// 5f/sum, 12f/sum, 15f/sum, 12f/sum, 5f/sum,
 			// 4f/sum, 9f/sum, 12f/sum, 9f/sum, 4f/sum,
 			// 2.0f/sum, 4.0f/sum, 5.0f/sum, 4.0f/sum, 2.0f/sum };
-			//       
+			//
 			// Kernel kernel = new Kernel(5,5,elements);
 			// ConvolveOp cop = new ConvolveOp(kernel);
 			// BufferedImage tmp2 = new
@@ -71,9 +95,9 @@ public class EnvironmentMapOp implements PixelTransformOp {
 			// cop.filter(tmp,tmp2);
 			// int [] buf2 = Utils.grabPixels(tmp2);
 			// int unchanged = 0;
-			//       
+			//
 			// // buf2 contains blurred reflection vectors
-			//       
+			//
 			// for ( int i = 0; i < length; i++ ) {
 			// int w = localPtm.getWidth();
 			// int h = localPtm.getHeight();
@@ -88,18 +112,14 @@ public class EnvironmentMapOp implements PixelTransformOp {
 		}
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
+	 * jpview.ptms.PTM, int, int)
+	 */
 	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY) {
 		transformPixels(pixels, ptm);
 
-	}
-
-	public void release() {
-	}
-
-	public void forceUpdate() {
-	}
-
-	public void clearCache() {
 	}
 
 }

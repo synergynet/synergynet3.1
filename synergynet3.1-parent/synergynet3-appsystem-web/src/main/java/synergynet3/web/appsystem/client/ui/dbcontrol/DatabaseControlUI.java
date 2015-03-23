@@ -5,24 +5,34 @@ import synergynet3.web.appsystem.client.SynergyNetAppSystemUI.SynergyNetAppServi
 import com.google.gwt.user.client.ui.TabPanel;
 import com.google.gwt.user.client.ui.VerticalPanel;
 
+/**
+ * The Class DatabaseControlUI.
+ */
 public class DatabaseControlUI extends VerticalPanel {
-	
-	private static TabPanel tabPanel;
-	private static DatabaseControlUI sharedInstance;
-	private static SynergyNetAppServiceUIDelegate delegate;
-	
-	private static StudentAdministationPanel studentAdminPanel;
-	private static ClassSelectionPanel classSelectionPanel;
-	
-	public static DatabaseControlUI get() {
-		return sharedInstance;
-	}
 
+	/** The class selection panel. */
+	private static ClassSelectionPanel classSelectionPanel;
+
+	/** The delegate. */
+	private static SynergyNetAppServiceUIDelegate delegate;
+
+	/** The shared instance. */
+	private static DatabaseControlUI sharedInstance;
+
+	/** The student admin panel. */
+	private static StudentAdministationPanel studentAdminPanel;
+
+	/** The tab panel. */
+	private static TabPanel tabPanel;
+
+	/**
+	 * Instantiates a new database control ui.
+	 */
 	public DatabaseControlUI() {
 		super();
 		sharedInstance = this;
 		tabPanel = new TabPanel();
-		
+
 		tabPanel.setWidth("270px");
 
 		studentAdminPanel = new StudentAdministationPanel();
@@ -30,17 +40,25 @@ public class DatabaseControlUI extends VerticalPanel {
 
 		classSelectionPanel = new ClassSelectionPanel();
 		tabPanel.add(classSelectionPanel, classSelectionPanel.getTitle(), false);
-				
+
 		tabPanel.selectTab(0);
 		add(tabPanel);
 	}
-	
-	public void setDelegate(SynergyNetAppServiceUIDelegate delegate) {
-		DatabaseControlUI.delegate = delegate;
+
+	/**
+	 * Gets the.
+	 *
+	 * @return the database control ui
+	 */
+	public static DatabaseControlUI get() {
+		return sharedInstance;
 	}
-	
-	public static void removeDatabaseTabs(){
-		delegate.shouldHideDBControls();
+
+	/**
+	 * @return the databaseSelectionPanel
+	 */
+	public static ClassSelectionPanel getClassSelectionPanel() {
+		return classSelectionPanel;
 	}
 
 	/**
@@ -51,10 +69,19 @@ public class DatabaseControlUI extends VerticalPanel {
 	}
 
 	/**
-	 * @return the databaseSelectionPanel
+	 * Removes the database tabs.
 	 */
-	public static ClassSelectionPanel getClassSelectionPanel() {
-		return classSelectionPanel;
+	public static void removeDatabaseTabs() {
+		delegate.shouldHideDBControls();
 	}
-	
+
+	/**
+	 * Sets the delegate.
+	 *
+	 * @param delegate the new delegate
+	 */
+	public void setDelegate(SynergyNetAppServiceUIDelegate delegate) {
+		DatabaseControlUI.delegate = delegate;
+	}
+
 }

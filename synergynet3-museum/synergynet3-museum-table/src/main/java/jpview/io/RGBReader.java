@@ -1,7 +1,5 @@
 /*
- * RGBReader.java
- *
- * Created on July 3, 2004, 11:41 PM
+ * RGBReader.java Created on July 3, 2004, 11:41 PM
  */
 
 package jpview.io;
@@ -17,143 +15,172 @@ import jpview.ptms.PTM;
 import jpview.ptms.RGBPTM;
 
 /**
- * 
- * 
  * @author Default
  */
 public class RGBReader implements PTMReader {
 
-    private RGBPTM ptm;
+	/** The __in. */
+	private ProgressMonitorInputStream __in;
 
-    private String version = null;
+	/** The debug. */
+	private boolean DEBUG = true;
 
-    private ProgressMonitorInputStream __in;
+	/** The ptm. */
+	private RGBPTM ptm;
 
-    private boolean DEBUG = true;
+	/** The reset. */
+	private boolean reset = true; /* assume a complete input stream */
 
-    private boolean reset = true; /* assume a complete input stream */
+	/** The version. */
+	private String version = null;
 
-    protected void reset(boolean b) {
-        reset = b;
-    }
+	/** Creates a new instance of LRGBReader */
+	public RGBReader(InputStream in) {
+		__in = new ProgressMonitorInputStream(null, "Reading...", in);
+		__in.getProgressMonitor().setMillisToDecideToPopup(0);
+		__in.getProgressMonitor().setMillisToPopup(0);
+	}
 
-    /** Creates a new instance of LRGBReader */
-    public RGBReader(InputStream in) {
-        __in = new ProgressMonitorInputStream(null, "Reading...", in);
-        __in.getProgressMonitor().setMillisToDecideToPopup(0);
-        __in.getProgressMonitor().setMillisToPopup(0);
-    }
+	/**
+	 * The main method.
+	 *
+	 * @param args the arguments
+	 */
+	public static void main(String args[]) {
+		try {
+			RGBReader me = new RGBReader(new FileInputStream(new File(args[0])));
+			me.readPTM();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
-    public void setVersion(String s) {
-        version = s;
-    }
+	/*
+	 * (non-Javadoc)
+	 * @see jpview.io.PTMReader#readPTM()
+	 */
+	public PTM readPTM() throws java.io.IOException {
 
-    public void setDebug(boolean b) {
-        DEBUG = b;
-    }
+		ptm = new RGBPTM();
 
-    private void debug(String s) {
-        if (DEBUG)
-            System.out.println(s);
-    }
+		// try {
 
-    public PTM readPTM() throws java.io.IOException {
+		if (reset) {
+			version = PTMIO.getLine(__in);
+			debug("Version: " + version);
+			String type = PTMIO.getLine(__in);
+			debug("Type: " + type);
+		}
 
-        ptm = new RGBPTM();
+		/* read headers from this stream */
+		// BufferedReader reader = new BufferedReader(new
+		// InputStreamReader(__in));
+		/* dimensions */
+		ptm.setWidth(Integer.parseInt(PTMIO.getLine(__in)));
+		ptm.setHeight(Integer.parseInt(PTMIO.getLine(__in)));
 
-        // try {
+		debug("Width: " + ptm.getWidth());
+		debug("Height: " + ptm.getHeight());
 
-        if (reset) {
-            version = PTMIO.getLine(__in);
-            debug("Version: " + version);
-            String type = PTMIO.getLine(__in);
-            debug("Type: " + type);
-        }
+		String[] sa;
 
-        /* read headers from this stream */
-        // BufferedReader reader = new BufferedReader(new
-        // InputStreamReader(__in));
-        /* dimensions */
-        ptm.setWidth(Integer.parseInt(PTMIO.getLine(__in)));
-        ptm.setHeight(Integer.parseInt(PTMIO.getLine(__in)));
+		/* scale */
+		sa = PTMIO.getLine(__in).split(" ");
+		float[] scale = new float[sa.length];
+		for (int i = 0; i < sa.length; i++) {
+			scale[i] = Float.parseFloat(sa[i]);
+		}
 
-        debug("Width: " + ptm.getWidth());
-        debug("Height: " + ptm.getHeight());
+		debug("Scale: " + Utils.asString(scale));
 
-        String[] sa;
+		/* bias */
+		sa = PTMIO.getLine(__in).split(" ");
+		int[] bias = new int[sa.length];
+		for (int i = 0; i < sa.length; i++) {
+			bias[i] = Integer.parseInt(sa[i]);
+		}
 
-        /* scale */
-        sa = PTMIO.getLine(__in).split(" ");
-        float[] scale = new float[sa.length];
-        for (int i = 0; i < sa.length; i++)
-            scale[i] = Float.parseFloat(sa[i]);
+		debug("Bias: " + Utils.asString(bias));
 
-        debug("Scale: " + Utils.asString(scale));
+		/*
+		 * int[][] red = new int[ptm.getWidth() * ptm.getHeight()][6]; int[][]
+		 * green = new int[ptm.getWidth() * ptm.getHeight()][6]; int[][] blue =
+		 * new int[ptm.getWidth() * ptm.getHeight()][6]; int[][][] colors = new
+		 * int[][][] { red, green, blue };
+		 */
 
-        /* bias */
-        sa = PTMIO.getLine(__in).split(" ");
-        int[] bias = new int[sa.length];
-        for (int i = 0; i < sa.length; i++)
-            bias[i] = Integer.parseInt(sa[i]);
+		int[][][] colors = new int[3][ptm.getWidth() * ptm.getHeight()][6];
 
-        debug("Bias: " + Utils.asString(bias));
+		// int [] rgb = new int[BUFSIZ];
+		int offset;
 
-        /*
-         int[][] red = new int[ptm.getWidth() * ptm.getHeight()][6];
-         int[][] green = new int[ptm.getWidth() * ptm.getHeight()][6];
-         int[][] blue = new int[ptm.getWidth() * ptm.getHeight()][6];
-         int[][][] colors = new int[][][] { red, green, blue };
-         */
+		/* coefficients */
+		int RED = 0;
+		int BLUE = 2;
 
-        int[][][] colors = new int[3][ptm.getWidth() * ptm.getHeight()][6];
+		for (int block = RED; block <= BLUE; block++) {
+			for (int h = ptm.getHeight() - 1; h >= 0; h--) {
+				for (int w = 0; w < ptm.getWidth(); w++) {
+					offset = (h * ptm.getWidth()) + w;
+					for (int i = 0; i < 6; i++) {
+						int c = __in.read();
+						colors[block][offset][i] = (int) PTMIO.cFinal(c,
+								bias[i], scale[i]);
+					}
+				}
+			}
+		}
 
-        // int [] rgb = new int[BUFSIZ];
-        int offset;
+		/*
+		 * for (int h = ptm.getHeight() - 1; h >= 0; h--) { for (int w = 0; w <
+		 * ptm.getWidth(); w++) { offset = h * ptm.getWidth() + w; for (int
+		 * block = RED; block <= BLUE; block++) { for (int i = 0; i < 6; i++) {
+		 * int c = __in.read(); colors[block][offset][i] = (int)
+		 * PTMIO.cFinal(c,bias[i], scale[i]); } } } }
+		 */
 
-        /* coefficients */
-        int RED = 0;
-        int BLUE = 2;
+		ptm.setCoeff(colors);
+		ptm.computeNormals();
+		return ptm;
 
-        for (int block = RED; block <= BLUE; block++) {
-            for (int h = ptm.getHeight() - 1; h >= 0; h--) {
-                for (int w = 0; w < ptm.getWidth(); w++) {
-                    offset = h * ptm.getWidth() + w;
-                    for (int i = 0; i < 6; i++) {
-                        int c = __in.read();
-                        colors[block][offset][i] = (int) PTMIO.cFinal(c,
-                                bias[i], scale[i]);
-                    }
-                }
-            }
-        }
-        
-        /*
-         for (int h = ptm.getHeight() - 1; h >= 0; h--) {
-          for (int w = 0; w < ptm.getWidth(); w++) {
-           offset = h * ptm.getWidth() + w;
-            for (int block = RED; block <= BLUE; block++) {
-             for (int i = 0; i < 6; i++) {
-              int c = __in.read();
-              colors[block][offset][i] = (int) PTMIO.cFinal(c,bias[i], scale[i]);
-             }
-            }
-          }
-         }
-         */
+	}
 
-        ptm.setCoeff(colors);
-        ptm.computeNormals();
-        return ptm;
+	/**
+	 * Sets the debug.
+	 *
+	 * @param b the new debug
+	 */
+	public void setDebug(boolean b) {
+		DEBUG = b;
+	}
 
-    }
+	/**
+	 * Sets the version.
+	 *
+	 * @param s the new version
+	 */
+	public void setVersion(String s) {
+		version = s;
+	}
 
-    public static void main(String args[]) {
-        try {
-            RGBReader me = new RGBReader(new FileInputStream(new File(args[0])));
-            me.readPTM();
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
+	/**
+	 * Debug.
+	 *
+	 * @param s the s
+	 */
+	private void debug(String s) {
+		if (DEBUG) {
+			System.out.println(s);
+		}
+	}
+
+	/**
+	 * Reset.
+	 *
+	 * @param b the b
+	 */
+	protected void reset(boolean b) {
+		reset = b;
+	}
 
 }

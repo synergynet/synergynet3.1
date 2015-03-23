@@ -18,46 +18,64 @@ import javax.xml.stream.XMLStreamWriter;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * The Class AppearanceXmlManager.
+ */
+public class AppearanceXmlManager extends DefaultHandler {
 
-public class AppearanceXmlManager extends DefaultHandler{
-	
+	/** The Constant APPEARANCE_FILENAME. */
+	private static final String APPEARANCE_FILENAME = "appearance.xml";
+
+	/** The Constant APPEARANCE_FOLDER. */
 	private static final String APPEARANCE_FOLDER = "Appearance";
-	private static final String APPEARANCE_FILENAME= "appearance.xml";
 
+	/** The appearance values. */
 	public HashMap<String, String> appearanceValues = new HashMap<String, String>();
-	
+
+	/** The appearance file. */
 	private File appearanceFile;
-	
+
+	/** The valid workspace. */
 	private boolean validWorkspace = true;
-	
-	public AppearanceXmlManager(String workspace){
-		
-		appearanceFile = new File(workspace + File.separator + APPEARANCE_FOLDER + File.separator + APPEARANCE_FILENAME) ;
-		if (!appearanceFile.exists()){		
-			if (new File(workspace).isDirectory()){
-				File apperanceFolder = new File(workspace + File.separator + APPEARANCE_FOLDER);
-				if (!apperanceFolder.isDirectory()){
+
+	/**
+	 * Instantiates a new appearance xml manager.
+	 *
+	 * @param workspace the workspace
+	 */
+	public AppearanceXmlManager(String workspace) {
+
+		appearanceFile = new File(workspace + File.separator
+				+ APPEARANCE_FOLDER + File.separator + APPEARANCE_FILENAME);
+		if (!appearanceFile.exists()) {
+			if (new File(workspace).isDirectory()) {
+				File apperanceFolder = new File(workspace + File.separator
+						+ APPEARANCE_FOLDER);
+				if (!apperanceFolder.isDirectory()) {
 					apperanceFolder.mkdirs();
 				}
-			}else{
+			} else {
 				validWorkspace = false;
 			}
 		}
 		regenerate();
 	}
 
-	public void regenerate(){
-		if (appearanceFile.exists()){	
+	/**
+	 * Regenerate.
+	 */
+	public void regenerate() {
+		if (appearanceFile.exists()) {
 
 			try {
 				SAXParserFactory factory = SAXParserFactory.newInstance();
 				SAXParser saxParser = factory.newSAXParser();
-				
+
 				AppearanceXmlParser handler = new AppearanceXmlParser();
 				saxParser.parse(appearanceFile, handler);
-				
-				appearanceValues = handler.getAppearanceValues();							
-				
+
+				appearanceValues = handler.getAppearanceValues();
+
 			} catch (ParserConfigurationException e) {
 				e.printStackTrace();
 			} catch (SAXException e) {
@@ -68,44 +86,47 @@ public class AppearanceXmlManager extends DefaultHandler{
 		}
 	}
 
-
+	/**
+	 * Save xml.
+	 */
 	public void saveXML() {
 		try {
-			if (validWorkspace){
-				if (!appearanceFile.exists()){		
+			if (validWorkspace) {
+				if (!appearanceFile.exists()) {
 					appearanceFile.createNewFile();
 				}
-	
+
 				OutputStream outputStream = new FileOutputStream(appearanceFile);
-		
-				XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(new OutputStreamWriter(outputStream, "utf-8"));
+
+				XMLStreamWriter out = XMLOutputFactory.newInstance()
+						.createXMLStreamWriter(
+								new OutputStreamWriter(outputStream, "utf-8"));
 				out.writeStartDocument();
 				out.writeCharacters("\n");
 				out.writeStartElement(AppearanceConfigPrefsItem.APPEARANCE_NODE);
 				out.writeCharacters("\n");
-				
-				for (Entry<String, String> entry : appearanceValues.entrySet()){
+
+				for (Entry<String, String> entry : appearanceValues.entrySet()) {
 					out.writeStartElement(entry.getKey());
 					out.writeCharacters(entry.getValue());
 					out.writeEndElement();
 					out.writeCharacters("\n");
 				}
-				
+
 				out.writeEndElement();
 				out.writeEndDocument();
-		
-				out.close();			
-				
+
+				out.close();
+
 				outputStream.close();
-				
+
 			}
-			
+
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (XMLStreamException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 }

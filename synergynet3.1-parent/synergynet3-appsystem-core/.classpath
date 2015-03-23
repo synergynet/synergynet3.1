@@ -10,15 +10,35 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-cluster"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/synergynet3-config"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/hazelcast-1.9.3.jar"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/hazelcast-1.9.3.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://docs.hazelcast.org/docs/1.9/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jmonkeyengine3-3.0.0-SNAPSHOT.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://javadoc.jmonkeyengine.org/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-contentsystem"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/smack-3.1.0.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/smack-3.1.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://www.igniterealtime.org/builds/smack/docs/3.1.0/javadoc/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-input"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-jme3contentsystem"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-appsystem"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jna-3.4.0.jar"/>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/vlcj-3.0.1.jar"/>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/jna-3.4.0.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="https://jna.java.net/javadoc/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/vlcj-3.0.1.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="http://caprica.github.io/vlcj/javadoc/3.0.0/"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="lib" path="/synergynet3-libraries/lib/db4o-8.0.184.15484-all-java5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/multiplicity3-config"/>
 	<classpathentry kind="output" path="target/classes"/>
