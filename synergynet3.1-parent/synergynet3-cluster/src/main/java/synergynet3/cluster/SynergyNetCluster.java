@@ -1,7 +1,6 @@
 package synergynet3.cluster;
 
 import java.io.File;
-import java.lang.management.ManagementFactory;
 import java.util.logging.Logger;
 
 import org.jivesoftware.smack.ConnectionConfiguration;
@@ -66,69 +65,13 @@ public class SynergyNetCluster {
 	 */
 	public static SynergyNetCluster get() {
 		synchronized (SynergyNetCluster.class) {
-			String identity = getIdentityFromArguments();
+			String identity = serverConfigPrefsItem.getClusterUserName();
 			if (instance == null) {
 				instance = new SynergyNetCluster(identity);
 				instance.getPresenceManager(); // forces cluster to go online
 			}
 			return instance;
 		}
-	}
-
-	/**
-	 * Gets the host from arguments.
-	 *
-	 * @return the host from arguments
-	 */
-	private static String getHostFromArguments() {
-		String argument = ManagementFactory.getRuntimeMXBean()
-				.getSystemProperties().get("synergynet3.host");
-		if (argument != null) {
-			return argument;
-		}
-		return serverConfigPrefsItem.getClusterHost();
-	}
-
-	/**
-	 * Gets the identity from arguments.
-	 *
-	 * @return the identity from arguments
-	 */
-	private static String getIdentityFromArguments() {
-		String argument = ManagementFactory.getRuntimeMXBean()
-				.getSystemProperties().get("synergynet3.user");
-		if (argument != null) {
-			return argument;
-		}
-		return serverConfigPrefsItem.getClusterUserName();
-	}
-
-	/**
-	 * Gets the password from arguments.
-	 *
-	 * @return the password from arguments
-	 */
-	private static String getPasswordFromArguments() {
-		String argument = ManagementFactory.getRuntimeMXBean()
-				.getSystemProperties().get("synergynet3.password");
-		if (argument != null) {
-			return argument;
-		}
-		return serverConfigPrefsItem.getClusterPassword();
-	}
-
-	/**
-	 * Gets the port from arguments.
-	 *
-	 * @return the port from arguments
-	 */
-	private static int getPortFromArguments() {
-		String argument = ManagementFactory.getRuntimeMXBean()
-				.getSystemProperties().get("synergynet3.port");
-		if (argument != null) {
-			return Integer.parseInt(argument);
-		}
-		return serverConfigPrefsItem.getPort();
 	}
 
 	/**
@@ -201,13 +144,13 @@ public class SynergyNetCluster {
 	public XMPPConnection getXMPPConnection() {
 		if (this.xmpp == null) {
 			ConnectionConfiguration config = new ConnectionConfiguration(
-					getHostFromArguments(), getPortFromArguments());
+					serverConfigPrefsItem.getClusterHost(), serverConfigPrefsItem.getPort());
 			config.setSASLAuthenticationEnabled(false);
 			config.setDebuggerEnabled(false);
 			this.xmpp = new XMPPConnection(config);
 			try {
 				xmpp.connect();
-				xmpp.login(identity, getPasswordFromArguments());
+				xmpp.login(identity, serverConfigPrefsItem.getClusterPassword());
 			} catch (XMPPException e) {
 				e.printStackTrace();
 			}

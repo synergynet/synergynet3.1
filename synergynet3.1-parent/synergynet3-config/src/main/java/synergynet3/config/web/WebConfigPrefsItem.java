@@ -1,5 +1,6 @@
 package synergynet3.config.web;
 
+import java.lang.management.ManagementFactory;
 import java.util.prefs.Preferences;
 
 import javax.swing.JPanel;
@@ -37,6 +38,11 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	 * @return the cluster host
 	 */
 	public String getClusterHost() {
+		String argument = ManagementFactory.getRuntimeMXBean()
+				.getSystemProperties().get("synergynet3.host");
+		if (argument != null) {
+			return argument;
+		}
 		return prefs.get(CLUSTER_HOST, "localhost");
 	}
 
@@ -46,6 +52,11 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	 * @return the cluster password
 	 */
 	public String getClusterPassword() {
+		String argument = ManagementFactory.getRuntimeMXBean()
+				.getSystemProperties().get("synergynet3.password");
+		if (argument != null) {
+			return argument;
+		}
 		return prefs.get(PASSWORD, "");
 	}
 
@@ -55,6 +66,11 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	 * @return the cluster user name
 	 */
 	public String getClusterUserName() {
+		String argument = ManagementFactory.getRuntimeMXBean()
+				.getSystemProperties().get("synergynet3.user");
+		if (argument != null) {
+			return argument;
+		}
 		return prefs.get(USERNAME, "");
 	}
 
@@ -82,6 +98,11 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	 * @return the port
 	 */
 	public int getPort() {
+		String argument = ManagementFactory.getRuntimeMXBean()
+				.getSystemProperties().get("synergynet3.port");
+		if (argument != null) {
+			return Integer.parseInt(argument);
+		}
 		return prefs.getInt(CLUSTER_PORT, 5222);
 	}
 
