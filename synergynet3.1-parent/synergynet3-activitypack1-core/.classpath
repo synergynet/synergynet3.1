@@ -18,10 +18,6 @@
 			<attribute name="javadoc_location" value="https://poi.apache.org/apidocs/"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/synergynet3-libraries/lib/gwt-user-2.2.0.jar">
-		<attributes>
-			<attribute name="javadoc_location" value="http://www.gwtproject.org/javadoc/latest/"/>
-		</attributes>
-	</classpathentry>
+	<classpathentry kind="lib" path="/synergynet3-libraries/lib/gwt-user.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
