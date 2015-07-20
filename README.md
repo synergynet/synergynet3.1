@@ -9,3 +9,5 @@ Versions of SynergyNet 3 differ from [SynergyNet 2.5](https://github.com/synergy
 For more details and information on how to download and run SynergyNet 3.1 read: [Using SynergyNet 3.1](https://github.com/synergynet/synergynet3.1/wiki/Running-SynergyNet-3.1)
 
 For developers read:  [Developing with SynergyNet 3.1](https://github.com/synergynet/synergynet3.1/wiki/Developing-with-SynergyNet-3.1)
+
+[![Analytics](https://ga-beacon.appspot.com/UA-29400586-7/synergyvew?pixel)](https://github.com/igrigorik/ga-beacon)
