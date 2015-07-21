@@ -10,4 +10,4 @@ For more details and information on how to download and run SynergyNet 3.1 read:
 
 For developers read:  [Developing with SynergyNet 3.1](https://github.com/synergynet/synergynet3.1/wiki/Developing-with-SynergyNet-3.1)
 
-[![Analytics](https://ga-beacon.appspot.com/UA-29400586-7/synergyvew?pixel)](https://github.com/igrigorik/ga-beacon)
+[![Analytics](https://ga-beacon.appspot.com/UA-29400586-7/synergynet3-1?pixel)](https://github.com/igrigorik/ga-beacon)
