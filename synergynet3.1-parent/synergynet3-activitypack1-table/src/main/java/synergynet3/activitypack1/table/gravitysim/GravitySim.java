@@ -318,7 +318,7 @@ public class GravitySim implements IMultiplicityApp, IMultiTouchEventListener,
 			IImage bg = contentFactory.create(IImage.class, "bg",
 					UUID.randomUUID());
 			bg.setImage(RESOURCE_PATH + "starfield.png");
-			bg.setSize(1024, 768);
+			bg.setSize(stage.getDisplayWidth(), stage.getDisplayHeight());
 			stage.addItem(bg);
 			stage.getZOrderManager().ignoreItemClickedBehaviour(bg);
 

@@ -3,6 +3,7 @@ package synergynet3.activitypack1.table.fishes;
 import java.awt.Color;
 import java.util.UUID;
 
+import synergynet3.activitypack1.table.fishes.birdmodel.Map;
 import multiplicity3.appsystem.IMultiplicityApp;
 import multiplicity3.appsystem.IQueueOwner;
 import multiplicity3.appsystem.MultiplicityClient;
@@ -113,8 +114,10 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 	 */
 	@Override
 	public void cursorReleased(MultiTouchCursorEvent event) {
+		
+		
 
-		if (stage.tableToWorld(event.getPosition()).getY() > 700) {
+		if (stage.tableToWorld(event.getPosition()).getY() > stage.getDisplayHeight() - 70 && stage.tableToWorld(event.getPosition()).getX() < (70 * 7) ) {
 			return;
 		}
 
@@ -211,6 +214,9 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 
 		IStage stage = MultiplicityEnvironment.get().getLocalStages().get(0);
 		this.stage = stage;
+		
+		Map.setMapDimensions(stage.getDisplayWidth(), stage.getDisplayHeight());
+		
 		IContentFactory contentFactory = stage.getContentFactory();
 		stage.getZOrderManager().setAutoBringToTop(false);
 
@@ -218,14 +224,14 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		try {
 			IImage bg = contentFactory.create(IImage.class, "bg",
 					UUID.randomUUID());
-			bg.setSize(1024, 768);
+			bg.setSize(stage.getDisplayWidth(), stage.getDisplayHeight());
 			stage.addItem(bg);
 			bg.setImage("synergynet3/activitypack1/table/fishes/grassbg.png");
 
 			birdsContainer = contentFactory.create(IContainer.class,
 					"birdscontainer", UUID.randomUUID());
 			stage.addItem(birdsContainer);
-			birdsContainer.setRelativeLocation(new Vector2f(-512, -768 / 2));
+			birdsContainer.setRelativeLocation(new Vector2f(-(stage.getDisplayWidth()/2), -(stage.getDisplayHeight()/2)));
 			BirdCollection birds = new BirdCollection(birdsContainer);
 			flockingSimulator = new FlockingSimulator(birds);
 			flockingSimulator.initWithDefaults();
@@ -258,7 +264,8 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 	private void addMenu(IContentFactory contentFactory, IStage stage)
 			throws ContentTypeNotBoundException {
 
-		int xindent = 320;
+		int xindent = 70;
+		int yindent = stage.getDisplayHeight() - 70;
 
 		IColourRectangle predButton = contentFactory.create(
 				IColourRectangle.class, "predbutton", UUID.randomUUID());
@@ -266,13 +273,15 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		predButton.setSize(60, 60);
 		predButton.setGradientBackground(new Gradient(ColorRGBA.Red,
 				ColorRGBA.DarkGray, GradientDirection.VERTICAL));
-		predButton.setWorldLocation(new Vector2f(xindent, 730));
+		predButton.setWorldLocation(new Vector2f(xindent, yindent));
 		predButton.addItemListener(new ItemListenerAdapter() {
 			public void itemCursorClicked(IItem item,
 					MultiTouchCursorEvent event) {
 				mode = Mode.AddPredators;
 			}
 		});
+		
+		xindent += 70;
 
 		IColourRectangle blueButton = contentFactory.create(
 				IColourRectangle.class, "bluebutton", UUID.randomUUID());
@@ -280,13 +289,15 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		blueButton.setSize(60, 60);
 		blueButton.setGradientBackground(new Gradient(ColorRGBA.Blue,
 				ColorRGBA.DarkGray, GradientDirection.VERTICAL));
-		blueButton.setWorldLocation(new Vector2f(xindent + 70, 730));
+		blueButton.setWorldLocation(new Vector2f(xindent, yindent));
 		blueButton.addItemListener(new ItemListenerAdapter() {
 			public void itemCursorClicked(IItem item,
 					MultiTouchCursorEvent event) {
 				mode = Mode.BlueBirds;
 			}
 		});
+		
+		xindent += 70;
 
 		IColourRectangle greenButton = contentFactory.create(
 				IColourRectangle.class, "greenbutton", UUID.randomUUID());
@@ -294,13 +305,15 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		greenButton.setSize(60, 60);
 		greenButton.setGradientBackground(new Gradient(ColorRGBA.Green,
 				ColorRGBA.DarkGray, GradientDirection.VERTICAL));
-		greenButton.setWorldLocation(new Vector2f(xindent + 140, 730));
+		greenButton.setWorldLocation(new Vector2f(xindent, yindent));
 		greenButton.addItemListener(new ItemListenerAdapter() {
 			public void itemCursorClicked(IItem item,
 					MultiTouchCursorEvent event) {
 				mode = Mode.GreenBirds;
 			}
 		});
+		
+		xindent += 70;
 
 		IColourRectangle yellowButton = contentFactory.create(
 				IColourRectangle.class, "yellowButton", UUID.randomUUID());
@@ -308,13 +321,15 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		yellowButton.setSize(60, 60);
 		yellowButton.setGradientBackground(new Gradient(ColorRGBA.Yellow,
 				ColorRGBA.DarkGray, GradientDirection.VERTICAL));
-		yellowButton.setWorldLocation(new Vector2f(xindent + 210, 730));
+		yellowButton.setWorldLocation(new Vector2f(xindent, yindent));
 		yellowButton.addItemListener(new ItemListenerAdapter() {
 			public void itemCursorClicked(IItem item,
 					MultiTouchCursorEvent event) {
 				mode = Mode.YellowBirds;
 			}
 		});
+		
+		xindent += 70;
 
 		IColourRectangle magentaButton = contentFactory.create(
 				IColourRectangle.class, "greenbutton", UUID.randomUUID());
@@ -322,13 +337,15 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		magentaButton.setSize(60, 60);
 		magentaButton.setGradientBackground(new Gradient(ColorRGBA.Magenta,
 				ColorRGBA.DarkGray, GradientDirection.VERTICAL));
-		magentaButton.setWorldLocation(new Vector2f(xindent + 280, 730));
+		magentaButton.setWorldLocation(new Vector2f(xindent, yindent));
 		magentaButton.addItemListener(new ItemListenerAdapter() {
 			public void itemCursorClicked(IItem item,
 					MultiTouchCursorEvent event) {
 				mode = Mode.Food;
 			}
 		});
+		
+		xindent += 70;
 
 		IColourRectangle greyButton = contentFactory.create(
 				IColourRectangle.class, "greenbutton", UUID.randomUUID());
@@ -336,7 +353,7 @@ public class LittleFishes implements IMultiplicityApp, IMultiTouchEventListener 
 		greyButton.setSize(60, 60);
 		greyButton.setGradientBackground(new Gradient(ColorRGBA.LightGray,
 				ColorRGBA.DarkGray, GradientDirection.VERTICAL));
-		greyButton.setWorldLocation(new Vector2f(xindent + 350, 730));
+		greyButton.setWorldLocation(new Vector2f(xindent, yindent));
 		greyButton.addItemListener(new ItemListenerAdapter() {
 			public void itemCursorClicked(IItem item,
 					MultiTouchCursorEvent event) {
