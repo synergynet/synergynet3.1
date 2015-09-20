@@ -24,7 +24,6 @@ import uk.co.caprica.vlcj.player.direct.BufferFormat;
 import uk.co.caprica.vlcj.player.direct.BufferFormatCallback;
 import uk.co.caprica.vlcj.player.direct.DirectMediaPlayer;
 import uk.co.caprica.vlcj.player.direct.RenderCallback;
-import uk.co.caprica.vlcj.player.direct.format.RV32BufferFormat;
 
 import com.jme3.asset.AssetManager;
 import com.jme3.material.Material;
@@ -418,7 +417,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 */
 	@Override
 	public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-		return new RV32BufferFormat(WIDTH, HEIGHT);
+	    BufferFormat format = new BufferFormat("RGBA", WIDTH, HEIGHT, new int[] { WIDTH * 4 }, new int[] { HEIGHT });
+
+	    return format;
 	}
 
 	/*
