@@ -180,7 +180,7 @@ public class WebConfigPanel extends JPanel {
 			}
 		});
 		
-		clusterInterfaceLabel = new JLabel("Device interface: ");
+		clusterInterfaceLabel = new JLabel("Cluster interface: ");
 		clusterInterfaceField = new JTextField();
 		clusterInterfaceField.setText(prefs.getClusterInterface());
 		clusterInterfaceField.addKeyListener(new KeyAdapter() {
@@ -281,11 +281,6 @@ public class WebConfigPanel extends JPanel {
 		webServerPortLabel.setBounds(new Rectangle(30, y, 130, 24));
 		webServerPortField.setBounds(new Rectangle(215, y, 80, 24));
 		
-		y += 30;
-		
-		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
-		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
-		
 		y += 60;
 
 		clusterNameLabel.setBounds(new Rectangle(30, y, 130, 24));
@@ -295,6 +290,11 @@ public class WebConfigPanel extends JPanel {
 
 		clusterPasswordLabel.setBounds(new Rectangle(30, y, 130, 24));
 		clusterPasswordField.setBounds(new Rectangle(215, y, 150, 24));
+		
+		y += 30;
+		
+		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
+		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
 		
 		y += 80;
 
