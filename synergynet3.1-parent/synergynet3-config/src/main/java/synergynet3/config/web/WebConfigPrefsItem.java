@@ -18,6 +18,9 @@ public class WebConfigPrefsItem implements PreferencesItem {
 
 	/** The Constant CLUSTER_PORT. */
 	private static final String CLUSTER_PORT = "CLUSTER_PORT";
+	
+	/** The Constant CLUSTER_INTERFACE. */
+	private static final String CLUSTER_INTERFACE = "CLUSTER_INTERFACE";
 
 	/** The Constant PASSWORD. */
 	private static final String PASSWORD = "PASSWORD";
@@ -91,6 +94,20 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	public String getConfigurationPanelName() {
 		return "Web";
 	}
+	
+	/**
+	 * Gets the Interface.
+	 *
+	 * @return the interface
+	 */
+	public String getClusterInterface() {
+		String argument = ManagementFactory.getRuntimeMXBean()
+				.getSystemProperties().get("synergynet3.interface");
+		if (argument != null) {
+			return argument;
+		}
+		return prefs.get(CLUSTER_INTERFACE, "");
+	}
 
 	/**
 	 * Gets the port.
@@ -105,6 +122,7 @@ public class WebConfigPrefsItem implements PreferencesItem {
 		}
 		return prefs.getInt(CLUSTER_PORT, 5222);
 	}
+	
 
 	/**
 	 * Gets the shared location.
@@ -141,6 +159,15 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	public void setClusterUserName(String s) {
 		prefs.put(USERNAME, s);
 	}
+	
+	/**
+	 * Sets the interface.
+	 *
+	 * @param port the new interface
+	 */
+	public void setClusterInterface(String clusterInterface) {
+		prefs.put(CLUSTER_INTERFACE, clusterInterface);
+	}	
 
 	/**
 	 * Sets the port.
@@ -150,7 +177,7 @@ public class WebConfigPrefsItem implements PreferencesItem {
 	public void setPort(int port) {
 		prefs.putInt(CLUSTER_PORT, port);
 	}
-
+	
 	/**
 	 * Sets the shared location.
 	 *

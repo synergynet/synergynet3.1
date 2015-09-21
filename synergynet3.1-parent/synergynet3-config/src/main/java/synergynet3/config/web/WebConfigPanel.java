@@ -33,41 +33,47 @@ public class WebConfigPanel extends JPanel {
 	/** The clear transfer cache button. */
 	private JButton clearTransferCacheButton;
 
-	/** The j file chooser. */
+	/** The file chooser. */
 	private JFileChooser jFileChooser;
 
-	/** The j label1. */
-	private JLabel jLabel1;
+	/** The Web server port label. */
+	private JLabel webServerPortLabel;
 
-	/** The j label2. */
-	private JLabel jLabel2;
+	/** The web server directory label. */
+	private JLabel webServerDirLabel;
 
-	/** The j label3. */
-	private JLabel jLabel3;
+	/** The cluster interface label. */
+	private JLabel clusterInterfaceLabel;
 
-	/** The j label4. */
-	private JLabel jLabel4;
+	/** The cluster name label. */
+	private JLabel clusterNameLabel;
 
-	/** The j label5. */
-	private JLabel jLabel5;
+	/** The cluster password label. */
+	private JLabel clusterPasswordLabel;
+
+	/** The shared location Label. */
+	private JLabel sharedLocationLabel;
 
 	/** The prefs. */
 	private WebConfigPrefsItem prefs;
 
-	/** The txt cluster password. */
-	private JPasswordField txtClusterPassword;
+	/** The cluster interface text field. */
+	private JTextField clusterInterfaceField;
 
-	/** The txt cluster username. */
-	private JTextField txtClusterUsername;
+	/** The cluster password text field. */
+	private JPasswordField clusterPasswordField;
 
-	/** The txt shared location. */
-	private JTextField txtSharedLocation;
+	/** The cluster username text field. */
+	private JTextField clusterUsernameField;
 
-	/** The txt web server dir. */
-	private JTextField txtWebServerDir;
+	/** The shared location text field. */
+	private JTextField sharedLocationField;
 
-	/** The txt web server port. */
-	private JTextField txtWebServerPort;
+	/** The web server directory  text field. */
+	private JTextField webServerDirField;
+
+	/** The web server port text field. */
+	private JTextField webServerPortField;
 
 	/**
 	 * Instantiates a new web config panel.
@@ -87,7 +93,7 @@ public class WebConfigPanel extends JPanel {
 
 		if (returnVal == JFileChooser.APPROVE_OPTION) {
 			File file = jFileChooser.getSelectedFile();
-			txtSharedLocation.setText(file.getAbsolutePath());
+			sharedLocationField.setText(file.getAbsolutePath());
 			prefs.setSharedLocation(file.getAbsolutePath());
 		}
 	}
@@ -108,10 +114,10 @@ public class WebConfigPanel extends JPanel {
 
 		setName("Form");
 
-		jLabel1 = new JLabel("Cluster port: ");
-		txtWebServerPort = new JTextField();
-		txtWebServerPort.setText(prefs.getPort() + "");
-		txtWebServerPort.addKeyListener(new KeyAdapter() {
+		webServerPortLabel = new JLabel("Cluster port: ");
+		webServerPortField = new JTextField();
+		webServerPortField.setText(prefs.getPort() + "");
+		webServerPortField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				store();
@@ -123,23 +129,23 @@ public class WebConfigPanel extends JPanel {
 			}
 
 			private void store() {
-				if (txtWebServerPort.getText().length() > 0) {
+				if (webServerPortField.getText().length() > 0) {
 					try {
-						prefs.setPort(Integer.parseInt(txtWebServerPort
+						prefs.setPort(Integer.parseInt(webServerPortField
 								.getText()));
 						;
-						txtWebServerPort.setForeground(Color.black);
+						webServerPortField.setForeground(Color.black);
 					} catch (NumberFormatException e) {
-						txtWebServerPort.setForeground(Color.red);
+						webServerPortField.setForeground(Color.red);
 					}
 				}
 			}
 		});
 
-		jLabel2 = new JLabel("Cluster host address: ");
-		txtWebServerDir = new JTextField();
-		txtWebServerDir.setText(prefs.getClusterHost());
-		txtWebServerDir.addKeyListener(new KeyAdapter() {
+		webServerDirLabel = new JLabel("Cluster host address: ");
+		webServerDirField = new JTextField();
+		webServerDirField.setText(prefs.getClusterHost());
+		webServerDirField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				store();
@@ -151,14 +157,14 @@ public class WebConfigPanel extends JPanel {
 			}
 
 			private void store() {
-				prefs.setClusterHost(txtWebServerDir.getText());
+				prefs.setClusterHost(webServerDirField.getText());
 			}
 		});
 
-		jLabel3 = new JLabel("Device username: ");
-		txtClusterUsername = new JTextField();
-		txtClusterUsername.setText(prefs.getClusterUserName());
-		txtClusterUsername.addKeyListener(new KeyAdapter() {
+		clusterNameLabel = new JLabel("Device username: ");
+		clusterUsernameField = new JTextField();
+		clusterUsernameField.setText(prefs.getClusterUserName());
+		clusterUsernameField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				store();
@@ -170,14 +176,33 @@ public class WebConfigPanel extends JPanel {
 			}
 
 			private void store() {
-				prefs.setClusterUserName(txtClusterUsername.getText());
+				prefs.setClusterUserName(clusterUsernameField.getText());
+			}
+		});
+		
+		clusterInterfaceLabel = new JLabel("Device interface: ");
+		clusterInterfaceField = new JTextField();
+		clusterInterfaceField.setText(prefs.getClusterInterface());
+		clusterInterfaceField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				store();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+				store();
+			}
+
+			private void store() {
+				prefs.setClusterInterface(clusterInterfaceField.getText());
 			}
 		});
 
-		jLabel4 = new JLabel("Device password: ");
-		txtClusterPassword = new JPasswordField();
-		txtClusterPassword.setText(prefs.getClusterPassword());
-		txtClusterPassword.addKeyListener(new KeyAdapter() {
+		clusterPasswordLabel = new JLabel("Device password: ");
+		clusterPasswordField = new JPasswordField();
+		clusterPasswordField.setText(prefs.getClusterPassword());
+		clusterPasswordField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				store();
@@ -189,15 +214,15 @@ public class WebConfigPanel extends JPanel {
 			}
 
 			private void store() {
-				prefs.setClusterPassword(new String(txtClusterPassword
+				prefs.setClusterPassword(new String(clusterPasswordField
 						.getPassword()));
 			}
 		});
 
-		jLabel5 = new JLabel("Shared location: ");
-		txtSharedLocation = new JTextField();
-		txtSharedLocation.setText(prefs.getSharedLocation());
-		txtSharedLocation.addKeyListener(new KeyAdapter() {
+		sharedLocationLabel = new JLabel("Shared location: ");
+		sharedLocationField = new JTextField();
+		sharedLocationField.setText(prefs.getSharedLocation());
+		sharedLocationField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyReleased(KeyEvent e) {
 				store();
@@ -209,7 +234,7 @@ public class WebConfigPanel extends JPanel {
 			}
 
 			private void store() {
-				prefs.setSharedLocation(txtSharedLocation.getText());
+				prefs.setSharedLocation(sharedLocationField.getText());
 			}
 		});
 
@@ -245,36 +270,55 @@ public class WebConfigPanel extends JPanel {
 		});
 
 		setLayout(null);
+		
+		int y = 30;
 
-		jLabel2.setBounds(new Rectangle(30, 30, 175, 24));
-		txtWebServerDir.setBounds(new Rectangle(215, 30, 150, 24));
+		webServerDirLabel.setBounds(new Rectangle(30, y, 175, 24));
+		webServerDirField.setBounds(new Rectangle(215, y, 150, 24));
+		
+		y += 30;
 
-		jLabel1.setBounds(new Rectangle(30, 60, 130, 24));
-		txtWebServerPort.setBounds(new Rectangle(215, 60, 80, 24));
+		webServerPortLabel.setBounds(new Rectangle(30, y, 130, 24));
+		webServerPortField.setBounds(new Rectangle(215, y, 80, 24));
+		
+		y += 30;
+		
+		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
+		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
+		
+		y += 60;
 
-		jLabel3.setBounds(new Rectangle(30, 120, 130, 24));
-		txtClusterUsername.setBounds(new Rectangle(215, 120, 150, 24));
+		clusterNameLabel.setBounds(new Rectangle(30, y, 130, 24));
+		clusterUsernameField.setBounds(new Rectangle(215, y, 150, 24));
+		
+		y += 30;
 
-		jLabel4.setBounds(new Rectangle(30, 150, 130, 24));
-		txtClusterPassword.setBounds(new Rectangle(215, 150, 150, 24));
+		clusterPasswordLabel.setBounds(new Rectangle(30, y, 130, 24));
+		clusterPasswordField.setBounds(new Rectangle(215, y, 150, 24));
+		
+		y += 80;
 
-		jLabel5.setBounds(new Rectangle(30, 230, 210, 24));
-		txtSharedLocation.setBounds(new Rectangle(150, 230, 275, 24));
-		browseButton.setBounds(new Rectangle(423, 230, 100, 23));
+		sharedLocationLabel.setBounds(new Rectangle(30, y, 210, 24));
+		sharedLocationField.setBounds(new Rectangle(150, y, 275, 24));
+		browseButton.setBounds(new Rectangle(423, y, 100, 23));
+		
+		y += 50;
 
-		clearTransferCacheButton.setBounds(new Rectangle(30, 280, 200, 23));
-		clearCaptureCacheButton.setBounds(new Rectangle(260, 280, 200, 23));
+		clearTransferCacheButton.setBounds(new Rectangle(30, y, 200, 23));
+		clearCaptureCacheButton.setBounds(new Rectangle(260, y, 200, 23));
 
-		add(jLabel2);
-		add(txtWebServerDir);
-		add(jLabel1);
-		add(txtWebServerPort);
-		add(jLabel3);
-		add(txtClusterUsername);
-		add(jLabel4);
-		add(txtClusterPassword);
-		add(jLabel5);
-		add(txtSharedLocation);
+		add(webServerDirLabel);
+		add(webServerDirField);
+		add(webServerPortLabel);
+		add(webServerPortField);
+		add(clusterNameLabel);
+		add(clusterUsernameField);
+		add(clusterPasswordLabel);
+		add(clusterPasswordField);
+		add(clusterInterfaceLabel);
+		add(clusterInterfaceField);
+		add(sharedLocationLabel);
+		add(sharedLocationField);
 		add(browseButton);
 		add(clearTransferCacheButton);
 		add(clearCaptureCacheButton);

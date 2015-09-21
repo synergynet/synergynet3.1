@@ -55,6 +55,9 @@ import synergynet3.web.core.AppSystemDeviceControl;
 import synergynet3.web.shared.DevicesSelected;
 
 import com.db4o.ext.Db4oIOException;
+import com.hazelcast.config.Config;
+import com.hazelcast.config.NetworkConfig;
+import com.hazelcast.core.Hazelcast;
 import com.jme3.math.ColorRGBA;
 import com.jme3.math.Vector2f;
 
@@ -504,7 +507,7 @@ abstract public class SynergyNetApp implements IMultiplicityApp,
 	 * @param iqo Queue owner.
 	 **/
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {		
 		initiateDefaultVariables();
 		initiateScreenShotState();
 		loginOnStartup();
@@ -698,6 +701,15 @@ abstract public class SynergyNetApp implements IMultiplicityApp,
 		this.contentFactory = this.stage.getContentFactory();
 
 		if (NETWORKING) {
+			
+			String clusterInterface = new WebConfigPrefsItem().getClusterInterface();
+			if (!clusterInterface.equals("")){
+				Config cfg = new Config();                  
+				NetworkConfig network = cfg.getNetworkConfig();
+				network.getInterfaces().setEnabled(true).addInterface(clusterInterface);			
+				Hazelcast.init(cfg);	
+			}
+			
 			localDevicePosition = SynergyNetPositioning
 					.getLocalDeviceLocationFull();
 		}
