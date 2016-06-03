@@ -240,6 +240,12 @@ public class ItemCaching {
 					studentID);
 			textBox.setVisible(false);
 			toReturn = textBox;
+			if (deceleration >= 0) {
+				NetworkFlickBehaviour nf = stage.getBehaviourMaker()
+						.addBehaviour(textBox.getListenBlock(), NetworkFlickBehaviour.class);
+				nf.setItemActingOn(textBox);
+				nf.setDeceleration(deceleration);
+			}
 		} else if (type.equalsIgnoreCase(CachableLine.CACHABLE_TYPE)) {
 			CachableLine line = CachableLine.reconstruct(itemRepresentation,
 					stage, studentID);
