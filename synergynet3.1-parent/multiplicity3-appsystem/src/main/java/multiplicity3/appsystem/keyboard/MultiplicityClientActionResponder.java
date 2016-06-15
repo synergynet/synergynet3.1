@@ -17,11 +17,11 @@ import com.jme3.input.controls.KeyTrigger;
 /**
  * The Class MultiplicityClientActionResponder.
  */
-public class MultiplicityClientActionResponder implements ActionListener {
+public class MultiplicityClientActionResponder implements ActionListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(MultiplicityClientActionResponder.class.getName());
+	private static final Logger log = Logger.getLogger(MultiplicityClientActionResponder.class.getName());
 
 	/** The actions. */
 	private Map<String, Callable<Void>> actions = new HashMap<String, Callable<Void>>();
@@ -32,11 +32,13 @@ public class MultiplicityClientActionResponder implements ActionListener {
 	/**
 	 * Instantiates a new multiplicity client action responder.
 	 *
-	 * @param inputManager the input manager
-	 * @param stage the stage
+	 * @param inputManager
+	 *            the input manager
+	 * @param stage
+	 *            the stage
 	 */
-	public MultiplicityClientActionResponder(InputManager inputManager,
-			IStage stage) {
+	public MultiplicityClientActionResponder(InputManager inputManager, IStage stage)
+	{
 		this.stage = stage;
 
 		addPrintStageMapping(inputManager);
@@ -48,7 +50,8 @@ public class MultiplicityClientActionResponder implements ActionListener {
 	 *
 	 * @return the action names supported
 	 */
-	public String[] getActionNamesSupported() {
+	public String[] getActionNamesSupported()
+	{
 		return actions.keySet().toArray(new String[actions.keySet().size()]);
 	}
 
@@ -58,17 +61,22 @@ public class MultiplicityClientActionResponder implements ActionListener {
 	 * boolean, float)
 	 */
 	@Override
-	public void onAction(String actionName, boolean valuePresent,
-			float timePerFrame) {
-		if (!valuePresent) {
+	public void onAction(String actionName, boolean valuePresent, float timePerFrame)
+	{
+		if (!valuePresent)
+		{
 			return;
 		}
 
 		Callable<Void> callableAction = actions.get(actionName);
-		if (callableAction != null) {
-			try {
+		if (callableAction != null)
+		{
+			try
+			{
 				callableAction.call();
-			} catch (Exception ex) {
+			}
+			catch (Exception ex)
+			{
 				log.log(Level.WARNING, "callable action had a problem.", ex);
 			}
 		}
@@ -77,17 +85,19 @@ public class MultiplicityClientActionResponder implements ActionListener {
 	/**
 	 * Adds the print jme mapping.
 	 *
-	 * @param inputManager the input manager
+	 * @param inputManager
+	 *            the input manager
 	 */
-	private void addPrintJMEMapping(InputManager inputManager) {
+	private void addPrintJMEMapping(InputManager inputManager)
+	{
 		inputManager.addMapping("M3_PRINT_JME", new KeyTrigger(KeyInput.KEY_J));
 
-		actions.put("M3_PRINT_JME", new Callable<Void>() {
+		actions.put("M3_PRINT_JME", new Callable<Void>()
+		{
 			@Override
-			public Void call() throws Exception {
-				ContentSystemPrinter.logJMEStructure(log, Level.INFO,
-						MultiplicityClientActionResponder.this.stage
-								.getManipulableSpatial());
+			public Void call() throws Exception
+			{
+				ContentSystemPrinter.logJMEStructure(log, Level.INFO, MultiplicityClientActionResponder.this.stage.getManipulableSpatial());
 				return null;
 			}
 		});
@@ -96,18 +106,19 @@ public class MultiplicityClientActionResponder implements ActionListener {
 	/**
 	 * Adds the print stage mapping.
 	 *
-	 * @param inputManager the input manager
+	 * @param inputManager
+	 *            the input manager
 	 */
-	private void addPrintStageMapping(InputManager inputManager) {
-		inputManager.addMapping("M3_PRINT_STAGE",
-				new KeyTrigger(KeyInput.KEY_D));
+	private void addPrintStageMapping(InputManager inputManager)
+	{
+		inputManager.addMapping("M3_PRINT_STAGE", new KeyTrigger(KeyInput.KEY_D));
 
-		actions.put("M3_PRINT_STAGE", new Callable<Void>() {
+		actions.put("M3_PRINT_STAGE", new Callable<Void>()
+		{
 			@Override
-			public Void call() throws Exception {
-				ContentSystemPrinter.logContentSystemByZOrderFromRoot(log,
-						Level.INFO,
-						MultiplicityClientActionResponder.this.stage);
+			public Void call() throws Exception
+			{
+				ContentSystemPrinter.logContentSystemByZOrderFromRoot(log, Level.INFO, MultiplicityClientActionResponder.this.stage);
 				return null;
 			}
 		});

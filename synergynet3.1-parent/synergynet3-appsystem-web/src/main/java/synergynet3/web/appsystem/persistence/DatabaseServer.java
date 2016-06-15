@@ -16,14 +16,14 @@ import com.db4o.messaging.MessageRecipient;
 /**
  * The Class DatabaseServer.
  */
-public class DatabaseServer implements MessageRecipient {
+public class DatabaseServer implements MessageRecipient
+{
 
 	/** The current db. */
 	private static String CURRENT_DB = "s3db";
 
 	/** The Constant DB_DIR. */
-	private static final String DB_DIR = ServerStorageManager
-			.getStorageDirForAppWithName("database").getAbsolutePath() + "\\";
+	private static final String DB_DIR = ServerStorageManager.getStorageDirForAppWithName("database").getAbsolutePath() + "\\";
 
 	/** The database is set. */
 	private boolean databaseIsSet = false;
@@ -34,7 +34,8 @@ public class DatabaseServer implements MessageRecipient {
 	/**
 	 * Instantiates a new database server.
 	 */
-	public DatabaseServer() {
+	public DatabaseServer()
+	{
 	}
 
 	/**
@@ -42,15 +43,18 @@ public class DatabaseServer implements MessageRecipient {
 	 *
 	 * @return the database directory
 	 */
-	public static String getDatabaseDirectory() {
+	public static String getDatabaseDirectory()
+	{
 		return DB_DIR;
 	}
 
 	/**
 	 * Close.
 	 */
-	public void close() {
-		synchronized (this) {
+	public void close()
+	{
+		synchronized (this)
+		{
 			databaseIsSet = false;
 			stop = true;
 			this.notify();
@@ -62,7 +66,8 @@ public class DatabaseServer implements MessageRecipient {
 	 *
 	 * @return true, if is database is set
 	 */
-	public boolean isDatabaseIsSet() {
+	public boolean isDatabaseIsSet()
+	{
 		return databaseIsSet;
 	}
 
@@ -72,10 +77,14 @@ public class DatabaseServer implements MessageRecipient {
 	 * com.db4o.messaging.MessageRecipient#processMessage(com.db4o.messaging
 	 * .MessageContext, java.lang.Object)
 	 */
-	public void processMessage(MessageContext con, Object message) {
-		if (message instanceof String) {
+	@Override
+	public void processMessage(MessageContext con, Object message)
+	{
+		if (message instanceof String)
+		{
 			String messageString = (String) message;
-			if (messageString.equals("close")) {
+			if (messageString.equals("close"))
+			{
 				close();
 			}
 		}
@@ -84,39 +93,49 @@ public class DatabaseServer implements MessageRecipient {
 	/**
 	 * Run server.
 	 */
-	public void runServer() {
-		synchronized (this) {
+	public void runServer()
+	{
+		synchronized (this)
+		{
 
 			File dbDir = new File(DB_DIR);
-			if (!dbDir.isDirectory()) {
+			if (!dbDir.isDirectory())
+			{
 				dbDir.mkdir();
 			}
 
 			databaseIsSet = true;
 
-			try {
-				ServerConfiguration config = Db4oClientServer
-						.newServerConfiguration();
+			try
+			{
+				ServerConfiguration config = Db4oClientServer.newServerConfiguration();
 				config.networking().messageRecipient(this);
 
-				ObjectServer db4oServer = Db4oClientServer.openServer(config,
-						DB_DIR + CURRENT_DB, Database.DB_PORT);
+				ObjectServer db4oServer = Db4oClientServer.openServer(config, DB_DIR + CURRENT_DB, Database.DB_PORT);
 				db4oServer.grantAccess(Database.DB_USER, Database.DB_PASS);
 
 				Thread.currentThread().setName(this.getClass().getName());
 
 				Thread.currentThread().setPriority(Thread.MIN_PRIORITY);
-				try {
-					if (!stop) {
+				try
+				{
+					if (!stop)
+					{
 						this.wait(Long.MAX_VALUE);
 					}
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 				db4oServer.close();
-			} catch (Db4oIOException f) {
+			}
+			catch (Db4oIOException f)
+			{
 				System.out.println("Database is already running");
-			} catch (DatabaseFileLockedException e) {
+			}
+			catch (DatabaseFileLockedException e)
+			{
 				System.out.println("Database is already running");
 			}
 		}

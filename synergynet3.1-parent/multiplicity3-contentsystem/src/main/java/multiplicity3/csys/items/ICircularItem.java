@@ -7,7 +7,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Interface ICircularItem.
  */
-public interface ICircularItem extends IItem {
+public interface ICircularItem extends IItem
+{
 
 	/**
 	 * Gets the height.
@@ -33,15 +34,18 @@ public interface ICircularItem extends IItem {
 	/**
 	 * Sets the size.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public void setSize(float width, float height);
 
 	/**
 	 * Sets the size.
 	 *
-	 * @param size the new size
+	 * @param size
+	 *            the new size
 	 */
 	public void setSize(Vector2f size);
 }

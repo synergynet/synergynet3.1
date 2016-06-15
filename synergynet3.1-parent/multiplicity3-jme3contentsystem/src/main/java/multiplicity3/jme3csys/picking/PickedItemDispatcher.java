@@ -17,11 +17,11 @@ import com.jme3.scene.Node;
 /**
  * The Class PickedItemDispatcher.
  */
-public class PickedItemDispatcher implements IMultiTouchEventListener {
+public class PickedItemDispatcher implements IMultiTouchEventListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(PickedItemDispatcher.class.getName());
+	private static final Logger log = Logger.getLogger(PickedItemDispatcher.class.getName());
 
 	// TODO: enable 3d picking too
 	// private Node threeDeePickRoot;
@@ -37,10 +37,13 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	/**
 	 * Instantiates a new picked item dispatcher.
 	 *
-	 * @param threeDeePickRoot the three dee pick root
-	 * @param stage the stage
+	 * @param threeDeePickRoot
+	 *            the three dee pick root
+	 * @param stage
+	 *            the stage
 	 */
-	public PickedItemDispatcher(Node threeDeePickRoot, IStage stage) {
+	public PickedItemDispatcher(Node threeDeePickRoot, IStage stage)
+	{
 		this.stage = stage;
 	}
 
@@ -51,10 +54,12 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 		// 2D
 		IItem item = getAssociatedItem(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.getMultiTouchDispatcher().cursorChanged(event);
 		}
 
@@ -67,10 +72,12 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 		// 2D
 		IItem item = getAssociatedItem(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.getMultiTouchDispatcher().cursorClicked(event);
 		}
 	}
@@ -82,13 +89,14 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 		log.fine("Attempting to pick from cursor event: " + event);
 
 		// 2D
-		List<IItem> items = getPickedItemListener(event.getPosition().x,
-				event.getPosition().y);
-		if ((items != null) && (items.size() > 0)) {
+		List<IItem> items = getPickedItemListener(event.getPosition().x, event.getPosition().y);
+		if ((items != null) && (items.size() > 0))
+		{
 			// for(IItem item : items) {
 			IItem item = items.get(0);
 			associate(event.getCursorID(), item);
@@ -105,10 +113,12 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		// 2D
 		IItem item = getAssociatedItem(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.getMultiTouchDispatcher().cursorReleased(event);
 			disassociate(event.getCursorID());
 		}
@@ -122,9 +132,11 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 		IItem item = getAssociatedItem(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.getMultiTouchDispatcher().objectAdded(event);
 		}
 	}
@@ -136,9 +148,11 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 		IItem item = getAssociatedItem(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.getMultiTouchDispatcher().objectChanged(event);
 		}
 	}
@@ -150,9 +164,11 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		IItem item = getAssociatedItem(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.getMultiTouchDispatcher().objectRemoved(event);
 		}
 	}
@@ -160,42 +176,51 @@ public class PickedItemDispatcher implements IMultiTouchEventListener {
 	/**
 	 * Associate.
 	 *
-	 * @param cursorID the cursor id
-	 * @param item the item
+	 * @param cursorID
+	 *            the cursor id
+	 * @param item
+	 *            the item
 	 */
-	private void associate(long cursorID, IItem item) {
+	private void associate(long cursorID, IItem item)
+	{
 		cursorItemAssociation.put(cursorID, item);
 	}
 
 	/**
 	 * Disassociate.
 	 *
-	 * @param cursorID the cursor id
+	 * @param cursorID
+	 *            the cursor id
 	 */
-	private void disassociate(long cursorID) {
+	private void disassociate(long cursorID)
+	{
 		cursorItemAssociation.remove(cursorID);
 	}
 
 	/**
 	 * Gets the associated item.
 	 *
-	 * @param cursorID the cursor id
+	 * @param cursorID
+	 *            the cursor id
 	 * @return the associated item
 	 */
-	private IItem getAssociatedItem(long cursorID) {
+	private IItem getAssociatedItem(long cursorID)
+	{
 		return cursorItemAssociation.get(cursorID);
 	}
 
 	/**
 	 * Gets the picked item listener.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return the picked item listener
 	 */
-	protected List<IItem> getPickedItemListener(float x, float y) {
-		return stage.getPickSystem().findItemsOnTableAtPosition(
-				new Vector2f(x, y));
+	protected List<IItem> getPickedItemListener(float x, float y)
+	{
+		return stage.getPickSystem().findItemsOnTableAtPosition(new Vector2f(x, y));
 	}
 
 }

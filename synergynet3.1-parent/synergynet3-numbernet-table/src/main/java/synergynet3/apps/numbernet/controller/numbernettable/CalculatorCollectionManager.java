@@ -19,11 +19,11 @@ import synergynet3.apps.numbernet.ui.calculator.Calculator;
 /**
  * The Class CalculatorCollectionManager.
  */
-public class CalculatorCollectionManager {
+public class CalculatorCollectionManager
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(CalculatorCollectionManager.class.getName());
+	private static final Logger log = Logger.getLogger(CalculatorCollectionManager.class.getName());
 
 	/** The container. */
 	private IContainer container;
@@ -40,11 +40,13 @@ public class CalculatorCollectionManager {
 	/**
 	 * Instantiates a new calculator collection manager.
 	 *
-	 * @param container the container
-	 * @param eventProcessor the event processor
+	 * @param container
+	 *            the container
+	 * @param eventProcessor
+	 *            the event processor
 	 */
-	public CalculatorCollectionManager(IContainer container,
-			CalculatorEventProcessor eventProcessor) {
+	public CalculatorCollectionManager(IContainer container, CalculatorEventProcessor eventProcessor)
+	{
 		this.container = container;
 		this.eventProcessor = eventProcessor;
 		userToCalculator = new HashMap<String, Calculator>();
@@ -53,16 +55,20 @@ public class CalculatorCollectionManager {
 	/**
 	 * Adds the calculator.
 	 *
-	 * @param name the name
-	 * @param x the x
-	 * @param y the y
+	 * @param name
+	 *            the name
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return the calculator
 	 */
-	public Calculator addCalculator(final String name, float x, float y) {
-		final IStage stage = MultiplicityEnvironment.get().getLocalStages()
-				.get(0);
+	public Calculator addCalculator(final String name, float x, float y)
+	{
+		final IStage stage = MultiplicityEnvironment.get().getLocalStages().get(0);
 
-		try {
+		try
+		{
 			Calculator c = new Calculator(container, stage);
 			c.setOwner(name);
 			c.buildAndAttach();
@@ -73,20 +79,26 @@ public class CalculatorCollectionManager {
 			c.addCalculatorEventListener(eventProcessor);
 
 			IItem target = c.getDragAndDropTarget();
-			stage.getDragAndDropSystem().registerDragDestinationListener(
-					target,
-					new CalculatorDragAndDropListener(c, eventProcessor));
+			stage.getDragAndDropSystem().registerDragDestinationListener(target, new CalculatorDragAndDropListener(c, eventProcessor));
 
 			// graphBuilder.registerItemForConnecting(label);
 
 			return c;
-		} catch (SecurityException e) {
+		}
+		catch (SecurityException e)
+		{
 			e.printStackTrace();
-		} catch (IllegalArgumentException e) {
+		}
+		catch (IllegalArgumentException e)
+		{
 			e.printStackTrace();
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
-		} catch (NullPointerException npe) {
+		}
+		catch (NullPointerException npe)
+		{
 			npe.printStackTrace();
 		}
 		return null;
@@ -96,10 +108,12 @@ public class CalculatorCollectionManager {
 	/**
 	 * Gets the calculator for user.
 	 *
-	 * @param user the user
+	 * @param user
+	 *            the user
 	 * @return the calculator for user
 	 */
-	public Calculator getCalculatorForUser(String user) {
+	public Calculator getCalculatorForUser(String user)
+	{
 		return userToCalculator.get(user);
 	}
 
@@ -108,16 +122,19 @@ public class CalculatorCollectionManager {
 	 *
 	 * @return the users who have calculators
 	 */
-	public Collection<String> getUsersWhoHaveCalculators() {
+	public Collection<String> getUsersWhoHaveCalculators()
+	{
 		return Collections.unmodifiableCollection(userToCalculator.keySet());
 	}
 
 	/**
 	 * Removes the calculator.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public void removeCalculator(String name) {
+	public void removeCalculator(String name)
+	{
 		Calculator c = userToCalculator.get(name);
 		c.remove();
 		userToCalculator.remove(name);
@@ -126,12 +143,15 @@ public class CalculatorCollectionManager {
 	/**
 	 * Sets the all calculators visible.
 	 *
-	 * @param visible the new all calculators visible
+	 * @param visible
+	 *            the new all calculators visible
 	 */
-	public void setAllCalculatorsVisible(boolean visible) {
+	public void setAllCalculatorsVisible(boolean visible)
+	{
 		log.fine("Setting calculator visibility: " + visible);
 		visibility = visible;
-		for (String user : getUsersWhoHaveCalculators()) {
+		for (String user : getUsersWhoHaveCalculators())
+		{
 			Calculator c = getCalculatorForUser(user);
 			c.setVisibility(visible);
 		}
@@ -140,26 +160,34 @@ public class CalculatorCollectionManager {
 	/**
 	 * Sets the available calculator collection.
 	 *
-	 * @param names the new available calculator collection
+	 * @param names
+	 *            the new available calculator collection
 	 */
-	public void setAvailableCalculatorCollection(List<String> names) {
+	public void setAvailableCalculatorCollection(List<String> names)
+	{
 		List<String> toRemove = new ArrayList<String>();
-		for (String name : userToCalculator.keySet()) {
-			if (!names.contains(name)) {
+		for (String name : userToCalculator.keySet())
+		{
+			if (!names.contains(name))
+			{
 				toRemove.add(name);
 			}
 		}
-		for (String name : toRemove) {
+		for (String name : toRemove)
+		{
 			removeCalculator(name);
 		}
 
 		List<String> toAdd = new ArrayList<String>();
-		for (String n : names) {
-			if (!userToCalculator.containsKey(n)) {
+		for (String n : names)
+		{
+			if (!userToCalculator.containsKey(n))
+			{
 				toAdd.add(n);
 			}
 		}
-		for (String name : toAdd) {
+		for (String name : toAdd)
+		{
 			addCalculator(name, 0, 0);
 		}
 	}

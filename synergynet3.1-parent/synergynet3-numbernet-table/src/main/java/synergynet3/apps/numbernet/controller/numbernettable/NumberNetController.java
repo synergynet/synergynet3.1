@@ -27,11 +27,11 @@ import com.hazelcast.core.Member;
 /**
  * The Class NumberNetController.
  */
-public class NumberNetController {
+public class NumberNetController
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(NumberNetController.class.getName());
+	private static final Logger log = Logger.getLogger(NumberNetController.class.getName());
 
 	/** The calculator collection manager. */
 	private CalculatorCollectionManager calculatorCollectionManager;
@@ -87,24 +87,25 @@ public class NumberNetController {
 	/**
 	 * Instantiates a new number net controller.
 	 *
-	 * @param input the input
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param input
+	 *            the input
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public NumberNetController(MultiTouchInputComponent input)
-			throws ContentTypeNotBoundException {
+	public NumberNetController(MultiTouchInputComponent input) throws ContentTypeNotBoundException
+	{
 
-		try {
+		try
+		{
 
 			this.tableIdentity = SynergyNetCluster.get().getIdentity();
 			log.info("Starting controller for numbernet");
 			initDisplay();
 
 			validationChecker = new DefaultValidationChecker();
-			studentTableDataCluster = new NumberNetStudentTableClusteredData(
-					tableIdentity);
+			studentTableDataCluster = new NumberNetStudentTableClusteredData(tableIdentity);
 			expressionSession = new ExpressionSession(studentTableDataCluster);
-			calculatorEventProcessor = new CalculatorEventProcessor(
-					tableIdentity, validationChecker);
+			calculatorEventProcessor = new CalculatorEventProcessor(tableIdentity, validationChecker);
 
 			log.info("private inits");
 			initCalculatorCollection();
@@ -126,28 +127,27 @@ public class NumberNetController {
 
 			// enterTestMode();
 
-			studentTableDataCluster.getGraphingModeControl()
-					.registerChangeListener(
-							new DistributedPropertyChangedAction<Boolean>() {
-								@Override
-								public void distributedPropertyDidChange(
-										Member member, Boolean oldValue,
-										Boolean newValue) {
-									log.fine("Graphing mode control change to "
-											+ newValue);
-									setGraphingModeEnabled(newValue);
-								}
-							});
+			studentTableDataCluster.getGraphingModeControl().registerChangeListener(new DistributedPropertyChangedAction<Boolean>()
+			{
+				@Override
+				public void distributedPropertyDidChange(Member member, Boolean oldValue, Boolean newValue)
+				{
+					log.fine("Graphing mode control change to " + newValue);
+					setGraphingModeEnabled(newValue);
+				}
+			});
 
-			Boolean graphModeEnabled = studentTableDataCluster
-					.getGraphingModeControl().getValue();
-			if ((graphModeEnabled != null) && (graphModeEnabled == true)) {
+			Boolean graphModeEnabled = studentTableDataCluster.getGraphingModeControl().getValue();
+			if ((graphModeEnabled != null) && (graphModeEnabled == true))
+			{
 				setGraphingModeEnabled(true);
 			}
 
 			calculatorCollectionManager.removeCalculator("dummy");
 
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 			ex.printStackTrace();
 		}
 
@@ -158,25 +158,30 @@ public class NumberNetController {
 	 *
 	 * @return the current target set
 	 */
-	public Double getCurrentTargetSet() {
+	public Double getCurrentTargetSet()
+	{
 		return currentTargetSet;
 	}
 
 	/**
 	 * Sets the current target set.
 	 *
-	 * @param currentTargetSet the new current target set
+	 * @param currentTargetSet
+	 *            the new current target set
 	 */
-	public void setCurrentTargetSet(Double currentTargetSet) {
+	public void setCurrentTargetSet(Double currentTargetSet)
+	{
 		this.currentTargetSet = currentTargetSet;
 	}
 
 	/**
 	 * Sets the expression session.
 	 *
-	 * @param session the new expression session
+	 * @param session
+	 *            the new expression session
 	 */
-	public void setExpressionSession(ExpressionSession session) {
+	public void setExpressionSession(ExpressionSession session)
+	{
 		expressionDisplay.setExpressionSession(session);
 		calculatorEventProcessor.setExpressionSession(session);
 		validationChecker.setCurrentExpressionSession(session);
@@ -185,7 +190,8 @@ public class NumberNetController {
 	/**
 	 * Shutdown.
 	 */
-	public void shutdown() {
+	public void shutdown()
+	{
 		expressionPositionSynchronizer.stop();
 		calculatorCollectionSynchronizer.stop();
 		multiTouchEnabledSynchronizer.stop();
@@ -194,10 +200,10 @@ public class NumberNetController {
 	/**
 	 * Inits the calculator collection.
 	 */
-	private void initCalculatorCollection() {
+	private void initCalculatorCollection()
+	{
 
-		calculatorCollectionManager = new CalculatorCollectionManager(
-				calculatorsAndExpressionsContainer, calculatorEventProcessor);
+		calculatorCollectionManager = new CalculatorCollectionManager(calculatorsAndExpressionsContainer, calculatorEventProcessor);
 	}
 
 	// ******* private ********
@@ -205,26 +211,26 @@ public class NumberNetController {
 	/**
 	 * Inits the calculator sync.
 	 */
-	private void initCalculatorSync() {
-		calculatorCollectionSynchronizer = new CalculatorCollectionSync(
-				calculatorCollectionManager, studentTableDataCluster);
+	private void initCalculatorSync()
+	{
+		calculatorCollectionSynchronizer = new CalculatorCollectionSync(calculatorCollectionManager, studentTableDataCluster);
 		calculatorCollectionSynchronizer.start();
 
-		calculatorKeySynchronizer = new CalculatorKeySynchronizer(
-				calculatorCollectionManager, studentTableDataCluster);
+		calculatorKeySynchronizer = new CalculatorKeySynchronizer(calculatorCollectionManager, studentTableDataCluster);
 		calculatorKeySynchronizer.start();
 	}
 
 	/**
 	 * Inits the display.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void initDisplay() throws ContentTypeNotBoundException {
+	private void initDisplay() throws ContentTypeNotBoundException
+	{
 		stage = MultiplicityEnvironment.get().getLocalStages().get(0);
 
-		IImage background = stage.getContentFactory().create(IImage.class,
-				"bg", UUID.randomUUID());
+		IImage background = stage.getContentFactory().create(IImage.class, "bg", UUID.randomUUID());
 		stage.addItem(background);
 
 		background.setImage("/synergynet3/apps/numbernet/backgrounds/blue.png");
@@ -232,13 +238,11 @@ public class NumberNetController {
 		float wrapScale = 100f;
 		background.setWrapping(wrapScale, wrapScale);
 
-		graphingLinesContainer = stage.getContentFactory().create(
-				IContainer.class, "glines", UUID.randomUUID());
+		graphingLinesContainer = stage.getContentFactory().create(IContainer.class, "glines", UUID.randomUUID());
 		stage.addItem(graphingLinesContainer);
 		stage.getZOrderManager().ignoreItemClickedBehaviour(background);
 
-		calculatorsAndExpressionsContainer = stage.getContentFactory().create(
-				IContainer.class, "calcexpr", UUID.randomUUID());
+		calculatorsAndExpressionsContainer = stage.getContentFactory().create(IContainer.class, "calcexpr", UUID.randomUUID());
 		stage.addItem(calculatorsAndExpressionsContainer);
 
 		stage.getZOrderManager().setAutoBringToTop(false);
@@ -248,49 +252,50 @@ public class NumberNetController {
 	/**
 	 * Inits the expression display.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void initExpressionDisplay() throws ContentTypeNotBoundException {
-		expressionDisplay = new ExpressionDisplay(tableIdentity, stage,
-				calculatorsAndExpressionsContainer, calculatorCollectionManager);
+	private void initExpressionDisplay() throws ContentTypeNotBoundException
+	{
+		expressionDisplay = new ExpressionDisplay(tableIdentity, stage, calculatorsAndExpressionsContainer, calculatorCollectionManager);
 	}
 
 	/**
 	 * Inits the expression display sync.
 	 */
-	private void initExpressionDisplaySync() {
-		expressionPositionSynchronizer = new ExpressionPositionSync(
-				expressionDisplay, studentTableDataCluster);
+	private void initExpressionDisplaySync()
+	{
+		expressionPositionSynchronizer = new ExpressionPositionSync(expressionDisplay, studentTableDataCluster);
 		expressionPositionSynchronizer.start();
 
-		expressionDisplaySynchronizer = new ExpressionDisplaySync(
-				expressionDisplay, studentTableDataCluster);
+		expressionDisplaySynchronizer = new ExpressionDisplaySync(expressionDisplay, studentTableDataCluster);
 		expressionDisplaySynchronizer.start();
 	}
 
 	/**
 	 * Inits the multi touch input sync.
 	 *
-	 * @param input the input
+	 * @param input
+	 *            the input
 	 */
-	private void initMultiTouchInputSync(MultiTouchInputComponent input) {
-		multiTouchEnabledSynchronizer = new MultiTouchEnabledSync(
-				studentTableDataCluster, input);
+	private void initMultiTouchInputSync(MultiTouchInputComponent input)
+	{
+		multiTouchEnabledSynchronizer = new MultiTouchEnabledSync(studentTableDataCluster, input);
 		multiTouchEnabledSynchronizer.start();
 	}
 
 	/**
 	 * Enter test mode.
 	 */
-	protected void enterTestMode() {
+	protected void enterTestMode()
+	{
 		log.info("Entering test mode");
 		// calculatorCollectionManager.addCalculator("iyad", -300, 0);
 		calculatorCollectionManager.addCalculator("andrew", -100, 0);
 		// calculatorCollectionManager.addCalculator("steve", 100, 0);
 		// calculatorCollectionManager.addCalculator("phyo", 300, 0);
 		expressionSession.setTarget(35);
-		springGraphBuilder.setExpressionSessionAndDisplay(expressionSession,
-				expressionDisplay, graphingLinesContainer);
+		springGraphBuilder.setExpressionSessionAndDisplay(expressionSession, expressionDisplay, graphingLinesContainer);
 		this.setGraphingModeEnabled(true);
 		calculatorCollectionManager.setAllCalculatorsVisible(true);
 	}
@@ -298,21 +303,26 @@ public class NumberNetController {
 	/**
 	 * Sets the graphing mode enabled.
 	 *
-	 * @param enabled the new graphing mode enabled
+	 * @param enabled
+	 *            the new graphing mode enabled
 	 */
-	protected void setGraphingModeEnabled(boolean enabled) {
-		if (enabled) {
+	protected void setGraphingModeEnabled(boolean enabled)
+	{
+		if (enabled)
+		{
 			log.fine("Setting graph builder up");
 			calculatorCollectionManager.setAllCalculatorsVisible(false);
-			springGraphBuilder.setExpressionSessionAndDisplay(
-					expressionSession, expressionDisplay,
-					graphingLinesContainer);
-			try {
-				springGraphBuilder.setActive(true,
-						expressionSession.getTargetValue());
-			} catch (Exception e) {
+			springGraphBuilder.setExpressionSessionAndDisplay(expressionSession, expressionDisplay, graphingLinesContainer);
+			try
+			{
+				springGraphBuilder.setActive(true, expressionSession.getTargetValue());
 			}
-		} else {
+			catch (Exception e)
+			{
+			}
+		}
+		else
+		{
 			log.fine("Shutting down graphbuilder");
 			calculatorCollectionManager.setAllCalculatorsVisible(true);
 			springGraphBuilder.setActive(false, 0);

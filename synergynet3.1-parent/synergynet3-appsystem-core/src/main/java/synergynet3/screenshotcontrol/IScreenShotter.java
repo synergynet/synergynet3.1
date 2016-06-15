@@ -7,14 +7,18 @@ import com.jme3.math.Vector2f;
 /**
  * The Interface IScreenShotter.
  */
-public interface IScreenShotter {
+public interface IScreenShotter
+{
 
 	/**
 	 * Utilise screenshot.
 	 *
-	 * @param screenShotFile the screen shot file
-	 * @param loc the loc
-	 * @param rot the rot
+	 * @param screenShotFile
+	 *            the screen shot file
+	 * @param loc
+	 *            the loc
+	 * @param rot
+	 *            the rot
 	 */
 	public void utiliseScreenshot(File screenShotFile, Vector2f loc, float rot);
 

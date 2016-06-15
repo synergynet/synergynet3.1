@@ -13,7 +13,8 @@ import com.thoughtworks.xstream.io.xml.DomDriver;
 /**
  * The Class ClassroomList.
  */
-public class ClassroomList {
+public class ClassroomList
+{
 
 	/** The Constant CLASSLIST. */
 	private static final String CLASSLIST = "classNames.xml";
@@ -28,20 +29,24 @@ public class ClassroomList {
 	 * Instantiates a new classroom list.
 	 */
 	@SuppressWarnings("unchecked")
-	public ClassroomList() {
+	public ClassroomList()
+	{
 		xstream = new XStream(new DomDriver());
-		try {
-			if (new File(DatabaseServer.getDatabaseDirectory() + CLASSLIST)
-					.isFile()) {
-				FileInputStream inputStream = new FileInputStream(
-						getClassroomListFile());
-				classroomNames = (ArrayList<String>) xstream
-						.fromXML(inputStream);
+		try
+		{
+			if (new File(DatabaseServer.getDatabaseDirectory() + CLASSLIST).isFile())
+			{
+				FileInputStream inputStream = new FileInputStream(getClassroomListFile());
+				classroomNames = (ArrayList<String>) xstream.fromXML(inputStream);
 				inputStream.close();
 			}
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -49,9 +54,11 @@ public class ClassroomList {
 	/**
 	 * Adds the classroom.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public void addClassroom(String name) {
+	public void addClassroom(String name)
+	{
 		classroomNames.add(name);
 		commitChangesToFile();
 	}
@@ -61,17 +68,21 @@ public class ClassroomList {
 	 *
 	 * @return the classroom names
 	 */
-	public ArrayList<String> getClassroomNames() {
+	public ArrayList<String> getClassroomNames()
+	{
 		return classroomNames;
 	}
 
 	/**
 	 * Removes the classroom.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public void removeClassroom(String name) {
-		if (classroomNames.contains(name)) {
+	public void removeClassroom(String name)
+	{
+		if (classroomNames.contains(name))
+		{
 			classroomNames.remove(name);
 			commitChangesToFile();
 		}
@@ -80,15 +91,20 @@ public class ClassroomList {
 	/**
 	 * Commit changes to file.
 	 */
-	private void commitChangesToFile() {
-		try {
-			FileOutputStream outputStream = new FileOutputStream(
-					getClassroomListFile());
+	private void commitChangesToFile()
+	{
+		try
+		{
+			FileOutputStream outputStream = new FileOutputStream(getClassroomListFile());
 			xstream.toXML(classroomNames, outputStream);
 			outputStream.close();
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -97,12 +113,14 @@ public class ClassroomList {
 	 * Gets the classroom list file.
 	 *
 	 * @return the classroom list file
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private File getClassroomListFile() throws IOException {
-		File classListFile = new File(DatabaseServer.getDatabaseDirectory()
-				+ CLASSLIST);
-		if (!classListFile.isFile()) {
+	private File getClassroomListFile() throws IOException
+	{
+		File classListFile = new File(DatabaseServer.getDatabaseDirectory() + CLASSLIST);
+		if (!classListFile.isFile())
+		{
 			classListFile.createNewFile();
 		}
 		return classListFile;

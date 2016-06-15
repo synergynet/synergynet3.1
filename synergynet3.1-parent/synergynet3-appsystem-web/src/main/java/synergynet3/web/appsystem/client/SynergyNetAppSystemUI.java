@@ -18,12 +18,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class SynergyNetAppSystemUI.
  */
-public class SynergyNetAppSystemUI extends VerticalPanel {
+public class SynergyNetAppSystemUI extends VerticalPanel
+{
 
 	/**
 	 * The Interface SynergyNetAppServiceUIDelegate.
 	 */
-	public static interface SynergyNetAppServiceUIDelegate {
+	public static interface SynergyNetAppServiceUIDelegate
+	{
 
 		/**
 		 * Should hide db controls.
@@ -33,7 +35,8 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 		/**
 		 * Should open management ui for class name.
 		 *
-		 * @param appClass the app class
+		 * @param appClass
+		 *            the app class
 		 */
 		void shouldOpenManagementUIForClassName(String appClass);
 	}
@@ -56,7 +59,8 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 	/**
 	 * Instantiates a new synergy net app system ui.
 	 */
-	public SynergyNetAppSystemUI() {
+	public SynergyNetAppSystemUI()
+	{
 		super();
 
 		this.setSpacing(5);
@@ -66,24 +70,27 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 		dow.setSpacing(5);
 		dow.setSize("272px", "100px");
 		dow.setDeviceType("tables");
-		dow.setDelegate(new DevicesOnlineListBoxDelegate() {
+		dow.setDelegate(new DevicesOnlineListBoxDelegate()
+		{
 			@Override
-			public void devicesOnlineListBoxDidReload() {
+			public void devicesOnlineListBoxDidReload()
+			{
 			}
 
 			@Override
-			public void devicesOnlineListBoxReloadFailed(Throwable caught) {
-				new MessageDialogBox(
-						"Communication error listing online devices: "
-								+ caught.getMessage()).show();
+			public void devicesOnlineListBoxReloadFailed(Throwable caught)
+			{
+				new MessageDialogBox("Communication error listing online devices: " + caught.getMessage()).show();
 			}
 
 			@Override
-			public void devicesSelected(List<String> device) {
+			public void devicesSelected(List<String> device)
+			{
 			}
 
 			@Override
-			public void noDevicesSelected() {
+			public void noDevicesSelected()
+			{
 			}
 		});
 		dow.setAllTablesCheckBoxOffset("120px");
@@ -99,18 +106,23 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 
 		Button btnSetActiveApplication = new Button("Set Active Application");
 		btnSetActiveApplication.setWidth("272px");
-		btnSetActiveApplication.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnSetActiveApplication.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				setActiveApplicationButtonClicked(event);
 			}
 		});
-		availableApplicationsList.getButtonsPanel()
-				.add(btnSetActiveApplication);
+		availableApplicationsList.getButtonsPanel().add(btnSetActiveApplication);
 
 		btnOpenManagementUi = new Button("Open Management UI");
 		btnOpenManagementUi.setWidth("272px");
-		btnOpenManagementUi.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnOpenManagementUi.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				openManagementUIButtonClicked();
 			}
 		});
@@ -122,29 +134,34 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 	 *
 	 * @return the delegate
 	 */
-	public SynergyNetAppServiceUIDelegate getDelegate() {
+	public SynergyNetAppServiceUIDelegate getDelegate()
+	{
 		return delegate;
 	}
 
 	/**
 	 * Sets the delegate.
 	 *
-	 * @param delegate the new delegate
+	 * @param delegate
+	 *            the new delegate
 	 */
-	public void setDelegate(SynergyNetAppServiceUIDelegate delegate) {
+	public void setDelegate(SynergyNetAppServiceUIDelegate delegate)
+	{
 		this.delegate = delegate;
 	}
 
 	/**
 	 * Sets the known application names with classes.
 	 *
-	 * @param availableAppNamesToClassName the available app names to class name
+	 * @param availableAppNamesToClassName
+	 *            the available app names to class name
 	 */
-	public void setKnownApplicationNamesWithClasses(
-			Map<String, String> availableAppNamesToClassName) {
+	public void setKnownApplicationNamesWithClasses(Map<String, String> availableAppNamesToClassName)
+	{
 		this.availableAppNamesToClassName = availableAppNamesToClassName;
 		availableApplicationsList.removeAllApplications();
-		for (String key : availableAppNamesToClassName.keySet()) {
+		for (String key : availableAppNamesToClassName.keySet())
+		{
 			availableApplicationsList.addApplicationName(key);
 		}
 	}
@@ -154,10 +171,11 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 	 *
 	 * @return the selected application class name
 	 */
-	private String getSelectedApplicationClassName() {
-		String appNameSelected = availableApplicationsList
-				.getSelectedApplication();
-		if (appNameSelected == null) {
+	private String getSelectedApplicationClassName()
+	{
+		String appNameSelected = availableApplicationsList.getSelectedApplication();
+		if (appNameSelected == null)
+		{
 			return null;
 		}
 		return availableAppNamesToClassName.get(appNameSelected);
@@ -166,7 +184,8 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 	/**
 	 * Open management ui button clicked.
 	 */
-	protected void openManagementUIButtonClicked() {
+	protected void openManagementUIButtonClicked()
+	{
 		String appClass = getSelectedApplicationClassName();
 		delegate.shouldOpenManagementUIForClassName(appClass);
 	}
@@ -176,40 +195,45 @@ public class SynergyNetAppSystemUI extends VerticalPanel {
 	/**
 	 * Sets the active application button clicked.
 	 *
-	 * @param event the new active application button clicked
+	 * @param event
+	 *            the new active application button clicked
 	 */
-	protected void setActiveApplicationButtonClicked(ClickEvent event) {
+	protected void setActiveApplicationButtonClicked(ClickEvent event)
+	{
 		String appClass = getSelectedApplicationClassName();
-		if (appClass == null) {
-			new MessageDialogBox("Please select at least one application")
-					.show();
+		if (appClass == null)
+		{
+			new MessageDialogBox("Please select at least one application").show();
 			return;
 		}
 
-		if ((dow.getDevicesSelected().size() < 1)
-				&& !dow.getAllDevicesOptionCheck()) {
+		if ((dow.getDevicesSelected().size() < 1) && !dow.getAllDevicesOptionCheck())
+		{
 			new MessageDialogBox("Please select at least one device").show();
 			return;
 		}
 		List<String> devicesSelected;
-		if (dow.getAllDevicesOptionCheck()) {
+		if (dow.getAllDevicesOptionCheck())
+		{
 			devicesSelected = dow.getDevicesPresent();
-		} else {
+		}
+		else
+		{
 			devicesSelected = dow.getDevicesSelected();
 		}
-		SynergyNetAppSystemService.Util.get().devicesShouldOpenApplication(
-				appClass, devicesSelected, new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(
-								"Communication error setting app: "
-										+ caught.getMessage()).show();
-					}
+		SynergyNetAppSystemService.Util.get().devicesShouldOpenApplication(appClass, devicesSelected, new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox("Communication error setting app: " + caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 	}
 
 }

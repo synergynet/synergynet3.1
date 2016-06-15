@@ -8,7 +8,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class DatabaseControlUI.
  */
-public class DatabaseControlUI extends VerticalPanel {
+public class DatabaseControlUI extends VerticalPanel
+{
 
 	/** The class selection panel. */
 	private static ClassSelectionPanel classSelectionPanel;
@@ -28,7 +29,8 @@ public class DatabaseControlUI extends VerticalPanel {
 	/**
 	 * Instantiates a new database control ui.
 	 */
-	public DatabaseControlUI() {
+	public DatabaseControlUI()
+	{
 		super();
 		sharedInstance = this;
 		tabPanel = new TabPanel();
@@ -50,37 +52,43 @@ public class DatabaseControlUI extends VerticalPanel {
 	 *
 	 * @return the database control ui
 	 */
-	public static DatabaseControlUI get() {
+	public static DatabaseControlUI get()
+	{
 		return sharedInstance;
 	}
 
 	/**
 	 * @return the databaseSelectionPanel
 	 */
-	public static ClassSelectionPanel getClassSelectionPanel() {
+	public static ClassSelectionPanel getClassSelectionPanel()
+	{
 		return classSelectionPanel;
 	}
 
 	/**
 	 * @return the studentAdminPanel
 	 */
-	public static StudentAdministationPanel getStudentAdminPanel() {
+	public static StudentAdministationPanel getStudentAdminPanel()
+	{
 		return studentAdminPanel;
 	}
 
 	/**
 	 * Removes the database tabs.
 	 */
-	public static void removeDatabaseTabs() {
+	public static void removeDatabaseTabs()
+	{
 		delegate.shouldHideDBControls();
 	}
 
 	/**
 	 * Sets the delegate.
 	 *
-	 * @param delegate the new delegate
+	 * @param delegate
+	 *            the new delegate
 	 */
-	public void setDelegate(SynergyNetAppServiceUIDelegate delegate) {
+	public void setDelegate(SynergyNetAppServiceUIDelegate delegate)
+	{
 		DatabaseControlUI.delegate = delegate;
 	}
 

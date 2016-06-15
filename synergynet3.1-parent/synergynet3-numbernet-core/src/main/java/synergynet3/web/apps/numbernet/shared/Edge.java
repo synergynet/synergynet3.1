@@ -7,7 +7,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Class Edge.
  */
-public class Edge implements Serializable, IsSerializable {
+public class Edge implements Serializable, IsSerializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -738061162769704771L;
@@ -21,10 +22,13 @@ public class Edge implements Serializable, IsSerializable {
 	/**
 	 * Instantiates a new edge.
 	 *
-	 * @param a the a
-	 * @param b the b
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 */
-	public Edge(Node a, Node b) {
+	public Edge(Node a, Node b)
+	{
 		this.a = a;
 		this.b = b;
 	}
@@ -34,7 +38,8 @@ public class Edge implements Serializable, IsSerializable {
 	 *
 	 * @return the key
 	 */
-	public String getKey() {
+	public String getKey()
+	{
 		return a.getID() + "-" + b.getID();
 	}
 
@@ -43,7 +48,8 @@ public class Edge implements Serializable, IsSerializable {
 	 *
 	 * @return the length
 	 */
-	public float getLength() {
+	public float getLength()
+	{
 		float diffX = b.getX() - a.getX();
 		float diffY = b.getY() - a.getY();
 		return (float) Math.sqrt((diffX * diffX) + (diffY * diffY));

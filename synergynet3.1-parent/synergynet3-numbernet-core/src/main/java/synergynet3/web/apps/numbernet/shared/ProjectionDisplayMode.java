@@ -5,7 +5,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Enum ProjectionDisplayMode.
  */
-public enum ProjectionDisplayMode implements IsSerializable {
+public enum ProjectionDisplayMode implements IsSerializable
+{
 
 	/** The blank. */
 	BLANK,

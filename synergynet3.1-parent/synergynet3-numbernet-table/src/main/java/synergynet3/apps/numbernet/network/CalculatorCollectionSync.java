@@ -14,11 +14,11 @@ import com.hazelcast.core.Member;
 /**
  * The Class CalculatorCollectionSync.
  */
-public class CalculatorCollectionSync {
+public class CalculatorCollectionSync
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(CalculatorCollectionSync.class.getName());
+	private static final Logger log = Logger.getLogger(CalculatorCollectionSync.class.getName());
 
 	/** The calculator collection manager. */
 	private CalculatorCollectionManager calculatorCollectionManager;
@@ -29,12 +29,13 @@ public class CalculatorCollectionSync {
 	/**
 	 * Instantiates a new calculator collection sync.
 	 *
-	 * @param calculatorCollectionManager the calculator collection manager
-	 * @param tableClusterData the table cluster data
+	 * @param calculatorCollectionManager
+	 *            the calculator collection manager
+	 * @param tableClusterData
+	 *            the table cluster data
 	 */
-	public CalculatorCollectionSync(
-			CalculatorCollectionManager calculatorCollectionManager,
-			NumberNetStudentTableClusteredData tableClusterData) {
+	public CalculatorCollectionSync(CalculatorCollectionManager calculatorCollectionManager, NumberNetStudentTableClusteredData tableClusterData)
+	{
 		this.calculatorCollectionManager = calculatorCollectionManager;
 		this.tableClusterData = tableClusterData;
 	}
@@ -42,7 +43,8 @@ public class CalculatorCollectionSync {
 	/**
 	 * Start.
 	 */
-	public void start() {
+	public void start()
+	{
 		initCalculatorCollectionSync();
 		initCalculatorVisibilitySync();
 	}
@@ -50,22 +52,27 @@ public class CalculatorCollectionSync {
 	/**
 	 * Stop.
 	 */
-	public void stop() {
+	public void stop()
+	{
 		// nothing to do
 	}
 
 	/**
 	 * Gets the names list from participant list.
 	 *
-	 * @param list the list
+	 * @param list
+	 *            the list
 	 * @return the names list from participant list
 	 */
-	private List<String> getNamesListFromParticipantList(List<Participant> list) {
+	private List<String> getNamesListFromParticipantList(List<Participant> list)
+	{
 		List<String> names = new ArrayList<String>();
-		if (list == null) {
+		if (list == null)
+		{
 			return names;
 		}
-		for (Participant p : list) {
+		for (Participant p : list)
+		{
 			names.add(p.getName());
 		}
 		return names;
@@ -74,44 +81,37 @@ public class CalculatorCollectionSync {
 	/**
 	 * Inits the calculator collection sync.
 	 */
-	private void initCalculatorCollectionSync() {
-		List<String> participants = getNamesListFromParticipantList(tableClusterData
-				.getParticipantListControlVariable().getValue());
-		calculatorCollectionManager
-				.setAvailableCalculatorCollection(participants);
+	private void initCalculatorCollectionSync()
+	{
+		List<String> participants = getNamesListFromParticipantList(tableClusterData.getParticipantListControlVariable().getValue());
+		calculatorCollectionManager.setAvailableCalculatorCollection(participants);
 
-		tableClusterData
-				.getParticipantListControlVariable()
-				.registerChangeListener(
-						new DistributedPropertyChangedAction<List<Participant>>() {
-							@Override
-							public void distributedPropertyDidChange(Member m,
-									List<Participant> oldValue,
-									List<Participant> newValue) {
-								log.fine("Update received for participant list: "
-										+ newValue);
-								List<String> names = getNamesListFromParticipantList(newValue);
-								calculatorCollectionManager
-										.setAvailableCalculatorCollection(names);
-							}
-						});
+		tableClusterData.getParticipantListControlVariable().registerChangeListener(new DistributedPropertyChangedAction<List<Participant>>()
+		{
+			@Override
+			public void distributedPropertyDidChange(Member m, List<Participant> oldValue, List<Participant> newValue)
+			{
+				log.fine("Update received for participant list: " + newValue);
+				List<String> names = getNamesListFromParticipantList(newValue);
+				calculatorCollectionManager.setAvailableCalculatorCollection(names);
+			}
+		});
 	}
 
 	/**
 	 * Inits the calculator visibility sync.
 	 */
-	private void initCalculatorVisibilitySync() {
-		tableClusterData.getCalculatorVisibleControlVariable()
-				.registerChangeListener(
-						new DistributedPropertyChangedAction<Boolean>() {
-							@Override
-							public void distributedPropertyDidChange(Member m,
-									Boolean oldValue, Boolean newValue) {
-								log.finer("Visibility property change");
-								calculatorCollectionManager
-										.setAllCalculatorsVisible(newValue);
-							}
-						});
+	private void initCalculatorVisibilitySync()
+	{
+		tableClusterData.getCalculatorVisibleControlVariable().registerChangeListener(new DistributedPropertyChangedAction<Boolean>()
+		{
+			@Override
+			public void distributedPropertyDidChange(Member m, Boolean oldValue, Boolean newValue)
+			{
+				log.finer("Visibility property change");
+				calculatorCollectionManager.setAllCalculatorsVisible(newValue);
+			}
+		});
 	}
 
 }

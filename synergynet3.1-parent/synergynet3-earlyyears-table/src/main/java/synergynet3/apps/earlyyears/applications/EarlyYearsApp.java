@@ -19,7 +19,8 @@ import synergynet3.web.earlyyears.shared.EarlyYearsActivity;
 /**
  * The Class EarlyYearsApp.
  */
-abstract public class EarlyYearsApp extends SynergyNetApp {
+abstract public class EarlyYearsApp extends SynergyNetApp
+{
 
 	/** The early years table identity. */
 	private static String earlyYearsTableIdentity;
@@ -41,8 +42,10 @@ abstract public class EarlyYearsApp extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
-		if (eySync != null) {
+	public void onDestroy()
+	{
+		if (eySync != null)
+		{
 			eySync.stop();
 		}
 		super.onDestroy();
@@ -51,41 +54,42 @@ abstract public class EarlyYearsApp extends SynergyNetApp {
 	/**
 	 * Sets the activity.
 	 *
-	 * @param newValue the new activity
+	 * @param newValue
+	 *            the new activity
 	 */
-	public void setActivity(EarlyYearsActivity newValue) {
-		if (newValue != syncName) {
+	public void setActivity(EarlyYearsActivity newValue)
+	{
+		if (newValue != syncName)
+		{
 
 			ArrayList<String[]> names = new ArrayList<String[]>();
 
-			for (int i = 0; i < StudentMenuUtilities.studentRepresentations
-					.size(); i++) {
+			for (int i = 0; i < StudentMenuUtilities.studentRepresentations.size(); i++)
+			{
 				String[] name = new String[4];
-				name[0] = StudentMenuUtilities.studentRepresentations.get(i)
-						.getStudentId();
-				name[1] = ""
-						+ StudentMenuUtilities.studentMenus.get(i)
-								.getRadialMenu().getRelativeLocation().x;
-				name[2] = ""
-						+ StudentMenuUtilities.studentMenus.get(i)
-								.getRadialMenu().getRelativeLocation().y;
-				name[3] = ""
-						+ StudentMenuUtilities.studentMenus.get(i)
-								.getRadialMenu().getRelativeRotation();
+				name[0] = StudentMenuUtilities.studentRepresentations.get(i).getStudentId();
+				name[1] = "" + StudentMenuUtilities.studentMenus.get(i).getRadialMenu().getRelativeLocation().x;
+				name[2] = "" + StudentMenuUtilities.studentMenus.get(i).getRadialMenu().getRelativeLocation().y;
+				name[3] = "" + StudentMenuUtilities.studentMenus.get(i).getRadialMenu().getRelativeRotation();
 				names.add(name);
 			}
 
 			FeedbackSystem.clearFeedbackEligibleItems();
 
-			if (newValue == EarlyYearsActivity.ENVIRONMENT_EXPLORER) {
+			if (newValue == EarlyYearsActivity.ENVIRONMENT_EXPLORER)
+			{
 				EnvironmentExplorerApp app = new EnvironmentExplorerApp();
 				app.loginAll(names);
 				MultiplicityClient.get().setCurrentApp(app);
-			} else if (newValue == EarlyYearsActivity.TRAIN_TRACKS) {
+			}
+			else if (newValue == EarlyYearsActivity.TRAIN_TRACKS)
+			{
 				TrainTracksApp app = new TrainTracksApp();
 				app.loginAll(names);
 				MultiplicityClient.get().setCurrentApp(app);
-			} else if (newValue == EarlyYearsActivity.STICKER_BOOK) {
+			}
+			else if (newValue == EarlyYearsActivity.STICKER_BOOK)
+			{
 				StickerbookApp app = new StickerbookApp();
 				app.loginAll(names);
 				MultiplicityClient.get().setCurrentApp(app);
@@ -100,18 +104,21 @@ abstract public class EarlyYearsApp extends SynergyNetApp {
 	 * MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		super.shouldStart(input, iqo);
 
 		displayWidth = (int) (stage.getWorldLocation().x * 2);
 		displayHeight = (int) (stage.getWorldLocation().y * 2);
 
-		if (eySync == null) {
+		if (eySync == null)
+		{
 			earlyYearsTableIdentity = SynergyNetCluster.get().getIdentity();
-			EarlyYearsDeviceControl earlyYearsDeviceController = new EarlyYearsDeviceControl(
-					earlyYearsTableIdentity);
+			EarlyYearsDeviceControl earlyYearsDeviceController = new EarlyYearsDeviceControl(earlyYearsTableIdentity);
 			eySync = new EarlyYearsSync(earlyYearsDeviceController, this);
-		} else {
+		}
+		else
+		{
 			eySync.reSync(this);
 		}
 

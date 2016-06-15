@@ -5,7 +5,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface IAudioItem.
  */
-public interface IAudioItem {
+public interface IAudioItem
+{
 
 	/**
 	 * Gets the height.
@@ -31,21 +32,24 @@ public interface IAudioItem {
 	/**
 	 * Sets the audio control object.
 	 *
-	 * @param audioControl the new audio control object
+	 * @param audioControl
+	 *            the new audio control object
 	 */
 	public void setAudioControlObject(SNAudioController audioControl);
 
 	/**
 	 * Sets the background colour.
 	 *
-	 * @param colour the new background colour
+	 * @param colour
+	 *            the new background colour
 	 */
 	public void setBackgroundColour(ColorRGBA colour);
 
 	/**
 	 * Sets the owner.
 	 *
-	 * @param owner the new owner
+	 * @param owner
+	 *            the new owner
 	 */
 	public void setOwner(String owner);
 
@@ -57,7 +61,8 @@ public interface IAudioItem {
 	/**
 	 * Stop record.
 	 *
-	 * @param success the success
+	 * @param success
+	 *            the success
 	 */
 	public void stopRecord(boolean success);
 

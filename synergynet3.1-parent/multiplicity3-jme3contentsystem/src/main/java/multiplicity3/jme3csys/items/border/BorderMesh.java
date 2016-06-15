@@ -13,32 +13,36 @@ import com.jme3.scene.VertexBuffer.Type;
 /**
  * The Class BorderMesh.
  */
-public class BorderMesh extends Mesh {
+public class BorderMesh extends Mesh
+{
 
 	/**
 	 * Instantiates a new border mesh.
 	 *
-	 * @param iw the iw
-	 * @param ih the ih
-	 * @param ow the ow
-	 * @param oh the oh
-	 * @param radius the radius
-	 * @param cornerDivisions the corner divisions
+	 * @param iw
+	 *            the iw
+	 * @param ih
+	 *            the ih
+	 * @param ow
+	 *            the ow
+	 * @param oh
+	 *            the oh
+	 * @param radius
+	 *            the radius
+	 * @param cornerDivisions
+	 *            the corner divisions
 	 */
-	public BorderMesh(float iw, float ih, float ow, float oh, float radius,
-			int cornerDivisions) {
+	public BorderMesh(float iw, float ih, float ow, float oh, float radius, int cornerDivisions)
+	{
 
-		Vector3f[] topLeft = getTopLeft(-ow / 2, -oh / 2, ow, oh, radius,
-				cornerDivisions).toArray(new Vector3f[0]);
-		Vector3f[] topRight = getTopRight(-ow / 2, -oh / 2, ow, oh, radius,
-				cornerDivisions).toArray(new Vector3f[0]);
-		Vector3f[] bottomLeft = getBottomLeft(-ow / 2, -oh / 2, ow, oh, radius,
-				cornerDivisions).toArray(new Vector3f[0]);
-		Vector3f[] bottomRight = getBottomRight(-ow / 2, -oh / 2, ow, oh,
-				radius, cornerDivisions).toArray(new Vector3f[0]);
+		Vector3f[] topLeft = getTopLeft(-ow / 2, -oh / 2, ow, oh, radius, cornerDivisions).toArray(new Vector3f[0]);
+		Vector3f[] topRight = getTopRight(-ow / 2, -oh / 2, ow, oh, radius, cornerDivisions).toArray(new Vector3f[0]);
+		Vector3f[] bottomLeft = getBottomLeft(-ow / 2, -oh / 2, ow, oh, radius, cornerDivisions).toArray(new Vector3f[0]);
+		Vector3f[] bottomRight = getBottomRight(-ow / 2, -oh / 2, ow, oh, radius, cornerDivisions).toArray(new Vector3f[0]);
 
-		int vertexCount = topLeft.length + topRight.length + bottomLeft.length
-				+ bottomRight.length + 4; // 4 inner vertices
+		int vertexCount = topLeft.length + topRight.length + bottomLeft.length + bottomRight.length + 4; // 4
+																											// inner
+																											// vertices
 
 		int triangleCount = vertexCount + 4;
 
@@ -46,17 +50,16 @@ public class BorderMesh extends Mesh {
 		setBuffer(Type.Normal, 3, new float[3 * vertexCount]);
 		setBuffer(Type.Index, 3, new short[3 * triangleCount]);
 
-		FloatBuffer normalBuffer = (FloatBuffer) getBuffer(Type.Normal)
-				.getData();
-		FloatBuffer vertexBuffer = (FloatBuffer) getBuffer(Type.Position)
-				.getData();
+		FloatBuffer normalBuffer = (FloatBuffer) getBuffer(Type.Normal).getData();
+		FloatBuffer vertexBuffer = (FloatBuffer) getBuffer(Type.Position).getData();
 		ShortBuffer indexBuffer = (ShortBuffer) getBuffer(Type.Index).getData();
 
 		vertexBuffer.rewind();
 		normalBuffer.rewind();
 		indexBuffer.rewind();
 
-		for (int x = 0; x < getVertexCount(); x++) {
+		for (int x = 0; x < getVertexCount(); x++)
+		{
 			normalBuffer.put(0).put(0).put(1);
 		}
 
@@ -64,12 +67,13 @@ public class BorderMesh extends Mesh {
 		short positionA = pos;
 
 		vertexBuffer.put(iw / 2).put(-ih / 2).put(0); // inner bottom right
-		for (int i = 0; i < bottomRight.length; i++) { // others
-			vertexBuffer.put(bottomRight[i].x).put(bottomRight[i].y)
-					.put(bottomRight[i].z);
+		for (int i = 0; i < bottomRight.length; i++)
+		{ // others
+			vertexBuffer.put(bottomRight[i].x).put(bottomRight[i].y).put(bottomRight[i].z);
 		}
 
-		for (short i = 0; i < (bottomRight.length - 1); i++) {
+		for (short i = 0; i < (bottomRight.length - 1); i++)
+		{
 			short first = pos;
 			short second = (short) (pos + i + 1);
 			short third = (short) (pos + i + 2);
@@ -79,12 +83,13 @@ public class BorderMesh extends Mesh {
 		pos = (short) (vertexBuffer.position() / 3);
 		short positionD = pos;
 		vertexBuffer.put(iw / 2).put(ih / 2).put(0); // inner top right
-		for (short i = 0; i < topRight.length; i++) { // others
-			vertexBuffer.put(topRight[i].x).put(topRight[i].y)
-					.put(topRight[i].z);
+		for (short i = 0; i < topRight.length; i++)
+		{ // others
+			vertexBuffer.put(topRight[i].x).put(topRight[i].y).put(topRight[i].z);
 		}
 
-		for (short i = 0; i < (topRight.length - 1); i++) {
+		for (short i = 0; i < (topRight.length - 1); i++)
+		{
 			short first = pos;
 			short second = (short) (pos + i + 1);
 			short third = (short) (pos + i + 2);
@@ -94,11 +99,13 @@ public class BorderMesh extends Mesh {
 		pos = (short) (vertexBuffer.position() / 3);
 		short positionG = pos;
 		vertexBuffer.put(-iw / 2).put(ih / 2).put(0); // inner top left
-		for (short i = 0; i < topLeft.length; i++) { // others
+		for (short i = 0; i < topLeft.length; i++)
+		{ // others
 			vertexBuffer.put(topLeft[i].x).put(topLeft[i].y).put(topLeft[i].z);
 		}
 
-		for (short i = 0; i < (topLeft.length - 1); i++) {
+		for (short i = 0; i < (topLeft.length - 1); i++)
+		{
 			short first = pos;
 			short second = (short) (pos + i + 1);
 			short third = (short) (pos + i + 2);
@@ -108,13 +115,14 @@ public class BorderMesh extends Mesh {
 		pos = (short) (vertexBuffer.position() / 3);
 		short positionJ = pos;
 		vertexBuffer.put(-iw / 2).put(-ih / 2).put(0); // inner bottom left
-		for (short i = 0; i < bottomLeft.length; i++) { // all other vertices on
-														// the bottom right
-			vertexBuffer.put(bottomLeft[i].x).put(bottomLeft[i].y)
-					.put(bottomLeft[i].z);
+		for (short i = 0; i < bottomLeft.length; i++)
+		{ // all other vertices on
+			// the bottom right
+			vertexBuffer.put(bottomLeft[i].x).put(bottomLeft[i].y).put(bottomLeft[i].z);
 		}
 
-		for (short i = 0; i < (bottomLeft.length - 1); i++) {
+		for (short i = 0; i < (bottomLeft.length - 1); i++)
+		{
 			short first = pos;
 			short second = (short) (pos + i + 1);
 			short third = (short) (pos + i + 2);
@@ -147,25 +155,30 @@ public class BorderMesh extends Mesh {
 	/**
 	 * Gets the bottom left.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param w the w
-	 * @param h the h
-	 * @param radius the radius
-	 * @param divisions the divisions
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param w
+	 *            the w
+	 * @param h
+	 *            the h
+	 * @param radius
+	 *            the radius
+	 * @param divisions
+	 *            the divisions
 	 * @return the bottom left
 	 */
-	public static List<Vector3f> getBottomLeft(float x, float y, float w,
-			float h, float radius, int divisions) {
+	public static List<Vector3f> getBottomLeft(float x, float y, float w, float h, float radius, int divisions)
+	{
 		List<Vector3f> list = new ArrayList<Vector3f>();
 		list.add(new Vector3f(x, y + radius, 0));
 		float t = FastMath.PI;
 		float increment = FastMath.PI / 2f / divisions;
-		for (int i = 0; i < divisions; i++) {
-			float sx = x + radius
-					+ (FastMath.cos(t + (i * increment)) * radius);
-			float sy = y + radius
-					+ (FastMath.sin(t + (i * increment)) * radius);
+		for (int i = 0; i < divisions; i++)
+		{
+			float sx = x + radius + (FastMath.cos(t + (i * increment)) * radius);
+			float sy = y + radius + (FastMath.sin(t + (i * increment)) * radius);
 			list.add(new Vector3f(sx, sy, 0));
 		}
 		float sx = x + radius + (FastMath.cos(t + (FastMath.PI / 2)) * radius);
@@ -177,29 +190,33 @@ public class BorderMesh extends Mesh {
 	/**
 	 * Gets the bottom right.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param w the w
-	 * @param h the h
-	 * @param radius the radius
-	 * @param divisions the divisions
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param w
+	 *            the w
+	 * @param h
+	 *            the h
+	 * @param radius
+	 *            the radius
+	 * @param divisions
+	 *            the divisions
 	 * @return the bottom right
 	 */
-	public static List<Vector3f> getBottomRight(float x, float y, float w,
-			float h, float radius, int divisions) {
+	public static List<Vector3f> getBottomRight(float x, float y, float w, float h, float radius, int divisions)
+	{
 		List<Vector3f> list = new ArrayList<Vector3f>();
 		list.add(new Vector3f((x + w) - radius, y, 0));
 		float t = FastMath.PI * 1.5f;
 		float increment = FastMath.PI / 2f / divisions;
-		for (int i = 0; i < divisions; i++) {
-			float sx = ((x + w) - radius)
-					+ (FastMath.cos(t + (i * increment)) * radius);
-			float sy = y + radius
-					+ (FastMath.sin(t + (i * increment)) * radius);
+		for (int i = 0; i < divisions; i++)
+		{
+			float sx = ((x + w) - radius) + (FastMath.cos(t + (i * increment)) * radius);
+			float sy = y + radius + (FastMath.sin(t + (i * increment)) * radius);
 			list.add(new Vector3f(sx, sy, 0));
 		}
-		float sx = ((x + w) - radius)
-				+ (FastMath.cos(t + (FastMath.PI / 2)) * radius);
+		float sx = ((x + w) - radius) + (FastMath.cos(t + (FastMath.PI / 2)) * radius);
 		float sy = y + radius + (FastMath.sin(t + (FastMath.PI / 2)) * radius);
 		list.add(new Vector3f(sx, sy, 0));
 		return list;
@@ -208,30 +225,34 @@ public class BorderMesh extends Mesh {
 	/**
 	 * Gets the top left.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param w the w
-	 * @param h the h
-	 * @param radius the radius
-	 * @param divisions the divisions
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param w
+	 *            the w
+	 * @param h
+	 *            the h
+	 * @param radius
+	 *            the radius
+	 * @param divisions
+	 *            the divisions
 	 * @return the top left
 	 */
-	public static List<Vector3f> getTopLeft(float x, float y, float w, float h,
-			float radius, int divisions) {
+	public static List<Vector3f> getTopLeft(float x, float y, float w, float h, float radius, int divisions)
+	{
 		List<Vector3f> list = new ArrayList<Vector3f>();
 		list.add(new Vector3f(x + radius, y + h, 0));
 		float t = FastMath.PI * 0.5f;
 		float increment = FastMath.PI / 2f / divisions;
-		for (int i = 0; i < divisions; i++) {
-			float sx = x + radius
-					+ (FastMath.cos(t + (i * increment)) * radius);
-			float sy = ((y + h) - radius)
-					+ (FastMath.sin(t + (i * increment)) * radius);
+		for (int i = 0; i < divisions; i++)
+		{
+			float sx = x + radius + (FastMath.cos(t + (i * increment)) * radius);
+			float sy = ((y + h) - radius) + (FastMath.sin(t + (i * increment)) * radius);
 			list.add(new Vector3f(sx, sy, 0));
 		}
 		float sx = x + radius + (FastMath.cos(t + (FastMath.PI / 2)) * radius);
-		float sy = ((y + h) - radius)
-				+ (FastMath.sin(t + (FastMath.PI / 2)) * radius);
+		float sy = ((y + h) - radius) + (FastMath.sin(t + (FastMath.PI / 2)) * radius);
 		list.add(new Vector3f(sx, sy, 0));
 		return list;
 	}
@@ -239,31 +260,34 @@ public class BorderMesh extends Mesh {
 	/**
 	 * Gets the top right.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param w the w
-	 * @param h the h
-	 * @param radius the radius
-	 * @param divisions the divisions
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param w
+	 *            the w
+	 * @param h
+	 *            the h
+	 * @param radius
+	 *            the radius
+	 * @param divisions
+	 *            the divisions
 	 * @return the top right
 	 */
-	public static List<Vector3f> getTopRight(float x, float y, float w,
-			float h, float radius, int divisions) {
+	public static List<Vector3f> getTopRight(float x, float y, float w, float h, float radius, int divisions)
+	{
 		List<Vector3f> list = new ArrayList<Vector3f>();
 		list.add(new Vector3f(x + w, (y + h) - radius, 0));
 		float t = 0;
 		float increment = FastMath.PI / 2f / divisions;
-		for (int i = 0; i < divisions; i++) {
-			float sx = ((x + w) - radius)
-					+ (FastMath.cos(t + (i * increment)) * radius);
-			float sy = ((y + h) - radius)
-					+ (FastMath.sin(t + (i * increment)) * radius);
+		for (int i = 0; i < divisions; i++)
+		{
+			float sx = ((x + w) - radius) + (FastMath.cos(t + (i * increment)) * radius);
+			float sy = ((y + h) - radius) + (FastMath.sin(t + (i * increment)) * radius);
 			list.add(new Vector3f(sx, sy, 0f));
 		}
-		float sx = ((x + w) - radius)
-				+ (FastMath.cos(t + (FastMath.PI / 2)) * radius);
-		float sy = ((y + h) - radius)
-				+ (FastMath.sin(t + (FastMath.PI / 2)) * radius);
+		float sx = ((x + w) - radius) + (FastMath.cos(t + (FastMath.PI / 2)) * radius);
+		float sy = ((y + h) - radius) + (FastMath.sin(t + (FastMath.PI / 2)) * radius);
 		list.add(new Vector3f(sx, sy, 0f));
 		return list;
 	}

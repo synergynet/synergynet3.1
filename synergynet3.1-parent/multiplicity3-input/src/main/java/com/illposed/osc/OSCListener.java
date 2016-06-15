@@ -35,14 +35,17 @@ import java.util.Date;
  *         information. Interface for things that listen for incoming OSC
  *         Messages
  */
-public interface OSCListener {
+public interface OSCListener
+{
 
 	/**
 	 * Accept an incoming OSCMessage
-	 * 
-	 * @param time the time this message is to be executed. null means execute
+	 *
+	 * @param time
+	 *            the time this message is to be executed. null means execute
 	 *            now
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
 	public void acceptMessage(Date time, OSCMessage message);
 

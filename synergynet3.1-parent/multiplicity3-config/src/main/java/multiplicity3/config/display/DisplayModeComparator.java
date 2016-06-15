@@ -30,23 +30,30 @@ import org.lwjgl.opengl.DisplayMode;
 /**
  * The Class DisplayModeComparator.
  */
-public class DisplayModeComparator implements Comparator<DisplayMode> {
+public class DisplayModeComparator implements Comparator<DisplayMode>
+{
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
-	public int compare(DisplayMode a, DisplayMode b) {
-		if (a.getWidth() != b.getWidth()) {
+	@Override
+	public int compare(DisplayMode a, DisplayMode b)
+	{
+		if (a.getWidth() != b.getWidth())
+		{
 			return (a.getWidth() > b.getWidth()) ? 1 : -1;
 		}
-		if (a.getHeight() != b.getHeight()) {
+		if (a.getHeight() != b.getHeight())
+		{
 			return (a.getHeight() > b.getHeight()) ? 1 : -1;
 		}
-		if (a.getBitsPerPixel() != b.getBitsPerPixel()) {
+		if (a.getBitsPerPixel() != b.getBitsPerPixel())
+		{
 			return (a.getBitsPerPixel() > b.getBitsPerPixel()) ? 1 : -1;
 		}
-		if (a.getFrequency() != b.getFrequency()) {
+		if (a.getFrequency() != b.getFrequency())
+		{
 			return (a.getFrequency() > b.getFrequency()) ? 1 : -1;
 		}
 		return 0;

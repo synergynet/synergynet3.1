@@ -20,7 +20,8 @@ import com.jme3.scene.Spatial;
  * The Class JMEStage.
  */
 @ImplementsContentItem(target = IStage.class)
-public class JMEStage extends JMEItem implements IStage, IInitable {
+public class JMEStage extends JMEItem implements IStage, IInitable
+{
 
 	/** The animation system. */
 	private AnimationSystem animationSystem;
@@ -49,10 +50,13 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	/**
 	 * Instantiates a new JME stage.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEStage(String name, UUID uuid) {
+	public JMEStage(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -60,7 +64,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getAnimationSystem()
 	 */
-	public AnimationSystem getAnimationSystem() {
+	@Override
+	public AnimationSystem getAnimationSystem()
+	{
 		return animationSystem;
 	}
 
@@ -68,7 +74,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getBehaviourMaker()
 	 */
-	public BehaviourMaker getBehaviourMaker() {
+	@Override
+	public BehaviourMaker getBehaviourMaker()
+	{
 		return behaviourMaker;
 	}
 
@@ -76,7 +84,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getContentFactory()
 	 */
-	public IContentFactory getContentFactory() {
+	@Override
+	public IContentFactory getContentFactory()
+	{
 		return this.contentFactory;
 	}
 
@@ -84,7 +94,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getDisplayHeight()
 	 */
-	public int getDisplayHeight() {
+	@Override
+	public int getDisplayHeight()
+	{
 		return height;
 	}
 
@@ -92,7 +104,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getDisplayWidth()
 	 */
-	public int getDisplayWidth() {
+	@Override
+	public int getDisplayWidth()
+	{
 		return width;
 	}
 
@@ -100,7 +114,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getDragAndDropSystem()
 	 */
-	public DragAndDropSystem getDragAndDropSystem() {
+	@Override
+	public DragAndDropSystem getDragAndDropSystem()
+	{
 		return dragAndDropSystem;
 	}
 
@@ -109,7 +125,8 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 *
 	 * @return the local stage
 	 */
-	public IStage getLocalStage() {
+	public IStage getLocalStage()
+	{
 		return localStage;
 	}
 
@@ -118,7 +135,8 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return this;
 	}
 
@@ -126,7 +144,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getPickSystem()
 	 */
-	public IPickSystem getPickSystem() {
+	@Override
+	public IPickSystem getPickSystem()
+	{
 		return pickSystem;
 	}
 
@@ -134,7 +154,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getScreenBottom()
 	 */
-	public float getScreenBottom() {
+	@Override
+	public float getScreenBottom()
+	{
 		return -getDisplayHeight() / 2;
 	}
 
@@ -142,7 +164,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getScreenLeft()
 	 */
-	public float getScreenLeft() {
+	@Override
+	public float getScreenLeft()
+	{
 		return -getDisplayWidth() / 2;
 	}
 
@@ -150,7 +174,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getScreenRight()
 	 */
-	public float getScreenRight() {
+	@Override
+	public float getScreenRight()
+	{
 		return getDisplayWidth() / 2;
 	}
 
@@ -158,7 +184,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#getScreenTop()
 	 */
-	public float getScreenTop() {
+	@Override
+	public float getScreenTop()
+	{
 		return getDisplayHeight() / 2;
 	}
 
@@ -169,7 +197,8 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		// no geometry to initialize
 	}
 
@@ -178,7 +207,8 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * @see multiplicity3.csys.stage.IStage#isLocal()
 	 */
 	@Override
-	public boolean isLocal() {
+	public boolean isLocal()
+	{
 		return true;
 	}
 
@@ -188,7 +218,8 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#screenToWorld(com.jme3.math.Vector2f)
 	 */
 	@Override
-	public Vector2f screenToWorld(Vector2f pos) {
+	public Vector2f screenToWorld(Vector2f pos)
+	{
 		return pos;
 	}
 
@@ -198,7 +229,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#setAnimationSystem(multiplicity3.csys
 	 * .animation.AnimationSystem)
 	 */
-	public void setAnimationSystem(AnimationSystem animationSystem) {
+	@Override
+	public void setAnimationSystem(AnimationSystem animationSystem)
+	{
 		this.animationSystem = animationSystem;
 	}
 
@@ -208,7 +241,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#setBehaviourMaker(multiplicity3.csys.
 	 * behaviours.BehaviourMaker)
 	 */
-	public void setBehaviourMaker(BehaviourMaker bm) {
+	@Override
+	public void setBehaviourMaker(BehaviourMaker bm)
+	{
 		this.behaviourMaker = bm;
 	}
 
@@ -218,7 +253,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#setContentFactory(multiplicity3.csys.
 	 * factory.IContentFactory)
 	 */
-	public void setContentFactory(IContentFactory contentFactory) {
+	@Override
+	public void setContentFactory(IContentFactory contentFactory)
+	{
 		this.contentFactory = contentFactory;
 	}
 
@@ -226,7 +263,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#setDisplayDimensions(int, int)
 	 */
-	public void setDisplayDimensions(int width, int height) {
+	@Override
+	public void setDisplayDimensions(int width, int height)
+	{
 		this.width = width;
 		this.height = height;
 	}
@@ -237,16 +276,20 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#setDragAndDropSystem(multiplicity3.csys
 	 * .draganddrop.DragAndDropSystem)
 	 */
-	public void setDragAndDropSystem(DragAndDropSystem dragAndDropSystem) {
+	@Override
+	public void setDragAndDropSystem(DragAndDropSystem dragAndDropSystem)
+	{
 		this.dragAndDropSystem = dragAndDropSystem;
 	}
 
 	/**
 	 * Sets the local stage.
 	 *
-	 * @param stage the new local stage
+	 * @param stage
+	 *            the new local stage
 	 */
-	public void setLocalStage(IStage stage) {
+	public void setLocalStage(IStage stage)
+	{
 		this.localStage = stage;
 	}
 
@@ -256,7 +299,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#setPickSystem(multiplicity3.csys.picksystem
 	 * .IPickSystem)
 	 */
-	public void setPickSystem(IPickSystem pickSystem) {
+	@Override
+	public void setPickSystem(IPickSystem pickSystem)
+	{
 		this.pickSystem = pickSystem;
 	}
 
@@ -266,7 +311,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * multiplicity3.csys.stage.IStage#tableToScreen(com.jme3.math.Vector2f,
 	 * com.jme3.math.Vector2f)
 	 */
-	public void tableToScreen(Vector2f in, Vector2f out) {
+	@Override
+	public void tableToScreen(Vector2f in, Vector2f out)
+	{
 		out.x = (width * in.x);
 		out.y = (height * in.y);
 	}
@@ -275,7 +322,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.stage.IStage#tableToWorld(com.jme3.math.Vector2f)
 	 */
-	public Vector2f tableToWorld(Vector2f in) {
+	@Override
+	public Vector2f tableToWorld(Vector2f in)
+	{
 		return new Vector2f((width * in.x), (height * in.y));
 	}
 
@@ -284,7 +333,9 @@ public class JMEStage extends JMEItem implements IStage, IInitable {
 	 * @see multiplicity3.csys.stage.IStage#tableToWorld(com.jme3.math.Vector2f,
 	 * com.jme3.math.Vector2f)
 	 */
-	public void tableToWorld(Vector2f in, Vector2f out) {
+	@Override
+	public void tableToWorld(Vector2f in, Vector2f out)
+	{
 		out.x = width * in.x;
 		out.y = height * in.y;
 	}

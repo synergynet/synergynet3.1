@@ -8,16 +8,18 @@ import com.jme3.math.Vector2f;
 /**
  * This line will link two items together such that when those items are
  * updated, the line will be updated too.
- * 
+ *
  * @author dcs0ah1
  */
 
-public interface ILine extends IItem {
+public interface ILine extends IItem
+{
 
 	/**
 	 * The Enum LineMode.
 	 */
-	public enum LineMode {
+	public enum LineMode
+	{
 
 		/** The linked. */
 		LINKED,
@@ -71,51 +73,56 @@ public interface ILine extends IItem {
 	/**
 	 * Sets the destination item.
 	 *
-	 * @param item the new destination item
+	 * @param item
+	 *            the new destination item
 	 */
 	public void setDestinationItem(IItem item);
 
 	/**
 	 * Sets the end position.
 	 *
-	 * @param v the new end position
+	 * @param v
+	 *            the new end position
 	 */
 	public void setEndPosition(Vector2f v);
 
 	/**
 	 * Sets the line colour.
 	 *
-	 * @param c the new line colour
+	 * @param c
+	 *            the new line colour
 	 */
 	public void setLineColour(ColorRGBA c);
 
 	/**
 	 * Sets the line visibility changes with item visibility.
 	 *
-	 * @param autoVisibilityChange the new line visibility changes with item
-	 *            visibility
+	 * @param autoVisibilityChange
+	 *            the new line visibility changes with item visibility
 	 */
-	public void setLineVisibilityChangesWithItemVisibility(
-			boolean autoVisibilityChange);
+	public void setLineVisibilityChangesWithItemVisibility(boolean autoVisibilityChange);
 
 	/**
 	 * Sets the line width.
 	 *
-	 * @param width the new line width
+	 * @param width
+	 *            the new line width
 	 */
 	public void setLineWidth(float width);
 
 	/**
 	 * Sets the source item.
 	 *
-	 * @param item the new source item
+	 * @param item
+	 *            the new source item
 	 */
 	public void setSourceItem(IItem item);
 
 	/**
 	 * Sets the start position.
 	 *
-	 * @param v the new start position
+	 * @param v
+	 *            the new start position
 	 */
 	public void setStartPosition(Vector2f v);
 

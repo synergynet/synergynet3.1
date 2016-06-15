@@ -13,7 +13,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface IScrollContainer.
  */
-public interface IScrollContainer extends IItem {
+public interface IScrollContainer extends IItem
+{
 
 	/**
 	 * Adds the frame.
@@ -25,27 +26,34 @@ public interface IScrollContainer extends IItem {
 	/**
 	 * Adds the listener to arrows.
 	 *
-	 * @param multiTouchEventAdapter the multi touch event adapter
+	 * @param multiTouchEventAdapter
+	 *            the multi touch event adapter
 	 */
-	public void addListenerToArrows(
-			MultiTouchEventAdapter multiTouchEventAdapter);
+	public void addListenerToArrows(MultiTouchEventAdapter multiTouchEventAdapter);
 
 	/**
 	 * Adds the to all frames.
 	 *
-	 * @param userIcon the user icon
-	 * @param x the x
-	 * @param y the y
+	 * @param userIcon
+	 *            the user icon
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void addToAllFrames(IItem userIcon, int x, int y);
 
 	/**
 	 * Adds the to frame.
 	 *
-	 * @param audioRecorder the audio recorder
-	 * @param frame the frame
-	 * @param x the x
-	 * @param y the y
+	 * @param audioRecorder
+	 *            the audio recorder
+	 * @param frame
+	 *            the frame
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void addToFrame(IItem audioRecorder, int frame, int x, int y);
 
@@ -92,66 +100,78 @@ public interface IScrollContainer extends IItem {
 	/**
 	 * Removes the frame.
 	 *
-	 * @param toRemove the to remove
+	 * @param toRemove
+	 *            the to remove
 	 */
 	public void removeFrame(int toRemove);
 
 	/**
 	 * Scroll to frame.
 	 *
-	 * @param frame the frame
+	 * @param frame
+	 *            the frame
 	 */
 	public void scrollToFrame(int frame);
 
 	/**
 	 * Sets the active.
 	 *
-	 * @param active the new active
+	 * @param active
+	 *            the new active
 	 */
 	public void setActive(boolean active);
 
 	/**
 	 * Sets the arrow height override.
 	 *
-	 * @param newHeight the new arrow height override
+	 * @param newHeight
+	 *            the new arrow height override
 	 */
 	public void setArrowHeightOverride(float newHeight);
 
 	/**
 	 * Sets the arrow width override.
 	 *
-	 * @param width the new arrow width override
+	 * @param width
+	 *            the new arrow width override
 	 */
 	public void setArrowWidthOverride(float width);
 
 	/**
 	 * Sets the arrow y override.
 	 *
-	 * @param newY the new arrow y override
+	 * @param newY
+	 *            the new arrow y override
 	 */
 	public void setArrowYOverride(float newY);
 
 	/**
 	 * Sets the dimensions.
 	 *
-	 * @param stage the stage
-	 * @param log the log
-	 * @param width the width
-	 * @param height the height
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public void setDimensions(IStage stage, Logger log, int width, int height);
 
 	/**
 	 * Sets the frame colour.
 	 *
-	 * @param studentColour the new frame colour
+	 * @param studentColour
+	 *            the new frame colour
 	 */
 	public void setFrameColour(ColorRGBA studentColour);
 
 	/**
 	 * Sets the visibility.
 	 *
-	 * @param isVisible the new visibility
+	 * @param isVisible
+	 *            the new visibility
 	 */
 	public void setVisibility(final Boolean isVisible);
 

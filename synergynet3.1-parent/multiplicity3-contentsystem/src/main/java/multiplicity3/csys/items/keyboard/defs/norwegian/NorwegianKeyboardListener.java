@@ -20,7 +20,8 @@ import multiplicity3.csys.items.keyboard.model.KeyboardKey;
  *
  * @see NorwegianKeyboardEvent
  */
-public class NorwegianKeyboardListener implements IMultiTouchKeyboardListener {
+public class NorwegianKeyboardListener implements IMultiTouchKeyboardListener
+{
 
 	/** The edit item. */
 	private IEditableText editItem;
@@ -31,10 +32,13 @@ public class NorwegianKeyboardListener implements IMultiTouchKeyboardListener {
 	/**
 	 * Instantiates a new norwegian keyboard listener.
 	 *
-	 * @param editItem the edit item
-	 * @param keyboard the keyboard
+	 * @param editItem
+	 *            the edit item
+	 * @param keyboard
+	 *            the keyboard
 	 */
-	public NorwegianKeyboardListener(IEditableText editItem, IKeyboard keyboard) {
+	public NorwegianKeyboardListener(IEditableText editItem, IKeyboard keyboard)
+	{
 		this.editItem = editItem;
 		this.keyboard = keyboard;
 	}
@@ -47,41 +51,55 @@ public class NorwegianKeyboardListener implements IMultiTouchKeyboardListener {
 	 * boolean, boolean)
 	 */
 	@Override
-	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
-		if (k.getKeyCode() == 222) {
+	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
+		if (k.getKeyCode() == 222)
+		{
 			// if(!shiftDown)
 			// editItem.appendString("�");
 			// else
 			editItem.appendString("�");
-		} else if (k.getKeyCode() == 59) {
+		}
+		else if (k.getKeyCode() == 59)
+		{
 			// if(!shiftDown)
 			// editItem.appendString("�");
 			// else
 			editItem.appendString("�");
-		} else if (k.getKeyCode() == 91) {
+		}
+		else if (k.getKeyCode() == 91)
+		{
 			// if(!shiftDown)
 			// editItem.appendString("�");
 			// else
 			editItem.appendString("�");
 
-		} else if (k.getKeyCode() == KeyEvent.VK_BACK_SPACE) {
+		}
+		else if (k.getKeyCode() == KeyEvent.VK_BACK_SPACE)
+		{
 			editItem.removeChar();
 
-		} else if (k.getKeyCode() == KeyEvent.VK_ENTER) {
+		}
+		else if (k.getKeyCode() == KeyEvent.VK_ENTER)
+		{
 			// ignore
-		} else if ((k.getKeyCode() != KeyEvent.VK_CANCEL)
-				&& (k.getModifiers() == KeyModifiers.NONE)) {
-			if (shiftDown) {
+		}
+		else if ((k.getKeyCode() != KeyEvent.VK_CANCEL) && (k.getModifiers() == KeyModifiers.NONE))
+		{
+			if (shiftDown)
+			{
 				String txt = KeyEvent.getKeyText(k.getKeyCode()).toUpperCase();
 				editItem.appendChar(Character.toUpperCase(txt.charAt(0)));
-			} else {
+			}
+			else
+			{
 				String txt = KeyEvent.getKeyText(k.getKeyCode()).toLowerCase();
 				editItem.appendChar(Character.toUpperCase(txt.charAt(0)));
 			}
 		}
 
-		if (editItem.getParentItem() instanceof IFrame) {
+		if (editItem.getParentItem() instanceof IFrame)
+		{
 			IFrame frame = (IFrame) editItem.getParentItem();
 			frame.setSize(editItem.getWidth(), frame.getSize().y);
 		}
@@ -97,8 +115,8 @@ public class NorwegianKeyboardListener implements IMultiTouchKeyboardListener {
 	 * boolean, boolean, boolean)
 	 */
 	@Override
-	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
+	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
 		// TODO Auto-generated method stub
 
 	}

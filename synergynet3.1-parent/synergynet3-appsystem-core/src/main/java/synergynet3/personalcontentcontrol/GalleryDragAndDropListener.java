@@ -17,7 +17,8 @@ import multiplicity3.csys.stage.IStage;
  *
  * @see GalleryDragAndDropEvent
  */
-public class GalleryDragAndDropListener implements DragAndDropListener {
+public class GalleryDragAndDropListener implements DragAndDropListener
+{
 
 	/** The gallery. */
 	private StudentGallery gallery;
@@ -31,12 +32,15 @@ public class GalleryDragAndDropListener implements DragAndDropListener {
 	/**
 	 * Instantiates a new gallery drag and drop listener.
 	 *
-	 * @param gallery the gallery
-	 * @param stage the stage
-	 * @param log the log
+	 * @param gallery
+	 *            the gallery
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
 	 */
-	public GalleryDragAndDropListener(StudentGallery gallery, IStage stage,
-			Logger log) {
+	public GalleryDragAndDropListener(StudentGallery gallery, IStage stage, Logger log)
+	{
 		this.gallery = gallery;
 		this.log = log;
 		this.stage = stage;
@@ -50,15 +54,17 @@ public class GalleryDragAndDropListener implements DragAndDropListener {
 	 * multiplicity3.csys.items.item.IItem, int)
 	 */
 	@Override
-	public void itemDraggedAndDropped(IItem itemDropped, IItem onto,
-			int indexOfDrop) {
+	public void itemDraggedAndDropped(IItem itemDropped, IItem onto, int indexOfDrop)
+	{
 
-		if (itemDropped == null) {
+		if (itemDropped == null)
+		{
 			log.warning("No actual dropping occurred!");
 			return;
 		}
 
-		if (!itemDropped.isVisible()) {
+		if (!itemDropped.isVisible())
+		{
 			log.fine("Item is not visible, no further action.");
 			return;
 		}
@@ -69,12 +75,17 @@ public class GalleryDragAndDropListener implements DragAndDropListener {
 	/**
 	 * Attempt to add to gallery.
 	 *
-	 * @param item the item
-	 * @param stage the stage
+	 * @param item
+	 *            the item
+	 * @param stage
+	 *            the stage
 	 */
-	private void attemptToAddToGallery(IItem item, IStage stage) {
-		if (!item.equals(stage)) {
-			if (!gallery.addToGallery(item, stage)) {
+	private void attemptToAddToGallery(IItem item, IStage stage)
+	{
+		if (!item.equals(stage))
+		{
+			if (!gallery.addToGallery(item, stage))
+			{
 				attemptToAddToGallery(item.getParentItem(), stage);
 			}
 		}

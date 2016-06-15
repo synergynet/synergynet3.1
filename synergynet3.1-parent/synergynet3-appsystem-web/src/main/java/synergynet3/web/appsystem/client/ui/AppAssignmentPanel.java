@@ -5,6 +5,7 @@ import com.google.gwt.user.client.ui.HorizontalPanel;
 /**
  * The Class AppAssignmentPanel.
  */
-public class AppAssignmentPanel extends HorizontalPanel {
+public class AppAssignmentPanel extends HorizontalPanel
+{
 
 }

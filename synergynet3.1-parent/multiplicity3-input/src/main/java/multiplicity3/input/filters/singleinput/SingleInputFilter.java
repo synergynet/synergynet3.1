@@ -33,7 +33,8 @@ import multiplicity3.input.filters.IMultiTouchInputFilter;
  *
  * @author dcs0ah1
  */
-public class SingleInputFilter implements IMultiTouchInputFilter {
+public class SingleInputFilter implements IMultiTouchInputFilter
+{
 
 	/** The Constant INVALID_CURSOR. */
 	private static final int INVALID_CURSOR = Integer.MIN_VALUE;
@@ -50,8 +51,11 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorChanged(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (event.getCursorID() == activeCursor) {
+	@Override
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (event.getCursorID() == activeCursor)
+		{
 			next.cursorChanged(event);
 		}
 	}
@@ -62,8 +66,11 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorClicked(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorClicked(MultiTouchCursorEvent event) {
-		if (event.getCursorID() == activeCursor) {
+	@Override
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
+		if (event.getCursorID() == activeCursor)
+		{
 			next.cursorClicked(event);
 		}
 	}
@@ -74,8 +81,11 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorPressed(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (activeCursor == INVALID_CURSOR) {
+	@Override
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (activeCursor == INVALID_CURSOR)
+		{
 			activeCursor = event.getCursorID();
 			next.cursorPressed(event);
 		}
@@ -87,8 +97,11 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorReleased(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (event.getCursorID() == activeCursor) {
+	@Override
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (event.getCursorID() == activeCursor)
+		{
 			activeCursor = INVALID_CURSOR;
 			next.cursorReleased(event);
 		}
@@ -100,7 +113,9 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#objectAdded(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectAdded(MultiTouchObjectEvent event) {
+	@Override
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 		next.objectAdded(event);
 	}
 
@@ -110,7 +125,9 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#objectChanged(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectChanged(MultiTouchObjectEvent event) {
+	@Override
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 		next.objectChanged(event);
 	}
 
@@ -120,7 +137,9 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#objectRemoved(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	@Override
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		next.objectRemoved(event);
 	}
 
@@ -130,7 +149,9 @@ public class SingleInputFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.filters.IMultiTouchInputFilter#setNext(multiplicity3
 	 * .input.IMultiTouchEventListener)
 	 */
-	public void setNext(IMultiTouchEventListener el) {
+	@Override
+	public void setNext(IMultiTouchEventListener el)
+	{
 		this.next = el;
 	}
 

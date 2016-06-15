@@ -26,7 +26,8 @@ package multiplicity3.input.tuio.tuioobjects;
 /**
  * The Class TUIOFingerCursor.
  */
-public class TUIOFingerCursor extends TUIOObjectRepresentation {
+public class TUIOFingerCursor extends TUIOObjectRepresentation
+{
 
 	/** The current id. */
 	public static long CURRENT_ID = 0;
@@ -34,10 +35,12 @@ public class TUIOFingerCursor extends TUIOObjectRepresentation {
 	/**
 	 * Instantiates a new TUIO finger cursor.
 	 */
-	public TUIOFingerCursor() {
+	public TUIOFingerCursor()
+	{
 		super();
 		setId(CURRENT_ID++);
-		if (CURRENT_ID == Long.MAX_VALUE) {
+		if (CURRENT_ID == Long.MAX_VALUE)
+		{
 			CURRENT_ID = 0;
 		}
 	}
@@ -46,7 +49,9 @@ public class TUIOFingerCursor extends TUIOObjectRepresentation {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return "TUIOFingerCursor(" + this.getId() + ") @" + this.getPosition();
 	}
 }

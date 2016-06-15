@@ -20,7 +20,8 @@ import multiplicity3.csys.items.keyboard.model.KeyboardKey;
 /**
  * The Class CalculatorKeyboardRenderer.
  */
-public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
+public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer
+{
 
 	/** The bg gradient paint. */
 	private GradientPaint bgGradientPaint;
@@ -36,15 +37,17 @@ public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
 
 	/** The key stroke. */
 	private Stroke keyStroke = new BasicStroke(6.0f, // Line width
-			BasicStroke.CAP_ROUND, // End-cap style
-			BasicStroke.JOIN_ROUND);
+	BasicStroke.CAP_ROUND, // End-cap style
+	BasicStroke.JOIN_ROUND);
 
 	/**
 	 * Instantiates a new calculator keyboard renderer.
 	 *
-	 * @param kbd the kbd
+	 * @param kbd
+	 *            the kbd
 	 */
-	public CalculatorKeyboardRenderer(KeyboardDefinition kbd) {
+	public CalculatorKeyboardRenderer(KeyboardDefinition kbd)
+	{
 		this.kbd = kbd;
 	}
 
@@ -55,27 +58,26 @@ public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	 * (java.awt.Graphics2D, boolean, boolean, boolean)
 	 */
 	@Override
-	public void drawKeyboard(Graphics2D g2d, boolean shiftDown,
-			boolean altDown, boolean ctlDown) {
+	public void drawKeyboard(Graphics2D g2d, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
 
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
-				RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
 
-		if (fontMetrics == null) {
+		if (fontMetrics == null)
+		{
 			fontMetrics = g2d.getFontMetrics(keyboardFont);
 		}
-		bgGradientPaint = new GradientPaint(0, (float) kbd.getBounds()
-				.getMaxY() / 3, Color.white, 0, (float) kbd.getBounds()
-				.getMaxY(), Color.lightGray);
+		bgGradientPaint = new GradientPaint(0, (float) kbd.getBounds().getMaxY() / 3, Color.white, 0, (float) kbd.getBounds().getMaxY(), Color.lightGray);
 		g2d.setPaint(bgGradientPaint);
-		g2d.fillRect(0, 0, (int) kbd.getBounds().getMaxX(), (int) kbd
-				.getBounds().getMaxY());
+		g2d.fillRect(0, 0, (int) kbd.getBounds().getMaxX(), (int) kbd.getBounds().getMaxY());
 		g2d.setColor(Color.black);
 
-		for (KeyboardKey k : kbd.getKeysIterator()) {
+		for (KeyboardKey k : kbd.getKeysIterator())
+		{
 			Point p = getShapeCenter(k.getKeyShape());
 			// if(k.isEnabled()) {
-			if (!k.isEnabled()) {
+			if (!k.isEnabled())
+			{
 				continue;
 			}
 			g2d.setColor(k.getBackgroundColour());
@@ -87,10 +89,8 @@ public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
 			g2d.setColor(k.getKeyTextColour());
 			g2d.draw(k.getKeyShape());
 			g2d.setFont(keyboardFont);
-			int strWidth = fontMetrics.stringWidth(k
-					.getKeyStringRepresentation());
-			g2d.drawString(k.getKeyStringRepresentation(),
-					p.x - (strWidth / 2), p.y + (fontMetrics.getAscent() / 2));
+			int strWidth = fontMetrics.stringWidth(k.getKeyStringRepresentation());
+			g2d.drawString(k.getKeyStringRepresentation(), p.x - (strWidth / 2), p.y + (fontMetrics.getAscent() / 2));
 
 		}
 
@@ -104,9 +104,10 @@ public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	 * boolean, boolean)
 	 */
 	@Override
-	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
-		if (k.getKeyCode() == KeyEvent.VK_SHIFT) {
+	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
+		if (k.getKeyCode() == KeyEvent.VK_SHIFT)
+		{
 			shiftDown = true;
 		}
 	}
@@ -119,9 +120,10 @@ public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	 * boolean, boolean, boolean)
 	 */
 	@Override
-	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
-		if (k.getKeyCode() == KeyEvent.VK_SHIFT) {
+	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
+		if (k.getKeyCode() == KeyEvent.VK_SHIFT)
+		{
 			shiftDown = false;
 		}
 	}
@@ -129,13 +131,14 @@ public class CalculatorKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	/**
 	 * Gets the shape center.
 	 *
-	 * @param keyShape the key shape
+	 * @param keyShape
+	 *            the key shape
 	 * @return the shape center
 	 */
-	private Point getShapeCenter(Shape keyShape) {
+	private Point getShapeCenter(Shape keyShape)
+	{
 		Rectangle2D bounds = keyShape.getBounds2D();
-		Point p = new Point((int) bounds.getCenterX(),
-				(int) bounds.getCenterY());
+		Point p = new Point((int) bounds.getCenterX(), (int) bounds.getCenterY());
 		return p;
 	}
 }

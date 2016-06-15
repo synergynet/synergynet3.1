@@ -14,7 +14,8 @@ import com.jme3.util.BufferUtils;
 /**
  * The Class GestureDrawer.
  */
-public class GestureDrawer extends Node {
+public class GestureDrawer extends Node
+{
 
 	/** The a. */
 	private Line a;
@@ -25,7 +26,8 @@ public class GestureDrawer extends Node {
 	/**
 	 * Instantiates a new gesture drawer.
 	 */
-	public GestureDrawer() {
+	public GestureDrawer()
+	{
 		super("gesture drawer");
 
 		a = new Line();
@@ -42,12 +44,16 @@ public class GestureDrawer extends Node {
 	/**
 	 * Blat.
 	 *
-	 * @param g the g
-	 * @param l the l
+	 * @param g
+	 *            the g
+	 * @param l
+	 *            the l
 	 */
-	public void blat(Gesture g, Line l) {
+	public void blat(Gesture g, Line l)
+	{
 		FloatBuffer v = BufferUtils.createFloatBuffer(g.numPoints() * 3);
-		for (int i = 0; i < g.numPoints(); i++) {
+		for (int i = 0; i < g.numPoints(); i++)
+		{
 			Vector2f x = g.getPoint(i);
 			v.put(x.x).put(x.y).put(0);
 		}
@@ -58,10 +64,13 @@ public class GestureDrawer extends Node {
 	/**
 	 * Update gesture pair.
 	 *
-	 * @param g1 the g1
-	 * @param g2 the g2
+	 * @param g1
+	 *            the g1
+	 * @param g2
+	 *            the g2
 	 */
-	public void updateGesturePair(Gesture g1, Gesture g2) {
+	public void updateGesturePair(Gesture g1, Gesture g2)
+	{
 		blat(g1, a);
 		blat(g2, b);
 	}
@@ -69,9 +78,11 @@ public class GestureDrawer extends Node {
 	/**
 	 * Inits the line.
 	 *
-	 * @param l the l
+	 * @param l
+	 *            the l
 	 */
-	private void initLine(Line l) {
+	private void initLine(Line l)
+	{
 		l.setLineWidth(3f);
 
 		// TODO: where do we set color, scale, translation, etc.

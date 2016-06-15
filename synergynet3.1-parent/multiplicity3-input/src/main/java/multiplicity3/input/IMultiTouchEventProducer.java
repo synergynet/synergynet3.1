@@ -5,12 +5,14 @@ import multiplicity3.input.filters.IMultiTouchInputFilter;
 /**
  * The Interface IMultiTouchEventProducer.
  */
-public interface IMultiTouchEventProducer {
+public interface IMultiTouchEventProducer
+{
 
 	/**
 	 * Adds the multi touch input filter.
 	 *
-	 * @param filter the filter
+	 * @param filter
+	 *            the filter
 	 */
 	public void addMultiTouchInputFilter(IMultiTouchInputFilter filter);
 
@@ -24,7 +26,8 @@ public interface IMultiTouchEventProducer {
 	/**
 	 * Checks if is filter active.
 	 *
-	 * @param filter the filter
+	 * @param filter
+	 *            the filter
 	 * @return true, if is filter active
 	 */
 	public boolean isFilterActive(Class<? extends IMultiTouchInputFilter> filter);
@@ -32,33 +35,34 @@ public interface IMultiTouchEventProducer {
 	/**
 	 * Register multi touch event listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener);
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener);
 
 	/**
 	 * Register multi touch event listener.
 	 *
-	 * @param listener the listener
-	 * @param index the index
+	 * @param listener
+	 *            the listener
+	 * @param index
+	 *            the index
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener, int index);
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener, int index);
 
 	/**
 	 * Register multi touch exception listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void registerMultiTouchExceptionListener(
-			IDispatchedMultiTouchEventExceptionListener listener);
+	public void registerMultiTouchExceptionListener(IDispatchedMultiTouchEventExceptionListener listener);
 
 	/**
 	 * Unregister multi touch event listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void unregisterMultiTouchEventListener(
-			IMultiTouchEventListener listener);
+	public void unregisterMultiTouchEventListener(IMultiTouchEventListener listener);
 }

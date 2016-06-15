@@ -9,7 +9,8 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
 /**
  * The Class ItemDragAndDropWorker.
  */
-public class ItemDragAndDropWorker implements IMultiTouchEventListener {
+public class ItemDragAndDropWorker implements IMultiTouchEventListener
+{
 
 	/** The item. */
 	private IItem item;
@@ -20,10 +21,13 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	/**
 	 * Instantiates a new item drag and drop worker.
 	 *
-	 * @param stage the stage
-	 * @param item the item
+	 * @param stage
+	 *            the stage
+	 * @param item
+	 *            the item
 	 */
-	public ItemDragAndDropWorker(IStage stage, IItem item) {
+	public ItemDragAndDropWorker(IStage stage, IItem item)
+	{
 		this.stage = stage;
 		this.item = item;
 		item.getMultiTouchDispatcher().addListener(this);
@@ -36,7 +40,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -48,7 +53,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -60,7 +66,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -72,7 +79,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		stage.getDragAndDropSystem().dropOccurred(event, item);
 	}
 
@@ -83,7 +91,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -95,7 +104,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -107,7 +117,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -115,7 +126,8 @@ public class ItemDragAndDropWorker implements IMultiTouchEventListener {
 	/**
 	 * Stop working.
 	 */
-	public void stopWorking() {
+	public void stopWorking()
+	{
 		item.getMultiTouchDispatcher().remove(this);
 	}
 }

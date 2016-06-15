@@ -9,10 +9,11 @@ import com.jme3.math.Vector2f;
 /**
  * The Interface IPickSystem.
  */
-public interface IPickSystem {
+public interface IPickSystem
+{
 	/**
 	 * Find items at a position in screen coordinates.
-	 * 
+	 *
 	 * @param position
 	 * @return
 	 */

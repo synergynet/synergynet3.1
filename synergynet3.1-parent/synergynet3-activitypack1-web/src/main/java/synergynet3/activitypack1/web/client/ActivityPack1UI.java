@@ -7,16 +7,20 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ActivityPack1UI.
  */
-public class ActivityPack1UI extends VerticalPanel {
+public class ActivityPack1UI extends VerticalPanel
+{
 
 	/**
 	 * Instantiates a new activity pack1 ui.
 	 *
-	 * @param app the app
+	 * @param app
+	 *            the app
 	 */
-	public ActivityPack1UI(String app) {
+	public ActivityPack1UI(String app)
+	{
 		super();
-		if ("gravity".equals(app)) {
+		if ("gravity".equals(app))
+		{
 			this.add(new GravitySimUI());
 		}
 	}

@@ -17,7 +17,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ProjectionControlPanel.
  */
-public class ProjectionControlPanel extends VerticalPanel {
+public class ProjectionControlPanel extends VerticalPanel
+{
 
 	/** The projector name. */
 	private String projectorName;
@@ -34,7 +35,8 @@ public class ProjectionControlPanel extends VerticalPanel {
 	/**
 	 * Instantiates a new projection control panel.
 	 */
-	public ProjectionControlPanel() {
+	public ProjectionControlPanel()
+	{
 		setSpacing(5);
 
 		disclosurePanel = new DisclosurePanel("");
@@ -74,8 +76,11 @@ public class ProjectionControlPanel extends VerticalPanel {
 
 		Button btnCloneSelectedTable = new Button("Clone Table");
 		verticalPanel.add(btnCloneSelectedTable);
-		btnCloneSelectedTable.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnCloneSelectedTable.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				cloneTableButtonPressed();
 			}
 		});
@@ -90,28 +95,40 @@ public class ProjectionControlPanel extends VerticalPanel {
 		btnUntifyRotation.setWidth("119px");
 
 		Button btnClearProjector = new Button("Clear Projector");
-		btnClearProjector.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnClearProjector.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				clearProjectorButtonPressed();
 			}
 		});
 
 		Button btnShowScores = new Button("Show Scores");
 		buttonsPanel.add(btnShowScores);
-		btnShowScores.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnShowScores.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				setScoreDisplay();
 			}
 		});
 		buttonsPanel.add(btnClearProjector);
-		btnUntifyRotation.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnUntifyRotation.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				setUnifyRotation(false);
 				setUnifyRotation(true);
 			}
 		});
-		btnReplaceTableContent.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnReplaceTableContent.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				replaceTableButtonPressed();
 			}
 		});
@@ -122,16 +139,19 @@ public class ProjectionControlPanel extends VerticalPanel {
 	 *
 	 * @return the projector name
 	 */
-	public String getProjectorName() {
+	public String getProjectorName()
+	{
 		return this.projectorName;
 	}
 
 	/**
 	 * Sets the projector name.
 	 *
-	 * @param name the new projector name
+	 * @param name
+	 *            the new projector name
 	 */
-	public void setProjectorName(String name) {
+	public void setProjectorName(String name)
+	{
 		this.projectorName = name;
 		this.disclosurePanel.getHeaderTextAccessor().setText(name);
 	}
@@ -141,64 +161,75 @@ public class ProjectionControlPanel extends VerticalPanel {
 	 *
 	 * @return the table last projected
 	 */
-	private String getTableLastProjected() {
+	private String getTableLastProjected()
+	{
 		return tableLastProjected;
 	}
 
 	/**
 	 * Sets the projection display mode.
 	 *
-	 * @param mode the new projection display mode
+	 * @param mode
+	 *            the new projection display mode
 	 */
-	private void setProjectionDisplayMode(ProjectionDisplayMode mode) {
-		NumberNetService.Util.getInstance().setProjectorDisplayMode(
-				getProjectorName(), mode, new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+	private void setProjectionDisplayMode(ProjectionDisplayMode mode)
+	{
+		NumberNetService.Util.getInstance().setProjectorDisplayMode(getProjectorName(), mode, new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 	}
 
 	/**
 	 * Clear projector button pressed.
 	 */
-	protected void clearProjectorButtonPressed() {
+	protected void clearProjectorButtonPressed()
+	{
 		setProjectionDisplayMode(ProjectionDisplayMode.BLANK);
 	}
 
 	/**
 	 * Clone table button pressed.
 	 */
-	protected void cloneTableButtonPressed() {
+	protected void cloneTableButtonPressed()
+	{
 		final String selectedTable = projectorsOnline.getDeviceSelected();
 
-		NumberNetService.Util.getInstance().projectTable(selectedTable,
-				getProjectorName(), new AsyncCallback<Void>() {
+		NumberNetService.Util.getInstance().projectTable(selectedTable, getProjectorName(), new AsyncCallback<Void>()
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-						tableLastProjected = selectedTable;
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+				tableLastProjected = selectedTable;
+			}
+		});
 
 	}
 
 	/**
 	 * Replace table button pressed.
 	 */
-	protected void replaceTableButtonPressed() {
+	protected void replaceTableButtonPressed()
+	{
 		String table = getTableLastProjected();
-		if (table == null) {
+		if (table == null)
+		{
 			return;
 			// NumberNetService.Util.getInstance().copyPositionInformationFromProjectorToTable(getProjectorName(),
 			// table, new AsyncCallback<Void>() {
@@ -218,27 +249,32 @@ public class ProjectionControlPanel extends VerticalPanel {
 	/**
 	 * Sets the score display.
 	 */
-	protected void setScoreDisplay() {
+	protected void setScoreDisplay()
+	{
 		setProjectionDisplayMode(ProjectionDisplayMode.SCORES);
 	}
 
 	/**
 	 * Sets the unify rotation.
 	 *
-	 * @param value the new unify rotation
+	 * @param value
+	 *            the new unify rotation
 	 */
-	protected void setUnifyRotation(boolean value) {
-		NumberNetService.Util.getInstance().setUnifyRotationModeEnabled(
-				getProjectorName(), value, new AsyncCallback<Void>() {
+	protected void setUnifyRotation(boolean value)
+	{
+		NumberNetService.Util.getInstance().setUnifyRotationModeEnabled(getProjectorName(), value, new AsyncCallback<Void>()
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 	}
 }

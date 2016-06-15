@@ -7,7 +7,8 @@ import synergynet3.web.apps.numbernet.shared.ProjectionDisplayMode;
 /**
  * The Class ProjectorDevice.
  */
-public class ProjectorDevice extends ClusteredDevice {
+public class ProjectorDevice extends ClusteredDevice
+{
 
 	/** The Constant deviceType. */
 	public static final String deviceType = "projector";
@@ -27,18 +28,16 @@ public class ProjectorDevice extends ClusteredDevice {
 	/**
 	 * Instantiates a new projector device.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public ProjectorDevice(String name) {
+	public ProjectorDevice(String name)
+	{
 		super(name);
-		targetToShow = getDistributedPropertyMap().createDistributedProperty(
-				"targetvalue");
-		unifyRotationControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty("unifyrotation");
-		updatePositionKicker = getDistributedPropertyMap()
-				.createDistributedProperty("shouldupdatepos");
-		displayMode = getDistributedPropertyMap().createDistributedProperty(
-				"displaymode");
+		targetToShow = getDistributedPropertyMap().createDistributedProperty("targetvalue");
+		unifyRotationControlVariable = getDistributedPropertyMap().createDistributedProperty("unifyrotation");
+		updatePositionKicker = getDistributedPropertyMap().createDistributedProperty("shouldupdatepos");
+		displayMode = getDistributedPropertyMap().createDistributedProperty("displaymode");
 	}
 
 	/**
@@ -46,7 +45,8 @@ public class ProjectorDevice extends ClusteredDevice {
 	 *
 	 * @return the projection display mode control variable
 	 */
-	public DistributedProperty<ProjectionDisplayMode> getProjectionDisplayModeControlVariable() {
+	public DistributedProperty<ProjectionDisplayMode> getProjectionDisplayModeControlVariable()
+	{
 		return displayMode;
 	}
 
@@ -55,7 +55,8 @@ public class ProjectorDevice extends ClusteredDevice {
 	 *
 	 * @return the should update position control variable
 	 */
-	public DistributedProperty<Integer> getShouldUpdatePositionControlVariable() {
+	public DistributedProperty<Integer> getShouldUpdatePositionControlVariable()
+	{
 		return updatePositionKicker;
 	}
 
@@ -64,7 +65,8 @@ public class ProjectorDevice extends ClusteredDevice {
 	 *
 	 * @return the target to show control variable
 	 */
-	public DistributedProperty<Double> getTargetToShowControlVariable() {
+	public DistributedProperty<Double> getTargetToShowControlVariable()
+	{
 		return targetToShow;
 	}
 
@@ -73,18 +75,23 @@ public class ProjectorDevice extends ClusteredDevice {
 	 *
 	 * @return the unify rotation control variable
 	 */
-	public DistributedProperty<Boolean> getUnifyRotationControlVariable() {
+	public DistributedProperty<Boolean> getUnifyRotationControlVariable()
+	{
 		return unifyRotationControlVariable;
 	}
 
 	/**
 	 * Notify should update position.
 	 */
-	public void notifyShouldUpdatePosition() {
+	public void notifyShouldUpdatePosition()
+	{
 		Integer i = updatePositionKicker.getValue();
-		if (i == null) {
+		if (i == null)
+		{
 			updatePositionKicker.setValue(1);
-		} else {
+		}
+		else
+		{
 			i += 1;
 			updatePositionKicker.setValue(i);
 		}

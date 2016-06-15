@@ -12,7 +12,8 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
 /**
  * The Class InertiaBehaviour.
  */
-public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
+public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener
+{
 
 	/** The active. */
 	private boolean active = true;
@@ -39,13 +40,15 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
-		if (cursorCount == 1) {
-			positionHistory
-					.add(event.getPosition(), System.currentTimeMillis());
+		if (cursorCount == 1)
+		{
+			positionHistory.add(event.getPosition(), System.currentTimeMillis());
 		}
 	}
 
@@ -56,8 +59,10 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		iae.reset();
@@ -72,8 +77,10 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		cursorCount++;
@@ -88,13 +95,15 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
-		if (cursorCount == 1) {
-			positionHistory
-					.add(event.getPosition(), System.currentTimeMillis());
+		if (cursorCount == 1)
+		{
+			positionHistory.add(event.getPosition(), System.currentTimeMillis());
 			iae.moveWithVelocity(positionHistory.getVelocity());
 			AnimationSystem.getInstance().add(iae);
 			positionHistory.clear();
@@ -109,7 +118,8 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -119,7 +129,8 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -129,7 +140,8 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -137,16 +149,19 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
 	/**
 	 * Sets the deceleration.
 	 *
-	 * @param deceleration the new deceleration
+	 * @param deceleration
+	 *            the new deceleration
 	 */
-	public void setDeceleration(float deceleration) {
+	public void setDeceleration(float deceleration)
+	{
 		iae.setDeceleration(deceleration);
 	}
 
@@ -157,8 +172,10 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem eventSourceItem) {
-		if ((eventSourceItem == null) && (eventSource != null)) {
+	public void setEventSource(IItem eventSourceItem)
+	{
+		if ((eventSourceItem == null) && (eventSource != null))
+		{
 			eventSource.getMultiTouchDispatcher().remove(this);
 		}
 
@@ -173,7 +190,8 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setItemActingOn(IItem item) {
+	public void setItemActingOn(IItem item)
+	{
 		iae = new InertiaAnimationElement(item, stage);
 		positionHistory = new ItemPositionHistory(item);
 		positionHistory.setStage(stage);
@@ -186,9 +204,11 @@ public class InertiaBehaviour implements IBehaviour, IMultiTouchEventListener {
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
-		if (positionHistory != null) {
+		if (positionHistory != null)
+		{
 			positionHistory.setStage(stage);
 		}
 	}

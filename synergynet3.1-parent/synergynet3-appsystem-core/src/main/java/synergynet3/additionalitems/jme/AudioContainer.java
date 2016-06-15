@@ -20,8 +20,8 @@ import synergynet3.databasemanagement.GalleryItemDatabaseFormat;
  * The Class AudioContainer.
  */
 @ImplementsContentItem(target = IAudioContainer.class)
-public class AudioContainer extends JMEContainer implements IAudioContainer,
-		IInitable, IItemCachable {
+public class AudioContainer extends JMEContainer implements IAudioContainer, IInitable, IItemCachable
+{
 
 	/** The Constant CACHABLE_TYPE. */
 	public static final String CACHABLE_TYPE = "CACHABLE_AUDIOWRAPPER";
@@ -35,34 +35,39 @@ public class AudioContainer extends JMEContainer implements IAudioContainer,
 	/**
 	 * Instantiates a new audio container.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public AudioContainer(String name, UUID uuid) {
+	public AudioContainer(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
 	/**
 	 * Reconstruct.
 	 *
-	 * @param galleryItem the gallery item
-	 * @param stage the stage
-	 * @param studentID the student id
+	 * @param galleryItem
+	 *            the gallery item
+	 * @param stage
+	 *            the stage
+	 * @param studentID
+	 *            the student id
 	 * @return the audio player
 	 */
-	public static AudioPlayer reconstruct(
-			GalleryItemDatabaseFormat galleryItem, IStage stage,
-			String studentID) {
+	public static AudioPlayer reconstruct(GalleryItemDatabaseFormat galleryItem, IStage stage, String studentID)
+	{
 		AudioPlayer audioPlayItem = null;
-		try {
-			audioPlayItem = stage.getContentFactory().create(
-					IAudioPlayer.class, "wrapper", UUID.randomUUID());
-			String audioLocation = CacheOrganisation.getSpecificDir(studentID)
-					+ File.separator + (String) galleryItem.getValues().get(0);
-			audioPlayItem.setAudioRecording(new File(audioLocation),
-					audioLocation);
+		try
+		{
+			audioPlayItem = stage.getContentFactory().create(IAudioPlayer.class, "wrapper", UUID.randomUUID());
+			String audioLocation = CacheOrganisation.getSpecificDir(studentID) + File.separator + (String) galleryItem.getValues().get(0);
+			audioPlayItem.setAudioRecording(new File(audioLocation), audioLocation);
 			audioPlayItem.setCached(studentID);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 		}
 		return audioPlayItem;
 	}
@@ -72,19 +77,24 @@ public class AudioContainer extends JMEContainer implements IAudioContainer,
 	 * @see synergynet3.cachecontrol.IItemCachable#deconstruct(java.lang.String)
 	 */
 	@Override
-	public GalleryItemDatabaseFormat deconstruct(String loc) {
+	public GalleryItemDatabaseFormat deconstruct(String loc)
+	{
 		GalleryItemDatabaseFormat galleryItem = new GalleryItemDatabaseFormat();
 		galleryItem.setType(CACHABLE_TYPE);
-		if (audioController == null) {
+		if (audioController == null)
+		{
 			return null;
 		}
-		if (audioController.getAudioFile() == null) {
+		if (audioController.getAudioFile() == null)
+		{
 			return null;
 		}
-		if (!audioController.getAudioFile().isFile()) {
+		if (!audioController.getAudioFile().isFile())
+		{
 			return null;
 		}
-		if (!cached.equalsIgnoreCase(loc)) {
+		if (!cached.equalsIgnoreCase(loc))
+		{
 			ItemCaching.cacheFile(audioController.getAudioFile(), loc);
 		}
 		galleryItem.addValue(audioController.getAudioFile().getName());
@@ -97,14 +107,17 @@ public class AudioContainer extends JMEContainer implements IAudioContainer,
 	 * synergynet3.additionalitems.interfaces.IAudioContainer#getAudioController
 	 * ()
 	 */
-	public SNAudioController getAudioController() {
+	@Override
+	public SNAudioController getAudioController()
+	{
 		return audioController;
 	}
 
 	/**
 	 * @return the cached
 	 */
-	public String isCached() {
+	public String isCached()
+	{
 		return cached;
 	}
 
@@ -114,14 +127,18 @@ public class AudioContainer extends JMEContainer implements IAudioContainer,
 	 * synergynet3.additionalitems.interfaces.IAudioContainer#setAudioController
 	 * (synergynet3.audio.SNAudioController)
 	 */
-	public void setAudioController(SNAudioController information) {
+	@Override
+	public void setAudioController(SNAudioController information)
+	{
 		this.audioController = information;
 	}
 
 	/**
-	 * @param cached the cached to set
+	 * @param cached
+	 *            the cached to set
 	 */
-	public void setCached(String cached) {
+	public void setCached(String cached)
+	{
 		this.cached = cached;
 	}
 

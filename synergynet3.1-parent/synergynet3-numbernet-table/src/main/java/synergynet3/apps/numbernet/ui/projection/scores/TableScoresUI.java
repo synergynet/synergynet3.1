@@ -19,7 +19,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class TableScoresUI.
  */
-public class TableScoresUI {
+public class TableScoresUI
+{
 
 	/** The bracket use label. */
 	private IMutableLabel bracketUseLabel;
@@ -43,31 +44,34 @@ public class TableScoresUI {
 	/**
 	 * Instantiates a new table scores ui.
 	 *
-	 * @param table the table
+	 * @param table
+	 *            the table
 	 */
-	public TableScoresUI(String table) {
+	public TableScoresUI(String table)
+	{
 		this.table = table;
 	}
 
 	/**
 	 * Builds the ui.
 	 *
-	 * @param root the root
-	 * @param contentFactory the content factory
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param root
+	 *            the root
+	 * @param contentFactory
+	 *            the content factory
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public void buildUI(IContainer root, IContentFactory contentFactory)
-			throws ContentTypeNotBoundException {
+	public void buildUI(IContainer root, IContentFactory contentFactory) throws ContentTypeNotBoundException
+	{
 		// container = contentFactory.create(IContainer.class, "tablescores_" +
 		// table, UUID.randomUUID());
 		root.getZOrderManager().setAutoBringToTop(false);
 		// root.addItem(container);
 
-		IColourRectangle backgroundRectangle = contentFactory.create(
-				IColourRectangle.class, "bg_" + table, UUID.randomUUID());
+		IColourRectangle backgroundRectangle = contentFactory.create(IColourRectangle.class, "bg_" + table, UUID.randomUUID());
 		root.addItem(backgroundRectangle);
-		ColorRGBA baseColour = ColourUtils.colourConvert(ColourUtils
-				.colorFromString(table));
+		ColorRGBA baseColour = ColourUtils.colourConvert(ColourUtils.colorFromString(table));
 
 		float topColourFactor = 0.3f;
 		float bottomColourFactor = 0.1f;
@@ -75,31 +79,21 @@ public class TableScoresUI {
 		float currentY = 120f;
 		float deltaY = 30f;
 
-		ColorRGBA gradientTop = new ColorRGBA(baseColour.r * topColourFactor,
-				baseColour.g * topColourFactor, baseColour.b * topColourFactor,
-				1f);
-		ColorRGBA gradientBottom = new ColorRGBA(baseColour.r
-				* bottomColourFactor, baseColour.g * bottomColourFactor,
-				baseColour.b * bottomColourFactor, 1f);
-		Gradient backgroundGradient = new Gradient(gradientTop, gradientBottom,
-				GradientDirection.VERTICAL);
+		ColorRGBA gradientTop = new ColorRGBA(baseColour.r * topColourFactor, baseColour.g * topColourFactor, baseColour.b * topColourFactor, 1f);
+		ColorRGBA gradientBottom = new ColorRGBA(baseColour.r * bottomColourFactor, baseColour.g * bottomColourFactor, baseColour.b * bottomColourFactor, 1f);
+		Gradient backgroundGradient = new Gradient(gradientTop, gradientBottom, GradientDirection.VERTICAL);
 		backgroundRectangle.setGradientBackground(backgroundGradient);
 		backgroundRectangle.setSize(450, 350);
 
-		correctExpressionLabel = contentFactory.create(IMutableLabel.class,
-				"correct", UUID.randomUUID());
+		correctExpressionLabel = contentFactory.create(IMutableLabel.class, "correct", UUID.randomUUID());
 		root.addItem(correctExpressionLabel);
-		incorrectExpressionLabel = contentFactory.create(IMutableLabel.class,
-				"incorrect", UUID.randomUUID());
+		incorrectExpressionLabel = contentFactory.create(IMutableLabel.class, "incorrect", UUID.randomUUID());
 		root.addItem(incorrectExpressionLabel);
-		bracketUseLabel = contentFactory.create(IMutableLabel.class,
-				"bracketuse", UUID.randomUUID());
+		bracketUseLabel = contentFactory.create(IMutableLabel.class, "bracketuse", UUID.randomUUID());
 		root.addItem(bracketUseLabel);
-		usedAllOperators = contentFactory.create(IMutableLabel.class,
-				"usedAllOperators", UUID.randomUUID());
+		usedAllOperators = contentFactory.create(IMutableLabel.class, "usedAllOperators", UUID.randomUUID());
 		root.addItem(usedAllOperators);
-		moreThanOneOperator = contentFactory.create(IMutableLabel.class,
-				"usedAllOperators", UUID.randomUUID());
+		moreThanOneOperator = contentFactory.create(IMutableLabel.class, "usedAllOperators", UUID.randomUUID());
 		root.addItem(moreThanOneOperator);
 
 		correctExpressionLabel.setFont(FontUtil.getFont(FontColour.White));
@@ -141,52 +135,62 @@ public class TableScoresUI {
 	/**
 	 * Sets the bracket use count.
 	 *
-	 * @param count the new bracket use count
+	 * @param count
+	 *            the new bracket use count
 	 */
-	public void setBracketUseCount(int count) {
+	public void setBracketUseCount(int count)
+	{
 		bracketUseLabel.setText("Correct bracket use: " + count);
 	}
 
 	/**
 	 * Sets the correct expression count.
 	 *
-	 * @param correctExpressionCount the new correct expression count
+	 * @param correctExpressionCount
+	 *            the new correct expression count
 	 */
-	public void setCorrectExpressionCount(int correctExpressionCount) {
+	public void setCorrectExpressionCount(int correctExpressionCount)
+	{
 		correctExpressionLabel.setText("Correct: " + correctExpressionCount);
 	}
 
 	/**
 	 * Sets the incorrect expression count.
 	 *
-	 * @param incorrectExpressionCount the new incorrect expression count
+	 * @param incorrectExpressionCount
+	 *            the new incorrect expression count
 	 */
-	public void setIncorrectExpressionCount(int incorrectExpressionCount) {
-		incorrectExpressionLabel.setText("Incorrect: "
-				+ incorrectExpressionCount);
+	public void setIncorrectExpressionCount(int incorrectExpressionCount)
+	{
+		incorrectExpressionLabel.setText("Incorrect: " + incorrectExpressionCount);
 	}
 
 	/**
 	 * Sets the more than one operator count.
 	 *
-	 * @param moreThanOneOperatorCount the new more than one operator count
+	 * @param moreThanOneOperatorCount
+	 *            the new more than one operator count
 	 */
-	public void setMoreThanOneOperatorCount(int moreThanOneOperatorCount) {
-		moreThanOneOperator.setText("More than one operator: "
-				+ moreThanOneOperatorCount);
+	public void setMoreThanOneOperatorCount(int moreThanOneOperatorCount)
+	{
+		moreThanOneOperator.setText("More than one operator: " + moreThanOneOperatorCount);
 	}
 
 	/**
 	 * Sets the used all operators.
 	 *
-	 * @param hasUsedAllOperators the new used all operators
+	 * @param hasUsedAllOperators
+	 *            the new used all operators
 	 */
-	public void setUsedAllOperators(boolean hasUsedAllOperators) {
+	public void setUsedAllOperators(boolean hasUsedAllOperators)
+	{
 		String str = "Used all operators?: ";
-		if (hasUsedAllOperators) {
+		if (hasUsedAllOperators)
+		{
 			str += " yes";
 		}
-		if (!hasUsedAllOperators) {
+		if (!hasUsedAllOperators)
+		{
 			str += " no";
 		}
 		usedAllOperators.setText(str);

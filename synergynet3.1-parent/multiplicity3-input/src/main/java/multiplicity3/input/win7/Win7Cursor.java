@@ -28,7 +28,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class Win7Cursor.
  */
-public class Win7Cursor {
+public class Win7Cursor
+{
 
 	/** The current id. */
 	public static long CURRENT_ID = 0;
@@ -48,9 +49,11 @@ public class Win7Cursor {
 	/**
 	 * Instantiates a new win7 cursor.
 	 */
-	public Win7Cursor() {
+	public Win7Cursor()
+	{
 		CURRENT_ID++;
-		if (CURRENT_ID == Long.MAX_VALUE) {
+		if (CURRENT_ID == Long.MAX_VALUE)
+		{
 			CURRENT_ID = 0;
 		}
 		id = CURRENT_ID;
@@ -61,7 +64,8 @@ public class Win7Cursor {
 	 *
 	 * @return the contact size
 	 */
-	public Vector2f getContactSize() {
+	public Vector2f getContactSize()
+	{
 		return contactSize;
 	}
 
@@ -70,7 +74,8 @@ public class Win7Cursor {
 	 *
 	 * @return the creation time
 	 */
-	public long getCreationTime() {
+	public long getCreationTime()
+	{
 		return creationTime;
 	}
 
@@ -79,7 +84,8 @@ public class Win7Cursor {
 	 *
 	 * @return the id
 	 */
-	public long getId() {
+	public long getId()
+	{
 		return id;
 	}
 
@@ -88,43 +94,52 @@ public class Win7Cursor {
 	 *
 	 * @return the position
 	 */
-	public Vector2f getPosition() {
+	public Vector2f getPosition()
+	{
 		return position;
 	}
 
 	/**
 	 * Sets the contact size.
 	 *
-	 * @param contactSize the new contact size
+	 * @param contactSize
+	 *            the new contact size
 	 */
-	public void setContactSize(Vector2f contactSize) {
+	public void setContactSize(Vector2f contactSize)
+	{
 		this.contactSize = contactSize;
 	}
 
 	/**
 	 * Sets the creation time.
 	 *
-	 * @param creationTime the new creation time
+	 * @param creationTime
+	 *            the new creation time
 	 */
-	public void setCreationTime(long creationTime) {
+	public void setCreationTime(long creationTime)
+	{
 		this.creationTime = creationTime;
 	}
 
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
-	public void setId(long id) {
+	public void setId(long id)
+	{
 		this.id = id;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param position the new position
+	 * @param position
+	 *            the new position
 	 */
-	public void setPosition(Vector2f position) {
+	public void setPosition(Vector2f position)
+	{
 		this.position = position;
 	}
 
@@ -132,7 +147,9 @@ public class Win7Cursor {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return "TUIOFingerCursor(" + this.getId() + ") @" + this.getPosition();
 	}
 }

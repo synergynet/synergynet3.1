@@ -27,8 +27,8 @@ import com.jme3.math.Vector2f;
  * The Class AudioRecorder.
  */
 @ImplementsContentItem(target = IAudioRecorder.class)
-public class AudioRecorder extends AudioContainer implements IAudioItem,
-		IAudioRecorder {
+public class AudioRecorder extends AudioContainer implements IAudioItem, IAudioRecorder
+{
 
 	/** The Constant DELETE_RECORD_BUTTON_IMAGE. */
 	private static final String DELETE_RECORD_BUTTON_IMAGE = "synergynet3/additionalitems/audio/audioDeleteRecording.png";
@@ -90,10 +90,13 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	/**
 	 * Instantiates a new audio recorder.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public AudioRecorder(String name, UUID uuid) {
+	public AudioRecorder(String name, UUID uuid)
+	{
 		super(name, uuid);
 		build();
 	}
@@ -102,7 +105,9 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IAudioRecorder#getAudioFile()
 	 */
-	public File getAudioFile() {
+	@Override
+	public File getAudioFile()
+	{
 		return audioControl.getAudioFile();
 	}
 
@@ -111,7 +116,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see synergynet3.audio.IAudioItem#getHeight()
 	 */
 	@Override
-	public int getHeight() {
+	public int getHeight()
+	{
 		return height;
 	}
 
@@ -119,7 +125,9 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * (non-Javadoc)
 	 * @see synergynet3.audio.IAudioItem#getOwner()
 	 */
-	public String getOwner() {
+	@Override
+	public String getOwner()
+	{
 		return this.owner;
 	}
 
@@ -128,7 +136,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see synergynet3.audio.IAudioItem#getWidth()
 	 */
 	@Override
-	public int getWidth() {
+	public int getWidth()
+	{
 		return width;
 	}
 
@@ -137,7 +146,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see synergynet3.additionalitems.interfaces.IAudioRecorder#hasRecorded()
 	 */
 	@Override
-	public boolean hasRecorded() {
+	public boolean hasRecorded()
+	{
 		return recorded;
 	}
 
@@ -146,7 +156,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 *
 	 * @return true, if is playing
 	 */
-	public boolean isPlaying() {
+	public boolean isPlaying()
+	{
 		return playing;
 	}
 
@@ -155,7 +166,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 *
 	 * @return true, if is recorded
 	 */
-	public boolean isRecorded() {
+	public boolean isRecorded()
+	{
 		return audioControl.hasAudioBeenSet();
 	}
 
@@ -164,7 +176,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 *
 	 * @return true, if is recording
 	 */
-	public boolean isRecording() {
+	public boolean isRecording()
+	{
 		return recording;
 	}
 
@@ -173,16 +186,17 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see synergynet3.audio.IAudioItem#makeImmovable()
 	 */
 	@Override
-	public void makeImmovable() {
+	public void makeImmovable()
+	{
 		frameBorder.setInteractionEnabled(false);
 	}
 
 	/**
 	 * Make movable.
 	 */
-	public void makeMovable() {
-		RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker()
-				.addBehaviour(frameBorder, RotateTranslateScaleBehaviour.class);
+	public void makeMovable()
+	{
+		RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker().addBehaviour(frameBorder, RotateTranslateScaleBehaviour.class);
 		rts.setItemActingOn(this);
 		rts.setScaleEnabled(false);
 	}
@@ -190,14 +204,16 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	/**
 	 * On cancel record.
 	 */
-	public void onCancelRecord() {
+	public void onCancelRecord()
+	{
 		recorded = false;
 	}
 
 	/**
 	 * On stop record.
 	 */
-	public void onStopRecord() {
+	public void onStopRecord()
+	{
 		recorded = true;
 	}
 
@@ -205,7 +221,9 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IAudioRecorder#removeBorder()
 	 */
-	public void removeBorder() {
+	@Override
+	public void removeBorder()
+	{
 		removeItem(frameBorder);
 	}
 
@@ -216,7 +234,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * SNAudioController)
 	 */
 	@Override
-	public void setAudioControlObject(SNAudioController audioControl) {
+	public void setAudioControlObject(SNAudioController audioControl)
+	{
 		this.audioControl = audioControl;
 	}
 
@@ -225,7 +244,9 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see
 	 * synergynet3.audio.IAudioItem#setBackgroundColour(com.jme3.math.ColorRGBA)
 	 */
-	public void setBackgroundColour(ColorRGBA colour) {
+	@Override
+	public void setBackgroundColour(ColorRGBA colour)
+	{
 		background.setSolidBackgroundColour(colour);
 	}
 
@@ -233,7 +254,9 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * (non-Javadoc)
 	 * @see synergynet3.audio.IAudioItem#setOwner(java.lang.String)
 	 */
-	public void setOwner(String owner) {
+	@Override
+	public void setOwner(String owner)
+	{
 		this.owner = owner;
 	}
 
@@ -242,7 +265,8 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see synergynet3.audio.IAudioItem#stopPlay()
 	 */
 	@Override
-	public void stopPlay() {
+	public void stopPlay()
+	{
 		playing = false;
 		playImage.setImage(PLAY_BUTTON_IMAGE);
 		recordImage.setImage(DELETE_RECORD_BUTTON_IMAGE);
@@ -253,13 +277,17 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	 * @see synergynet3.audio.IAudioItem#stopRecord(boolean)
 	 */
 	@Override
-	public void stopRecord(boolean success) {
+	public void stopRecord(boolean success)
+	{
 		recording = false;
-		if (success) {
+		if (success)
+		{
 			recordImage.setImage(DELETE_RECORD_BUTTON_IMAGE);
 			playImage.setImage(PLAY_BUTTON_IMAGE);
 			onStopRecord();
-		} else {
+		}
+		else
+		{
 			recordImage.setImage(RECORD_BUTTON_IMAGE);
 			onCancelRecord();
 		}
@@ -269,81 +297,90 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 	/**
 	 * Builds the.
 	 */
-	private void build() {
+	private void build()
+	{
 		this.stage = MultiplicityEnvironment.get().getLocalStages().get(0);
-		try {
+		try
+		{
 			final IContentFactory contentFactory = stage.getContentFactory();
 
 			audioControl = new SNAudioController(log, this);
 			setAudioController(audioControl);
 
-			background = contentFactory.create(IColourRectangle.class,
-					"recorderbg", UUID.randomUUID());
+			background = contentFactory.create(IColourRectangle.class, "recorderbg", UUID.randomUUID());
 			background.setSolidBackgroundColour(ColorRGBA.Black);
 			background.setSize(width, height);
 
-			frameBorder = contentFactory.create(IRoundedBorder.class, "border",
-					UUID.randomUUID());
+			frameBorder = contentFactory.create(IRoundedBorder.class, "border", UUID.randomUUID());
 			frameBorder.setBorderWidth(15f);
 			frameBorder.setSize(width, height);
 			frameBorder.setColor(new ColorRGBA(1, 1, 1, 0.75f));
 
-			recordImage = contentFactory.create(ICachableImage.class, "record",
-					UUID.randomUUID());
+			recordImage = contentFactory.create(ICachableImage.class, "record", UUID.randomUUID());
 			recordImage.setImage(RECORD_BUTTON_IMAGE);
 			recordImage.setSize(100, 100);
 			recordImage.setRelativeLocation(new Vector2f(-width / 4, 0));
 
-			recordImage.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							if (!playing) {
-								if (audioControl.hasAudioBeenSet()) {
-									audioControl.resetAudioRecording();
-									recordImage.setImage(RECORD_BUTTON_IMAGE);
-									playImage
-											.setImage(PLAY_DISABLED_BUTTON_IMAGE);
-									onCancelRecord();
-								} else {
-									if (!recording) {
-										if (!SNAudioController.recordingConcurrently) {
-											recording = true;
-											recordImage
-													.setImage(STOP_BUTTON_IMAGE);
-											audioControl.startAudioCapture();
-										}
-									} else {
-										audioControl.stopAudioCapture(true);
-									}
+			recordImage.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					if (!playing)
+					{
+						if (audioControl.hasAudioBeenSet())
+						{
+							audioControl.resetAudioRecording();
+							recordImage.setImage(RECORD_BUTTON_IMAGE);
+							playImage.setImage(PLAY_DISABLED_BUTTON_IMAGE);
+							onCancelRecord();
+						}
+						else
+						{
+							if (!recording)
+							{
+								if (!SNAudioController.recordingConcurrently)
+								{
+									recording = true;
+									recordImage.setImage(STOP_BUTTON_IMAGE);
+									audioControl.startAudioCapture();
 								}
 							}
+							else
+							{
+								audioControl.stopAudioCapture(true);
+							}
 						}
-					});
+					}
+				}
+			});
 
-			playImage = contentFactory.create(ICachableImage.class, "play",
-					UUID.randomUUID());
+			playImage = contentFactory.create(ICachableImage.class, "play", UUID.randomUUID());
 			playImage.setImage(PLAY_DISABLED_BUTTON_IMAGE);
 			playImage.setSize(100, 100);
 			playImage.setRelativeLocation(new Vector2f(width / 4, 0));
 
-			playImage.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							if (audioControl.hasAudioBeenSet()) {
-								if (!playing) {
-									playing = true;
-									playImage.setImage(STOP_BUTTON_IMAGE);
-									recordImage
-											.setImage(DELETE_RECORD_DISABLE_BUTTON_IMAGE);
-									audioControl.startAudioPlayBack();
-								} else {
-									audioControl.stopAudioPlayBack();
-								}
-							}
+			playImage.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					if (audioControl.hasAudioBeenSet())
+					{
+						if (!playing)
+						{
+							playing = true;
+							playImage.setImage(STOP_BUTTON_IMAGE);
+							recordImage.setImage(DELETE_RECORD_DISABLE_BUTTON_IMAGE);
+							audioControl.startAudioPlayBack();
 						}
-					});
+						else
+						{
+							audioControl.stopAudioPlayBack();
+						}
+					}
+				}
+			});
 
 			addItem(background);
 			addItem(recordImage);
@@ -352,7 +389,9 @@ public class AudioRecorder extends AudioContainer implements IAudioItem,
 
 			this.getZOrderManager().setAutoBringToTop(false);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "Content Not Bound: ", e);
 		}
 	}

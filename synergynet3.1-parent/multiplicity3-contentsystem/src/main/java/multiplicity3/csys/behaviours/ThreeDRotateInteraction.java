@@ -16,12 +16,11 @@ import com.jme3.math.Vector2f;
 /**
  * The Class ThreeDRotateInteraction.
  */
-public class ThreeDRotateInteraction implements IBehaviour,
-		IMultiTouchEventListener {
+public class ThreeDRotateInteraction implements IBehaviour, IMultiTouchEventListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(ThreeDRotateInteraction.class.getName());
+	private static final Logger log = Logger.getLogger(ThreeDRotateInteraction.class.getName());
 
 	/** The active. */
 	private boolean active = true;
@@ -54,27 +53,29 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
-		if (currentCursorID == event.getCursorID()) {
+		if (currentCursorID == event.getCursorID())
+		{
 			Vector2f newPos = event.getPosition();
 			newPos = stage.tableToWorld(newPos);
 			newPos = newPos.subtract(parentItem.getWorldLocation());
 			newPos.rotateAroundOrigin(-parentItem.getRelativeRotation(), false);
-			if (newPos.length() < (maxDim * parentItem.getRelativeScale())) {
+			if (newPos.length() < (maxDim * parentItem.getRelativeScale()))
+			{
 				Vector2f change = newPos.subtract(cursorPressedPosition);
-				float xChange = (((-change.y) / (height * parentItem
-						.getRelativeScale())) / (360 * FastMath.DEG_TO_RAD));
-				float yChange = (((change.x) / (width * parentItem
-						.getRelativeScale())) / (360 * FastMath.DEG_TO_RAD));
+				float xChange = (((-change.y) / (height * parentItem.getRelativeScale())) / (360 * FastMath.DEG_TO_RAD));
+				float yChange = (((change.x) / (width * parentItem.getRelativeScale())) / (360 * FastMath.DEG_TO_RAD));
 
-				float[] angles = { xChange, yChange, 0 };
+				float[] angles =
+				{ xChange, yChange, 0 };
 				Quaternion q = new Quaternion();
 				q.fromAngles(angles);
-				q.multLocal(affectedItem.getManipulableSpatial()
-						.getLocalRotation());
+				q.multLocal(affectedItem.getManipulableSpatial().getLocalRotation());
 				affectedItem.getManipulableSpatial().setLocalRotation(q);
 			}
 		}
@@ -87,7 +88,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -97,17 +99,17 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		this.currentCursorID = event.getCursorID();
 		this.cursorPressedPosition = event.getPosition();
 		cursorPressedPosition = stage.tableToWorld(cursorPressedPosition);
-		cursorPressedPosition = cursorPressedPosition.subtract(parentItem
-				.getWorldLocation());
-		cursorPressedPosition.rotateAroundOrigin(
-				-parentItem.getRelativeRotation(), false);
+		cursorPressedPosition = cursorPressedPosition.subtract(parentItem.getWorldLocation());
+		cursorPressedPosition.rotateAroundOrigin(-parentItem.getRelativeRotation(), false);
 	}
 
 	/*
@@ -117,7 +119,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		this.currentCursorID = -1;
 	}
 
@@ -126,7 +129,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 *
 	 * @return the parent item
 	 */
-	public IItem getParentItem() {
+	public IItem getParentItem()
+	{
 		return parentItem;
 	}
 
@@ -137,7 +141,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -147,7 +152,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -157,7 +163,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -165,7 +172,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
@@ -176,32 +184,34 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem newSourceItem) {
-		if (newSourceItem == eventSourceItem) {
+	public void setEventSource(IItem newSourceItem)
+	{
+		if (newSourceItem == eventSourceItem)
+		{
 			// no change
 			return;
 		}
 
 		// already have an event source, so unregister it
-		if (this.eventSourceItem != null) {
+		if (this.eventSourceItem != null)
+		{
 			this.eventSourceItem.getMultiTouchDispatcher().remove(this);
 		}
 
 		eventSourceItem = newSourceItem;
 		eventSourceItem.getMultiTouchDispatcher().addListener(this);
 
-		width = ((BoundingBox) eventSourceItem.getManipulableSpatial()
-				.getWorldBound()).getXExtent();
-		height = ((BoundingBox) eventSourceItem.getManipulableSpatial()
-				.getWorldBound()).getYExtent();
-		depth = ((BoundingBox) eventSourceItem.getManipulableSpatial()
-				.getWorldBound()).getZExtent();
+		width = ((BoundingBox) eventSourceItem.getManipulableSpatial().getWorldBound()).getXExtent();
+		height = ((BoundingBox) eventSourceItem.getManipulableSpatial().getWorldBound()).getYExtent();
+		depth = ((BoundingBox) eventSourceItem.getManipulableSpatial().getWorldBound()).getZExtent();
 
 		maxDim = width;
-		if (maxDim < height) {
+		if (maxDim < height)
+		{
 			maxDim = height;
 		}
-		if (maxDim < depth) {
+		if (maxDim < depth)
+		{
 			maxDim = depth;
 		}
 		maxDim /= 2;
@@ -214,7 +224,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setItemActingOn(IItem item) {
+	public void setItemActingOn(IItem item)
+	{
 		log.fine("Adding 3D rotation behaviour to " + item);
 		this.affectedItem = item;
 	}
@@ -222,9 +233,11 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	/**
 	 * Sets the parent item.
 	 *
-	 * @param parentItem the new parent item
+	 * @param parentItem
+	 *            the new parent item
 	 */
-	public void setParentItem(IItem parentItem) {
+	public void setParentItem(IItem parentItem)
+	{
 		this.parentItem = parentItem;
 	}
 
@@ -235,7 +248,8 @@ public class ThreeDRotateInteraction implements IBehaviour,
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
 	}
 

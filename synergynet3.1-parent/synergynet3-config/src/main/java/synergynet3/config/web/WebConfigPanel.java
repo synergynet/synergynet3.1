@@ -19,7 +19,8 @@ import javax.swing.JTextField;
 /**
  * The Class WebConfigPanel.
  */
-public class WebConfigPanel extends JPanel {
+public class WebConfigPanel extends JPanel
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8701347662757286944L;
@@ -69,7 +70,7 @@ public class WebConfigPanel extends JPanel {
 	/** The shared location text field. */
 	private JTextField sharedLocationField;
 
-	/** The web server directory  text field. */
+	/** The web server directory text field. */
 	private JTextField webServerDirField;
 
 	/** The web server port text field. */
@@ -78,9 +79,11 @@ public class WebConfigPanel extends JPanel {
 	/**
 	 * Instantiates a new web config panel.
 	 *
-	 * @param serverConfigPrefsItem the server config prefs item
+	 * @param serverConfigPrefsItem
+	 *            the server config prefs item
 	 */
-	public WebConfigPanel(WebConfigPrefsItem serverConfigPrefsItem) {
+	public WebConfigPanel(WebConfigPrefsItem serverConfigPrefsItem)
+	{
 		this.prefs = serverConfigPrefsItem;
 		initComponents();
 	}
@@ -88,10 +91,12 @@ public class WebConfigPanel extends JPanel {
 	/**
 	 * Browse folders.
 	 */
-	private void browseFolders() {
+	private void browseFolders()
+	{
 		int returnVal = jFileChooser.showOpenDialog(this);
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		if (returnVal == JFileChooser.APPROVE_OPTION)
+		{
 			File file = jFileChooser.getSelectedFile();
 			sharedLocationField.setText(file.getAbsolutePath());
 			prefs.setSharedLocation(file.getAbsolutePath());
@@ -101,41 +106,48 @@ public class WebConfigPanel extends JPanel {
 	/**
 	 * Capture message.
 	 */
-	private void captureMessage() {
-		JOptionPane.showMessageDialog(this,
-				"The Capture Cache has been Cleared.", "",
-				JOptionPane.PLAIN_MESSAGE);
+	private void captureMessage()
+	{
+		JOptionPane.showMessageDialog(this, "The Capture Cache has been Cleared.", "", JOptionPane.PLAIN_MESSAGE);
 	}
 
 	/**
 	 * Inits the components.
 	 */
-	private void initComponents() {
+	private void initComponents()
+	{
 
 		setName("Form");
 
 		webServerPortLabel = new JLabel("Cluster port: ");
 		webServerPortField = new JTextField();
 		webServerPortField.setText(prefs.getPort() + "");
-		webServerPortField.addKeyListener(new KeyAdapter() {
+		webServerPortField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
-				if (webServerPortField.getText().length() > 0) {
-					try {
-						prefs.setPort(Integer.parseInt(webServerPortField
-								.getText()));
+			private void store()
+			{
+				if (webServerPortField.getText().length() > 0)
+				{
+					try
+					{
+						prefs.setPort(Integer.parseInt(webServerPortField.getText()));
 						;
 						webServerPortField.setForeground(Color.black);
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e)
+					{
 						webServerPortField.setForeground(Color.red);
 					}
 				}
@@ -145,18 +157,22 @@ public class WebConfigPanel extends JPanel {
 		webServerDirLabel = new JLabel("Cluster host address: ");
 		webServerDirField = new JTextField();
 		webServerDirField.setText(prefs.getClusterHost());
-		webServerDirField.addKeyListener(new KeyAdapter() {
+		webServerDirField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
+			private void store()
+			{
 				prefs.setClusterHost(webServerDirField.getText());
 			}
 		});
@@ -164,37 +180,45 @@ public class WebConfigPanel extends JPanel {
 		clusterNameLabel = new JLabel("Device username: ");
 		clusterUsernameField = new JTextField();
 		clusterUsernameField.setText(prefs.getClusterUserName());
-		clusterUsernameField.addKeyListener(new KeyAdapter() {
+		clusterUsernameField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
+			private void store()
+			{
 				prefs.setClusterUserName(clusterUsernameField.getText());
 			}
 		});
-		
+
 		clusterInterfaceLabel = new JLabel("Cluster interface: ");
 		clusterInterfaceField = new JTextField();
 		clusterInterfaceField.setText(prefs.getClusterInterface());
-		clusterInterfaceField.addKeyListener(new KeyAdapter() {
+		clusterInterfaceField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
+			private void store()
+			{
 				prefs.setClusterInterface(clusterInterfaceField.getText());
 			}
 		});
@@ -202,38 +226,45 @@ public class WebConfigPanel extends JPanel {
 		clusterPasswordLabel = new JLabel("Device password: ");
 		clusterPasswordField = new JPasswordField();
 		clusterPasswordField.setText(prefs.getClusterPassword());
-		clusterPasswordField.addKeyListener(new KeyAdapter() {
+		clusterPasswordField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
-				prefs.setClusterPassword(new String(clusterPasswordField
-						.getPassword()));
+			private void store()
+			{
+				prefs.setClusterPassword(new String(clusterPasswordField.getPassword()));
 			}
 		});
 
 		sharedLocationLabel = new JLabel("Shared location: ");
 		sharedLocationField = new JTextField();
 		sharedLocationField.setText(prefs.getSharedLocation());
-		sharedLocationField.addKeyListener(new KeyAdapter() {
+		sharedLocationField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
+			private void store()
+			{
 				prefs.setSharedLocation(sharedLocationField.getText());
 			}
 		});
@@ -245,16 +276,22 @@ public class WebConfigPanel extends JPanel {
 
 		browseButton = new javax.swing.JButton();
 		browseButton.setText("Browse...");
-		browseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		browseButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				browseFolders();
 			}
 		});
 
 		clearTransferCacheButton = new javax.swing.JButton();
 		clearTransferCacheButton.setText("Clear Transfer Cache");
-		clearTransferCacheButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		clearTransferCacheButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				CacheOrganisation.clearTransferCaches();
 				transferMessage();
 			}
@@ -262,46 +299,49 @@ public class WebConfigPanel extends JPanel {
 
 		clearCaptureCacheButton = new javax.swing.JButton();
 		clearCaptureCacheButton.setText("Clear Capture Cache");
-		clearCaptureCacheButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		clearCaptureCacheButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				CacheOrganisation.clearCaptureCache();
 				captureMessage();
 			}
 		});
 
 		setLayout(null);
-		
+
 		int y = 30;
 
 		webServerDirLabel.setBounds(new Rectangle(30, y, 175, 24));
 		webServerDirField.setBounds(new Rectangle(215, y, 150, 24));
-		
+
 		y += 30;
 
 		webServerPortLabel.setBounds(new Rectangle(30, y, 130, 24));
 		webServerPortField.setBounds(new Rectangle(215, y, 80, 24));
-		
+
 		y += 60;
 
 		clusterNameLabel.setBounds(new Rectangle(30, y, 130, 24));
 		clusterUsernameField.setBounds(new Rectangle(215, y, 150, 24));
-		
+
 		y += 30;
 
 		clusterPasswordLabel.setBounds(new Rectangle(30, y, 130, 24));
 		clusterPasswordField.setBounds(new Rectangle(215, y, 150, 24));
-		
+
 		y += 30;
-		
+
 		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
 		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
-		
+
 		y += 80;
 
 		sharedLocationLabel.setBounds(new Rectangle(30, y, 210, 24));
 		sharedLocationField.setBounds(new Rectangle(150, y, 275, 24));
 		browseButton.setBounds(new Rectangle(423, y, 100, 23));
-		
+
 		y += 50;
 
 		clearTransferCacheButton.setBounds(new Rectangle(30, y, 200, 23));
@@ -327,9 +367,8 @@ public class WebConfigPanel extends JPanel {
 	/**
 	 * Transfer message.
 	 */
-	private void transferMessage() {
-		JOptionPane.showMessageDialog(this,
-				"The Transfer Cache has been Cleared.", "",
-				JOptionPane.PLAIN_MESSAGE);
+	private void transferMessage()
+	{
+		JOptionPane.showMessageDialog(this, "The Transfer Cache has been Cleared.", "", JOptionPane.PLAIN_MESSAGE);
 	}
 }

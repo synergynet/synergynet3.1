@@ -20,32 +20,35 @@ import synergynet3.cluster.fileshare.localfilecache.MD5Hash;
 /**
  * The Class FileReceiver.
  */
-public class FileReceiver implements FileTransferListener {
+public class FileReceiver implements FileTransferListener
+{
 
 	/**
 	 * The Interface FileReceiverDelegate.
 	 */
-	public static interface FileReceiverDelegate {
+	public static interface FileReceiverDelegate
+	{
 
 		/**
 		 * Error receiving file.
 		 *
-		 * @param hash the hash
+		 * @param hash
+		 *            the hash
 		 */
 		void errorReceivingFile(MD5Hash hash);
 
 		/**
 		 * New file added to cache.
 		 *
-		 * @param entry the entry
+		 * @param entry
+		 *            the entry
 		 */
 		void newFileAddedToCache(LocalFileCacheEntry entry);
 
 	}
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(FileReceiver.class
-			.getName());
+	private static final Logger log = Logger.getLogger(FileReceiver.class.getName());
 
 	/** The cache. */
 	private LocalFileCache cache;
@@ -59,10 +62,13 @@ public class FileReceiver implements FileTransferListener {
 	/**
 	 * Instantiates a new file receiver.
 	 *
-	 * @param delegate the delegate
-	 * @param cache the cache
+	 * @param delegate
+	 *            the delegate
+	 * @param cache
+	 *            the cache
 	 */
-	public FileReceiver(FileReceiverDelegate delegate, LocalFileCache cache) {
+	public FileReceiver(FileReceiverDelegate delegate, LocalFileCache cache)
+	{
 		this.delegate = delegate;
 		this.cache = cache;
 		hashToDevice = new HashMap<MD5Hash, String>();
@@ -74,29 +80,33 @@ public class FileReceiver implements FileTransferListener {
 	 * org.jivesoftware.smackx.filetransfer.FileTransferListener#fileTransferRequest
 	 * (org.jivesoftware.smackx.filetransfer.FileTransferRequest)
 	 */
-	public void fileTransferRequest(final FileTransferRequest request) {
+	@Override
+	public void fileTransferRequest(final FileTransferRequest request)
+	{
 		log.fine("Received file transfer request " + request);
 		final String uniqueFileIdentifier = request.getDescription();
 		final MD5Hash hash = new MD5Hash(uniqueFileIdentifier);
 		final File temporaryIncomingFile = getTemporaryFileToStoreIncomingTransfer();
-		log.fine("File " + request.getFileName() + " being saved as "
-				+ temporaryIncomingFile.getAbsolutePath());
+		log.fine("File " + request.getFileName() + " being saved as " + temporaryIncomingFile.getAbsolutePath());
 
 		final IncomingFileTransfer transfer = request.accept();
-		try {
+		try
+		{
 			transfer.recieveFile(temporaryIncomingFile);
-			FileTransferWorker fileTransferWorker = new FileTransferWorker(
-					new FileTransferWorker.FileTransferWorkerDelegate() {
-						@Override
-						public void transferComplete() {
-							fileTransferDidComplete(request.getFileName(),
-									temporaryIncomingFile, hash, transfer);
-						}
+			FileTransferWorker fileTransferWorker = new FileTransferWorker(new FileTransferWorker.FileTransferWorkerDelegate()
+			{
+				@Override
+				public void transferComplete()
+				{
+					fileTransferDidComplete(request.getFileName(), temporaryIncomingFile, hash, transfer);
+				}
 
-					}, transfer);
+			}, transfer);
 			fileTransferWorker.start();
 
-		} catch (XMPPException ex) {
+		}
+		catch (XMPPException ex)
+		{
 			log.log(Level.SEVERE, null, ex);
 		}
 	}
@@ -104,10 +114,13 @@ public class FileReceiver implements FileTransferListener {
 	/**
 	 * Should receive file.
 	 *
-	 * @param id the id
-	 * @param device the device
+	 * @param id
+	 *            the id
+	 * @param device
+	 *            the device
 	 */
-	public void shouldReceiveFile(MD5Hash id, String device) {
+	public void shouldReceiveFile(MD5Hash id, String device)
+	{
 		hashToDevice.put(id, device);
 	}
 
@@ -116,15 +129,17 @@ public class FileReceiver implements FileTransferListener {
 	 *
 	 * @return the temporary file to store incoming transfer
 	 */
-	private File getTemporaryFileToStoreIncomingTransfer() {
-		try {
+	private File getTemporaryFileToStoreIncomingTransfer()
+	{
+		try
+		{
 			File temporaryFile = File.createTempFile("mn_filexfer", "tmp");
 			temporaryFile.deleteOnExit();
 			return temporaryFile;
-		} catch (IOException e) {
-			log.log(Level.SEVERE,
-					"Could not receive an incoming file transfer: couldn't create temporary file storage",
-					e);
+		}
+		catch (IOException e)
+		{
+			log.log(Level.SEVERE, "Could not receive an incoming file transfer: couldn't create temporary file storage", e);
 		}
 		return null;
 	}
@@ -132,24 +147,31 @@ public class FileReceiver implements FileTransferListener {
 	/**
 	 * File transfer did complete.
 	 *
-	 * @param fileName the file name
-	 * @param fileLocation the file location
-	 * @param hash the hash
-	 * @param transfer the transfer
+	 * @param fileName
+	 *            the file name
+	 * @param fileLocation
+	 *            the file location
+	 * @param hash
+	 *            the hash
+	 * @param transfer
+	 *            the transfer
 	 */
-	protected void fileTransferDidComplete(String fileName, File fileLocation,
-			MD5Hash hash, IncomingFileTransfer transfer) {
-		log.fine("File " + fileLocation.getAbsolutePath() + " with id " + hash
-				+ " received successfully.");
+	protected void fileTransferDidComplete(String fileName, File fileLocation, MD5Hash hash, IncomingFileTransfer transfer)
+	{
+		log.fine("File " + fileLocation.getAbsolutePath() + " with id " + hash + " received successfully.");
 		String device = hashToDevice.get(hash);
-		try {
-			LocalFileCacheEntry entry = cache.addFileToCacheWithName(
-					fileLocation, fileName, device);
+		try
+		{
+			LocalFileCacheEntry entry = cache.addFileToCacheWithName(fileLocation, fileName, device);
 			delegate.newFileAddedToCache(entry);
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			delegate.errorReceivingFile(hash);
 			log.log(Level.SEVERE, "Could not add file " + hash + " to cache", e);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			delegate.errorReceivingFile(hash);
 			log.log(Level.SEVERE, "Could not add file " + hash + " to cache", e);
 		}

@@ -15,12 +15,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * The Interface SynergyNetAppSystemService.
  */
 @RemoteServiceRelativePath("SynergyNetAppSystemService")
-public interface SynergyNetAppSystemService extends RemoteService {
+public interface SynergyNetAppSystemService extends RemoteService
+{
 
 	/**
 	 * The Class Util.
 	 */
-	public static class Util {
+	public static class Util
+	{
 
 		/** The instance. */
 		private static SynergyNetAppSystemServiceAsync instance;
@@ -30,8 +32,10 @@ public interface SynergyNetAppSystemService extends RemoteService {
 		 *
 		 * @return the synergy net app system service async
 		 */
-		public static SynergyNetAppSystemServiceAsync get() {
-			if (instance == null) {
+		public static SynergyNetAppSystemServiceAsync get()
+		{
+			if (instance == null)
+			{
 				instance = GWT.create(SynergyNetAppSystemService.class);
 			}
 			return instance;
@@ -41,32 +45,38 @@ public interface SynergyNetAppSystemService extends RemoteService {
 	/**
 	 * Adds the class room.
 	 *
-	 * @param classroom the classroom
+	 * @param classroom
+	 *            the classroom
 	 */
 	public void addClassRoom(ClassRoom classroom);
 
 	/**
 	 * Align.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
 	public void align(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Bring students to top.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void bringStudentsToTop(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void bringStudentsToTop(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Change student class.
 	 *
-	 * @param ID the id
-	 * @param newClass the new class
+	 * @param ID
+	 *            the id
+	 * @param newClass
+	 *            the new class
 	 */
 	public void changeStudentClass(String ID, String newClass);
 
@@ -74,27 +84,30 @@ public interface SynergyNetAppSystemService extends RemoteService {
 	/**
 	 * Clear projector contents.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void clearProjectorContents(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void clearProjectorContents(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Creates the student.
 	 *
-	 * @param student the student
+	 * @param student
+	 *            the student
 	 */
 	public void createStudent(Student student);
 
 	/**
 	 * Devices should open application.
 	 *
-	 * @param className the class name
-	 * @param devices the devices
+	 * @param className
+	 *            the class name
+	 * @param devices
+	 *            the devices
 	 */
-	public void devicesShouldOpenApplication(String className,
-			List<String> devices);
+	public void devicesShouldOpenApplication(String className, List<String> devices);
 
 	// Class selection functions
 	/**
@@ -107,7 +120,8 @@ public interface SynergyNetAppSystemService extends RemoteService {
 	/**
 	 * Gets the students from class.
 	 *
-	 * @param classSelected the class selected
+	 * @param classSelected
+	 *            the class selected
 	 * @return the students from class
 	 */
 	public ArrayList<Student> getStudentsFromClass(String classSelected);
@@ -115,99 +129,113 @@ public interface SynergyNetAppSystemService extends RemoteService {
 	/**
 	 * Modify student.
 	 *
-	 * @param student the student
+	 * @param student
+	 *            the student
 	 */
 	public void modifyStudent(Student student);
 
 	/**
 	 * Reload removable drive contents.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void reloadRemovableDriveContents(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void reloadRemovableDriveContents(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Reload server contents.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void reloadServerContents(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void reloadServerContents(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Removes the additional content.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void removeAdditionalContent(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void removeAdditionalContent(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Removes the class room.
 	 *
-	 * @param classroom the classroom
+	 * @param classroom
+	 *            the classroom
 	 */
 	public void removeClassRoom(ClassRoom classroom);
 
 	/**
 	 * Removes the student.
 	 *
-	 * @param ID the id
+	 * @param ID
+	 *            the id
 	 */
 	public void removeStudent(String ID);
 
 	/**
 	 * Removes the student from table.
 	 *
-	 * @param ID the id
-	 * @param table the table
+	 * @param ID
+	 *            the id
+	 * @param table
+	 *            the table
 	 */
 	public void removeStudentFromTable(String ID, String table);
 
 	/**
 	 * Removes the students of class.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
 	public void removeStudentsOfClass(String name);
 
 	/**
 	 * Send contents to projector.
 	 *
-	 * @param projectorsToSendTo the projectors to send to
-	 * @param tablesToSendTo the tables to send to
+	 * @param projectorsToSendTo
+	 *            the projectors to send to
+	 * @param tablesToSendTo
+	 *            the tables to send to
 	 */
-	public void sendContentsToProjector(String[] projectorsToSendTo,
-			String[] tablesToSendTo);
+	public void sendContentsToProjector(String[] projectorsToSendTo, String[] tablesToSendTo);
 
 	/**
 	 * Send projected contents to table.
 	 *
-	 * @param tablesToSendTo the tables to send to
-	 * @param projectorsToSendTo the projectors to send to
+	 * @param tablesToSendTo
+	 *            the tables to send to
+	 * @param projectorsToSendTo
+	 *            the projectors to send to
 	 */
-	public void sendProjectedContentsToTable(String[] tablesToSendTo,
-			String[] projectorsToSendTo);
+	public void sendProjectedContentsToTable(String[] tablesToSendTo, String[] projectorsToSendTo);
 
 	/**
 	 * Send screenshots to projector.
 	 *
-	 * @param projectorsToSendTo the projectors to send to
-	 * @param tablesToSendTo the tables to send to
+	 * @param projectorsToSendTo
+	 *            the projectors to send to
+	 * @param tablesToSendTo
+	 *            the tables to send to
 	 */
-	public void sendScreenshotsToProjector(String[] projectorsToSendTo,
-			String[] tablesToSendTo);
+	public void sendScreenshotsToProjector(String[] projectorsToSendTo, String[] tablesToSendTo);
 
 	// Student control functions
 	/**
 	 * Send student to table.
 	 *
-	 * @param ID the id
-	 * @param deviceSelected the device selected
+	 * @param ID
+	 *            the id
+	 * @param deviceSelected
+	 *            the device selected
 	 */
 	public void sendStudentToTable(String ID, String deviceSelected);
 
@@ -215,11 +243,12 @@ public interface SynergyNetAppSystemService extends RemoteService {
 	/**
 	 * Sets the network flick.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void setNetworkFlick(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void setNetworkFlick(PerformActionMessage message, String[] deviceToSendTo);
 
 	// Database control functions
 	/**
@@ -235,19 +264,21 @@ public interface SynergyNetAppSystemService extends RemoteService {
 	/**
 	 * Take screenshot.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void takeScreenshot(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void takeScreenshot(PerformActionMessage message, String[] deviceToSendTo);
 
 	/**
 	 * Toggle freeze.
 	 *
-	 * @param message the message
-	 * @param deviceToSendTo the device to send to
+	 * @param message
+	 *            the message
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void toggleFreeze(PerformActionMessage message,
-			String[] deviceToSendTo);
+	public void toggleFreeze(PerformActionMessage message, String[] deviceToSendTo);
 
 }

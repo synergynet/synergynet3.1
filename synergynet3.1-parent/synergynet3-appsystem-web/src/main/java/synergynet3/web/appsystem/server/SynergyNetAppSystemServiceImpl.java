@@ -22,8 +22,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 /**
  * The Class SynergyNetAppSystemServiceImpl.
  */
-public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
-		implements SynergyNetAppSystemService {
+public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet implements SynergyNetAppSystemService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 762348478211327434L;
@@ -40,7 +40,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * addClassRoom(synergynet3.web.shared.ClassRoom)
 	 */
 	@Override
-	public void addClassRoom(ClassRoom classroom) {
+	public void addClassRoom(ClassRoom classroom)
+	{
 		classroomList.addClassroom(classroom.getName());
 	}
 
@@ -52,16 +53,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void align(PerformActionMessage message, String[] projectors) {
-		if (projectors.length < 1) {
+	public void align(PerformActionMessage message, String[] projectors)
+	{
+		if (projectors.length < 1)
+		{
 			return;
 		}
-		for (String projector : projectors) {
-			if (projector.equals(DevicesSelected.ALL_PROJECTORS_ID)) {
+		for (String projector : projectors)
+		{
+			if (projector.equals(DevicesSelected.ALL_PROJECTORS_ID))
+			{
 				ProjectorControlComms.get().allProjectorsAlign(message);
-			} else {
-				ProjectorControlComms.get().specificProjectorAlign(message,
-						projector);
+			}
+			else
+			{
+				ProjectorControlComms.get().specificProjectorAlign(message, projector);
 			}
 		}
 	}
@@ -73,17 +79,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void bringStudentsToTop(PerformActionMessage message, String[] tables) {
-		if (tables.length < 1) {
+	public void bringStudentsToTop(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-				AppSystemControlComms.get()
-						.allTablesBringStudentsToTop(message);
-			} else {
-				AppSystemControlComms.get().specificTableBringStudentsToTop(
-						message, table);
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
+				AppSystemControlComms.get().allTablesBringStudentsToTop(message);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTableBringStudentsToTop(message, table);
 			}
 		}
 
@@ -95,7 +105,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * changeStudentClass(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void changeStudentClass(String ID, String newClass) {
+	public void changeStudentClass(String ID, String newClass)
+	{
 		StudentDatabaseServerControl.moveStudent(ID, newClass);
 	}
 
@@ -107,17 +118,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void clearProjectorContents(PerformActionMessage message,
-			String[] projectors) {
-		if (projectors.length < 1) {
+	public void clearProjectorContents(PerformActionMessage message, String[] projectors)
+	{
+		if (projectors.length < 1)
+		{
 			return;
 		}
-		for (String projector : projectors) {
-			if (projector.equals(DevicesSelected.ALL_PROJECTORS_ID)) {
+		for (String projector : projectors)
+		{
+			if (projector.equals(DevicesSelected.ALL_PROJECTORS_ID))
+			{
 				ProjectorControlComms.get().allProjectorsClear(message);
-			} else {
-				ProjectorControlComms.get().specificProjectorClear(message,
-						projector);
+			}
+			else
+			{
+				ProjectorControlComms.get().specificProjectorClear(message, projector);
 			}
 		}
 	}
@@ -128,7 +143,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * createStudent(synergynet3.web.shared.Student)
 	 */
 	@Override
-	public void createStudent(Student student) {
+	public void createStudent(Student student)
+	{
 		StudentDatabaseServerControl.createStudent(student);
 	}
 
@@ -138,8 +154,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * devicesShouldOpenApplication(java.lang.String, java.util.List)
 	 */
 	@Override
-	public void devicesShouldOpenApplication(String className,
-			List<String> devices) {
+	public void devicesShouldOpenApplication(String className, List<String> devices)
+	{
 		MessagingManager mm = SynergyNetCluster.get().getMessagingManager();
 		String[] devicesStringArray = devices.toArray(new String[0]);
 		SwitchToApplication message = new SwitchToApplication(className);
@@ -152,9 +168,11 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * getCurrentClasses()
 	 */
 	@Override
-	public ArrayList<ClassRoom> getCurrentClasses() {
+	public ArrayList<ClassRoom> getCurrentClasses()
+	{
 		ArrayList<ClassRoom> classrooms = new ArrayList<ClassRoom>();
-		for (String name : classroomList.getClassroomNames()) {
+		for (String name : classroomList.getClassroomNames())
+		{
 			ClassRoom database = new ClassRoom();
 			database.setName(name);
 			classrooms.add(database);
@@ -168,10 +186,13 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * getStudentsFromClass(java.lang.String)
 	 */
 	@Override
-	public ArrayList<Student> getStudentsFromClass(String className) {
+	public ArrayList<Student> getStudentsFromClass(String className)
+	{
 		ArrayList<Student> students = new ArrayList<Student>();
-		for (Student student : StudentDatabaseServerControl.getStudents()) {
-			if (student.getClassName().equalsIgnoreCase(className)) {
+		for (Student student : StudentDatabaseServerControl.getStudents())
+		{
+			if (student.getClassName().equalsIgnoreCase(className))
+			{
 				students.add(student);
 			}
 		}
@@ -184,7 +205,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * modifyStudent(synergynet3.web.shared.Student)
 	 */
 	@Override
-	public void modifyStudent(Student student) {
+	public void modifyStudent(Student student)
+	{
 		StudentDatabaseServerControl.modifyStudent(student);
 	}
 
@@ -196,19 +218,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void reloadRemovableDriveContents(PerformActionMessage message,
-			String[] tables) {
-		if (tables.length < 1) {
+	public void reloadRemovableDriveContents(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-				AppSystemControlComms.get()
-						.allTablesReloadRemovableDriveContents(message);
-			} else {
-				AppSystemControlComms.get()
-						.specificTableReloadRemovableDriveContents(message,
-								table);
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
+				AppSystemControlComms.get().allTablesReloadRemovableDriveContents(message);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTableReloadRemovableDriveContents(message, table);
 			}
 		}
 	}
@@ -221,18 +245,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void reloadServerContents(PerformActionMessage message,
-			String[] tables) {
-		if (tables.length < 1) {
+	public void reloadServerContents(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-				AppSystemControlComms.get().allTablesReloadServerContents(
-						message);
-			} else {
-				AppSystemControlComms.get().specificTableReloadServerContents(
-						message, table);
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
+				AppSystemControlComms.get().allTablesReloadServerContents(message);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTableReloadServerContents(message, table);
 			}
 		}
 	}
@@ -245,18 +272,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void removeAdditionalContent(PerformActionMessage message,
-			String[] tables) {
-		if (tables.length < 1) {
+	public void removeAdditionalContent(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-				AppSystemControlComms.get().allTablesRemoveAdditionalContent(
-						message);
-			} else {
-				AppSystemControlComms.get()
-						.specificTableRemoveAdditionalContent(message, table);
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
+				AppSystemControlComms.get().allTablesRemoveAdditionalContent(message);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTableRemoveAdditionalContent(message, table);
 			}
 		}
 	}
@@ -267,7 +297,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * removeClassRoom(synergynet3.web.shared.ClassRoom)
 	 */
 	@Override
-	public void removeClassRoom(ClassRoom classroom) {
+	public void removeClassRoom(ClassRoom classroom)
+	{
 		classroomList.removeClassroom(classroom.getName());
 		StudentDatabaseServerControl.removeStudentsOfClass(classroom.getName());
 	}
@@ -278,7 +309,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * removeStudent(java.lang.String)
 	 */
 	@Override
-	public void removeStudent(String ID) {
+	public void removeStudent(String ID)
+	{
 		StudentDatabaseServerControl.removeStudent(ID);
 	}
 
@@ -288,7 +320,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * removeStudentFromTable(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void removeStudentFromTable(String ID, String table) {
+	public void removeStudentFromTable(String ID, String table)
+	{
 		AppSystemControlComms.get().removeStudentFromTable(ID, table);
 	}
 
@@ -298,7 +331,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * removeStudentsOfClass(java.lang.String)
 	 */
 	@Override
-	public void removeStudentsOfClass(String className) {
+	public void removeStudentsOfClass(String className)
+	{
 		AppSystemControlComms.get().removeStudentsOfClass(className);
 	}
 
@@ -308,19 +342,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * sendContentsToProjector(java.lang.String[], java.lang.String[])
 	 */
 	@Override
-	public void sendContentsToProjector(String[] projectorsToSendTo,
-			String[] tablesToSendTo) {
-		if ((projectorsToSendTo.length < 1) || (tablesToSendTo.length < 1)) {
+	public void sendContentsToProjector(String[] projectorsToSendTo, String[] tablesToSendTo)
+	{
+		if ((projectorsToSendTo.length < 1) || (tablesToSendTo.length < 1))
+		{
 			return;
 		}
-		for (String table : tablesToSendTo) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-				AppSystemControlComms.get().allTablesSendContentsToProjectors(
-						projectorsToSendTo);
-			} else {
-				AppSystemControlComms.get()
-						.specificTablesSendContentsToProjectors(
-								projectorsToSendTo, table);
+		for (String table : tablesToSendTo)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
+				AppSystemControlComms.get().allTablesSendContentsToProjectors(projectorsToSendTo);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTablesSendContentsToProjectors(projectorsToSendTo, table);
 			}
 		}
 	}
@@ -331,19 +367,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * sendProjectedContentsToTable(java.lang.String[], java.lang.String[])
 	 */
 	@Override
-	public void sendProjectedContentsToTable(String[] tablesToSendTo,
-			String[] projectorsToSendTo) {
-		if ((projectorsToSendTo.length < 1) || (tablesToSendTo.length < 1)) {
+	public void sendProjectedContentsToTable(String[] tablesToSendTo, String[] projectorsToSendTo)
+	{
+		if ((projectorsToSendTo.length < 1) || (tablesToSendTo.length < 1))
+		{
 			return;
 		}
-		for (String projector : projectorsToSendTo) {
-			if (projector.equals(DevicesSelected.ALL_PROJECTORS_ID)) {
-				ProjectorControlComms.get().allProjectorsSendContentsToTables(
-						tablesToSendTo);
-			} else {
-				ProjectorControlComms.get()
-						.specificProjectorsSendContentsToTables(tablesToSendTo,
-								projector);
+		for (String projector : projectorsToSendTo)
+		{
+			if (projector.equals(DevicesSelected.ALL_PROJECTORS_ID))
+			{
+				ProjectorControlComms.get().allProjectorsSendContentsToTables(tablesToSendTo);
+			}
+			else
+			{
+				ProjectorControlComms.get().specificProjectorsSendContentsToTables(tablesToSendTo, projector);
 			}
 		}
 	}
@@ -354,20 +392,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * sendScreenshotsToProjector(java.lang.String[], java.lang.String[])
 	 */
 	@Override
-	public void sendScreenshotsToProjector(String[] projectorsToSendTo,
-			String[] tablesToSendTo) {
-		if ((projectorsToSendTo.length < 1) || (tablesToSendTo.length < 1)) {
+	public void sendScreenshotsToProjector(String[] projectorsToSendTo, String[] tablesToSendTo)
+	{
+		if ((projectorsToSendTo.length < 1) || (tablesToSendTo.length < 1))
+		{
 			return;
 		}
-		for (String table : tablesToSendTo) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-				AppSystemControlComms.get()
-						.allTablesSendScreenshotsToProjectors(
-								projectorsToSendTo);
-			} else {
-				AppSystemControlComms.get()
-						.specificTablesSendScreenshotsToProjectors(
-								projectorsToSendTo, table);
+		for (String table : tablesToSendTo)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
+				AppSystemControlComms.get().allTablesSendScreenshotsToProjectors(projectorsToSendTo);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTablesSendScreenshotsToProjectors(projectorsToSendTo, table);
 			}
 		}
 	}
@@ -378,7 +417,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * sendStudentToTable(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void sendStudentToTable(String ID, String table) {
+	public void sendStudentToTable(String ID, String table)
+	{
 		AppSystemControlComms.get().sendStudentToTable(ID, table);
 	}
 
@@ -389,16 +429,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void setNetworkFlick(PerformActionMessage message, String[] tables) {
-		if (tables.length < 1) {
+	public void setNetworkFlick(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
 				AppSystemControlComms.get().allTablesSetNetworkFlick(message);
-			} else {
-				AppSystemControlComms.get().specificTableSetNetworkFlick(
-						message, table);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTableSetNetworkFlick(message, table);
 			}
 		}
 	}
@@ -409,7 +454,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * startDatabase()
 	 */
 	@Override
-	public void startDatabase() {
+	public void startDatabase()
+	{
 		databaseController.runServer();
 	}
 
@@ -419,7 +465,8 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * stopDatabase()
 	 */
 	@Override
-	public void stopDatabase() {
+	public void stopDatabase()
+	{
 		databaseController.close();
 	}
 
@@ -430,16 +477,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void takeScreenshot(PerformActionMessage message, String[] tables) {
-		if (tables.length < 1) {
+	public void takeScreenshot(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
 				AppSystemControlComms.get().allTablesTakeScreenshot(message);
-			} else {
-				AppSystemControlComms.get().specificTableTakeScreenshot(
-						message, table);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTableTakeScreenshot(message, table);
 			}
 		}
 
@@ -452,16 +504,21 @@ public class SynergyNetAppSystemServiceImpl extends RemoteServiceServlet
 	 * java.lang.String[])
 	 */
 	@Override
-	public void toggleFreeze(PerformActionMessage message, String[] tables) {
-		if (tables.length < 1) {
+	public void toggleFreeze(PerformActionMessage message, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(DevicesSelected.ALL_TABLES_ID))
+			{
 				AppSystemControlComms.get().allTablesFreeze(message);
-			} else {
-				AppSystemControlComms.get()
-						.specificTablesFreeze(message, table);
+			}
+			else
+			{
+				AppSystemControlComms.get().specificTablesFreeze(message, table);
 			}
 		}
 	}

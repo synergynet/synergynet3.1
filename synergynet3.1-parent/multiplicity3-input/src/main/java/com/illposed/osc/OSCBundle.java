@@ -34,11 +34,11 @@ import com.illposed.osc.utility.OSCJavaToByteArrayConverter;
 /**
  * The Class OSCBundle.
  */
-public class OSCBundle extends OSCPacket {
+public class OSCBundle extends OSCPacket
+{
 
 	/** The Constant SECONDS_FROM_1900_to_1970. */
-	public static final BigInteger SECONDS_FROM_1900_to_1970 = new BigInteger(
-			"2208988800");
+	public static final BigInteger SECONDS_FROM_1900_to_1970 = new BigInteger("2208988800");
 	// 17 leap years
 	// protected OSCPacket[] packets;
 	/** The packets. */
@@ -51,38 +51,49 @@ public class OSCBundle extends OSCPacket {
 	 * Create a new OSCBundle, with a timestamp of now. You can add packets to
 	 * the bundle with addPacket()
 	 */
-	public OSCBundle() {
+	public OSCBundle()
+	{
 		this(null, GregorianCalendar.getInstance().getTime());
 	}
 
 	/**
 	 * Create an OSCBundle with the specified timestamp
-	 * 
+	 *
 	 * @param timestamp
 	 */
-	public OSCBundle(Date timestamp) {
+	public OSCBundle(Date timestamp)
+	{
 		this(null, timestamp);
 	}
 
 	/**
-	 * @param newPackets Array of OSCPackets to initialize this object with
+	 * @param newPackets
+	 *            Array of OSCPackets to initialize this object with
 	 */
-	public OSCBundle(OSCPacket[] newPackets) {
+	public OSCBundle(OSCPacket[] newPackets)
+	{
 		this(newPackets, GregorianCalendar.getInstance().getTime());
 	}
 
 	/**
-	 * @param newPackets OscPacket[]
-	 * @param time java.lang.Time
+	 * @param newPackets
+	 *            OscPacket[]
+	 * @param time
+	 *            java.lang.Time
 	 */
-	public OSCBundle(OSCPacket[] newPackets, Date newTimestamp) {
+	public OSCBundle(OSCPacket[] newPackets, Date newTimestamp)
+	{
 		super();
-		if (null != newPackets) {
+		if (null != newPackets)
+		{
 			packets = new Vector<OSCPacket>(newPackets.length);
-			for (int i = 0; i < newPackets.length; i++) {
+			for (int i = 0; i < newPackets.length; i++)
+			{
 				packets.add(newPackets[i]);
 			}
-		} else {
+		}
+		else
+		{
 			packets = new Vector<OSCPacket>();
 		}
 		timestamp = newTimestamp;
@@ -91,19 +102,21 @@ public class OSCBundle extends OSCPacket {
 
 	/**
 	 * Add a packet to the list of packets in this bundle
-	 * 
+	 *
 	 * @param packet
 	 */
-	public void addPacket(OSCPacket packet) {
+	public void addPacket(OSCPacket packet)
+	{
 		packets.add(packet);
 	}
 
 	/**
 	 * Get the packets contained in this bundle
-	 * 
+	 *
 	 * @return an array of packets
 	 */
-	public OSCPacket[] getPackets() {
+	public OSCPacket[] getPackets()
+	{
 		OSCPacket[] packetArray = new OSCPacket[packets.size()];
 		packets.toArray(packetArray);
 		return packetArray;
@@ -111,32 +124,38 @@ public class OSCBundle extends OSCPacket {
 
 	/**
 	 * Return the timestamp for this bundle
-	 * 
+	 *
 	 * @return a Date
 	 */
-	public Date getTimestamp() {
+	public Date getTimestamp()
+	{
 		return timestamp;
 	}
 
 	/**
 	 * Set the timestamp for this bundle
-	 * 
+	 *
 	 * @param timestamp
 	 */
-	public void setTimestamp(Date timestamp) {
+	public void setTimestamp(Date timestamp)
+	{
 		this.timestamp = timestamp;
 	}
 
 	/**
-	 * @param stream OscPacketByteArrayConverter
+	 * @param stream
+	 *            OscPacketByteArrayConverter
 	 */
-	protected void computeByteArray(OSCJavaToByteArrayConverter stream) {
+	@Override
+	protected void computeByteArray(OSCJavaToByteArrayConverter stream)
+	{
 		stream.write("#bundle");
 		computeTimeTagByteArray(stream);
 		Enumeration<OSCPacket> enm = packets.elements();
 		OSCPacket nextElement;
 		byte[] packetBytes;
-		while (enm.hasMoreElements()) {
+		while (enm.hasMoreElements())
+		{
 			nextElement = enm.nextElement();
 			packetBytes = nextElement.getByteArray();
 			stream.write(packetBytes.length);
@@ -148,9 +167,11 @@ public class OSCBundle extends OSCPacket {
 	/**
 	 * Compute time tag byte array.
 	 *
-	 * @param stream the stream
+	 * @param stream
+	 *            the stream
 	 */
-	protected void computeTimeTagByteArray(OSCJavaToByteArrayConverter stream) {
+	protected void computeTimeTagByteArray(OSCJavaToByteArrayConverter stream)
+	{
 		long millisecs = timestamp.getTime();
 		long secsSince1970 = millisecs / 1000;
 		long secs = secsSince1970 + SECONDS_FROM_1900_to_1970.longValue();

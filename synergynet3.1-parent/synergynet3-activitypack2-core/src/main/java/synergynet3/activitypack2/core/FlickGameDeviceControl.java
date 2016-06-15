@@ -7,7 +7,8 @@ import synergynet3.cluster.sharedmemory.DistributedProperty;
 /**
  * The Class FlickGameDeviceControl.
  */
-public class FlickGameDeviceControl extends ClusteredDevice {
+public class FlickGameDeviceControl extends ClusteredDevice
+{
 
 	/** The score. */
 	private DistributedProperty<FlickGameScore> score;
@@ -15,12 +16,13 @@ public class FlickGameDeviceControl extends ClusteredDevice {
 	/**
 	 * Instantiates a new flick game device control.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	public FlickGameDeviceControl(String deviceName) {
+	public FlickGameDeviceControl(String deviceName)
+	{
 		super(deviceName);
-		score = getDistributedPropertyMap().createDistributedProperty(
-				"flickGameScore");
+		score = getDistributedPropertyMap().createDistributedProperty("flickGameScore");
 		initWithDefault(score, new FlickGameScore(0, 0));
 	}
 
@@ -29,19 +31,23 @@ public class FlickGameDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the score
 	 */
-	public DistributedProperty<FlickGameScore> getScore() {
+	public DistributedProperty<FlickGameScore> getScore()
+	{
 		return score;
 	}
 
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<FlickGameScore> control,
-			FlickGameScore defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<FlickGameScore> control, FlickGameScore defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}

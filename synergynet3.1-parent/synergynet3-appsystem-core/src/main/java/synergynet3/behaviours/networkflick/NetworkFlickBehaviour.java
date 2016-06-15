@@ -17,8 +17,8 @@ import com.jme3.math.Vector2f;
  * the network. Note that with this behaviour an item does not need
  * inertiaBehaviour, inertia is supplied by this class.
  */
-public class NetworkFlickBehaviour implements IBehaviour,
-		IMultiTouchEventListener {
+public class NetworkFlickBehaviour implements IBehaviour, IMultiTouchEventListener
+{
 
 	/**
 	 * Determines if the item will respond to user touches.
@@ -59,14 +59,16 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	/**
 	 * Causes item to bounce.
 	 *
-	 * @param vX X component of the velocity the item that the managed item is
+	 * @param vX
+	 *            X component of the velocity the item that the managed item is
 	 *            bouncing off.
-	 * @param vY Y component of the velocity the item that the managed item is
+	 * @param vY
+	 *            Y component of the velocity the item that the managed item is
 	 *            bouncing off.
 	 * @param rp
 	 */
-	public void bounce(float vX, float vY, float tpf,
-			RelativePosition bouncePosition) {
+	public void bounce(float vX, float vY, float tpf, RelativePosition bouncePosition)
+	{
 		iae.bounce(vX, vY, tpf, bouncePosition);
 	}
 
@@ -77,13 +79,15 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
-		if (displayDimensions == null) {
-			displayDimensions = new Vector2f(stage.getDisplayWidth(),
-					stage.getDisplayHeight());
+		if (displayDimensions == null)
+		{
+			displayDimensions = new Vector2f(stage.getDisplayWidth(), stage.getDisplayHeight());
 		}
 		float x = this.eventSource.getWorldLocation().x / displayDimensions.x;
 		float y = this.eventSource.getWorldLocation().y / displayDimensions.y;
@@ -97,8 +101,10 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		iae.reset();
@@ -113,8 +119,10 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		cursorCount++;
@@ -129,13 +137,15 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
-		if (cursorCount == 1) {
-			positionHistory
-					.add(event.getPosition(), System.currentTimeMillis());
+		if (cursorCount == 1)
+		{
+			positionHistory.add(event.getPosition(), System.currentTimeMillis());
 			iae.moveWithVelocity(positionHistory.getVelocity());
 			AnimationSystem.getInstance().add(iae);
 			positionHistory.clear();
@@ -146,9 +156,11 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	/**
 	 * Flicks the item without the need for initiation from a user gesture.
 	 *
-	 * @param newVelocity Direction (and force) the item should be flicked in.
+	 * @param newVelocity
+	 *            Direction (and force) the item should be flicked in.
 	 */
-	public void flick(Vector2f newVelocity) {
+	public void flick(Vector2f newVelocity)
+	{
 		iae.moveWithVelocity(newVelocity);
 		AnimationSystem.getInstance().add(iae);
 		positionHistory.clear();
@@ -161,7 +173,8 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -171,7 +184,8 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -181,13 +195,15 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/**
 	 * Halts the item's current movement if travelling under its own momentum.
 	 */
-	public void reset() {
+	public void reset()
+	{
 		iae.reset();
 		positionHistory.clear();
 	}
@@ -197,17 +213,20 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
 	/**
 	 * Sets the deceleration at which the managed item's momentum is reduced.
 	 *
-	 * @param drag The deceleration at which the managed item's momentum is
+	 * @param drag
+	 *            The deceleration at which the managed item's momentum is
 	 *            reduced.
 	 */
-	public void setDeceleration(float deceleration) {
+	public void setDeceleration(float deceleration)
+	{
 		iae.setDeceleration(deceleration);
 	}
 
@@ -218,8 +237,10 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem eventSourceItem) {
-		if ((eventSourceItem == null) && (eventSource != null)) {
+	public void setEventSource(IItem eventSourceItem)
+	{
+		if ((eventSourceItem == null) && (eventSource != null))
+		{
 			eventSource.getMultiTouchDispatcher().remove(this);
 		}
 
@@ -234,7 +255,8 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setItemActingOn(IItem item) {
+	public void setItemActingOn(IItem item)
+	{
 		iae = new NetworkFlickAnimationElement(item, stage);
 		positionHistory = new ItemPositionHistory(item);
 		positionHistory.setStage(stage);
@@ -243,9 +265,11 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	/**
 	 * Sets the predetermined max dimension of the managed item.
 	 *
-	 * @param maxDim The predetermined max dimension of the managed item
+	 * @param maxDim
+	 *            The predetermined max dimension of the managed item
 	 */
-	public void setMaxDimension(float maxDimension) {
+	public void setMaxDimension(float maxDimension)
+	{
 		iae.setMaxDimension(maxDimension);
 	}
 
@@ -256,9 +280,11 @@ public class NetworkFlickBehaviour implements IBehaviour,
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
-		if (positionHistory != null) {
+		if (positionHistory != null)
+		{
 			positionHistory.setStage(stage);
 		}
 	}

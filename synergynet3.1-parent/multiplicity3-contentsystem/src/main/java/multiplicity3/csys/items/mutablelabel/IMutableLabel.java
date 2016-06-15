@@ -7,12 +7,14 @@ import com.jme3.math.Vector2f;
 /**
  * The Interface IMutableLabel.
  */
-public interface IMutableLabel extends IItem {
+public interface IMutableLabel extends IItem
+{
 
 	/**
 	 * Append char.
 	 *
-	 * @param charAt the char at
+	 * @param charAt
+	 *            the char at
 	 */
 	public void appendChar(char charAt);
 
@@ -45,29 +47,34 @@ public interface IMutableLabel extends IItem {
 	/**
 	 * Sets the box size.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public void setBoxSize(float width, float height);
 
 	/**
 	 * Sets the font.
 	 *
-	 * @param resourcePath the new font
+	 * @param resourcePath
+	 *            the new font
 	 */
 	public void setFont(String resourcePath);
 
 	/**
 	 * Sets the font scale.
 	 *
-	 * @param f the new font scale
+	 * @param f
+	 *            the new font scale
 	 */
 	public void setFontScale(float f);
 
 	/**
 	 * Sets the text.
 	 *
-	 * @param text the new text
+	 * @param text
+	 *            the new text
 	 */
 	public void setText(String text);
 }

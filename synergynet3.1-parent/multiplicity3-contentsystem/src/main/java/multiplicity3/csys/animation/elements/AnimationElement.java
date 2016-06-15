@@ -26,7 +26,8 @@ package multiplicity3.csys.animation.elements;
 /**
  * The Class AnimationElement.
  */
-public abstract class AnimationElement {
+public abstract class AnimationElement
+{
 
 	/** The enabled. */
 	protected boolean enabled;
@@ -36,7 +37,7 @@ public abstract class AnimationElement {
 
 	/**
 	 * Called on the first
-	 * 
+	 *
 	 * @param tpf
 	 */
 	public abstract void elementStart(float tpf);
@@ -44,15 +45,17 @@ public abstract class AnimationElement {
 	/**
 	 * Enable.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	public void enable(boolean b) {
+	public void enable(boolean b)
+	{
 		this.enabled = b;
 	}
 
 	/**
 	 * When this method returns true, the animation element will be reset.
-	 * 
+	 *
 	 * @return
 	 */
 	public abstract boolean isFinished();
@@ -67,13 +70,15 @@ public abstract class AnimationElement {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return this.getClass().getName();
 	}
 
 	/**
 	 * Called each frame in the game loop.
-	 * 
+	 *
 	 * @param tpf
 	 */
 	public abstract void updateAnimationState(float tpf);
@@ -82,11 +87,13 @@ public abstract class AnimationElement {
 	 * Called by the AnimationSystem on each frame. Will call
 	 * <code>elementStart</code> and <code>updateAnimationState</code> as
 	 * necessary.
-	 * 
+	 *
 	 * @param tpf
 	 */
-	public void updateState(float tpf) {
-		if (firstCall) {
+	public void updateState(float tpf)
+	{
+		if (firstCall)
+		{
 			elementStart(tpf);
 			firstCall = false;
 		}

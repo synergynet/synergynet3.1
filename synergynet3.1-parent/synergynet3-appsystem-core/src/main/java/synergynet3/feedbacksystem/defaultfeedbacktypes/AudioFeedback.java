@@ -14,7 +14,8 @@ import synergynet3.feedbacksystem.FeedbackViewer;
 /**
  * The Class AudioFeedback.
  */
-public class AudioFeedback extends FeedbackItem {
+public class AudioFeedback extends FeedbackItem
+{
 
 	/** The Constant CACHABLE_TYPE. */
 	public static final String CACHABLE_TYPE = "CACHABLE_FEEDBACK_AUDIO";
@@ -31,17 +32,16 @@ public class AudioFeedback extends FeedbackItem {
 	/**
 	 * Reconstruct.
 	 *
-	 * @param feedbackItem the feedback item
+	 * @param feedbackItem
+	 *            the feedback item
 	 * @return the audio feedback
 	 */
-	public static AudioFeedback reconstruct(Object[] feedbackItem) {
+	public static AudioFeedback reconstruct(Object[] feedbackItem)
+	{
 		AudioFeedback feedback = new AudioFeedback();
 		String studentID = (String) feedbackItem[1];
 		feedback.setStudentID(studentID);
-		feedback.setRecordingLocation(CacheOrganisation
-				.getSpecificDir(studentID)
-				+ File.separatorChar
-				+ (String) feedbackItem[2]);
+		feedback.setRecordingLocation(CacheOrganisation.getSpecificDir(studentID) + File.separatorChar + (String) feedbackItem[2]);
 		feedback.setCached(studentID);
 		return feedback;
 	}
@@ -53,17 +53,21 @@ public class AudioFeedback extends FeedbackItem {
 	 * String)
 	 */
 	@Override
-	public Object[] deconstruct(String studentIDin) {
+	public Object[] deconstruct(String studentIDin)
+	{
 		Object[] feedbackItem = new Object[3];
 		feedbackItem[0] = CACHABLE_TYPE;
 		feedbackItem[1] = studentID;
-		if (recording == null) {
+		if (recording == null)
+		{
 			return null;
 		}
-		if (!recording.isFile()) {
+		if (!recording.isFile())
+		{
 			return null;
 		}
-		if (!cached.equalsIgnoreCase(studentIDin)) {
+		if (!cached.equalsIgnoreCase(studentIDin))
+		{
 			ItemCaching.cacheFile(recording, studentIDin);
 		}
 		feedbackItem[2] = recording.getName();
@@ -75,30 +79,36 @@ public class AudioFeedback extends FeedbackItem {
 	 * @see synergynet3.feedbacksystem.FeedbackItem#getIcon()
 	 */
 	@Override
-	public String getIcon() {
+	public String getIcon()
+	{
 		return "synergynet3/feedbacksystem/defaultfeedbacktypes/audioFeedback.png";
 	}
 
 	/**
 	 * @return the cached
 	 */
-	public String isCached() {
+	public String isCached()
+	{
 		return cached;
 	}
 
 	/**
-	 * @param cached the cached to set
+	 * @param cached
+	 *            the cached to set
 	 */
-	public void setCached(String cached) {
+	public void setCached(String cached)
+	{
 		this.cached = cached;
 	}
 
 	/**
 	 * Sets the recording location.
 	 *
-	 * @param value the new recording location
+	 * @param value
+	 *            the new recording location
 	 */
-	public void setRecordingLocation(String value) {
+	public void setRecordingLocation(String value)
+	{
 		recording = new File(value);
 	}
 
@@ -107,9 +117,9 @@ public class AudioFeedback extends FeedbackItem {
 	 * @see synergynet3.feedbacksystem.FeedbackItem#addSettings()
 	 */
 	@Override
-	protected void addSettings() throws ContentTypeNotBoundException {
-		audioRecorder = getStage().getContentFactory().create(
-				IAudioRecorder.class, "bg", UUID.randomUUID());
+	protected void addSettings() throws ContentTypeNotBoundException
+	{
+		audioRecorder = getStage().getContentFactory().create(IAudioRecorder.class, "bg", UUID.randomUUID());
 		audioRecorder.makeImmovable();
 		setter.addToFrame(audioRecorder, 0, 0, 0);
 	}
@@ -121,15 +131,15 @@ public class AudioFeedback extends FeedbackItem {
 	 * .feedbacksystem.FeedbackViewer, int)
 	 */
 	@Override
-	protected void generateFeedbackView(FeedbackViewer feedbackViewer,
-			int frameNo) throws ContentTypeNotBoundException {
+	protected void generateFeedbackView(FeedbackViewer feedbackViewer, int frameNo) throws ContentTypeNotBoundException
+	{
 
-		if (recording == null) {
+		if (recording == null)
+		{
 			recording = audioRecorder.getAudioFile();
 		}
 
-		IAudioPlayer audioPlayer = getStage().getContentFactory().create(
-				IAudioPlayer.class, "bg", UUID.randomUUID());
+		IAudioPlayer audioPlayer = getStage().getContentFactory().create(IAudioPlayer.class, "bg", UUID.randomUUID());
 		audioPlayer.setVisible(false);
 		audioPlayer.setAudioRecording(recording);
 
@@ -141,7 +151,8 @@ public class AudioFeedback extends FeedbackItem {
 	 * @see synergynet3.feedbacksystem.FeedbackItem#getAllSettingsMade()
 	 */
 	@Override
-	protected boolean getAllSettingsMade() {
+	protected boolean getAllSettingsMade()
+	{
 		return audioRecorder.hasRecorded();
 	}
 

@@ -15,7 +15,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ProjectionControl.
  */
-public class ProjectionControl extends VerticalPanel {
+public class ProjectionControl extends VerticalPanel
+{
 
 	/** The control panels. */
 	private VerticalPanel controlPanels;
@@ -23,13 +24,17 @@ public class ProjectionControl extends VerticalPanel {
 	/**
 	 * Instantiates a new projection control.
 	 */
-	public ProjectionControl() {
+	public ProjectionControl()
+	{
 		controlPanels = new VerticalPanel();
 		setTitle("Projection Control");
 
 		Button btnDiscover = new Button("Discover");
-		btnDiscover.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnDiscover.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				loadProjectionControlPanels();
 			}
 		});
@@ -42,11 +47,12 @@ public class ProjectionControl extends VerticalPanel {
 	 *
 	 * @return the currently known projectors
 	 */
-	private List<String> getCurrentlyKnownProjectors() {
+	private List<String> getCurrentlyKnownProjectors()
+	{
 		List<String> currentlyKnownProjectors = new ArrayList<String>();
-		for (int i = 0; i < controlPanels.getWidgetCount(); i++) {
-			ProjectionControlPanel pcp = (ProjectionControlPanel) controlPanels
-					.getWidget(i);
+		for (int i = 0; i < controlPanels.getWidgetCount(); i++)
+		{
+			ProjectionControlPanel pcp = (ProjectionControlPanel) controlPanels.getWidget(i);
 			currentlyKnownProjectors.add(pcp.getProjectorName());
 		}
 		return currentlyKnownProjectors;
@@ -55,10 +61,13 @@ public class ProjectionControl extends VerticalPanel {
 	/**
 	 * Adds the control panels for names.
 	 *
-	 * @param newProjectors the new projectors
+	 * @param newProjectors
+	 *            the new projectors
 	 */
-	protected void addControlPanelsForNames(List<String> newProjectors) {
-		for (String np : newProjectors) {
+	protected void addControlPanelsForNames(List<String> newProjectors)
+	{
+		for (String np : newProjectors)
+		{
 			ProjectionControlPanel pcp = new ProjectionControlPanel();
 			pcp.setProjectorName(np);
 			controlPanels.add(pcp);
@@ -69,52 +78,59 @@ public class ProjectionControl extends VerticalPanel {
 	/**
 	 * Load projection control panels.
 	 */
-	protected void loadProjectionControlPanels() {
-		SynergyNetWebCommonsService.Util.getInstance()
-				.getDevicesCurrentlyOnline("projectors",
-						new AsyncCallback<List<String>>() {
+	protected void loadProjectionControlPanels()
+	{
+		SynergyNetWebCommonsService.Util.getInstance().getDevicesCurrentlyOnline("projectors", new AsyncCallback<List<String>>()
+		{
 
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(caught.getMessage())
-										.show();
-							}
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-							@Override
-							public void onSuccess(List<String> result) {
-								System.out.println(result);
-								List<String> currentlyKnownProjectors = getCurrentlyKnownProjectors();
-								List<String> projectorsGone = getCurrentlyKnownProjectors();
+			@Override
+			public void onSuccess(List<String> result)
+			{
+				System.out.println(result);
+				List<String> currentlyKnownProjectors = getCurrentlyKnownProjectors();
+				List<String> projectorsGone = getCurrentlyKnownProjectors();
 
-								for (String op : result) {
-									projectorsGone.remove(op);
-								}
+				for (String op : result)
+				{
+					projectorsGone.remove(op);
+				}
 
-								List<String> newProjectors = new ArrayList<String>();
-								for (String n : result) {
-									if (!currentlyKnownProjectors.contains(n)) {
-										newProjectors.add(n);
-									}
-								}
+				List<String> newProjectors = new ArrayList<String>();
+				for (String n : result)
+				{
+					if (!currentlyKnownProjectors.contains(n))
+					{
+						newProjectors.add(n);
+					}
+				}
 
-								removeControlPanelsForNames(projectorsGone);
-								addControlPanelsForNames(newProjectors);
+				removeControlPanelsForNames(projectorsGone);
+				addControlPanelsForNames(newProjectors);
 
-							}
-						});
+			}
+		});
 
 	}
 
 	/**
 	 * Removes the control panels for names.
 	 *
-	 * @param projectorsGone the projectors gone
+	 * @param projectorsGone
+	 *            the projectors gone
 	 */
-	protected void removeControlPanelsForNames(List<String> projectorsGone) {
-		for (int i = 0; i < controlPanels.getWidgetCount(); i++) {
-			ProjectionControlPanel pcp = (ProjectionControlPanel) controlPanels
-					.getWidget(i);
-			if (projectorsGone.contains(pcp.getProjectorName())) {
+	protected void removeControlPanelsForNames(List<String> projectorsGone)
+	{
+		for (int i = 0; i < controlPanels.getWidgetCount(); i++)
+		{
+			ProjectionControlPanel pcp = (ProjectionControlPanel) controlPanels.getWidget(i);
+			if (projectorsGone.contains(pcp.getProjectorName()))
+			{
 				controlPanels.remove(pcp);
 			}
 		}

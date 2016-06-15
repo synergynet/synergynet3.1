@@ -8,12 +8,14 @@ import org.jivesoftware.smackx.filetransfer.IncomingFileTransfer;
 /**
  * The Class FileTransferWorker.
  */
-public class FileTransferWorker implements Runnable {
+public class FileTransferWorker implements Runnable
+{
 
 	/**
 	 * The Interface FileTransferWorkerDelegate.
 	 */
-	public static interface FileTransferWorkerDelegate {
+	public static interface FileTransferWorkerDelegate
+	{
 
 		/**
 		 * Transfer complete.
@@ -22,8 +24,7 @@ public class FileTransferWorker implements Runnable {
 	}
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(FileTransferWorker.class
-			.getName());
+	private static final Logger log = Logger.getLogger(FileTransferWorker.class.getName());
 
 	/** The delegate. */
 	private FileTransferWorkerDelegate delegate;
@@ -34,11 +35,13 @@ public class FileTransferWorker implements Runnable {
 	/**
 	 * Instantiates a new file transfer worker.
 	 *
-	 * @param delegate the delegate
-	 * @param transfer the transfer
+	 * @param delegate
+	 *            the delegate
+	 * @param transfer
+	 *            the transfer
 	 */
-	public FileTransferWorker(FileTransferWorkerDelegate delegate,
-			IncomingFileTransfer transfer) {
+	public FileTransferWorker(FileTransferWorkerDelegate delegate, IncomingFileTransfer transfer)
+	{
 		this.delegate = delegate;
 		this.transfer = transfer;
 	}
@@ -48,7 +51,8 @@ public class FileTransferWorker implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
-	public void run() {
+	public void run()
+	{
 		waitUntilTransferIsComplete();
 		delegate.transferComplete();
 	}
@@ -56,7 +60,8 @@ public class FileTransferWorker implements Runnable {
 	/**
 	 * Start.
 	 */
-	public void start() {
+	public void start()
+	{
 		Thread workerThread = new Thread(this);
 		workerThread.setDaemon(true);
 		workerThread.start();
@@ -65,11 +70,16 @@ public class FileTransferWorker implements Runnable {
 	/**
 	 * Wait until transfer is complete.
 	 */
-	private void waitUntilTransferIsComplete() {
-		while (!transfer.isDone()) {
-			try {
+	private void waitUntilTransferIsComplete()
+	{
+		while (!transfer.isDone())
+		{
+			try
+			{
 				Thread.sleep(500);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e)
+			{
 				log.log(Level.WARNING, "Thread error.", e);
 			}
 		}

@@ -10,12 +10,14 @@ package synergynet3.cluster.xmpp.messaging;
  *
  * @see IMessageEvent
  */
-public interface IMessageListener {
+public interface IMessageListener
+{
 
 	/**
 	 * Message received.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
 	public void messageReceived(Message message);
 }

@@ -12,7 +12,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Class StudentRepresentation.
  */
-public class StudentRepresentation {
+public class StudentRepresentation
+{
 
 	/** The gallery. */
 	private StudentGallery gallery;
@@ -29,9 +30,11 @@ public class StudentRepresentation {
 	/**
 	 * Instantiates a new student representation.
 	 *
-	 * @param student the student
+	 * @param student
+	 *            the student
 	 */
-	public StudentRepresentation(Student student) {
+	public StudentRepresentation(Student student)
+	{
 		Logger log = Logger.getLogger(StudentRepresentation.class.getName());
 		initialise(student, log);
 	}
@@ -39,11 +42,15 @@ public class StudentRepresentation {
 	/**
 	 * Instantiates a new student representation.
 	 *
-	 * @param student the student
-	 * @param studentID the student id
-	 * @param log the log
+	 * @param student
+	 *            the student
+	 * @param studentID
+	 *            the student id
+	 * @param log
+	 *            the log
 	 */
-	public StudentRepresentation(Student student, String studentID, Logger log) {
+	public StudentRepresentation(Student student, String studentID, Logger log)
+	{
 		initialise(student, log);
 	}
 
@@ -52,7 +59,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the i item
 	 */
-	public IItem asItem() {
+	public IItem asItem()
+	{
 		return wrapperFrame;
 	}
 
@@ -61,7 +69,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the class name
 	 */
-	public String getClassName() {
+	public String getClassName()
+	{
 		return student.getClassName();
 	}
 
@@ -70,7 +79,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the gallery
 	 */
-	public StudentGallery getGallery() {
+	public StudentGallery getGallery()
+	{
 		return gallery;
 	}
 
@@ -79,7 +89,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return student.getName();
 	}
 
@@ -88,7 +99,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the student
 	 */
-	public Student getStudent() {
+	public Student getStudent()
+	{
 		return student;
 	}
 
@@ -97,7 +109,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the student colour
 	 */
-	public ColorRGBA getStudentColour() {
+	public ColorRGBA getStudentColour()
+	{
 		return studentColour;
 	}
 
@@ -106,16 +119,19 @@ public class StudentRepresentation {
 	 *
 	 * @return the student id
 	 */
-	public String getStudentId() {
+	public String getStudentId()
+	{
 		return student.getStudentID();
 	}
 
 	/**
 	 * Sets the student colour.
 	 *
-	 * @param studentColour the new student colour
+	 * @param studentColour
+	 *            the new student colour
 	 */
-	public void setStudentColour(ColorRGBA studentColour) {
+	public void setStudentColour(ColorRGBA studentColour)
+	{
 		this.studentColour = studentColour;
 	}
 
@@ -124,7 +140,8 @@ public class StudentRepresentation {
 	 *
 	 * @return the color rgba
 	 */
-	private ColorRGBA generateColour() {
+	private ColorRGBA generateColour()
+	{
 		float[] colourRGB = ColourManager.getRGBForColour(student.getColour());
 		return new ColorRGBA(colourRGB[0], colourRGB[1], colourRGB[2], 1f);
 	}
@@ -132,10 +149,13 @@ public class StudentRepresentation {
 	/**
 	 * Initialise.
 	 *
-	 * @param student the student
-	 * @param log the log
+	 * @param student
+	 *            the student
+	 * @param log
+	 *            the log
 	 */
-	private void initialise(Student student, Logger log) {
+	private void initialise(Student student, Logger log)
+	{
 		this.student = student;
 		studentColour = generateColour();
 		gallery = new StudentGallery(this, log);

@@ -26,8 +26,8 @@ import com.jme3.math.Vector2f;
  * The Class Textbox.
  */
 @ImplementsContentItem(target = ITextbox.class)
-public class Textbox extends JMEContainer implements ITextbox, IInitable,
-		IItemCachable {
+public class Textbox extends JMEContainer implements ITextbox, IInitable, IItemCachable
+{
 
 	/** The Constant CACHABLE_TYPE. */
 	public static final String CACHABLE_TYPE = "CACHABLE_TEXT";
@@ -83,55 +83,55 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	/**
 	 * Instantiates a new textbox.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public Textbox(String name, UUID uuid) {
+	public Textbox(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
 	/**
 	 * Reconstruct.
 	 *
-	 * @param galleryItem the gallery item
-	 * @param stage the stage
-	 * @param loc the loc
+	 * @param galleryItem
+	 *            the gallery item
+	 * @param stage
+	 *            the stage
+	 * @param loc
+	 *            the loc
 	 * @return the textbox
 	 */
-	public static Textbox reconstruct(GalleryItemDatabaseFormat galleryItem,
-			IStage stage, String loc) {
-		try {
-			Textbox textbox = stage.getContentFactory().create(ITextbox.class,
-					(String) galleryItem.getValues().get(0), UUID.randomUUID());
+	public static Textbox reconstruct(GalleryItemDatabaseFormat galleryItem, IStage stage, String loc)
+	{
+		try
+		{
+			Textbox textbox = stage.getContentFactory().create(ITextbox.class, (String) galleryItem.getValues().get(0), UUID.randomUUID());
 
 			String text = (String) galleryItem.getValues().get(0);
 			boolean movable = (Boolean) galleryItem.getValues().get(1);
-			ColorRGBA bgColour = new ColorRGBA((Float) galleryItem.getValues()
-					.get(2), (Float) galleryItem.getValues().get(3),
-					(Float) galleryItem.getValues().get(4), (Float) galleryItem
-							.getValues().get(5));
-			ColorRGBA borderColour = new ColorRGBA((Float) galleryItem
-					.getValues().get(6),
-					(Float) galleryItem.getValues().get(7), (Float) galleryItem
-							.getValues().get(8), (Float) galleryItem
-							.getValues().get(9));
-			FontColour fontColour = FontUtil
-					.getFontColourFromString((String) galleryItem.getValues()
-							.get(10));
+			ColorRGBA bgColour = new ColorRGBA((Float) galleryItem.getValues().get(2), (Float) galleryItem.getValues().get(3), (Float) galleryItem.getValues().get(4), (Float) galleryItem.getValues().get(5));
+			ColorRGBA borderColour = new ColorRGBA((Float) galleryItem.getValues().get(6), (Float) galleryItem.getValues().get(7), (Float) galleryItem.getValues().get(8), (Float) galleryItem.getValues().get(9));
+			FontColour fontColour = FontUtil.getFontColourFromString((String) galleryItem.getValues().get(10));
 			boolean scaleLimitsSet = (Boolean) galleryItem.getValues().get(11);
 			float scaleMin = (Float) galleryItem.getValues().get(12);
 			float scaleMax = (Float) galleryItem.getValues().get(13);
 
 			textbox.setColours(bgColour, borderColour, fontColour);
 			textbox.setMovable(movable);
-			if (scaleLimitsSet) {
+			if (scaleLimitsSet)
+			{
 				textbox.setScaleLimits(scaleMin, scaleMax);
 			}
 			textbox.setWidth(galleryItem.getWidth());
 			textbox.setHeight(galleryItem.getHeight());
 			textbox.setText(text, stage);
 			return textbox;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			return null;
 		}
 	}
@@ -141,7 +141,8 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * @see synergynet3.cachecontrol.IItemCachable#deconstruct(java.lang.String)
 	 */
 	@Override
-	public GalleryItemDatabaseFormat deconstruct(String loc) {
+	public GalleryItemDatabaseFormat deconstruct(String loc)
+	{
 		GalleryItemDatabaseFormat galleryItem = new GalleryItemDatabaseFormat();
 		galleryItem.setType(CACHABLE_TYPE);
 		galleryItem.addValue(textLabel.getText());
@@ -170,7 +171,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#getBackground()
 	 */
-	public IColourRectangle getBackground() {
+	@Override
+	public IColourRectangle getBackground()
+	{
 		return background;
 	}
 
@@ -178,7 +181,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#getHeight()
 	 */
-	public float getHeight() {
+	@Override
+	public float getHeight()
+	{
 		return bgHeight;
 	}
 
@@ -186,7 +191,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#getListenBlock()
 	 */
-	public IImage getListenBlock() {
+	@Override
+	public IImage getListenBlock()
+	{
 		return listenBlock;
 	}
 
@@ -194,7 +201,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#getTextBorder()
 	 */
-	public IRoundedBorder getTextBorder() {
+	@Override
+	public IRoundedBorder getTextBorder()
+	{
 		return textBorder;
 	}
 
@@ -202,7 +211,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#getTextLabel()
 	 */
-	public IMutableLabel getTextLabel() {
+	@Override
+	public IMutableLabel getTextLabel()
+	{
 		return textLabel;
 	}
 
@@ -210,7 +221,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#getWidth()
 	 */
-	public float getWidth() {
+	@Override
+	public float getWidth()
+	{
 		return bgWidth;
 	}
 
@@ -220,8 +233,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * synergynet3.additionalitems.interfaces.ITextbox#setColours(com.jme3.math
 	 * .ColorRGBA, com.jme3.math.ColorRGBA, synergynet3.fonts.FontColour)
 	 */
-	public void setColours(ColorRGBA bgColour, ColorRGBA borderColour,
-			FontColour fontColour) {
+	@Override
+	public void setColours(ColorRGBA bgColour, ColorRGBA borderColour, FontColour fontColour)
+	{
 		this.bgColour = bgColour;
 		this.borderColour = borderColour;
 		this.fontColour = fontColour;
@@ -231,7 +245,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#setHeight(float)
 	 */
-	public void setHeight(float height) {
+	@Override
+	public void setHeight(float height)
+	{
 		this.height = height;
 	}
 
@@ -239,9 +255,12 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#setMovable(boolean)
 	 */
-	public void setMovable(boolean movable) {
+	@Override
+	public void setMovable(boolean movable)
+	{
 		this.movable = movable;
-		if (rts != null) {
+		if (rts != null)
+		{
 			rts.setActive(false);
 		}
 		this.setInteractionEnabled(movable);
@@ -253,11 +272,14 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * synergynet3.additionalitems.interfaces.ITextbox#setScaleLimits(float,
 	 * float)
 	 */
-	public void setScaleLimits(float scaleMin, float scaleMax) {
+	@Override
+	public void setScaleLimits(float scaleMin, float scaleMax)
+	{
 		scaleLimitsSet = true;
 		this.scaleMin = scaleMin;
 		this.scaleMax = scaleMax;
-		if (rts != null) {
+		if (rts != null)
+		{
 			rts.setScaleLimits(scaleMin, scaleMax);
 		}
 	}
@@ -268,21 +290,23 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * synergynet3.additionalitems.interfaces.ITextbox#setText(java.lang.String,
 	 * multiplicity3.csys.stage.IStage)
 	 */
-	public void setText(String text, IStage stage) {
+	@Override
+	public void setText(String text, IStage stage)
+	{
 
-		try {
-			textLabel = stage.getContentFactory().create(IMutableLabel.class,
-					"textLabel", UUID.randomUUID());
+		try
+		{
+			textLabel = stage.getContentFactory().create(IMutableLabel.class, "textLabel", UUID.randomUUID());
 			textLabel.setFont(FontUtil.getFont(fontColour));
 
 			textLabel.setText("A");
-			BitmapText bitmapText = (BitmapText) textLabel
-					.getManipulableSpatial();
+			BitmapText bitmapText = (BitmapText) textLabel.getManipulableSpatial();
 			float border = bitmapText.getLineWidth();
 
 			textLabel.setText(text);
 
-			if (width == -1) {
+			if (width == -1)
+			{
 				width = bitmapText.getLineWidth();
 			}
 
@@ -291,14 +315,12 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 			bgHeight = bitmapText.getHeight();
 			Vector2f bgSize = new Vector2f(bgWidth, bgHeight);
 
-			textBorder = stage.getContentFactory().create(IRoundedBorder.class,
-					"textBorder", UUID.randomUUID());
+			textBorder = stage.getContentFactory().create(IRoundedBorder.class, "textBorder", UUID.randomUUID());
 			textBorder.setBorderWidth(3);
 			textBorder.setSize(bgSize);
 			textBorder.setColor(borderColour);
 
-			background = stage.getContentFactory().create(
-					IColourRectangle.class, "bg", UUID.randomUUID());
+			background = stage.getContentFactory().create(IColourRectangle.class, "bg", UUID.randomUUID());
 			background.enableTransparency();
 			background.setSolidBackgroundColour(bgColour);
 			background.setSize(bgSize);
@@ -310,14 +332,13 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 			textBorder.setInteractionEnabled(false);
 			textLabel.setInteractionEnabled(false);
 
-			listenBlock = stage.getContentFactory().create(IImage.class,
-					"listenBlock", UUID.randomUUID());
+			listenBlock = stage.getContentFactory().create(IImage.class, "listenBlock", UUID.randomUUID());
 			listenBlock.setSize(bgSize);
 			this.addItem(listenBlock);
 
-			rts = stage.getBehaviourMaker().addBehaviour(listenBlock,
-					RotateTranslateScaleBehaviour.class);
-			if (scaleLimitsSet) {
+			rts = stage.getBehaviourMaker().addBehaviour(listenBlock, RotateTranslateScaleBehaviour.class);
+			if (scaleLimitsSet)
+			{
 				rts.setScaleLimits(scaleMin, scaleMax);
 			}
 			rts.setItemActingOn(this);
@@ -325,8 +346,12 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 
 			this.setInteractionEnabled(movable);
 
-		} catch (ContentTypeNotBoundException e) {
-		} catch (NullPointerException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
+		}
+		catch (NullPointerException e)
+		{
 		}
 
 	}
@@ -335,7 +360,9 @@ public class Textbox extends JMEContainer implements ITextbox, IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ITextbox#setWidth(float)
 	 */
-	public void setWidth(float width) {
+	@Override
+	public void setWidth(float width)
+	{
 		this.width = width;
 	}
 

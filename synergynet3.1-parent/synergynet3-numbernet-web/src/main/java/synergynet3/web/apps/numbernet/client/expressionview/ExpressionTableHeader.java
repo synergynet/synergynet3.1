@@ -6,12 +6,14 @@ import com.google.gwt.user.client.ui.Label;
 /**
  * The Class ExpressionTableHeader.
  */
-public class ExpressionTableHeader extends HorizontalPanel {
+public class ExpressionTableHeader extends HorizontalPanel
+{
 
 	/**
 	 * Instantiates a new expression table header.
 	 */
-	public ExpressionTableHeader() {
+	public ExpressionTableHeader()
+	{
 		super();
 		setSize("394px", "22px");
 		setSpacing(2);

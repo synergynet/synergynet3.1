@@ -46,14 +46,14 @@ import de.evoluce.multitouch.adapter.java.JavaAdapter;
 /**
  * Support for the Lumin multi-touch table. This implementation currently only
  * supports cursor information - it does not support objects/fiducials.
- * 
+ *
  * @author dcs0ah1
  */
-public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
+public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(ThreadedLuminMultiTouchInput.class.getName());
+	private static final Logger log = Logger.getLogger(ThreadedLuminMultiTouchInput.class.getName());
 
 	/** The click detector. */
 	protected ClickDetector clickDetector = new ClickDetector(500, 2f);
@@ -82,16 +82,22 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	/**
 	 * Instantiates a new threaded lumin multi touch input.
 	 */
-	public ThreadedLuminMultiTouchInput() {
+	public ThreadedLuminMultiTouchInput()
+	{
 		ja = new JavaAdapter("localhost");
-		Thread t = new Thread(new Runnable() {
+		Thread t = new Thread(new Runnable()
+		{
 			@Override
-			public void run() {
-				try {
+			public void run()
+			{
+				try
+				{
 					currentBlobs = ja.getBlobsOfNextFrame().mBlobs;
 					process();
 					Thread.yield();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					log.log(Level.SEVERE, "Error getting frames.", e);
 				}
 
@@ -105,7 +111,8 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#endListening()
 	 */
 	@Override
-	public void endListening() {
+	public void endListening()
+	{
 	}
 
 	/*
@@ -114,9 +121,11 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * multiplicity3.input.IMultiTouchInputSource#registerMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
-		if (!listeners.contains(listener)) {
+	@Override
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(listener);
 		}
 	}
@@ -127,9 +136,11 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * multiplicity3.input.IMultiTouchInputSource#registerMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener, int)
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener, int index) {
-		if (!listeners.contains(listener)) {
+	@Override
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener, int index)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(index, listener);
 		}
 	}
@@ -139,7 +150,8 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#requiresMouseDisplay()
 	 */
 	@Override
-	public boolean requiresMouseDisplay() {
+	public boolean requiresMouseDisplay()
+	{
 		return false;
 	}
 
@@ -148,16 +160,20 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#setClickSensitivity(long,
 	 * float)
 	 */
-	public void setClickSensitivity(long time, float distance) {
+	@Override
+	public void setClickSensitivity(long time, float distance)
+	{
 		clickDetector.setSensitivity(time, distance);
 	}
 
 	/**
 	 * Sets the same position tolerance.
 	 *
-	 * @param samePositionTolerance the new same position tolerance
+	 * @param samePositionTolerance
+	 *            the new same position tolerance
 	 */
-	public void setSamePositionTolerance(float samePositionTolerance) {
+	public void setSamePositionTolerance(float samePositionTolerance)
+	{
 		this.samePositionTolerance = samePositionTolerance;
 	}
 
@@ -167,8 +183,9 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * multiplicity3.input.IMultiTouchInputSource#unregisterMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
-	public void unregisterMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
+	@Override
+	public void unregisterMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
 		listeners.remove(listener);
 	}
 
@@ -177,11 +194,16 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#update(float)
 	 */
 	@Override
-	public void update(float tpf) throws MultiTouchInputException {
-		for (Callable<Void> c : executeQueue) {
-			try {
+	public void update(float tpf) throws MultiTouchInputException
+	{
+		for (Callable<Void> c : executeQueue)
+		{
+			try
+			{
 				c.call();
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 			}
 			executeQueue.remove(c);
@@ -191,28 +213,34 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 	/**
 	 * Process.
 	 *
-	 * @throws MultiTouchInputException the multi touch input exception
+	 * @throws MultiTouchInputException
+	 *             the multi touch input exception
 	 */
-	private void process() throws MultiTouchInputException {
+	private void process() throws MultiTouchInputException
+	{
 
 		final Vector2f pos = new Vector2f();
 		Vector2f vel = new Vector2f();
 
 		Map<Integer, BlobJ> newRegistry = new HashMap<Integer, BlobJ>();
 		// notify for new blobs or changes to existing blobs
-		for (final BlobJ blob : currentBlobs) {
+		for (final BlobJ blob : currentBlobs)
+		{
 			newRegistry.put(blob.mID, blob);
 			pos.x = blob.mX;
 			pos.y = blob.mY;
 
-			final MultiTouchCursorEvent event = new MultiTouchCursorEvent(
-					blob.mID, pos, vel, blob.mWidth, 0f);
+			final MultiTouchCursorEvent event = new MultiTouchCursorEvent(blob.mID, pos, vel, blob.mWidth, 0f);
 
-			if (currentBlobRegistry.containsKey(blob.mID)) {
-				for (final IMultiTouchEventListener listener : listeners) {
-					executeQueue.add(new Callable<Void>() {
+			if (currentBlobRegistry.containsKey(blob.mID))
+			{
+				for (final IMultiTouchEventListener listener : listeners)
+				{
+					executeQueue.add(new Callable<Void>()
+					{
 						@Override
-						public Void call() throws Exception {
+						public Void call() throws Exception
+						{
 							listener.cursorChanged(event);
 							return null;
 						}
@@ -220,19 +248,26 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 
 				}
 				lastKnownPosition.put(blob.mID, new Vector2f(blob.mX, blob.mY));
-			} else {
-				executeQueue.add(new Callable<Void>() {
+			}
+			else
+			{
+				executeQueue.add(new Callable<Void>()
+				{
 					@Override
-					public Void call() throws Exception {
+					public Void call() throws Exception
+					{
 						clickDetector.newCursorPressed(blob.mID, pos);
 						return null;
 					}
 				});
 
-				for (final IMultiTouchEventListener listener : listeners) {
-					executeQueue.add(new Callable<Void>() {
+				for (final IMultiTouchEventListener listener : listeners)
+				{
+					executeQueue.add(new Callable<Void>()
+					{
 						@Override
-						public Void call() throws Exception {
+						public Void call() throws Exception
+						{
 							listener.cursorPressed(event);
 							return null;
 						}
@@ -243,21 +278,25 @@ public class ThreadedLuminMultiTouchInput implements IMultiTouchInputSource {
 		}
 
 		// notify if blobs have disappeared
-		for (Integer i : currentBlobRegistry.keySet()) {
-			if (!newRegistry.keySet().contains(i)) {
+		for (Integer i : currentBlobRegistry.keySet())
+		{
+			if (!newRegistry.keySet().contains(i))
+			{
 				final BlobJ blob = currentBlobRegistry.get(i);
 				pos.x = blob.mX;
 				pos.y = blob.mY;
-				final MultiTouchCursorEvent event = new MultiTouchCursorEvent(
-						blob.mID, pos, vel, blob.mWidth, 0f);
+				final MultiTouchCursorEvent event = new MultiTouchCursorEvent(blob.mID, pos, vel, blob.mWidth, 0f);
 
-				for (final IMultiTouchEventListener l : listeners) {
-					executeQueue.add(new Callable<Void>() {
+				for (final IMultiTouchEventListener l : listeners)
+				{
+					executeQueue.add(new Callable<Void>()
+					{
 						@Override
-						public Void call() throws Exception {
-							int clickCount = clickDetector
-									.cursorReleasedGetClickCount(blob.mID, pos);
-							if (clickCount > 0) {
+						public Void call() throws Exception
+						{
+							int clickCount = clickDetector.cursorReleasedGetClickCount(blob.mID, pos);
+							if (clickCount > 0)
+							{
 								event.setClickCount(clickCount);
 								l.cursorClicked(event);
 							}

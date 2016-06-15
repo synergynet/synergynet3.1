@@ -33,7 +33,8 @@ import multiplicity3.input.exceptions.MultiTouchInputException;
  * @author dcs0ah1
  */
 
-public interface IMultiTouchInputSource {
+public interface IMultiTouchInputSource
+{
 
 	/**
 	 * Stop the listener from running
@@ -43,24 +44,24 @@ public interface IMultiTouchInputSource {
 	/**
 	 * Register the listener to receive multi-touch events, as defined in
 	 * IMultiTouchInputListener.
-	 * 
+	 *
 	 * @param listener
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener);
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener);
 
 	/**
 	 * Register multi touch event listener.
 	 *
-	 * @param listener the listener
-	 * @param index the index
+	 * @param listener
+	 *            the listener
+	 * @param index
+	 *            the index
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener, int index);
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener, int index);
 
 	/**
 	 * Should the mouse be shown or hidden?
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean requiresMouseDisplay();
@@ -69,25 +70,26 @@ public interface IMultiTouchInputSource {
 	 * Determines whether two successive cursor add/remove events constitute a
 	 * 'click'. Determines how close together in both time (in milliseconds) and
 	 * space (in coordinate mode distance).
-	 * 
-	 * @param time in milliseconds
-	 * @param distance in coordinate space
+	 *
+	 * @param time
+	 *            in milliseconds
+	 * @param distance
+	 *            in coordinate space
 	 */
 	public void setClickSensitivity(long time, float distance);
 
 	/**
 	 * Stops the listener from receiving multi-touch events.
-	 * 
+	 *
 	 * @param listener
 	 */
-	public void unregisterMultiTouchEventListener(
-			IMultiTouchEventListener listener);
+	public void unregisterMultiTouchEventListener(IMultiTouchEventListener listener);
 
 	/**
 	 * Some sources run in a separate thread. This ensures that, say OpenGL
 	 * based threads can use this input source without any tedious mucking
 	 * about.
-	 * 
+	 *
 	 * @param tpf
 	 * @throws MultiTouchInputException
 	 */

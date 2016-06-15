@@ -38,8 +38,8 @@ import multiplicity3.input.utils.ClickDetector;
  *
  * @author ashatch
  */
-public abstract class AbstractMultiTouchSimulator implements
-		IMultiTouchSimulator, IMultiTouchInputSource {
+public abstract class AbstractMultiTouchSimulator implements IMultiTouchSimulator, IMultiTouchInputSource
+{
 
 	/** The click detector. */
 	protected ClickDetector clickDetector = new ClickDetector(500, 0.02f);
@@ -57,7 +57,9 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * (non-Javadoc)
 	 * @see multiplicity3.input.simulator.IMultiTouchSimulator#clearCursor()
 	 */
-	public void clearCursor() {
+	@Override
+	public void clearCursor()
+	{
 		currentCursor = null;
 	}
 
@@ -66,6 +68,7 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * @see multiplicity3.input.simulator.IMultiTouchSimulator#deleteCursor(int,
 	 * float, float)
 	 */
+	@Override
 	public abstract void deleteCursor(int id, float x, float y);
 
 	/*
@@ -74,15 +77,16 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * multiplicity3.input.simulator.IMultiTouchSimulator#deleteTwoCursors(int,
 	 * float, float, int, float, float)
 	 */
-	public abstract void deleteTwoCursors(int id1, float x1, float y1, int id2,
-			float x2, float y2);
+	@Override
+	public abstract void deleteTwoCursors(int id1, float x1, float y1, int id2, float x2, float y2);
 
 	/**
 	 * Gets the current cursor.
 	 *
 	 * @return the current cursor
 	 */
-	public AbstractSimCursor getCurrentCursor() {
+	public AbstractSimCursor getCurrentCursor()
+	{
 		return currentCursor;
 	}
 
@@ -91,17 +95,21 @@ public abstract class AbstractMultiTouchSimulator implements
 	 *
 	 * @return the new cursor id
 	 */
-	public int getNewCursorID() {
+	public int getNewCursorID()
+	{
 		return cursorID++;
 	}
 
 	/**
 	 * Key pressed.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 */
-	public void keyPressed(String key) {
-		if (currentCursor == null) {
+	public void keyPressed(String key)
+	{
+		if (currentCursor == null)
+		{
 			return;
 		}
 		currentCursor.keyPressed(key);
@@ -110,10 +118,13 @@ public abstract class AbstractMultiTouchSimulator implements
 	/**
 	 * Key released.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 */
-	public void keyReleased(String key) {
-		if (currentCursor == null) {
+	public void keyReleased(String key)
+	{
+		if (currentCursor == null)
+		{
 			return;
 		}
 		currentCursor.keyReleased(key);
@@ -122,12 +133,17 @@ public abstract class AbstractMultiTouchSimulator implements
 	/**
 	 * Mouse dragged.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param button the button
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param button
+	 *            the button
 	 */
-	public void mouseDragged(float x, float y, int button) {
-		if (currentCursor == null) {
+	public void mouseDragged(float x, float y, int button)
+	{
+		if (currentCursor == null)
+		{
 			return;
 		}
 		currentCursor.mouseDragged(x, y, button);
@@ -136,11 +152,15 @@ public abstract class AbstractMultiTouchSimulator implements
 	/**
 	 * Mouse moved.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public void mouseMoved(float x, float y) {
-		if (currentCursor == null) {
+	public void mouseMoved(float x, float y)
+	{
+		if (currentCursor == null)
+		{
 			return;
 		}
 		currentCursor.mouseMoved(x, y);
@@ -148,34 +168,37 @@ public abstract class AbstractMultiTouchSimulator implements
 
 	/**
 	 * Must supply x and y in range 0..1
-	 * 
+	 *
 	 * @param x
 	 * @param y
 	 * @param button
 	 */
-	public void mousePressed(float x, float y, int button) {
-		if (currentCursor != null) {
+	public void mousePressed(float x, float y, int button)
+	{
+		if (currentCursor != null)
+		{
 			currentCursor.mousePressed(x, y, button);
 			return;
 		}
 
-		switch (button) {
-			case AbstractSimCursor.MOUSE_BUTTON_LEFT: {
-				currentCursor = new SingleFingerSimCursor(this,
-						getNewCursorID());
+		switch (button)
+		{
+			case AbstractSimCursor.MOUSE_BUTTON_LEFT:
+			{
+				currentCursor = new SingleFingerSimCursor(this, getNewCursorID());
 				currentCursor.mousePressed(x, y, button);
 				break;
 			}
-			case AbstractSimCursor.MOUSE_BUTTON_MIDDLE: {
-				currentCursor = new TripleFingerSimCursor(this,
-						getNewCursorID(), getNewCursorID(), getNewCursorID());
+			case AbstractSimCursor.MOUSE_BUTTON_MIDDLE:
+			{
+				currentCursor = new TripleFingerSimCursor(this, getNewCursorID(), getNewCursorID(), getNewCursorID());
 				currentCursor.mousePressed(x, y, button);
 				break;
 			}
 
-			case AbstractSimCursor.MOUSE_BUTTON_RIGHT: {
-				currentCursor = new DoubleFingerSimCursor(this,
-						getNewCursorID(), getNewCursorID());
+			case AbstractSimCursor.MOUSE_BUTTON_RIGHT:
+			{
+				currentCursor = new DoubleFingerSimCursor(this, getNewCursorID(), getNewCursorID());
 				currentCursor.mousePressed(x, y, button);
 				break;
 			}
@@ -187,12 +210,17 @@ public abstract class AbstractMultiTouchSimulator implements
 	/**
 	 * Mouse released.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param button the button
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param button
+	 *            the button
 	 */
-	public void mouseReleased(float x, float y, int button) {
-		if (currentCursor == null) {
+	public void mouseReleased(float x, float y, int button)
+	{
+		if (currentCursor == null)
+		{
 			return;
 		}
 		currentCursor.mouseReleased(x, y, button);
@@ -203,6 +231,7 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * @see multiplicity3.input.simulator.IMultiTouchSimulator#newCursor(int,
 	 * float, float)
 	 */
+	@Override
 	public abstract void newCursor(int id, float x, float y);
 
 	/*
@@ -211,9 +240,11 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * multiplicity3.input.IMultiTouchInputSource#registerMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
-		if (!listeners.contains(listener)) {
+	@Override
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(listener);
 		}
 	}
@@ -224,9 +255,11 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * multiplicity3.input.IMultiTouchInputSource#registerMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener, int)
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener, int index) {
-		if (!listeners.contains(listener)) {
+	@Override
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener, int index)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(index, listener);
 		}
 	}
@@ -236,7 +269,9 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * @see multiplicity3.input.IMultiTouchInputSource#setClickSensitivity(long,
 	 * float)
 	 */
-	public void setClickSensitivity(long time, float distance) {
+	@Override
+	public void setClickSensitivity(long time, float distance)
+	{
 		clickDetector.setSensitivity(time, distance);
 	}
 
@@ -246,8 +281,9 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * multiplicity3.input.IMultiTouchInputSource#unregisterMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
-	public void unregisterMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
+	@Override
+	public void unregisterMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
 		listeners.remove(listener);
 	}
 
@@ -256,6 +292,7 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * @see multiplicity3.input.simulator.IMultiTouchSimulator#updateCursor(int,
 	 * float, float)
 	 */
+	@Override
 	public abstract void updateCursor(int id, float x, float y);
 
 	/*
@@ -264,6 +301,6 @@ public abstract class AbstractMultiTouchSimulator implements
 	 * multiplicity3.input.simulator.IMultiTouchSimulator#updateTwoCursors(int,
 	 * float, float, int, float, float)
 	 */
-	public abstract void updateTwoCursors(int id1, float x, float y, int id2,
-			float x2, float y2);
+	@Override
+	public abstract void updateTwoCursors(int id1, float x, float y, int id2, float x2, float y2);
 }

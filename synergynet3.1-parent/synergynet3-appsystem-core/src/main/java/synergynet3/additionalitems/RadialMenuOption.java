@@ -7,7 +7,8 @@ import multiplicity3.input.events.MultiTouchCursorEvent;
 /**
  * The Class RadialMenuOption.
  */
-public class RadialMenuOption {
+public class RadialMenuOption
+{
 
 	/** The item. */
 	private IItem item;
@@ -15,27 +16,32 @@ public class RadialMenuOption {
 	/**
 	 * Instantiates a new radial menu option.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	public RadialMenuOption(IItem item) {
-		item.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
+	public RadialMenuOption(IItem item)
+	{
+		item.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorClicked(MultiTouchCursorEvent event)
+			{
+				onOptionSelect();
+			}
+		});
+
+		if (item.getChildItems().size() > 0)
+		{
+			for (IItem child : item.getChildItems())
+			{
+				child.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+				{
 					@Override
-					public void cursorClicked(MultiTouchCursorEvent event) {
+					public void cursorClicked(MultiTouchCursorEvent event)
+					{
 						onOptionSelect();
 					}
 				});
-
-		if (item.getChildItems().size() > 0) {
-			for (IItem child : item.getChildItems()) {
-				child.getMultiTouchDispatcher().addListener(
-						new MultiTouchEventAdapter() {
-							@Override
-							public void cursorClicked(
-									MultiTouchCursorEvent event) {
-								onOptionSelect();
-							}
-						});
 			}
 		}
 
@@ -47,14 +53,16 @@ public class RadialMenuOption {
 	 *
 	 * @return the i item
 	 */
-	public IItem asItem() {
+	public IItem asItem()
+	{
 		return item;
 	}
 
 	/**
 	 * On option select.
 	 */
-	protected void onOptionSelect() {
+	protected void onOptionSelect()
+	{
 	}
 
 }

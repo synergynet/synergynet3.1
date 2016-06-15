@@ -9,8 +9,8 @@ import synergynet3.web.shared.messages.PerformActionMessage;
  * Structured message representing the item, its target and trajectory when
  * transferred through a network flick.
  */
-public class ContentTransferedMessage extends PerformActionMessage implements
-		Serializable, Comparable<ContentTransferedMessage> {
+public class ContentTransferedMessage extends PerformActionMessage implements Serializable, Comparable<ContentTransferedMessage>
+{
 
 	/** Unique ID for serialisation. */
 	private static final long serialVersionUID = 3301043234796641222L;
@@ -45,7 +45,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	/**
 	 * Empty Constructor used to initialise value in the network cluster.
 	 */
-	public ContentTransferedMessage() {
+	public ContentTransferedMessage()
+	{
 		super();
 	}
 
@@ -53,21 +54,28 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 * Create a structured network flick message for transmission through the
 	 * cluster.
 	 *
-	 * @param targetDeviceIDs List of target table's identity in the cluster.
-	 * @param galleryItem Object representing the transfered item and its
-	 *            attached feedback.
-	 * @param x The X value of the transfered item's arrival location.
-	 * @param y The Y value of the transfered item's arrival location.
-	 * @param targetAngle Rotation of the transfered item on arrival.
-	 * @param targetScale Scale of the transfered item on arrival. *
-	 * @param zOrder the zOrder ID of the transfered item.
-	 * @param Visibility of the item being transferred.
-	 * @param itemName the unique ID of the transfered item.
+	 * @param targetDeviceIDs
+	 *            List of target table's identity in the cluster.
+	 * @param galleryItem
+	 *            Object representing the transfered item and its attached
+	 *            feedback.
+	 * @param x
+	 *            The X value of the transfered item's arrival location.
+	 * @param y
+	 *            The Y value of the transfered item's arrival location.
+	 * @param targetAngle
+	 *            Rotation of the transfered item on arrival.
+	 * @param targetScale
+	 *            Scale of the transfered item on arrival. *
+	 * @param zOrder
+	 *            the zOrder ID of the transfered item.
+	 * @param Visibility
+	 *            of the item being transferred.
+	 * @param itemName
+	 *            the unique ID of the transfered item.
 	 */
-	public ContentTransferedMessage(String[] targetDeviceIDs,
-			GalleryItemDatabaseFormat galleryItem, float x, float y,
-			float targetAngle, float targetScale, int zOrder, boolean visible,
-			String itemName) {
+	public ContentTransferedMessage(String[] targetDeviceIDs, GalleryItemDatabaseFormat galleryItem, float x, float y, float targetAngle, float targetScale, int zOrder, boolean visible, String itemName)
+	{
 		super(MESSAGESTATE.ACTIVATE);
 		this.targetDeviceIDs = targetDeviceIDs;
 		this.galleryItem = galleryItem;
@@ -83,14 +91,19 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	/**
 	 * Allows sorting of items by their Z-Orders.
 	 *
-	 * @param other Another instance of ContentTransferedMessage.
+	 * @param other
+	 *            Another instance of ContentTransferedMessage.
 	 */
 	@Override
-	public int compareTo(ContentTransferedMessage other) {
+	public int compareTo(ContentTransferedMessage other)
+	{
 		int toReturn = 0;
-		if (this.zOrder > other.getZOrder()) {
+		if (this.zOrder > other.getZOrder())
+		{
 			toReturn = 1;
-		} else if (this.zOrder < other.getZOrder()) {
+		}
+		else if (this.zOrder < other.getZOrder())
+		{
 			toReturn = -1;
 		}
 		return toReturn;
@@ -103,7 +116,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 * @return Object representing the transfered item and its attached
 	 *         feedback.
 	 */
-	public GalleryItemDatabaseFormat getGalleryItem() {
+	public GalleryItemDatabaseFormat getGalleryItem()
+	{
 		return galleryItem;
 	}
 
@@ -112,7 +126,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return String representing the transfered item's name.
 	 */
-	public String getItemName() {
+	public String getItemName()
+	{
 		return itemName;
 	}
 
@@ -121,7 +136,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return The rotation of the transfered item on arrival.
 	 */
-	public float getRotation() {
+	public float getRotation()
+	{
 		return rotation;
 	}
 
@@ -130,7 +146,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return The scale of the transfered item on arrival.
 	 */
-	public float getScale() {
+	public float getScale()
+	{
 		return scale;
 	}
 
@@ -139,7 +156,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return String representing the target devices' IDs
 	 */
-	public String[] getTargetDeviceIDs() {
+	public String[] getTargetDeviceIDs()
+	{
 		return targetDeviceIDs;
 	}
 
@@ -148,7 +166,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return The X value of the transfered item's arrival location.
 	 */
-	public float getX() {
+	public float getX()
+	{
 		return x;
 	}
 
@@ -157,7 +176,8 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return The Y value of the transfered item's arrival location.
 	 */
-	public float getY() {
+	public float getY()
+	{
 		return y;
 	}
 
@@ -166,14 +186,16 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 *
 	 * @return String representing Z level of the transfered item.
 	 */
-	public int getZOrder() {
+	public int getZOrder()
+	{
 		return zOrder;
 	}
 
 	/**
 	 * @return the visible
 	 */
-	public boolean isVisible() {
+	public boolean isVisible()
+	{
 		return visible;
 	}
 
@@ -181,80 +203,98 @@ public class ContentTransferedMessage extends PerformActionMessage implements
 	 * Set the object representing the transfered item and its attached
 	 * feedback.
 	 *
-	 * @param galleryItem Object representing the transfered item and its
-	 *            attached feedback.
+	 * @param galleryItem
+	 *            Object representing the transfered item and its attached
+	 *            feedback.
 	 */
-	public void setGalleryItem(GalleryItemDatabaseFormat galleryItem) {
+	public void setGalleryItem(GalleryItemDatabaseFormat galleryItem)
+	{
 		this.galleryItem = galleryItem;
 	}
 
 	/**
 	 * Set the item name.
 	 *
-	 * @param itemName Name of the item.
+	 * @param itemName
+	 *            Name of the item.
 	 */
-	public void setItemName(String itemName) {
+	public void setItemName(String itemName)
+	{
 		this.itemName = itemName;
 	}
 
 	/**
 	 * Set the rotation of the transfered item on arrival.
 	 *
-	 * @param rotation The rotation of the transfered item on arrival.
+	 * @param rotation
+	 *            The rotation of the transfered item on arrival.
 	 */
-	public void setRotation(float rotation) {
+	public void setRotation(float rotation)
+	{
 		this.rotation = rotation;
 	}
 
 	/**
 	 * Set the scale of the transfered item on arrival.
 	 *
-	 * @param scale The scale of the transfered item on arrival.
+	 * @param scale
+	 *            The scale of the transfered item on arrival.
 	 */
-	public void setScale(float scale) {
+	public void setScale(float scale)
+	{
 		this.scale = scale;
 	}
 
 	/**
 	 * Set the target device's IDs in the cluster.
 	 *
-	 * @param targetDeviceIDs The target devices' IDs
+	 * @param targetDeviceIDs
+	 *            The target devices' IDs
 	 */
-	public void setTargetDeviceIDs(String[] targetDeviceIDs) {
+	public void setTargetDeviceIDs(String[] targetDeviceIDs)
+	{
 		this.targetDeviceIDs = targetDeviceIDs;
 	}
 
 	/**
-	 * @param visible the visible to set
+	 * @param visible
+	 *            the visible to set
 	 */
-	public void setVisible(boolean visible) {
+	public void setVisible(boolean visible)
+	{
 		this.visible = visible;
 	}
 
 	/**
 	 * Set the X value of the transfered item's arrival location.
 	 *
-	 * @param x The X value of the transfered item's arrival location.
+	 * @param x
+	 *            The X value of the transfered item's arrival location.
 	 */
-	public void setX(float x) {
+	public void setX(float x)
+	{
 		this.x = x;
 	}
 
 	/**
 	 * Set the Y value of the transfered item's arrival location.
 	 *
-	 * @param y The Y value of the transfered item's arrival location.
+	 * @param y
+	 *            The Y value of the transfered item's arrival location.
 	 */
-	public void setY(float y) {
+	public void setY(float y)
+	{
 		this.y = y;
 	}
 
 	/**
 	 * Set the transfered item's z level.
 	 *
-	 * @param sourceID Z level of the transfered item.
+	 * @param sourceID
+	 *            Z level of the transfered item.
 	 */
-	public void setZOrder(int zOrder) {
+	public void setZOrder(int zOrder)
+	{
 		this.zOrder = zOrder;
 	}
 

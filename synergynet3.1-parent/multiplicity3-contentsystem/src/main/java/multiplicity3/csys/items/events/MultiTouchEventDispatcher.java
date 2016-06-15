@@ -10,7 +10,8 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
 /**
  * The Class MultiTouchEventDispatcher.
  */
-public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
+public class MultiTouchEventDispatcher implements IMultiTouchEventListener
+{
 
 	/** The enabled. */
 	private boolean enabled = true;
@@ -21,10 +22,13 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	/**
 	 * Adds the listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void addListener(IMultiTouchEventListener listener) {
-		if ((listener != null) && !items.contains(listener)) {
+	public void addListener(IMultiTouchEventListener listener)
+	{
+		if ((listener != null) && !items.contains(listener))
+		{
 			items.add(listener);
 		}
 	}
@@ -32,10 +36,13 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	/**
 	 * Adds the listeners.
 	 *
-	 * @param listeners the listeners
+	 * @param listeners
+	 *            the listeners
 	 */
-	public void addListeners(List<IMultiTouchEventListener> listeners) {
-		for (IMultiTouchEventListener l : listeners) {
+	public void addListeners(List<IMultiTouchEventListener> listeners)
+	{
+		for (IMultiTouchEventListener l : listeners)
+		{
 			addListener(l);
 		}
 	}
@@ -47,11 +54,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!enabled) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.cursorChanged(event);
 		}
 	}
@@ -63,11 +73,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
-		if (!enabled) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.cursorClicked(event);
 		}
 	}
@@ -79,11 +92,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!enabled) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.cursorPressed(event);
 		}
 	}
@@ -95,11 +111,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (!enabled) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.cursorReleased(event);
 		}
 	}
@@ -109,7 +128,8 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 *
 	 * @return the listeners
 	 */
-	public List<IMultiTouchEventListener> getListeners() {
+	public List<IMultiTouchEventListener> getListeners()
+	{
 		return items;
 	}
 
@@ -118,7 +138,8 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 *
 	 * @return true, if is enabled
 	 */
-	public boolean isEnabled() {
+	public boolean isEnabled()
+	{
 		return enabled;
 	}
 
@@ -129,11 +150,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
-		if (!enabled) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.objectAdded(event);
 		}
 	}
@@ -145,11 +169,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
-		if (!enabled) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.objectChanged(event);
 		}
 	}
@@ -161,11 +188,14 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
-		if (!enabled) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
+		if (!enabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener item : items) {
+		for (IMultiTouchEventListener item : items)
+		{
 			item.objectRemoved(event);
 		}
 	}
@@ -173,19 +203,24 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	/**
 	 * Removes the.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void remove(IMultiTouchEventListener listener) {
+	public void remove(IMultiTouchEventListener listener)
+	{
 		items.remove(listener);
 	}
 
 	/**
 	 * Removes the listeners.
 	 *
-	 * @param listeners the listeners
+	 * @param listeners
+	 *            the listeners
 	 */
-	public void removeListeners(List<IMultiTouchEventListener> listeners) {
-		for (IMultiTouchEventListener l : listeners) {
+	public void removeListeners(List<IMultiTouchEventListener> listeners)
+	{
+		for (IMultiTouchEventListener l : listeners)
+		{
 			remove(l);
 		}
 	}
@@ -193,9 +228,11 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	/**
 	 * Sets the enabled.
 	 *
-	 * @param b the new enabled
+	 * @param b
+	 *            the new enabled
 	 */
-	public void setEnabled(boolean b) {
+	public void setEnabled(boolean b)
+	{
 		this.enabled = b;
 	}
 
@@ -203,8 +240,9 @@ public class MultiTouchEventDispatcher implements IMultiTouchEventListener {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
-		return MultiTouchEventDispatcher.class.getName() + " containing "
-				+ items;
+	@Override
+	public String toString()
+	{
+		return MultiTouchEventDispatcher.class.getName() + " containing " + items;
 	}
 }

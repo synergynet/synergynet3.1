@@ -5,12 +5,14 @@ import com.jme3.math.Vector2f;
 /**
  * The Class Cursor.
  */
-public class Cursor {
+public class Cursor
+{
 
 	/**
 	 * The Enum Mode.
 	 */
-	public enum Mode {
+	public enum Mode
+	{
 
 		/** The dragging. */
 		DRAGGING
@@ -34,10 +36,13 @@ public class Cursor {
 	/**
 	 * Instantiates a new cursor.
 	 *
-	 * @param cursorID the cursor id
-	 * @param position the position
+	 * @param cursorID
+	 *            the cursor id
+	 * @param position
+	 *            the position
 	 */
-	public Cursor(long cursorID, Vector2f position) {
+	public Cursor(long cursorID, Vector2f position)
+	{
 		this.id = cursorID;
 		this.startpos = position.clone();
 		this.mode = Mode.DRAGGING;
@@ -46,18 +51,22 @@ public class Cursor {
 	/**
 	 * Sets the current position.
 	 *
-	 * @param pos the new current position
+	 * @param pos
+	 *            the new current position
 	 */
-	public void setCurrentPosition(Vector2f pos) {
+	public void setCurrentPosition(Vector2f pos)
+	{
 		this.current = pos.clone();
 	}
 
 	/**
 	 * Sets the end position.
 	 *
-	 * @param pos the new end position
+	 * @param pos
+	 *            the new end position
 	 */
-	public void setEndPosition(Vector2f pos) {
+	public void setEndPosition(Vector2f pos)
+	{
 		this.endpos = pos.clone();
 	}
 }

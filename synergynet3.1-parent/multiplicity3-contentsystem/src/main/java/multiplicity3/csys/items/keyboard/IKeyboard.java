@@ -6,7 +6,8 @@ import multiplicity3.csys.items.shapes.IRectangularItem;
 /**
  * The Interface IKeyboard.
  */
-public interface IKeyboard extends IRectangularItem {
+public interface IKeyboard extends IRectangularItem
+{
 
 	/**
 	 * Gets the keyboard definition.
@@ -23,25 +24,28 @@ public interface IKeyboard extends IRectangularItem {
 	/**
 	 * Re draw keyboard.
 	 *
-	 * @param shiftDown the shift down
-	 * @param altDown the alt down
-	 * @param ctlDown the ctl down
+	 * @param shiftDown
+	 *            the shift down
+	 * @param altDown
+	 *            the alt down
+	 * @param ctlDown
+	 *            the ctl down
 	 */
-	public void reDrawKeyboard(boolean shiftDown, boolean altDown,
-			boolean ctlDown);
+	public void reDrawKeyboard(boolean shiftDown, boolean altDown, boolean ctlDown);
 
 	/**
 	 * Sets the keyboard definition.
 	 *
-	 * @param kd the new keyboard definition
+	 * @param kd
+	 *            the new keyboard definition
 	 */
 	public void setKeyboardDefinition(KeyboardDefinition kd);
 
 	/**
 	 * Sets the keyboard renderer.
 	 *
-	 * @param simpleAlphaKeyboardRenderer the new keyboard renderer
+	 * @param simpleAlphaKeyboardRenderer
+	 *            the new keyboard renderer
 	 */
-	public void setKeyboardRenderer(
-			IKeyboardGraphicsRenderer simpleAlphaKeyboardRenderer);
+	public void setKeyboardRenderer(IKeyboardGraphicsRenderer simpleAlphaKeyboardRenderer);
 }

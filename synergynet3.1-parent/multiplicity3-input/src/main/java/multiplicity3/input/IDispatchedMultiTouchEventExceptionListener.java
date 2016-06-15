@@ -12,12 +12,14 @@ package multiplicity3.input;
  *
  * @see IDispatchedMultiTouchEventExceptionEvent
  */
-public interface IDispatchedMultiTouchEventExceptionListener {
+public interface IDispatchedMultiTouchEventExceptionListener
+{
 
 	/**
 	 * Dispatched multi touch event exception.
 	 *
-	 * @param problem the problem
+	 * @param problem
+	 *            the problem
 	 */
 	public void dispatchedMultiTouchEventException(Throwable problem);
 }

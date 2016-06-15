@@ -11,13 +11,16 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface ISimpleKeyboard.
  */
-public interface ISimpleKeyboard extends IItem {
+public interface ISimpleKeyboard extends IItem
+{
 
 	/**
 	 * Generate keys.
 	 *
-	 * @param stage the stage
-	 * @param keyboardOutput the keyboard output
+	 * @param stage
+	 *            the stage
+	 * @param keyboardOutput
+	 *            the keyboard output
 	 */
 	public void generateKeys(IStage stage, KeyboardOutput keyboardOutput);
 
@@ -45,28 +48,34 @@ public interface ISimpleKeyboard extends IItem {
 	/**
 	 * Sets the colours.
 	 *
-	 * @param bgColour the bg colour
-	 * @param keyColour the key colour
-	 * @param keyBorderColour the key border colour
-	 * @param boardBorderColour the board border colour
-	 * @param fontColour the font colour
+	 * @param bgColour
+	 *            the bg colour
+	 * @param keyColour
+	 *            the key colour
+	 * @param keyBorderColour
+	 *            the key border colour
+	 * @param boardBorderColour
+	 *            the board border colour
+	 * @param fontColour
+	 *            the font colour
 	 */
-	public void setColours(ColorRGBA bgColour, ColorRGBA keyColour,
-			ColorRGBA keyBorderColour, ColorRGBA boardBorderColour,
-			FontColour fontColour);
+	public void setColours(ColorRGBA bgColour, ColorRGBA keyColour, ColorRGBA keyBorderColour, ColorRGBA boardBorderColour, FontColour fontColour);
 
 	/**
 	 * Sets the movable.
 	 *
-	 * @param movable the new movable
+	 * @param movable
+	 *            the new movable
 	 */
 	public void setMovable(boolean movable);
 
 	/**
 	 * Sets the scale limits.
 	 *
-	 * @param minScale the min scale
-	 * @param maxScale the max scale
+	 * @param minScale
+	 *            the min scale
+	 * @param maxScale
+	 *            the max scale
 	 */
 	public void setScaleLimits(float minScale, float maxScale);
 }

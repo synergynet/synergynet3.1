@@ -6,7 +6,8 @@ import java.awt.Shape;
 /**
  * The Class KeyboardKey.
  */
-public class KeyboardKey {
+public class KeyboardKey
+{
 
 	/** The background colour. */
 	private Color backgroundColour = Color.white;
@@ -29,10 +30,13 @@ public class KeyboardKey {
 	/**
 	 * Instantiates a new keyboard key.
 	 *
-	 * @param defaultCharacter the default character
-	 * @param keyShape the key shape
+	 * @param defaultCharacter
+	 *            the default character
+	 * @param keyShape
+	 *            the key shape
 	 */
-	public KeyboardKey(CharacterKey defaultCharacter, Shape keyShape) {
+	public KeyboardKey(CharacterKey defaultCharacter, Shape keyShape)
+	{
 		this.defaultCharacter = defaultCharacter;
 		this.setKeyShape(keyShape);
 	}
@@ -42,7 +46,8 @@ public class KeyboardKey {
 	 *
 	 * @return the background colour
 	 */
-	public Color getBackgroundColour() {
+	public Color getBackgroundColour()
+	{
 		return backgroundColour;
 	}
 
@@ -51,7 +56,8 @@ public class KeyboardKey {
 	 *
 	 * @return the key code
 	 */
-	public int getKeyCode() {
+	public int getKeyCode()
+	{
 		return defaultCharacter.getKeyCode();
 	}
 
@@ -60,7 +66,8 @@ public class KeyboardKey {
 	 *
 	 * @return the key shape
 	 */
-	public Shape getKeyShape() {
+	public Shape getKeyShape()
+	{
 		return keyShape;
 	}
 
@@ -69,7 +76,8 @@ public class KeyboardKey {
 	 *
 	 * @return the key string representation
 	 */
-	public String getKeyStringRepresentation() {
+	public String getKeyStringRepresentation()
+	{
 		return defaultCharacter.getStringRepresentation();
 	}
 
@@ -78,7 +86,8 @@ public class KeyboardKey {
 	 *
 	 * @return the key text colour
 	 */
-	public Color getKeyTextColour() {
+	public Color getKeyTextColour()
+	{
 		return keyTextColour;
 	}
 
@@ -87,7 +96,8 @@ public class KeyboardKey {
 	 *
 	 * @return the max x
 	 */
-	public int getMaxX() {
+	public int getMaxX()
+	{
 		return (int) keyShape.getBounds2D().getMaxX();
 	}
 
@@ -96,7 +106,8 @@ public class KeyboardKey {
 	 *
 	 * @return the max y
 	 */
-	public int getMaxY() {
+	public int getMaxY()
+	{
 		return (int) keyShape.getBounds2D().getMaxY();
 	}
 
@@ -105,7 +116,8 @@ public class KeyboardKey {
 	 *
 	 * @return the min x
 	 */
-	public int getMinX() {
+	public int getMinX()
+	{
 		return (int) keyShape.getBounds2D().getMinX();
 	}
 
@@ -114,7 +126,8 @@ public class KeyboardKey {
 	 *
 	 * @return the min y
 	 */
-	public int getMinY() {
+	public int getMinY()
+	{
 		return (int) keyShape.getBounds2D().getMinY();
 	}
 
@@ -123,7 +136,8 @@ public class KeyboardKey {
 	 *
 	 * @return the modifiers
 	 */
-	public KeyModifiers getModifiers() {
+	public KeyModifiers getModifiers()
+	{
 		return modifiers;
 	}
 
@@ -132,52 +146,63 @@ public class KeyboardKey {
 	 *
 	 * @return true, if is enabled
 	 */
-	public boolean isEnabled() {
+	public boolean isEnabled()
+	{
 		return enabled;
 	}
 
 	/**
 	 * Sets the background colour.
 	 *
-	 * @param backgroundColour the new background colour
+	 * @param backgroundColour
+	 *            the new background colour
 	 */
-	public void setBackgroundColour(Color backgroundColour) {
+	public void setBackgroundColour(Color backgroundColour)
+	{
 		this.backgroundColour = backgroundColour;
 	}
 
 	/**
 	 * Sets the enabled.
 	 *
-	 * @param enabled the new enabled
+	 * @param enabled
+	 *            the new enabled
 	 */
-	public void setEnabled(boolean enabled) {
+	public void setEnabled(boolean enabled)
+	{
 		this.enabled = enabled;
 	}
 
 	/**
 	 * Sets the key shape.
 	 *
-	 * @param keyShape the new key shape
+	 * @param keyShape
+	 *            the new key shape
 	 */
-	public void setKeyShape(Shape keyShape) {
+	public void setKeyShape(Shape keyShape)
+	{
 		this.keyShape = keyShape;
 	}
 
 	/**
 	 * Sets the key text colour.
 	 *
-	 * @param keyTextColour the new key text colour
+	 * @param keyTextColour
+	 *            the new key text colour
 	 */
-	public void setKeyTextColour(Color keyTextColour) {
+	public void setKeyTextColour(Color keyTextColour)
+	{
 		this.keyTextColour = keyTextColour;
 	}
 
 	/**
 	 * Sets the modifiers.
 	 *
-	 * @param modifiers the new modifiers
+	 * @param modifiers
+	 *            the new modifiers
 	 */
-	public void setModifiers(KeyModifiers modifiers) {
+	public void setModifiers(KeyModifiers modifiers)
+	{
 		this.modifiers = modifiers;
 	}
 

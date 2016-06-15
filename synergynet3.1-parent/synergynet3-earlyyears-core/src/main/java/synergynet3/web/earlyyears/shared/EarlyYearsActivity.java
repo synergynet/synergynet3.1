@@ -5,7 +5,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Enum EarlyYearsActivity.
  */
-public enum EarlyYearsActivity implements IsSerializable {
+public enum EarlyYearsActivity implements IsSerializable
+{
 
 	/** The environment explorer. */
 	ENVIRONMENT_EXPLORER,

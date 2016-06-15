@@ -8,7 +8,8 @@ import com.google.gwt.user.client.ui.Label;
 /**
  * The Class SingleExpressionWidget.
  */
-public class SingleExpressionWidget extends HorizontalPanel {
+public class SingleExpressionWidget extends HorizontalPanel
+{
 
 	/** The lbl expression. */
 	private Label lblExpression;
@@ -28,7 +29,8 @@ public class SingleExpressionWidget extends HorizontalPanel {
 	/**
 	 * Instantiates a new single expression widget.
 	 */
-	public SingleExpressionWidget() {
+	public SingleExpressionWidget()
+	{
 		super();
 		setSize("394px", "22px");
 		setSpacing(2);
@@ -57,10 +59,13 @@ public class SingleExpressionWidget extends HorizontalPanel {
 	/**
 	 * Sets the expression.
 	 *
-	 * @param e the new expression
+	 * @param e
+	 *            the new expression
 	 */
-	public void setExpression(Expression e) {
-		if (e == null) {
+	public void setExpression(Expression e)
+	{
+		if (e == null)
+		{
 			return;
 		}
 		setExpressionProperties(e);
@@ -70,9 +75,11 @@ public class SingleExpressionWidget extends HorizontalPanel {
 	/**
 	 * Sets the expression properties.
 	 *
-	 * @param e the new expression properties
+	 * @param e
+	 *            the new expression properties
 	 */
-	private void setExpressionProperties(Expression e) {
+	private void setExpressionProperties(Expression e)
+	{
 		lblTable.setText(e.getCreatedOnTable());
 		lblName.setText(e.getCreatedBy());
 		lblExpression.setText(e.getExpression());
@@ -83,12 +90,17 @@ public class SingleExpressionWidget extends HorizontalPanel {
 	/**
 	 * Update styles.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
-	private void updateStyles(Expression e) {
-		if (e.isCorrect()) {
+	private void updateStyles(Expression e)
+	{
+		if (e.isCorrect())
+		{
 			this.setStyleName("correctExpression");
-		} else {
+		}
+		else
+		{
 			this.setStyleName("incorrectExpression");
 		}
 	}

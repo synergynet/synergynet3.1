@@ -10,7 +10,8 @@ import java.util.UUID;
 /**
  * @author dcs0ah1
  */
-public class IdentityConfigPanel extends javax.swing.JPanel {
+public class IdentityConfigPanel extends javax.swing.JPanel
+{
 	/**
 	 *
 	 */
@@ -32,7 +33,8 @@ public class IdentityConfigPanel extends javax.swing.JPanel {
 	// End of variables declaration//GEN-END:variables
 
 	/** Creates new form IdentityPreferencesPanel */
-	public IdentityConfigPanel() {
+	public IdentityConfigPanel()
+	{
 		this.prefs = new IdentityConfigPrefsItem();
 		initComponents();
 	}
@@ -44,15 +46,19 @@ public class IdentityConfigPanel extends javax.swing.JPanel {
 	 */
 	// <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+	private void initComponents()
+	{
 
 		txtID = new java.awt.TextField();
 		jLabel1 = new javax.swing.JLabel();
 		jButton1 = new javax.swing.JButton();
 
 		txtID.setText(prefs.getID());
-		txtID.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
+		txtID.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
 				txtIDKeyReleased(evt);
 			}
 		});
@@ -60,8 +66,11 @@ public class IdentityConfigPanel extends javax.swing.JPanel {
 		jLabel1.setText("Unique ID:");
 
 		jButton1.setText("Generate ID");
-		jButton1.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		jButton1.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
 				jButton1ActionPerformed(evt);
 			}
 		});
@@ -81,9 +90,11 @@ public class IdentityConfigPanel extends javax.swing.JPanel {
 	/**
 	 * J button1 action performed.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {// GEN-FIRST:event_jButton1ActionPerformed
+	private void jButton1ActionPerformed(java.awt.event.ActionEvent evt)
+	{// GEN-FIRST:event_jButton1ActionPerformed
 		txtID.setText(UUID.randomUUID().toString());
 		prefs.setID(txtID.getText());
 	}// GEN-LAST:event_jButton1ActionPerformed
@@ -91,9 +102,11 @@ public class IdentityConfigPanel extends javax.swing.JPanel {
 	/**
 	 * Txt id key released.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void txtIDKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtIDKeyReleased
+	private void txtIDKeyReleased(java.awt.event.KeyEvent evt)
+	{// GEN-FIRST:event_txtIDKeyReleased
 		prefs.setID(txtID.getText());
 	}// GEN-LAST:event_txtIDKeyReleased
 

@@ -32,7 +32,8 @@ import multiplicity3.config.PreferencesItem;
 /**
  * The Class SNConfigurationApplication.
  */
-public class SNConfigurationApplication extends ConfigurationApplication {
+public class SNConfigurationApplication extends ConfigurationApplication
+{
 
 	/** The Constant POSITION_PREF_NAME. */
 	private final static String POSITION_PREF_NAME = "multiplicity3.config.position.PositionConfigPrefsItem";
@@ -43,30 +44,31 @@ public class SNConfigurationApplication extends ConfigurationApplication {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * @param args
+	 *            the arguments
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
 	@SuppressWarnings("unchecked")
-	public static void main(String[] args) throws FileNotFoundException,
-			IOException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
 		startConfigGUI();
 
-		Class<? extends PreferencesItem> webPrefsClass = (Class<? extends PreferencesItem>) Class
-				.forName(WEB_PREF_NAME);
+		Class<? extends PreferencesItem> webPrefsClass = (Class<? extends PreferencesItem>) Class.forName(WEB_PREF_NAME);
 		PreferencesItem webPrefsItem = webPrefsClass.newInstance();
-		jtp.add(webPrefsItem.getConfigurationPanelName(),
-				webPrefsItem.getConfigurationPanel());
+		jtp.add(webPrefsItem.getConfigurationPanelName(), webPrefsItem.getConfigurationPanel());
 
-		Class<? extends PreferencesItem> positionPrefsClass = (Class<? extends PreferencesItem>) Class
-				.forName(POSITION_PREF_NAME);
+		Class<? extends PreferencesItem> positionPrefsClass = (Class<? extends PreferencesItem>) Class.forName(POSITION_PREF_NAME);
 		PreferencesItem positionPrefsItem = positionPrefsClass.newInstance();
-		jtp.add(positionPrefsItem.getConfigurationPanelName(),
-				positionPrefsItem.getConfigurationPanel());
+		jtp.add(positionPrefsItem.getConfigurationPanelName(), positionPrefsItem.getConfigurationPanel());
 	}
 
 }

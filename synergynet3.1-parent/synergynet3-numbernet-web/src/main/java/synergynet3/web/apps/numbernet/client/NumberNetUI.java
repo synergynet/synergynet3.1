@@ -14,7 +14,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class NumberNetUI.
  */
-public class NumberNetUI extends VerticalPanel {
+public class NumberNetUI extends VerticalPanel
+{
 
 	/** The shared instance. */
 	private static NumberNetUI sharedInstance;
@@ -25,7 +26,8 @@ public class NumberNetUI extends VerticalPanel {
 	/**
 	 * Instantiates a new number net ui.
 	 */
-	public NumberNetUI() {
+	public NumberNetUI()
+	{
 		super();
 		sharedInstance = this;
 		tabPanel = new TabPanel();
@@ -51,17 +53,21 @@ public class NumberNetUI extends VerticalPanel {
 	 *
 	 * @return the number net ui
 	 */
-	public static NumberNetUI get() {
+	public static NumberNetUI get()
+	{
 		return sharedInstance;
 	}
 
 	/**
 	 * Adds the to tab panel.
 	 *
-	 * @param vp the vp
-	 * @param title the title
+	 * @param vp
+	 *            the vp
+	 * @param title
+	 *            the title
 	 */
-	public void addToTabPanel(VerticalPanel vp, String title) {
+	public void addToTabPanel(VerticalPanel vp, String title)
+	{
 		tabPanel.add(vp, title);
 		int index = tabPanel.getWidgetIndex(vp);
 		addCloseButtonToPanel(vp, index);
@@ -71,14 +77,19 @@ public class NumberNetUI extends VerticalPanel {
 	/**
 	 * Adds the close button to panel.
 	 *
-	 * @param vp the vp
-	 * @param tabIndex the tab index
+	 * @param vp
+	 *            the vp
+	 * @param tabIndex
+	 *            the tab index
 	 */
-	private void addCloseButtonToPanel(VerticalPanel vp, final int tabIndex) {
+	private void addCloseButtonToPanel(VerticalPanel vp, final int tabIndex)
+	{
 		Button b = new Button("Close Tab");
-		b.addClickHandler(new ClickHandler() {
+		b.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				tabPanel.selectTab(0);
 				tabPanel.remove(tabIndex);
 			}

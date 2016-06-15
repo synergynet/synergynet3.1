@@ -7,20 +7,22 @@ import multiplicity3.input.IMultiTouchEventProducer;
 /**
  * The Interface ICursorOverlay.
  */
-public interface ICursorOverlay extends IItem, IMultiTouchEventListener {
+public interface ICursorOverlay extends IItem, IMultiTouchEventListener
+{
 
 	/**
 	 * Respond to item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	void respondToItem(IItem item);
 
 	/**
 	 * Respond to multi touch input.
 	 *
-	 * @param multiTouchEventProducer the multi touch event producer
+	 * @param multiTouchEventProducer
+	 *            the multi touch event producer
 	 */
-	void respondToMultiTouchInput(
-			IMultiTouchEventProducer multiTouchEventProducer);
+	void respondToMultiTouchInput(IMultiTouchEventProducer multiTouchEventProducer);
 }

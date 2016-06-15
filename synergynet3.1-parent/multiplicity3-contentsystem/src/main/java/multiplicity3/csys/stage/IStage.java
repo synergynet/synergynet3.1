@@ -12,7 +12,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Interface IStage.
  */
-public interface IStage extends IContainer {
+public interface IStage extends IContainer
+{
 
 	/**
 	 * Gets the animation system.
@@ -101,7 +102,8 @@ public interface IStage extends IContainer {
 	/**
 	 * Screen to world.
 	 *
-	 * @param newScreenPosition the new screen position
+	 * @param newScreenPosition
+	 *            the new screen position
 	 * @return the vector2f
 	 */
 	public Vector2f screenToWorld(Vector2f newScreenPosition);
@@ -109,58 +111,68 @@ public interface IStage extends IContainer {
 	/**
 	 * Sets the animation system.
 	 *
-	 * @param animationSystem the new animation system
+	 * @param animationSystem
+	 *            the new animation system
 	 */
 	public void setAnimationSystem(AnimationSystem animationSystem);
 
 	/**
 	 * Sets the behaviour maker.
 	 *
-	 * @param bm the new behaviour maker
+	 * @param bm
+	 *            the new behaviour maker
 	 */
 	public void setBehaviourMaker(BehaviourMaker bm);
 
 	/**
 	 * Sets the content factory.
 	 *
-	 * @param contentFactory the new content factory
+	 * @param contentFactory
+	 *            the new content factory
 	 */
 	public void setContentFactory(IContentFactory contentFactory);
 
 	/**
 	 * Sets the display dimensions.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public void setDisplayDimensions(int width, int height);
 
 	/**
 	 * Sets the drag and drop system.
 	 *
-	 * @param dragAndDropSystem the new drag and drop system
+	 * @param dragAndDropSystem
+	 *            the new drag and drop system
 	 */
 	public void setDragAndDropSystem(DragAndDropSystem dragAndDropSystem);
 
 	/**
 	 * Sets the pick system.
 	 *
-	 * @param pickSystem the new pick system
+	 * @param pickSystem
+	 *            the new pick system
 	 */
 	public void setPickSystem(IPickSystem pickSystem);
 
 	/**
 	 * Table to screen.
 	 *
-	 * @param in the in
-	 * @param out the out
+	 * @param in
+	 *            the in
+	 * @param out
+	 *            the out
 	 */
 	public void tableToScreen(Vector2f in, Vector2f out);
 
 	/**
 	 * Table to world.
 	 *
-	 * @param in the in
+	 * @param in
+	 *            the in
 	 * @return the vector2f
 	 */
 	public Vector2f tableToWorld(Vector2f in);
@@ -168,8 +180,10 @@ public interface IStage extends IContainer {
 	/**
 	 * Table to world.
 	 *
-	 * @param in the in
-	 * @param out the out
+	 * @param in
+	 *            the in
+	 * @param out
+	 *            the out
 	 */
 	public void tableToWorld(Vector2f in, Vector2f out);
 }

@@ -17,7 +17,8 @@ import multiplicity3.csys.stage.IStage;
  *
  * @see FeedbackDragAndDropEvent
  */
-public class FeedbackDragAndDropListener implements DragAndDropListener {
+public class FeedbackDragAndDropListener implements DragAndDropListener
+{
 
 	/** The feedback item. */
 	private FeedbackItem feedbackItem;
@@ -31,12 +32,15 @@ public class FeedbackDragAndDropListener implements DragAndDropListener {
 	/**
 	 * Instantiates a new feedback drag and drop listener.
 	 *
-	 * @param feedbackItem the feedback item
-	 * @param stage the stage
-	 * @param log the log
+	 * @param feedbackItem
+	 *            the feedback item
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
 	 */
-	public FeedbackDragAndDropListener(FeedbackItem feedbackItem, IStage stage,
-			Logger log) {
+	public FeedbackDragAndDropListener(FeedbackItem feedbackItem, IStage stage, Logger log)
+	{
 		this.feedbackItem = feedbackItem;
 		this.log = log;
 		this.stage = stage;
@@ -50,15 +54,17 @@ public class FeedbackDragAndDropListener implements DragAndDropListener {
 	 * multiplicity3.csys.items.item.IItem, int)
 	 */
 	@Override
-	public void itemDraggedAndDropped(IItem itemDropped, IItem onto,
-			int indexOfDrop) {
+	public void itemDraggedAndDropped(IItem itemDropped, IItem onto, int indexOfDrop)
+	{
 
-		if (itemDropped == null) {
+		if (itemDropped == null)
+		{
 			log.warning("No actual dropping occurred!");
 			return;
 		}
 
-		if (!itemDropped.isVisible()) {
+		if (!itemDropped.isVisible())
+		{
 			log.fine("Item is not visible, no further action.");
 			return;
 		}
@@ -69,12 +75,17 @@ public class FeedbackDragAndDropListener implements DragAndDropListener {
 	/**
 	 * Attempt to add feedback to.
 	 *
-	 * @param item the item
-	 * @param stage the stage
+	 * @param item
+	 *            the item
+	 * @param stage
+	 *            the stage
 	 */
-	private void attemptToAddFeedbackTo(IItem item, IStage stage) {
-		if (!item.equals(stage)) {
-			if (!feedbackItem.addFeedbackItem(item)) {
+	private void attemptToAddFeedbackTo(IItem item, IStage stage)
+	{
+		if (!item.equals(stage))
+		{
+			if (!feedbackItem.addFeedbackItem(item))
+			{
 				attemptToAddFeedbackTo(item.getParentItem(), stage);
 			}
 		}

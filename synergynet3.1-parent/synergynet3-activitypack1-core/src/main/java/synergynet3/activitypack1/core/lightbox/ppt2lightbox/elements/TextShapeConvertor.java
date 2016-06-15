@@ -10,7 +10,8 @@ import synergynet3.activitypack1.core.lightbox.lightboxmodel.items.TextItem;
 /**
  * The Class TextShapeConvertor.
  */
-public class TextShapeConvertor extends Convertor {
+public class TextShapeConvertor extends Convertor
+{
 
 	/** The font size. */
 	private int fontSize;
@@ -36,10 +37,13 @@ public class TextShapeConvertor extends Convertor {
 	/**
 	 * Instantiates a new text shape convertor.
 	 *
-	 * @param shape the shape
-	 * @param slideSize the slide size
+	 * @param shape
+	 *            the shape
+	 * @param slideSize
+	 *            the slide size
 	 */
-	public TextShapeConvertor(TextShape shape, Dimension slideSize) {
+	public TextShapeConvertor(TextShape shape, Dimension slideSize)
+	{
 		super(shape, slideSize);
 		this.shape = shape;
 	}
@@ -47,12 +51,14 @@ public class TextShapeConvertor extends Convertor {
 	/**
 	 * Convert text shape.
 	 *
-	 * @param textShape the text shape
-	 * @param slideSize the slide size
+	 * @param textShape
+	 *            the text shape
+	 * @param slideSize
+	 *            the slide size
 	 * @return the text item
 	 */
-	public static TextItem convertTextShape(TextShape textShape,
-			Dimension slideSize) {
+	public static TextItem convertTextShape(TextShape textShape, Dimension slideSize)
+	{
 		return new TextShapeConvertor(textShape, slideSize).convert();
 	}
 
@@ -61,7 +67,8 @@ public class TextShapeConvertor extends Convertor {
 	 *
 	 * @return the text item
 	 */
-	private TextItem convert() {
+	private TextItem convert()
+	{
 		extractData();
 		TextItem item = createEmptyTextItem();
 		populateTextItemWithExtractedData(item);
@@ -73,14 +80,16 @@ public class TextShapeConvertor extends Convertor {
 	 *
 	 * @return the text item
 	 */
-	private TextItem createEmptyTextItem() {
+	private TextItem createEmptyTextItem()
+	{
 		return new TextItem();
 	}
 
 	/**
 	 * Extract data.
 	 */
-	private void extractData() {
+	private void extractData()
+	{
 		this.text = getTextFromRichText();
 		this.fontSize = getFontSizeFromRichText();
 		this.isMoveable = interpretMoveablePropertyFromBackgroundFillColour();
@@ -94,11 +103,15 @@ public class TextShapeConvertor extends Convertor {
 	 *
 	 * @return the font size from rich text
 	 */
-	private int getFontSizeFromRichText() {
+	private int getFontSizeFromRichText()
+	{
 		int fontSize = 32;
-		try {
+		try
+		{
 			fontSize = shape.getTextRun().getRichTextRunAt(0).getFontSize();
-		} catch (NullPointerException npe) {
+		}
+		catch (NullPointerException npe)
+		{
 		}
 		return fontSize;
 	}
@@ -108,7 +121,8 @@ public class TextShapeConvertor extends Convertor {
 	 *
 	 * @return the rotation degrees from shape
 	 */
-	private int getRotationDegreesFromShape() {
+	private int getRotationDegreesFromShape()
+	{
 		return this.shape.getRotation();
 	}
 
@@ -117,11 +131,15 @@ public class TextShapeConvertor extends Convertor {
 	 *
 	 * @return the text from rich text
 	 */
-	private String getTextFromRichText() {
+	private String getTextFromRichText()
+	{
 		String extractedText = "";
-		try {
+		try
+		{
 			extractedText = shape.getTextRun().getRichTextRunAt(0).getText();
-		} catch (NullPointerException npe) {
+		}
+		catch (NullPointerException npe)
+		{
 		}
 		return extractedText;
 	}
@@ -129,9 +147,11 @@ public class TextShapeConvertor extends Convertor {
 	/**
 	 * Populate text item with extracted data.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void populateTextItemWithExtractedData(TextItem item) {
+	private void populateTextItemWithExtractedData(TextItem item)
+	{
 		item.setText(this.text);
 		item.setMoveable(this.isMoveable);
 		item.setPosition(this.position);

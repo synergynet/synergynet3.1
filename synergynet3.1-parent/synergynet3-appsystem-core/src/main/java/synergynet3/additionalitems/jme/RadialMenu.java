@@ -26,7 +26,8 @@ import com.jme3.math.Vector2f;
  * The Class RadialMenu.
  */
 @ImplementsContentItem(target = IRadialMenu.class)
-public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
+public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable
+{
 
 	/** The log. */
 	private Logger log = Logger.getLogger(RadialMenu.class.getName());
@@ -52,10 +53,13 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	/**
 	 * Instantiates a new radial menu.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public RadialMenu(String name, UUID uuid) {
+	public RadialMenu(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -65,7 +69,9 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * synergynet3.additionalitems.interfaces.IRadialMenu#addOption(synergynet3
 	 * .additionalitems.RadialMenuOption)
 	 */
-	public int addOption(RadialMenuOption option) {
+	@Override
+	public int addOption(RadialMenuOption option)
+	{
 		options.add(option);
 		updateMenu();
 		return options.indexOf(option);
@@ -75,7 +81,9 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IRadialMenu#removeOption(int)
 	 */
-	public void removeOption(int optionIndex) {
+	@Override
+	public void removeOption(int optionIndex)
+	{
 		options.remove(optionIndex);
 		updateMenu();
 	}
@@ -86,12 +94,16 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * synergynet3.additionalitems.interfaces.IRadialMenu#setOptionVisibility
 	 * (boolean)
 	 */
-	public void setOptionVisibility(boolean visibility) {
-		for (IItem line : lines) {
+	@Override
+	public void setOptionVisibility(boolean visibility)
+	{
+		for (IItem line : lines)
+		{
 			line.setVisible(visibility);
 		}
 
-		for (RadialMenuOption option : options) {
+		for (RadialMenuOption option : options)
+		{
 			option.asItem().setVisible(visibility);
 			option.asItem().setInteractionEnabled(visibility);
 		}
@@ -103,7 +115,8 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * @see synergynet3.additionalitems.interfaces.IRadialMenu#setRadius(int)
 	 */
 	@Override
-	public void setRadius(int radius) {
+	public void setRadius(int radius)
+	{
 		this.radius = radius;
 	}
 
@@ -114,8 +127,9 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * .csys.items.item.IItem, multiplicity3.csys.stage.IStage,
 	 * java.util.logging.Logger, com.jme3.math.ColorRGBA)
 	 */
-	public void setRootItem(IItem rootItem, IStage stage, Logger log,
-			ColorRGBA menuColour) {
+	@Override
+	public void setRootItem(IItem rootItem, IStage stage, Logger log, ColorRGBA menuColour)
+	{
 		this.stage = stage;
 		this.menuColour = menuColour;
 
@@ -132,7 +146,8 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * @see multiplicity3.jme3csys.items.item.JMEItem#setVisible(boolean)
 	 */
 	@Override
-	public void setVisible(boolean b) {
+	public void setVisible(boolean b)
+	{
 		super.setVisible(b);
 		setOptionVisibility(false);
 	}
@@ -143,17 +158,21 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	 * synergynet3.additionalitems.interfaces.IRadialMenu#toggleOptionVisibility
 	 * ()
 	 */
-	public void toggleOptionVisibility() {
+	@Override
+	public void toggleOptionVisibility()
+	{
 		setOptionVisibility(!optionsVisible);
 	}
 
 	/**
 	 * Gets the option position.
 	 *
-	 * @param angle the angle
+	 * @param angle
+	 *            the angle
 	 * @return the option position
 	 */
-	private Vector2f getOptionPosition(int angle) {
+	private Vector2f getOptionPosition(int angle)
+	{
 		Vector2f position = new Vector2f(0, radius);
 		position.rotateAroundOrigin(FastMath.DEG_TO_RAD * angle, true);
 		return position;
@@ -162,41 +181,49 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 	/**
 	 * Gets the option rotation.
 	 *
-	 * @param angleTotal the angle total
+	 * @param angleTotal
+	 *            the angle total
 	 * @return the option rotation
 	 */
-	private float getOptionRotation(int angleTotal) {
+	private float getOptionRotation(int angleTotal)
+	{
 		return FastMath.DEG_TO_RAD * angleTotal;
 	}
 
 	/**
 	 * Switch behaviour.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void switchBehaviour(final IItem item) {
-		for (IBehaviour behaviour : item.getBehaviours()) {
+	private void switchBehaviour(final IItem item)
+	{
+		for (IBehaviour behaviour : item.getBehaviours())
+		{
 			behaviour.setItemActingOn(this);
 		}
-		for (IItem child : item.getChildItems()) {
+		for (IItem child : item.getChildItems())
+		{
 			switchBehaviour(child);
 		}
 
 		final RadialMenu menu = this;
 
-		item.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						stage.getZOrderManager().bringToTop(menu);
-					}
-				});
+		item.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				stage.getZOrderManager().bringToTop(menu);
+			}
+		});
 	}
 
 	/**
 	 * Update menu.
 	 */
-	private void updateMenu() {
+	private void updateMenu()
+	{
 
 		Vector2f containerLocation = getRelativeLocation();
 		float containerRotation = getRelativeRotation();
@@ -206,12 +233,16 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 		setRelativeRotation(0);
 		setRelativeScale(1);
 
-		for (IItem line : lines) {
+		for (IItem line : lines)
+		{
 			stage.removeItem(line);
 		}
-		for (RadialMenuOption option : options) {
-			if (option.asItem().getParentItem() != null) {
-				if (option.asItem().getParentItem().equals(this)) {
+		for (RadialMenuOption option : options)
+		{
+			if (option.asItem().getParentItem() != null)
+			{
+				if (option.asItem().getParentItem().equals(this))
+				{
 					this.removeItem(option.asItem());
 				}
 			}
@@ -220,15 +251,16 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 		lines.clear();
 		int angleStep = 360 / options.size();
 		int angleTotal = 0;
-		for (RadialMenuOption option : options) {
+		for (RadialMenuOption option : options)
+		{
 			Vector2f location = getOptionPosition(angleTotal);
 			float rotation = getOptionRotation(angleTotal);
 			option.asItem().setRelativeLocation(location);
 			option.asItem().setRelativeRotation(rotation);
 
-			try {
-				ILine line = stage.getContentFactory().create(ILine.class,
-						"line", UUID.randomUUID());
+			try
+			{
+				ILine line = stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 				line.setLineWidth(6f);
 				line.setStartPosition(new Vector2f());
 				line.setEndPosition(option.asItem().getRelativeLocation());
@@ -240,13 +272,16 @@ public class RadialMenu extends JMEContainer implements IRadialMenu, IInitable {
 
 				addItem(option.asItem());
 
-				if (!optionsVisible) {
+				if (!optionsVisible)
+				{
 					line.setVisible(false);
 					option.asItem().setVisible(false);
 					option.asItem().setInteractionEnabled(false);
 				}
 
-			} catch (ContentTypeNotBoundException e) {
+			}
+			catch (ContentTypeNotBoundException e)
+			{
 				log.log(Level.SEVERE, "ContentTypeNotBoundException: ", e);
 			}
 

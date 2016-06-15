@@ -23,7 +23,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class FeedbackItem.
  */
-public abstract class FeedbackItem implements IFeedbackItemCachable {
+public abstract class FeedbackItem implements IFeedbackItemCachable
+{
 
 	/** The line. */
 	private ILine line;
@@ -52,35 +53,41 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	/**
 	 * Adds the feedback item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return true, if successful
 	 */
-	public boolean addFeedbackItem(IItem item) {
+	public boolean addFeedbackItem(IItem item)
+	{
 
-		if (FeedbackSystem.isItemFeedbackEligible(item) && getAllSettingsMade()) {
+		if (FeedbackSystem.isItemFeedbackEligible(item) && getAllSettingsMade())
+		{
 
 			FeedbackContainer feedbackContainer;
 
 			boolean correctVisibility = false;
 
-			if (FeedbackSystem.isItemFeedbackContainer(item)) {
-				feedbackContainer = FeedbackContainer.feedbackContainers
-						.get(item);
-			} else {
+			if (FeedbackSystem.isItemFeedbackContainer(item))
+			{
+				feedbackContainer = FeedbackContainer.feedbackContainers.get(item);
+			}
+			else
+			{
 				feedbackContainer = addContainerToItem(item);
 				correctVisibility = true;
 			}
 			feedbackContainer.getFeedbackViewer().addFeedback(this);
 			tidyAwayFeedbackSetter();
 
-			if (correctVisibility) {
-				feedbackContainer.getFeedbackViewer().getContainer()
-						.setVisibility(true);
-				feedbackContainer.getFeedbackViewer().getContainer()
-						.setVisibility(false);
+			if (correctVisibility)
+			{
+				feedbackContainer.getFeedbackViewer().getContainer().setVisibility(true);
+				feedbackContainer.getFeedbackViewer().getContainer().setVisibility(false);
 			}
 			return true;
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -88,37 +95,41 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	/**
 	 * Adds the feedback view frame.
 	 *
-	 * @param feedbackViewer the feedback viewer
-	 * @param frameNo the frame no
+	 * @param feedbackViewer
+	 *            the feedback viewer
+	 * @param frameNo
+	 *            the frame no
 	 */
-	public void addFeedbackViewFrame(final FeedbackViewer feedbackViewer,
-			int frameNo) {
-		try {
+	public void addFeedbackViewFrame(final FeedbackViewer feedbackViewer, int frameNo)
+	{
+		try
+		{
 
-			userIcon = StudentIconGenerator.generateIcon(stage, 50, 50, 4,
-					false, studentID);
-			feedbackViewer.getContainer().addToFrame(userIcon, frameNo,
-					feedbackViewer.getContainer().getWidth() / 4,
-					(-feedbackViewer.getContainer().getHeight() / 2) + 60);
+			userIcon = StudentIconGenerator.generateIcon(stage, 50, 50, 4, false, studentID);
+			feedbackViewer.getContainer().addToFrame(userIcon, frameNo, feedbackViewer.getContainer().getWidth() / 4, (-feedbackViewer.getContainer().getHeight() / 2) + 60);
 
-			new PerformActionOnAllDescendents(userIcon, false, false) {
+			new PerformActionOnAllDescendents(userIcon, false, false)
+			{
 				@Override
-				protected void actionOnDescendent(IItem child) {
+				protected void actionOnDescendent(IItem child)
+				{
 					child.setInteractionEnabled(true);
-					child.getMultiTouchDispatcher().addListener(
-							new MultiTouchEventAdapter() {
-								@Override
-								public void cursorClicked(
-										MultiTouchCursorEvent event) {
-									feedbackViewer.toggleVisibility();
-								}
-							});
+					child.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+					{
+						@Override
+						public void cursorClicked(MultiTouchCursorEvent event)
+						{
+							feedbackViewer.toggleVisibility();
+						}
+					});
 				}
 			};
 
 			generateFeedbackView(feedbackViewer, frameNo);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -126,78 +137,84 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	/**
 	 * Creates the setter.
 	 *
-	 * @param position the position
-	 * @param rotation the rotation
-	 * @param student the student
-	 * @param menuIn the menu in
-	 * @param stage the stage
-	 * @param log the log
+	 * @param position
+	 *            the position
+	 * @param rotation
+	 *            the rotation
+	 * @param student
+	 *            the student
+	 * @param menuIn
+	 *            the menu in
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
 	 */
-	public void createSetter(Vector2f position, float rotation,
-			StudentRepresentation student, StudentMenu menuIn, IStage stage,
-			Logger log) {
+	public void createSetter(Vector2f position, float rotation, StudentRepresentation student, StudentMenu menuIn, IStage stage, Logger log)
+	{
 
 		this.stage = stage;
 		menu = menuIn;
 
 		menu.setFeedbackModeSelect(this);
 
-		if (log == null) {
+		if (log == null)
+		{
 			this.log = Logger.getLogger(FeedbackItem.class.getName());
-		} else {
+		}
+		else
+		{
 			this.log = log;
 		}
 
 		this.student = student;
 		studentID = student.getStudentId();
 
-		try {
+		try
+		{
 
-			setter = stage.getContentFactory().create(IScrollContainer.class,
-					"menu", UUID.randomUUID());
+			setter = stage.getContentFactory().create(IScrollContainer.class, "menu", UUID.randomUUID());
 			setter.setDimensions(stage, log, 512, 300);
 			stage.addItem(setter);
 			setter.setRelativeLocation(new Vector2f(position.x, position.y));
 			setter.setRelativeRotation(rotation);
 			setter.setFrameColour(student.getStudentColour());
 
-			stage.getDragAndDropSystem().registerDragDestinationListener(
-					setter.getBackground(),
-					new FeedbackDragAndDropListener(this, stage, log));
+			stage.getDragAndDropSystem().registerDragDestinationListener(setter.getBackground(), new FeedbackDragAndDropListener(this, stage, log));
 
-			line = stage.getContentFactory().create(ILine.class, "line",
-					UUID.randomUUID());
+			line = stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 			line.setLineColour(student.getStudentColour());
 			line.setLineWidth(10f);
 			stage.addItem(line);
 
-			ZManager.manageLineOrderFull(stage, line, menu.getRadialMenu(),
-					setter);
+			ZManager.manageLineOrderFull(stage, line, menu.getRadialMenu(), setter);
 
-			IItem userIcon = StudentIconGenerator.generateIcon(stage, 40, 40,
-					3, false, studentID);
+			IItem userIcon = StudentIconGenerator.generateIcon(stage, 40, 40, 3, false, studentID);
 
-			new PerformActionOnAllDescendents(userIcon, false, false) {
+			new PerformActionOnAllDescendents(userIcon, false, false)
+			{
 				@Override
-				protected void actionOnDescendent(IItem child) {
+				protected void actionOnDescendent(IItem child)
+				{
 					child.setInteractionEnabled(true);
-					child.getMultiTouchDispatcher().addListener(
-							new MultiTouchEventAdapter() {
-								@Override
-								public void cursorClicked(
-										MultiTouchCursorEvent event) {
-									tidyAwayFeedbackSetter();
-								}
-							});
+					child.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+					{
+						@Override
+						public void cursorClicked(MultiTouchCursorEvent event)
+						{
+							tidyAwayFeedbackSetter();
+						}
+					});
 				}
 			};
 
-			setter.addToAllFrames(userIcon, (setter.getWidth() / 2) - (40 / 2)
-					- 5, (-setter.getHeight() / 2) + (40 / 2) + 5);
+			setter.addToAllFrames(userIcon, (setter.getWidth() / 2) - (40 / 2) - 5, (-setter.getHeight() / 2) + (40 / 2) + 5);
 
 			addSettings();
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -207,43 +224,52 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	 *
 	 * @return the icon
 	 */
-	public String getIcon() {
+	public String getIcon()
+	{
 		return "synergynet3/feedbacksystem/feedbackIcon.png";
 	}
 
 	/**
 	 * @return the stage
 	 */
-	public IStage getStage() {
+	public IStage getStage()
+	{
 		return stage;
 	}
 
 	/**
 	 * @return the studentID
 	 */
-	public String getStudentID() {
+	public String getStudentID()
+	{
 		return studentID;
 	}
 
 	/**
-	 * @param stage the stage to set
+	 * @param stage
+	 *            the stage to set
 	 */
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
 	}
 
 	/**
-	 * @param studentID the studentID to set
+	 * @param studentID
+	 *            the studentID to set
 	 */
-	public void setStudentID(String studentID) {
+	public void setStudentID(String studentID)
+	{
 		this.studentID = studentID;
 	}
 
 	/**
 	 * Tidy away feedback setter.
 	 */
-	public void tidyAwayFeedbackSetter() {
-		if (menu != null) {
+	public void tidyAwayFeedbackSetter()
+	{
+		if (menu != null)
+		{
 			menu.turnFeedbackModeOff();
 		}
 		stage.removeItem(setter);
@@ -253,10 +279,12 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	/**
 	 * Adds the container to item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return the feedback container
 	 */
-	private FeedbackContainer addContainerToItem(IItem item) {
+	private FeedbackContainer addContainerToItem(IItem item)
+	{
 		FeedbackContainer feedbackContainer = new FeedbackContainer(stage, log);
 		feedbackContainer.setItem(item);
 		feedbackContainer.getFeedbackViewer().addToStage(stage);
@@ -267,20 +295,25 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	/**
 	 * Adds the settings.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	protected void addSettings() throws ContentTypeNotBoundException {
+	protected void addSettings() throws ContentTypeNotBoundException
+	{
 	}
 
 	/**
 	 * Generate feedback view.
 	 *
-	 * @param feedbackViewer the feedback viewer
-	 * @param frameNo the frame no
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param feedbackViewer
+	 *            the feedback viewer
+	 * @param frameNo
+	 *            the frame no
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	protected void generateFeedbackView(FeedbackViewer feedbackViewer,
-			int frameNo) throws ContentTypeNotBoundException {
+	protected void generateFeedbackView(FeedbackViewer feedbackViewer, int frameNo) throws ContentTypeNotBoundException
+	{
 	}
 
 	/**
@@ -288,7 +321,8 @@ public abstract class FeedbackItem implements IFeedbackItemCachable {
 	 *
 	 * @return the all settings made
 	 */
-	protected boolean getAllSettingsMade() {
+	protected boolean getAllSettingsMade()
+	{
 		return false;
 	}
 

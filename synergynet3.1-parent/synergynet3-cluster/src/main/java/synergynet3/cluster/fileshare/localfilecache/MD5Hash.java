@@ -13,7 +13,8 @@ import java.security.NoSuchAlgorithmException;
 /**
  * The Class MD5Hash.
  */
-public class MD5Hash implements Serializable {
+public class MD5Hash implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 4356452630424788104L;
@@ -24,30 +25,34 @@ public class MD5Hash implements Serializable {
 	/**
 	 * Instantiates a new m d5 hash.
 	 *
-	 * @param hashString the hash string
+	 * @param hashString
+	 *            the hash string
 	 */
-	public MD5Hash(String hashString) {
+	public MD5Hash(String hashString)
+	{
 		this.hashString = hashString;
 	}
 
 	/**
 	 * Md5.
 	 *
-	 * @param file the file
+	 * @param file
+	 *            the file
 	 * @return the m d5 hash
-	 * @throws NoSuchAlgorithmException the no such algorithm exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static MD5Hash md5(File file) throws NoSuchAlgorithmException,
-			IOException {
+	public static MD5Hash md5(File file) throws NoSuchAlgorithmException, IOException
+	{
 		MessageDigest md = MessageDigest.getInstance("MD5");
 		InputStream is = new FileInputStream(file);
 
 		is = new DigestInputStream(is, md);
 		byte[] buf = new byte[2048];
-		@SuppressWarnings("unused")
-		int read;
-		while ((read = is.read(buf)) != -1) {
+		while ((is.read(buf)) != -1)
+		{
 			//
 		}
 
@@ -60,11 +65,14 @@ public class MD5Hash implements Serializable {
 	/**
 	 * Md5.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return the m d5 hash
-	 * @throws NoSuchAlgorithmException the no such algorithm exception
+	 * @throws NoSuchAlgorithmException
+	 *             the no such algorithm exception
 	 */
-	public static MD5Hash md5(String s) throws NoSuchAlgorithmException {
+	public static MD5Hash md5(String s) throws NoSuchAlgorithmException
+	{
 		MessageDigest m = MessageDigest.getInstance("MD5");
 		m.update(s.getBytes(), 0, s.length());
 		BigInteger i = new BigInteger(1, m.digest());
@@ -75,8 +83,11 @@ public class MD5Hash implements Serializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object obj) {
-		if (obj instanceof MD5Hash) {
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof MD5Hash)
+		{
 			MD5Hash testHash = (MD5Hash) obj;
 			return testHash.getHash().equals(getHash());
 		}
@@ -88,7 +99,8 @@ public class MD5Hash implements Serializable {
 	 *
 	 * @return the hash
 	 */
-	public String getHash() {
+	public String getHash()
+	{
 		return this.hashString;
 	}
 
@@ -96,7 +108,9 @@ public class MD5Hash implements Serializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#hashCode()
 	 */
-	public int hashCode() {
+	@Override
+	public int hashCode()
+	{
 		return hashString.hashCode();
 	}
 
@@ -104,7 +118,9 @@ public class MD5Hash implements Serializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return this.hashString;
 	}
 

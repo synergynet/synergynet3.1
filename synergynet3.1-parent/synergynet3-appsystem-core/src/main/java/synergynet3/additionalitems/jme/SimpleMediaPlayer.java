@@ -42,13 +42,14 @@ import com.sun.jna.Memory;
  * The Class SimpleMediaPlayer.
  */
 @ImplementsContentItem(target = ISimpleMediaPlayer.class)
-public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
-		IInitable, RenderCallback, BufferFormatCallback {
+public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer, IInitable, RenderCallback, BufferFormatCallback
+{
 
 	/**
 	 * The Class VidThread.
 	 */
-	class VidThread extends Thread {
+	class VidThread extends Thread
+	{
 
 		/** The event handlers to add. */
 		private ArrayList<MediaPlayerEventAdapter> eventHandlersToAdd = new ArrayList<MediaPlayerEventAdapter>();
@@ -65,21 +66,25 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		/**
 		 * Instantiates a new vid thread.
 		 */
-		public VidThread() {
+		public VidThread()
+		{
 			super();
 		}
 
 		/**
 		 * Adds the media player event listener.
 		 *
-		 * @param mediaPlayerEventAdapter the media player event adapter
+		 * @param mediaPlayerEventAdapter
+		 *            the media player event adapter
 		 */
-		public void addMediaPlayerEventListener(
-				MediaPlayerEventAdapter mediaPlayerEventAdapter) {
-			if (initiated) {
-				mediaPlayer
-						.addMediaPlayerEventListener(mediaPlayerEventAdapter);
-			} else {
+		public void addMediaPlayerEventListener(MediaPlayerEventAdapter mediaPlayerEventAdapter)
+		{
+			if (initiated)
+			{
+				mediaPlayer.addMediaPlayerEventListener(mediaPlayerEventAdapter);
+			}
+			else
+			{
 				eventHandlersToAdd.add(mediaPlayerEventAdapter);
 			}
 		}
@@ -87,9 +92,11 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		/**
 		 * At end.
 		 */
-		public void atEnd() {
+		public void atEnd()
+		{
 			playing = false;
-			if (actionOnVideoEndListener != null) {
+			if (actionOnVideoEndListener != null)
+			{
 				actionOnVideoEndListener.onVideoEnd();
 			}
 		}
@@ -98,7 +105,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		 * (non-Javadoc)
 		 * @see java.lang.Thread#destroy()
 		 */
-		public void destroy() {
+		@Override
+		public void destroy()
+		{
 			initiated = false;
 		}
 
@@ -107,10 +116,14 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		 *
 		 * @return the position
 		 */
-		public float getPosition() {
-			if (!initiated) {
+		public float getPosition()
+		{
+			if (!initiated)
+			{
 				return 0;
-			} else {
+			}
+			else
+			{
 				return mediaPlayer.getPosition();
 			}
 		}
@@ -120,15 +133,18 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		 *
 		 * @return true, if is playing
 		 */
-		public boolean isPlaying() {
+		public boolean isPlaying()
+		{
 			return playing;
 		}
 
 		/**
 		 * Pause vid.
 		 */
-		public void pauseVid() {
-			if (playing) {
+		public void pauseVid()
+		{
+			if (playing)
+			{
 				mediaPlayer.setPause(true);
 				playing = false;
 			}
@@ -137,8 +153,10 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		/**
 		 * Play vid.
 		 */
-		public void playVid() {
-			if (initiated) {
+		public void playVid()
+		{
+			if (initiated)
+			{
 				mediaPlayer.play();
 				playing = true;
 			}
@@ -147,7 +165,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		/**
 		 * Restart.
 		 */
-		public void restart() {
+		public void restart()
+		{
 			mediaPlayer.prepareMedia(videoURL, "");
 			mediaPlayer.play();
 			playing = true;
@@ -158,19 +177,24 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		 * (non-Javadoc)
 		 * @see java.lang.Thread#run()
 		 */
-		public void run() {
-			try {
-				mediaPlayerFactory = new MediaPlayerFactory(
-						"--no-video-title-show", "--quiet");
-				mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(instance,
-						instance);
-				addMediaPlayerEventListener(new MediaPlayerEventAdapter() {
+		@Override
+		public void run()
+		{
+			try
+			{
+				mediaPlayerFactory = new MediaPlayerFactory("--no-video-title-show", "--quiet");
+				mediaPlayer = mediaPlayerFactory.newDirectMediaPlayer(instance, instance);
+				addMediaPlayerEventListener(new MediaPlayerEventAdapter()
+				{
 					@Override
-					public void finished(MediaPlayer mediaPlayer) {
+					public void finished(MediaPlayer mediaPlayer)
+					{
 						atEnd = true;
-						if (vidThread != null) {
+						if (vidThread != null)
+						{
 							vidThread.atEnd();
-							if (repeat) {
+							if (repeat)
+							{
 								vidThread.restart();
 							}
 						}
@@ -180,33 +204,41 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 				mediaPlayer.mute(true);
 				mediaPlayer.prepareMedia(videoURL, "");
 				mediaPlayer.play();
-				while (!mediaPlayer.isPlaying()) {
+				while (!mediaPlayer.isPlaying())
+				{
 					Thread.sleep(100);
 				}
 				initiated = true;
 				playing = true;
 				mediaPlayer.setPosition(startPos);
 				mediaPlayer.mute(false);
-				if (!autostart) {
+				if (!autostart)
+				{
 					pauseVid();
-					while (!firstClick) {
-						if (mediaPlayer.isPlaying()) {
+					while (!firstClick)
+					{
+						if (mediaPlayer.isPlaying())
+						{
 							Thread.sleep(100);
-							if (!firstClick) {
+							if (!firstClick)
+							{
 								mediaPlayer.setPause(true);
 								mediaPlayer.setPosition(startPos);
 							}
 						}
 					}
 				}
-				for (MediaPlayerEventAdapter eventHandler : eventHandlersToAdd) {
+				for (MediaPlayerEventAdapter eventHandler : eventHandlersToAdd)
+				{
 					mediaPlayer.addMediaPlayerEventListener(eventHandler);
 				}
-			} catch (RuntimeException e) {
-				log.log(Level.SEVERE,
-						"Video won't play.  VLC may not be installed or the same architecture (32/64bit) as the java platform used).",
-						e);
-			} catch (InterruptedException e) {
+			}
+			catch (RuntimeException e)
+			{
+				log.log(Level.SEVERE, "Video won't play.  VLC may not be installed or the same architecture (32/64bit) as the java platform used).", e);
+			}
+			catch (InterruptedException e)
+			{
 
 			}
 		}
@@ -214,12 +246,17 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		/**
 		 * Sets the position.
 		 *
-		 * @param pos the new position
+		 * @param pos
+		 *            the new position
 		 */
-		public void setPosition(float pos) {
-			if (initiated) {
+		public void setPosition(float pos)
+		{
+			if (initiated)
+			{
 				mediaPlayer.setPosition(pos);
-			} else {
+			}
+			else
+			{
 				startPos = pos;
 			}
 		}
@@ -228,15 +265,19 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		 * (non-Javadoc)
 		 * @see java.lang.Thread#start()
 		 */
-		public void start() {
+		@Override
+		public void start()
+		{
 			super.start();
 		}
 
 		/**
 		 * Stop vid.
 		 */
-		public void stopVid() {
-			if (playing) {
+		public void stopVid()
+		{
+			if (playing)
+			{
 				mediaPlayer.stop();
 				playing = false;
 			}
@@ -245,10 +286,14 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 		/**
 		 * Unpause vid.
 		 */
-		public void unpauseVid() {
-			if (atEnd) {
+		public void unpauseVid()
+		{
+			if (atEnd)
+			{
 				restart();
-			} else if (!playing) {
+			}
+			else if (!playing)
+			{
 				mediaPlayer.setPause(false);
 				playing = true;
 			}
@@ -266,8 +311,7 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	private static final int HEIGHT = 240;
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(SimpleMediaPlayer.class
-			.getName());
+	private static final Logger log = Logger.getLogger(SimpleMediaPlayer.class.getName());
 
 	/** The texture format. */
 	private static Format TEXTURE_FORMAT = Format.RGBA16;
@@ -280,6 +324,24 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 
 	/** The Constant WIDTH. */
 	private static final int WIDTH = 320;
+
+	static
+	{
+		boolean found = false;
+		String vlcLib = ManagementFactory.getRuntimeMXBean().getSystemProperties().get("vlc");
+		if (vlcLib != null)
+		{
+			found = true;
+		}
+		if (!found)
+		{
+			found = new NativeDiscovery().discover();
+		}
+		if (!found)
+		{
+			log.warning("Cannot play videos.  VLC is either not installed or located in an unexpected directory.  " + "If VLC is installed in an unexpected directory you can provide the path to its library " + "location with the argument: '-Dvlc=\"...\"");
+		}
+	}
 
 	/** The media player. */
 	public DirectMediaPlayer mediaPlayer;
@@ -332,28 +394,14 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	/**
 	 * Instantiates a new simple media player.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public SimpleMediaPlayer(String name, UUID uuid) {
+	public SimpleMediaPlayer(String name, UUID uuid)
+	{
 		super(name, uuid);
-	}
-
-	static {
-		boolean found = false;
-		String vlcLib = ManagementFactory.getRuntimeMXBean()
-				.getSystemProperties().get("vlc");
-		if (vlcLib != null) {
-			found = true;
-		}
-		if (!found) {
-			found = new NativeDiscovery().discover();
-		}
-		if (!found) {
-			log.warning("Cannot play videos.  VLC is either not installed or located in an unexpected directory.  "
-					+ "If VLC is installed in an unexpected directory you can provide the path to its library "
-					+ "location with the argument: '-Dvlc=\"...\"");
-		}
 	}
 
 	/*
@@ -362,9 +410,11 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * addMediaPlayerEventListener
 	 * (uk.co.caprica.vlcj.player.MediaPlayerEventAdapter)
 	 */
-	public void addMediaPlayerEventListener(
-			MediaPlayerEventAdapter mediaPlayerEventAdapter) {
-		if (vidThread != null) {
+	@Override
+	public void addMediaPlayerEventListener(MediaPlayerEventAdapter mediaPlayerEventAdapter)
+	{
+		if (vidThread != null)
+		{
 			vidThread.addMediaPlayerEventListener(mediaPlayerEventAdapter);
 		}
 	}
@@ -373,18 +423,24 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#destroy()
 	 */
-	public void destroy() {
-		if (vidThread != null) {
+	@Override
+	public void destroy()
+	{
+		if (vidThread != null)
+		{
 			vidThread.destroy();
-			if (mediaPlayer != null) {
+			if (mediaPlayer != null)
+			{
 				unpause();
 				mediaPlayer.stop();
 				mediaPlayer.release();
 			}
-			if (mediaPlayerFactory != null) {
+			if (mediaPlayerFactory != null)
+			{
 				mediaPlayerFactory.release();
 			}
-			if (mediaPlayers.contains(this)) {
+			if (mediaPlayers.contains(this))
+			{
 				mediaPlayers.remove(this);
 			}
 			vidThread.interrupt();
@@ -401,10 +457,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * uk.co.caprica.vlcj.player.direct.BufferFormat)
 	 */
 	@Override
-	public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers,
-			BufferFormat bufferFormat) {
-		ByteBuffer buffer = nativeBuffers[0].getByteBuffer(0,
-				bufferFormat.getWidth() * bufferFormat.getHeight() * 4);
+	public void display(DirectMediaPlayer mediaPlayer, Memory[] nativeBuffers, BufferFormat bufferFormat)
+	{
+		ByteBuffer buffer = nativeBuffers[0].getByteBuffer(0, bufferFormat.getWidth() * bufferFormat.getHeight() * 4);
 		videoImage.setData(buffer);
 		videoTexture.setImage(videoImage);
 	}
@@ -416,10 +471,13 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (int, int)
 	 */
 	@Override
-	public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight) {
-	    BufferFormat format = new BufferFormat("RGBA", WIDTH, HEIGHT, new int[] { WIDTH * 4 }, new int[] { HEIGHT });
+	public BufferFormat getBufferFormat(int sourceWidth, int sourceHeight)
+	{
+		BufferFormat format = new BufferFormat("RGBA", WIDTH, HEIGHT, new int[]
+		{ WIDTH * 4 }, new int[]
+		{ HEIGHT });
 
-	    return format;
+		return format;
 	}
 
 	/*
@@ -427,7 +485,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getHeight()
 	 */
-	public float getHeight() {
+	@Override
+	public float getHeight()
+	{
 		return vidHeight;
 	}
 
@@ -436,7 +496,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return quadGeometry;
 	}
 
@@ -445,10 +506,15 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getPosition()
 	 */
-	public float getPosition() {
-		if (vidThread != null) {
+	@Override
+	public float getPosition()
+	{
+		if (vidThread != null)
+		{
 			return vidThread.getPosition();
-		} else {
+		}
+		else
+		{
 			return 0;
 		}
 	}
@@ -459,7 +525,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getRepeat()
 	 */
 	@Override
-	public boolean getRepeat() {
+	public boolean getRepeat()
+	{
 		return repeat;
 	}
 
@@ -467,7 +534,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#getWidth()
 	 */
-	public float getWidth() {
+	@Override
+	public float getWidth()
+	{
 		return vidWidth;
 	}
 
@@ -478,7 +547,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		this.instance = this;
 
 		videoImage = new Image(TEXTURE_FORMAT, WIDTH, HEIGHT, null);
@@ -486,8 +556,7 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 
 		quad = new CenteredQuad(vidWidth, vidHeight);
 		quadGeometry = new Geometry("quad_geom", quad);
-		mat = new Material(MultiplicityClient.assetManager,
-				"Common/MatDefs/Misc/Unshaded.j3md");
+		mat = new Material(MultiplicityClient.assetManager, "Common/MatDefs/Misc/Unshaded.j3md");
 		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		mat.setTexture("ColorMap", videoTexture);
 		mat.getAdditionalRenderState().setFaceCullMode(FaceCullMode.Front);
@@ -512,10 +581,15 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#isPlaying()
 	 */
-	public boolean isPlaying() {
-		if (vidThread != null) {
+	@Override
+	public boolean isPlaying()
+	{
+		if (vidThread != null)
+		{
 			return vidThread.isPlaying();
-		} else {
+		}
+		else
+		{
 			return false;
 		}
 	}
@@ -524,8 +598,11 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#pause()
 	 */
-	public void pause() {
-		if (vidThread != null) {
+	@Override
+	public void pause()
+	{
+		if (vidThread != null)
+		{
 			vidThread.pauseVid();
 		}
 	}
@@ -534,8 +611,11 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#play()
 	 */
-	public void play() {
-		if (vidThread != null) {
+	@Override
+	public void play()
+	{
+		if (vidThread != null)
+		{
 			vidThread.playVid();
 		}
 	}
@@ -547,8 +627,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (synergynet3.additionalitems.interfaces.IActionOnVideoEndListener)
 	 */
 	@Override
-	public void setActionOnVideoEndListener(
-			IActionOnVideoEndListener actionOnVideoEndListener) {
+	public void setActionOnVideoEndListener(IActionOnVideoEndListener actionOnVideoEndListener)
+	{
 		this.actionOnVideoEndListener = actionOnVideoEndListener;
 	}
 
@@ -558,7 +638,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setLocalResource
 	 * (java.io.File, boolean)
 	 */
-	public void setLocalResource(File file, boolean autostart) {
+	@Override
+	public void setLocalResource(File file, boolean autostart)
+	{
 		this.autostart = autostart;
 		videoURL = file.toString();
 	}
@@ -569,7 +651,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setLocalResource
 	 * (java.lang.String, boolean)
 	 */
-	public void setLocalResource(String localPath, boolean autostart) {
+	@Override
+	public void setLocalResource(String localPath, boolean autostart)
+	{
 		this.autostart = autostart;
 		videoURL = localPath;
 	}
@@ -580,8 +664,11 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setPosition
 	 * (float)
 	 */
-	public void setPosition(float pos) {
-		if (vidThread != null) {
+	@Override
+	public void setPosition(float pos)
+	{
+		if (vidThread != null)
+		{
 			vidThread.setPosition(pos);
 		}
 	}
@@ -592,7 +679,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setRemoteResource
 	 * (java.lang.String, boolean)
 	 */
-	public void setRemoteResource(String remotePath, boolean autostart) {
+	@Override
+	public void setRemoteResource(String remotePath, boolean autostart)
+	{
 		this.autostart = autostart;
 		videoURL = remotePath;
 	}
@@ -604,7 +693,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * )
 	 */
 	@Override
-	public void setRepeat(boolean repeat) {
+	public void setRepeat(boolean repeat)
+	{
 		this.repeat = repeat;
 	}
 
@@ -614,7 +704,9 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#setSize(float,
 	 * float)
 	 */
-	public void setSize(float width, float height) {
+	@Override
+	public void setSize(float width, float height)
+	{
 		vidWidth = width;
 		vidHeight = height;
 		quad = new CenteredQuad(width, height);
@@ -626,19 +718,28 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * @see multiplicity3.jme3csys.items.item.JMEItem#setVisible(boolean)
 	 */
 	@Override
-	public void setVisible(boolean isVisible) {
-		if (!hasStarted) {
+	public void setVisible(boolean isVisible)
+	{
+		if (!hasStarted)
+		{
 			super.setVisible(isVisible);
-			if (!isVisible) {
-				if (this.getParentItem() != null) {
+			if (!isVisible)
+			{
+				if (this.getParentItem() != null)
+				{
 					this.setInteractionEnabled(false);
 				}
 			}
-		} else {
-			if (!isVisible) {
+		}
+		else
+		{
+			if (!isVisible)
+			{
 				super.setVisible(isVisible);
 				destroy();
-			} else {
+			}
+			else
+			{
 				initialise();
 				super.setVisible(isVisible);
 			}
@@ -648,8 +749,10 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	/**
 	 * Stop.
 	 */
-	public void stop() {
-		if (vidThread != null) {
+	public void stop()
+	{
+		if (vidThread != null)
+		{
 			vidThread.stopVid();
 		}
 	}
@@ -658,10 +761,14 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleMediaPlayer#unpause()
 	 */
-	public void unpause() {
-		if (vidThread != null) {
+	@Override
+	public void unpause()
+	{
+		if (vidThread != null)
+		{
 			vidThread.unpauseVid();
-			if (!firstClick) {
+			if (!firstClick)
+			{
 				firstClick = true;
 			}
 		}
@@ -670,7 +777,8 @@ public class SimpleMediaPlayer extends JMEItem implements ISimpleMediaPlayer,
 	/**
 	 * Initialise.
 	 */
-	private void initialise() {
+	private void initialise()
+	{
 		vidThread = new VidThread();
 		vidThread.start();
 		mediaPlayers.add(this);

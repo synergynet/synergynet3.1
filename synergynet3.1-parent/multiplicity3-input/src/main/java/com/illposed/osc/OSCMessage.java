@@ -38,7 +38,8 @@ import com.illposed.osc.utility.OSCJavaToByteArrayConverter;
 /**
  * The Class OSCMessage.
  */
-public class OSCMessage extends OSCPacket {
+public class OSCMessage extends OSCPacket
+{
 
 	/** The address. */
 	protected String address;
@@ -50,35 +51,45 @@ public class OSCMessage extends OSCPacket {
 	 * Create an empty OSC Message In order to send this osc message, you need
 	 * to set the address and, perhaps, some arguments.
 	 */
-	public OSCMessage() {
+	public OSCMessage()
+	{
 		super();
 		arguments = new Vector<Object>();
 	}
 
 	/**
 	 * Create an OSCMessage with an address already initialized
-	 * 
-	 * @param newAddress The recepient of this OSC message
+	 *
+	 * @param newAddress
+	 *            The recepient of this OSC message
 	 */
-	public OSCMessage(String newAddress) {
+	public OSCMessage(String newAddress)
+	{
 		this(newAddress, null);
 	}
 
 	/**
 	 * Create an OSCMessage with an address and arguments already initialized
-	 * 
-	 * @param newAddress The recepient of this OSC message
-	 * @param newArguments The data sent to the receiver
+	 *
+	 * @param newAddress
+	 *            The recepient of this OSC message
+	 * @param newArguments
+	 *            The data sent to the receiver
 	 */
-	public OSCMessage(String newAddress, Object[] newArguments) {
+	public OSCMessage(String newAddress, Object[] newArguments)
+	{
 		super();
 		address = newAddress;
-		if (null != newArguments) {
+		if (null != newArguments)
+		{
 			arguments = new Vector<Object>(newArguments.length);
-			for (int i = 0; i < newArguments.length; i++) {
+			for (int i = 0; i < newArguments.length; i++)
+			{
 				arguments.add(newArguments[i]);
 			}
-		} else {
+		}
+		else
+		{
 			arguments = new Vector<Object>();
 		}
 		init();
@@ -87,16 +98,19 @@ public class OSCMessage extends OSCPacket {
 	/**
 	 * Adds the argument.
 	 *
-	 * @param argument the argument
+	 * @param argument
+	 *            the argument
 	 */
-	public void addArgument(Object argument) {
+	public void addArgument(Object argument)
+	{
 		arguments.add(argument);
 	}
 
 	/**
 	 * @return the address of this OSC Message
 	 */
-	public String getAddress() {
+	public String getAddress()
+	{
 		return address;
 	}
 
@@ -105,47 +119,58 @@ public class OSCMessage extends OSCPacket {
 	 *
 	 * @return the arguments
 	 */
-	public Object[] getArguments() {
+	public Object[] getArguments()
+	{
 		return arguments.toArray();
 	}
 
 	/**
 	 * Set the address of this messsage
-	 * 
+	 *
 	 * @param anAddress
 	 */
-	public void setAddress(String anAddress) {
+	public void setAddress(String anAddress)
+	{
 		address = anAddress;
 	}
 
 	/**
-	 * @param stream OscPacketByteArrayConverter
+	 * @param stream
+	 *            OscPacketByteArrayConverter
 	 */
-	protected void computeAddressByteArray(OSCJavaToByteArrayConverter stream) {
+	protected void computeAddressByteArray(OSCJavaToByteArrayConverter stream)
+	{
 		stream.write(address);
 	}
 
 	/**
-	 * @param stream OscPacketByteArrayConverter
+	 * @param stream
+	 *            OscPacketByteArrayConverter
 	 */
-	protected void computeArgumentsByteArray(OSCJavaToByteArrayConverter stream) {
+	protected void computeArgumentsByteArray(OSCJavaToByteArrayConverter stream)
+	{
 		// SC starting at version 2.2.10 wants a comma at the beginning
 		// of the arguments array.
 		stream.write(',');
-		if (null == arguments) {
+		if (null == arguments)
+		{
 			return;
 		}
 		stream.writeTypes(arguments);
 		Enumeration<Object> enm = arguments.elements();
-		while (enm.hasMoreElements()) {
+		while (enm.hasMoreElements())
+		{
 			stream.write(enm.nextElement());
 		}
 	}
 
 	/**
-	 * @param stream OscPacketByteArrayConverter
+	 * @param stream
+	 *            OscPacketByteArrayConverter
 	 */
-	protected void computeByteArray(OSCJavaToByteArrayConverter stream) {
+	@Override
+	protected void computeByteArray(OSCJavaToByteArrayConverter stream)
+	{
 		computeAddressByteArray(stream);
 		computeArgumentsByteArray(stream);
 		byteArray = stream.toByteArray();

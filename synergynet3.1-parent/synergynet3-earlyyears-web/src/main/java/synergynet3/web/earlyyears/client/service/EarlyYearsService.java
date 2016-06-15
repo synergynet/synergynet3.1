@@ -11,12 +11,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * The Interface EarlyYearsService.
  */
 @RemoteServiceRelativePath("EarlyYearsService")
-public interface EarlyYearsService extends RemoteService {
+public interface EarlyYearsService extends RemoteService
+{
 
 	/**
 	 * The Class Util.
 	 */
-	public static class Util {
+	public static class Util
+	{
 
 		/** The instance. */
 		private static EarlyYearsServiceAsync instance;
@@ -26,8 +28,10 @@ public interface EarlyYearsService extends RemoteService {
 		 *
 		 * @return the early years service async
 		 */
-		public static EarlyYearsServiceAsync get() {
-			if (instance == null) {
+		public static EarlyYearsServiceAsync get()
+		{
+			if (instance == null)
+			{
 				instance = GWT.create(EarlyYearsService.class);
 			}
 			return instance;
@@ -38,8 +42,10 @@ public interface EarlyYearsService extends RemoteService {
 	/**
 	 * Sets the activity.
 	 *
-	 * @param scenario the scenario
-	 * @param tables the tables
+	 * @param scenario
+	 *            the scenario
+	 * @param tables
+	 *            the tables
 	 */
 	public void setActivity(EarlyYearsActivity scenario, String[] tables);
 
@@ -47,32 +53,40 @@ public interface EarlyYearsService extends RemoteService {
 	/**
 	 * Sets the railway corner num.
 	 *
-	 * @param i the i
-	 * @param tables the tables
+	 * @param i
+	 *            the i
+	 * @param tables
+	 *            the tables
 	 */
 	public void setRailwayCornerNum(int i, String[] tables);
 
 	/**
 	 * Sets the railway cross num.
 	 *
-	 * @param i the i
-	 * @param tables the tables
+	 * @param i
+	 *            the i
+	 * @param tables
+	 *            the tables
 	 */
 	public void setRailwayCrossNum(int i, String[] tables);
 
 	/**
 	 * Sets the railway straight num.
 	 *
-	 * @param i the i
-	 * @param tables the tables
+	 * @param i
+	 *            the i
+	 * @param tables
+	 *            the tables
 	 */
 	public void setRailwayStraightNum(int i, String[] tables);
 
 	/**
 	 * Sets the road mode.
 	 *
-	 * @param b the b
-	 * @param tables the tables
+	 * @param b
+	 *            the b
+	 * @param tables
+	 *            the tables
 	 */
 	public void setRoadMode(PerformActionMessage b, String[] tables);
 
@@ -80,10 +94,11 @@ public interface EarlyYearsService extends RemoteService {
 	/**
 	 * Show explorer teacher console.
 	 *
-	 * @param b the b
-	 * @param deviceToSendTo the device to send to
+	 * @param b
+	 *            the b
+	 * @param deviceToSendTo
+	 *            the device to send to
 	 */
-	public void showExplorerTeacherConsole(PerformActionMessage b,
-			String[] deviceToSendTo);
+	public void showExplorerTeacherConsole(PerformActionMessage b, String[] deviceToSendTo);
 
 }

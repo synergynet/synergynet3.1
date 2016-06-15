@@ -21,7 +21,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class BirdCollection.
  */
-public class BirdCollection {
+public class BirdCollection
+{
 
 	/** The birds. */
 	private List<Bird> birds = new ArrayList<Bird>();
@@ -35,23 +36,28 @@ public class BirdCollection {
 	/**
 	 * Instantiates a new bird collection.
 	 *
-	 * @param root the root
+	 * @param root
+	 *            the root
 	 */
-	public BirdCollection(IContainer root) {
+	public BirdCollection(IContainer root)
+	{
 		this.root = root;
 	}
 
 	/**
 	 * Adds the bird.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	public void addBird(Bird b) {
+	public void addBird(Bird b)
+	{
 		birds.add(b);
 		IItem rep = createRepresentationForBird(b);
 		root.addItem(rep);
 		b.setRepresentation(rep);
-		if (birdIsEatable(b)) {
+		if (birdIsEatable(b))
+		{
 			eatableBirdCount++;
 		}
 	}
@@ -59,10 +65,12 @@ public class BirdCollection {
 	/**
 	 * Bird at index.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the bird
 	 */
-	public Bird birdAtIndex(int i) {
+	public Bird birdAtIndex(int i)
+	{
 		return birds.get(i);
 	}
 
@@ -71,19 +79,23 @@ public class BirdCollection {
 	 *
 	 * @return the int
 	 */
-	public int eatableBirdCount() {
+	public int eatableBirdCount()
+	{
 		return eatableBirdCount;
 	}
 
 	/**
 	 * Removes the bird.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	public void removeBird(Bird b) {
+	public void removeBird(Bird b)
+	{
 		birds.remove(b);
 		root.removeItem(b.getRepresentation());
-		if (birdIsEatable(b)) {
+		if (birdIsEatable(b))
+		{
 			eatableBirdCount--;
 		}
 	}
@@ -93,15 +105,18 @@ public class BirdCollection {
 	 *
 	 * @return the int
 	 */
-	public int size() {
+	public int size()
+	{
 		return birds.size();
 	}
 
 	/**
 	 * Update.
 	 */
-	public void update() {
-		for (Bird b : birds) {
+	public void update()
+	{
+		for (Bird b : birds)
+		{
 			b.updateRepresentationPosition();
 			b.updateRepresentationRotation();
 		}
@@ -110,45 +125,60 @@ public class BirdCollection {
 	/**
 	 * Bird is eatable.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 * @return true, if successful
 	 */
-	private boolean birdIsEatable(Bird b) {
-		return b.getColor().equals(Color.blue)
-				|| b.getColor().equals(Color.green)
-				|| b.getColor().equals(Color.yellow);
+	private boolean birdIsEatable(Bird b)
+	{
+		return b.getColor().equals(Color.blue) || b.getColor().equals(Color.green) || b.getColor().equals(Color.yellow);
 	}
 
 	/**
 	 * Creates the representation for bird.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 * @return the i item
 	 */
-	private IItem createRepresentationForBird(Bird b) {
+	private IItem createRepresentationForBird(Bird b)
+	{
 		IStage stage = MultiplicityEnvironment.get().getLocalStages().get(0);
-		try {
+		try
+		{
 
-			IImage img = stage.getContentFactory().create(IImage.class, "bird",
-					UUID.randomUUID());
+			IImage img = stage.getContentFactory().create(IImage.class, "bird", UUID.randomUUID());
 			img.setSize(new Vector2f(24, 24));
-			if (b instanceof Predator) {
+			if (b instanceof Predator)
+			{
 				img.setImage("synergynet3/activitypack1/table/fishes/red.png");
-			} else if (b instanceof Food) {
+			}
+			else if (b instanceof Food)
+			{
 				img.setImage("synergynet3/activitypack1/table/fishes/food.png");
-			} else if (b instanceof Obstacle) {
+			}
+			else if (b instanceof Obstacle)
+			{
 				img.setImage("synergynet3/activitypack1/table/fishes/obstacle.png");
-			} else if (b.getColor().equals(Color.blue)) {
+			}
+			else if (b.getColor().equals(Color.blue))
+			{
 				img.setImage("synergynet3/activitypack1/table/fishes/blue.png");
-			} else if (b.getColor().equals(Color.green)) {
+			}
+			else if (b.getColor().equals(Color.green))
+			{
 				img.setImage("synergynet3/activitypack1/table/fishes/green.png");
-			} else if (b.getColor().equals(Color.yellow)) {
+			}
+			else if (b.getColor().equals(Color.yellow))
+			{
 				img.setImage("synergynet3/activitypack1/table/fishes/yellow.png");
 			}
 
 			return img;
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

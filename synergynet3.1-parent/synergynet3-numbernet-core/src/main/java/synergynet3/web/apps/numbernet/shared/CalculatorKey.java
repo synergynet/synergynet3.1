@@ -5,7 +5,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Enum CalculatorKey.
  */
-public enum CalculatorKey implements IsSerializable {
+public enum CalculatorKey implements IsSerializable
+{
 
 	/** The divide. */
 	DIVIDE("\u00F7"),
@@ -64,9 +65,11 @@ public enum CalculatorKey implements IsSerializable {
 	/**
 	 * Instantiates a new calculator key.
 	 *
-	 * @param stringRepresentation the string representation
+	 * @param stringRepresentation
+	 *            the string representation
 	 */
-	CalculatorKey(String stringRepresentation) {
+	CalculatorKey(String stringRepresentation)
+	{
 		this.stringRepresentation = stringRepresentation;
 	}
 
@@ -75,7 +78,8 @@ public enum CalculatorKey implements IsSerializable {
 	 *
 	 * @return the string representation
 	 */
-	public String getStringRepresentation() {
+	public String getStringRepresentation()
+	{
 		return stringRepresentation;
 	}
 

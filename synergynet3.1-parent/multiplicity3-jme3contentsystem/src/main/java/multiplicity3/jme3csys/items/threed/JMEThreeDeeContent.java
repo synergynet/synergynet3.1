@@ -26,12 +26,11 @@ import com.jme3.texture.Texture.WrapMode;
  * The Class JMEThreeDeeContent.
  */
 @ImplementsContentItem(target = IThreeDeeContent.class)
-public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
-		IInitable {
+public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent, IInitable
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(JMEThreeDeeContent.class
-			.getName());
+	private static final Logger log = Logger.getLogger(JMEThreeDeeContent.class.getName());
 
 	/** The asset manager. */
 	private AssetManager assetManager;
@@ -54,10 +53,13 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	/**
 	 * Instantiates a new JME three dee content.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEThreeDeeContent(String name, UUID uuid) {
+	public JMEThreeDeeContent(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -66,7 +68,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return geometry;
 	}
 
@@ -75,7 +78,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * @see multiplicity3.csys.items.threed.IThreeDeeContent#getModel()
 	 */
 	@Override
-	public String getModel() {
+	public String getModel()
+	{
 		return modelResource;
 	}
 
@@ -84,7 +88,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * @see multiplicity3.csys.items.threed.IThreeDeeContent#getSize()
 	 */
 	@Override
-	public Vector3f getSize() {
+	public Vector3f getSize()
+	{
 		return extent;
 	}
 
@@ -93,7 +98,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * @see multiplicity3.csys.items.threed.IThreeDeeContent#getTexture()
 	 */
 	@Override
-	public String getTexture() {
+	public String getTexture()
+	{
 		return textureResource;
 	}
 
@@ -104,14 +110,14 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		this.assetManager = assetManager;
 
 		CenteredQuad quad = new CenteredQuad(100, 100);
 		geometry = new Geometry("quad_geom", quad);
 
-		material = new Material(assetManager,
-				"multiplicity3/jme3csys/resources/shaders/Textured.j3md");
+		material = new Material(assetManager, "multiplicity3/jme3csys/resources/shaders/Textured.j3md");
 		material.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		setTexture("multiplicity3/jme3csys/resources/placeholders/transparent_16.png");
 
@@ -127,10 +133,10 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * multiplicity3.csys.items.threed.IThreeDeeContent#setModel(java.io.File)
 	 */
 	@Override
-	public void setModel(File modelFile) {
+	public void setModel(File modelFile)
+	{
 		File parent = modelFile.getParentFile();
-		assetManager.registerLocator(parent.getAbsolutePath(),
-				FileLocator.class);
+		assetManager.registerLocator(parent.getAbsolutePath(), FileLocator.class);
 		setModel(modelFile.getName());
 	}
 
@@ -141,7 +147,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * )
 	 */
 	@Override
-	public void setModel(String modelResource) {
+	public void setModel(String modelResource)
+	{
 		this.modelResource = modelResource;
 		Spatial s = assetManager.loadModel(modelResource);
 		((BoundingBox) s.getWorldBound()).getExtent(extent);
@@ -154,7 +161,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * float, float)
 	 */
 	@Override
-	public void setSize(float width, float height, float depth) {
+	public void setSize(float width, float height, float depth)
+	{
 		((BoundingBox) geometry.getWorldBound()).setXExtent(width);
 		((BoundingBox) geometry.getWorldBound()).setYExtent(height);
 		((BoundingBox) geometry.getWorldBound()).setZExtent(depth);
@@ -166,10 +174,10 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * multiplicity3.csys.items.threed.IThreeDeeContent#setTexture(java.io.File)
 	 */
 	@Override
-	public void setTexture(File textureFile) {
+	public void setTexture(File textureFile)
+	{
 		File parent = textureFile.getParentFile();
-		assetManager.registerLocator(parent.getAbsolutePath(),
-				FileLocator.class);
+		assetManager.registerLocator(parent.getAbsolutePath(), FileLocator.class);
 		setTexture(textureFile.getName());
 	}
 
@@ -180,7 +188,8 @@ public class JMEThreeDeeContent extends JMEItem implements IThreeDeeContent,
 	 * .String)
 	 */
 	@Override
-	public void setTexture(String textureResource) {
+	public void setTexture(String textureResource)
+	{
 		this.textureResource = textureResource;
 		Texture tex = assetManager.loadTexture(textureResource);
 		tex.setWrap(WrapMode.EdgeClamp); // or edgeclamp?

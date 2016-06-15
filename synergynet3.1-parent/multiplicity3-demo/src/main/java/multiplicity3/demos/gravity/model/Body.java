@@ -7,7 +7,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class Body.
  */
-public class Body {
+public class Body
+{
 
 	/** The mass. */
 	public MassReference mass;
@@ -24,14 +25,19 @@ public class Body {
 	/**
 	 * Instantiates a new body.
 	 *
-	 * @param name the name
-	 * @param representation the representation
-	 * @param mass the mass
-	 * @param position the position
-	 * @param velocity the velocity
+	 * @param name
+	 *            the name
+	 * @param representation
+	 *            the representation
+	 * @param mass
+	 *            the mass
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
 	 */
-	public Body(String name, IItem representation, MassReference mass,
-			Vector2f position, Vector2f velocity) {
+	public Body(String name, IItem representation, MassReference mass, Vector2f position, Vector2f velocity)
+	{
 		this.name = name;
 		this.representation = representation;
 		this.mass = mass;
@@ -43,7 +49,8 @@ public class Body {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return representation.getName();
 	}
 
@@ -52,7 +59,8 @@ public class Body {
 	 *
 	 * @return the position
 	 */
-	public Vector2f getPosition() {
+	public Vector2f getPosition()
+	{
 		return representation.getRelativeLocation();
 	}
 
@@ -61,26 +69,32 @@ public class Body {
 	 *
 	 * @return the representation
 	 */
-	public IItem getRepresentation() {
+	public IItem getRepresentation()
+	{
 		return representation;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public void setPosition(float x, float y) {
+	public void setPosition(float x, float y)
+	{
 		representation.setRelativeLocation(new Vector2f(x, y));
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param pos the new position
+	 * @param pos
+	 *            the new position
 	 */
-	public void setPosition(Vector2f pos) {
+	public void setPosition(Vector2f pos)
+	{
 		representation.setRelativeLocation(pos);
 	}
 
@@ -88,7 +102,9 @@ public class Body {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return name + "[" + mass + "]";
 	}
 

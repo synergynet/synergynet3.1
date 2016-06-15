@@ -3,7 +3,8 @@ package multiplicity3.csys.items.keyboard.model;
 /**
  * The Class CharacterKey.
  */
-public class CharacterKey {
+public class CharacterKey
+{
 
 	/** The key code. */
 	private int keyCode;
@@ -14,10 +15,13 @@ public class CharacterKey {
 	/**
 	 * Instantiates a new character key.
 	 *
-	 * @param stringRepresentation the string representation
-	 * @param keyCode the key code
+	 * @param stringRepresentation
+	 *            the string representation
+	 * @param keyCode
+	 *            the key code
 	 */
-	public CharacterKey(String stringRepresentation, int keyCode) {
+	public CharacterKey(String stringRepresentation, int keyCode)
+	{
 		this.setStringRepresentation(stringRepresentation);
 		this.setKeyCode(keyCode);
 	}
@@ -27,7 +31,8 @@ public class CharacterKey {
 	 *
 	 * @return the key code
 	 */
-	public int getKeyCode() {
+	public int getKeyCode()
+	{
 		return keyCode;
 	}
 
@@ -36,25 +41,30 @@ public class CharacterKey {
 	 *
 	 * @return the string representation
 	 */
-	public String getStringRepresentation() {
+	public String getStringRepresentation()
+	{
 		return stringRepresentation;
 	}
 
 	/**
 	 * Sets the key code.
 	 *
-	 * @param keyCode the new key code
+	 * @param keyCode
+	 *            the new key code
 	 */
-	public void setKeyCode(int keyCode) {
+	public void setKeyCode(int keyCode)
+	{
 		this.keyCode = keyCode;
 	}
 
 	/**
 	 * Sets the string representation.
 	 *
-	 * @param stringRepresentation the new string representation
+	 * @param stringRepresentation
+	 *            the new string representation
 	 */
-	public void setStringRepresentation(String stringRepresentation) {
+	public void setStringRepresentation(String stringRepresentation)
+	{
 		this.stringRepresentation = stringRepresentation;
 	}
 }

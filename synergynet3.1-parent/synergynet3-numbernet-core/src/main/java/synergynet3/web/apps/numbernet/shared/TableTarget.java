@@ -7,7 +7,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Class TableTarget.
  */
-public class TableTarget implements Serializable, IsSerializable {
+public class TableTarget implements Serializable, IsSerializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -536053704733381831L;
@@ -21,7 +22,8 @@ public class TableTarget implements Serializable, IsSerializable {
 	/**
 	 * Instantiates a new table target.
 	 */
-	public TableTarget() {
+	public TableTarget()
+	{
 		this.table = "";
 		this.target = null;
 	}
@@ -29,10 +31,13 @@ public class TableTarget implements Serializable, IsSerializable {
 	/**
 	 * Instantiates a new table target.
 	 *
-	 * @param table the table
-	 * @param target the target
+	 * @param table
+	 *            the table
+	 * @param target
+	 *            the target
 	 */
-	public TableTarget(String table, Double target) {
+	public TableTarget(String table, Double target)
+	{
 		this.table = table;
 		this.target = target;
 	}
@@ -41,11 +46,13 @@ public class TableTarget implements Serializable, IsSerializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object obj) {
-		if (obj instanceof TableTarget) {
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof TableTarget)
+		{
 			TableTarget tt = (TableTarget) obj;
-			return tt.getTable().equals(getTable())
-					&& (tt.getTarget() == getTarget());
+			return tt.getTable().equals(getTable()) && (tt.getTarget() == getTarget());
 		}
 		return false;
 	}
@@ -55,7 +62,8 @@ public class TableTarget implements Serializable, IsSerializable {
 	 *
 	 * @return the table
 	 */
-	public String getTable() {
+	public String getTable()
+	{
 		return table;
 	}
 
@@ -64,7 +72,8 @@ public class TableTarget implements Serializable, IsSerializable {
 	 *
 	 * @return the target
 	 */
-	public Double getTarget() {
+	public Double getTarget()
+	{
 		return target;
 	}
 
@@ -72,7 +81,9 @@ public class TableTarget implements Serializable, IsSerializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return table + "->" + target;
 	}
 }

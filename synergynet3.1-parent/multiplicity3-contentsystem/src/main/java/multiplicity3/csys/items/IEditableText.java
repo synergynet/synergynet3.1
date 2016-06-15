@@ -3,26 +3,30 @@ package multiplicity3.csys.items;
 /**
  * The Interface IEditableText.
  */
-public interface IEditableText extends ILabel {
+public interface IEditableText extends ILabel
+{
 
 	/**
 	 * Append char.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 */
 	public void appendChar(char c);
 
 	/**
 	 * Append string.
 	 *
-	 * @param charSet the char set
+	 * @param charSet
+	 *            the char set
 	 */
 	public void appendString(String charSet);
 
 	/**
 	 * Insert char.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 */
 	public void insertChar(char c);
 
@@ -34,7 +38,8 @@ public interface IEditableText extends ILabel {
 	/**
 	 * Sets the cursor at.
 	 *
-	 * @param index the new cursor at
+	 * @param index
+	 *            the new cursor at
 	 */
 	public void setCursorAt(int index);
 
@@ -46,7 +51,8 @@ public interface IEditableText extends ILabel {
 	/**
 	 * Sets the cursor display.
 	 *
-	 * @param onOrOff the new cursor display
+	 * @param onOrOff
+	 *            the new cursor display
 	 */
 	public void setCursorDisplay(boolean onOrOff);
 }

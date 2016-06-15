@@ -14,24 +14,26 @@ import java.util.HashMap;
  * When the getValue() is called, a Double object is returned. If it returns
  * null, an error occured.
  * <p>
- * 
+ *
  * <pre>
  * Sample:
  * MathEvaluator m = new MathEvaluator("-5-6/(-2) + sqr(15+x)");
  * m.addVariable("x", 15.1d);
  * System.out.println( m.getValue() );
  * </pre>
- * 
+ *
  * @version 1.1
  * @author The-Son LAI, <a href="mailto:Lts@writeme.com">Lts@writeme.com</a>
  * @date April 2001
  ************************************************************************/
-public class MathEvaluator {
+public class MathEvaluator
+{
 
 	/**
 	 * The Class Node.
 	 */
-	protected class Node {
+	protected class Node
+	{
 
 		/** The n left. */
 		public Node nLeft = null;
@@ -57,37 +59,49 @@ public class MathEvaluator {
 		/**
 		 * Instantiates a new node.
 		 *
-		 * @param parent the parent
-		 * @param s the s
-		 * @param level the level
-		 * @throws Exception the exception
+		 * @param parent
+		 *            the parent
+		 * @param s
+		 *            the s
+		 * @param level
+		 *            the level
+		 * @throws Exception
+		 *             the exception
 		 */
-		public Node(Node parent, String s, int level) throws Exception {
+		public Node(Node parent, String s, int level) throws Exception
+		{
 			init(parent, s, level);
 		}
 
 		/**
 		 * Instantiates a new node.
 		 *
-		 * @param s the s
-		 * @throws Exception the exception
+		 * @param s
+		 *            the s
+		 * @throws Exception
+		 *             the exception
 		 */
-		public Node(String s) throws Exception {
+		public Node(String s) throws Exception
+		{
 			init(null, s, 0);
 		}
 
 		/***
 		 * Removes spaces, tabs and brackets at the begining
 		 */
-		public String removeBrackets(String s) {
+		public String removeBrackets(String s)
+		{
 			String res = s;
-			if ((s.length() > 2) && res.startsWith("(") && res.endsWith(")")
-					&& (checkBrackets(s.substring(1, s.length() - 1)) == 0)) {
+			if ((s.length() > 2) && res.startsWith("(") && res.endsWith(")") && (checkBrackets(s.substring(1, s.length() - 1)) == 0))
+			{
 				res = res.substring(1, res.length() - 1);
 			}
-			if (res != s) {
+			if (res != s)
+			{
 				return removeBrackets(res);
-			} else {
+			}
+			else
+			{
 				return res;
 			}
 		}
@@ -95,13 +109,17 @@ public class MathEvaluator {
 		/***
 		 * Removes illegal characters
 		 */
-		public String removeIllegalCharacters(String s) {
-			char[] illegalCharacters = { ' ' };
+		public String removeIllegalCharacters(String s)
+		{
+			char[] illegalCharacters =
+			{ ' ' };
 			String res = s;
 
-			for (int j = 0; j < illegalCharacters.length; j++) {
+			for (int j = 0; j < illegalCharacters.length; j++)
+			{
 				int i = res.lastIndexOf(illegalCharacters[j], res.length());
-				while (i != -1) {
+				while (i != -1)
+				{
 					String temp = res;
 					res = temp.substring(0, i);
 					res += temp.substring(i + 1);
@@ -114,15 +132,18 @@ public class MathEvaluator {
 		/***
 		 * displays the tree of the expression
 		 */
-		public void trace() {
-			String op = getOperator() == null ? " " : getOperator()
-					.getOperator();
+		public void trace()
+		{
+			String op = getOperator() == null ? " " : getOperator().getOperator();
 			_D(op + " : " + getString());
-			if (this.hasChild()) {
-				if (hasLeft()) {
+			if (this.hasChild())
+			{
+				if (hasLeft())
+				{
 					getLeft().trace();
 				}
-				if (hasRight()) {
+				if (hasRight())
+				{
 					getRight().trace();
 				}
 			}
@@ -131,14 +152,18 @@ public class MathEvaluator {
 		/**
 		 * Gets the next word.
 		 *
-		 * @param s the s
+		 * @param s
+		 *            the s
 		 * @return the next word
 		 */
-		private String getNextWord(String s) {
+		private String getNextWord(String s)
+		{
 			int sLength = s.length();
-			for (int i = 1; i < sLength; i++) {
+			for (int i = 1; i < sLength; i++)
+			{
 				char c = s.charAt(i);
-				if (((c > 'z') || (c < 'a')) && ((c > '9') || (c < '0'))) {
+				if (((c > 'z') || (c < 'a')) && ((c > '9') || (c < '0')))
+				{
 					return s.substring(0, i);
 				}
 			}
@@ -148,16 +173,21 @@ public class MathEvaluator {
 		/**
 		 * Gets the operator.
 		 *
-		 * @param s the s
-		 * @param start the start
+		 * @param s
+		 *            the s
+		 * @param start
+		 *            the start
 		 * @return the operator
 		 */
-		private Operator getOperator(String s, int start) {
+		private Operator getOperator(String s, int start)
+		{
 			Operator[] operators = getOperators();
 			String temp = s.substring(start);
 			temp = getNextWord(temp);
-			for (int i = 0; i < operators.length; i++) {
-				if (temp.startsWith(operators[i].getOperator())) {
+			for (int i = 0; i < operators.length; i++)
+			{
+				if (temp.startsWith(operators[i].getOperator()))
+				{
 					return operators[i];
 				}
 			}
@@ -167,16 +197,22 @@ public class MathEvaluator {
 		/**
 		 * Inits the.
 		 *
-		 * @param parent the parent
-		 * @param s the s
-		 * @param level the level
-		 * @throws Exception the exception
+		 * @param parent
+		 *            the parent
+		 * @param s
+		 *            the s
+		 * @param level
+		 *            the level
+		 * @throws Exception
+		 *             the exception
 		 */
-		private void init(Node parent, String s, int level) throws Exception {
+		private void init(Node parent, String s, int level) throws Exception
+		{
 			s = removeIllegalCharacters(s);
 			s = removeBrackets(s);
 			s = addZero(s);
-			if (checkBrackets(s) != 0) {
+			if (checkBrackets(s) != 0)
+			{
 				throw new Exception("Wrong number of brackets in [" + s + "]");
 			}
 
@@ -188,20 +224,27 @@ public class MathEvaluator {
 			int inBrackets = 0;
 			int startOperator = 0;
 
-			for (int i = 0; i < sLength; i++) {
-				if (s.charAt(i) == '(') {
+			for (int i = 0; i < sLength; i++)
+			{
+				if (s.charAt(i) == '(')
+				{
 					inBrackets++;
-				} else if (s.charAt(i) == ')') {
+				}
+				else if (s.charAt(i) == ')')
+				{
 					inBrackets--;
-				} else {
+				}
+				else
+				{
 					// the expression must be at "root" level
-					if (inBrackets == 0) {
+					if (inBrackets == 0)
+					{
 						Operator o = getOperator(nString, i);
-						if (o != null) {
+						if (o != null)
+						{
 							// if first operator or lower priority operator
-							if ((nOperator == null)
-									|| (nOperator.getPriority() >= o
-											.getPriority())) {
+							if ((nOperator == null) || (nOperator.getPriority() >= o.getPriority()))
+							{
 								nOperator = o;
 								startOperator = i;
 							}
@@ -210,29 +253,29 @@ public class MathEvaluator {
 				}
 			}
 
-			if (nOperator != null) {
+			if (nOperator != null)
+			{
 				// one operand, should always be at the beginning
-				if ((startOperator == 0) && (nOperator.getType() == 1)) {
+				if ((startOperator == 0) && (nOperator.getType() == 1))
+				{
 					// the brackets must be ok
-					if (checkBrackets(s.substring(nOperator.getOperator()
-							.length())) == 0) {
-						nLeft = new Node(this, s.substring(nOperator
-								.getOperator().length()), nLevel + 1);
+					if (checkBrackets(s.substring(nOperator.getOperator().length())) == 0)
+					{
+						nLeft = new Node(this, s.substring(nOperator.getOperator().length()), nLevel + 1);
 						nRight = null;
 						return;
-					} else {
-						throw new Exception(
-								"Error during parsing... missing brackets in ["
-										+ s + "]");
+					}
+					else
+					{
+						throw new Exception("Error during parsing... missing brackets in [" + s + "]");
 					}
 				}
 				// two operands
-				else if ((startOperator > 0) && (nOperator.getType() == 2)) {
+				else if ((startOperator > 0) && (nOperator.getType() == 2))
+				{
 					// nOperator = nOperator;
-					nLeft = new Node(this, s.substring(0, startOperator),
-							nLevel + 1);
-					nRight = new Node(this, s.substring(startOperator
-							+ nOperator.getOperator().length()), nLevel + 1);
+					nLeft = new Node(this, s.substring(0, startOperator), nLevel + 1);
+					nRight = new Node(this, s.substring(startOperator + nOperator.getOperator().length()), nLevel + 1);
 				}
 			}
 		}
@@ -240,11 +283,14 @@ public class MathEvaluator {
 		/**
 		 * d.
 		 *
-		 * @param s the s
+		 * @param s
+		 *            the s
 		 */
-		protected void _D(String s) {
+		protected void _D(String s)
+		{
 			String nbSpaces = "";
-			for (int i = 0; i < nLevel; i++) {
+			for (int i = 0; i < nLevel; i++)
+			{
 				nbSpaces += "  ";
 			}
 			System.out.println(nbSpaces + "|" + s);
@@ -253,11 +299,15 @@ public class MathEvaluator {
 		/***
 		 * returns a string that doesnt start with a + or a -
 		 */
-		protected String addZero(String s) {
-			if (s.startsWith("+") || s.startsWith("-")) {
+		protected String addZero(String s)
+		{
+			if (s.startsWith("+") || s.startsWith("-"))
+			{
 				int sLength = s.length();
-				for (int i = 0; i < sLength; i++) {
-					if (getOperator(s, i) != null) {
+				for (int i = 0; i < sLength; i++)
+				{
+					if (getOperator(s, i) != null)
+					{
 						return "0" + s;
 					}
 				}
@@ -268,17 +318,22 @@ public class MathEvaluator {
 
 		/***
 		 * checks if there is any missing brackets
-		 * 
+		 *
 		 * @return true if s is valid
 		 */
-		protected int checkBrackets(String s) {
+		protected int checkBrackets(String s)
+		{
 			int sLength = s.length();
 			int inBracket = 0;
 
-			for (int i = 0; i < sLength; i++) {
-				if ((s.charAt(i) == '(') && (inBracket >= 0)) {
+			for (int i = 0; i < sLength; i++)
+			{
+				if ((s.charAt(i) == '(') && (inBracket >= 0))
+				{
 					inBracket++;
-				} else if (s.charAt(i) == ')') {
+				}
+				else if (s.charAt(i) == ')')
+				{
 					inBracket--;
 				}
 			}
@@ -291,7 +346,8 @@ public class MathEvaluator {
 		 *
 		 * @return the left
 		 */
-		protected Node getLeft() {
+		protected Node getLeft()
+		{
 			return nLeft;
 		}
 
@@ -300,7 +356,8 @@ public class MathEvaluator {
 		 *
 		 * @return the level
 		 */
-		protected int getLevel() {
+		protected int getLevel()
+		{
 			return nLevel;
 		}
 
@@ -309,7 +366,8 @@ public class MathEvaluator {
 		 *
 		 * @return the operator
 		 */
-		protected Operator getOperator() {
+		protected Operator getOperator()
+		{
 			return nOperator;
 		}
 
@@ -318,7 +376,8 @@ public class MathEvaluator {
 		 *
 		 * @return the right
 		 */
-		protected Node getRight() {
+		protected Node getRight()
+		{
 			return nRight;
 		}
 
@@ -327,7 +386,8 @@ public class MathEvaluator {
 		 *
 		 * @return the string
 		 */
-		protected String getString() {
+		protected String getString()
+		{
 			return nString;
 		}
 
@@ -336,7 +396,8 @@ public class MathEvaluator {
 		 *
 		 * @return the value
 		 */
-		protected Double getValue() {
+		protected Double getValue()
+		{
 			return nValue;
 		}
 
@@ -345,7 +406,8 @@ public class MathEvaluator {
 		 *
 		 * @return true, if successful
 		 */
-		protected boolean hasChild() {
+		protected boolean hasChild()
+		{
 			return ((nLeft != null) || (nRight != null));
 		}
 
@@ -354,7 +416,8 @@ public class MathEvaluator {
 		 *
 		 * @return true, if successful
 		 */
-		protected boolean hasLeft() {
+		protected boolean hasLeft()
+		{
 			return (nLeft != null);
 		}
 
@@ -363,7 +426,8 @@ public class MathEvaluator {
 		 *
 		 * @return true, if successful
 		 */
-		protected boolean hasOperator() {
+		protected boolean hasOperator()
+		{
 			return (nOperator != null);
 		}
 
@@ -372,16 +436,19 @@ public class MathEvaluator {
 		 *
 		 * @return true, if successful
 		 */
-		protected boolean hasRight() {
+		protected boolean hasRight()
+		{
 			return (nRight != null);
 		}
 
 		/**
 		 * Sets the value.
 		 *
-		 * @param f the new value
+		 * @param f
+		 *            the new value
 		 */
-		protected void setValue(Double f) {
+		protected void setValue(Double f)
+		{
 			nValue = f;
 		}
 	}
@@ -389,7 +456,8 @@ public class MathEvaluator {
 	/**
 	 * The Class Operator.
 	 */
-	protected class Operator {
+	protected class Operator
+	{
 
 		/** The op. */
 		private String op;
@@ -403,11 +471,15 @@ public class MathEvaluator {
 		/**
 		 * Instantiates a new operator.
 		 *
-		 * @param o the o
-		 * @param t the t
-		 * @param p the p
+		 * @param o
+		 *            the o
+		 * @param t
+		 *            the t
+		 * @param p
+		 *            the p
 		 */
-		public Operator(String o, int t, int p) {
+		public Operator(String o, int t, int p)
+		{
 			op = o;
 			type = t;
 			priority = p;
@@ -418,7 +490,8 @@ public class MathEvaluator {
 		 *
 		 * @return the operator
 		 */
-		public String getOperator() {
+		public String getOperator()
+		{
 			return op;
 		}
 
@@ -427,7 +500,8 @@ public class MathEvaluator {
 		 *
 		 * @return the priority
 		 */
-		public int getPriority() {
+		public int getPriority()
+		{
 			return priority;
 		}
 
@@ -436,16 +510,19 @@ public class MathEvaluator {
 		 *
 		 * @return the type
 		 */
-		public int getType() {
+		public int getType()
+		{
 			return type;
 		}
 
 		/**
 		 * Sets the operator.
 		 *
-		 * @param o the new operator
+		 * @param o
+		 *            the new operator
 		 */
-		public void setOperator(String o) {
+		public void setOperator(String o)
+		{
 			op = o;
 		}
 	}
@@ -466,14 +543,16 @@ public class MathEvaluator {
 	 * creates an empty MathEvaluator. You need to use setExpression(String s)
 	 * to assign a math expression string to it.
 	 */
-	public MathEvaluator() {
+	public MathEvaluator()
+	{
 		init();
 	}
 
 	/***
 	 * creates a MathEvaluator and assign the math expression string.
 	 */
-	public MathEvaluator(String s) {
+	public MathEvaluator(String s)
+	{
 		init();
 		setExpression(s);
 	}
@@ -482,19 +561,22 @@ public class MathEvaluator {
 	 * Main. To run the program in command line. Usage: java MathEvaluator.main
 	 * [your math expression]
 	 */
-	public static void main(String[] args) {
-		if ((args == null) || (args.length != 1)) {
-			System.err
-					.println("Math Expression Evaluator by The-Son LAI Lts@writeme.com C(2001):");
-			System.err
-					.println("Usage: java MathEvaluator.main [your math expression]");
+	public static void main(String[] args)
+	{
+		if ((args == null) || (args.length != 1))
+		{
+			System.err.println("Math Expression Evaluator by The-Son LAI Lts@writeme.com C(2001):");
+			System.err.println("Usage: java MathEvaluator.main [your math expression]");
 			System.exit(0);
 		}
 
-		try {
+		try
+		{
 			MathEvaluator m = new MathEvaluator(args[0]);
 			System.out.println(m.getValue());
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -502,17 +584,21 @@ public class MathEvaluator {
 	/**
 	 * Evaluate.
 	 *
-	 * @param n the n
+	 * @param n
+	 *            the n
 	 * @return the double
 	 */
-	private static Double evaluate(Node n) {
-		if (n.hasOperator() && n.hasChild()) {
-			if (n.getOperator().getType() == 1) {
-				n.setValue(evaluateExpression(n.getOperator(),
-						evaluate(n.getLeft()), null));
-			} else if (n.getOperator().getType() == 2) {
-				n.setValue(evaluateExpression(n.getOperator(),
-						evaluate(n.getLeft()), evaluate(n.getRight())));
+	private static Double evaluate(Node n)
+	{
+		if (n.hasOperator() && n.hasChild())
+		{
+			if (n.getOperator().getType() == 1)
+			{
+				n.setValue(evaluateExpression(n.getOperator(), evaluate(n.getLeft()), null));
+			}
+			else if (n.getOperator().getType() == 2)
+			{
+				n.setValue(evaluateExpression(n.getOperator(), evaluate(n.getLeft()), evaluate(n.getRight())));
 			}
 		}
 		return n.getValue();
@@ -521,68 +607,125 @@ public class MathEvaluator {
 	/**
 	 * Evaluate expression.
 	 *
-	 * @param o the o
-	 * @param f1 the f1
-	 * @param f2 the f2
+	 * @param o
+	 *            the o
+	 * @param f1
+	 *            the f1
+	 * @param f2
+	 *            the f2
 	 * @return the double
 	 */
-	private static Double evaluateExpression(Operator o, Double f1, Double f2) {
+	private static Double evaluateExpression(Operator o, Double f1, Double f2)
+	{
 		String op = o.getOperator();
 		Double res = null;
 
-		if ("+".equals(op)) {
+		if ("+".equals(op))
+		{
 			res = new Double(f1.doubleValue() + f2.doubleValue());
-		} else if ("-".equals(op)) {
+		}
+		else if ("-".equals(op))
+		{
 			res = new Double(f1.doubleValue() - f2.doubleValue());
-		} else if ("*".equals(op)) {
+		}
+		else if ("*".equals(op))
+		{
 			res = new Double(f1.doubleValue() * f2.doubleValue());
-		} else if ("\u00D7".equals(op)) {
+		}
+		else if ("\u00D7".equals(op))
+		{
 			res = new Double(f1.doubleValue() * f2.doubleValue());
-		} else if ("/".equals(op)) {
+		}
+		else if ("/".equals(op))
+		{
 			res = new Double(f1.doubleValue() / f2.doubleValue());
-		} else if ("\u00F7".equals(op)) {
+		}
+		else if ("\u00F7".equals(op))
+		{
 			res = new Double(f1.doubleValue() / f2.doubleValue());
-		} else if ("^".equals(op)) {
+		}
+		else if ("^".equals(op))
+		{
 			res = new Double(Math.pow(f1.doubleValue(), f2.doubleValue()));
-		} else if ("%".equals(op)) {
+		}
+		else if ("%".equals(op))
+		{
 			res = new Double(f1.doubleValue() % f2.doubleValue());
-		} else if ("&".equals(op)) {
+		}
+		else if ("&".equals(op))
+		{
 			res = new Double(f1.doubleValue() + f2.doubleValue()); // todo
-		} else if ("|".equals(op)) {
+		}
+		else if ("|".equals(op))
+		{
 			res = new Double(f1.doubleValue() + f2.doubleValue()); // todo
-		} else if ("cos".equals(op)) {
+		}
+		else if ("cos".equals(op))
+		{
 			res = new Double(Math.cos(f1.doubleValue()));
-		} else if ("sin".equals(op)) {
+		}
+		else if ("sin".equals(op))
+		{
 			res = new Double(Math.sin(f1.doubleValue()));
-		} else if ("tan".equals(op)) {
+		}
+		else if ("tan".equals(op))
+		{
 			res = new Double(Math.tan(f1.doubleValue()));
-		} else if ("acos".equals(op)) {
+		}
+		else if ("acos".equals(op))
+		{
 			res = new Double(Math.acos(f1.doubleValue()));
-		} else if ("asin".equals(op)) {
+		}
+		else if ("asin".equals(op))
+		{
 			res = new Double(Math.asin(f1.doubleValue()));
-		} else if ("atan".equals(op)) {
+		}
+		else if ("atan".equals(op))
+		{
 			res = new Double(Math.atan(f1.doubleValue()));
-		} else if ("sqr".equals(op)) {
+		}
+		else if ("sqr".equals(op))
+		{
 			res = new Double(f1.doubleValue() * f1.doubleValue());
-		} else if ("sqrt".equals(op)) {
+		}
+		else if ("sqrt".equals(op))
+		{
 			res = new Double(Math.sqrt(f1.doubleValue()));
-		} else if ("log".equals(op)) {
+		}
+		else if ("log".equals(op))
+		{
 			res = new Double(Math.log(f1.doubleValue()));
-		} else if ("min".equals(op)) {
+		}
+		else if ("min".equals(op))
+		{
 			res = new Double(Math.min(f1.doubleValue(), f2.doubleValue()));
-		} else if ("max".equals(op)) {
+		}
+		else if ("max".equals(op))
+		{
 			res = new Double(Math.max(f1.doubleValue(), f2.doubleValue()));
-		} else if ("exp".equals(op)) {
+		}
+		else if ("exp".equals(op))
+		{
 			res = new Double(Math.exp(f1.doubleValue()));
-		} else if ("floor".equals(op)) {
+		}
+		else if ("floor".equals(op))
+		{
 			res = new Double(Math.floor(f1.doubleValue()));
-		} else if ("ceil".equals(op)) {
+		}
+		else if ("ceil".equals(op))
+		{
 			res = new Double(Math.ceil(f1.doubleValue()));
-		} else if ("abs".equals(op)) {
+		}
+		else if ("abs".equals(op))
+		{
 			res = new Double(Math.abs(f1.doubleValue()));
-		} else if ("neg".equals(op)) {
+		}
+		else if ("neg".equals(op))
+		{
 			res = new Double(-f1.doubleValue());
-		} else if ("rnd".equals(op)) {
+		}
+		else if ("rnd".equals(op))
+		{
 			res = new Double(Math.random() * f1.doubleValue());
 		}
 
@@ -592,31 +735,37 @@ public class MathEvaluator {
 	/**
 	 * d.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 */
-	protected static void _D(String s) {
+	protected static void _D(String s)
+	{
 		System.err.println(s);
 	}
 
 	/***
 	 * adds a variable and its value in the MathEvaluator
 	 */
-	public void addVariable(String v, double val) {
+	public void addVariable(String v, double val)
+	{
 		addVariable(v, new Double(val));
 	}
 
 	/***
 	 * adds a variable and its value in the MathEvaluator
 	 */
-	public void addVariable(String v, Double val) {
+	public void addVariable(String v, Double val)
+	{
 		variables.put(v, val);
 	}
 
 	/***
 	 * evaluates and returns the value of the expression
 	 */
-	public Double getValue() throws Exception {
-		if (expression == null) {
+	public Double getValue() throws Exception
+	{
+		if (expression == null)
+		{
 			return null;
 		}
 
@@ -635,14 +784,16 @@ public class MathEvaluator {
 	/***
 	 * gets the variable's value that was assigned previously
 	 */
-	public Double getVariable(String s) {
+	public Double getVariable(String s)
+	{
 		return variables.get(s);
 	}
 
 	/***
 	 * resets the evaluator
 	 */
-	public void reset() {
+	public void reset()
+	{
 		node = null;
 		expression = null;
 		variables = new HashMap<String, Double>();
@@ -651,18 +802,23 @@ public class MathEvaluator {
 	/***
 	 * sets the expression
 	 */
-	public void setExpression(String s) {
+	public void setExpression(String s)
+	{
 		expression = s;
 	}
 
 	/***
 	 * trace the binary tree for debug
 	 */
-	public void trace() {
-		try {
+	public void trace()
+	{
+		try
+		{
 			node = new Node(expression);
 			node.trace();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -670,18 +826,24 @@ public class MathEvaluator {
 	/**
 	 * Gets the double.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return the double
 	 */
-	private Double getDouble(String s) {
-		if (s == null) {
+	private Double getDouble(String s)
+	{
+		if (s == null)
+		{
 			return null;
 		}
 
 		Double res = null;
-		try {
+		try
+		{
 			res = new Double(Double.parseDouble(s));
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return getVariable(s);
 		}
 
@@ -691,8 +853,10 @@ public class MathEvaluator {
 	/**
 	 * Inits the.
 	 */
-	private void init() {
-		if (operators == null) {
+	private void init()
+	{
+		if (operators == null)
+		{
 			initializeOperators();
 		}
 	}
@@ -700,7 +864,8 @@ public class MathEvaluator {
 	/**
 	 * Initialize operators.
 	 */
-	private void initializeOperators() {
+	private void initializeOperators()
+	{
 		operators = new Operator[27];
 		operators[0] = new Operator("+", 2, 0);
 		operators[1] = new Operator("-", 2, 0);
@@ -736,7 +901,8 @@ public class MathEvaluator {
 	 *
 	 * @return the operators
 	 */
-	protected Operator[] getOperators() {
+	protected Operator[] getOperators()
+	{
 		return operators;
 	}
 }

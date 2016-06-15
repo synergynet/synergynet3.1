@@ -48,7 +48,8 @@ import com.illposed.osc.utility.OSCPacketDispatcher;
 /**
  * The Class OSCPortIn.
  */
-public class OSCPortIn extends OSCPort implements Runnable {
+public class OSCPortIn extends OSCPort implements Runnable
+{
 
 	/** The converter. */
 	protected OSCByteArrayToJavaConverter converter = new OSCByteArrayToJavaConverter();
@@ -62,22 +63,26 @@ public class OSCPortIn extends OSCPort implements Runnable {
 
 	/**
 	 * Create an OSCPort that listens on port
-	 * 
+	 *
 	 * @param port
 	 * @throws SocketException
 	 */
-	public OSCPortIn(int port) throws SocketException {
+	public OSCPortIn(int port) throws SocketException
+	{
 		socket = new DatagramSocket(port);
 		this.port = port;
 	}
 
 	/**
 	 * Register the listener for incoming OSCPackets addressed to an Address
-	 * 
-	 * @param anAddress the address to listen for
-	 * @param listener the object to invoke when a message comes in
+	 *
+	 * @param anAddress
+	 *            the address to listen for
+	 * @param listener
+	 *            the object to invoke when a message comes in
 	 */
-	public void addListener(String anAddress, OSCListener listener) {
+	public void addListener(String anAddress, OSCListener listener)
+	{
 		dispatcher.addListener(anAddress, listener);
 	}
 
@@ -85,36 +90,48 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	 * Close the socket and free-up resources. It's recommended that clients
 	 * call this when they are done with the port.
 	 */
-	public void close() {
+	@Override
+	public void close()
+	{
 		socket.close();
 	}
 
 	/**
 	 * Am I listening for packets?
 	 */
-	public boolean isListening() {
+	public boolean isListening()
+	{
 		return isListening;
 	}
 
 	/**
 	 * @see java.lang.Runnable#run()
 	 */
-	public void run() {
+	@Override
+	public void run()
+	{
 		byte[] buffer = new byte[1536];
 		DatagramPacket packet = new DatagramPacket(buffer, 1536);
-		while (isListening) {
-			try {
+		while (isListening)
+		{
+			try
+			{
 				packet.setLength(1536);
 				socket.receive(packet);
-				OSCPacket oscPacket = converter.convert(buffer,
-						packet.getLength());
+				OSCPacket oscPacket = converter.convert(buffer, packet.getLength());
 				dispatcher.dispatchPacket(oscPacket);
-			} catch (java.net.SocketException e) {
-				if (isListening) {
+			}
+			catch (java.net.SocketException e)
+			{
+				if (isListening)
+				{
 					e.printStackTrace();
 				}
-			} catch (IOException e) {
-				if (isListening) {
+			}
+			catch (IOException e)
+			{
+				if (isListening)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -124,7 +141,8 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	/**
 	 * Start listening for incoming OSCPackets
 	 */
-	public void startListening() {
+	public void startListening()
+	{
 		isListening = true;
 		Thread thread = new Thread(this);
 		thread.start();
@@ -133,7 +151,8 @@ public class OSCPortIn extends OSCPort implements Runnable {
 	/**
 	 * Stop listening for incoming OSCPackets
 	 */
-	public void stopListening() {
+	public void stopListening()
+	{
 		isListening = false;
 	}
 

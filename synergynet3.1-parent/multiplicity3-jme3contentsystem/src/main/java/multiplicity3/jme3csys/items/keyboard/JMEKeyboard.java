@@ -28,7 +28,8 @@ import com.jme3.texture.plugins.AWTLoader;
  * The Class JMEKeyboard.
  */
 @ImplementsContentItem(target = IKeyboard.class)
-public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
+public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable
+{
 
 	/** The asset manager. */
 	private AssetManager assetManager;
@@ -60,10 +61,13 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	/**
 	 * Instantiates a new JME keyboard.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEKeyboard(String name, UUID uuid) {
+	public JMEKeyboard(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -72,7 +76,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getHeight()
 	 */
 	@Override
-	public float getHeight() {
+	public float getHeight()
+	{
 		return quad.getHeight();
 	}
 
@@ -81,7 +86,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * @see multiplicity3.csys.items.keyboard.IKeyboard#getKeyboardDefinition()
 	 */
 	@Override
-	public KeyboardDefinition getKeyboardDefinition() {
+	public KeyboardDefinition getKeyboardDefinition()
+	{
 		return this.keybDefinition;
 	}
 
@@ -90,7 +96,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return quadGeometry;
 	}
 
@@ -99,7 +106,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getSize()
 	 */
 	@Override
-	public Vector2f getSize() {
+	public Vector2f getSize()
+	{
 		return new Vector2f(quad.getWidth(), quad.getHeight());
 	}
 
@@ -108,7 +116,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getWidth()
 	 */
 	@Override
-	public float getWidth() {
+	public float getWidth()
+	{
 		return quad.getWidth();
 	}
 
@@ -119,7 +128,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		this.assetManager = assetManager;
 		quad = new CenteredQuad(100, 100);
 		bufferedImage = new BufferedImage(100, 100, BufferedImage.TYPE_INT_ARGB);
@@ -129,8 +139,7 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 		quadGeometry = new Geometry("_quad_geom", quad);
 
 		// reminder of where to find j3md stuff: jme3/src/core-data
-		mat = new Material(this.assetManager,
-				"Common/MatDefs/Misc/SimpleTextured.j3md");
+		mat = new Material(this.assetManager, "Common/MatDefs/Misc/SimpleTextured.j3md");
 		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		// Texture tex = assetManager.loadTexture("Interface/Logo/Monkey.jpg");
 		Image img = new AWTLoader().load(bufferedImage, true);
@@ -149,7 +158,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * @see multiplicity3.csys.items.keyboard.IKeyboard#reDraw()
 	 */
 	@Override
-	public void reDraw() {
+	public void reDraw()
+	{
 		this.reDrawKeyboard(false, false, false);
 	}
 
@@ -159,10 +169,12 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * boolean, boolean)
 	 */
 	@Override
-	public void reDrawKeyboard(boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
-		if (this.renderer != null) {
-			if (gfx != null) {
+	public void reDrawKeyboard(boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
+		if (this.renderer != null)
+		{
+			if (gfx != null)
+			{
 				renderer.drawKeyboard(gfx, shiftDown, altDown, ctlDown);
 				Image img2 = new AWTLoader().load(bufferedImage, true);
 				mat.setTexture("m_ColorMap", new Texture2D(img2));
@@ -176,13 +188,13 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * multiplicity3.csys.items.keyboard.model.KeyboardDefinition)
 	 */
 	@Override
-	public void setKeyboardDefinition(KeyboardDefinition kd) {
+	public void setKeyboardDefinition(KeyboardDefinition kd)
+	{
 		this.keybDefinition = kd;
 		int width = (int) this.keybDefinition.getBounds().getWidth();
 		int height = (int) this.keybDefinition.getBounds().getHeight();
 		setSize(width, height);
-		bufferedImage = new BufferedImage(width, height,
-				BufferedImage.TYPE_INT_ARGB);
+		bufferedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_ARGB);
 		gfx = (Graphics2D) bufferedImage.getGraphics();
 		reDrawKeyboard(false, false, false);
 		this.updateGeometricState();
@@ -195,7 +207,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * .csys.items.keyboard.IKeyboardGraphicsRenderer)
 	 */
 	@Override
-	public void setKeyboardRenderer(IKeyboardGraphicsRenderer keyboardRenderer) {
+	public void setKeyboardRenderer(IKeyboardGraphicsRenderer keyboardRenderer)
+	{
 		this.renderer = keyboardRenderer;
 		reDrawKeyboard(false, false, false);
 	}
@@ -206,7 +219,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * float)
 	 */
 	@Override
-	public void setSize(float width, float height) {
+	public void setSize(float width, float height)
+	{
 		quad = new CenteredQuad(width, height);
 		quadGeometry.setMesh(quad);
 	}
@@ -218,7 +232,8 @@ public class JMEKeyboard extends JMEItem implements IKeyboard, IInitable {
 	 * .Vector2f)
 	 */
 	@Override
-	public void setSize(Vector2f size) {
+	public void setSize(Vector2f size)
+	{
 		setSize(size.x, size.y);
 	}
 }

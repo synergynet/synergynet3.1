@@ -27,7 +27,8 @@ import com.jme3.scene.Node;
  * The Class JMEItem.
  */
 @ImplementsContentItem(target = IItem.class)
-public abstract class JMEItem extends Node implements IItem, IInitable {
+public abstract class JMEItem extends Node implements IItem, IInitable
+{
 
 	/** The Constant KEY_JMEITEMDATA. */
 	public static final String KEY_JMEITEMDATA = "KEY_JMEITEMDATA";
@@ -83,54 +84,69 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	/**
 	 * Instantiates a new JME item.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEItem(String name, UUID uuid) {
+	public JMEItem(String name, UUID uuid)
+	{
 		super(name);
 		this.itemName = name;
 		this.uuid = uuid;
 		zOrderManager = new ZOrderManager(this, 5);
 		final IItem instance = this;
-		dispatcher.addListener(new IMultiTouchEventListener() {
+		dispatcher.addListener(new IMultiTouchEventListener()
+		{
 			@Override
-			public void cursorChanged(MultiTouchCursorEvent event) {
-				for (IItemListener l : getItemListeners()) {
+			public void cursorChanged(MultiTouchCursorEvent event)
+			{
+				for (IItemListener l : getItemListeners())
+				{
 					l.itemCursorChanged(instance, event);
 				}
 			}
 
 			@Override
-			public void cursorClicked(MultiTouchCursorEvent event) {
-				for (IItemListener l : getItemListeners()) {
+			public void cursorClicked(MultiTouchCursorEvent event)
+			{
+				for (IItemListener l : getItemListeners())
+				{
 					l.itemCursorClicked(instance, event);
 				}
 			}
 
 			@Override
-			public void cursorPressed(MultiTouchCursorEvent event) {
-				for (IItemListener l : getItemListeners()) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				for (IItemListener l : getItemListeners())
+				{
 					l.itemCursorPressed(instance, event);
 				}
 			}
 
 			@Override
-			public void cursorReleased(MultiTouchCursorEvent event) {
-				for (IItemListener l : getItemListeners()) {
+			public void cursorReleased(MultiTouchCursorEvent event)
+			{
+				for (IItemListener l : getItemListeners())
+				{
 					l.itemCursorReleased(instance, event);
 				}
 			}
 
 			@Override
-			public void objectAdded(MultiTouchObjectEvent event) {
+			public void objectAdded(MultiTouchObjectEvent event)
+			{
 			}
 
 			@Override
-			public void objectChanged(MultiTouchObjectEvent event) {
+			public void objectChanged(MultiTouchObjectEvent event)
+			{
 			}
 
 			@Override
-			public void objectRemoved(MultiTouchObjectEvent event) {
+			public void objectRemoved(MultiTouchObjectEvent event)
+			{
 			}
 		});
 
@@ -143,7 +159,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * .IItem)
 	 */
 	@Override
-	public void addItem(IItem item) {
+	public void addItem(IItem item)
+	{
 		log.fine("Adding " + item + " to " + this);
 		getItemChildren().add(item);
 		getZOrderManager().registerForZOrdering(item);
@@ -158,8 +175,10 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * .items.events.IItemListener)
 	 */
 	@Override
-	public void addItemListener(IItemListener itemListener) {
-		if (!getItemListeners().contains(itemListener)) {
+	public void addItemListener(IItemListener itemListener)
+	{
+		if (!getItemListeners().contains(itemListener))
+		{
 			getItemListeners().add(itemListener);
 		}
 	}
@@ -171,7 +190,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * .behaviours.IBehaviour)
 	 */
 	@Override
-	public void behaviourAdded(IBehaviour behaviour) {
+	public void behaviourAdded(IBehaviour behaviour)
+	{
 		behaviours.add(behaviour);
 	}
 
@@ -180,7 +200,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#centerItem()
 	 */
 	@Override
-	public void centerItem() {
+	public void centerItem()
+	{
 		Vector2f center = new Vector2f(0, 0);
 		setRelativeLocation(center);
 	}
@@ -191,8 +212,11 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * multiplicity3.csys.items.item.IItem#convertWorldVelocityToLocalVelocity
 	 * (com.jme3.math.Vector2f)
 	 */
-	public Vector2f convertWorldVelocityToLocalVelocity(Vector2f loc) {
-		if (getParent() == null) {
+	@Override
+	public Vector2f convertWorldVelocityToLocalVelocity(Vector2f loc)
+	{
+		if (getParent() == null)
+		{
 			return null;
 		}
 		Vector3f in = new Vector3f(loc.x, loc.y, getLocalTranslation().z);
@@ -207,8 +231,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * multiplicity3.csys.items.INestable.IChildrenChangedListener)
 	 */
 	@Override
-	public void deRegisterChildrenChangedListener(
-			IChildrenChangedListener listener) {
+	public void deRegisterChildrenChangedListener(IChildrenChangedListener listener)
+	{
 		childrenChangedListeners.remove(listener);
 	}
 
@@ -217,7 +241,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getBehaviours()
 	 */
 	@Override
-	public List<IBehaviour> getBehaviours() {
+	public List<IBehaviour> getBehaviours()
+	{
 		return behaviours;
 	}
 
@@ -227,10 +252,13 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 */
 	@SuppressWarnings("unchecked")
 	@Override
-	public <T extends IBehaviour> List<T> getBehaviours(Class<T> clazz) {
+	public <T extends IBehaviour> List<T> getBehaviours(Class<T> clazz)
+	{
 		List<T> bs = new ArrayList<T>();
-		for (IBehaviour b : getBehaviours()) {
-			if (b.getClass().equals(clazz)) {
+		for (IBehaviour b : getBehaviours())
+		{
+			if (b.getClass().equals(clazz))
+			{
 				bs.add((T) b);
 			}
 		}
@@ -242,7 +270,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.INestable#getChildItems()
 	 */
 	@Override
-	public List<IItem> getChildItems() {
+	public List<IItem> getChildItems()
+	{
 		return getItemChildren();
 	}
 
@@ -251,7 +280,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.INestable#getChildrenCount()
 	 */
 	@Override
-	public int getChildrenCount() {
+	public int getChildrenCount()
+	{
 		return getItemChildren().size();
 	}
 
@@ -260,7 +290,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 *
 	 * @return the item children
 	 */
-	public List<IItem> getItemChildren() {
+	public List<IItem> getItemChildren()
+	{
 		return itemChildren;
 	}
 
@@ -269,7 +300,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getItemListeners()
 	 */
 	@Override
-	public List<IItemListener> getItemListeners() {
+	public List<IItemListener> getItemListeners()
+	{
 		return itemListeners;
 	}
 
@@ -278,7 +310,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 *
 	 * @return the item name
 	 */
-	public String getItemName() {
+	public String getItemName()
+	{
 		return itemName;
 	}
 
@@ -287,7 +320,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getMultiTouchDispatcher()
 	 */
 	@Override
-	public MultiTouchEventDispatcher getMultiTouchDispatcher() {
+	public MultiTouchEventDispatcher getMultiTouchDispatcher()
+	{
 		return dispatcher;
 	}
 
@@ -295,7 +329,9 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * (non-Javadoc)
 	 * @see com.jme3.scene.Spatial#getName()
 	 */
-	public String getName() {
+	@Override
+	public String getName()
+	{
 		return itemName;
 
 	}
@@ -305,7 +341,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getParentItem()
 	 */
 	@Override
-	public IItem getParentItem() {
+	public IItem getParentItem()
+	{
 		return parentItem;
 	}
 
@@ -314,7 +351,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getRelativeLocation()
 	 */
 	@Override
-	public Vector2f getRelativeLocation() {
+	public Vector2f getRelativeLocation()
+	{
 		return new Vector2f(getLocalTranslation().x, getLocalTranslation().y);
 	}
 
@@ -323,12 +361,15 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * coordinates relative to this item.
 	 */
 	@Override
-	public Vector2f getRelativeLocationOfWorldLocation(Vector2f worldloc) {
-		if (getParent() == null) {
+	public Vector2f getRelativeLocationOfWorldLocation(Vector2f worldloc)
+	{
+		if (getParent() == null)
+		{
 			return worldloc;
-		} else {
-			Vector3f in = new Vector3f(worldloc.x, worldloc.y,
-					getLocalTranslation().z);
+		}
+		else
+		{
+			Vector3f in = new Vector3f(worldloc.x, worldloc.y, getLocalTranslation().z);
 			getParent().worldToLocal(in, out);
 			return new Vector2f(out.x, out.y);
 		}
@@ -339,7 +380,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getRelativeRotation()
 	 */
 	@Override
-	public float getRelativeRotation() {
+	public float getRelativeRotation()
+	{
 		return relativeRotation;
 	}
 
@@ -349,7 +391,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getRelativeScale()
 	 */
 	@Override
-	public float getRelativeScale() {
+	public float getRelativeScale()
+	{
 		return getLocalScale().z;
 	}
 
@@ -357,7 +400,9 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.items.item.IItem#getUUID()
 	 */
-	public UUID getUUID() {
+	@Override
+	public UUID getUUID()
+	{
 		return uuid;
 	}
 
@@ -366,8 +411,10 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getWorldLocation()
 	 */
 	@Override
-	public Vector2f getWorldLocation() {
-		if (getParent() == null) {
+	public Vector2f getWorldLocation()
+	{
+		if (getParent() == null)
+		{
 			return getRelativeLocation();
 		}
 		getParent().localToWorld(getLocalTranslation(), out);
@@ -381,12 +428,13 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * )
 	 */
 	@Override
-	public Vector2f getWorldLocation(Vector2f v) {
-		if (getParent() == null) {
+	public Vector2f getWorldLocation(Vector2f v)
+	{
+		if (getParent() == null)
+		{
 			return v;
 		}
-		getParent().localToWorld(
-				new Vector3f(v.x, v.y, getLocalTranslation().z), out);
+		getParent().localToWorld(new Vector3f(v.x, v.y, getLocalTranslation().z), out);
 		return new Vector2f(out.x, out.y);
 	}
 
@@ -395,7 +443,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getWorldRotationDegrees()
 	 */
 	@Override
-	public float getWorldRotationDegrees() {
+	public float getWorldRotationDegrees()
+	{
 		getWorldRotation().toAngleAxis(tempWorldRotation);
 		return tempWorldRotation.z;
 	}
@@ -404,7 +453,9 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.items.item.IItem#getZOrder()
 	 */
-	public int getZOrder() {
+	@Override
+	public int getZOrder()
+	{
 		return this.zorder;
 	}
 
@@ -413,7 +464,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getZOrderManager()
 	 */
 	@Override
-	public IZOrderManager getZOrderManager() {
+	public IZOrderManager getZOrderManager()
+	{
 		return zOrderManager;
 	}
 
@@ -422,7 +474,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.INestable#hasChildren()
 	 */
 	@Override
-	public boolean hasChildren() {
+	public boolean hasChildren()
+	{
 		return getItemChildren().size() > 0;
 	}
 
@@ -431,7 +484,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#isVisible()
 	 */
 	@Override
-	public boolean isVisible() {
+	public boolean isVisible()
+	{
 		return isVisible;
 	}
 
@@ -441,9 +495,10 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * multiplicity3.csys.items.INestable.IChildrenChangedListener)
 	 */
 	@Override
-	public void registerChildrenChangedListener(
-			IChildrenChangedListener listener) {
-		if (!childrenChangedListeners.contains(listener)) {
+	public void registerChildrenChangedListener(IChildrenChangedListener listener)
+	{
+		if (!childrenChangedListeners.contains(listener))
+		{
 			childrenChangedListeners.add(listener);
 		}
 	}
@@ -453,10 +508,13 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.INestable#removeAllItems(boolean)
 	 */
 	@Override
-	public void removeAllItems(boolean recursive) {
-		while (getItemChildren().size() > 0) {
+	public void removeAllItems(boolean recursive)
+	{
+		while (getItemChildren().size() > 0)
+		{
 			IItem item = getItemChildren().get(0);
-			if (recursive) {
+			if (recursive)
+			{
 				item.removeAllItems(recursive);
 			}
 			removeItem(item);
@@ -470,7 +528,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * .item.IItem)
 	 */
 	@Override
-	public void removeItem(IItem item) {
+	public void removeItem(IItem item)
+	{
 		log.fine("Removing " + item + " from " + this);
 		getItemChildren().remove(item);
 		getZOrderManager().unregisterForZOrdering(item);
@@ -484,7 +543,9 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * multiplicity3.csys.items.item.IItem#removeItemListener(multiplicity3.
 	 * csys.items.events.IItemListener)
 	 */
-	public void removeItemListener(IItemListener itemListener) {
+	@Override
+	public void removeItemListener(IItemListener itemListener)
+	{
 		getItemListeners().remove(itemListener);
 	}
 
@@ -493,7 +554,8 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#setInteractionEnabled(boolean)
 	 */
 	@Override
-	public void setInteractionEnabled(boolean b) {
+	public void setInteractionEnabled(boolean b)
+	{
 		this.dispatcher.setEnabled(b);
 	}
 
@@ -502,16 +564,19 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#setItemListeners(java.util.List)
 	 */
 	@Override
-	public void setItemListeners(List<IItemListener> itemListeners) {
+	public void setItemListeners(List<IItemListener> itemListeners)
+	{
 		this.itemListeners = itemListeners;
 	}
 
 	/**
 	 * Sets the item name.
 	 *
-	 * @param itemName the new item name
+	 * @param itemName
+	 *            the new item name
 	 */
-	public void setItemName(String itemName) {
+	public void setItemName(String itemName)
+	{
 		this.itemName = itemName;
 	}
 
@@ -522,10 +587,12 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * items.item.IItem)
 	 */
 	@Override
-	public void setParentItem(IItem parent) {
+	public void setParentItem(IItem parent)
+	{
 		log.fine(getManipulableSpatial() + " parent item changing to " + parent);
 		this.removeFromParent();
-		if (parent != null) {
+		if (parent != null)
+		{
 			((JMEItem) parent).attachChild(this);
 		}
 		parentItem = parent;
@@ -538,10 +605,12 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * .Vector2f)
 	 */
 	@Override
-	public void setRelativeLocation(Vector2f newLoc) {
+	public void setRelativeLocation(Vector2f newLoc)
+	{
 		setLocalTranslation(newLoc.x, newLoc.y, getLocalTranslation().z);
 		updateGeometricState();
-		for (IItemListener l : getItemListeners()) {
+		for (IItemListener l : getItemListeners())
+		{
 			l.itemMoved(this);
 		}
 	}
@@ -551,12 +620,14 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#setRelativeRotation(float)
 	 */
 	@Override
-	public void setRelativeRotation(float angle) {
+	public void setRelativeRotation(float angle)
+	{
 		this.relativeRotation = angle;
 		trot.fromAngleAxis(angle, Vector3f.UNIT_Z);
 		setLocalRotation(trot);
 		updateGeometricState();
-		for (IItemListener l : getItemListeners()) {
+		for (IItemListener l : getItemListeners())
+		{
 			l.itemRotated(this);
 		}
 	}
@@ -566,9 +637,11 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#setRelativeScale(float)
 	 */
 	@Override
-	public void setRelativeScale(float scale) {
+	public void setRelativeScale(float scale)
+	{
 		setLocalScale(scale);
-		for (IItemListener l : getItemListeners()) {
+		for (IItemListener l : getItemListeners())
+		{
 			l.itemScaled(this);
 		}
 	}
@@ -578,24 +651,31 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#setVisible(boolean)
 	 */
 	@Override
-	public void setVisible(boolean isVisible) {
-		if (isVisible == this.isVisible) {
+	public void setVisible(boolean isVisible)
+	{
+		if (isVisible == this.isVisible)
+		{
 			return;
 		}
 
-		if (isVisible) {
+		if (isVisible)
+		{
 			this.setCullHint(CullHint.Never);
-		} else {
+		}
+		else
+		{
 			this.setCullHint(CullHint.Always);
 		}
 
 		this.isVisible = isVisible;
 
-		for (IItemListener l : itemListeners) {
+		for (IItemListener l : itemListeners)
+		{
 			l.itemVisibilityChanged(this, isVisible);
 		}
 
-		for (int i = 0; i < itemChildren.size(); i++) {
+		for (int i = 0; i < itemChildren.size(); i++)
+		{
 			itemChildren.get(i).setVisible(isVisible);
 		}
 	}
@@ -607,13 +687,16 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * )
 	 */
 	@Override
-	public void setWorldLocation(Vector2f loc) {
-		if (getParent() == null) {
+	public void setWorldLocation(Vector2f loc)
+	{
+		if (getParent() == null)
+		{
 			setRelativeLocation(new Vector2f(loc.x, loc.y));
-		} else {
+		}
+		else
+		{
 			Vector3f store = new Vector3f();
-			getParent().worldToLocal(
-					new Vector3f(loc.x, loc.y, getWorldTranslation().z), store);
+			getParent().worldToLocal(new Vector3f(loc.x, loc.y, getWorldTranslation().z), store);
 			setRelativeLocation(new Vector2f(store.x, store.y));
 		}
 		updateGeometricState();
@@ -624,13 +707,15 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#setZOrder(int)
 	 */
 	@Override
-	public void setZOrder(int zOrder) {
+	public void setZOrder(int zOrder)
+	{
 		this.zorder = zOrder;
-		if ((getParent() != null) && (this.getParentItem() != null)) {
-			setLocalTranslation(getLocalTranslation().x,
-					getLocalTranslation().y, zOrder
-							- this.getParentItem().getZOrder());
-		} else {
+		if ((getParent() != null) && (this.getParentItem() != null))
+		{
+			setLocalTranslation(getLocalTranslation().x, getLocalTranslation().y, zOrder - this.getParentItem().getZOrder());
+		}
+		else
+		{
 			Vector3f newZOrder = getLocalTranslation().clone();
 			setLocalTranslation(newZOrder.x, newZOrder.y, zOrder);
 		}
@@ -641,15 +726,19 @@ public abstract class JMEItem extends Node implements IItem, IInitable {
 	 * (non-Javadoc)
 	 * @see com.jme3.scene.Spatial#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return this.getClass().getName() + " (" + getItemName() + ")";
 	}
 
 	/**
 	 * Notify children changed.
 	 */
-	private void notifyChildrenChanged() {
-		for (IChildrenChangedListener l : childrenChangedListeners) {
+	private void notifyChildrenChanged()
+	{
+		for (IChildrenChangedListener l : childrenChangedListeners)
+		{
 			l.childrenChanged(this, itemChildren);
 		}
 	}

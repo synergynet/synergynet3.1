@@ -6,7 +6,8 @@ import java.io.Serializable;
  * Representation of a class of students. This class is comparable so that
  * instances of it can be ordered by their name.
  */
-public class ClassRoom implements Comparable<ClassRoom>, Serializable {
+public class ClassRoom implements Comparable<ClassRoom>, Serializable
+{
 
 	/** Generated unique serial id for serialisation. */
 	private static final long serialVersionUID = 7802827317172799668L;
@@ -25,7 +26,8 @@ public class ClassRoom implements Comparable<ClassRoom>, Serializable {
 	 * @see java.lang.Comparable#compareTo(java.lang.Object)
 	 */
 	@Override
-	public int compareTo(ClassRoom otherClass) {
+	public int compareTo(ClassRoom otherClass)
+	{
 		int lastCmp = name.compareTo(otherClass.getName());
 		return (lastCmp != 0 ? lastCmp : name.compareTo(otherClass.getName()));
 	}
@@ -35,7 +37,8 @@ public class ClassRoom implements Comparable<ClassRoom>, Serializable {
 	 *
 	 * @return The name of the class.
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -44,26 +47,30 @@ public class ClassRoom implements Comparable<ClassRoom>, Serializable {
 	 *
 	 * @return A boolean value representing whether the class is in session.
 	 */
-	public boolean isInSession() {
+	public boolean isInSession()
+	{
 		return inSession;
 	}
 
 	/**
 	 * Set whether a class is in session.
 	 *
-	 * @param inSession A boolean value representing whether the class is in
-	 *            session
+	 * @param inSession
+	 *            A boolean value representing whether the class is in session
 	 */
-	public void setInSession(boolean inSession) {
+	public void setInSession(boolean inSession)
+	{
 		this.inSession = inSession;
 	}
 
 	/**
 	 * Set the name of the class.
 	 *
-	 * @param name The name of the class.
+	 * @param name
+	 *            The name of the class.
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 

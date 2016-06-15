@@ -29,7 +29,8 @@ import multiplicity3.input.simulator.IndividualCursor;
 /**
  * The Class JMETUIOSimulator.
  */
-public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
+public class JMETUIOSimulator extends AbstractMultiTouchSimulator
+{
 
 	// public JMETUIOSimulator(int tableWidth, int tableHeight) {
 	// super(tableWidth, tableHeight);
@@ -42,7 +43,8 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * (int, float, float)
 	 */
 	@Override
-	public void deleteCursor(int id, float x, float y) {
+	public void deleteCursor(int id, float x, float y)
+	{
 		TableSimTUIOComms.getInstance().cursorDelete();
 	}
 
@@ -53,8 +55,8 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * (int, float, float, int, float, float)
 	 */
 	@Override
-	public void deleteTwoCursors(int id1, float x1, float y1, int id2,
-			float x2, float y2) {
+	public void deleteTwoCursors(int id1, float x1, float y1, int id2, float x2, float y2)
+	{
 		TableSimTUIOComms.getInstance().cursorDelete();
 	}
 
@@ -63,7 +65,8 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * @see multiplicity3.input.IMultiTouchInputSource#endListening()
 	 */
 	@Override
-	public void endListening() {
+	public void endListening()
+	{
 		stop();
 	}
 
@@ -74,7 +77,8 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * float, float)
 	 */
 	@Override
-	public void newCursor(int id, float x, float y) {
+	public void newCursor(int id, float x, float y)
+	{
 		updateCursor(id, x, y);
 	}
 
@@ -83,22 +87,24 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * @see multiplicity3.input.IMultiTouchInputSource#requiresMouseDisplay()
 	 */
 	@Override
-	public boolean requiresMouseDisplay() {
+	public boolean requiresMouseDisplay()
+	{
 		return true;
 	}
 
 	/**
 	 * Start.
 	 */
-	public void start() {
-		TableSimTUIOComms.getInstance().init("localhost",
-				TableSimTUIOComms.DEFAULT_PORT);
+	public void start()
+	{
+		TableSimTUIOComms.getInstance().init("localhost", TableSimTUIOComms.DEFAULT_PORT);
 	}
 
 	/**
 	 * Stop.
 	 */
-	public void stop() {
+	public void stop()
+	{
 		TableSimTUIOComms.getInstance().quit();
 	}
 
@@ -106,7 +112,9 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * (non-Javadoc)
 	 * @see multiplicity3.input.IMultiTouchInputSource#update(float)
 	 */
-	public void update(float tpf) {
+	@Override
+	public void update(float tpf)
+	{
 	}
 
 	/*
@@ -116,9 +124,9 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * (int, float, float)
 	 */
 	@Override
-	public void updateCursor(int id, float x, float y) {
-		TableSimTUIOComms.getInstance().singleCursorMessage(
-				new IndividualCursor(id, x, y));
+	public void updateCursor(int id, float x, float y)
+	{
+		TableSimTUIOComms.getInstance().singleCursorMessage(new IndividualCursor(id, x, y));
 	}
 
 	/*
@@ -128,8 +136,8 @@ public class JMETUIOSimulator extends AbstractMultiTouchSimulator {
 	 * (int, float, float, int, float, float)
 	 */
 	@Override
-	public void updateTwoCursors(int id1, float x, float y, int id2, float x2,
-			float y2) {
+	public void updateTwoCursors(int id1, float x, float y, int id2, float x2, float y2)
+	{
 		IndividualCursor[] cursorInfo = new IndividualCursor[2];
 		cursorInfo[0] = new IndividualCursor(id1, x, y);
 		cursorInfo[1] = new IndividualCursor(id2, x2, y2);

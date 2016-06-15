@@ -20,7 +20,8 @@ import synergynet3.projector.network.ProjectorTransferUtilities;
 /**
  * The Class TestVideoApp.
  */
-public class TestVideoApp extends SynergyNetApp {
+public class TestVideoApp extends SynergyNetApp
+{
 
 	/** The media sources. */
 	private static ArrayList<String> mediaSources = new ArrayList<String>();
@@ -28,10 +29,13 @@ public class TestVideoApp extends SynergyNetApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		for (String arg : args) {
+	public static void main(String[] args)
+	{
+		for (String arg : args)
+		{
 			mediaSources.add(arg);
 		}
 
@@ -46,8 +50,8 @@ public class TestVideoApp extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 
 		ProjectorTransferUtilities.get().setDecelerationOnArrival(-1);
 		feedbackTypes.add(SimpleTrafficLightFeedback.class);
@@ -59,17 +63,15 @@ public class TestVideoApp extends SynergyNetApp {
 
 		IItem[] items = new IItem[mediaSources.size()];
 
-		for (int i = 0; i < mediaSources.size(); i++) {
-			IMediaPlayer mediaPlayer = stage.getContentFactory().create(
-					IMediaPlayer.class, "vid", UUID.randomUUID());
+		for (int i = 0; i < mediaSources.size(); i++)
+		{
+			IMediaPlayer mediaPlayer = stage.getContentFactory().create(IMediaPlayer.class, "vid", UUID.randomUUID());
 			mediaPlayer.setDeceleration(deceleration);
-			mediaPlayer.setRemoteResource(mediaSources.get(i), false, true,
-					stage);
+			mediaPlayer.setRemoteResource(mediaSources.get(i), false, true, stage);
 			mediaPlayer.setSize(640, 385);
 			stage.addItem(mediaPlayer);
 			items[i] = mediaPlayer;
-			FeedbackSystem.registerAsFeedbackEligible(mediaPlayer, 640, 385,
-					stage);
+			FeedbackSystem.registerAsFeedbackEligible(mediaPlayer, 640, 385, stage);
 			mediaPlayer.setVisible(false);
 			mediaPlayer.setVisible(true);
 		}

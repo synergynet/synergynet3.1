@@ -36,7 +36,8 @@ import java.util.jar.JarFile;
 /**
  * The Class ResourceUtils.
  */
-public class ResourceUtils {
+public class ResourceUtils
+{
 	/**
 	 * List directory contents for a resource folder. Not recursive. This is
 	 * basically a brute-force implementation. Works for regular files and also
@@ -44,22 +45,26 @@ public class ResourceUtils {
 	 *
 	 * @author Greg Briggs, modified by Andrew Hatch to allow for class-relative
 	 *         paths
-	 * @param clazz Any java class that lives in the same place as the resources
+	 * @param clazz
+	 *            Any java class that lives in the same place as the resources
 	 *            you want.
-	 * @param path Should end with "/".
+	 * @param path
+	 *            Should end with "/".
 	 * @return Just the name of each member item, not the full paths.
 	 * @throws URISyntaxException
 	 * @throws IOException
 	 */
-	public static String[] getResourceListing(Class<?> clazz, String path)
-			throws URISyntaxException, IOException {
+	public static String[] getResourceListing(Class<?> clazz, String path) throws URISyntaxException, IOException
+	{
 		URL dirURL = clazz.getResource(path);
-		if ((dirURL != null) && dirURL.getProtocol().equals("file")) {
+		if ((dirURL != null) && dirURL.getProtocol().equals("file"))
+		{
 			/* A file path: easy enough */
 			return new File(dirURL.toURI()).list();
 		}
 
-		if (dirURL == null) {
+		if (dirURL == null)
+		{
 			/*
 			 * In case of a jar file, we can't actually find a directory. Have
 			 * to assume the same jar as clazz.
@@ -68,23 +73,30 @@ public class ResourceUtils {
 			dirURL = clazz.getResource(me);
 		}
 
-		if (dirURL.getProtocol().equals("jar")) {
+		if (dirURL.getProtocol().equals("jar"))
+		{
 			/* A JAR path */
-			String jarPath = dirURL.getPath().substring(5,
-					dirURL.getPath().indexOf("!")); // strip out only the JAR
-													// file
+			String jarPath = dirURL.getPath().substring(5, dirURL.getPath().indexOf("!")); // strip
+																							// out
+																							// only
+																							// the
+																							// JAR
+																							// file
 			JarFile jar = new JarFile(jarPath);
 			Enumeration<JarEntry> entries = jar.entries(); // gives ALL entries
-															// in jar
+			// in jar
 			Set<String> result = new HashSet<String>(); // avoid duplicates in
-														// case it is a
-														// subdirectory
-			while (entries.hasMoreElements()) {
+			// case it is a
+			// subdirectory
+			while (entries.hasMoreElements())
+			{
 				String name = entries.nextElement().getName();
-				if (name.startsWith(path)) { // filter according to the path
+				if (name.startsWith(path))
+				{ // filter according to the path
 					String entry = name.substring(path.length());
 					int checkSubdir = entry.indexOf("/");
-					if (checkSubdir >= 0) {
+					if (checkSubdir >= 0)
+					{
 						// if it is a subdirectory, we just return the directory
 						// name
 						entry = entry.substring(0, checkSubdir);
@@ -96,7 +108,6 @@ public class ResourceUtils {
 			return result.toArray(new String[result.size()]);
 		}
 
-		throw new UnsupportedOperationException("Cannot list files for URL "
-				+ dirURL);
+		throw new UnsupportedOperationException("Cannot list files for URL " + dirURL);
 	}
 }

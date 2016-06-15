@@ -18,13 +18,14 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 /**
  * The Class NumberNetServiceImpl.
  */
-public class NumberNetServiceImpl extends RemoteServiceServlet implements
-		NumberNetService {
+public class NumberNetServiceImpl extends RemoteServiceServlet implements NumberNetService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8692351104428199812L;
 
-	static {
+	static
+	{
 		new DataWriter();
 	}
 
@@ -34,7 +35,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * addExpectedTable(java.lang.String)
 	 */
 	@Override
-	public void addExpectedTable(String name) {
+	public void addExpectedTable(String name)
+	{
 		TeacherControlComms.get().addExpectedTable(name);
 	}
 
@@ -45,7 +47,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * (java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void addNameToTable(String name, String table) {
+	public void addNameToTable(String name, String table)
+	{
 		TeacherControlComms.get().assignParticipantToTable(table, name);
 	}
 
@@ -55,7 +58,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getAllParticipants()
 	 */
 	@Override
-	public List<Participant> getAllParticipants() {
+	public List<Participant> getAllParticipants()
+	{
 		return TeacherControlComms.get().getAllParticipants();
 	}
 
@@ -65,9 +69,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getAllTargetsThatHaveOneOrMoreExpressions()
 	 */
 	@Override
-	public List<Double> getAllTargetsThatHaveOneOrMoreExpressions() {
-		return TeacherControlComms.get()
-				.getAllTargetsThatHaveOneOrMoreExpressions();
+	public List<Double> getAllTargetsThatHaveOneOrMoreExpressions()
+	{
+		return TeacherControlComms.get().getAllTargetsThatHaveOneOrMoreExpressions();
 	}
 
 	/*
@@ -76,10 +80,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getCalculatorAllKeyStatesForTable(java.lang.String)
 	 */
 	@Override
-	public Map<CalculatorKey, Boolean> getCalculatorAllKeyStatesForTable(
-			String tableName) {
-		return TeacherControlComms.get().getCalculatorAllKeyStatesForTable(
-				tableName);
+	public Map<CalculatorKey, Boolean> getCalculatorAllKeyStatesForTable(String tableName)
+	{
+		return TeacherControlComms.get().getCalculatorAllKeyStatesForTable(tableName);
 	}
 
 	/*
@@ -89,15 +92,15 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * synergynet3.web.apps.numbernet.shared.CalculatorKey)
 	 */
 	@Override
-	public boolean getCalculatorKeyStateForTable(String tableName,
-			CalculatorKey key) {
-		Map<CalculatorKey, Boolean> map = TeacherControlComms.get()
-				.getStudentTableDeviceForName(tableName)
-				.getCalculatorKeyStateMap().getValue();
-		if (map == null) {
+	public boolean getCalculatorKeyStateForTable(String tableName, CalculatorKey key)
+	{
+		Map<CalculatorKey, Boolean> map = TeacherControlComms.get().getStudentTableDeviceForName(tableName).getCalculatorKeyStateMap().getValue();
+		if (map == null)
+		{
 			map = new HashMap<CalculatorKey, Boolean>();
 		}
-		if (map.containsKey(key)) {
+		if (map.containsKey(key))
+		{
 			return map.get(key);
 		}
 		return false;
@@ -109,7 +112,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getExpectedTables()
 	 */
 	@Override
-	public List<String> getExpectedTables() {
+	public List<String> getExpectedTables()
+	{
 		return TeacherControlComms.get().getExpectedTablesList();
 	}
 
@@ -119,7 +123,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getExpressionsForPerson(java.lang.String)
 	 */
 	@Override
-	public List<Expression> getExpressionsForPerson(String person) {
+	public List<Expression> getExpressionsForPerson(String person)
+	{
 		return TeacherControlComms.get().getExpressionsForPerson(person);
 	}
 
@@ -129,7 +134,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getExpressionsForTable(java.lang.String)
 	 */
 	@Override
-	public List<Expression> getExpressionsForTable(String table) {
+	public List<Expression> getExpressionsForTable(String table)
+	{
 		return TeacherControlComms.get().getExpressionsForTable(table);
 	}
 
@@ -139,7 +145,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getExpressionsForTarget(double)
 	 */
 	@Override
-	public List<Expression> getExpressionsForTarget(double target) {
+	public List<Expression> getExpressionsForTarget(double target)
+	{
 		return TeacherControlComms.get().getExpressionsForTarget(target);
 	}
 
@@ -149,7 +156,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getNamesForTable(java.lang.String)
 	 */
 	@Override
-	public List<Participant> getNamesForTable(String table) {
+	public List<Participant> getNamesForTable(String table)
+	{
 		return TeacherControlComms.get().getParticipantListForTable(table);
 	}
 
@@ -159,7 +167,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * getTableTargets()
 	 */
 	@Override
-	public List<TableTarget> getTableTargets() {
+	public List<TableTarget> getTableTargets()
+	{
 		return TeacherControlComms.get().getTableTargets();
 	}
 
@@ -170,7 +179,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * (java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void projectTable(String table, String projector) {
+	public void projectTable(String table, String projector)
+	{
 		TeacherControlComms.get().projectTable(table, projector);
 	}
 
@@ -180,7 +190,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * removeFromTable(java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void removeFromTable(String name, String table) {
+	public void removeFromTable(String name, String table)
+	{
 		TeacherControlComms.get().removeParticipantFromTable(table, name);
 	}
 
@@ -190,7 +201,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * rotateTableContentAndTargets(java.util.List)
 	 */
 	@Override
-	public void rotateTableContentAndTargets(List<TableTarget> to) {
+	public void rotateTableContentAndTargets(List<TableTarget> to)
+	{
 		TeacherControlComms.get().rotateTableContentAndTargets(to);
 	}
 
@@ -201,8 +213,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * (synergynet3.web.apps.numbernet.shared.CalculatorKey, boolean)
 	 */
 	@Override
-	public void setCalculatorKeyStateForAllTables(CalculatorKey key,
-			boolean state) {
+	public void setCalculatorKeyStateForAllTables(CalculatorKey key, boolean state)
+	{
 		TeacherControlComms.get().setCalculatorKeyStateForAllTables(key, state);
 	}
 
@@ -213,17 +225,15 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * synergynet3.web.apps.numbernet.shared.CalculatorKey, boolean)
 	 */
 	@Override
-	public void setCalculatorKeyStateForTable(String tableName,
-			CalculatorKey key, boolean state) {
-		Map<CalculatorKey, Boolean> map = TeacherControlComms.get()
-				.getStudentTableDeviceForName(tableName)
-				.getCalculatorKeyStateMap().getValue();
-		if (map == null) {
+	public void setCalculatorKeyStateForTable(String tableName, CalculatorKey key, boolean state)
+	{
+		Map<CalculatorKey, Boolean> map = TeacherControlComms.get().getStudentTableDeviceForName(tableName).getCalculatorKeyStateMap().getValue();
+		if (map == null)
+		{
 			map = new HashMap<CalculatorKey, Boolean>();
 		}
 		map.put(key, state);
-		TeacherControlComms.get().getStudentTableDeviceForName(tableName)
-				.getCalculatorKeyStateMap().setValue(map);
+		TeacherControlComms.get().getStudentTableDeviceForName(tableName).getCalculatorKeyStateMap().setValue(map);
 	}
 
 	/*
@@ -232,7 +242,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setCalculatorVisibility(boolean)
 	 */
 	@Override
-	public void setCalculatorVisibility(boolean visible) {
+	public void setCalculatorVisibility(boolean visible)
+	{
 		TeacherControlComms.get().setAllCalculatorsVisible(visible);
 	}
 
@@ -242,9 +253,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setCorrectExpressionsVisibleForAllTables(boolean)
 	 */
 	@Override
-	public void setCorrectExpressionsVisibleForAllTables(boolean shouldBeVisible) {
-		TeacherControlComms.get().setCorrectExpressionsVisibleForAllTables(
-				shouldBeVisible);
+	public void setCorrectExpressionsVisibleForAllTables(boolean shouldBeVisible)
+	{
+		TeacherControlComms.get().setCorrectExpressionsVisibleForAllTables(shouldBeVisible);
 	}
 
 	/*
@@ -253,7 +264,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setGraphingModeEnabled(boolean)
 	 */
 	@Override
-	public void setGraphingModeEnabled(boolean graphingModeOn) {
+	public void setGraphingModeEnabled(boolean graphingModeOn)
+	{
 		TeacherControlComms.get().setGraphingModeEnabled(graphingModeOn);
 	}
 
@@ -263,10 +275,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setIncorrectExpressionsVisibleForAllTables(boolean)
 	 */
 	@Override
-	public void setIncorrectExpressionsVisibleForAllTables(
-			boolean shouldBeVisible) {
-		TeacherControlComms.get().setIncorrectExpressionsVisibleForAllTables(
-				shouldBeVisible);
+	public void setIncorrectExpressionsVisibleForAllTables(boolean shouldBeVisible)
+	{
+		TeacherControlComms.get().setIncorrectExpressionsVisibleForAllTables(shouldBeVisible);
 	}
 
 	/*
@@ -275,11 +286,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setOthersCorrectExpressionsVisibleForAllTables(boolean)
 	 */
 	@Override
-	public void setOthersCorrectExpressionsVisibleForAllTables(
-			boolean shouldBeVisible) {
-		TeacherControlComms
-				.get()
-				.setOthersCorrectExpressionsVisibleForAllTables(shouldBeVisible);
+	public void setOthersCorrectExpressionsVisibleForAllTables(boolean shouldBeVisible)
+	{
+		TeacherControlComms.get().setOthersCorrectExpressionsVisibleForAllTables(shouldBeVisible);
 	}
 
 	/*
@@ -288,11 +297,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setOthersIncorrectExpressionsVisibleForAllTables(boolean)
 	 */
 	@Override
-	public void setOthersIncorrectExpressionsVisibleForAllTables(
-			boolean shouldBeVisible) {
-		TeacherControlComms.get()
-				.setOthersIncorrectExpressionsVisibleForAllTables(
-						shouldBeVisible);
+	public void setOthersIncorrectExpressionsVisibleForAllTables(boolean shouldBeVisible)
+	{
+		TeacherControlComms.get().setOthersIncorrectExpressionsVisibleForAllTables(shouldBeVisible);
 	}
 
 	/*
@@ -302,8 +309,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * synergynet3.web.apps.numbernet.shared.ProjectionDisplayMode)
 	 */
 	@Override
-	public void setProjectorDisplayMode(String projector,
-			ProjectionDisplayMode mode) {
+	public void setProjectorDisplayMode(String projector, ProjectionDisplayMode mode)
+	{
 		TeacherControlComms.get().setProjectorDisplayMode(projector, mode);
 	}
 
@@ -313,7 +320,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setScoresVisibleForAllTables(boolean)
 	 */
 	@Override
-	public void setScoresVisibleForAllTables(boolean shouldBeVisible) {
+	public void setScoresVisibleForAllTables(boolean shouldBeVisible)
+	{
 		TeacherControlComms.get().setScoresVisibleForAllTables(shouldBeVisible);
 	}
 
@@ -323,7 +331,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setTableInputEnabled(boolean)
 	 */
 	@Override
-	public void setTableInputEnabled(boolean enabled) {
+	public void setTableInputEnabled(boolean enabled)
+	{
 		TeacherControlComms.get().setTableInputEnabled(enabled);
 
 	}
@@ -334,7 +343,8 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setTableTargets(java.util.List)
 	 */
 	@Override
-	public void setTableTargets(List<TableTarget> targets) {
+	public void setTableTargets(List<TableTarget> targets)
+	{
 		TeacherControlComms.get().setTableTargets(targets);
 	}
 
@@ -344,9 +354,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * setUnifyRotationModeEnabled(java.lang.String, boolean)
 	 */
 	@Override
-	public void setUnifyRotationModeEnabled(String projector, boolean enabled) {
-		TeacherControlComms.get().setUnifyRotationModeEnabled(projector,
-				enabled);
+	public void setUnifyRotationModeEnabled(String projector, boolean enabled)
+	{
+		TeacherControlComms.get().setUnifyRotationModeEnabled(projector, enabled);
 	}
 
 	/*
@@ -355,9 +365,9 @@ public class NumberNetServiceImpl extends RemoteServiceServlet implements
 	 * updatePositionInformationFromProjector(java.lang.String)
 	 */
 	@Override
-	public void updatePositionInformationFromProjector(String projector) {
-		TeacherControlComms.get().updatePositionInformationFromProjector(
-				projector);
+	public void updatePositionInformationFromProjector(String projector)
+	{
+		TeacherControlComms.get().updatePositionInformationFromProjector(projector);
 	}
 
 }

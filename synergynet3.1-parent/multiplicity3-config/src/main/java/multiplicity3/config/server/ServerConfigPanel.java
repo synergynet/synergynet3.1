@@ -13,7 +13,8 @@ import javax.swing.JPanel;
 /**
  * The Class ServerConfigPanel.
  */
-public class ServerConfigPanel extends JPanel {
+public class ServerConfigPanel extends JPanel
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8701347662757286944L;
@@ -39,9 +40,11 @@ public class ServerConfigPanel extends JPanel {
 	/**
 	 * Instantiates a new server config panel.
 	 *
-	 * @param serverConfigPrefsItem the server config prefs item
+	 * @param serverConfigPrefsItem
+	 *            the server config prefs item
 	 */
-	public ServerConfigPanel(ServerConfigPrefsItem serverConfigPrefsItem) {
+	public ServerConfigPanel(ServerConfigPrefsItem serverConfigPrefsItem)
+	{
 		this.prefs = serverConfigPrefsItem;
 		initComponents();
 	}
@@ -49,7 +52,8 @@ public class ServerConfigPanel extends JPanel {
 	/**
 	 * Inits the components.
 	 */
-	private void initComponents() {
+	private void initComponents()
+	{
 		final JPanel instance = this;
 		jLabel1 = new javax.swing.JLabel();
 		txtWebServerPort = new javax.swing.JTextField();
@@ -61,18 +65,22 @@ public class ServerConfigPanel extends JPanel {
 
 		jLabel1.setText("Web Server Directory:");
 		txtWebServerPort.setText(prefs.getPort() + "");
-		txtWebServerPort.addKeyListener(new KeyAdapter() {
+		txtWebServerPort.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
+			public void keyReleased(KeyEvent e)
+			{
 				store();
 			}
 
 			@Override
-			public void keyTyped(KeyEvent e) {
+			public void keyTyped(KeyEvent e)
+			{
 				store();
 			}
 
-			private void store() {
+			private void store()
+			{
 				prefs.setPort(Integer.parseInt(txtWebServerPort.getText()));
 			}
 		});
@@ -82,16 +90,18 @@ public class ServerConfigPanel extends JPanel {
 		txtWebServerDir.setEditable(false);
 
 		btnSelectDir.setText("Browse...");
-		btnSelectDir.addActionListener(new ActionListener() {
+		btnSelectDir.addActionListener(new ActionListener()
+		{
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
-				final JFileChooser fc = new JFileChooser(new File(prefs
-						.getWebDirectory()));
+			public void actionPerformed(ActionEvent e)
+			{
+				final JFileChooser fc = new JFileChooser(new File(prefs.getWebDirectory()));
 				fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 				int returnVal = fc.showOpenDialog(instance);
 
-				if (returnVal == JFileChooser.APPROVE_OPTION) {
+				if (returnVal == JFileChooser.APPROVE_OPTION)
+				{
 					File file = fc.getSelectedFile();
 					txtWebServerDir.setText(file.getAbsolutePath());
 					prefs.setWebDirectory(file.getAbsolutePath());

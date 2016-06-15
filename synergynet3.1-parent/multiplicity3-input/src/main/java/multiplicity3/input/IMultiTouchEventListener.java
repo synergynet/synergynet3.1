@@ -34,10 +34,11 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
  *
  * @author dcs0ah1
  */
-public interface IMultiTouchEventListener {
+public interface IMultiTouchEventListener
+{
 	/**
 	 * Cursor is on the table, and moves, or rotates, or changes in some way.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void cursorChanged(MultiTouchCursorEvent event);
@@ -46,42 +47,42 @@ public interface IMultiTouchEventListener {
 	 * Cursor clicked. The sensitivity of the clicking detection is the
 	 * responsibility of the appropriate IMultiTouchInputService. Event order is
 	 * cursorPressed, cursorReleased, cursorClicked.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void cursorClicked(MultiTouchCursorEvent event);
 
 	/**
 	 * Cursor press arriving on the table.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void cursorPressed(MultiTouchCursorEvent event);
 
 	/**
 	 * Cursor left the table.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void cursorReleased(MultiTouchCursorEvent event);
 
 	/**
 	 * Object/fiducial is added to the table.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void objectAdded(MultiTouchObjectEvent event);
 
 	/**
 	 * Object/fiducial is changed - position or rotation.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void objectChanged(MultiTouchObjectEvent event);
 
 	/**
 	 * Object/fiducial is removed from the table.
-	 * 
+	 *
 	 * @param event
 	 */
 	public void objectRemoved(MultiTouchObjectEvent event);

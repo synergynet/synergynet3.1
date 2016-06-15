@@ -41,12 +41,11 @@ import multiplicity3.input.filters.IMultiTouchInputFilter;
  *
  * @author dcs0ah1
  */
-public class MultiTouchInputComponent implements IMultiTouchEventListener,
-		IMultiTouchEventProducer {
+public class MultiTouchInputComponent implements IMultiTouchEventListener, IMultiTouchEventProducer
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(MultiTouchInputComponent.class.getName());
+	private static final Logger log = Logger.getLogger(MultiTouchInputComponent.class.getName());
 
 	/** The cursor trails. */
 	private Map<Long, List<CursorPositionRecord>> cursorTrails = new HashMap<Long, List<CursorPositionRecord>>();
@@ -69,9 +68,11 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	/**
 	 * Instantiates a new multi touch input component.
 	 *
-	 * @param source the source
+	 * @param source
+	 *            the source
 	 */
-	public MultiTouchInputComponent(IMultiTouchInputSource source) {
+	public MultiTouchInputComponent(IMultiTouchInputSource source)
+	{
 		this.source = source;
 		source.registerMultiTouchEventListener(this);
 	}
@@ -81,11 +82,14 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * the current (possibly empty) filter queue. The filter will be told to
 	 * pass events back to the MultiTouchInputComponent so that it can then pass
 	 * it on to any listeners.
-	 * 
+	 *
 	 * @param filter
 	 */
-	public void addMultiTouchInputFilter(IMultiTouchInputFilter filter) {
-		if (filters.size() > 0) {
+	@Override
+	public void addMultiTouchInputFilter(IMultiTouchInputFilter filter)
+	{
+		if (filters.size() > 0)
+		{
 			// if we already have filters
 			// get the last one
 			IMultiTouchInputFilter t = getLastFilter();
@@ -96,7 +100,9 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 			// get the filter to pass the results back to us
 			// so that we can pass it on to our listeners
 			filter.setNext(this);
-		} else {
+		}
+		else
+		{
 			// if we don't currently have any filters
 			// unregister this from the source
 			source.unregisterMultiTouchEventListener(this);
@@ -116,21 +122,26 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#cursorChanged(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!this.isMultiTouchInputEnabled) {
+	@Override
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!this.isMultiTouchInputEnabled)
+		{
 			return;
 		}
 
-		List<CursorPositionRecord> trail = cursorTrails
-				.get(event.getCursorID());
-		trail.add(new CursorPositionRecord(event.getPosition(), System
-				.currentTimeMillis()));
+		List<CursorPositionRecord> trail = cursorTrails.get(event.getCursorID());
+		trail.add(new CursorPositionRecord(event.getPosition(), System.currentTimeMillis()));
 		event.setPositionHistory(trail);
 
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.cursorChanged(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -142,14 +153,21 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#cursorClicked(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorClicked(MultiTouchCursorEvent event) {
-		if (!this.isMultiTouchInputEnabled) {
+	@Override
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
+		if (!this.isMultiTouchInputEnabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.cursorClicked(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -161,20 +179,26 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#cursorPressed(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!this.isMultiTouchInputEnabled) {
+	@Override
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!this.isMultiTouchInputEnabled)
+		{
 			return;
 		}
 		List<CursorPositionRecord> trail = new ArrayList<CursorPositionRecord>();
-		trail.add(new CursorPositionRecord(event.getPosition(), System
-				.currentTimeMillis()));
+		trail.add(new CursorPositionRecord(event.getPosition(), System.currentTimeMillis()));
 		cursorTrails.put(event.getCursorID(), trail);
 		event.setPositionHistory(trail);
 
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.cursorPressed(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -186,19 +210,24 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#cursorReleased(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	@Override
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		// if (!this.isMultiTouchInputEnabled) return; // if this line was not
 		// commented out, release events would not complete, causing problems
 
-		List<CursorPositionRecord> trail = cursorTrails.remove(event
-				.getCursorID());
+		List<CursorPositionRecord> trail = cursorTrails.remove(event.getCursorID());
 		event.setPositionHistory(trail);
 		cursorTrails.remove(event.getCursorID());
 
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.cursorReleased(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -209,9 +238,11 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 *
 	 * @return the active filter classes
 	 */
-	public List<Class<? extends IMultiTouchInputFilter>> getActiveFilterClasses() {
+	public List<Class<? extends IMultiTouchInputFilter>> getActiveFilterClasses()
+	{
 		List<Class<? extends IMultiTouchInputFilter>> classes = new ArrayList<Class<? extends IMultiTouchInputFilter>>();
-		for (IMultiTouchInputFilter f : filters) {
+		for (IMultiTouchInputFilter f : filters)
+		{
 			classes.add(f.getClass());
 		}
 		return classes;
@@ -221,7 +252,9 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * (non-Javadoc)
 	 * @see multiplicity3.input.IMultiTouchEventProducer#getLastFilter()
 	 */
-	public IMultiTouchInputFilter getLastFilter() {
+	@Override
+	public IMultiTouchInputFilter getLastFilter()
+	{
 		return filters.get(filters.size() - 1);
 	}
 
@@ -231,9 +264,13 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventProducer#isFilterActive(java.lang
 	 * .Class)
 	 */
-	public boolean isFilterActive(Class<? extends IMultiTouchInputFilter> filter) {
-		for (IMultiTouchInputFilter f : filters) {
-			if (f.getClass().equals(filter)) {
+	@Override
+	public boolean isFilterActive(Class<? extends IMultiTouchInputFilter> filter)
+	{
+		for (IMultiTouchInputFilter f : filters)
+		{
+			if (f.getClass().equals(filter))
+			{
 				return true;
 			}
 		}
@@ -245,7 +282,8 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 *
 	 * @return true, if is multi touch input enabled
 	 */
-	public boolean isMultiTouchInputEnabled() {
+	public boolean isMultiTouchInputEnabled()
+	{
 		return isMultiTouchInputEnabled;
 	}
 
@@ -255,14 +293,21 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#objectAdded(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectAdded(MultiTouchObjectEvent event) {
-		if (!this.isMultiTouchInputEnabled) {
+	@Override
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
+		if (!this.isMultiTouchInputEnabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.objectAdded(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -276,14 +321,21 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#objectChanged(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectChanged(MultiTouchObjectEvent event) {
-		if (!this.isMultiTouchInputEnabled) {
+	@Override
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
+		if (!this.isMultiTouchInputEnabled)
+		{
 			return;
 		}
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.objectChanged(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -295,12 +347,18 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventListener#objectRemoved(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	@Override
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		// if (!this.isMultiTouchInputEnabled) return;
-		for (IMultiTouchEventListener l : listeners) {
-			try {
+		for (IMultiTouchEventListener l : listeners)
+		{
+			try
+			{
 				l.objectRemoved(event);
-			} catch (Throwable t) {
+			}
+			catch (Throwable t)
+			{
 				notifyListenersOfException(t);
 			}
 		}
@@ -312,9 +370,11 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventProducer#registerMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
-		if (!listeners.contains(listener)) {
+	@Override
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(listener);
 		}
 	}
@@ -325,9 +385,11 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * multiplicity3.input.IMultiTouchEventProducer#registerMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener, int)
 	 */
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener, int index) {
-		if (!listeners.contains(listener)) {
+	@Override
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener, int index)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(index, listener);
 		}
 	}
@@ -339,9 +401,10 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * (multiplicity3.input.IDispatchedMultiTouchEventExceptionListener)
 	 */
 	@Override
-	public void registerMultiTouchExceptionListener(
-			IDispatchedMultiTouchEventExceptionListener listener) {
-		if (!exceptionListeners.contains(listener)) {
+	public void registerMultiTouchExceptionListener(IDispatchedMultiTouchEventExceptionListener listener)
+	{
+		if (!exceptionListeners.contains(listener))
+		{
 			this.exceptionListeners.add(listener);
 		}
 	}
@@ -349,18 +412,22 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	/**
 	 * Sets the multi touch input enabled.
 	 *
-	 * @param isMultiTouchInputEnabled the new multi touch input enabled
+	 * @param isMultiTouchInputEnabled
+	 *            the new multi touch input enabled
 	 */
-	public void setMultiTouchInputEnabled(boolean isMultiTouchInputEnabled) {
+	public void setMultiTouchInputEnabled(boolean isMultiTouchInputEnabled)
+	{
 		this.isMultiTouchInputEnabled = isMultiTouchInputEnabled;
 	}
 
 	/**
 	 * Sets the source.
 	 *
-	 * @param source the new source
+	 * @param source
+	 *            the new source
 	 */
-	public void setSource(IMultiTouchInputSource source) {
+	public void setSource(IMultiTouchInputSource source)
+	{
 		this.source = source;
 		source.registerMultiTouchEventListener(filters.get(0));
 	}
@@ -371,28 +438,36 @@ public class MultiTouchInputComponent implements IMultiTouchEventListener,
 	 * unregisterMultiTouchEventListener
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
-	public void unregisterMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
+	@Override
+	public void unregisterMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
 		listeners.remove(listener);
 	}
 
 	/**
 	 * Notify listeners of exception.
 	 *
-	 * @param t the t
+	 * @param t
+	 *            the t
 	 */
-	private void notifyListenersOfException(Throwable t) {
-		if (exceptionListeners.size() < 1) {
+	private void notifyListenersOfException(Throwable t)
+	{
+		if (exceptionListeners.size() < 1)
+		{
 			// we dont' have anybody interested in exceptions, so
 			// should log
 			log.severe("Exception occurred: " + t.toString());
 			StringBuffer sb = new StringBuffer();
-			for (StackTraceElement elem : t.getStackTrace()) {
+			for (StackTraceElement elem : t.getStackTrace())
+			{
 				sb.append("   " + elem.toString() + "\n");
 			}
 			log.severe("  Stack tace follows:\n" + sb);
-		} else {
-			for (IDispatchedMultiTouchEventExceptionListener l : exceptionListeners) {
+		}
+		else
+		{
+			for (IDispatchedMultiTouchEventExceptionListener l : exceptionListeners)
+			{
 				l.dispatchedMultiTouchEventException(t);
 			}
 		}

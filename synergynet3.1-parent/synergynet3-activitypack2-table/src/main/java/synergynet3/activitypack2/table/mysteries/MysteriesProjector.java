@@ -13,7 +13,8 @@ import synergynet3.projector.SynergyNetProjector;
 import synergynet3.projector.network.ProjectorTransferUtilities;
 
 /** Class to be run to produce a projection environment. */
-public class MysteriesProjector extends SynergyNetProjector {
+public class MysteriesProjector extends SynergyNetProjector
+{
 
 	/** The mysteries location. */
 	public static String mysteriesLocation;
@@ -21,30 +22,37 @@ public class MysteriesProjector extends SynergyNetProjector {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
 
-		try {
-			mysteriesLocation = ManagementFactory.getRuntimeMXBean()
-					.getSystemProperties().get("mysteries");
-			AdditionalSynergyNetUtilities.logInfo("Using mysteries from: "
-					+ mysteriesLocation);
-		} catch (Exception e) {
+		try
+		{
+			mysteriesLocation = ManagementFactory.getRuntimeMXBean().getSystemProperties().get("mysteries");
+			AdditionalSynergyNetUtilities.logInfo("Using mysteries from: " + mysteriesLocation);
+		}
+		catch (Exception e)
+		{
 			stop();
 		}
 
-		if (mysteriesLocation == null) {
+		if (mysteriesLocation == null)
+		{
 			stop();
 		}
 
 		File mysteriesDir = new File(mysteriesLocation);
-		if (!mysteriesDir.isDirectory()) {
+		if (!mysteriesDir.isDirectory())
+		{
 			stop();
 		}
 
@@ -57,9 +65,9 @@ public class MysteriesProjector extends SynergyNetProjector {
 	/**
 	 * Stop.
 	 */
-	private static void stop() {
-		AdditionalSynergyNetUtilities
-				.logInfo("No valid mysteries address in arguments, no mysteries will be available.");
+	private static void stop()
+	{
+		AdditionalSynergyNetUtilities.logInfo("No valid mysteries address in arguments, no mysteries will be available.");
 		System.exit(0);
 	}
 
@@ -68,7 +76,8 @@ public class MysteriesProjector extends SynergyNetProjector {
 	 * @see synergynet3.projector.SynergyNetProjector#getFriendlyAppName()
 	 */
 	@Override
-	public String getFriendlyAppName() {
+	public String getFriendlyAppName()
+	{
 		return "MysteriesProjector";
 	}
 
@@ -79,7 +88,8 @@ public class MysteriesProjector extends SynergyNetProjector {
 	 * .MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		super.shouldStart(input, iqo);
 
 		ProjectorTransferUtilities.get().setDecelerationOnArrival(-1);

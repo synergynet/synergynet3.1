@@ -3,7 +3,8 @@ package org.mt4j.input.inputSources;
 /**
  * The Class Windows7TouchEvent.
  */
-public class Windows7TouchEvent {
+public class Windows7TouchEvent
+{
 
 	/** The Constant TOUCH_DOWN. */
 	public static final int TOUCH_DOWN = 0;

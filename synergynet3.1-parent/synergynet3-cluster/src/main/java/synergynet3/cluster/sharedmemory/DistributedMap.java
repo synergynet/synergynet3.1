@@ -20,70 +20,92 @@ import com.hazelcast.core.Member;
 /**
  * The Class DistributedMap.
  *
- * @param <K> the key type
- * @param <V> the value type
+ * @param <K>
+ *            the key type
+ * @param <V>
+ *            the value type
  */
-public class DistributedMap<K, V> {
+public class DistributedMap<K, V>
+{
 
 	/**
 	 * The Interface ItemAddedAction.
 	 *
-	 * @param <K> the key type
-	 * @param <V> the value type
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 */
-	public static interface ItemAddedAction<K, V> {
+	public static interface ItemAddedAction<K, V>
+	{
 
 		/**
 		 * Item added to collection.
 		 *
-		 * @param collection the collection
-		 * @param itemKey the item key
-		 * @param itemValue the item value
-		 * @param member the member
+		 * @param collection
+		 *            the collection
+		 * @param itemKey
+		 *            the item key
+		 * @param itemValue
+		 *            the item value
+		 * @param member
+		 *            the member
 		 */
-		public void itemAddedToCollection(IMap<K, V> collection, K itemKey,
-				V itemValue, Member member);
+		public void itemAddedToCollection(IMap<K, V> collection, K itemKey, V itemValue, Member member);
 	}
 
 	/**
 	 * The Interface ItemRemovedAction.
 	 *
-	 * @param <K> the key type
-	 * @param <V> the value type
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 */
-	public static interface ItemRemovedAction<K, V> {
+	public static interface ItemRemovedAction<K, V>
+	{
 
 		/**
 		 * Item removed from collection.
 		 *
-		 * @param collection the collection
-		 * @param itemKey the item key
-		 * @param itemValue the item value
-		 * @param member the member
+		 * @param collection
+		 *            the collection
+		 * @param itemKey
+		 *            the item key
+		 * @param itemValue
+		 *            the item value
+		 * @param member
+		 *            the member
 		 */
-		public void itemRemovedFromCollection(IMap<K, V> collection, K itemKey,
-				V itemValue, Member member);
+		public void itemRemovedFromCollection(IMap<K, V> collection, K itemKey, V itemValue, Member member);
 	}
 
 	/**
 	 * The Interface ItemUpdatedAction.
 	 *
-	 * @param <K> the key type
-	 * @param <V> the value type
+	 * @param <K>
+	 *            the key type
+	 * @param <V>
+	 *            the value type
 	 */
-	public static interface ItemUpdatedAction<K, V> {
+	public static interface ItemUpdatedAction<K, V>
+	{
 
 		/**
 		 * Item updated in collection.
 		 *
-		 * @param collection the collection
-		 * @param itemKey the item key
-		 * @param itemOldValue the item old value
-		 * @param itemNewValue the item new value
-		 * @param member the member
+		 * @param collection
+		 *            the collection
+		 * @param itemKey
+		 *            the item key
+		 * @param itemOldValue
+		 *            the item old value
+		 * @param itemNewValue
+		 *            the item new value
+		 * @param member
+		 *            the member
 		 */
-		public void itemUpdatedInCollection(IMap<K, V> collection, K itemKey,
-				V itemOldValue, V itemNewValue, Member member);
+		public void itemUpdatedInCollection(IMap<K, V> collection, K itemKey, V itemOldValue, V itemNewValue, Member member);
 	}
 
 	/**
@@ -95,11 +117,14 @@ public class DistributedMap<K, V> {
 	 * the collectionChange event occurs, that object's appropriate
 	 * method is invoked.
 	 *
-	 * @param <G> the generic type
-	 * @param <H> the generic type
+	 * @param <G>
+	 *            the generic type
+	 * @param <H>
+	 *            the generic type
 	 * @see CollectionChangeEvent
 	 */
-	private class CollectionChangeListener<G, H> implements EntryListener<G, H> {
+	private class CollectionChangeListener<G, H> implements EntryListener<G, H>
+	{
 
 		/** The added actions. */
 		private List<ItemAddedAction<G, H>> addedActions;
@@ -116,9 +141,11 @@ public class DistributedMap<K, V> {
 		/**
 		 * Instantiates a new collection change listener.
 		 *
-		 * @param collection the collection
+		 * @param collection
+		 *            the collection
 		 */
-		public CollectionChangeListener(IMap<G, H> collection) {
+		public CollectionChangeListener(IMap<G, H> collection)
+		{
 			collection.addEntryListener(this, true);
 			this.collection = collection;
 			addedActions = new ArrayList<ItemAddedAction<G, H>>();
@@ -133,13 +160,16 @@ public class DistributedMap<K, V> {
 		 * )
 		 */
 		@Override
-		public void entryAdded(final EntryEvent<G, H> e) {
-			ClusterThreadManager.get().enqueue(new Callable<Void>() {
+		public void entryAdded(final EntryEvent<G, H> e)
+		{
+			ClusterThreadManager.get().enqueue(new Callable<Void>()
+			{
 				@Override
-				public Void call() throws Exception {
-					for (ItemAddedAction<G, H> action : addedActions) {
-						action.itemAddedToCollection(collection, e.getKey(),
-								e.getValue(), e.getMember());
+				public Void call() throws Exception
+				{
+					for (ItemAddedAction<G, H> action : addedActions)
+					{
+						action.itemAddedToCollection(collection, e.getKey(), e.getValue(), e.getMember());
 					}
 					return null;
 				}
@@ -153,7 +183,8 @@ public class DistributedMap<K, V> {
 		 * EntryEvent)
 		 */
 		@Override
-		public void entryEvicted(EntryEvent<G, H> e) {
+		public void entryEvicted(EntryEvent<G, H> e)
+		{
 		}
 
 		/*
@@ -163,13 +194,16 @@ public class DistributedMap<K, V> {
 		 * EntryEvent)
 		 */
 		@Override
-		public void entryRemoved(final EntryEvent<G, H> e) {
-			ClusterThreadManager.get().enqueue(new Callable<Void>() {
+		public void entryRemoved(final EntryEvent<G, H> e)
+		{
+			ClusterThreadManager.get().enqueue(new Callable<Void>()
+			{
 				@Override
-				public Void call() throws Exception {
-					for (ItemRemovedAction<G, H> action : removedActions) {
-						action.itemRemovedFromCollection(collection,
-								e.getKey(), e.getValue(), e.getMember());
+				public Void call() throws Exception
+				{
+					for (ItemRemovedAction<G, H> action : removedActions)
+					{
+						action.itemRemovedFromCollection(collection, e.getKey(), e.getValue(), e.getMember());
 					}
 					return null;
 				}
@@ -183,13 +217,16 @@ public class DistributedMap<K, V> {
 		 * EntryEvent)
 		 */
 		@Override
-		public void entryUpdated(final EntryEvent<G, H> e) {
-			ClusterThreadManager.get().enqueue(new Callable<Void>() {
+		public void entryUpdated(final EntryEvent<G, H> e)
+		{
+			ClusterThreadManager.get().enqueue(new Callable<Void>()
+			{
 				@Override
-				public Void call() throws Exception {
-					for (ItemUpdatedAction<G, H> action : updatedActions) {
-						action.itemUpdatedInCollection(collection, e.getKey(),
-								e.getOldValue(), e.getValue(), e.getMember());
+				public Void call() throws Exception
+				{
+					for (ItemUpdatedAction<G, H> action : updatedActions)
+					{
+						action.itemUpdatedInCollection(collection, e.getKey(), e.getOldValue(), e.getValue(), e.getMember());
 					}
 					return null;
 				}
@@ -199,10 +236,13 @@ public class DistributedMap<K, V> {
 		/**
 		 * Register item added action.
 		 *
-		 * @param action the action
+		 * @param action
+		 *            the action
 		 */
-		public void registerItemAddedAction(ItemAddedAction<G, H> action) {
-			if (addedActions.contains(action)) {
+		public void registerItemAddedAction(ItemAddedAction<G, H> action)
+		{
+			if (addedActions.contains(action))
+			{
 				return;
 			}
 			addedActions.add(action);
@@ -211,10 +251,13 @@ public class DistributedMap<K, V> {
 		/**
 		 * Register item removed action.
 		 *
-		 * @param action the action
+		 * @param action
+		 *            the action
 		 */
-		public void registerItemRemovedAction(ItemRemovedAction<G, H> action) {
-			if (removedActions.contains(action)) {
+		public void registerItemRemovedAction(ItemRemovedAction<G, H> action)
+		{
+			if (removedActions.contains(action))
+			{
 				return;
 			}
 			removedActions.add(action);
@@ -223,10 +266,13 @@ public class DistributedMap<K, V> {
 		/**
 		 * Register item updated action.
 		 *
-		 * @param action the action
+		 * @param action
+		 *            the action
 		 */
-		public void registerItemUpdatedAction(ItemUpdatedAction<G, H> action) {
-			if (updatedActions.contains(action)) {
+		public void registerItemUpdatedAction(ItemUpdatedAction<G, H> action)
+		{
+			if (updatedActions.contains(action))
+			{
 				return;
 			}
 			updatedActions.add(action);
@@ -235,18 +281,22 @@ public class DistributedMap<K, V> {
 		/**
 		 * Unregister item added action.
 		 *
-		 * @param action the action
+		 * @param action
+		 *            the action
 		 */
-		public void unregisterItemAddedAction(ItemAddedAction<K, V> action) {
+		public void unregisterItemAddedAction(ItemAddedAction<K, V> action)
+		{
 			addedActions.remove(action);
 		}
 
 		/**
 		 * Unregister item removed action.
 		 *
-		 * @param action the action
+		 * @param action
+		 *            the action
 		 */
-		public void unregisterItemRemovedAction(ItemRemovedAction<K, V> action) {
+		public void unregisterItemRemovedAction(ItemRemovedAction<K, V> action)
+		{
 			removedActions.remove(action);
 		}
 	}
@@ -260,9 +310,11 @@ public class DistributedMap<K, V> {
 	/**
 	 * Instantiates a new distributed map.
 	 *
-	 * @param map the map
+	 * @param map
+	 *            the map
 	 */
-	public DistributedMap(IMap<K, V> map) {
+	public DistributedMap(IMap<K, V> map)
+	{
 		this.map = map;
 		listener = this.new CollectionChangeListener<K, V>(map);
 	}
@@ -270,17 +322,20 @@ public class DistributedMap<K, V> {
 	/**
 	 * Instantiates a new distributed map.
 	 *
-	 * @param distributedMapName the distributed map name
+	 * @param distributedMapName
+	 *            the distributed map name
 	 */
 	@SuppressWarnings("unchecked")
-	public DistributedMap(String distributedMapName) {
+	public DistributedMap(String distributedMapName)
+	{
 		this((IMap<K, V>) Hazelcast.getMap(distributedMapName));
 	}
 
 	/**
 	 * Clear.
 	 */
-	public void clear() {
+	public void clear()
+	{
 		map.clear();
 	}
 
@@ -289,17 +344,20 @@ public class DistributedMap<K, V> {
 	 *
 	 * @return the sets the
 	 */
-	public Set<Entry<K, V>> entrySet() {
+	public Set<Entry<K, V>> entrySet()
+	{
 		return map.entrySet();
 	}
 
 	/**
 	 * Gets the.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 * @return the v
 	 */
-	public V get(K key) {
+	public V get(K key)
+	{
 		return map.get(key);
 	}
 
@@ -308,66 +366,81 @@ public class DistributedMap<K, V> {
 	 *
 	 * @return the sets the
 	 */
-	public Set<K> keySet() {
+	public Set<K> keySet()
+	{
 		return map.keySet();
 	}
 
 	/**
 	 * Put.
 	 *
-	 * @param key the key
-	 * @param value the value
+	 * @param key
+	 *            the key
+	 * @param value
+	 *            the value
 	 * @return the v
 	 */
-	public V put(K key, V value) {
+	public V put(K key, V value)
+	{
 		return map.put(key, value);
 	}
 
 	/**
 	 * Register item added action.
 	 *
-	 * @param action the action
+	 * @param action
+	 *            the action
 	 */
-	public void registerItemAddedAction(ItemAddedAction<K, V> action) {
+	public void registerItemAddedAction(ItemAddedAction<K, V> action)
+	{
 		listener.registerItemAddedAction(action);
 	}
 
 	/**
 	 * Register item removed action.
 	 *
-	 * @param action the action
+	 * @param action
+	 *            the action
 	 */
-	public void registerItemRemovedAction(ItemRemovedAction<K, V> action) {
+	public void registerItemRemovedAction(ItemRemovedAction<K, V> action)
+	{
 		listener.registerItemRemovedAction(action);
 	}
 
 	/**
 	 * Register item updated action.
 	 *
-	 * @param action the action
+	 * @param action
+	 *            the action
 	 */
-	public void registerItemUpdatedAction(ItemUpdatedAction<K, V> action) {
+	public void registerItemUpdatedAction(ItemUpdatedAction<K, V> action)
+	{
 		listener.registerItemUpdatedAction(action);
 	}
 
 	/**
 	 * Removes the.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 * @return the v
 	 */
-	public V remove(K key) {
+	public V remove(K key)
+	{
 		return map.remove(key);
 	}
 
 	/**
 	 * Replace contents.
 	 *
-	 * @param contents the contents
+	 * @param contents
+	 *            the contents
 	 */
-	public void replaceContents(Map<K, V> contents) {
+	public void replaceContents(Map<K, V> contents)
+	{
 		map.clear();
-		for (K key : contents.keySet()) {
+		for (K key : contents.keySet())
+		{
 			map.put(key, contents.get(key));
 		}
 	}
@@ -377,25 +450,30 @@ public class DistributedMap<K, V> {
 	 *
 	 * @return the int
 	 */
-	public int size() {
+	public int size()
+	{
 		return map.size();
 	}
 
 	/**
 	 * Unregister item added action.
 	 *
-	 * @param action the action
+	 * @param action
+	 *            the action
 	 */
-	public void unregisterItemAddedAction(ItemAddedAction<K, V> action) {
+	public void unregisterItemAddedAction(ItemAddedAction<K, V> action)
+	{
 		listener.unregisterItemAddedAction(action);
 	}
 
 	/**
 	 * Unregister item removed action.
 	 *
-	 * @param action the action
+	 * @param action
+	 *            the action
 	 */
-	public void unregisterItemRemovedAction(ItemRemovedAction<K, V> action) {
+	public void unregisterItemRemovedAction(ItemRemovedAction<K, V> action)
+	{
 		listener.unregisterItemRemovedAction(action);
 	}
 
@@ -404,7 +482,8 @@ public class DistributedMap<K, V> {
 	 *
 	 * @return the collection
 	 */
-	public Collection<V> values() {
+	public Collection<V> values()
+	{
 		return map.values();
 	}
 

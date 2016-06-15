@@ -7,5 +7,6 @@ import java.lang.annotation.RetentionPolicy;
  * The Interface RequiresUpdate.
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface RequiresUpdate {
+public @interface RequiresUpdate
+{
 }

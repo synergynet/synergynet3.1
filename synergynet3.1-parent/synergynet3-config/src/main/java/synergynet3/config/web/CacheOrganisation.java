@@ -6,7 +6,8 @@ import java.util.regex.Pattern;
 /**
  * The Class CacheOrganisation.
  */
-public class CacheOrganisation {
+public class CacheOrganisation
+{
 
 	/** The Constant AUDIO_DIR. */
 	public static final String AUDIO_DIR = "Audio";
@@ -38,19 +39,28 @@ public class CacheOrganisation {
 	/**
 	 * Clear capture cache.
 	 */
-	public static void clearCaptureCache() {
+	public static void clearCaptureCache()
+	{
 		File screenshotCacheDir = new File(getScreenshotDir());
-		if (screenshotCacheDir.isDirectory()) {
+		if (screenshotCacheDir.isDirectory())
+		{
 			File[] subFolders = screenshotCacheDir.listFiles();
-			for (File subFolder : subFolders) {
-				if (subFolder.isFile()) {
-					if (!subFolder.delete()) {
+			for (File subFolder : subFolders)
+			{
+				if (subFolder.isFile())
+				{
+					if (!subFolder.delete())
+					{
 						subFolder.deleteOnExit();
 					}
-				} else if (subFolder.isDirectory()) {
+				}
+				else if (subFolder.isDirectory())
+				{
 					File[] files = subFolder.listFiles();
-					for (File file : files) {
-						if (!file.delete()) {
+					for (File file : files)
+					{
+						if (!file.delete())
+						{
 							file.deleteOnExit();
 						}
 					}
@@ -59,17 +69,25 @@ public class CacheOrganisation {
 		}
 
 		File audioCacheDir = new File(getAudioDir());
-		if (audioCacheDir.isDirectory()) {
+		if (audioCacheDir.isDirectory())
+		{
 			File[] subFolders = audioCacheDir.listFiles();
-			for (File subFolder : subFolders) {
-				if (subFolder.isFile()) {
-					if (!subFolder.delete()) {
+			for (File subFolder : subFolders)
+			{
+				if (subFolder.isFile())
+				{
+					if (!subFolder.delete())
+					{
 						subFolder.deleteOnExit();
 					}
-				} else if (subFolder.isDirectory()) {
+				}
+				else if (subFolder.isDirectory())
+				{
 					File[] files = subFolder.listFiles();
-					for (File file : files) {
-						if (!file.delete()) {
+					for (File file : files)
+					{
+						if (!file.delete())
+						{
 							file.deleteOnExit();
 						}
 					}
@@ -81,19 +99,28 @@ public class CacheOrganisation {
 	/**
 	 * Clear transfer caches.
 	 */
-	public static void clearTransferCaches() {
+	public static void clearTransferCaches()
+	{
 		File networkFlickCacheDir = new File(getNetworkFlickDir());
-		if (networkFlickCacheDir.isDirectory()) {
+		if (networkFlickCacheDir.isDirectory())
+		{
 			File[] subFolders = networkFlickCacheDir.listFiles();
-			for (File subFolder : subFolders) {
-				if (subFolder.isFile()) {
-					if (!subFolder.delete()) {
+			for (File subFolder : subFolders)
+			{
+				if (subFolder.isFile())
+				{
+					if (!subFolder.delete())
+					{
 						subFolder.deleteOnExit();
 					}
-				} else if (subFolder.isDirectory()) {
+				}
+				else if (subFolder.isDirectory())
+				{
 					File[] files = subFolder.listFiles();
-					for (File file : files) {
-						if (!file.delete()) {
+					for (File file : files)
+					{
+						if (!file.delete())
+						{
 							file.deleteOnExit();
 						}
 					}
@@ -102,17 +129,25 @@ public class CacheOrganisation {
 		}
 
 		File projectorTransferCacheDir = new File(getProjectorTransferDir());
-		if (projectorTransferCacheDir.isDirectory()) {
+		if (projectorTransferCacheDir.isDirectory())
+		{
 			File[] subFolders = projectorTransferCacheDir.listFiles();
-			for (File subFolder : subFolders) {
-				if (subFolder.isFile()) {
-					if (!subFolder.delete()) {
+			for (File subFolder : subFolders)
+			{
+				if (subFolder.isFile())
+				{
+					if (!subFolder.delete())
+					{
 						subFolder.deleteOnExit();
 					}
-				} else if (subFolder.isDirectory()) {
+				}
+				else if (subFolder.isDirectory())
+				{
 					File[] files = subFolder.listFiles();
-					for (File file : files) {
-						if (!file.delete()) {
+					for (File file : files)
+					{
+						if (!file.delete())
+						{
 							file.deleteOnExit();
 						}
 					}
@@ -126,11 +161,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the audio dir
 	 */
-	public static String getAudioDir() {
+	public static String getAudioDir()
+	{
 		String captureCacheLoc = getCaptureDir();
 		String audioCacheLoc = captureCacheLoc + File.separator + AUDIO_DIR;
 		File audioCacheDir = new File(audioCacheLoc);
-		if (!audioCacheDir.isDirectory()) {
+		if (!audioCacheDir.isDirectory())
+		{
 			audioCacheDir.mkdir();
 		}
 		return audioCacheLoc;
@@ -141,11 +178,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the cache location
 	 */
-	public static String getCacheLocation() {
+	public static String getCacheLocation()
+	{
 		WebConfigPrefsItem prefs = new WebConfigPrefsItem();
 		String cacheLoc = prefs.getSharedLocation();
 		File cacheDir = new File(cacheLoc);
-		if (!cacheDir.isDirectory()) {
+		if (!cacheDir.isDirectory())
+		{
 			cacheDir.mkdir();
 		}
 		return cacheLoc;
@@ -156,11 +195,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the capture dir
 	 */
-	public static String getCaptureDir() {
+	public static String getCaptureDir()
+	{
 		String cacheLoc = getCacheLocation();
 		String captureCacheLoc = cacheLoc + File.separator + CAPTURE_DIR;
 		File captureCacheDir = new File(captureCacheLoc);
-		if (!captureCacheDir.isDirectory()) {
+		if (!captureCacheDir.isDirectory())
+		{
 			captureCacheDir.mkdir();
 		}
 		return captureCacheLoc;
@@ -171,12 +212,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the network flick dir
 	 */
-	public static String getNetworkFlickDir() {
+	public static String getNetworkFlickDir()
+	{
 		String transferCacheLoc = getTransferDir();
-		String networkFlickCacheLoc = transferCacheLoc + File.separator
-				+ NETWORK_FLICK_DIR;
+		String networkFlickCacheLoc = transferCacheLoc + File.separator + NETWORK_FLICK_DIR;
 		File networkFlickCacheDir = new File(networkFlickCacheLoc);
-		if (!networkFlickCacheDir.isDirectory()) {
+		if (!networkFlickCacheDir.isDirectory())
+		{
 			networkFlickCacheDir.mkdir();
 		}
 		return networkFlickCacheLoc;
@@ -187,12 +229,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the projector transfer dir
 	 */
-	public static String getProjectorTransferDir() {
+	public static String getProjectorTransferDir()
+	{
 		String transferCacheLoc = getTransferDir();
-		String projectorTransferCacheLoc = transferCacheLoc + File.separator
-				+ PROJECTOR_TRANSFER_DIR;
+		String projectorTransferCacheLoc = transferCacheLoc + File.separator + PROJECTOR_TRANSFER_DIR;
 		File projectorTransferCacheDir = new File(projectorTransferCacheLoc);
-		if (!projectorTransferCacheDir.isDirectory()) {
+		if (!projectorTransferCacheDir.isDirectory())
+		{
 			projectorTransferCacheDir.mkdir();
 		}
 		return projectorTransferCacheLoc;
@@ -203,12 +246,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the screenshot dir
 	 */
-	public static String getScreenshotDir() {
+	public static String getScreenshotDir()
+	{
 		String captureCacheLoc = getCaptureDir();
-		String screenshotCacheLoc = captureCacheLoc + File.separator
-				+ SCREENSHOT_DIR;
+		String screenshotCacheLoc = captureCacheLoc + File.separator + SCREENSHOT_DIR;
 		File screenshotCacheDir = new File(screenshotCacheLoc);
-		if (!screenshotCacheDir.isDirectory()) {
+		if (!screenshotCacheDir.isDirectory())
+		{
 			screenshotCacheDir.mkdir();
 		}
 		return screenshotCacheLoc;
@@ -217,16 +261,20 @@ public class CacheOrganisation {
 	/**
 	 * Gets the specific dir.
 	 *
-	 * @param loc the loc
+	 * @param loc
+	 *            the loc
 	 * @return the specific dir
 	 */
-	public static String getSpecificDir(String loc) {
+	public static String getSpecificDir(String loc)
+	{
 		String cacheLoc = getCacheLocation();
 		String[] path = loc.split(Pattern.quote(File.separator));
-		for (String s : path) {
+		for (String s : path)
+		{
 			cacheLoc += File.separator + s;
 			File specificDir = new File(cacheLoc);
-			if (!specificDir.isDirectory()) {
+			if (!specificDir.isDirectory())
+			{
 				specificDir.mkdir();
 			}
 		}
@@ -236,15 +284,17 @@ public class CacheOrganisation {
 	/**
 	 * Gets the specific student dir.
 	 *
-	 * @param studentID the student id
+	 * @param studentID
+	 *            the student id
 	 * @return the specific student dir
 	 */
-	public static String getSpecificStudentDir(String studentID) {
+	public static String getSpecificStudentDir(String studentID)
+	{
 		String studentCacheLoc = getStudentsDir();
-		String specifcStudentCacheLoc = studentCacheLoc + File.separator
-				+ studentID;
+		String specifcStudentCacheLoc = studentCacheLoc + File.separator + studentID;
 		File specificStudentCacheDir = new File(specifcStudentCacheLoc);
-		if (!specificStudentCacheDir.isDirectory()) {
+		if (!specificStudentCacheDir.isDirectory())
+		{
 			specificStudentCacheDir.mkdir();
 		}
 		return specifcStudentCacheLoc;
@@ -253,15 +303,17 @@ public class CacheOrganisation {
 	/**
 	 * Gets the specific student icon dir.
 	 *
-	 * @param studentID the student id
+	 * @param studentID
+	 *            the student id
 	 * @return the specific student icon dir
 	 */
-	public static String getSpecificStudentIconDir(String studentID) {
+	public static String getSpecificStudentIconDir(String studentID)
+	{
 		String studentSpecificCache = getSpecificStudentDir(studentID);
-		String specifcStudentIconCacheLoc = studentSpecificCache
-				+ File.separator + ICON_DIR;
+		String specifcStudentIconCacheLoc = studentSpecificCache + File.separator + ICON_DIR;
 		File specifcStudentIconCacheDir = new File(specifcStudentIconCacheLoc);
-		if (!specifcStudentIconCacheDir.isDirectory()) {
+		if (!specifcStudentIconCacheDir.isDirectory())
+		{
 			specifcStudentIconCacheDir.mkdir();
 		}
 		return specifcStudentIconCacheLoc;
@@ -270,14 +322,17 @@ public class CacheOrganisation {
 	/**
 	 * Gets the specific table dir.
 	 *
-	 * @param tableID the table id
+	 * @param tableID
+	 *            the table id
 	 * @return the specific table dir
 	 */
-	public static String getSpecificTableDir(String tableID) {
+	public static String getSpecificTableDir(String tableID)
+	{
 		String tableCacheLoc = getTablesDir();
 		String specificTableCacheLoc = tableCacheLoc + File.separator + tableID;
 		File specificTableCacheDir = new File(specificTableCacheLoc);
-		if (!specificTableCacheDir.isDirectory()) {
+		if (!specificTableCacheDir.isDirectory())
+		{
 			specificTableCacheDir.mkdir();
 		}
 		return specificTableCacheLoc;
@@ -288,11 +343,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the students dir
 	 */
-	public static String getStudentsDir() {
+	public static String getStudentsDir()
+	{
 		String cacheLoc = getCacheLocation();
 		String studentCacheLoc = cacheLoc + File.separator + STUDENT_DIR;
 		File studentCacheDir = new File(studentCacheLoc);
-		if (!studentCacheDir.isDirectory()) {
+		if (!studentCacheDir.isDirectory())
+		{
 			studentCacheDir.mkdir();
 		}
 		return studentCacheLoc;
@@ -303,11 +360,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the tables dir
 	 */
-	public static String getTablesDir() {
+	public static String getTablesDir()
+	{
 		String cacheLoc = getCacheLocation();
 		String tableCacheLoc = cacheLoc + File.separator + TABLE_DIR;
 		File tableCacheDir = new File(tableCacheLoc);
-		if (!tableCacheDir.isDirectory()) {
+		if (!tableCacheDir.isDirectory())
+		{
 			tableCacheDir.mkdir();
 		}
 		return tableCacheLoc;
@@ -318,11 +377,13 @@ public class CacheOrganisation {
 	 *
 	 * @return the transfer dir
 	 */
-	public static String getTransferDir() {
+	public static String getTransferDir()
+	{
 		String cacheLoc = getCacheLocation();
 		String transferCacheLoc = cacheLoc + File.separator + TRANSFER_DIR;
 		File transferCacheDir = new File(transferCacheLoc);
-		if (!transferCacheDir.isDirectory()) {
+		if (!transferCacheDir.isDirectory())
+		{
 			transferCacheDir.mkdir();
 		}
 		return transferCacheLoc;

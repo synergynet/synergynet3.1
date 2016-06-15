@@ -9,7 +9,8 @@ import com.jme3.texture.Texture;
 /**
  * The Interface IImage.
  */
-public interface IImage extends IRectangularItem {
+public interface IImage extends IRectangularItem
+{
 
 	/**
 	 * Gets the image.
@@ -21,14 +22,16 @@ public interface IImage extends IRectangularItem {
 	/**
 	 * Sets the image.
 	 *
-	 * @param imageFile the new image
+	 * @param imageFile
+	 *            the new image
 	 */
 	public void setImage(File imageFile);
 
 	/**
 	 * Sets the image.
 	 *
-	 * @param imageResoure the new image
+	 * @param imageResoure
+	 *            the new image
 	 */
 	public void setImage(String imageResoure);
 
@@ -37,20 +40,24 @@ public interface IImage extends IRectangularItem {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#setSize(float,
 	 * float)
 	 */
+	@Override
 	public void setSize(float width, float height);
 
 	/**
 	 * Sets the texture.
 	 *
-	 * @param tex the new texture
+	 * @param tex
+	 *            the new texture
 	 */
 	public void setTexture(Texture tex);
 
 	/**
 	 * Sets the wrapping.
 	 *
-	 * @param xscale the xscale
-	 * @param yscale the yscale
+	 * @param xscale
+	 *            the xscale
+	 * @param yscale
+	 *            the yscale
 	 */
 	public void setWrapping(float xscale, float yscale);
 }

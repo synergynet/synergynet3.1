@@ -3,7 +3,8 @@ package multiplicity3.csys.animation.elements;
 /**
  * The Class WaitFor.
  */
-public class WaitFor extends AnimationElement {
+public class WaitFor extends AnimationElement
+{
 
 	/** The elapsed. */
 	private float elapsed;
@@ -17,9 +18,11 @@ public class WaitFor extends AnimationElement {
 	/**
 	 * Instantiates a new wait for.
 	 *
-	 * @param seconds the seconds
+	 * @param seconds
+	 *            the seconds
 	 */
-	public WaitFor(float seconds) {
+	public WaitFor(float seconds)
+	{
 		this.seconds = seconds;
 		this.elapsed = 0f;
 		finished = false;
@@ -32,7 +35,8 @@ public class WaitFor extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 
 	}
 
@@ -41,7 +45,8 @@ public class WaitFor extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
@@ -50,7 +55,8 @@ public class WaitFor extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		elapsed = 0f;
 		finished = false;
 	}
@@ -62,9 +68,11 @@ public class WaitFor extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
+	public void updateAnimationState(float tpf)
+	{
 		elapsed += tpf;
-		if (elapsed > seconds) {
+		if (elapsed > seconds)
+		{
 			finished = true;
 		}
 	}

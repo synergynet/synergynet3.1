@@ -34,19 +34,24 @@ import com.jme3.asset.AssetManager;
 /**
  * The Class ItemCaching.
  */
-public class ItemCaching {
+public class ItemCaching
+{
 
 	/**
 	 * Cache file.
 	 *
-	 * @param file the file
-	 * @param studentID the student id
+	 * @param file
+	 *            the file
+	 * @param studentID
+	 *            the student id
 	 */
-	public static void cacheFile(File file, String studentID) {
-		if (file != null) {
-			if (file.isFile()) {
-				copyFile(file, CacheOrganisation.getSpecificDir(studentID)
-						+ File.separator + file.getName());
+	public static void cacheFile(File file, String studentID)
+	{
+		if (file != null)
+		{
+			if (file.isFile())
+			{
+				copyFile(file, CacheOrganisation.getSpecificDir(studentID) + File.separator + file.getName());
 			}
 		}
 	}
@@ -54,45 +59,55 @@ public class ItemCaching {
 	/**
 	 * Cache image.
 	 *
-	 * @param image the image
-	 * @param studentID the student id
+	 * @param image
+	 *            the image
+	 * @param studentID
+	 *            the student id
 	 */
-	public static void cacheImage(String image, String studentID) {
+	public static void cacheImage(String image, String studentID)
+	{
 		copyImage(image, removeExtension(getFullImageName(image, studentID)));
 	}
 
 	/**
 	 * Copy image.
 	 *
-	 * @param oldImage the old image
-	 * @param newAddress the new address
+	 * @param oldImage
+	 *            the old image
+	 * @param newAddress
+	 *            the new address
 	 */
-	public static void copyImage(String oldImage, String newAddress) {
+	public static void copyImage(String oldImage, String newAddress)
+	{
 		newAddress += "." + getExtension(oldImage);
 		File outputFile = new File(newAddress);
 		AssetManager assetManager = MultiplicityClient.assetManager;
-		try {
-			if (outputFile.isFile()) {
+		try
+		{
+			if (outputFile.isFile())
+			{
 				return;
 			}
 			outputFile.createNewFile();
 
-			InputStream in = assetManager.locateAsset(
-					assetManager.loadTexture(oldImage).getKey()).openStream();
+			InputStream in = assetManager.locateAsset(assetManager.loadTexture(oldImage).getKey()).openStream();
 			OutputStream out = new FileOutputStream(outputFile);
 
 			byte[] buf = new byte[1024];
 
 			int len;
 
-			while ((len = in.read(buf)) > 0) {
+			while ((len = in.read(buf)) > 0)
+			{
 				out.write(buf, 0, len);
 			}
 
 			in.close();
 			out.close();
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 			outputFile.delete();
 		}
@@ -101,40 +116,48 @@ public class ItemCaching {
 	/**
 	 * Deconstruct item.
 	 *
-	 * @param item the item
-	 * @param info the info
-	 * @param studentID the student id
+	 * @param item
+	 *            the item
+	 * @param info
+	 *            the info
+	 * @param studentID
+	 *            the student id
 	 * @return the gallery item database format
 	 */
-	public static GalleryItemDatabaseFormat deconstructItem(IItem item,
-			Object[] info, String studentID) {
+	public static GalleryItemDatabaseFormat deconstructItem(IItem item, Object[] info, String studentID)
+	{
 
 		GalleryItemDatabaseFormat itemRepresentation = null;
 		FeedbackContainer feedbackContainer = null;
 
-		if (info[2] != null) {
-			if (info[2] instanceof FeedbackContainer) {
+		if (info[2] != null)
+		{
+			if (info[2] instanceof FeedbackContainer)
+			{
 				feedbackContainer = (FeedbackContainer) info[2];
 				item = feedbackContainer.getContainedItem();
 			}
 		}
 
-		if (item instanceof IItemCachable) {
+		if (item instanceof IItemCachable)
+		{
 			IItemCachable cacheItem = (IItemCachable) item;
 			itemRepresentation = cacheItem.deconstruct(studentID);
-			if (itemRepresentation == null) {
+			if (itemRepresentation == null)
+			{
 				return null;
 			}
 			itemRepresentation.setWidth((Float) info[0]);
 			itemRepresentation.setHeight((Float) info[1]);
 
-			if (feedbackContainer != null) {
-				for (FeedbackItem feedbackItem : feedbackContainer
-						.getFeedbackViewer().getFeedbackItems()) {
-					if (feedbackItem instanceof IFeedbackItemCachable) {
+			if (feedbackContainer != null)
+			{
+				for (FeedbackItem feedbackItem : feedbackContainer.getFeedbackViewer().getFeedbackItems())
+				{
+					if (feedbackItem instanceof IFeedbackItemCachable)
+					{
 						IFeedbackItemCachable feedbackCacheItem = feedbackItem;
-						itemRepresentation.addFeedbackItem(feedbackCacheItem
-								.deconstruct(studentID));
+						itemRepresentation.addFeedbackItem(feedbackCacheItem.deconstruct(studentID));
 					}
 				}
 			}
@@ -146,18 +169,22 @@ public class ItemCaching {
 	/**
 	 * Gets the extension.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return the extension
 	 */
-	public static String getExtension(String s) {
+	public static String getExtension(String s)
+	{
 		String ext = null;
 		int i = s.lastIndexOf('.');
 
-		if ((i > 0) && (i < (s.length() - 1))) {
+		if ((i > 0) && (i < (s.length() - 1)))
+		{
 			ext = s.substring(i + 1);
 		}
 
-		if (ext == null) {
+		if (ext == null)
+		{
 			return "";
 		}
 
@@ -167,138 +194,150 @@ public class ItemCaching {
 	/**
 	 * Gets the full image name.
 	 *
-	 * @param image the image
-	 * @param studentID the student id
+	 * @param image
+	 *            the image
+	 * @param studentID
+	 *            the student id
 	 * @return the full image name
 	 */
-	public static String getFullImageName(String image, String studentID) {
+	public static String getFullImageName(String image, String studentID)
+	{
 		String pathValues[];
-		try {
+		try
+		{
 			pathValues = image.split(File.separator);
-		} catch (PatternSyntaxException e) {
+		}
+		catch (PatternSyntaxException e)
+		{
 			pathValues = image.split("/");
 		}
 
-		return CacheOrganisation.getSpecificDir(studentID) + File.separator
-				+ pathValues[pathValues.length - 1];
+		return CacheOrganisation.getSpecificDir(studentID) + File.separator + pathValues[pathValues.length - 1];
 	}
 
 	/**
 	 * Reconstruct item.
 	 *
-	 * @param itemRepresentation the item representation
-	 * @param stage the stage
-	 * @param studentID the student id
+	 * @param itemRepresentation
+	 *            the item representation
+	 * @param stage
+	 *            the stage
+	 * @param studentID
+	 *            the student id
 	 * @return the i item
 	 */
-	public static IItem reconstructItem(
-			GalleryItemDatabaseFormat itemRepresentation, IStage stage,
-			String studentID) {
+	public static IItem reconstructItem(GalleryItemDatabaseFormat itemRepresentation, IStage stage, String studentID)
+	{
 		return reconstructItem(itemRepresentation, stage, studentID, 0);
 	}
 
 	/**
 	 * Reconstruct item.
 	 *
-	 * @param itemRepresentation the item representation
-	 * @param stage the stage
-	 * @param studentID the student id
-	 * @param deceleration the deceleration
+	 * @param itemRepresentation
+	 *            the item representation
+	 * @param stage
+	 *            the stage
+	 * @param studentID
+	 *            the student id
+	 * @param deceleration
+	 *            the deceleration
 	 * @return the i item
 	 */
-	public static IItem reconstructItem(
-			GalleryItemDatabaseFormat itemRepresentation, IStage stage,
-			String studentID, float deceleration) {
+	public static IItem reconstructItem(GalleryItemDatabaseFormat itemRepresentation, IStage stage, String studentID, float deceleration)
+	{
 		String type = itemRepresentation.getType();
 		IItem toReturn = null;
-		if (type.equalsIgnoreCase(CachableImage.CACHABLE_TYPE)) {
-			ICachableImage image = CachableImage.reconstruct(
-					itemRepresentation, stage, studentID);
+		if (type.equalsIgnoreCase(CachableImage.CACHABLE_TYPE))
+		{
+			ICachableImage image = CachableImage.reconstruct(itemRepresentation, stage, studentID);
 			toReturn = image;
 			image.setVisible(false);
-			if (image != null) {
-				stage.getBehaviourMaker().addBehaviour(image,
-						RotateTranslateScaleBehaviour.class);
-				if (deceleration >= 0) {
-					stage.getBehaviourMaker()
-							.addBehaviour(image, NetworkFlickBehaviour.class)
-							.setDeceleration(deceleration);
+			if (image != null)
+			{
+				stage.getBehaviourMaker().addBehaviour(image, RotateTranslateScaleBehaviour.class);
+				if (deceleration >= 0)
+				{
+					stage.getBehaviourMaker().addBehaviour(image, NetworkFlickBehaviour.class).setDeceleration(deceleration);
 				}
 			}
-		} else if (type.equalsIgnoreCase(ScreenshotContainer.CACHABLE_TYPE)) {
-			ScreenshotContainer screenshotContainer = ScreenshotContainer
-					.reconstruct(itemRepresentation, stage, studentID);
+		}
+		else if (type.equalsIgnoreCase(ScreenshotContainer.CACHABLE_TYPE))
+		{
+			ScreenshotContainer screenshotContainer = ScreenshotContainer.reconstruct(itemRepresentation, stage, studentID);
 			screenshotContainer.setVisible(false);
 			toReturn = screenshotContainer;
-		} else if (type.equalsIgnoreCase(MediaPlayer.CACHABLE_TYPE)) {
-			MediaPlayer mediaPlayer = MediaPlayer.reconstruct(
-					itemRepresentation, stage, studentID);
+		}
+		else if (type.equalsIgnoreCase(MediaPlayer.CACHABLE_TYPE))
+		{
+			MediaPlayer mediaPlayer = MediaPlayer.reconstruct(itemRepresentation, stage, studentID);
 			mediaPlayer.setVisible(false);
 			toReturn = mediaPlayer;
-		} else if (type.equalsIgnoreCase(Textbox.CACHABLE_TYPE)) {
-			Textbox textBox = Textbox.reconstruct(itemRepresentation, stage,
-					studentID);
+		}
+		else if (type.equalsIgnoreCase(Textbox.CACHABLE_TYPE))
+		{
+			Textbox textBox = Textbox.reconstruct(itemRepresentation, stage, studentID);
 			textBox.setVisible(false);
 			toReturn = textBox;
-			if (deceleration >= 0) {
-				NetworkFlickBehaviour nf = stage.getBehaviourMaker()
-						.addBehaviour(textBox.getListenBlock(), NetworkFlickBehaviour.class);
+			if (deceleration >= 0)
+			{
+				NetworkFlickBehaviour nf = stage.getBehaviourMaker().addBehaviour(textBox.getListenBlock(), NetworkFlickBehaviour.class);
 				nf.setItemActingOn(textBox);
 				nf.setDeceleration(deceleration);
 			}
-		} else if (type.equalsIgnoreCase(CachableLine.CACHABLE_TYPE)) {
-			CachableLine line = CachableLine.reconstruct(itemRepresentation,
-					stage, studentID);
+		}
+		else if (type.equalsIgnoreCase(CachableLine.CACHABLE_TYPE))
+		{
+			CachableLine line = CachableLine.reconstruct(itemRepresentation, stage, studentID);
 			line.setVisible(false);
 			toReturn = line;
 		}
-		if (toReturn != null) {
-			if (itemRepresentation.getFeedbackItems().size() > 0) {
-				FeedbackContainer feedbackContainer = new FeedbackContainer(
-						stage);
+		if (toReturn != null)
+		{
+			if (itemRepresentation.getFeedbackItems().size() > 0)
+			{
+				FeedbackContainer feedbackContainer = new FeedbackContainer(stage);
 
-				FeedbackSystem.registerAsFeedbackEligible(toReturn,
-						itemRepresentation.getWidth(),
-						itemRepresentation.getHeight(), stage);
+				FeedbackSystem.registerAsFeedbackEligible(toReturn, itemRepresentation.getWidth(), itemRepresentation.getHeight(), stage);
 				feedbackContainer.setItem(toReturn);
 
-				for (Object[] feedbackItem : itemRepresentation
-						.getFeedbackItems()) {
+				for (Object[] feedbackItem : itemRepresentation.getFeedbackItems())
+				{
 
 					String feedbackType = (String) feedbackItem[0];
 					FeedbackItem feedback = null;
 
-					if (feedbackType
-							.equalsIgnoreCase(AudioFeedback.CACHABLE_TYPE)) {
+					if (feedbackType.equalsIgnoreCase(AudioFeedback.CACHABLE_TYPE))
+					{
 						feedback = AudioFeedback.reconstruct(feedbackItem);
-					} else if (feedbackType
-							.equalsIgnoreCase(YesOrNoFeedback.CACHABLE_TYPE)) {
+					}
+					else if (feedbackType.equalsIgnoreCase(YesOrNoFeedback.CACHABLE_TYPE))
+					{
 						feedback = YesOrNoFeedback.reconstruct(feedbackItem);
-					} else if (feedbackType
-							.equalsIgnoreCase(SmilieFeedback.CACHABLE_TYPE)) {
+					}
+					else if (feedbackType.equalsIgnoreCase(SmilieFeedback.CACHABLE_TYPE))
+					{
 						feedback = SmilieFeedback.reconstruct(feedbackItem);
-					} else if (feedbackType
-							.equalsIgnoreCase(SimpleTrafficLightFeedback.CACHABLE_TYPE)) {
-						feedback = SimpleTrafficLightFeedback
-								.reconstruct(feedbackItem);
+					}
+					else if (feedbackType.equalsIgnoreCase(SimpleTrafficLightFeedback.CACHABLE_TYPE))
+					{
+						feedback = SimpleTrafficLightFeedback.reconstruct(feedbackItem);
 					}
 
-					if (feedback != null) {
+					if (feedback != null)
+					{
 						feedback.setStage(stage);
-						feedbackContainer.getFeedbackViewer().addFeedback(
-								feedback);
-						feedbackContainer.getFeedbackViewer().getContainer()
-								.setVisibility(false);
+						feedbackContainer.getFeedbackViewer().addFeedback(feedback);
+						feedbackContainer.getFeedbackViewer().getContainer().setVisibility(false);
 					}
 				}
 
 				toReturn = feedbackContainer.getWrapper();
 			}
 
-			if (!FeedbackSystem.isItemFeedbackEligible(toReturn)) {
-				FeedbackSystem.registerAsFeedbackEligible(toReturn,
-						itemRepresentation.getWidth(),
-						itemRepresentation.getHeight(), stage);
+			if (!FeedbackSystem.isItemFeedbackEligible(toReturn))
+			{
+				FeedbackSystem.registerAsFeedbackEligible(toReturn, itemRepresentation.getWidth(), itemRepresentation.getHeight(), stage);
 			}
 		}
 		return toReturn;
@@ -307,18 +346,22 @@ public class ItemCaching {
 	/**
 	 * Removes the extension.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return the string
 	 */
-	public static String removeExtension(String s) {
+	public static String removeExtension(String s)
+	{
 		String sFull = null;
 		int i = s.lastIndexOf('.');
 
-		if (i > 1) {
+		if (i > 1)
+		{
 			sFull = s.substring(0, i);
 		}
 
-		if (sFull == null) {
+		if (sFull == null)
+		{
 			return "";
 		}
 
@@ -328,13 +371,18 @@ public class ItemCaching {
 	/**
 	 * Copy file.
 	 *
-	 * @param inputFile the input file
-	 * @param newAddress the new address
+	 * @param inputFile
+	 *            the input file
+	 * @param newAddress
+	 *            the new address
 	 */
-	private static void copyFile(File inputFile, String newAddress) {
+	private static void copyFile(File inputFile, String newAddress)
+	{
 		File outputFile = new File(newAddress);
-		try {
-			if (outputFile.isFile()) {
+		try
+		{
+			if (outputFile.isFile())
+			{
 				return;
 			}
 			outputFile.createNewFile();
@@ -346,14 +394,17 @@ public class ItemCaching {
 
 			int len;
 
-			while ((len = in.read(buf)) > 0) {
+			while ((len = in.read(buf)) > 0)
+			{
 				out.write(buf, 0, len);
 			}
 
 			in.close();
 			out.close();
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 			outputFile.delete();
 		}

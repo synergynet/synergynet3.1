@@ -10,7 +10,8 @@ import com.google.gwt.user.client.ui.ScrollPanel;
 /**
  * The Class FixedSizeScrollableListBox.
  */
-public class FixedSizeScrollableListBox extends ScrollPanel {
+public class FixedSizeScrollableListBox extends ScrollPanel
+{
 
 	/** The list box. */
 	SimpleListBox listBox;
@@ -18,7 +19,8 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	/**
 	 * Instantiates a new fixed size scrollable list box.
 	 */
-	public FixedSizeScrollableListBox() {
+	public FixedSizeScrollableListBox()
+	{
 		listBox = new SimpleListBox();
 		setStylePrimaryName("fixedSizeScrollableListBox");
 		listBox.setStylePrimaryName("simpleListBoxPlain");
@@ -28,29 +30,35 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	/**
 	 * Adds the click handler.
 	 *
-	 * @param handler the handler
+	 * @param handler
+	 *            the handler
 	 * @return the handler registration
 	 */
-	public HandlerRegistration addClickHandler(ClickHandler handler) {
+	public HandlerRegistration addClickHandler(ClickHandler handler)
+	{
 		return addDomHandler(handler, ClickEvent.getType());
 	}
 
 	/**
 	 * Adds the item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	public void addItem(String item) {
+	public void addItem(String item)
+	{
 		listBox.addItem(item);
 	}
 
 	/**
 	 * Gets the item at index.
 	 *
-	 * @param index the index
+	 * @param index
+	 *            the index
 	 * @return the item at index
 	 */
-	public String getItemAtIndex(int index) {
+	public String getItemAtIndex(int index)
+	{
 		return listBox.getItemAtIndex(index);
 	}
 
@@ -59,7 +67,8 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	 *
 	 * @return the item count
 	 */
-	public int getItemCount() {
+	public int getItemCount()
+	{
 		return listBox.getWidgetCount();
 	}
 
@@ -70,7 +79,8 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	 *
 	 * @return the selected index
 	 */
-	public int getSelectedIndex() {
+	public int getSelectedIndex()
+	{
 		return listBox.getSelectedIndex();
 	}
 
@@ -79,7 +89,8 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	 *
 	 * @return the selected item
 	 */
-	public String getSelectedItem() {
+	public String getSelectedItem()
+	{
 		return listBox.getSelectedItem();
 	}
 
@@ -88,7 +99,8 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	 *
 	 * @return the selected items
 	 */
-	public List<String> getSelectedItems() {
+	public List<String> getSelectedItems()
+	{
 		return listBox.getSelectedItems();
 	}
 
@@ -97,40 +109,47 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	 *
 	 * @return true, if is multiple select
 	 */
-	public boolean isMultipleSelect() {
+	public boolean isMultipleSelect()
+	{
 		return listBox.isMultipleSelect();
 	}
 
 	/**
 	 * Checks if is selected.
 	 *
-	 * @param index the index
+	 * @param index
+	 *            the index
 	 * @return true, if is selected
 	 */
-	public boolean isSelected(int index) {
+	public boolean isSelected(int index)
+	{
 		return listBox.isSelected(index);
 	}
 
 	/**
 	 * Removes the all items.
 	 */
-	public void removeAllItems() {
+	public void removeAllItems()
+	{
 		listBox.removeAllItems();
 	}
 
 	/**
 	 * Select all.
 	 */
-	public void selectAll() {
+	public void selectAll()
+	{
 		listBox.selectAll();
 	}
 
 	/**
 	 * Sets the allows selection.
 	 *
-	 * @param allowsSelection the new allows selection
+	 * @param allowsSelection
+	 *            the new allows selection
 	 */
-	public void setAllowsSelection(boolean allowsSelection) {
+	public void setAllowsSelection(boolean allowsSelection)
+	{
 		listBox.setAllowsSelection(allowsSelection);
 	}
 
@@ -139,9 +158,11 @@ public class FixedSizeScrollableListBox extends ScrollPanel {
 	/**
 	 * Sets the multiple select.
 	 *
-	 * @param isMultipleSelect the new multiple select
+	 * @param isMultipleSelect
+	 *            the new multiple select
 	 */
-	public void setMultipleSelect(boolean isMultipleSelect) {
+	public void setMultipleSelect(boolean isMultipleSelect)
+	{
 		listBox.setMultipleSelect(isMultipleSelect);
 	}
 

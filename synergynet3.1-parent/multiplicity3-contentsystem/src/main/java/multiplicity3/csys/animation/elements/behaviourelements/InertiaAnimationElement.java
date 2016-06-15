@@ -9,7 +9,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class InertiaAnimationElement.
  */
-public class InertiaAnimationElement extends AnimationElement {
+public class InertiaAnimationElement extends AnimationElement
+{
 
 	/** The current velocity. */
 	private Vector2f currentVelocity;
@@ -29,10 +30,13 @@ public class InertiaAnimationElement extends AnimationElement {
 	/**
 	 * Instantiates a new inertia animation element.
 	 *
-	 * @param item the item
-	 * @param stage the stage
+	 * @param item
+	 *            the item
+	 * @param stage
+	 *            the stage
 	 */
-	public InertiaAnimationElement(IItem item, IStage stage) {
+	public InertiaAnimationElement(IItem item, IStage stage)
+	{
 		this.item = item;
 		this.stage = stage;
 	}
@@ -44,7 +48,8 @@ public class InertiaAnimationElement extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 	}
 
 	/**
@@ -52,7 +57,8 @@ public class InertiaAnimationElement extends AnimationElement {
 	 *
 	 * @return the deceleration factor
 	 */
-	public float getDecelerationFactor() {
+	public float getDecelerationFactor()
+	{
 		return this.deceleration;
 	}
 
@@ -61,16 +67,19 @@ public class InertiaAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
 	/**
 	 * Move with velocity.
 	 *
-	 * @param velocity the velocity
+	 * @param velocity
+	 *            the velocity
 	 */
-	public void moveWithVelocity(Vector2f velocity) {
+	public void moveWithVelocity(Vector2f velocity)
+	{
 		this.currentVelocity = velocity.clone();
 		this.finished = false;
 	}
@@ -80,7 +89,8 @@ public class InertiaAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		finished = true;
 		currentVelocity = new Vector2f();
 	}
@@ -92,9 +102,11 @@ public class InertiaAnimationElement extends AnimationElement {
 	/**
 	 * Sets the deceleration.
 	 *
-	 * @param deceleration the new deceleration
+	 * @param deceleration
+	 *            the new deceleration
 	 */
-	public void setDeceleration(float deceleration) {
+	public void setDeceleration(float deceleration)
+	{
 		this.deceleration = deceleration;
 	}
 
@@ -105,36 +117,47 @@ public class InertiaAnimationElement extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
-		if (!finished) {
-			item.setWorldLocation(item.getWorldLocation().add(
-					currentVelocity.mult(tpf)));
+	public void updateAnimationState(float tpf)
+	{
+		if (!finished)
+		{
+			item.setWorldLocation(item.getWorldLocation().add(currentVelocity.mult(tpf)));
 
-			if (item.getWorldLocation().x > stage.getDisplayWidth()) {
-				if (currentVelocity.x > 0) {
+			if (item.getWorldLocation().x > stage.getDisplayWidth())
+			{
+				if (currentVelocity.x > 0)
+				{
 					currentVelocity.setX(-currentVelocity.getX());
 				}
-			} else if (item.getWorldLocation().x < 0) {
-				if (currentVelocity.x < 0) {
+			}
+			else if (item.getWorldLocation().x < 0)
+			{
+				if (currentVelocity.x < 0)
+				{
 					currentVelocity.setX(-currentVelocity.getX());
 				}
 			}
 
-			if (item.getWorldLocation().y > stage.getDisplayHeight()) {
-				if (currentVelocity.y > 0) {
+			if (item.getWorldLocation().y > stage.getDisplayHeight())
+			{
+				if (currentVelocity.y > 0)
+				{
 					currentVelocity.setY(-currentVelocity.getY());
 				}
-			} else if (item.getWorldLocation().y < 0) {
-				if (currentVelocity.y < 0) {
+			}
+			else if (item.getWorldLocation().y < 0)
+			{
+				if (currentVelocity.y < 0)
+				{
 					currentVelocity.setY(-currentVelocity.getY());
 				}
 			}
 
-			Vector2f reduceBy = currentVelocity.normalize().mult(
-					deceleration * tpf);
+			Vector2f reduceBy = currentVelocity.normalize().mult(deceleration * tpf);
 			currentVelocity.subtractLocal(reduceBy);
 
-			if (currentVelocity.length() < 1f) {
+			if (currentVelocity.length() < 1f)
+			{
 				finished = true;
 			}
 		}

@@ -3,7 +3,8 @@ package synergynet3.fonts;
 /**
  * The Enum FontColour.
  */
-public enum FontColour {
+public enum FontColour
+{
 
 	/** The Black. */
 	Black,

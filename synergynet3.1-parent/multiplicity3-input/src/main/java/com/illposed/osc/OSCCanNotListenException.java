@@ -32,7 +32,8 @@ package com.illposed.osc;
  *         rights reserved. See license.txt (or license.rtf) for license
  *         information.
  */
-public class OSCCanNotListenException extends Exception {
+public class OSCCanNotListenException extends Exception
+{
 
 	/**
 	 *
@@ -42,14 +43,16 @@ public class OSCCanNotListenException extends Exception {
 	/**
 	 *
 	 */
-	public OSCCanNotListenException() {
+	public OSCCanNotListenException()
+	{
 		super();
 	}
 
 	/**
 	 * @param message
 	 */
-	public OSCCanNotListenException(String message) {
+	public OSCCanNotListenException(String message)
+	{
 		super(message);
 	}
 

@@ -19,11 +19,11 @@ import com.hazelcast.core.Member;
 /**
  * The Class ExpressionSession.
  */
-public class ExpressionSession {
+public class ExpressionSession
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(ExpressionSession.class
-			.getName());
+	private static final Logger log = Logger.getLogger(ExpressionSession.class.getName());
 
 	/** The distributed expression map. */
 	private DistributedMap<String, Expression> distributedExpressionMap;
@@ -49,9 +49,11 @@ public class ExpressionSession {
 	/**
 	 * Instantiates a new expression session.
 	 *
-	 * @param dataCluster the data cluster
+	 * @param dataCluster
+	 *            the data cluster
 	 */
-	public ExpressionSession(NumberNetStudentTableClusteredData dataCluster) {
+	public ExpressionSession(NumberNetStudentTableClusteredData dataCluster)
+	{
 		listeners = new ArrayList<IExpressionSessionChangeListener>();
 
 		targetValueFormatter = new DecimalFormat();
@@ -60,28 +62,29 @@ public class ExpressionSession {
 
 		expressions = new ArrayList<Expression>();
 
-		dataCluster.getTargetValueControlVariable().registerChangeListener(
-				new DistributedPropertyChangedAction<Double>() {
-					@Override
-					public void distributedPropertyDidChange(Member member,
-							Double oldValue, Double newValue) {
-						log.fine("Target value changed from " + oldValue
-								+ " to " + newValue);
-						setTarget(newValue);
-					}
-				});
+		dataCluster.getTargetValueControlVariable().registerChangeListener(new DistributedPropertyChangedAction<Double>()
+		{
+			@Override
+			public void distributedPropertyDidChange(Member member, Double oldValue, Double newValue)
+			{
+				log.fine("Target value changed from " + oldValue + " to " + newValue);
+				setTarget(newValue);
+			}
+		});
 	}
 
 	/**
 	 * Adds the all expressions from distributed map.
 	 */
-	public void addAllExpressionsFromDistributedMap() {
-		if (distributedExpressionMap == null) {
+	public void addAllExpressionsFromDistributedMap()
+	{
+		if (distributedExpressionMap == null)
+		{
 			return;
 		}
-		log.info("Distributed map has " + distributedExpressionMap.size()
-				+ " entries.");
-		for (Expression e : distributedExpressionMap.values()) {
+		log.info("Distributed map has " + distributedExpressionMap.size() + " entries.");
+		for (Expression e : distributedExpressionMap.values())
+		{
 			addExpressionFromAlreadyExistingEntryInDistributedMap(e);
 		}
 	}
@@ -89,10 +92,13 @@ public class ExpressionSession {
 	/**
 	 * Adds the change listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void addChangeListener(IExpressionSessionChangeListener listener) {
-		if (listeners.contains(listener)) {
+	public void addChangeListener(IExpressionSessionChangeListener listener)
+	{
+		if (listeners.contains(listener))
+		{
 			return;
 		}
 		this.listeners.add(listener);
@@ -101,19 +107,23 @@ public class ExpressionSession {
 	/**
 	 * Adds the expression created by calculator.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
-	public void addExpressionCreatedByCalculator(Expression e) {
+	public void addExpressionCreatedByCalculator(Expression e)
+	{
 		addExpressionToSession(e, true);
 	}
 
 	/**
 	 * Contains expression.
 	 *
-	 * @param expressionString the expression string
+	 * @param expressionString
+	 *            the expression string
 	 * @return true, if successful
 	 */
-	public boolean containsExpression(String expressionString) {
+	public boolean containsExpression(String expressionString)
+	{
 		return getExpressionForExpressionString(expressionString) != null;
 	}
 
@@ -122,8 +132,10 @@ public class ExpressionSession {
 	 *
 	 * @return the current target value as string
 	 */
-	public String getCurrentTargetValueAsString() {
-		if (getTargetValue() == null) {
+	public String getCurrentTargetValueAsString()
+	{
+		if (getTargetValue() == null)
+		{
 			return null;
 		}
 		return targetValueFormatter.format(getTargetValue());
@@ -132,12 +144,16 @@ public class ExpressionSession {
 	/**
 	 * Gets the expression for expression string.
 	 *
-	 * @param expressionString the expression string
+	 * @param expressionString
+	 *            the expression string
 	 * @return the expression for expression string
 	 */
-	public Expression getExpressionForExpressionString(String expressionString) {
-		for (int i = 0; i < expressions.size(); i++) {
-			if (expressions.get(i).getExpression().equals(expressionString)) {
+	public Expression getExpressionForExpressionString(String expressionString)
+	{
+		for (int i = 0; i < expressions.size(); i++)
+		{
+			if (expressions.get(i).getExpression().equals(expressionString))
+			{
 				return expressions.get(i);
 			}
 		}
@@ -147,17 +163,24 @@ public class ExpressionSession {
 	/**
 	 * Gets the scores for table.
 	 *
-	 * @param tableID the table id
+	 * @param tableID
+	 *            the table id
 	 * @return the scores for table
 	 */
-	public ExpressionSessionScores getScoresForTable(String tableID) {
+	public ExpressionSessionScores getScoresForTable(String tableID)
+	{
 		int correctCount = 0;
 		int incorrectCount = 0;
-		for (int i = 0; i < expressions.size(); i++) {
-			if (expressions.get(i).getCreatedOnTable().equals(tableID)) {
-				if (expressions.get(i).isCorrect()) {
+		for (int i = 0; i < expressions.size(); i++)
+		{
+			if (expressions.get(i).getCreatedOnTable().equals(tableID))
+			{
+				if (expressions.get(i).isCorrect())
+				{
 					correctCount++;
-				} else {
+				}
+				else
+				{
 					incorrectCount++;
 				}
 			}
@@ -170,32 +193,40 @@ public class ExpressionSession {
 	 *
 	 * @return the target value
 	 */
-	public Double getTargetValue() {
+	public Double getTargetValue()
+	{
 		return targetValue;
 	}
 
 	/**
 	 * Removes the change listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void removeChangeListener(IExpressionSessionChangeListener listener) {
+	public void removeChangeListener(IExpressionSessionChangeListener listener)
+	{
 		this.listeners.remove(listener);
 	}
 
 	/**
 	 * Removes the expression with text.
 	 *
-	 * @param expressionText the expression text
+	 * @param expressionText
+	 *            the expression text
 	 */
-	public void removeExpressionWithText(String expressionText) {
+	public void removeExpressionWithText(String expressionText)
+	{
 		log.info("Attempting to remove expression >" + expressionText + "<");
 		log.info("Finding appropriate object...");
 		Expression expression = getExpressionForExpressionString(expressionText);
-		if (expression == null) {
+		if (expression == null)
+		{
 			log.info("Did not find one.");
 			return;
-		} else {
+		}
+		else
+		{
 			log.info("Found expression " + expression.getFullString());
 			removeExpressionFromSession(expression, true);
 		}
@@ -204,16 +235,19 @@ public class ExpressionSession {
 	/**
 	 * Sets the target.
 	 *
-	 * @param newTarget the new target
+	 * @param newTarget
+	 *            the new target
 	 */
-	public void setTarget(double newTarget) {
+	public void setTarget(double newTarget)
+	{
 		this.targetValue = newTarget;
 
 		removeAllExpressionsLocally();
 		switchDistributedMapAndUpdateMapActions();
 		addAllExpressionsFromDistributedMap();
 
-		for (IExpressionSessionChangeListener listener : listeners) {
+		for (IExpressionSessionChangeListener listener : listeners)
+		{
 			listener.targetChanged(newTarget);
 		}
 	}
@@ -221,10 +255,11 @@ public class ExpressionSession {
 	/**
 	 * Adds the expression from already existing entry in distributed map.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
-	private void addExpressionFromAlreadyExistingEntryInDistributedMap(
-			Expression e) {
+	private void addExpressionFromAlreadyExistingEntryInDistributedMap(Expression e)
+	{
 		log.info("Adding " + e + " to display");
 		addExpressionToSession(e, false);
 	}
@@ -234,24 +269,34 @@ public class ExpressionSession {
 	/**
 	 * Adds the expression to session.
 	 *
-	 * @param e the e
-	 * @param addToDistributedMap the add to distributed map
+	 * @param e
+	 *            the e
+	 * @param addToDistributedMap
+	 *            the add to distributed map
 	 */
-	private void addExpressionToSession(Expression e,
-			boolean addToDistributedMap) {
+	private void addExpressionToSession(Expression e, boolean addToDistributedMap)
+	{
 		expressions.add(e);
 
-		if (addToDistributedMap) {
-			for (IExpressionSessionChangeListener listener : listeners) {
+		if (addToDistributedMap)
+		{
+			for (IExpressionSessionChangeListener listener : listeners)
+			{
 				listener.expressionAddedFromCalculator(e);
 			}
-			if (distributedExpressionMap != null) {
+			if (distributedExpressionMap != null)
+			{
 				distributedExpressionMap.put(e.getId(), e);
-			} else {
+			}
+			else
+			{
 				log.warning("Attempt to add an expression when there's no distributed map");
 			}
-		} else {
-			for (IExpressionSessionChangeListener listener : listeners) {
+		}
+		else
+		{
+			for (IExpressionSessionChangeListener listener : listeners)
+			{
 				listener.expressionAddedFromNetwork(e);
 			}
 		}
@@ -262,13 +307,15 @@ public class ExpressionSession {
 	 *
 	 * @return the item added action
 	 */
-	private ItemAddedAction<String, Expression> createAndGetItemAddedAction() {
-		itemAddedAction = new ItemAddedAction<String, Expression>() {
+	private ItemAddedAction<String, Expression> createAndGetItemAddedAction()
+	{
+		itemAddedAction = new ItemAddedAction<String, Expression>()
+		{
 			@Override
-			public void itemAddedToCollection(
-					IMap<String, Expression> collection, String itemKey,
-					Expression itemValue, Member member) {
-				if (member.localMember()) {
+			public void itemAddedToCollection(IMap<String, Expression> collection, String itemKey, Expression itemValue, Member member)
+			{
+				if (member.localMember())
+				{
 					return;
 				}
 				addExpressionFromAlreadyExistingEntryInDistributedMap(itemValue);
@@ -282,13 +329,15 @@ public class ExpressionSession {
 	 *
 	 * @return the item removed action
 	 */
-	private ItemRemovedAction<String, Expression> createAndGetItemRemovedAction() {
-		itemRemovedAction = new ItemRemovedAction<String, Expression>() {
+	private ItemRemovedAction<String, Expression> createAndGetItemRemovedAction()
+	{
+		itemRemovedAction = new ItemRemovedAction<String, Expression>()
+		{
 			@Override
-			public void itemRemovedFromCollection(
-					IMap<String, Expression> collection, String itemKey,
-					Expression itemValue, Member member) {
-				if (member.localMember()) {
+			public void itemRemovedFromCollection(IMap<String, Expression> collection, String itemKey, Expression itemValue, Member member)
+			{
+				if (member.localMember())
+				{
 					return;
 				}
 				removeExpressionFromSession(itemValue, true);
@@ -300,18 +349,23 @@ public class ExpressionSession {
 	/**
 	 * Removes the expression from session.
 	 *
-	 * @param expression the expression
-	 * @param deleteFromDistributedMap the delete from distributed map
+	 * @param expression
+	 *            the expression
+	 * @param deleteFromDistributedMap
+	 *            the delete from distributed map
 	 */
-	private void removeExpressionFromSession(Expression expression,
-			boolean deleteFromDistributedMap) {
+	private void removeExpressionFromSession(Expression expression, boolean deleteFromDistributedMap)
+	{
 		expressions.remove(expression);
-		if (deleteFromDistributedMap) {
-			if (distributedExpressionMap != null) {
+		if (deleteFromDistributedMap)
+		{
+			if (distributedExpressionMap != null)
+			{
 				distributedExpressionMap.remove(expression.getId());
 			}
 		}
-		for (IExpressionSessionChangeListener listener : listeners) {
+		for (IExpressionSessionChangeListener listener : listeners)
+		{
 			listener.expressionRemoved(expression);
 		}
 	}
@@ -319,30 +373,29 @@ public class ExpressionSession {
 	/**
 	 * Switch distributed map and update map actions.
 	 */
-	private void switchDistributedMapAndUpdateMapActions() {
-		if (this.distributedExpressionMap != null) {
-			this.distributedExpressionMap
-					.unregisterItemAddedAction(itemAddedAction);
-			this.distributedExpressionMap
-					.unregisterItemRemovedAction(itemRemovedAction);
+	private void switchDistributedMapAndUpdateMapActions()
+	{
+		if (this.distributedExpressionMap != null)
+		{
+			this.distributedExpressionMap.unregisterItemAddedAction(itemAddedAction);
+			this.distributedExpressionMap.unregisterItemRemovedAction(itemRemovedAction);
 		}
 
-		this.distributedExpressionMap = TargetMaps.get()
-				.getDistributedMapForTarget(targetValue);
+		this.distributedExpressionMap = TargetMaps.get().getDistributedMapForTarget(targetValue);
 		// this.distributedExpressionMap =
 		// dataCluster.getDistributedExpressionMapForTarget(this.targetValue);
-		this.distributedExpressionMap
-				.registerItemAddedAction(createAndGetItemAddedAction());
-		this.distributedExpressionMap
-				.registerItemRemovedAction(createAndGetItemRemovedAction());
+		this.distributedExpressionMap.registerItemAddedAction(createAndGetItemAddedAction());
+		this.distributedExpressionMap.registerItemRemovedAction(createAndGetItemRemovedAction());
 	}
 
 	/**
 	 * Removes the all expressions locally.
 	 */
-	protected void removeAllExpressionsLocally() {
+	protected void removeAllExpressionsLocally()
+	{
 		expressions.clear();
-		for (IExpressionSessionChangeListener listener : listeners) {
+		for (IExpressionSessionChangeListener listener : listeners)
+		{
 			listener.allExpressionsRemoved();
 		}
 	}

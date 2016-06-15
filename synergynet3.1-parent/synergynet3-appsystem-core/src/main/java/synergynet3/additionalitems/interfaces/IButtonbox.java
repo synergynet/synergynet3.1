@@ -12,7 +12,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface IButtonbox.
  */
-public interface IButtonbox extends IItem {
+public interface IButtonbox extends IItem
+{
 
 	/**
 	 * Gets the height.
@@ -59,29 +60,39 @@ public interface IButtonbox extends IItem {
 	/**
 	 * Sets the image.
 	 *
-	 * @param image the image
-	 * @param bgColour the bg colour
-	 * @param borderColour the border colour
-	 * @param width the width
-	 * @param height the height
-	 * @param stage the stage
+	 * @param image
+	 *            the image
+	 * @param bgColour
+	 *            the bg colour
+	 * @param borderColour
+	 *            the border colour
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param stage
+	 *            the stage
 	 */
-	public void setImage(IImage image, ColorRGBA bgColour,
-			ColorRGBA borderColour, float width, float height, IStage stage);
+	public void setImage(IImage image, ColorRGBA bgColour, ColorRGBA borderColour, float width, float height, IStage stage);
 
 	/**
 	 * Sets the text.
 	 *
-	 * @param text the text
-	 * @param bgColour the bg colour
-	 * @param borderColour the border colour
-	 * @param fontColour the font colour
-	 * @param width the width
-	 * @param height the height
-	 * @param stage the stage
+	 * @param text
+	 *            the text
+	 * @param bgColour
+	 *            the bg colour
+	 * @param borderColour
+	 *            the border colour
+	 * @param fontColour
+	 *            the font colour
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param stage
+	 *            the stage
 	 */
-	public void setText(String text, ColorRGBA bgColour,
-			ColorRGBA borderColour, FontColour fontColour, float width,
-			float height, IStage stage);
+	public void setText(String text, ColorRGBA bgColour, ColorRGBA borderColour, FontColour fontColour, float width, float height, IStage stage);
 
 }

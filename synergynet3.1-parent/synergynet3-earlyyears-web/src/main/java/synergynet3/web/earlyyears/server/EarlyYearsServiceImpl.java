@@ -11,8 +11,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 /**
  * The Class EarlyYearsServiceImpl.
  */
-public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
-		EarlyYearsService {
+public class EarlyYearsServiceImpl extends RemoteServiceServlet implements EarlyYearsService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 888142181330339335L;
@@ -25,17 +25,22 @@ public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
 	 * java.lang.String[])
 	 */
 	@Override
-	public void setActivity(EarlyYearsActivity scenario, String[] tables) {
-		if (tables.length < 1) {
+	public void setActivity(EarlyYearsActivity scenario, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(EarlyYearsUI.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(EarlyYearsUI.ALL_TABLES_ID))
+			{
 				EarlyYearsControlComms.get().setAllTablesScenario(scenario);
 				break;
-			} else {
-				EarlyYearsControlComms.get().setSpecificTablesScenario(
-						scenario, table);
+			}
+			else
+			{
+				EarlyYearsControlComms.get().setSpecificTablesScenario(scenario, table);
 			}
 		}
 	}
@@ -46,16 +51,21 @@ public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
 	 * setRailwayCornerNum(int, java.lang.String[])
 	 */
 	@Override
-	public void setRailwayCornerNum(int newNum, String[] tables) {
-		if (tables.length < 1) {
+	public void setRailwayCornerNum(int newNum, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(EarlyYearsUI.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(EarlyYearsUI.ALL_TABLES_ID))
+			{
 				EarlyYearsControlComms.get().setAllTablesRailwayCorners(newNum);
-			} else {
-				EarlyYearsControlComms.get().setSpecificTablesRailwayCorners(
-						newNum, table);
+			}
+			else
+			{
+				EarlyYearsControlComms.get().setSpecificTablesRailwayCorners(newNum, table);
 			}
 		}
 	}
@@ -66,16 +76,21 @@ public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
 	 * setRailwayCrossNum(int, java.lang.String[])
 	 */
 	@Override
-	public void setRailwayCrossNum(int newNum, String[] tables) {
-		if (tables.length < 1) {
+	public void setRailwayCrossNum(int newNum, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(EarlyYearsUI.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(EarlyYearsUI.ALL_TABLES_ID))
+			{
 				EarlyYearsControlComms.get().setAllTablesRailwayCrosses(newNum);
-			} else {
-				EarlyYearsControlComms.get().setSpecificTablesRailwayCrosses(
-						newNum, table);
+			}
+			else
+			{
+				EarlyYearsControlComms.get().setSpecificTablesRailwayCrosses(newNum, table);
 			}
 		}
 	}
@@ -86,17 +101,21 @@ public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
 	 * setRailwayStraightNum(int, java.lang.String[])
 	 */
 	@Override
-	public void setRailwayStraightNum(int newNum, String[] tables) {
-		if (tables.length < 1) {
+	public void setRailwayStraightNum(int newNum, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(EarlyYearsUI.ALL_TABLES_ID)) {
-				EarlyYearsControlComms.get().setAllTablesRailwayStraights(
-						newNum);
-			} else {
-				EarlyYearsControlComms.get().setSpecificTablesRailwayStraights(
-						newNum, table);
+		for (String table : tables)
+		{
+			if (table.equals(EarlyYearsUI.ALL_TABLES_ID))
+			{
+				EarlyYearsControlComms.get().setAllTablesRailwayStraights(newNum);
+			}
+			else
+			{
+				EarlyYearsControlComms.get().setSpecificTablesRailwayStraights(newNum, table);
 			}
 		}
 	}
@@ -109,16 +128,21 @@ public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
 	 * java.lang.String[])
 	 */
 	@Override
-	public void setRoadMode(PerformActionMessage roadMode, String[] tables) {
-		if (tables.length < 1) {
+	public void setRoadMode(PerformActionMessage roadMode, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(EarlyYearsUI.ALL_TABLES_ID)) {
+		for (String table : tables)
+		{
+			if (table.equals(EarlyYearsUI.ALL_TABLES_ID))
+			{
 				EarlyYearsControlComms.get().setAllRoadMode(roadMode);
-			} else {
-				EarlyYearsControlComms.get().setSpecificRoadMode(roadMode,
-						table);
+			}
+			else
+			{
+				EarlyYearsControlComms.get().setSpecificRoadMode(roadMode, table);
 			}
 		}
 	}
@@ -131,19 +155,21 @@ public class EarlyYearsServiceImpl extends RemoteServiceServlet implements
 	 * java.lang.String[])
 	 */
 	@Override
-	public void showExplorerTeacherConsole(PerformActionMessage show,
-			String[] tables) {
-		if (tables.length < 1) {
+	public void showExplorerTeacherConsole(PerformActionMessage show, String[] tables)
+	{
+		if (tables.length < 1)
+		{
 			return;
 		}
-		for (String table : tables) {
-			if (table.equals(EarlyYearsUI.ALL_TABLES_ID)) {
-				EarlyYearsControlComms.get()
-						.setAllTablesExplorerShowTeacherControl(show);
-			} else {
-				EarlyYearsControlComms.get()
-						.setSpecificTablesExplorerShowTeacherControl(show,
-								table);
+		for (String table : tables)
+		{
+			if (table.equals(EarlyYearsUI.ALL_TABLES_ID))
+			{
+				EarlyYearsControlComms.get().setAllTablesExplorerShowTeacherControl(show);
+			}
+			else
+			{
+				EarlyYearsControlComms.get().setSpecificTablesExplorerShowTeacherControl(show, table);
 			}
 		}
 	}

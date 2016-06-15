@@ -40,7 +40,8 @@ import multiplicity3.ioutils.FileUtils;
 /**
  * The Class ConfigurationApplication.
  */
-public class ConfigurationApplication {
+public class ConfigurationApplication
+{
 
 	/** The Constant CORE_PREFS_LIST_FILE. */
 	private static final String CORE_PREFS_LIST_FILE = "corepreferences.list";
@@ -51,10 +52,12 @@ public class ConfigurationApplication {
 	/**
 	 * Gets the preferences.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 * @return the preferences
 	 */
-	public static Preferences getPreferences(Class<? extends PreferencesItem> c) {
+	public static Preferences getPreferences(Class<? extends PreferencesItem> c)
+	{
 		return Preferences.userNodeForPackage(c);
 	}
 
@@ -63,23 +66,29 @@ public class ConfigurationApplication {
 	 *
 	 * @return the tabbed pane
 	 */
-	public static JTabbedPane getTabbedPane() {
+	public static JTabbedPane getTabbedPane()
+	{
 		return jtp;
 	}
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * @param args
+	 *            the arguments
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
-	public static void main(String[] args) throws FileNotFoundException,
-			IOException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
 		startConfigGUI();
 	}
 
@@ -87,23 +96,30 @@ public class ConfigurationApplication {
 	 * Gets the core preferences items.
 	 *
 	 * @return the core preferences items
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private static List<PreferencesItem> getCorePreferencesItems()
-			throws IOException {
+	private static List<PreferencesItem> getCorePreferencesItems() throws IOException
+	{
 		List<PreferencesItem> items = new ArrayList<PreferencesItem>();
-		List<String> classes = FileUtils.readAsStringList(
-				ConfigurationApplication.class
-						.getResourceAsStream(CORE_PREFS_LIST_FILE), true);
-		for (String c : classes) {
-			try {
+		List<String> classes = FileUtils.readAsStringList(ConfigurationApplication.class.getResourceAsStream(CORE_PREFS_LIST_FILE), true);
+		for (String c : classes)
+		{
+			try
+			{
 				PreferencesItem item = getPreferencesItemForClass(c);
 				items.add(item);
-			} catch (InstantiationException e) {
+			}
+			catch (InstantiationException e)
+			{
 				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			}
+			catch (IllegalAccessException e)
+			{
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			}
+			catch (ClassNotFoundException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -113,18 +129,20 @@ public class ConfigurationApplication {
 	/**
 	 * Gets the preferences item for class.
 	 *
-	 * @param classname the classname
+	 * @param classname
+	 *            the classname
 	 * @return the preferences item for class
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
 	@SuppressWarnings("unchecked")
-	private static PreferencesItem getPreferencesItemForClass(String classname)
-			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
-		Class<? extends PreferencesItem> prefsClass = (Class<? extends PreferencesItem>) Class
-				.forName(classname);
+	private static PreferencesItem getPreferencesItemForClass(String classname) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
+		Class<? extends PreferencesItem> prefsClass = (Class<? extends PreferencesItem>) Class.forName(classname);
 		PreferencesItem item = prefsClass.newInstance();
 		return item;
 	}
@@ -132,22 +150,25 @@ public class ConfigurationApplication {
 	/**
 	 * Load core preferences items.
 	 *
-	 * @param jtp the jtp
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param jtp
+	 *            the jtp
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private static void loadCorePreferencesItems(JTabbedPane jtp)
-			throws IOException {
+	private static void loadCorePreferencesItems(JTabbedPane jtp) throws IOException
+	{
 		List<PreferencesItem> prefsItems = getCorePreferencesItems();
-		for (PreferencesItem item : prefsItems) {
-			jtp.add(item.getConfigurationPanelName(),
-					item.getConfigurationPanel());
+		for (PreferencesItem item : prefsItems)
+		{
+			jtp.add(item.getConfigurationPanelName(), item.getConfigurationPanel());
 		}
 	}
 
 	/**
 	 * Exit.
 	 */
-	protected static void exit() {
+	protected static void exit()
+	{
 		System.exit(0);
 
 	}
@@ -155,23 +176,30 @@ public class ConfigurationApplication {
 	/**
 	 * Start config gui.
 	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
 	 */
-	protected static void startConfigGUI() throws FileNotFoundException,
-			IOException, ClassNotFoundException, InstantiationException,
-			IllegalAccessException {
+	protected static void startConfigGUI() throws FileNotFoundException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
+	{
 		JFrame jf = new JFrame("Configuration Tool");
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.getContentPane().setLayout(new BorderLayout());
 		jtp = new JTabbedPane();
-		jtp.addKeyListener(new KeyAdapter() {
+		jtp.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				if ((e.getKeyCode() == 27) || (e.getKeyCode() == 157)) {
+			public void keyReleased(KeyEvent e)
+			{
+				if ((e.getKeyCode() == 27) || (e.getKeyCode() == 157))
+				{
 					exit();
 				}
 			}

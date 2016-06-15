@@ -16,11 +16,11 @@ import synergynet3.web.apps.numbernet.shared.Expression;
 /**
  * The Class CalculatorEventProcessor.
  */
-public class CalculatorEventProcessor implements ICalculatorEventListener {
+public class CalculatorEventProcessor implements ICalculatorEventListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(CalculatorEventProcessor.class.getName());
+	private static final Logger log = Logger.getLogger(CalculatorEventProcessor.class.getName());
 
 	/** The expression session. */
 	private ExpressionSession expressionSession;
@@ -37,11 +37,13 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 	/**
 	 * Instantiates a new calculator event processor.
 	 *
-	 * @param tableID the table id
-	 * @param validationChecker the validation checker
+	 * @param tableID
+	 *            the table id
+	 * @param validationChecker
+	 *            the validation checker
 	 */
-	public CalculatorEventProcessor(String tableID,
-			IValidationChecker validationChecker) {
+	public CalculatorEventProcessor(String tableID, IValidationChecker validationChecker)
+	{
 		this.tableID = tableID;
 		this.validationChecker = validationChecker;
 	}
@@ -49,15 +51,20 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 	/**
 	 * Calculator drag and drop event.
 	 *
-	 * @param calculator the calculator
-	 * @param itemDropped the item dropped
-	 * @param onto the onto
-	 * @param indexOfDrop the index of drop
+	 * @param calculator
+	 *            the calculator
+	 * @param itemDropped
+	 *            the item dropped
+	 * @param onto
+	 *            the onto
+	 * @param indexOfDrop
+	 *            the index of drop
 	 */
-	public void calculatorDragAndDropEvent(Calculator calculator,
-			IItem itemDropped, IItem onto, int indexOfDrop) {
+	public void calculatorDragAndDropEvent(Calculator calculator, IItem itemDropped, IItem onto, int indexOfDrop)
+	{
 		log.fine("Calculator drag and drop occurred.");
-		if (!calculator.isVisible()) {
+		if (!calculator.isVisible())
+		{
 			log.fine("attempt to drop on an invisible calculator ignored.");
 			return;
 		}
@@ -66,15 +73,15 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 		IContainer container = getContainerForDroppedItem(itemDropped);
 		String expressionText = getExpressionTextForExpressionContainer(container);
 
-		if (expressionText == null) {
+		if (expressionText == null)
+		{
 			log.fine("Could not find the text for the expression.");
 			return;
 		}
 
-		Expression expressionObject = expressionSession
-				.getExpressionForExpressionString(expressionText);
-		if (!expressionObject.getCreatedOnTable().equals(tableID)
-				&& !allowEditingOfOthersPolicy) {
+		Expression expressionObject = expressionSession.getExpressionForExpressionString(expressionText);
+		if (!expressionObject.getCreatedOnTable().equals(tableID) && !allowEditingOfOthersPolicy)
+		{
 			log.fine("Attempt to edit other table's expression ignored.");
 			return;
 		}
@@ -91,8 +98,8 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 	 * java.lang.String)
 	 */
 	@Override
-	public void characterAdded(char character, Calculator calculator,
-			String currentDisplay) {
+	public void characterAdded(char character, Calculator calculator, String currentDisplay)
+	{
 	}
 
 	/*
@@ -102,7 +109,8 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 	 * java.lang.String)
 	 */
 	@Override
-	public void characterRemoved(Calculator calculator, String text) {
+	public void characterRemoved(Calculator calculator, String text)
+	{
 	}
 
 	/*
@@ -112,31 +120,32 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 	 * java.lang.String)
 	 */
 	@Override
-	public void enterKeyPressed(Calculator calculator, String currentDisplay) {
-		if (expressionSession == null) {
+	public void enterKeyPressed(Calculator calculator, String currentDisplay)
+	{
+		if (expressionSession == null)
+		{
 			log.warning("Calculator event processor is not aware of the current expression session");
 			return;
 		}
-		if (expressionSession.getTargetValue() != null) {
+		if (expressionSession.getTargetValue() != null)
+		{
 			currentDisplay = currentDisplay.trim();
 			log.fine("Checking " + currentDisplay + " validitiy.");
-			ValidationResult validationResult = validationChecker
-					.isValid(currentDisplay);
+			ValidationResult validationResult = validationChecker.isValid(currentDisplay);
 			calculator.setDisplayStyle(validationResult);
 			log.fine("Result: " + validationResult);
 
-			if ((validationResult == ValidationResult.VALID)
-					|| (validationResult == ValidationResult.INVALID)) {
+			if ((validationResult == ValidationResult.VALID) || (validationResult == ValidationResult.INVALID))
+			{
 				log.fine("Should add to expressions");
 				double currentTarget = expressionSession.getTargetValue();
-				Expression expression = ExpressionFactory
-						.createExpressionFromStringAndCalculator(
-								currentDisplay, calculator, tableID,
-								currentTarget, false);
+				Expression expression = ExpressionFactory.createExpressionFromStringAndCalculator(currentDisplay, calculator, tableID, currentTarget, false);
 				expressionSession.addExpressionCreatedByCalculator(expression);
 				calculator.setTextForCalculatorDisplay("");
 			}
-		} else {
+		}
+		else
+		{
 			log.fine("No target value set.");
 		}
 	}
@@ -144,32 +153,40 @@ public class CalculatorEventProcessor implements ICalculatorEventListener {
 	/**
 	 * Sets the expression session.
 	 *
-	 * @param session the new expression session
+	 * @param session
+	 *            the new expression session
 	 */
-	public void setExpressionSession(ExpressionSession session) {
+	public void setExpressionSession(ExpressionSession session)
+	{
 		this.expressionSession = session;
 	}
 
 	/**
 	 * Gets the container for dropped item.
 	 *
-	 * @param itemDropped the item dropped
+	 * @param itemDropped
+	 *            the item dropped
 	 * @return the container for dropped item
 	 */
-	private IContainer getContainerForDroppedItem(IItem itemDropped) {
+	private IContainer getContainerForDroppedItem(IItem itemDropped)
+	{
 		return (IContainer) itemDropped.getParentItem();
 	}
 
 	/**
 	 * Gets the expression text for expression container.
 	 *
-	 * @param container the container
+	 * @param container
+	 *            the container
 	 * @return the expression text for expression container
 	 */
-	private String getExpressionTextForExpressionContainer(IContainer container) {
-		for (int i = 0; i < container.getChildItems().size(); i++) {
+	private String getExpressionTextForExpressionContainer(IContainer container)
+	{
+		for (int i = 0; i < container.getChildItems().size(); i++)
+		{
 			IItem child = container.getChildItems().get(i);
-			if (child instanceof IMutableLabel) {
+			if (child instanceof IMutableLabel)
+			{
 				IMutableLabel lbl = (IMutableLabel) child;
 				return lbl.getText();
 			}

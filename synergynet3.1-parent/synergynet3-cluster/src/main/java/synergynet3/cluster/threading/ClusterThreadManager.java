@@ -8,14 +8,14 @@ import java.util.logging.Logger;
 /**
  * The Class ClusterThreadManager.
  */
-public class ClusterThreadManager {
+public class ClusterThreadManager
+{
 
 	/** The instance. */
 	public static ClusterThreadManager instance;
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(ClusterThreadManager.class.getName());
+	private static final Logger log = Logger.getLogger(ClusterThreadManager.class.getName());
 
 	/** The queue processor. */
 	private IQueueProcessor queueProcessor;
@@ -25,9 +25,12 @@ public class ClusterThreadManager {
 	 *
 	 * @return the cluster thread manager
 	 */
-	public static ClusterThreadManager get() {
-		synchronized (ClusterThreadManager.class) {
-			if (instance == null) {
+	public static ClusterThreadManager get()
+	{
+		synchronized (ClusterThreadManager.class)
+		{
+			if (instance == null)
+			{
 				instance = new ClusterThreadManager();
 				instance.setQueueProcessor(createDefaultQueueProcessor());
 			}
@@ -40,13 +43,19 @@ public class ClusterThreadManager {
 	 *
 	 * @return the i queue processor
 	 */
-	private static IQueueProcessor createDefaultQueueProcessor() {
-		IQueueProcessor processor = new IQueueProcessor() {
+	private static IQueueProcessor createDefaultQueueProcessor()
+	{
+		IQueueProcessor processor = new IQueueProcessor()
+		{
 			@Override
-			public <V> Future<V> enqueue(Callable<V> callable) {
-				try {
+			public <V> Future<V> enqueue(Callable<V> callable)
+			{
+				try
+				{
 					callable.call();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					log.log(Level.WARNING, "A callable item had a problem", e);
 				}
 				return null;
@@ -58,15 +67,17 @@ public class ClusterThreadManager {
 	/**
 	 * Enqueue.
 	 *
-	 * @param <V> the value type
-	 * @param callable the callable
+	 * @param <V>
+	 *            the value type
+	 * @param callable
+	 *            the callable
 	 * @return the future
 	 */
-	public <V> Future<V> enqueue(Callable<V> callable) {
-		if (queueProcessor == null) {
-			log.severe("Queue processor is not set in "
-					+ ClusterThreadManager.class.getName()
-					+ ". We are likely to crash right now.");
+	public <V> Future<V> enqueue(Callable<V> callable)
+	{
+		if (queueProcessor == null)
+		{
+			log.severe("Queue processor is not set in " + ClusterThreadManager.class.getName() + ". We are likely to crash right now.");
 			return null;
 		}
 		return queueProcessor.enqueue(callable);
@@ -75,9 +86,11 @@ public class ClusterThreadManager {
 	/**
 	 * Sets the queue processor.
 	 *
-	 * @param proc the new queue processor
+	 * @param proc
+	 *            the new queue processor
 	 */
-	public void setQueueProcessor(IQueueProcessor proc) {
+	public void setQueueProcessor(IQueueProcessor proc)
+	{
 		this.queueProcessor = proc;
 	}
 }

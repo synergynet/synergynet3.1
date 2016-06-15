@@ -25,7 +25,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ClassSelectionPanel.
  */
-public class ClassSelectionPanel extends VerticalPanel {
+public class ClassSelectionPanel extends VerticalPanel
+{
 
 	/** The classes selected. */
 	private ArrayList<String> classesSelected = new ArrayList<String>();
@@ -45,24 +46,26 @@ public class ClassSelectionPanel extends VerticalPanel {
 	/**
 	 * Instantiates a new class selection panel.
 	 */
-	public ClassSelectionPanel() {
+	public ClassSelectionPanel()
+	{
 		setTitle("Class Selection");
 		setSpacing(5);
 
-		SynergyNetAppSystemService.Util.get().getCurrentClasses(
-				new AsyncCallback<ArrayList<ClassRoom>>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox("Error loading classes: "
-								+ caught.getMessage()).show();
-					}
+		SynergyNetAppSystemService.Util.get().getCurrentClasses(new AsyncCallback<ArrayList<ClassRoom>>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox("Error loading classes: " + caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(ArrayList<ClassRoom> result) {
-						classrooms = result;
-						fillClassList();
-					}
-				});
+			@Override
+			public void onSuccess(ArrayList<ClassRoom> result)
+			{
+				classrooms = result;
+				fillClassList();
+			}
+		});
 
 		DisclosurePanel pnlClassSettings = new DisclosurePanel("Classes");
 		pnlClassSettings.setOpen(true);
@@ -76,14 +79,18 @@ public class ClassSelectionPanel extends VerticalPanel {
 		verticalClassPanel.add(classroomBox);
 		classroomBox.setSize("270px", "100px");
 		classroomBox.setMultipleSelect(false);
-		classroomBox.addClickHandler(new ClickHandler() {
+		classroomBox.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
-				if (classroomBox.getSelectedIndex() < 0) {
+			public void onClick(ClickEvent event)
+			{
+				if (classroomBox.getSelectedIndex() < 0)
+				{
 					selectedClass = null;
-				} else {
-					selectedClass = classrooms.get(classroomBox
-							.getSelectedIndex());
+				}
+				else
+				{
+					selectedClass = classrooms.get(classroomBox.getSelectedIndex());
 				}
 			}
 		});
@@ -97,14 +104,18 @@ public class ClassSelectionPanel extends VerticalPanel {
 
 		Button btnStartClass = new Button("Start Class");
 		btnStartClass.setWidth("272px");
-		btnStartClass.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (selectedClass != null) {
-					if (!selectedClass.isInSession()) {
+		btnStartClass.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				if (selectedClass != null)
+				{
+					if (!selectedClass.isInSession())
+					{
 						selectedClass.setInSession(true);
 						classesSelected.add(selectedClass.getName());
-						DatabaseControlUI.getStudentAdminPanel()
-								.loadStudentsFromClass(selectedClass.getName());
+						DatabaseControlUI.getStudentAdminPanel().loadStudentsFromClass(selectedClass.getName());
 						fillClassList();
 					}
 				}
@@ -117,33 +128,34 @@ public class ClassSelectionPanel extends VerticalPanel {
 
 		Button btnStopClass = new Button("Stop Class");
 		btnStopClass.setWidth("272px");
-		btnStopClass.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (selectedClass != null) {
-					if (selectedClass.isInSession()) {
+		btnStopClass.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				if (selectedClass != null)
+				{
+					if (selectedClass.isInSession())
+					{
 
 						selectedClass.setInSession(false);
 						classesSelected.remove(selectedClass.getName());
 
-						DatabaseControlUI.getStudentAdminPanel()
-								.removeStudentsOfClass(selectedClass.getName());
+						DatabaseControlUI.getStudentAdminPanel().removeStudentsOfClass(selectedClass.getName());
 
-						SynergyNetAppSystemService.Util.get()
-								.removeStudentsOfClass(selectedClass.getName(),
-										new AsyncCallback<Void>() {
-											@Override
-											public void onFailure(
-													Throwable caught) {
-												new MessageDialogBox(
-														"Communication error when logging out class: "
-																+ caught.getMessage())
-														.show();
-											}
+						SynergyNetAppSystemService.Util.get().removeStudentsOfClass(selectedClass.getName(), new AsyncCallback<Void>()
+						{
+							@Override
+							public void onFailure(Throwable caught)
+							{
+								new MessageDialogBox("Communication error when logging out class: " + caught.getMessage()).show();
+							}
 
-											@Override
-											public void onSuccess(Void result) {
-											}
-										});
+							@Override
+							public void onSuccess(Void result)
+							{
+							}
+						});
 
 						fillClassList();
 					}
@@ -170,19 +182,24 @@ public class ClassSelectionPanel extends VerticalPanel {
 		createNameBox = new TextBox();
 		createNameBox.setWidth("150px");
 		horizontalCreatePanel_1.add(createNameBox);
-		createNameBox.addKeyUpHandler(new KeyUpHandler() {
+		createNameBox.addKeyUpHandler(new KeyUpHandler()
+		{
 			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			public void onKeyUp(KeyUpEvent event)
+			{
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				{
 					createClassroom();
 				}
 			}
 		});
 
 		Button buttonCreateUser = new Button("Create");
-		buttonCreateUser.addClickHandler(new ClickHandler() {
+		buttonCreateUser.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				createClassroom();
 			}
 		});
@@ -200,22 +217,24 @@ public class ClassSelectionPanel extends VerticalPanel {
 		verticalRemovePanel.add(horizontalRemovePanel_1);
 
 		Button buttonRemoveClass = new Button("Remove Selected Class");
-		buttonRemoveClass.addClickHandler(new ClickHandler() {
+		buttonRemoveClass.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
-				if (selectedClass == null) {
+			public void onClick(ClickEvent event)
+			{
+				if (selectedClass == null)
+				{
 					return;
 				}
 
-				if (selectedClass.isInSession()) {
-					new MessageDialogBox(
-							"This class cannot be removed because it is in session.")
-							.show();
+				if (selectedClass.isInSession())
+				{
+					new MessageDialogBox("This class cannot be removed because it is in session.").show();
 					return;
 				}
 
-				if (Window.confirm("Removing " + selectedClass.getName()
-						+ " will also remove all its students.")) {
+				if (Window.confirm("Removing " + selectedClass.getName() + " will also remove all its students."))
+				{
 					removeClass();
 				}
 			}
@@ -234,8 +253,11 @@ public class ClassSelectionPanel extends VerticalPanel {
 		stopDBVerticalPanel.add(stopDBHorinzontalPanel);
 
 		Button btnStopDB = new Button("Shut Down Database");
-		btnStopDB.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnStopDB.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				shutDownDB();
 			}
 		});
@@ -244,16 +266,18 @@ public class ClassSelectionPanel extends VerticalPanel {
 		fillClassList();
 
 		// start the db running
-		SynergyNetAppSystemService.Util.get().startDatabase(
-				new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-					}
+		SynergyNetAppSystemService.Util.get().startDatabase(new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 
 	}
 
@@ -262,28 +286,33 @@ public class ClassSelectionPanel extends VerticalPanel {
 	 *
 	 * @return the classes selected
 	 */
-	public ArrayList<String> getClassesSelected() {
+	public ArrayList<String> getClassesSelected()
+	{
 		return classesSelected;
 	}
 
 	/**
 	 * @return the classrooms
 	 */
-	public ArrayList<ClassRoom> getClassrooms() {
+	public ArrayList<ClassRoom> getClassrooms()
+	{
 		return classrooms;
 	}
 
 	/**
 	 * Creates the classroom.
 	 */
-	private void createClassroom() {
+	private void createClassroom()
+	{
 		String name = createNameBox.getText().replaceAll(" ", "");
-		if (name.length() > 0) {
+		if (name.length() > 0)
+		{
 
-			for (ClassRoom db : classrooms) {
-				if (db.getName().equalsIgnoreCase(name)) {
-					new MessageDialogBox(
-							"A class with this name already exists.").show();
+			for (ClassRoom db : classrooms)
+			{
+				if (db.getName().equalsIgnoreCase(name))
+				{
+					new MessageDialogBox("A class with this name already exists.").show();
 					return;
 				}
 			}
@@ -291,18 +320,19 @@ public class ClassSelectionPanel extends VerticalPanel {
 			ClassRoom classroom = new ClassRoom();
 			classroom.setName(name);
 
-			SynergyNetAppSystemService.Util.get().addClassRoom(classroom,
-					new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox("Error adding new classroom: "
-									+ caught.getMessage()).show();
-						}
+			SynergyNetAppSystemService.Util.get().addClassRoom(classroom, new AsyncCallback<Void>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox("Error adding new classroom: " + caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 
 			createNameBox.setText("");
 			classrooms.add(classroom);
@@ -313,13 +343,16 @@ public class ClassSelectionPanel extends VerticalPanel {
 	/**
 	 * Fill class list.
 	 */
-	private void fillClassList() {
+	private void fillClassList()
+	{
 		classroomBox.removeAllItems();
 		selectedClass = null;
 		Collections.sort(classrooms);
-		for (ClassRoom classroom : classrooms) {
+		for (ClassRoom classroom : classrooms)
+		{
 			String name = classroom.getName();
-			if (classroom.isInSession()) {
+			if (classroom.isInSession())
+			{
 				name += " (In Session)";
 			}
 			classroomBox.addItem(name);
@@ -330,22 +363,24 @@ public class ClassSelectionPanel extends VerticalPanel {
 	/**
 	 * Removes the class.
 	 */
-	private void removeClass() {
+	private void removeClass()
+	{
 
 		classrooms.remove(selectedClass);
 
-		SynergyNetAppSystemService.Util.get().removeClassRoom(selectedClass,
-				new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox("Error removing class: "
-								+ caught.getMessage()).show();
-					}
+		SynergyNetAppSystemService.Util.get().removeClassRoom(selectedClass, new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox("Error removing class: " + caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 
 		fillClassList();
 	}
@@ -353,36 +388,33 @@ public class ClassSelectionPanel extends VerticalPanel {
 	/**
 	 * Shut down db.
 	 */
-	private void shutDownDB() {
-		if (classesSelected.size() > 0) {
-			new MessageDialogBox(
-					"Please end all class sessions before shutting down the database.")
-					.show();
+	private void shutDownDB()
+	{
+		if (classesSelected.size() > 0)
+		{
+			new MessageDialogBox("Please end all class sessions before shutting down the database.").show();
 			return;
 		}
 
-		if (Window
-				.confirm("Stopping the database will no longer allow you to log in students.")) {
-			SynergyNetAppSystemService.Util.get().stopDatabase(
-					new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox("Error stopping database: "
-									+ caught.getMessage()).show();
-						}
+		if (Window.confirm("Stopping the database will no longer allow you to log in students."))
+		{
+			SynergyNetAppSystemService.Util.get().stopDatabase(new AsyncCallback<Void>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox("Error stopping database: " + caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-							new MessageDialogBox(
-									"The database has been stopped.  Refresh this page to restart it.")
-									.show();
-							DatabaseControlUI.getClassSelectionPanel()
-									.setVisible(false);
-							DatabaseControlUI.getStudentAdminPanel()
-									.setVisible(false);
-							DatabaseControlUI.removeDatabaseTabs();
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+					new MessageDialogBox("The database has been stopped.  Refresh this page to restart it.").show();
+					DatabaseControlUI.getClassSelectionPanel().setVisible(false);
+					DatabaseControlUI.getStudentAdminPanel().setVisible(false);
+					DatabaseControlUI.removeDatabaseTabs();
+				}
+			});
 		}
 	}
 

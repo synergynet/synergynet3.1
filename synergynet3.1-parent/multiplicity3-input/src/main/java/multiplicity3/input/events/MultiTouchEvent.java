@@ -39,7 +39,8 @@ import com.jme3.math.Vector2f;
  *
  * @author dcs0ah1
  */
-public abstract class MultiTouchEvent implements Serializable {
+public abstract class MultiTouchEvent implements Serializable
+{
 
 	/** The last event. */
 	private static long lastEvent = System.nanoTime();
@@ -72,36 +73,46 @@ public abstract class MultiTouchEvent implements Serializable {
 	 * Constructs a new MultiTouchEvent with cursor id and 2D position where x
 	 * and y components should be in the range 0..1. System behaviour undefined
 	 * for values outside this range.
-	 * 
+	 *
 	 * @param id
 	 * @param position
 	 */
-	public MultiTouchEvent(long id, Vector2f position) {
+	public MultiTouchEvent(long id, Vector2f position)
+	{
 		this(id, position, new Vector2f());
 	}
 
 	/**
 	 * Instantiates a new multi touch event.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param velocity the velocity
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
 	 */
-	public MultiTouchEvent(long id, Vector2f position, Vector2f velocity) {
+	public MultiTouchEvent(long id, Vector2f position, Vector2f velocity)
+	{
 		this(id, position, velocity, 1f, 0d);
 	}
 
 	/**
 	 * Instantiates a new multi touch event.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param velocity the velocity
-	 * @param pressure the pressure
-	 * @param angle the angle
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
+	 * @param pressure
+	 *            the pressure
+	 * @param angle
+	 *            the angle
 	 */
-	public MultiTouchEvent(long id, Vector2f position, Vector2f velocity,
-			float pressure, double angle) {
+	public MultiTouchEvent(long id, Vector2f position, Vector2f velocity, float pressure, double angle)
+	{
 		this.cursorID = id;
 		this.currentPosition = position;
 		this.velocity = velocity;
@@ -116,7 +127,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the last event
 	 */
-	public static long getLastEvent() {
+	public static long getLastEvent()
+	{
 		return lastEvent;
 	}
 
@@ -125,7 +137,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the angle
 	 */
-	public double getAngle() {
+	public double getAngle()
+	{
 		return angle;
 	}
 
@@ -134,7 +147,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the cursor id
 	 */
-	public long getCursorID() {
+	public long getCursorID()
+	{
 		return cursorID;
 	}
 
@@ -143,7 +157,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the position
 	 */
-	public Vector2f getPosition() {
+	public Vector2f getPosition()
+	{
 		return currentPosition;
 	}
 
@@ -152,7 +167,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the position history
 	 */
-	public List<CursorPositionRecord> getPositionHistory() {
+	public List<CursorPositionRecord> getPositionHistory()
+	{
 		return this.positionHistory;
 	}
 
@@ -161,7 +177,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the pressure
 	 */
-	public float getPressure() {
+	public float getPressure()
+	{
 		return pressure;
 	}
 
@@ -170,7 +187,8 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the time of creation nanos
 	 */
-	public long getTimeOfCreationNanos() {
+	public long getTimeOfCreationNanos()
+	{
 		return timeOfCreationNanos;
 	}
 
@@ -179,16 +197,19 @@ public abstract class MultiTouchEvent implements Serializable {
 	 *
 	 * @return the velocity
 	 */
-	public Vector2f getVelocity() {
+	public Vector2f getVelocity()
+	{
 		return velocity;
 	}
 
 	/**
 	 * Sets the position history.
 	 *
-	 * @param history the new position history
+	 * @param history
+	 *            the new position history
 	 */
-	public void setPositionHistory(List<CursorPositionRecord> history) {
+	public void setPositionHistory(List<CursorPositionRecord> history)
+	{
 		this.positionHistory = history;
 	}
 
@@ -196,15 +217,17 @@ public abstract class MultiTouchEvent implements Serializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
-		return getClass().getName() + " " + cursorID + " @" + currentPosition
-				+ " vel: " + velocity;
+	@Override
+	public String toString()
+	{
+		return getClass().getName() + " " + cursorID + " @" + currentPosition + " vel: " + velocity;
 	}
 
 	/**
 	 * Update last event.
 	 */
-	private void updateLastEvent() {
+	private void updateLastEvent()
+	{
 		lastEvent = System.nanoTime();
 	}
 }

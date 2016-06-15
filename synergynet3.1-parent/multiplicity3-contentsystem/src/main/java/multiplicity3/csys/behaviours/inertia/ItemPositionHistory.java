@@ -11,12 +11,14 @@ import com.jme3.math.Vector2f;
 /**
  * The Class ItemPositionHistory.
  */
-public class ItemPositionHistory {
+public class ItemPositionHistory
+{
 
 	/**
 	 * The Class PositionTime.
 	 */
-	public static class PositionTime {
+	public static class PositionTime
+	{
 
 		/** The pos. */
 		public Vector2f pos;
@@ -27,10 +29,13 @@ public class ItemPositionHistory {
 		/**
 		 * Instantiates a new position time.
 		 *
-		 * @param pos the pos
-		 * @param timeMillis the time millis
+		 * @param pos
+		 *            the pos
+		 * @param timeMillis
+		 *            the time millis
 		 */
-		public PositionTime(Vector2f pos, long timeMillis) {
+		public PositionTime(Vector2f pos, long timeMillis)
+		{
 			this.pos = pos;
 			this.timeStampMillis = timeMillis;
 		}
@@ -63,9 +68,11 @@ public class ItemPositionHistory {
 	/**
 	 * Instantiates a new item position history.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	public ItemPositionHistory(IItem item) {
+	public ItemPositionHistory(IItem item)
+	{
 		this.item = item;
 		this.positions = new ArrayList<PositionTime>();
 	}
@@ -73,10 +80,13 @@ public class ItemPositionHistory {
 	/**
 	 * Adds the.
 	 *
-	 * @param position the position
-	 * @param timeStampMillis the time stamp millis
+	 * @param position
+	 *            the position
+	 * @param timeStampMillis
+	 *            the time stamp millis
 	 */
-	public void add(Vector2f position, long timeStampMillis) {
+	public void add(Vector2f position, long timeStampMillis)
+	{
 		stage.tableToScreen(position, posTemp);
 		positions.add(new PositionTime(posTemp.clone(), timeStampMillis));
 	}
@@ -84,17 +94,19 @@ public class ItemPositionHistory {
 	/**
 	 * Clear.
 	 */
-	public void clear() {
+	public void clear()
+	{
 		positions.clear();
 		velocity = new Vector2f(0f, 0f);
 	}
 
 	/**
 	 * screen units per second
-	 * 
+	 *
 	 * @return
 	 */
-	public Vector2f getVelocity() {
+	public Vector2f getVelocity()
+	{
 		updateVelocity();
 		return velocity;
 	}
@@ -102,9 +114,11 @@ public class ItemPositionHistory {
 	/**
 	 * Sets the stage.
 	 *
-	 * @param stage the new stage
+	 * @param stage
+	 *            the new stage
 	 */
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
 
 	}
@@ -112,8 +126,10 @@ public class ItemPositionHistory {
 	/**
 	 * Update velocity.
 	 */
-	private void updateVelocity() {
-		if (positions.size() < (SAMPLE_SIZE + SAMPLE_OFFSET)) {
+	private void updateVelocity()
+	{
+		if (positions.size() < (SAMPLE_SIZE + SAMPLE_OFFSET))
+		{
 			return;
 		}
 
@@ -125,9 +141,12 @@ public class ItemPositionHistory {
 		later.pos.subtract(earlier.pos, velocity);
 		float timeSeconds = (later.timeStampMillis - earlier.timeStampMillis);
 
-		if (timeSeconds > TIME_THRESHOLD) {
+		if (timeSeconds > TIME_THRESHOLD)
+		{
 			clear();
-		} else {
+		}
+		else
+		{
 			velocity.multLocal(SAMPLE_SIZE + SAMPLE_OFFSET);
 		}
 

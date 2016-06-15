@@ -14,22 +14,26 @@ import com.jme3.scene.Spatial;
 /**
  * The Class ItemMap.
  */
-public class ItemMap {
+public class ItemMap
+{
 
 	/** The item map. */
 	private static Map<UUID, List<IItem>> itemMap;
 
-	static {
+	static
+	{
 		itemMap = new HashMap<UUID, List<IItem>>();
 	}
 
 	/**
 	 * Gets the item.
 	 *
-	 * @param uuid the uuid
+	 * @param uuid
+	 *            the uuid
 	 * @return the item
 	 */
-	public static List<IItem> getItem(UUID uuid) {
+	public static List<IItem> getItem(UUID uuid)
+	{
 		return itemMap.get(uuid);
 	}
 
@@ -37,14 +41,16 @@ public class ItemMap {
 	 * Associates a spatial item to a content item. This is used by the
 	 * <code>PickedItemDispatcher</code> to find out where to dispatch events to
 	 * when a spatial is pressed on.
-	 * 
+	 *
 	 * @param spatial
 	 * @param item
 	 */
-	public static void register(Spatial spatial, IItem item) {
+	public static void register(Spatial spatial, IItem item)
+	{
 		spatial.setUserData(JMEItem.KEY_JMEITEMDATA, item.getUUID().toString());
 		List<IItem> list = itemMap.get(item.getUUID());
-		if (list == null) {
+		if (list == null)
+		{
 			list = new ArrayList<IItem>();
 		}
 		list.add(item);
@@ -54,10 +60,13 @@ public class ItemMap {
 	/**
 	 * Unregister.
 	 *
-	 * @param spatial the spatial
-	 * @param item the item
+	 * @param spatial
+	 *            the spatial
+	 * @param item
+	 *            the item
 	 */
-	public static void unregister(Spatial spatial, IItem item) {
+	public static void unregister(Spatial spatial, IItem item)
+	{
 		itemMap.remove(item.getUUID());
 	}
 
@@ -66,9 +75,11 @@ public class ItemMap {
 	 *
 	 * @return the string
 	 */
-	public static String view() {
+	public static String view()
+	{
 		String s = "ItemMap";
-		for (UUID id : itemMap.keySet()) {
+		for (UUID id : itemMap.keySet())
+		{
 			List<IItem> list = itemMap.get(id);
 			s += "\n  " + id + " -> " + list;
 		}

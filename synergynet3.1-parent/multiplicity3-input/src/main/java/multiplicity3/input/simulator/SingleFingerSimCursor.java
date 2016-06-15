@@ -28,11 +28,11 @@ import java.util.logging.Logger;
 /**
  * The Class SingleFingerSimCursor.
  */
-public class SingleFingerSimCursor extends AbstractSimCursor {
+public class SingleFingerSimCursor extends AbstractSimCursor
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(SingleFingerSimCursor.class.getName());
+	private static final Logger log = Logger.getLogger(SingleFingerSimCursor.class.getName());
 
 	/** The id. */
 	private int id;
@@ -55,10 +55,13 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	/**
 	 * Instantiates a new single finger sim cursor.
 	 *
-	 * @param simulator the simulator
-	 * @param id the id
+	 * @param simulator
+	 *            the simulator
+	 * @param id
+	 *            the id
 	 */
-	public SingleFingerSimCursor(IMultiTouchSimulator simulator, int id) {
+	public SingleFingerSimCursor(IMultiTouchSimulator simulator, int id)
+	{
 		this.simulator = simulator;
 		this.id = id;
 	}
@@ -68,7 +71,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 *
 	 * @return the mouse x
 	 */
-	public int getMouseX() {
+	public int getMouseX()
+	{
 		return screenX;
 	}
 
@@ -77,7 +81,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 *
 	 * @return the mouse y
 	 */
-	public int getMouseY() {
+	public int getMouseY()
+	{
 		return screenY;
 	}
 
@@ -86,7 +91,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 *
 	 * @return the x
 	 */
-	public float getX() {
+	public float getX()
+	{
 		return x;
 	}
 
@@ -95,7 +101,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 *
 	 * @return the y
 	 */
-	public float getY() {
+	public float getY()
+	{
 		return y;
 	}
 
@@ -106,7 +113,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 * String)
 	 */
 	@Override
-	public void keyPressed(String key) {
+	public void keyPressed(String key)
+	{
 	}
 
 	/*
@@ -116,7 +124,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 * .String)
 	 */
 	@Override
-	public void keyReleased(String key) {
+	public void keyReleased(String key)
+	{
 	}
 
 	/*
@@ -125,7 +134,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 * float, int)
 	 */
 	@Override
-	public void mouseDragged(float x, float y, int buttonNumber) {
+	public void mouseDragged(float x, float y, int buttonNumber)
+	{
 		this.x = x;
 		this.y = y;
 		log.fine("mouseDragged");
@@ -138,7 +148,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 * float)
 	 */
 	@Override
-	public void mouseMoved(float x, float y) {
+	public void mouseMoved(float x, float y)
+	{
 		this.x = x;
 		this.y = y;
 	}
@@ -149,7 +160,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 * float, int)
 	 */
 	@Override
-	public void mousePressed(float x, float y, int button) {
+	public void mousePressed(float x, float y, int button)
+	{
 		this.x = x;
 		this.y = y;
 		simulator.newCursor(id, this.x, this.y);
@@ -161,7 +173,8 @@ public class SingleFingerSimCursor extends AbstractSimCursor {
 	 * float, int)
 	 */
 	@Override
-	public void mouseReleased(float x, float y, int button) {
+	public void mouseReleased(float x, float y, int button)
+	{
 		this.x = x;
 		this.y = y;
 		simulator.deleteCursor(id, this.x, this.y);

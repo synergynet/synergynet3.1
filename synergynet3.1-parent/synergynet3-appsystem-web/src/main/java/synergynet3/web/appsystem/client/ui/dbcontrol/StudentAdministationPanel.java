@@ -28,7 +28,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class StudentAdministationPanel.
  */
-public class StudentAdministationPanel extends VerticalPanel {
+public class StudentAdministationPanel extends VerticalPanel
+{
 
 	/** The students. */
 	private static ArrayList<Student> students = new ArrayList<Student>();
@@ -63,20 +64,22 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Instantiates a new student administation panel.
 	 */
-	public StudentAdministationPanel() {
+	public StudentAdministationPanel()
+	{
 
 		setTitle("Student Administration");
 		setSpacing(5);
 
-		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel(
-				"Tables Online");
+		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel("Tables Online");
 		add(tableSelectionDisclosurePanel);
 		tableSelectionDisclosurePanel.setOpen(true);
 		tableSelectionDisclosurePanel.setWidth("272");
 
-		devicesOnline = new DevicesOnlineWidget() {
+		devicesOnline = new DevicesOnlineWidget()
+		{
 			@Override
-			protected void onRefresh() {
+			protected void onRefresh()
+			{
 				fillStudentList();
 			};
 		};
@@ -94,24 +97,24 @@ public class StudentAdministationPanel extends VerticalPanel {
 		pnlStudentSettings.setContent(verticalStudentPanel);
 
 		studentBox = new FixedSizeScrollableListBox();
-		studentBox.addClickHandler(new ClickHandler() {
+		studentBox.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
-				if (studentBox.getSelectedIndex() < 0) {
+			public void onClick(ClickEvent event)
+			{
+				if (studentBox.getSelectedIndex() < 0)
+				{
 					selectedStudent = null;
 					modifyNameBox.setText("");
 					modifyClassBox.setSelectedIndex(0);
 					modifyColourBox.setSelectedIndex(0);
-				} else {
-					selectedStudent = students.get(studentBox
-							.getSelectedIndex());
+				}
+				else
+				{
+					selectedStudent = students.get(studentBox.getSelectedIndex());
 					modifyNameBox.setText(selectedStudent.getName());
-					modifyClassBox
-							.setSelectedIndex(getIndexOfClass(selectedStudent
-									.getClassName()));
-					modifyColourBox
-							.setSelectedIndex(getIndexOfColour(selectedStudent
-									.getColour()));
+					modifyClassBox.setSelectedIndex(getIndexOfClass(selectedStudent.getClassName()));
+					modifyColourBox.setSelectedIndex(getIndexOfColour(selectedStudent.getColour()));
 				}
 			}
 
@@ -123,8 +126,11 @@ public class StudentAdministationPanel extends VerticalPanel {
 		HorizontalPanel refreshStudentsPanel = new HorizontalPanel();
 
 		Button btnRefreshStudents = new Button("Refresh");
-		btnRefreshStudents.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnRefreshStudents.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				fillStudentList();
 			}
 		});
@@ -137,36 +143,34 @@ public class StudentAdministationPanel extends VerticalPanel {
 
 		HorizontalPanel horizontalStudentPanel_1 = new HorizontalPanel();
 
-		Button btnSendToTable = new Button(
-				"Log selected student in on selected table");
+		Button btnSendToTable = new Button("Log selected student in on selected table");
 		btnSendToTable.setWidth("272px");
-		btnSendToTable.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (devicesOnline.getDeviceSelected() != null) {
-					if (selectedStudent != null) {
-						if (selectedStudent.getTable().equals("none")) {
-							SynergyNetAppSystemService.Util.get()
-									.sendStudentToTable(
-											selectedStudent.getStudentID(),
-											devicesOnline.getDeviceSelected(),
-											new AsyncCallback<Void>() {
-												@Override
-												public void onFailure(
-														Throwable caught) {
-													new MessageDialogBox(
-															"Communication error logging student in: "
-																	+ caught.getMessage())
-															.show();
-												}
+		btnSendToTable.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				if (devicesOnline.getDeviceSelected() != null)
+				{
+					if (selectedStudent != null)
+					{
+						if (selectedStudent.getTable().equals("none"))
+						{
+							SynergyNetAppSystemService.Util.get().sendStudentToTable(selectedStudent.getStudentID(), devicesOnline.getDeviceSelected(), new AsyncCallback<Void>()
+							{
+								@Override
+								public void onFailure(Throwable caught)
+								{
+									new MessageDialogBox("Communication error logging student in: " + caught.getMessage()).show();
+								}
 
-												@Override
-												public void onSuccess(
-														Void result) {
-												}
-											});
+								@Override
+								public void onSuccess(Void result)
+								{
+								}
+							});
 						}
-						selectedStudent.setTable(devicesOnline
-								.getDeviceSelected());
+						selectedStudent.setTable(devicesOnline.getDeviceSelected());
 						fillStudentList();
 					}
 				}
@@ -177,29 +181,28 @@ public class StudentAdministationPanel extends VerticalPanel {
 
 		HorizontalPanel horizontalStudentPanel_2 = new HorizontalPanel();
 
-		Button btnRemoveFromTable = new Button(
-				"Log selected student out from table");
+		Button btnRemoveFromTable = new Button("Log selected student out from table");
 		btnRemoveFromTable.setWidth("272px");
-		btnRemoveFromTable.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				if (selectedStudent != null) {
-					SynergyNetAppSystemService.Util.get()
-							.removeStudentFromTable(
-									selectedStudent.getStudentID(),
-									selectedStudent.getTable(),
-									new AsyncCallback<Void>() {
-										@Override
-										public void onFailure(Throwable caught) {
-											new MessageDialogBox(
-													"Communication error logging student out: "
-															+ caught.getMessage())
-													.show();
-										}
+		btnRemoveFromTable.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				if (selectedStudent != null)
+				{
+					SynergyNetAppSystemService.Util.get().removeStudentFromTable(selectedStudent.getStudentID(), selectedStudent.getTable(), new AsyncCallback<Void>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							new MessageDialogBox("Communication error logging student out: " + caught.getMessage()).show();
+						}
 
-										@Override
-										public void onSuccess(Void result) {
-										}
-									});
+						@Override
+						public void onSuccess(Void result)
+						{
+						}
+					});
 				}
 				selectedStudent.setTable("none");
 				fillStudentList();
@@ -208,8 +211,7 @@ public class StudentAdministationPanel extends VerticalPanel {
 		horizontalStudentPanel_2.add(btnRemoveFromTable);
 		verticalStudentPanel.add(horizontalStudentPanel_2);
 
-		DisclosurePanel pnlStudentModify = new DisclosurePanel(
-				"Modify Student Account");
+		DisclosurePanel pnlStudentModify = new DisclosurePanel("Modify Student Account");
 		pnlStudentModify.setOpen(false);
 		add(pnlStudentModify);
 		pnlStudentModify.setWidth("272px");
@@ -250,7 +252,8 @@ public class StudentAdministationPanel extends VerticalPanel {
 		modifyColourBox = new ListBox();
 		modifyColourBox.setVisibleItemCount(1);
 		modifyColourBox.setWidth("80px");
-		for (String colour : ColourManager.getColours()) {
+		for (String colour : ColourManager.getColours())
+		{
 			modifyColourBox.addItem(colour);
 		}
 		horizontalModifyPanel_3.add(modifyColourBox);
@@ -263,16 +266,17 @@ public class StudentAdministationPanel extends VerticalPanel {
 		horizontalModifyPanel_4.add(lblGapModify);
 
 		Button buttonModifyUser = new Button("Modify");
-		buttonModifyUser.addClickHandler(new ClickHandler() {
+		buttonModifyUser.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				modifyStudent();
 			}
 		});
 		horizontalModifyPanel_4.add(buttonModifyUser);
 
-		DisclosurePanel pnlStudentCreate = new DisclosurePanel(
-				"Create Student Account");
+		DisclosurePanel pnlStudentCreate = new DisclosurePanel("Create Student Account");
 		pnlStudentCreate.setOpen(false);
 		add(pnlStudentCreate);
 		pnlStudentCreate.setWidth("272px");
@@ -313,7 +317,8 @@ public class StudentAdministationPanel extends VerticalPanel {
 		createColourBox = new ListBox();
 		createColourBox.setVisibleItemCount(1);
 		createColourBox.setWidth("80px");
-		for (String colour : ColourManager.getColours()) {
+		for (String colour : ColourManager.getColours())
+		{
 			createColourBox.addItem(colour);
 		}
 		horizontalCreatePanel_3.add(createColourBox);
@@ -326,16 +331,17 @@ public class StudentAdministationPanel extends VerticalPanel {
 		horizontalCreatePanel_4.add(lblCreateGap);
 
 		Button buttonCreateUser = new Button("Create");
-		buttonCreateUser.addClickHandler(new ClickHandler() {
+		buttonCreateUser.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				createStudent();
 			}
 		});
 		horizontalCreatePanel_4.add(buttonCreateUser);
 
-		DisclosurePanel pnlStudentRemove = new DisclosurePanel(
-				"Remove Student Account");
+		DisclosurePanel pnlStudentRemove = new DisclosurePanel("Remove Student Account");
 		pnlStudentRemove.setOpen(false);
 		add(pnlStudentRemove);
 		pnlStudentRemove.setWidth("272px");
@@ -346,24 +352,25 @@ public class StudentAdministationPanel extends VerticalPanel {
 		HorizontalPanel horizontalRemovePanel_1 = new HorizontalPanel();
 		verticalRemovePanel.add(horizontalRemovePanel_1);
 
-		Button buttonRemoveStudent = new Button(
-				"Remove Selected Student Account");
-		buttonRemoveStudent.addClickHandler(new ClickHandler() {
+		Button buttonRemoveStudent = new Button("Remove Selected Student Account");
+		buttonRemoveStudent.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
-				if (selectedStudent == null) {
+			public void onClick(ClickEvent event)
+			{
+				if (selectedStudent == null)
+				{
 					return;
 				}
 
-				if (!selectedStudent.getTable().equals("none")) {
-					new MessageDialogBox(
-							"Please remove this student from their table before modifying their account.")
-							.show();
+				if (!selectedStudent.getTable().equals("none"))
+				{
+					new MessageDialogBox("Please remove this student from their table before modifying their account.").show();
 					return;
 				}
 
-				if (Window.confirm("Remove account for "
-						+ selectedStudent.getName() + "?")) {
+				if (Window.confirm("Remove account for " + selectedStudent.getName() + "?"))
+				{
 					removeStudent();
 				}
 			}
@@ -378,29 +385,32 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Load students from class.
 	 *
-	 * @param classname the classname
+	 * @param classname
+	 *            the classname
 	 */
-	public void loadStudentsFromClass(String classname) {
-		if (DatabaseControlUI.getClassSelectionPanel().getClassesSelected()
-				.size() > 0) {
+	public void loadStudentsFromClass(String classname)
+	{
+		if (DatabaseControlUI.getClassSelectionPanel().getClassesSelected().size() > 0)
+		{
 			// Get student list from database and add to students array
-			SynergyNetAppSystemService.Util.get().getStudentsFromClass(
-					classname, new AsyncCallback<ArrayList<Student>>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(
-									"Error loading students from database: "
-											+ caught.getMessage()).show();
-						}
+			SynergyNetAppSystemService.Util.get().getStudentsFromClass(classname, new AsyncCallback<ArrayList<Student>>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox("Error loading students from database: " + caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(ArrayList<Student> result) {
-							for (Student student : result) {
-								students.add(student);
-							}
-							fillStudentList();
-						}
-					});
+				@Override
+				public void onSuccess(ArrayList<Student> result)
+				{
+					for (Student student : result)
+					{
+						students.add(student);
+					}
+					fillStudentList();
+				}
+			});
 		}
 
 	}
@@ -408,19 +418,22 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Removes the students of class.
 	 *
-	 * @param className the class name
+	 * @param className
+	 *            the class name
 	 */
-	public void removeStudentsOfClass(String className) {
+	public void removeStudentsOfClass(String className)
+	{
 		ArrayList<Student> toRemove = new ArrayList<Student>();
-		for (int i = 0; i < students.size(); i++) {
-			if (!DatabaseControlUI.getClassSelectionPanel()
-					.getClassesSelected()
-					.contains(students.get(i).getClassName())) {
+		for (int i = 0; i < students.size(); i++)
+		{
+			if (!DatabaseControlUI.getClassSelectionPanel().getClassesSelected().contains(students.get(i).getClassName()))
+			{
 				toRemove.add(students.get(i));
 			}
 		}
 
-		for (Student student : toRemove) {
+		for (Student student : toRemove)
+		{
 			students.remove(student);
 		}
 		toRemove.clear();
@@ -430,12 +443,15 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Update class box.
 	 *
-	 * @param classSelectionPanel the class selection panel
+	 * @param classSelectionPanel
+	 *            the class selection panel
 	 */
-	public void updateClassBox(ClassSelectionPanel classSelectionPanel) {
+	public void updateClassBox(ClassSelectionPanel classSelectionPanel)
+	{
 		modifyClassBox.clear();
 		createClassBox.clear();
-		for (ClassRoom classroom : classSelectionPanel.getClassrooms()) {
+		for (ClassRoom classroom : classSelectionPanel.getClassrooms())
+		{
 			String name = classroom.getName();
 			modifyClassBox.addItem(name);
 			createClassBox.addItem(name);
@@ -445,61 +461,65 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Creates the student.
 	 */
-	private void createStudent() {
-		if (createNameBox.getText().replaceAll(" ", "").length() > 0) {
+	private void createStudent()
+	{
+		if (createNameBox.getText().replaceAll(" ", "").length() > 0)
+		{
 
 			Student student = new Student();
 			student.setName(createNameBox.getText());
-			student.setClassName(createClassBox.getItemText(createClassBox
-					.getSelectedIndex()));
-			student.setColour(createColourBox.getItemText(createColourBox
-					.getSelectedIndex()));
-			DateTimeFormat yearFormat = DateTimeFormat
-					.getFormat("yyyyMMddHHmmssSS");
+			student.setClassName(createClassBox.getItemText(createClassBox.getSelectedIndex()));
+			student.setColour(createColourBox.getItemText(createColourBox.getSelectedIndex()));
+			DateTimeFormat yearFormat = DateTimeFormat.getFormat("yyyyMMddHHmmssSS");
 			String studentID = student.getName().replace(" ", "");
 			studentID += "_" + yearFormat.format(new Date());
 			student.setStudentID(studentID);
 
 			createNameBox.setText("");
 
-			if (DatabaseControlUI.getClassSelectionPanel().getClassesSelected()
-					.contains(student.getClassName())) {
+			if (DatabaseControlUI.getClassSelectionPanel().getClassesSelected().contains(student.getClassName()))
+			{
 				students.add(student);
 			}
 
 			fillStudentList();
 
-			SynergyNetAppSystemService.Util.get().createStudent(student,
-					new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(
-									"Communication error when creating student: "
-											+ caught.getMessage()).show();
-						}
+			SynergyNetAppSystemService.Util.get().createStudent(student, new AsyncCallback<Void>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox("Communication error when creating student: " + caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 		}
 	}
 
 	/**
 	 * Fill student list.
 	 */
-	private void fillStudentList() {
+	private void fillStudentList()
+	{
 		modifyNameBox.setText("");
 		studentBox.removeAllItems();
 		selectedStudent = null;
 		Collections.sort(students);
-		for (Student student : students) {
+		for (Student student : students)
+		{
 			String studentName = student.getName();
-			if (!student.getTable().equals("none")) {
-				if (devicesOnline.getDevicesPresent().contains(
-						student.getTable())) {
+			if (!student.getTable().equals("none"))
+			{
+				if (devicesOnline.getDevicesPresent().contains(student.getTable()))
+				{
 					studentName += " (" + student.getTable() + ")";
-				} else {
+				}
+				else
+				{
 					student.setTable("none");
 				}
 			}
@@ -510,12 +530,16 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Gets the index of class.
 	 *
-	 * @param className the class name
+	 * @param className
+	 *            the class name
 	 * @return the index of class
 	 */
-	private int getIndexOfClass(String className) {
-		for (int i = 0; i < modifyClassBox.getItemCount(); i++) {
-			if (modifyClassBox.getItemText(i).equalsIgnoreCase(className)) {
+	private int getIndexOfClass(String className)
+	{
+		for (int i = 0; i < modifyClassBox.getItemCount(); i++)
+		{
+			if (modifyClassBox.getItemText(i).equalsIgnoreCase(className))
+			{
 				return i;
 			}
 		}
@@ -525,12 +549,16 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Gets the index of colour.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the index of colour
 	 */
-	private int getIndexOfColour(String colour) {
-		for (int i = 0; i < modifyColourBox.getItemCount(); i++) {
-			if (modifyColourBox.getItemText(i).equalsIgnoreCase(colour)) {
+	private int getIndexOfColour(String colour)
+	{
+		for (int i = 0; i < modifyColourBox.getItemCount(); i++)
+		{
+			if (modifyColourBox.getItemText(i).equalsIgnoreCase(colour))
+			{
 				return i;
 			}
 		}
@@ -540,52 +568,49 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Modify student.
 	 */
-	private void modifyStudent() {
-		if ((modifyNameBox.getText().replaceAll(" ", "").length() > 0)
-				&& (selectedStudent != null)) {
+	private void modifyStudent()
+	{
+		if ((modifyNameBox.getText().replaceAll(" ", "").length() > 0) && (selectedStudent != null))
+		{
 
-			if (!selectedStudent.getTable().equals("none")) {
-				new MessageDialogBox(
-						"Please remove this student from their table before modifying their account.")
-						.show();
+			if (!selectedStudent.getTable().equals("none"))
+			{
+				new MessageDialogBox("Please remove this student from their table before modifying their account.").show();
 				return;
 			}
 
-			for (Student student : students) {
-				if (!student.equals(selectedStudent)) {
-					if (student.getName().equalsIgnoreCase(
-							createNameBox.getText())) {
-						new MessageDialogBox(
-								"A student with this name already exists.")
-								.show();
+			for (Student student : students)
+			{
+				if (!student.equals(selectedStudent))
+				{
+					if (student.getName().equalsIgnoreCase(createNameBox.getText()))
+					{
+						new MessageDialogBox("A student with this name already exists.").show();
 						return;
 					}
 				}
 			}
 
 			selectedStudent.setName(modifyNameBox.getText());
-			selectedStudent.setClassName(modifyClassBox
-					.getItemText(modifyClassBox.getSelectedIndex()));
-			selectedStudent.setColour(modifyColourBox
-					.getItemText(modifyColourBox.getSelectedIndex()));
+			selectedStudent.setClassName(modifyClassBox.getItemText(modifyClassBox.getSelectedIndex()));
+			selectedStudent.setColour(modifyColourBox.getItemText(modifyColourBox.getSelectedIndex()));
 
-			SynergyNetAppSystemService.Util.get().modifyStudent(
-					selectedStudent, new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(
-									"Communication error when modifying student: "
-											+ caught.getMessage()).show();
-						}
+			SynergyNetAppSystemService.Util.get().modifyStudent(selectedStudent, new AsyncCallback<Void>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox("Communication error when modifying student: " + caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 
-			if (!DatabaseControlUI.getClassSelectionPanel()
-					.getClassesSelected()
-					.contains(selectedStudent.getClassName())) {
+			if (!DatabaseControlUI.getClassSelectionPanel().getClassesSelected().contains(selectedStudent.getClassName()))
+			{
 				students.remove(selectedStudent);
 			}
 
@@ -596,39 +621,40 @@ public class StudentAdministationPanel extends VerticalPanel {
 	/**
 	 * Removes the student.
 	 */
-	private void removeStudent() {
+	private void removeStudent()
+	{
 
-		if (!selectedStudent.getTable().equals("none")) {
-			SynergyNetAppSystemService.Util.get().removeStudentFromTable(
-					selectedStudent.getStudentID(), selectedStudent.getTable(),
-					new AsyncCallback<Void>() {
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(
-									"Communication error when logging out student: "
-											+ caught.getMessage()).show();
-						}
+		if (!selectedStudent.getTable().equals("none"))
+		{
+			SynergyNetAppSystemService.Util.get().removeStudentFromTable(selectedStudent.getStudentID(), selectedStudent.getTable(), new AsyncCallback<Void>()
+			{
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox("Communication error when logging out student: " + caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 		}
 		students.remove(selectedStudent);
 
-		SynergyNetAppSystemService.Util.get().removeStudent(
-				selectedStudent.getStudentID(), new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(
-								"Communication error when removing student: "
-										+ caught.getMessage()).show();
-					}
+		SynergyNetAppSystemService.Util.get().removeStudent(selectedStudent.getStudentID(), new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox("Communication error when removing student: " + caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 
 		fillStudentList();
 	}

@@ -6,10 +6,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 
 /**
  * Represents an individual person.
- * 
+ *
  * @author dcs0ah1
  */
-public class Participant implements Serializable, IsSerializable {
+public class Participant implements Serializable, IsSerializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 2647062936457560005L;
@@ -20,16 +21,19 @@ public class Participant implements Serializable, IsSerializable {
 	/**
 	 * Instantiates a new participant.
 	 */
-	public Participant() {
+	public Participant()
+	{
 		this.name = "<none>";
 	}
 
 	/**
 	 * Instantiates a new participant.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public Participant(String name) {
+	public Participant(String name)
+	{
 		this.name = name;
 	}
 
@@ -38,7 +42,8 @@ public class Participant implements Serializable, IsSerializable {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -46,7 +51,9 @@ public class Participant implements Serializable, IsSerializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return getName();
 	}
 

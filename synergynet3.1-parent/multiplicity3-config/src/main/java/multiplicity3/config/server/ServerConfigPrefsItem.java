@@ -10,11 +10,11 @@ import multiplicity3.config.PreferencesItem;
 /**
  * The Class ServerConfigPrefsItem.
  */
-public class ServerConfigPrefsItem implements PreferencesItem {
+public class ServerConfigPrefsItem implements PreferencesItem
+{
 
 	/** The Constant prefs. */
-	private static final Preferences prefs = ConfigurationApplication
-			.getPreferences(ServerConfigPrefsItem.class);
+	private static final Preferences prefs = ConfigurationApplication.getPreferences(ServerConfigPrefsItem.class);
 
 	/** The Constant WEB_SERVER_DIR. */
 	private static final String WEB_SERVER_DIR = "WEB_SERVER_DIR";
@@ -27,7 +27,8 @@ public class ServerConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		return new ServerConfigPanel(this);
 	}
 
@@ -36,7 +37,8 @@ public class ServerConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Server";
 	}
 
@@ -45,7 +47,8 @@ public class ServerConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the port
 	 */
-	public int getPort() {
+	public int getPort()
+	{
 		return prefs.getInt(WEB_SERVER_PORT, 8080);
 	}
 
@@ -54,25 +57,30 @@ public class ServerConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the web directory
 	 */
-	public String getWebDirectory() {
+	public String getWebDirectory()
+	{
 		return prefs.get(WEB_SERVER_DIR, "/");
 	}
 
 	/**
 	 * Sets the port.
 	 *
-	 * @param port the new port
+	 * @param port
+	 *            the new port
 	 */
-	public void setPort(int port) {
+	public void setPort(int port)
+	{
 		prefs.putInt(WEB_SERVER_PORT, port);
 	}
 
 	/**
 	 * Sets the web directory.
 	 *
-	 * @param s the new web directory
+	 * @param s
+	 *            the new web directory
 	 */
-	public void setWebDirectory(String s) {
+	public void setWebDirectory(String s)
+	{
 		prefs.put(WEB_SERVER_DIR, s);
 	}
 

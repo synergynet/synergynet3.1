@@ -21,7 +21,8 @@ import synergynet3.web.core.AppSystemControlComms;
 import synergynet3.web.shared.DevicesSelected;
 
 /** Class to be run to produce a projection environment. */
-public class SynergyNetProjector implements IMultiplicityApp {
+public class SynergyNetProjector implements IMultiplicityApp
+{
 
 	/** The projector sync. */
 	private ProjectorSync projectorSync;
@@ -32,11 +33,15 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -50,9 +55,10 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	/**
 	 * Align all contents currently displayed by the projector.
 	 */
-	public void alignContents() {
-		for (IItem item : ProjectorTransferUtilities.get().getContents()
-				.values()) {
+	public void alignContents()
+	{
+		for (IItem item : ProjectorTransferUtilities.get().getContents().values())
+		{
 			item.setRelativeRotation(0);
 		}
 	}
@@ -60,9 +66,10 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	/**
 	 * Clear all contents currently displayed by the projector.
 	 */
-	public void clearContents() {
-		for (IItem item : ProjectorTransferUtilities.get().getContents()
-				.values()) {
+	public void clearContents()
+	{
+		for (IItem item : ProjectorTransferUtilities.get().getContents().values())
+		{
 			stage.removeItem(item);
 		}
 		ProjectorTransferUtilities.get().clearContents();
@@ -73,7 +80,8 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	 * @see multiplicity3.appsystem.IMultiplicityApp#getFriendlyAppName()
 	 */
 	@Override
-	public String getFriendlyAppName() {
+	public String getFriendlyAppName()
+	{
 		return "SynergyNetProjector";
 	}
 
@@ -82,18 +90,20 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	 *
 	 * @return the stage
 	 */
-	public IStage getStage() {
+	public IStage getStage()
+	{
 		return stage;
 	}
 
 	/**
 	 * Retrieves details from the supplied message to recreate the transfered
 	 * item
-	 * 
-	 * @param message Structured message detailing the details of an item's
-	 *            arrival.
+	 *
+	 * @param message
+	 *            Structured message detailing the details of an item's arrival.
 	 */
-	public void onContentArrival(ArrayList<ContentTransferedMessage> messages) {
+	public void onContentArrival(ArrayList<ContentTransferedMessage> messages)
+	{
 		ProjectorTransferUtilities.get().onContentArrival(messages);
 	}
 
@@ -101,8 +111,10 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	 * Actions to be performed when the SynergyNetProjector window is closed.
 	 */
 	@Override
-	public void onDestroy() {
-		if (projectorSync != null) {
+	public void onDestroy()
+	{
+		if (projectorSync != null)
+		{
 			projectorSync.stop();
 		}
 		SynergyNetCluster.get().shutdown();
@@ -112,18 +124,23 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	 * Send current contents of the projector a the list of tables provided. * @param
 	 * tablesToSendTo List of table identities to send contents to.
 	 */
-	public void sendProjectedContents(final String[] tablesToSendTo) {
-		Thread cachingThread = new Thread(new Runnable() {
-			public void run() {
-				ArrayList<ContentTransferedMessage> messages = ProjectorTransferUtilities
-						.get().prepareToTransferAllContents(tablesToSendTo);
-				for (String table : tablesToSendTo) {
-					if (table.equals(DevicesSelected.ALL_TABLES_ID)) {
-						AppSystemControlComms.get().allTablesReceiveContent(
-								messages);
-					} else {
-						AppSystemControlComms.get()
-								.specificTableReceiveContent(messages, table);
+	public void sendProjectedContents(final String[] tablesToSendTo)
+	{
+		Thread cachingThread = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				ArrayList<ContentTransferedMessage> messages = ProjectorTransferUtilities.get().prepareToTransferAllContents(tablesToSendTo);
+				for (String table : tablesToSendTo)
+				{
+					if (table.equals(DevicesSelected.ALL_TABLES_ID))
+					{
+						AppSystemControlComms.get().allTablesReceiveContent(messages);
+					}
+					else
+					{
+						AppSystemControlComms.get().specificTableReceiveContent(messages, table);
 					}
 				}
 			}
@@ -134,9 +151,11 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	/**
 	 * Sets the stage.
 	 *
-	 * @param stage the new stage
+	 * @param stage
+	 *            the new stage
 	 */
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
 	}
 
@@ -147,15 +166,15 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	 * .MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		stage = MultiplicityEnvironment.get().getLocalStages().get(0);
 
 		AdditionalItemUtilities.loadAdditionalItems(stage);
 
 		String projectorID = SynergyNetCluster.get().getIdentity();
 
-		ProjectorDeviceControl projectorDeviceController = new ProjectorDeviceControl(
-				projectorID);
+		ProjectorDeviceControl projectorDeviceController = new ProjectorDeviceControl(projectorID);
 		projectorSync = new ProjectorSync(projectorDeviceController, this);
 
 		new TopRightProjectorMenu(this);
@@ -167,7 +186,8 @@ public class SynergyNetProjector implements IMultiplicityApp {
 	 * @see multiplicity3.appsystem.IMultiplicityApp#shouldStop()
 	 */
 	@Override
-	public void shouldStop() {
+	public void shouldStop()
+	{
 	}
 
 }

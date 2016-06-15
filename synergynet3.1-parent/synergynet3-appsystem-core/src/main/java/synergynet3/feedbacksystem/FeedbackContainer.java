@@ -23,7 +23,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class FeedbackContainer.
  */
-public class FeedbackContainer {
+public class FeedbackContainer
+{
 
 	/** The feedback containers. */
 	public static HashMap<IContainer, FeedbackContainer> feedbackContainers = new HashMap<IContainer, FeedbackContainer>();
@@ -52,9 +53,11 @@ public class FeedbackContainer {
 	/**
 	 * Instantiates a new feedback container.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 */
-	public FeedbackContainer(IStage stage) {
+	public FeedbackContainer(IStage stage)
+	{
 		this.stage = stage;
 		this.log = Logger.getLogger(AudioRecorder.class.getName());
 	}
@@ -62,10 +65,13 @@ public class FeedbackContainer {
 	/**
 	 * Instantiates a new feedback container.
 	 *
-	 * @param stage the stage
-	 * @param log the log
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
 	 */
-	public FeedbackContainer(IStage stage, Logger log) {
+	public FeedbackContainer(IStage stage, Logger log)
+	{
 		this.stage = stage;
 		this.log = log;
 	}
@@ -73,7 +79,8 @@ public class FeedbackContainer {
 	/**
 	 * Destroy.
 	 */
-	public void Destroy() {
+	public void Destroy()
+	{
 		feedbackContainers.remove(wrapperFrame);
 		wrapperFrame.removeItem(containedItem);
 		float rotation = wrapperFrame.getRelativeRotation();
@@ -87,7 +94,8 @@ public class FeedbackContainer {
 	/**
 	 * @return the containedItem
 	 */
-	public IItem getContainedItem() {
+	public IItem getContainedItem()
+	{
 		return containedItem;
 	}
 
@@ -96,7 +104,8 @@ public class FeedbackContainer {
 	 *
 	 * @return the feedback viewer
 	 */
-	public FeedbackViewer getFeedbackViewer() {
+	public FeedbackViewer getFeedbackViewer()
+	{
 		return feedbackViewer;
 	}
 
@@ -105,7 +114,8 @@ public class FeedbackContainer {
 	 *
 	 * @return the icon
 	 */
-	public IItem getIcon() {
+	public IItem getIcon()
+	{
 		return feedbackIcon;
 	}
 
@@ -114,38 +124,45 @@ public class FeedbackContainer {
 	 *
 	 * @return the wrapper
 	 */
-	public IItem getWrapper() {
+	public IItem getWrapper()
+	{
 		return wrapperFrame;
 	}
 
 	/**
-	 * @param containedItem the containedItem to set
+	 * @param containedItem
+	 *            the containedItem to set
 	 */
-	public void setContainedItem(IItem containedItem) {
+	public void setContainedItem(IItem containedItem)
+	{
 		this.containedItem = containedItem;
 	}
 
 	/**
 	 * Sets the item.
 	 *
-	 * @param item the new item
+	 * @param item
+	 *            the new item
 	 */
-	public void setItem(final IItem item) {
+	public void setItem(final IItem item)
+	{
 		containedItem = item;
-		try {
+		try
+		{
 
-			new PerformActionOnAllDescendents(item, false, false) {
+			new PerformActionOnAllDescendents(item, false, false)
+			{
 				@Override
-				protected void actionOnDescendent(IItem child) {
-					for (IBehaviour nf : stage.getBehaviourMaker().getBehavior(
-							child, NetworkFlickBehaviour.class)) {
+				protected void actionOnDescendent(IItem child)
+				{
+					for (IBehaviour nf : stage.getBehaviourMaker().getBehavior(child, NetworkFlickBehaviour.class))
+					{
 						((NetworkFlickBehaviour) nf).reset();
 					}
 				}
 			};
 
-			wrapperFrame = stage.getContentFactory().create(IContainer.class,
-					"feedBackContainer", UUID.randomUUID());
+			wrapperFrame = stage.getContentFactory().create(IContainer.class, "feedBackContainer", UUID.randomUUID());
 
 			float rotation = item.getRelativeRotation();
 			Vector2f position = item.getRelativeLocation();
@@ -154,12 +171,12 @@ public class FeedbackContainer {
 			containedItem.setRelativeLocation(new Vector2f(0, 0));
 			containedItem.setRelativeScale(1);
 
-			Vector2f itemDimensions = FeedbackSystem
-					.getFedbackEligbleItemDimensions(item);
+			Vector2f itemDimensions = FeedbackSystem.getFedbackEligbleItemDimensions(item);
 			FeedbackSystem.unregisterAsFeedbackEligible(item, stage);
 
 			IItem parent = item.getParentItem();
-			if (parent != null) {
+			if (parent != null)
+			{
 				parent.removeItem(item);
 			}
 
@@ -167,19 +184,18 @@ public class FeedbackContainer {
 
 			switchBehaviour(item);
 
-			feedbackIcon = stage.getContentFactory().create(
-					ICachableImage.class, "feedbackIcon", UUID.randomUUID());
+			feedbackIcon = stage.getContentFactory().create(ICachableImage.class, "feedbackIcon", UUID.randomUUID());
 			feedbackIcon.setImage(FEEDBACK_ICON_IMAGE);
 			feedbackIcon.setSize(50, 50);
-			feedbackIcon.setRelativeLocation(new Vector2f(itemDimensions.x / 2,
-					-itemDimensions.y / 2));
-			feedbackIcon.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							feedbackViewer.toggleVisibility();
-						}
-					});
+			feedbackIcon.setRelativeLocation(new Vector2f(itemDimensions.x / 2, -itemDimensions.y / 2));
+			feedbackIcon.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					feedbackViewer.toggleVisibility();
+				}
+			});
 			feedbackIcon.setVisible(false);
 
 			wrapperFrame.addItem(feedbackIcon);
@@ -187,17 +203,17 @@ public class FeedbackContainer {
 			wrapperFrame.setRelativeLocation(position);
 			wrapperFrame.setRelativeScale(scale);
 
-			FeedbackSystem.registerAsFeedbackEligible(wrapperFrame,
-					itemDimensions.x, itemDimensions.y, this, stage);
+			FeedbackSystem.registerAsFeedbackEligible(wrapperFrame, itemDimensions.x, itemDimensions.y, this, stage);
 
-			if (parent != null) {
+			if (parent != null)
+			{
 				parent.addItem(wrapperFrame);
 				parent.getZOrderManager().bringToTop(wrapperFrame);
-			} else {
-				MultiplicityEnvironment.get().getLocalStages().get(0)
-						.addItem(wrapperFrame);
-				MultiplicityEnvironment.get().getLocalStages().get(0)
-						.getZOrderManager().bringToTop(wrapperFrame);
+			}
+			else
+			{
+				MultiplicityEnvironment.get().getLocalStages().get(0).addItem(wrapperFrame);
+				MultiplicityEnvironment.get().getLocalStages().get(0).getZOrderManager().bringToTop(wrapperFrame);
 			}
 
 			feedbackContainers.put(wrapperFrame, this);
@@ -205,7 +221,9 @@ public class FeedbackContainer {
 			feedbackViewer = new FeedbackViewer(stage, this);
 			feedbackViewer.setFeedbackContainerVisibility(false);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 
@@ -214,25 +232,29 @@ public class FeedbackContainer {
 	/**
 	 * Switch behaviour.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void switchBehaviour(final IItem item) {
-		for (IBehaviour behaviour : item.getBehaviours()) {
+	private void switchBehaviour(final IItem item)
+	{
+		for (IBehaviour behaviour : item.getBehaviours())
+		{
 			behaviour.setItemActingOn(wrapperFrame);
 		}
-		for (IItem child : item.getChildItems()) {
+		for (IItem child : item.getChildItems())
+		{
 			switchBehaviour(child);
 		}
 
-		item.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						wrapperFrame.getZOrderManager()
-								.bringToTop(feedbackIcon);
-						stage.getZOrderManager().bringToTop(wrapperFrame);
-					}
-				});
+		item.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				wrapperFrame.getZOrderManager().bringToTop(feedbackIcon);
+				stage.getZOrderManager().bringToTop(wrapperFrame);
+			}
+		});
 	}
 
 }

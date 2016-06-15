@@ -10,7 +10,8 @@ import com.jme3.math.FastMath;
 /**
  * The Class SynergyNetPositioning.
  */
-public class SynergyNetPositioning {
+public class SynergyNetPositioning
+{
 
 	/** The conversion between pixel and metre. */
 	private static float conversionBetweenPixelAndMetre = 0f;
@@ -20,7 +21,8 @@ public class SynergyNetPositioning {
 	 *
 	 * @return the local device location full
 	 */
-	public static SynergyNetPosition getLocalDeviceLocationFull() {
+	public static SynergyNetPosition getLocalDeviceLocationFull()
+	{
 
 		String identity = new WebConfigPrefsItem().getClusterUserName();
 
@@ -29,33 +31,36 @@ public class SynergyNetPositioning {
 		float tableLocationX = prefs.getXPos();
 		float tableLocationY = prefs.getYPos();
 
-		if (prefs.getDeveloperMode()) {
-			int currentConnectionsCount = AppSystemControlComms.get()
-					.getNumberOfTablesOnline();
-			if (prefs.getHorizontalPlacement()) {
-				if (prefs.getGridLimitX() != 0) {
-					float xPos = currentConnectionsCount
-							% prefs.getGridLimitX();
+		if (prefs.getDeveloperMode())
+		{
+			int currentConnectionsCount = AppSystemControlComms.get().getNumberOfTablesOnline();
+			if (prefs.getHorizontalPlacement())
+			{
+				if (prefs.getGridLimitX() != 0)
+				{
+					float xPos = currentConnectionsCount % prefs.getGridLimitX();
 					tableLocationX = xPos * prefs.getGridDistanceX();
-					float yPos = currentConnectionsCount
-							/ prefs.getGridLimitX();
+					float yPos = currentConnectionsCount / prefs.getGridLimitX();
 					tableLocationY = yPos * prefs.getGridDistanceY();
-				} else {
-					tableLocationX = currentConnectionsCount
-							* prefs.getGridDistanceX();
+				}
+				else
+				{
+					tableLocationX = currentConnectionsCount * prefs.getGridDistanceX();
 					tableLocationY = 0;
 				}
-			} else {
-				if (prefs.getGridLimitY() != 0) {
-					float yPos = currentConnectionsCount
-							% prefs.getGridLimitY();
+			}
+			else
+			{
+				if (prefs.getGridLimitY() != 0)
+				{
+					float yPos = currentConnectionsCount % prefs.getGridLimitY();
 					tableLocationY = yPos * prefs.getGridDistanceY();
-					float xPos = currentConnectionsCount
-							/ prefs.getGridLimitY();
+					float xPos = currentConnectionsCount / prefs.getGridLimitY();
 					tableLocationX = xPos * prefs.getGridDistanceX();
-				} else {
-					tableLocationY = currentConnectionsCount
-							* prefs.getGridDistanceY();
+				}
+				else
+				{
+					tableLocationY = currentConnectionsCount * prefs.getGridDistanceY();
 					tableLocationX = 0;
 				}
 			}
@@ -69,9 +74,7 @@ public class SynergyNetPositioning {
 		float width = getMetreValue(displayPrefs.getWidth());
 		float height = getMetreValue(displayPrefs.getHeight());
 
-		return new SynergyNetPosition(identity, tableLocationX, tableLocationY,
-				orientation, width, height, heightFromFloor,
-				displayPrefs.getWidth());
+		return new SynergyNetPosition(identity, tableLocationX, tableLocationY, orientation, width, height, heightFromFloor, displayPrefs.getWidth());
 	}
 
 	/**
@@ -79,36 +82,44 @@ public class SynergyNetPositioning {
 	 *
 	 * @return the local device location pos only
 	 */
-	public static SynergyNetPosition getLocalDeviceLocationPosOnly() {
+	public static SynergyNetPosition getLocalDeviceLocationPosOnly()
+	{
 		PositionConfigPrefsItem prefs = new PositionConfigPrefsItem();
 
 		float tableLocationX = prefs.getXPos();
 		float tableLocationY = prefs.getYPos();
 
-		int currentConnectionsCount = AppSystemControlComms.get()
-				.getNumberOfTablesOnline() - 1;
+		int currentConnectionsCount = AppSystemControlComms.get().getNumberOfTablesOnline() - 1;
 
-		if (prefs.getDeveloperMode()) {
-			if (prefs.getHorizontalPlacement()) {
-				if (prefs.getGridLimitX() != 0) {
+		if (prefs.getDeveloperMode())
+		{
+			if (prefs.getHorizontalPlacement())
+			{
+				if (prefs.getGridLimitX() != 0)
+				{
 					int xPos = currentConnectionsCount % prefs.getGridLimitX();
 					tableLocationX = xPos * prefs.getGridDistanceX();
 					int yPos = currentConnectionsCount / prefs.getGridLimitX();
 					tableLocationY = yPos * prefs.getGridDistanceY();
-				} else {
-					tableLocationX = currentConnectionsCount
-							* prefs.getGridDistanceX();
+				}
+				else
+				{
+					tableLocationX = currentConnectionsCount * prefs.getGridDistanceX();
 					tableLocationY = 0;
 				}
-			} else {
-				if (prefs.getGridLimitY() != 0) {
+			}
+			else
+			{
+				if (prefs.getGridLimitY() != 0)
+				{
 					int yPos = currentConnectionsCount % prefs.getGridLimitY();
 					tableLocationY = yPos * prefs.getGridDistanceY();
 					int xPos = currentConnectionsCount / prefs.getGridLimitY();
 					tableLocationX = xPos * prefs.getGridDistanceX();
-				} else {
-					tableLocationY = currentConnectionsCount
-							* prefs.getGridDistanceY();
+				}
+				else
+				{
+					tableLocationY = currentConnectionsCount * prefs.getGridDistanceY();
 					tableLocationX = 0;
 				}
 			}
@@ -118,18 +129,20 @@ public class SynergyNetPositioning {
 
 		float heightFromFloor = prefs.getTableHeight();
 
-		return new SynergyNetPosition("", tableLocationX, tableLocationY,
-				orientation, 0, 0, heightFromFloor, 0);
+		return new SynergyNetPosition("", tableLocationX, tableLocationY, orientation, 0, 0, heightFromFloor, 0);
 	}
 
 	/**
 	 * Gets the metre value.
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 * @return the metre value
 	 */
-	public static float getMetreValue(int value) {
-		if (conversionBetweenPixelAndMetre == 0f) {
+	public static float getMetreValue(int value)
+	{
+		if (conversionBetweenPixelAndMetre == 0f)
+		{
 			initialiseConversionValue();
 		}
 		return value / conversionBetweenPixelAndMetre;
@@ -138,11 +151,14 @@ public class SynergyNetPositioning {
 	/**
 	 * Gets the pixel value.
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 * @return the pixel value
 	 */
-	public static int getPixelValue(float value) {
-		if (conversionBetweenPixelAndMetre == 0f) {
+	public static int getPixelValue(float value)
+	{
+		if (conversionBetweenPixelAndMetre == 0f)
+		{
 			initialiseConversionValue();
 		}
 		return (int) (value * conversionBetweenPixelAndMetre);
@@ -151,10 +167,10 @@ public class SynergyNetPositioning {
 	/**
 	 * Initialise conversion value.
 	 */
-	private static void initialiseConversionValue() {
+	private static void initialiseConversionValue()
+	{
 		DisplayPrefsItem displayPrefs = new DisplayPrefsItem();
-		conversionBetweenPixelAndMetre = displayPrefs.getWidth()
-				/ displayPrefs.getRealWidth();
+		conversionBetweenPixelAndMetre = displayPrefs.getWidth() / displayPrefs.getRealWidth();
 	}
 
 }

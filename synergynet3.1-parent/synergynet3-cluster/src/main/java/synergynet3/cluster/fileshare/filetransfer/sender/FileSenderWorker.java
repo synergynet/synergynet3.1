@@ -13,7 +13,8 @@ import synergynet3.cluster.fileshare.localfilecache.MD5Hash;
 /**
  * The Class FileSenderWorker.
  */
-public class FileSenderWorker implements Runnable {
+public class FileSenderWorker implements Runnable
+{
 
 	/** The destination device. */
 	private String destinationDevice;
@@ -30,14 +31,17 @@ public class FileSenderWorker implements Runnable {
 	/**
 	 * Instantiates a new file sender worker.
 	 *
-	 * @param localFileCache the local file cache
-	 * @param fileTransferManager the file transfer manager
-	 * @param deviceToSendToJID the device to send to jid
-	 * @param identityOfFileToSend the identity of file to send
+	 * @param localFileCache
+	 *            the local file cache
+	 * @param fileTransferManager
+	 *            the file transfer manager
+	 * @param deviceToSendToJID
+	 *            the device to send to jid
+	 * @param identityOfFileToSend
+	 *            the identity of file to send
 	 */
-	public FileSenderWorker(LocalFileCache localFileCache,
-			FileTransferManager fileTransferManager, String deviceToSendToJID,
-			MD5Hash identityOfFileToSend) {
+	public FileSenderWorker(LocalFileCache localFileCache, FileTransferManager fileTransferManager, String deviceToSendToJID, MD5Hash identityOfFileToSend)
+	{
 		this.localFileCache = localFileCache;
 		this.fileTransferManager = fileTransferManager;
 		this.destinationDevice = deviceToSendToJID;
@@ -49,21 +53,26 @@ public class FileSenderWorker implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
-	public void run() {
-		final OutgoingFileTransfer outgoingTransfer = fileTransferManager
-				.createOutgoingFileTransfer(destinationDevice + "/Smack");
-		try {
-			File localFileToSend = localFileCache
-					.getCachedFileForHashIdentity(identifyOfFile);
-			outgoingTransfer.sendFile(localFileToSend,
-					identifyOfFile.toString());
-			Thread fileSendingThread = new Thread(new Runnable() {
+	public void run()
+	{
+		final OutgoingFileTransfer outgoingTransfer = fileTransferManager.createOutgoingFileTransfer(destinationDevice + "/Smack");
+		try
+		{
+			File localFileToSend = localFileCache.getCachedFileForHashIdentity(identifyOfFile);
+			outgoingTransfer.sendFile(localFileToSend, identifyOfFile.toString());
+			Thread fileSendingThread = new Thread(new Runnable()
+			{
 				@Override
-				public void run() {
-					while (!outgoingTransfer.isDone()) {
-						try {
+				public void run()
+				{
+					while (!outgoingTransfer.isDone())
+					{
+						try
+						{
 							Thread.sleep(100);
-						} catch (InterruptedException e) {
+						}
+						catch (InterruptedException e)
+						{
 						}
 					}
 				}
@@ -71,13 +80,19 @@ public class FileSenderWorker implements Runnable {
 			fileSendingThread.setDaemon(true);
 			fileSendingThread.start();
 			fileSendingThread.join(); // TODO confirm that
-										// handleFileTransferRequest will be in
-										// a thread of its own
-		} catch (IOException e) {
+			// handleFileTransferRequest will be in
+			// a thread of its own
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (XMPPException e) {
+		}
+		catch (XMPPException e)
+		{
 			e.printStackTrace();
-		} catch (InterruptedException e) {
+		}
+		catch (InterruptedException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -85,7 +100,8 @@ public class FileSenderWorker implements Runnable {
 	/**
 	 * Start.
 	 */
-	public void start() {
+	public void start()
+	{
 		Thread t = new Thread(this);
 		t.setDaemon(true);
 		t.start();

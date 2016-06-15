@@ -21,7 +21,8 @@ import synergynet3.activitypack1.core.lightbox.ppt2lightbox.elements.TextShapeCo
 /**
  * The Class PowerpointToLightBoxConvertor.
  */
-public class PowerpointToLightBoxConvertor {
+public class PowerpointToLightBoxConvertor
+{
 
 	/** The light box. */
 	private LightBox lightBox;
@@ -35,12 +36,15 @@ public class PowerpointToLightBoxConvertor {
 	/**
 	 * Instantiates a new powerpoint to light box convertor.
 	 *
-	 * @param lightBoxName the light box name
-	 * @param slideshow the slideshow
-	 * @param storageDirectory the storage directory
+	 * @param lightBoxName
+	 *            the light box name
+	 * @param slideshow
+	 *            the slideshow
+	 * @param storageDirectory
+	 *            the storage directory
 	 */
-	public PowerpointToLightBoxConvertor(String lightBoxName,
-			SlideShow slideshow, File storageDirectory) {
+	public PowerpointToLightBoxConvertor(String lightBoxName, SlideShow slideshow, File storageDirectory)
+	{
 		this.slideshow = slideshow;
 		this.lightBoxDirectory = storageDirectory;
 		lightBox = new LightBox(lightBoxName);
@@ -49,33 +53,38 @@ public class PowerpointToLightBoxConvertor {
 	/**
 	 * Convert slide from stream.
 	 *
-	 * @param slideIndex the slide index
-	 * @param inputStream the input stream
-	 * @param lightBoxStorageDirectory the light box storage directory
-	 * @param lightBoxName the light box name
+	 * @param slideIndex
+	 *            the slide index
+	 * @param inputStream
+	 *            the input stream
+	 * @param lightBoxStorageDirectory
+	 *            the light box storage directory
+	 * @param lightBoxName
+	 *            the light box name
 	 * @return the light box
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static LightBox convertSlideFromStream(int slideIndex,
-			InputStream inputStream, File lightBoxStorageDirectory,
-			String lightBoxName) throws IOException {
+	public static LightBox convertSlideFromStream(int slideIndex, InputStream inputStream, File lightBoxStorageDirectory, String lightBoxName) throws IOException
+	{
 		SlideShow powerpointFile = new SlideShow(inputStream);
-		PowerpointToLightBoxConvertor convertor = new PowerpointToLightBoxConvertor(
-				lightBoxName, powerpointFile, lightBoxStorageDirectory);
+		PowerpointToLightBoxConvertor convertor = new PowerpointToLightBoxConvertor(lightBoxName, powerpointFile, lightBoxStorageDirectory);
 		return convertor.convertFromSlide(slideIndex);
 	}
 
 	/**
 	 * Populate light box with images from slide.
 	 *
-	 * @param slide the slide
+	 * @param slide
+	 *            the slide
 	 */
-	private void populateLightBoxWithImagesFromSlide(Slide slide) {
-		for (Shape shape : slide.getShapes()) {
-			if (shape instanceof Picture) {
-				ImageItem imageItem = ImageItemConvertor.convertPictureShape(
-						(Picture) shape, slideshow.getPageSize(),
-						lightBoxDirectory);
+	private void populateLightBoxWithImagesFromSlide(Slide slide)
+	{
+		for (Shape shape : slide.getShapes())
+		{
+			if (shape instanceof Picture)
+			{
+				ImageItem imageItem = ImageItemConvertor.convertPictureShape((Picture) shape, slideshow.getPageSize(), lightBoxDirectory);
 				lightBox.addImageItem(imageItem);
 			}
 		}
@@ -84,10 +93,12 @@ public class PowerpointToLightBoxConvertor {
 	/**
 	 * Convert from slide.
 	 *
-	 * @param slideIndex the slide index
+	 * @param slideIndex
+	 *            the slide index
 	 * @return the light box
 	 */
-	LightBox convertFromSlide(int slideIndex) {
+	LightBox convertFromSlide(int slideIndex)
+	{
 		Slide slide = getSlideFromPowerpointDocumentForIndex(slideIndex);
 		populateLightBoxWithTextShapesFromSlide(slide);
 		populateLightBoxWithImagesFromSlide(slide);
@@ -97,23 +108,29 @@ public class PowerpointToLightBoxConvertor {
 	/**
 	 * Gets the slide from powerpoint document for index.
 	 *
-	 * @param slideIndex the slide index
+	 * @param slideIndex
+	 *            the slide index
 	 * @return the slide from powerpoint document for index
 	 */
-	Slide getSlideFromPowerpointDocumentForIndex(int slideIndex) {
+	Slide getSlideFromPowerpointDocumentForIndex(int slideIndex)
+	{
 		return slideshow.getSlides()[slideIndex];
 	}
 
 	/**
 	 * Gets the text shapes from slide.
 	 *
-	 * @param slide the slide
+	 * @param slide
+	 *            the slide
 	 * @return the text shapes from slide
 	 */
-	TextShape[] getTextShapesFromSlide(Slide slide) {
+	TextShape[] getTextShapesFromSlide(Slide slide)
+	{
 		List<TextShape> textShapes = new ArrayList<TextShape>();
-		for (Shape shape : slide.getShapes()) {
-			if (shape instanceof TextShape) {
+		for (Shape shape : slide.getShapes())
+		{
+			if (shape instanceof TextShape)
+			{
 				textShapes.add((TextShape) shape);
 			}
 		}
@@ -123,12 +140,14 @@ public class PowerpointToLightBoxConvertor {
 	/**
 	 * Populate light box with text shapes from slide.
 	 *
-	 * @param slide the slide
+	 * @param slide
+	 *            the slide
 	 */
-	void populateLightBoxWithTextShapesFromSlide(Slide slide) {
-		for (TextShape textBox : getTextShapesFromSlide(slide)) {
-			TextItem textItem = TextShapeConvertor.convertTextShape(textBox,
-					slideshow.getPageSize());
+	void populateLightBoxWithTextShapesFromSlide(Slide slide)
+	{
+		for (TextShape textBox : getTextShapesFromSlide(slide))
+		{
+			TextItem textItem = TextShapeConvertor.convertTextShape(textBox, slideshow.getPageSize());
 			lightBox.addTextItem(textItem);
 		}
 	}

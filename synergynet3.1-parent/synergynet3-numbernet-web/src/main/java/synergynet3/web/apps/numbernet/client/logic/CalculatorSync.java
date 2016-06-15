@@ -10,7 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 /**
  * The Class CalculatorSync.
  */
-public class CalculatorSync implements CalculatorKeyControlPanelDelegate {
+public class CalculatorSync implements CalculatorKeyControlPanelDelegate
+{
 
 	/** The table. */
 	private String table;
@@ -18,9 +19,11 @@ public class CalculatorSync implements CalculatorKeyControlPanelDelegate {
 	/**
 	 * Instantiates a new calculator sync.
 	 *
-	 * @param forTable the for table
+	 * @param forTable
+	 *            the for table
 	 */
-	public CalculatorSync(String forTable) {
+	public CalculatorSync(String forTable)
+	{
 		this.table = forTable;
 	}
 
@@ -33,17 +36,20 @@ public class CalculatorSync implements CalculatorKeyControlPanelDelegate {
 	 * boolean)
 	 */
 	@Override
-	public void keyStateChanged(CalculatorKey key, boolean state) {
-		NumberNetService.Util.getInstance().setCalculatorKeyStateForTable(
-				table, key, state, new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+	public void keyStateChanged(CalculatorKey key, boolean state)
+	{
+		NumberNetService.Util.getInstance().setCalculatorKeyStateForTable(table, key, state, new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 	}
 }

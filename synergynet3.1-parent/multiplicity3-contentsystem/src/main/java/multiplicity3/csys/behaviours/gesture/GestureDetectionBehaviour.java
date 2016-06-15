@@ -15,8 +15,8 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
 /**
  * The Class GestureDetectionBehaviour.
  */
-public class GestureDetectionBehaviour implements IBehaviour,
-		IMultiTouchEventListener {
+public class GestureDetectionBehaviour implements IBehaviour, IMultiTouchEventListener
+{
 
 	/** The active. */
 	private boolean active = true;
@@ -34,9 +34,11 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	/**
 	 * Adds the listener.
 	 *
-	 * @param l the l
+	 * @param l
+	 *            the l
 	 */
-	public void addListener(IGestureListener l) {
+	public void addListener(IGestureListener l)
+	{
 		listeners.add(l);
 		item.getMultiTouchDispatcher().addListener(this);
 	}
@@ -48,12 +50,15 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		Gesture g = currentGestures.get(event.getCursorID());
-		if (g != null) {
+		if (g != null)
+		{
 			g.addPoint(event.getPosition());
 		}
 	}
@@ -65,7 +70,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -77,8 +83,10 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		Gesture g = new Gesture("c" + event.getCursorID());
@@ -93,12 +101,15 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		Gesture g = currentGestures.get(event.getCursorID());
-		if (g != null) {
+		if (g != null)
+		{
 			g.addPoint(event.getPosition());
 		}
 		detectGesture(g, event);
@@ -112,7 +123,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -124,7 +136,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -136,7 +149,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -146,7 +160,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
@@ -157,7 +172,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem eventSourceItem) {
+	public void setEventSource(IItem eventSourceItem)
+	{
 		this.item = eventSourceItem;
 	}
 
@@ -168,7 +184,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setItemActingOn(IItem item) {
+	public void setItemActingOn(IItem item)
+	{
 
 	}
 
@@ -179,7 +196,8 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -187,14 +205,18 @@ public class GestureDetectionBehaviour implements IBehaviour,
 	/**
 	 * Detect gesture.
 	 *
-	 * @param g the g
-	 * @param event the event
+	 * @param g
+	 *            the g
+	 * @param event
+	 *            the event
 	 */
-	private void detectGesture(Gesture g, MultiTouchCursorEvent event) {
-		GestureMatch match = GestureLibrary.getInstance().findGestureMatch(g,
-				0.1f);
-		if (match != null) {
-			for (IGestureListener l : listeners) {
+	private void detectGesture(Gesture g, MultiTouchCursorEvent event)
+	{
+		GestureMatch match = GestureLibrary.getInstance().findGestureMatch(g, 0.1f);
+		if (match != null)
+		{
+			for (IGestureListener l : listeners)
+			{
 				l.gestureDetected(match, item);
 			}
 		}

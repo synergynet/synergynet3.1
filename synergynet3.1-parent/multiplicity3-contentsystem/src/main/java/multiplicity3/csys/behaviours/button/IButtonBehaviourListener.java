@@ -13,26 +13,30 @@ import multiplicity3.csys.items.item.IItem;
  *
  * @see IButtonBehaviourEvent
  */
-public interface IButtonBehaviourListener {
+public interface IButtonBehaviourListener
+{
 
 	/**
 	 * Button clicked.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	public void buttonClicked(IItem item);
 
 	/**
 	 * Button pressed.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	public void buttonPressed(IItem item);
 
 	/**
 	 * Button released.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	public void buttonReleased(IItem item);
 }

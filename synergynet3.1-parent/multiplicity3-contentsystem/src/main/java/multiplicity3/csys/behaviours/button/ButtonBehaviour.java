@@ -9,7 +9,8 @@ import multiplicity3.input.events.MultiTouchCursorEvent;
 /**
  * The Class ButtonBehaviour.
  */
-public class ButtonBehaviour implements IBehaviour {
+public class ButtonBehaviour implements IBehaviour
+{
 
 	/** The active. */
 	private boolean active = true;
@@ -20,37 +21,46 @@ public class ButtonBehaviour implements IBehaviour {
 	/**
 	 * Adds the listener.
 	 *
-	 * @param l the l
+	 * @param l
+	 *            the l
 	 */
-	public void addListener(final IButtonBehaviourListener l) {
-		if (l != null) {
+	public void addListener(final IButtonBehaviourListener l)
+	{
+		if (l != null)
+		{
 			final IButtonBehaviourListener bb = l;
-			item.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							if (!active) {
-								return;
-							}
-							bb.buttonClicked(item);
-						}
+			item.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					if (!active)
+					{
+						return;
+					}
+					bb.buttonClicked(item);
+				}
 
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							if (!active) {
-								return;
-							}
-							bb.buttonPressed(item);
-						}
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					if (!active)
+					{
+						return;
+					}
+					bb.buttonPressed(item);
+				}
 
-						@Override
-						public void cursorReleased(MultiTouchCursorEvent event) {
-							if (!active) {
-								return;
-							}
-							bb.buttonReleased(item);
-						}
-					});
+				@Override
+				public void cursorReleased(MultiTouchCursorEvent event)
+				{
+					if (!active)
+					{
+						return;
+					}
+					bb.buttonReleased(item);
+				}
+			});
 		}
 	}
 
@@ -59,7 +69,8 @@ public class ButtonBehaviour implements IBehaviour {
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
@@ -70,7 +81,8 @@ public class ButtonBehaviour implements IBehaviour {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem eventSourceItem) {
+	public void setEventSource(IItem eventSourceItem)
+	{
 		this.item = eventSourceItem;
 	}
 
@@ -80,7 +92,9 @@ public class ButtonBehaviour implements IBehaviour {
 	 * multiplicity3.csys.behaviours.IBehaviour#setItemActingOn(multiplicity3
 	 * .csys.items.item.IItem)
 	 */
-	public void setItemActingOn(final IItem item) {
+	@Override
+	public void setItemActingOn(final IItem item)
+	{
 
 	}
 
@@ -91,7 +105,8 @@ public class ButtonBehaviour implements IBehaviour {
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		// TODO Auto-generated method stub
 
 	}

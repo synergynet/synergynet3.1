@@ -6,7 +6,8 @@ import java.io.Serializable;
 /**
  * The Class LightBoxItem.
  */
-public class LightBoxItem implements Serializable {
+public class LightBoxItem implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 6773468172887101449L;
@@ -25,7 +26,8 @@ public class LightBoxItem implements Serializable {
 	 *
 	 * @return the position
 	 */
-	public Float getPosition() {
+	public Float getPosition()
+	{
 		return this.position;
 	}
 
@@ -34,7 +36,8 @@ public class LightBoxItem implements Serializable {
 	 *
 	 * @return the rotation degrees
 	 */
-	public int getRotationDegrees() {
+	public int getRotationDegrees()
+	{
 		return rotationDegrees;
 	}
 
@@ -43,34 +46,41 @@ public class LightBoxItem implements Serializable {
 	 *
 	 * @return true, if is moveable
 	 */
-	public boolean isMoveable() {
+	public boolean isMoveable()
+	{
 		return this.moveable;
 	}
 
 	/**
 	 * Sets the moveable.
 	 *
-	 * @param isMoveable the new moveable
+	 * @param isMoveable
+	 *            the new moveable
 	 */
-	public void setMoveable(boolean isMoveable) {
+	public void setMoveable(boolean isMoveable)
+	{
 		this.moveable = isMoveable;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param position the new position
+	 * @param position
+	 *            the new position
 	 */
-	public void setPosition(Float position) {
+	public void setPosition(Float position)
+	{
 		this.position = position;
 	}
 
 	/**
 	 * Sets the rotation degrees.
 	 *
-	 * @param rotationDegrees the new rotation degrees
+	 * @param rotationDegrees
+	 *            the new rotation degrees
 	 */
-	public void setRotationDegrees(int rotationDegrees) {
+	public void setRotationDegrees(int rotationDegrees)
+	{
 		this.rotationDegrees = rotationDegrees;
 	}
 }

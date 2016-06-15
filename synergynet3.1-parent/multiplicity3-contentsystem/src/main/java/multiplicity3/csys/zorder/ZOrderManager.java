@@ -10,11 +10,11 @@ import multiplicity3.input.events.MultiTouchCursorEvent;
 /**
  * The Class ZOrderManager.
  */
-public class ZOrderManager implements IZOrderManager {
+public class ZOrderManager implements IZOrderManager
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(ZOrderManager.class
-			.getName());
+	private static final Logger log = Logger.getLogger(ZOrderManager.class.getName());
 
 	/** The auto bring to top. */
 	private boolean autoBringToTop = true;
@@ -40,10 +40,13 @@ public class ZOrderManager implements IZOrderManager {
 	/**
 	 * Instantiates a new z order manager.
 	 *
-	 * @param itemBeingManaged the item being managed
-	 * @param initialCapacity the initial capacity
+	 * @param itemBeingManaged
+	 *            the item being managed
+	 * @param initialCapacity
+	 *            the initial capacity
 	 */
-	public ZOrderManager(IItem itemBeingManaged, int initialCapacity) {
+	public ZOrderManager(IItem itemBeingManaged, int initialCapacity)
+	{
 		capacity = initialCapacity;
 		this.itemBeingManaged = itemBeingManaged;
 	}
@@ -55,7 +58,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .items.item.IItem)
 	 */
 	@Override
-	public void bringToTop(IItem item) {
+	public void bringToTop(IItem item)
+	{
 		registeredItems.remove(item);
 		registeredItems.add(0, item);
 		updateOrder();
@@ -66,7 +70,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see multiplicity3.csys.zorder.IZOrderManager#getItemZOrder()
 	 */
 	@Override
-	public int getItemZOrder() {
+	public int getItemZOrder()
+	{
 		return this.startZOrder;
 	}
 
@@ -75,9 +80,10 @@ public class ZOrderManager implements IZOrderManager {
 	 *
 	 * @return the parent z order manager
 	 */
-	public IZOrderManager getParentZOrderManager() {
-		if ((itemBeingManaged != null)
-				&& (itemBeingManaged.getParentItem() != null)) {
+	public IZOrderManager getParentZOrderManager()
+	{
+		if ((itemBeingManaged != null) && (itemBeingManaged.getParentItem() != null))
+		{
 			return itemBeingManaged.getParentItem().getZOrderManager();
 		}
 		return null;
@@ -88,7 +94,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see multiplicity3.csys.zorder.IZOrderManager#getZCapacity()
 	 */
 	@Override
-	public int getZCapacity() {
+	public int getZCapacity()
+	{
 		return capacity;
 	}
 
@@ -98,7 +105,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * multiplicity3.csys.items.item.IItem)
 	 */
 	@Override
-	public void ignoreItemClickedBehaviour(IItem item) {
+	public void ignoreItemClickedBehaviour(IItem item)
+	{
 		item.removeItemListener(this);
 	}
 
@@ -109,7 +117,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorChanged(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorChanged(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -119,7 +128,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorClicked(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorClicked(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -129,12 +139,15 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorPressed(IItem item, MultiTouchCursorEvent event) {
-		if (autoBringToTop) {
+	public void itemCursorPressed(IItem item, MultiTouchCursorEvent event)
+	{
+		if (autoBringToTop)
+		{
 			log.fine("Bringing " + item + " to the top");
 			bringToTop(item);
 		}
-		if (bringToTopPropagatesUp && (getParentZOrderManager() != null)) {
+		if (bringToTopPropagatesUp && (getParentZOrderManager() != null))
+		{
 			getParentZOrderManager().bringToTop(item.getParentItem());
 		}
 	}
@@ -146,7 +159,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorReleased(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorReleased(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -156,7 +170,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemMoved(IItem item) {
+	public void itemMoved(IItem item)
+	{
 	}
 
 	/*
@@ -166,7 +181,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemRotated(IItem item) {
+	public void itemRotated(IItem item)
+	{
 	}
 
 	/*
@@ -176,7 +192,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemScaled(IItem item) {
+	public void itemScaled(IItem item)
+	{
 	}
 
 	/*
@@ -185,7 +202,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * multiplicity3.csys.items.item.IItem, boolean)
 	 */
 	@Override
-	public void itemVisibilityChanged(IItem item, boolean isVisible) {
+	public void itemVisibilityChanged(IItem item, boolean isVisible)
+	{
 	}
 
 	/*
@@ -195,7 +213,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemZOrderChanged(IItem item) {
+	public void itemZOrderChanged(IItem item)
+	{
 	}
 
 	/*
@@ -206,15 +225,17 @@ public class ZOrderManager implements IZOrderManager {
 	 * multiplicity3.csys.zorder.IZOrderManager)
 	 */
 	@Override
-	public void notifyChildZCapacityChanged(IItem item, IZOrderManager manager) {
-		log.fine(this.itemBeingManaged + " has item that changed capacity: "
-				+ item);
+	public void notifyChildZCapacityChanged(IItem item, IZOrderManager manager)
+	{
+		log.fine(this.itemBeingManaged + " has item that changed capacity: " + item);
 		int zReq = capacity;
-		for (IItem i : registeredItems) {
+		for (IItem i : registeredItems)
+		{
 			zReq += i.getZOrderManager().getZCapacity();
 		}
 		this.usedZSpace = zReq;
-		if (usedZSpace > capacity) {
+		if (usedZSpace > capacity)
+		{
 			doubleZSpaceCapacity();
 		}
 		updateOrder();
@@ -229,12 +250,15 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void registerForZOrdering(IItem item) {
-		if (!registeredItems.contains(item)) {
+	public void registerForZOrdering(IItem item)
+	{
+		if (!registeredItems.contains(item))
+		{
 			registeredItems.add(0, item);
 			item.getZOrderManager().setItemZOrder(usedZSpace);
 			usedZSpace += item.getZOrderManager().getZCapacity();
-			if (usedZSpace > capacity) {
+			if (usedZSpace > capacity)
+			{
 				doubleZSpaceCapacity();
 			}
 			item.addItemListener(this);
@@ -249,7 +273,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * .items.item.IItem)
 	 */
 	@Override
-	public void sendToBottom(IItem item) {
+	public void sendToBottom(IItem item)
+	{
 		registeredItems.remove(item);
 		registeredItems.add(item);
 		updateOrder();
@@ -260,7 +285,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see multiplicity3.csys.zorder.IZOrderManager#setAutoBringToTop(boolean)
 	 */
 	@Override
-	public void setAutoBringToTop(boolean enabled) {
+	public void setAutoBringToTop(boolean enabled)
+	{
 		this.autoBringToTop = enabled;
 		updateOrder();
 	}
@@ -272,7 +298,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * )
 	 */
 	@Override
-	public void setBringToTopPropagatesUp(boolean should) {
+	public void setBringToTopPropagatesUp(boolean should)
+	{
 		this.bringToTopPropagatesUp = should;
 	}
 
@@ -281,7 +308,8 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see multiplicity3.csys.zorder.IZOrderManager#setItemZOrder(int)
 	 */
 	@Override
-	public void setItemZOrder(int zValue) {
+	public void setItemZOrder(int zValue)
+	{
 		this.startZOrder = zValue;
 		updateOrder();
 	}
@@ -291,12 +319,13 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see multiplicity3.csys.zorder.IZOrderManager#setZCapacity(int)
 	 */
 	@Override
-	public void setZCapacity(int c) {
+	public void setZCapacity(int c)
+	{
 		log.fine(this.itemBeingManaged + " setCapacity " + c);
-		if (c > capacity) {
+		if (c > capacity)
+		{
 			this.capacity = c;
-			log.fine(this.itemBeingManaged + " now has z capacity of "
-					+ this.capacity);
+			log.fine(this.itemBeingManaged + " now has z capacity of " + this.capacity);
 			informParentThatCapacityChanged();
 		}
 	}
@@ -308,8 +337,10 @@ public class ZOrderManager implements IZOrderManager {
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void unregisterForZOrdering(IItem item) {
-		if (registeredItems.contains(item)) {
+	public void unregisterForZOrdering(IItem item)
+	{
+		if (registeredItems.contains(item))
+		{
 			registeredItems.remove(item);
 			usedZSpace -= item.getZOrderManager().getZCapacity();
 			item.removeItemListener(this);
@@ -322,12 +353,15 @@ public class ZOrderManager implements IZOrderManager {
 	 * @see multiplicity3.csys.zorder.IZOrderManager#updateOrder()
 	 */
 	@Override
-	public void updateOrder() {
-		if (itemBeingManaged != null) {
+	public void updateOrder()
+	{
+		if (itemBeingManaged != null)
+		{
 			itemBeingManaged.setZOrder(startZOrder);
 		}
 		int z = startZOrder;
-		for (IItem i : registeredItems) {
+		for (IItem i : registeredItems)
+		{
 			i.getZOrderManager().setItemZOrder(z);
 			z -= i.getZOrderManager().getZCapacity();
 		}
@@ -338,17 +372,19 @@ public class ZOrderManager implements IZOrderManager {
 	/**
 	 * Double z space capacity.
 	 */
-	private void doubleZSpaceCapacity() {
+	private void doubleZSpaceCapacity()
+	{
 		setZCapacity(getZCapacity() * 2);
 	}
 
 	/**
 	 * Inform parent that capacity changed.
 	 */
-	private void informParentThatCapacityChanged() {
-		if (getParentZOrderManager() != null) {
-			getParentZOrderManager().notifyChildZCapacityChanged(
-					itemBeingManaged, this);
+	private void informParentThatCapacityChanged()
+	{
+		if (getParentZOrderManager() != null)
+		{
+			getParentZOrderManager().notifyChildZCapacityChanged(itemBeingManaged, this);
 		}
 	}
 

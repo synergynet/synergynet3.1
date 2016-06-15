@@ -5,7 +5,8 @@ import com.hazelcast.core.IMap;
 /**
  * The Class DistributedPropertyMap.
  */
-public class DistributedPropertyMap {
+public class DistributedPropertyMap
+{
 
 	/** The distributed property changed listener. */
 	private DistributedPropertyChangedListener distributedPropertyChangedListener;
@@ -16,22 +17,26 @@ public class DistributedPropertyMap {
 	/**
 	 * Instantiates a new distributed property map.
 	 *
-	 * @param map the map
+	 * @param map
+	 *            the map
 	 */
-	public DistributedPropertyMap(IMap<String, Object> map) {
+	public DistributedPropertyMap(IMap<String, Object> map)
+	{
 		this.map = map;
-		this.distributedPropertyChangedListener = new DistributedPropertyChangedListener(
-				map);
+		this.distributedPropertyChangedListener = new DistributedPropertyChangedListener(map);
 	}
 
 	/**
 	 * Creates the distributed property.
 	 *
-	 * @param <T> the generic type
-	 * @param key the key
+	 * @param <T>
+	 *            the generic type
+	 * @param key
+	 *            the key
 	 * @return the distributed property
 	 */
-	public <T> DistributedProperty<T> createDistributedProperty(String key) {
+	public <T> DistributedProperty<T> createDistributedProperty(String key)
+	{
 		return new DistributedProperty<T>(this, key);
 	}
 
@@ -40,7 +45,8 @@ public class DistributedPropertyMap {
 	 *
 	 * @return the distributed property changed listener
 	 */
-	public DistributedPropertyChangedListener getDistributedPropertyChangedListener() {
+	public DistributedPropertyChangedListener getDistributedPropertyChangedListener()
+	{
 		return distributedPropertyChangedListener;
 	}
 
@@ -50,7 +56,8 @@ public class DistributedPropertyMap {
 	 * @return the map
 	 */
 	@SuppressWarnings("rawtypes")
-	public IMap getMap() {
+	public IMap getMap()
+	{
 		return this.map;
 	}
 }

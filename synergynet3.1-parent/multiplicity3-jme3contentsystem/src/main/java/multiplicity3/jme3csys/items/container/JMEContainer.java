@@ -14,15 +14,19 @@ import com.jme3.scene.Spatial;
  * The Class JMEContainer.
  */
 @ImplementsContentItem(target = IContainer.class)
-public class JMEContainer extends JMEItem implements IContainer, IInitable {
+public class JMEContainer extends JMEItem implements IContainer, IInitable
+{
 
 	/**
 	 * Instantiates a new JME container.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEContainer(String name, UUID uuid) {
+	public JMEContainer(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -31,7 +35,8 @@ public class JMEContainer extends JMEItem implements IContainer, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return null;
 	}
 
@@ -42,7 +47,8 @@ public class JMEContainer extends JMEItem implements IContainer, IInitable {
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 	}
 
 }

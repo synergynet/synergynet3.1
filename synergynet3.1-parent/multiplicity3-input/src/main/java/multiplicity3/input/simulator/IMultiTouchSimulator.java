@@ -26,7 +26,8 @@ package multiplicity3.input.simulator;
 /**
  * The Interface IMultiTouchSimulator.
  */
-public interface IMultiTouchSimulator {
+public interface IMultiTouchSimulator
+{
 
 	/**
 	 * Clear cursor.
@@ -36,53 +37,72 @@ public interface IMultiTouchSimulator {
 	/**
 	 * Delete cursor.
 	 *
-	 * @param id the id
-	 * @param x the x
-	 * @param y the y
+	 * @param id
+	 *            the id
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void deleteCursor(int id, float x, float y);
 
 	/**
 	 * Delete two cursors.
 	 *
-	 * @param id1 the id1
-	 * @param x the x
-	 * @param y the y
-	 * @param id2 the id2
-	 * @param x2 the x2
-	 * @param y2 the y2
+	 * @param id1
+	 *            the id1
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param id2
+	 *            the id2
+	 * @param x2
+	 *            the x2
+	 * @param y2
+	 *            the y2
 	 */
-	public void deleteTwoCursors(int id1, float x, float y, int id2, float x2,
-			float y2);
+	public void deleteTwoCursors(int id1, float x, float y, int id2, float x2, float y2);
 
 	/**
 	 * New cursor.
 	 *
-	 * @param id the id
-	 * @param x the x
-	 * @param y the y
+	 * @param id
+	 *            the id
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void newCursor(int id, float x, float y);
 
 	/**
 	 * Update cursor.
 	 *
-	 * @param id the id
-	 * @param x the x
-	 * @param y the y
+	 * @param id
+	 *            the id
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public void updateCursor(int id, float x, float y);
 
 	/**
 	 * Update two cursors.
 	 *
-	 * @param id1 the id1
-	 * @param x the x
-	 * @param y the y
-	 * @param id2 the id2
-	 * @param x2 the x2
-	 * @param y2 the y2
+	 * @param id1
+	 *            the id1
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param id2
+	 *            the id2
+	 * @param x2
+	 *            the x2
+	 * @param y2
+	 *            the y2
 	 */
-	public void updateTwoCursors(int id1, float x, float y, int id2, float x2,
-			float y2);
+	public void updateTwoCursors(int id1, float x, float y, int id2, float x2, float y2);
 }

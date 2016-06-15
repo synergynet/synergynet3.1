@@ -8,19 +8,25 @@ import com.google.gwt.user.client.ui.DialogBox;
 /**
  * The Class MessageDialogBox.
  */
-public class MessageDialogBox extends DialogBox {
+public class MessageDialogBox extends DialogBox
+{
 
 	/**
 	 * Instantiates a new message dialog box.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	public MessageDialogBox(String message) {
+	public MessageDialogBox(String message)
+	{
 		setText(message);
 
 		Button ok = new Button("OK");
-		ok.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		ok.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				MessageDialogBox.this.hide();
 			}
 		});

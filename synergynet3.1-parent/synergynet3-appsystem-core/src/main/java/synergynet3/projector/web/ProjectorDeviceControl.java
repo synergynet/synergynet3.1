@@ -11,7 +11,8 @@ import synergynet3.web.shared.messages.PerformActionMessage;
  * Manages the network cluster default entries for SynergyNetApp extending
  * application.
  */
-public class ProjectorDeviceControl extends ClusteredDevice {
+public class ProjectorDeviceControl extends ClusteredDevice
+{
 
 	/** Network messages relating to sending content to projectors. */
 	private DistributedProperty<ArrayList<ContentTransferedMessage>> contentTransferToProjectorControl;
@@ -28,29 +29,24 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	/**
 	 * Creates the default shared properties of a network cluster for a device.
 	 *
-	 * @param deviceName ID of the device being initiated on the network
-	 *            cluster.
+	 * @param deviceName
+	 *            ID of the device being initiated on the network cluster.
 	 */
-	public ProjectorDeviceControl(String deviceName) {
+	public ProjectorDeviceControl(String deviceName)
+	{
 		super(deviceName);
 
-		projectorClearControl = getDistributedPropertyMap()
-				.createDistributedProperty("projectorClearControl");
+		projectorClearControl = getDistributedPropertyMap().createDistributedProperty("projectorClearControl");
 		initWithDefault(projectorClearControl, new PerformActionMessage());
 
-		projectorAlignControl = getDistributedPropertyMap()
-				.createDistributedProperty("projectorAlignControl");
+		projectorAlignControl = getDistributedPropertyMap().createDistributedProperty("projectorAlignControl");
 		initWithDefault(projectorAlignControl, new PerformActionMessage());
 
-		sendProjectedContentsToTablesControl = getDistributedPropertyMap()
-				.createDistributedProperty(
-						"sendProjectedContentsToTablesControl");
+		sendProjectedContentsToTablesControl = getDistributedPropertyMap().createDistributedProperty("sendProjectedContentsToTablesControl");
 		initWithDefault(sendProjectedContentsToTablesControl, new String[0]);
 
-		contentTransferToProjectorControl = getDistributedPropertyMap()
-				.createDistributedProperty("contentTransferToProjectorControl");
-		initWithDefault(contentTransferToProjectorControl,
-				new ArrayList<ContentTransferedMessage>());
+		contentTransferToProjectorControl = getDistributedPropertyMap().createDistributedProperty("contentTransferToProjectorControl");
+		initWithDefault(contentTransferToProjectorControl, new ArrayList<ContentTransferedMessage>());
 
 	}
 
@@ -61,7 +57,8 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * @return The value of the network cluster property representing messages
 	 *         relating to content arriving on a projector.
 	 */
-	public DistributedProperty<ArrayList<ContentTransferedMessage>> getContentTransferToProjectorControl() {
+	public DistributedProperty<ArrayList<ContentTransferedMessage>> getContentTransferToProjectorControl()
+	{
 		return contentTransferToProjectorControl;
 	}
 
@@ -72,7 +69,8 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * @return The value of the network cluster property representing messages
 	 *         relating to aligning contents a projector.
 	 */
-	public DistributedProperty<PerformActionMessage> getProjectorAlignControl() {
+	public DistributedProperty<PerformActionMessage> getProjectorAlignControl()
+	{
 		return projectorAlignControl;
 	}
 
@@ -83,7 +81,8 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * @return The value of the network cluster property representing messages
 	 *         relating to clearing a projector.
 	 */
-	public DistributedProperty<PerformActionMessage> getProjectorClearControl() {
+	public DistributedProperty<PerformActionMessage> getProjectorClearControl()
+	{
 		return projectorClearControl;
 	}
 
@@ -94,7 +93,8 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * @return The value of the network cluster property representing messages
 	 *         relating to aligning contents a projector.
 	 */
-	public DistributedProperty<String[]> getSendContentsToTablesControl() {
+	public DistributedProperty<String[]> getSendContentsToTablesControl()
+	{
 		return sendProjectedContentsToTablesControl;
 	}
 
@@ -102,14 +102,16 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * Initialises the corresponding shared properties with the supplied default
 	 * value.
 	 *
-	 * @param control Property on the network cluster to be initialised.
-	 * @param defaultValue The default value to be used when initialising the
-	 *            shared property.
+	 * @param control
+	 *            Property on the network cluster to be initialised.
+	 * @param defaultValue
+	 *            The default value to be used when initialising the shared
+	 *            property.
 	 */
-	protected void initWithDefault(
-			DistributedProperty<ArrayList<ContentTransferedMessage>> control,
-			ArrayList<ContentTransferedMessage> defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<ArrayList<ContentTransferedMessage>> control, ArrayList<ContentTransferedMessage> defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -118,14 +120,16 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * Initialises the corresponding shared properties with the supplied default
 	 * value.
 	 *
-	 * @param control Property on the network cluster to be initialised.
-	 * @param defaultValue The default value to be used when initialising the
-	 *            shared property.
+	 * @param control
+	 *            Property on the network cluster to be initialised.
+	 * @param defaultValue
+	 *            The default value to be used when initialising the shared
+	 *            property.
 	 */
-	protected void initWithDefault(
-			DistributedProperty<PerformActionMessage> control,
-			PerformActionMessage defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<PerformActionMessage> control, PerformActionMessage defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -134,13 +138,16 @@ public class ProjectorDeviceControl extends ClusteredDevice {
 	 * Initialises the corresponding shared properties with the supplied default
 	 * value.
 	 *
-	 * @param control Property on the network cluster to be initialised.
-	 * @param defaultValue The default value to be used when initialising the
-	 *            shared property.
+	 * @param control
+	 *            Property on the network cluster to be initialised.
+	 * @param defaultValue
+	 *            The default value to be used when initialising the shared
+	 *            property.
 	 */
-	protected void initWithDefault(DistributedProperty<String[]> control,
-			String[] defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<String[]> control, String[] defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}

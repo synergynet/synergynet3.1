@@ -8,7 +8,8 @@ import synergynet3.web.shared.messages.PerformActionMessage;
 /**
  * The Class EarlyYearsDeviceControl.
  */
-public class EarlyYearsDeviceControl extends ClusteredDevice {
+public class EarlyYearsDeviceControl extends ClusteredDevice
+{
 
 	/** The activity. */
 	private DistributedProperty<EarlyYearsActivity> activity;
@@ -31,28 +32,23 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	/**
 	 * Instantiates a new early years device control.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	public EarlyYearsDeviceControl(String deviceName) {
+	public EarlyYearsDeviceControl(String deviceName)
+	{
 		super(deviceName);
-		activity = getDistributedPropertyMap().createDistributedProperty(
-				"scenarioName");
+		activity = getDistributedPropertyMap().createDistributedProperty("scenarioName");
 		initWithDefault(activity, EarlyYearsActivity.ENVIRONMENT_EXPLORER);
-		railWayCornerNumControl = getDistributedPropertyMap()
-				.createDistributedProperty("railWayCornerNumControl");
+		railWayCornerNumControl = getDistributedPropertyMap().createDistributedProperty("railWayCornerNumControl");
 		initWithDefault(railWayCornerNumControl, 6);
-		railWayCrossNumControl = getDistributedPropertyMap()
-				.createDistributedProperty("railWayCrossNumControl");
+		railWayCrossNumControl = getDistributedPropertyMap().createDistributedProperty("railWayCrossNumControl");
 		initWithDefault(railWayCrossNumControl, 1);
-		railWayStraightNumControl = getDistributedPropertyMap()
-				.createDistributedProperty("railWayStraightNumControl");
+		railWayStraightNumControl = getDistributedPropertyMap().createDistributedProperty("railWayStraightNumControl");
 		initWithDefault(railWayStraightNumControl, 4);
-		exploreShowTeacherConsoleControl = getDistributedPropertyMap()
-				.createDistributedProperty("exploreShowTeacherConsoleControl");
-		initWithDefault(exploreShowTeacherConsoleControl,
-				new PerformActionMessage());
-		roadModeControl = getDistributedPropertyMap()
-				.createDistributedProperty("roadMode");
+		exploreShowTeacherConsoleControl = getDistributedPropertyMap().createDistributedProperty("exploreShowTeacherConsoleControl");
+		initWithDefault(exploreShowTeacherConsoleControl, new PerformActionMessage());
+		roadModeControl = getDistributedPropertyMap().createDistributedProperty("roadMode");
 		initWithDefault(roadModeControl, new PerformActionMessage());
 	}
 
@@ -61,7 +57,8 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the activity
 	 */
-	public DistributedProperty<EarlyYearsActivity> getActivity() {
+	public DistributedProperty<EarlyYearsActivity> getActivity()
+	{
 		return activity;
 	}
 
@@ -70,7 +67,8 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the explore show teacher console control
 	 */
-	public DistributedProperty<PerformActionMessage> getExploreShowTeacherConsoleControl() {
+	public DistributedProperty<PerformActionMessage> getExploreShowTeacherConsoleControl()
+	{
 		return exploreShowTeacherConsoleControl;
 	}
 
@@ -79,7 +77,8 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the rail way corner num control
 	 */
-	public DistributedProperty<Integer> getRailWayCornerNumControl() {
+	public DistributedProperty<Integer> getRailWayCornerNumControl()
+	{
 		return railWayCornerNumControl;
 	}
 
@@ -88,7 +87,8 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the rail way cross num control
 	 */
-	public DistributedProperty<Integer> getRailWayCrossNumControl() {
+	public DistributedProperty<Integer> getRailWayCrossNumControl()
+	{
 		return railWayCrossNumControl;
 	}
 
@@ -97,7 +97,8 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the rail way straight num control
 	 */
-	public DistributedProperty<Integer> getRailWayStraightNumControl() {
+	public DistributedProperty<Integer> getRailWayStraightNumControl()
+	{
 		return railWayStraightNumControl;
 	}
 
@@ -106,19 +107,23 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the road mode control
 	 */
-	public DistributedProperty<PerformActionMessage> getRoadModeControl() {
+	public DistributedProperty<PerformActionMessage> getRoadModeControl()
+	{
 		return roadModeControl;
 	}
 
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<Double> control,
-			double defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<Double> control, double defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -126,13 +131,15 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(
-			DistributedProperty<EarlyYearsActivity> control,
-			EarlyYearsActivity defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<EarlyYearsActivity> control, EarlyYearsActivity defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -140,12 +147,15 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<Integer> control,
-			int defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<Integer> control, int defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -153,13 +163,15 @@ public class EarlyYearsDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(
-			DistributedProperty<PerformActionMessage> control,
-			PerformActionMessage defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<PerformActionMessage> control, PerformActionMessage defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}

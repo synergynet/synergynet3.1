@@ -31,7 +31,8 @@ import com.jme3.scene.VertexBuffer.Type;
 /**
  * The Class CenteredQuad.
  */
-public class CenteredQuad extends Mesh {
+public class CenteredQuad extends Mesh
+{
 
 	/** The flip coords. */
 	private boolean flipCoords;
@@ -45,27 +46,35 @@ public class CenteredQuad extends Mesh {
 	/**
 	 * Do not use this constructor. Serialization purposes only.
 	 */
-	public CenteredQuad() {
+	public CenteredQuad()
+	{
 	}
 
 	/**
 	 * Instantiates a new centered quad.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
-	public CenteredQuad(float width, float height) {
+	public CenteredQuad(float width, float height)
+	{
 		this(width, height, false);
 	}
 
 	/**
 	 * Instantiates a new centered quad.
 	 *
-	 * @param width the width
-	 * @param height the height
-	 * @param flipCoords the flip coords
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param flipCoords
+	 *            the flip coords
 	 */
-	public CenteredQuad(float width, float height, boolean flipCoords) {
+	public CenteredQuad(float width, float height, boolean flipCoords)
+	{
 		this.width = width;
 		this.height = height;
 		this.flipCoords = flipCoords;
@@ -77,7 +86,8 @@ public class CenteredQuad extends Mesh {
 	 *
 	 * @return the height
 	 */
-	public float getHeight() {
+	public float getHeight()
+	{
 		return height;
 	}
 
@@ -86,17 +96,21 @@ public class CenteredQuad extends Mesh {
 	 *
 	 * @return the width
 	 */
-	public float getWidth() {
+	public float getWidth()
+	{
 		return width;
 	}
 
 	/**
 	 * Update geometry.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
-	public void updateGeometry(float width, float height) {
+	public void updateGeometry(float width, float height)
+	{
 		this.width = width;
 		this.height = height;
 		FloatBuffer fb = (FloatBuffer) getBuffer(Type.Position).getData();
@@ -112,22 +126,32 @@ public class CenteredQuad extends Mesh {
 	/**
 	 * Inits the buffers.
 	 */
-	private void initBuffers() {
-		setBuffer(Type.Position, 3, new float[] { -width / 2, -height / 2, 0,
-				width / 2, -height / 2, 0, width / 2, height / 2, 0,
-				-width / 2, height / 2, 0 });
+	private void initBuffers()
+	{
+		setBuffer(Type.Position, 3, new float[]
+		{ -width / 2, -height / 2, 0, width / 2, -height / 2, 0, width / 2, height / 2, 0, -width / 2, height / 2, 0 });
 
-		if (flipCoords) {
-			setBuffer(Type.TexCoord, 2, new float[] { 0, 1, 1, 1, 1, 0, 0, 0 });
-		} else {
-			setBuffer(Type.TexCoord, 2, new float[] { 0, 0, 1, 0, 1, 1, 0, 1 });
+		if (flipCoords)
+		{
+			setBuffer(Type.TexCoord, 2, new float[]
+			{ 0, 1, 1, 1, 1, 0, 0, 0 });
 		}
-		setBuffer(Type.Normal, 3, new float[] { 0, 0, 1, 0, 0, 1, 0, 0, 1, 0,
-				0, 1 });
-		if (height < 0) {
-			setBuffer(Type.Index, 3, new short[] { 0, 2, 1, 0, 3, 2 });
-		} else {
-			setBuffer(Type.Index, 3, new short[] { 0, 1, 2, 0, 2, 3 });
+		else
+		{
+			setBuffer(Type.TexCoord, 2, new float[]
+			{ 0, 0, 1, 0, 1, 1, 0, 1 });
+		}
+		setBuffer(Type.Normal, 3, new float[]
+		{ 0, 0, 1, 0, 0, 1, 0, 0, 1, 0, 0, 1 });
+		if (height < 0)
+		{
+			setBuffer(Type.Index, 3, new short[]
+			{ 0, 2, 1, 0, 3, 2 });
+		}
+		else
+		{
+			setBuffer(Type.Index, 3, new short[]
+			{ 0, 1, 2, 0, 2, 3 });
 		}
 		setDynamic();
 		updateBound();

@@ -33,7 +33,8 @@ import java.net.DatagramSocket;
 /**
  * The Class OSCPort.
  */
-public abstract class OSCPort {
+public abstract class OSCPort
+{
 
 	/**
 	 * The port that the SuperCollider language engine ususally listens too
@@ -55,14 +56,17 @@ public abstract class OSCPort {
 	 * Close the socket and free-up resources. It's recommended that clients
 	 * call this when they are done with the port.
 	 */
-	public void close() {
+	public void close()
+	{
 		socket.close();
 	}
 
 	/**
 	 * @see java.lang.Object#finalize()
 	 */
-	protected void finalize() throws Throwable {
+	@Override
+	protected void finalize() throws Throwable
+	{
 		super.finalize();
 		socket.close();
 	}

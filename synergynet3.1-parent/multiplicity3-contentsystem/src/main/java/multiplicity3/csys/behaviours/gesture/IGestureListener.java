@@ -12,13 +12,16 @@ import multiplicity3.csys.items.item.IItem;
  *
  * @see IGestureEvent
  */
-public interface IGestureListener {
+public interface IGestureListener
+{
 
 	/**
 	 * Gesture detected.
 	 *
-	 * @param match the match
-	 * @param item the item
+	 * @param match
+	 *            the match
+	 * @param item
+	 *            the item
 	 */
 	public void gestureDetected(GestureMatch match, IItem item);
 }

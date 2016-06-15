@@ -12,7 +12,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface IToggleButtonbox.
  */
-public interface IToggleButtonbox extends IItem {
+public interface IToggleButtonbox extends IItem
+{
 
 	/**
 	 * Gets the image off.
@@ -73,39 +74,54 @@ public interface IToggleButtonbox extends IItem {
 	/**
 	 * Sets the image.
 	 *
-	 * @param imageOff the image off
-	 * @param bgColourOff the bg colour off
-	 * @param borderColourOff the border colour off
-	 * @param imageOn the image on
-	 * @param bgColourOn the bg colour on
-	 * @param borderColourOn the border colour on
-	 * @param width the width
-	 * @param height the height
-	 * @param stage the stage
+	 * @param imageOff
+	 *            the image off
+	 * @param bgColourOff
+	 *            the bg colour off
+	 * @param borderColourOff
+	 *            the border colour off
+	 * @param imageOn
+	 *            the image on
+	 * @param bgColourOn
+	 *            the bg colour on
+	 * @param borderColourOn
+	 *            the border colour on
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param stage
+	 *            the stage
 	 */
-	public void setImage(IImage imageOff, ColorRGBA bgColourOff,
-			ColorRGBA borderColourOff, IImage imageOn, ColorRGBA bgColourOn,
-			ColorRGBA borderColourOn, float width, float height, IStage stage);
+	public void setImage(IImage imageOff, ColorRGBA bgColourOff, ColorRGBA borderColourOff, IImage imageOn, ColorRGBA bgColourOn, ColorRGBA borderColourOn, float width, float height, IStage stage);
 
 	/**
 	 * Sets the text.
 	 *
-	 * @param textOff the text off
-	 * @param bgColourOff the bg colour off
-	 * @param borderColourOff the border colour off
-	 * @param fontColourOff the font colour off
-	 * @param textOn the text on
-	 * @param bgColourOn the bg colour on
-	 * @param borderColourOn the border colour on
-	 * @param fontColourOn the font colour on
-	 * @param width the width
-	 * @param height the height
-	 * @param stage the stage
+	 * @param textOff
+	 *            the text off
+	 * @param bgColourOff
+	 *            the bg colour off
+	 * @param borderColourOff
+	 *            the border colour off
+	 * @param fontColourOff
+	 *            the font colour off
+	 * @param textOn
+	 *            the text on
+	 * @param bgColourOn
+	 *            the bg colour on
+	 * @param borderColourOn
+	 *            the border colour on
+	 * @param fontColourOn
+	 *            the font colour on
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param stage
+	 *            the stage
 	 */
-	public void setText(String textOff, ColorRGBA bgColourOff,
-			ColorRGBA borderColourOff, FontColour fontColourOff, String textOn,
-			ColorRGBA bgColourOn, ColorRGBA borderColourOn,
-			FontColour fontColourOn, float width, float height, IStage stage);
+	public void setText(String textOff, ColorRGBA bgColourOff, ColorRGBA borderColourOff, FontColour fontColourOff, String textOn, ColorRGBA bgColourOn, ColorRGBA borderColourOn, FontColour fontColourOn, float width, float height, IStage stage);
 
 	/**
 	 * Toggle.

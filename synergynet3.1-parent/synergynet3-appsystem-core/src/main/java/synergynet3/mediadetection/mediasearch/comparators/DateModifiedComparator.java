@@ -6,27 +6,40 @@ import java.util.Comparator;
 /**
  * The Class DateModifiedComparator.
  */
-public class DateModifiedComparator implements Comparator<File> {
+public class DateModifiedComparator implements Comparator<File>
+{
 
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.Comparator#compare(java.lang.Object, java.lang.Object)
 	 */
-	public int compare(File a, File b) {
-		if (a.isDirectory() && !a.isDirectory()) {
+	@Override
+	public int compare(File a, File b)
+	{
+		if (a.isDirectory() && !a.isDirectory())
+		{
 			return -1;
 
-		} else if (!a.isDirectory() && a.isDirectory()) {
+		}
+		else if (!a.isDirectory() && a.isDirectory())
+		{
 			return 1;
 
-		} else {
+		}
+		else
+		{
 			long aLastModified = a.lastModified();
 			long bLastModified = b.lastModified();
-			if (aLastModified < bLastModified) {
+			if (aLastModified < bLastModified)
+			{
 				return -1;
-			} else if (aLastModified > bLastModified) {
+			}
+			else if (aLastModified > bLastModified)
+			{
 				return 1;
-			} else {
+			}
+			else
+			{
 				return 0;
 			}
 

@@ -30,7 +30,8 @@ import java.util.List;
 /**
  * The Class ParallelAnimation.
  */
-public class ParallelAnimation extends AnimationElement {
+public class ParallelAnimation extends AnimationElement
+{
 
 	/** The elements. */
 	protected List<AnimationElement> elements = new ArrayList<AnimationElement>();
@@ -41,10 +42,13 @@ public class ParallelAnimation extends AnimationElement {
 	/**
 	 * Instantiates a new parallel animation.
 	 *
-	 * @param els the els
+	 * @param els
+	 *            the els
 	 */
-	public ParallelAnimation(AnimationElement... els) {
-		for (AnimationElement e : els) {
+	public ParallelAnimation(AnimationElement... els)
+	{
+		for (AnimationElement e : els)
+		{
 			elements.add(e);
 		}
 	}
@@ -52,28 +56,35 @@ public class ParallelAnimation extends AnimationElement {
 	/**
 	 * Adds the animation element.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
-	public void addAnimationElement(AnimationElement e) {
+	public void addAnimationElement(AnimationElement e)
+	{
 		elements.add(e);
 	}
 
 	/**
 	 * Adds the animation element.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 */
-	public void addAnimationElement(Collection<AnimationElement> c) {
+	public void addAnimationElement(Collection<AnimationElement> c)
+	{
 		elements.addAll(c);
 	}
 
 	/**
 	 * Adds the animation elements.
 	 *
-	 * @param es the es
+	 * @param es
+	 *            the es
 	 */
-	public void addAnimationElements(AnimationElement... es) {
-		for (AnimationElement e : es) {
+	public void addAnimationElements(AnimationElement... es)
+	{
+		for (AnimationElement e : es)
+		{
 			elements.add(e);
 		}
 	}
@@ -85,7 +96,8 @@ public class ParallelAnimation extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 	}
 
 	/*
@@ -93,7 +105,8 @@ public class ParallelAnimation extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
@@ -102,7 +115,8 @@ public class ParallelAnimation extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 
 	}
 
@@ -113,9 +127,11 @@ public class ParallelAnimation extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
+	public void updateAnimationState(float tpf)
+	{
 		boolean finishTest = true;
-		for (AnimationElement e : elements) {
+		for (AnimationElement e : elements)
+		{
 			e.updateState(tpf);
 			finishTest = finishTest && e.isFinished();
 		}

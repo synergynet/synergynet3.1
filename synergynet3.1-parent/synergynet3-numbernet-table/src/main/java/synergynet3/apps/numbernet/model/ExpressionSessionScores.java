@@ -3,7 +3,8 @@ package synergynet3.apps.numbernet.model;
 /**
  * The Class ExpressionSessionScores.
  */
-public class ExpressionSessionScores {
+public class ExpressionSessionScores
+{
 
 	/** The correct. */
 	private int correct = 0;
@@ -14,10 +15,13 @@ public class ExpressionSessionScores {
 	/**
 	 * Instantiates a new expression session scores.
 	 *
-	 * @param correct the correct
-	 * @param incorrect the incorrect
+	 * @param correct
+	 *            the correct
+	 * @param incorrect
+	 *            the incorrect
 	 */
-	public ExpressionSessionScores(int correct, int incorrect) {
+	public ExpressionSessionScores(int correct, int incorrect)
+	{
 		this.correct = correct;
 		this.incorrect = incorrect;
 	}
@@ -27,7 +31,8 @@ public class ExpressionSessionScores {
 	 *
 	 * @return the correct
 	 */
-	public int getCorrect() {
+	public int getCorrect()
+	{
 		return correct;
 	}
 
@@ -36,7 +41,8 @@ public class ExpressionSessionScores {
 	 *
 	 * @return the incorrect
 	 */
-	public int getIncorrect() {
+	public int getIncorrect()
+	{
 		return incorrect;
 	}
 }

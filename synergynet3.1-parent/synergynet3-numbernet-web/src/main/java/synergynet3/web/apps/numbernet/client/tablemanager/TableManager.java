@@ -28,7 +28,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class TableManager.
  */
-public class TableManager extends VerticalPanel {
+public class TableManager extends VerticalPanel
+{
 
 	/** The list box expected tables. */
 	private FixedSizeScrollableListBox listBoxExpectedTables;
@@ -42,13 +43,13 @@ public class TableManager extends VerticalPanel {
 	/**
 	 * Instantiates a new table manager.
 	 */
-	public TableManager() {
+	public TableManager()
+	{
 		super();
 		setSpacing(10);
 		setSize("492px", "437px");
 
-		DisclosurePanel disclosurePanelTablesExpected = new DisclosurePanel(
-				"Tables Expected");
+		DisclosurePanel disclosurePanelTablesExpected = new DisclosurePanel("Tables Expected");
 		disclosurePanelTablesExpected.setOpen(true);
 		add(disclosurePanelTablesExpected);
 
@@ -64,16 +65,18 @@ public class TableManager extends VerticalPanel {
 
 		Label label_2 = new Label("Table Name:");
 		horizontalPanel.add(label_2);
-		horizontalPanel.setCellHorizontalAlignment(label_2,
-				HasHorizontalAlignment.ALIGN_RIGHT);
+		horizontalPanel.setCellHorizontalAlignment(label_2, HasHorizontalAlignment.ALIGN_RIGHT);
 
 		txtTableName = new TextBox();
 		horizontalPanel.add(txtTableName);
 		txtTableName.setWidth("172px");
 
 		Button btnAddTableName = new Button("Add");
-		btnAddTableName.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnAddTableName.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				addExpectedTable();
 			}
 		});
@@ -86,8 +89,7 @@ public class TableManager extends VerticalPanel {
 
 		listBoxExpectedTables = new FixedSizeScrollableListBox();
 		horizontalPanel_1.add(listBoxExpectedTables);
-		horizontalPanel_1.setCellHorizontalAlignment(listBoxExpectedTables,
-				HasHorizontalAlignment.ALIGN_RIGHT);
+		horizontalPanel_1.setCellHorizontalAlignment(listBoxExpectedTables, HasHorizontalAlignment.ALIGN_RIGHT);
 		listBoxExpectedTables.setSize("160px", "100px");
 
 		VerticalPanel verticalPanel_1 = new VerticalPanel();
@@ -97,10 +99,14 @@ public class TableManager extends VerticalPanel {
 		verticalPanel_1.setWidth("220px");
 
 		Button btnExpectedTableView = new Button("Open Participant Manager");
-		btnExpectedTableView.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnExpectedTableView.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				String table = listBoxExpectedTables.getSelectedItem();
-				if (table == null) {
+				if (table == null)
+				{
 					return;
 				}
 				openTableTab(table);
@@ -109,25 +115,29 @@ public class TableManager extends VerticalPanel {
 		verticalPanel_1.add(btnExpectedTableView);
 
 		Button btnRemove = new Button("Remove Table");
-		btnRemove.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnRemove.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				removeExpectedTable();
 			}
 		});
 		verticalPanel_1.add(btnRemove);
-		horizontalPanel_1.setCellVerticalAlignment(btnRemove,
-				HasVerticalAlignment.ALIGN_BOTTOM);
+		horizontalPanel_1.setCellVerticalAlignment(btnRemove, HasVerticalAlignment.ALIGN_BOTTOM);
 
 		Button btnRefreshExpected = new Button("Refresh");
-		btnRefreshExpected.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnRefreshExpected.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				loadExpectedTablesList();
 			}
 		});
 		verticalPanel_1.add(btnRefreshExpected);
 
-		DisclosurePanel disclosurePanelTablesOnline = new DisclosurePanel(
-				"Tables Online");
+		DisclosurePanel disclosurePanelTablesOnline = new DisclosurePanel("Tables Online");
 		disclosurePanelTablesOnline.setOpen(true);
 		add(disclosurePanelTablesOnline);
 
@@ -143,15 +153,21 @@ public class TableManager extends VerticalPanel {
 		verticalPanelTablesOnline.add(tablesOnline);
 
 		Button btnOnlineTableView = new Button("View");
-		btnOnlineTableView.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnOnlineTableView.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 			}
 		});
 		tablesOnline.getButtonsPanel().add(btnOnlineTableView);
 
 		Button btnEditCalculators = new Button("Edit Calculators");
-		btnEditCalculators.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnEditCalculators.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				editCalculatorForSpecificTableButtonPressed();
 			}
 		});
@@ -166,89 +182,100 @@ public class TableManager extends VerticalPanel {
 	 * @see com.google.gwt.user.client.ui.UIObject#getTitle()
 	 */
 	@Override
-	public String getTitle() {
+	public String getTitle()
+	{
 		return "Table Manager";
 	}
 
 	/**
 	 * Adds the expected table.
 	 */
-	protected void addExpectedTable() {
+	protected void addExpectedTable()
+	{
 		System.out.println("adding expected table...");
-		NumberNetService.Util.getInstance().addExpectedTable(
-				txtTableName.getText(), new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+		NumberNetService.Util.getInstance().addExpectedTable(txtTableName.getText(), new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-						loadExpectedTablesList();
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+				loadExpectedTablesList();
+			}
+		});
 	}
 
 	/**
 	 * Edits the calculator for specific table button pressed.
 	 */
-	protected void editCalculatorForSpecificTableButtonPressed() {
+	protected void editCalculatorForSpecificTableButtonPressed()
+	{
 		final String tableSelected = tablesOnline.getDeviceSelected();
-		if (tableSelected == null) {
+		if (tableSelected == null)
+		{
 			return;
 		}
 
-		NumberNetService.Util.getInstance().getCalculatorAllKeyStatesForTable(
-				tableSelected,
-				new AsyncCallback<Map<CalculatorKey, Boolean>>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+		NumberNetService.Util.getInstance().getCalculatorAllKeyStatesForTable(tableSelected, new AsyncCallback<Map<CalculatorKey, Boolean>>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Map<CalculatorKey, Boolean> result) {
-						final EditCalculatorForTablePanel editor = new EditCalculatorForTablePanel();
-						editor.setTableName(tableSelected);
-						CalculatorSync syncer = new CalculatorSync(
-								tableSelected);
-						editor.setCalculatorKeyControlPanelDelegate(syncer);
-						NumberNetUI.get().addToTabPanel(editor,
-								"Edit calculators (" + tableSelected + ")");
-						editor.setValuesForCheckBoxesWithKeyStateInfo(result);
-					}
-				});
+			@Override
+			public void onSuccess(Map<CalculatorKey, Boolean> result)
+			{
+				final EditCalculatorForTablePanel editor = new EditCalculatorForTablePanel();
+				editor.setTableName(tableSelected);
+				CalculatorSync syncer = new CalculatorSync(tableSelected);
+				editor.setCalculatorKeyControlPanelDelegate(syncer);
+				NumberNetUI.get().addToTabPanel(editor, "Edit calculators (" + tableSelected + ")");
+				editor.setValuesForCheckBoxesWithKeyStateInfo(result);
+			}
+		});
 
 	}
 
 	/**
 	 * Load expected tables list.
 	 */
-	protected void loadExpectedTablesList() {
-		NumberNetService.Util.getInstance().getExpectedTables(
-				new AsyncCallback<List<String>>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+	protected void loadExpectedTablesList()
+	{
+		NumberNetService.Util.getInstance().getExpectedTables(new AsyncCallback<List<String>>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(List<String> result) {
-						listBoxExpectedTables.removeAllItems();
-						for (String name : result) {
-							listBoxExpectedTables.addItem(name);
-						}
-					}
-				});
+			@Override
+			public void onSuccess(List<String> result)
+			{
+				listBoxExpectedTables.removeAllItems();
+				for (String name : result)
+				{
+					listBoxExpectedTables.addItem(name);
+				}
+			}
+		});
 
 	}
 
 	/**
 	 * Open table tab.
 	 *
-	 * @param table the table
+	 * @param table
+	 *            the table
 	 */
-	protected void openTableTab(String table) {
+	protected void openTableTab(String table)
+	{
 		ParticipantManager pm = new ParticipantManager();
 		pm.setTable(table);
 		NumberNetUI.get().addToTabPanel(pm, table + " participants");
@@ -257,7 +284,8 @@ public class TableManager extends VerticalPanel {
 	/**
 	 * Removes the expected table.
 	 */
-	protected void removeExpectedTable() {
+	protected void removeExpectedTable()
+	{
 		// TODO: unimplemented as yet
 	}
 }

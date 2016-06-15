@@ -12,7 +12,8 @@ import synergynet3.activitypack1.core.lightbox.lightboxmodel.items.TextItem;
 /**
  * The Class LightBox.
  */
-public class LightBox implements Serializable {
+public class LightBox implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8097923181418609702L;
@@ -29,9 +30,11 @@ public class LightBox implements Serializable {
 	/**
 	 * Instantiates a new light box.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public LightBox(String name) {
+	public LightBox(String name)
+	{
 		this.name = name;
 		textItems = new ArrayList<TextItem>();
 		imageItems = new ArrayList<ImageItem>();
@@ -40,18 +43,22 @@ public class LightBox implements Serializable {
 	/**
 	 * Adds the image item.
 	 *
-	 * @param imageItem the image item
+	 * @param imageItem
+	 *            the image item
 	 */
-	public void addImageItem(ImageItem imageItem) {
+	public void addImageItem(ImageItem imageItem)
+	{
 		imageItems.add(imageItem);
 	}
 
 	/**
 	 * Adds the text item.
 	 *
-	 * @param textItem the text item
+	 * @param textItem
+	 *            the text item
 	 */
-	public void addTextItem(TextItem textItem) {
+	public void addTextItem(TextItem textItem)
+	{
 		textItems.add(textItem);
 	}
 
@@ -60,7 +67,8 @@ public class LightBox implements Serializable {
 	 *
 	 * @return the image items
 	 */
-	public Collection<ImageItem> getImageItems() {
+	public Collection<ImageItem> getImageItems()
+	{
 		return Collections.unmodifiableCollection(imageItems);
 	}
 
@@ -69,7 +77,8 @@ public class LightBox implements Serializable {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return this.name;
 	}
 
@@ -78,7 +87,8 @@ public class LightBox implements Serializable {
 	 *
 	 * @return the text items
 	 */
-	public Collection<TextItem> getTextItems() {
+	public Collection<TextItem> getTextItems()
+	{
 		return Collections.unmodifiableCollection(textItems);
 	}
 

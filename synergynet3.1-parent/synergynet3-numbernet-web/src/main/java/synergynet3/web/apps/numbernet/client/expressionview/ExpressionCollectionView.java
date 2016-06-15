@@ -13,7 +13,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ExpressionCollectionView.
  */
-public class ExpressionCollectionView extends VerticalPanel {
+public class ExpressionCollectionView extends VerticalPanel
+{
 
 	/** The panel for expressions. */
 	private VerticalPanel panelForExpressions;
@@ -21,7 +22,8 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Instantiates a new expression collection view.
 	 */
-	public ExpressionCollectionView() {
+	public ExpressionCollectionView()
+	{
 		super();
 		panelForExpressions = new VerticalPanel();
 		panelForExpressions.setStylePrimaryName("expressionCollectionBox");
@@ -32,9 +34,11 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Sets the expression collection.
 	 *
-	 * @param expressions the new expression collection
+	 * @param expressions
+	 *            the new expression collection
 	 */
-	public void setExpressionCollection(List<Expression> expressions) {
+	public void setExpressionCollection(List<Expression> expressions)
+	{
 		removeAllExpressionsFromView();
 		addExpressionTableHeader();
 		addExpressionViewsForEachExpression(expressions);
@@ -45,16 +49,19 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Adds the expression table header.
 	 */
-	private void addExpressionTableHeader() {
+	private void addExpressionTableHeader()
+	{
 		panelForExpressions.add(new ExpressionTableHeader());
 	}
 
 	/**
 	 * Adds the expression view for expression.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
-	private void addExpressionViewForExpression(Expression e) {
+	private void addExpressionViewForExpression(Expression e)
+	{
 		SingleExpressionWidget ev = new SingleExpressionWidget();
 		ev.setExpression(e);
 		panelForExpressions.add(ev);
@@ -63,11 +70,13 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Adds the expression views for each expression.
 	 *
-	 * @param expressions the expressions
+	 * @param expressions
+	 *            the expressions
 	 */
-	private void addExpressionViewsForEachExpression(
-			List<Expression> expressions) {
-		for (Expression e : expressions) {
+	private void addExpressionViewsForEachExpression(List<Expression> expressions)
+	{
+		for (Expression e : expressions)
+		{
 			addExpressionViewForExpression(e);
 		}
 	}
@@ -75,9 +84,11 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Adds the operator frequency table.
 	 *
-	 * @param expressions the expressions
+	 * @param expressions
+	 *            the expressions
 	 */
-	private void addOperatorFrequencyTable(List<Expression> expressions) {
+	private void addOperatorFrequencyTable(List<Expression> expressions)
+	{
 		Map<String, Integer> operatorFrequencies = getOperatorFrequencies(expressions);
 		FlexTable t = new FlexTable();
 		t.setStylePrimaryName("operatorFrequencyTable");
@@ -85,7 +96,8 @@ public class ExpressionCollectionView extends VerticalPanel {
 		t.setText(row, 0, "Operator");
 		t.setText(row, 1, "Frequency");
 		row++;
-		for (String key : operatorFrequencies.keySet()) {
+		for (String key : operatorFrequencies.keySet())
+		{
 			t.setText(row, 0, key);
 			t.setText(row, 1, "" + operatorFrequencies.get(key));
 			row++;
@@ -96,9 +108,11 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Adds the scores.
 	 *
-	 * @param expressions the expressions
+	 * @param expressions
+	 *            the expressions
 	 */
-	private void addScores(List<Expression> expressions) {
+	private void addScores(List<Expression> expressions)
+	{
 		int correct = getCorrectCount(expressions);
 		int incorrect = getIncorrectCount(expressions);
 		FlexTable t = new FlexTable();
@@ -112,13 +126,17 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Gets the correct count.
 	 *
-	 * @param expressions the expressions
+	 * @param expressions
+	 *            the expressions
 	 * @return the correct count
 	 */
-	private int getCorrectCount(List<Expression> expressions) {
+	private int getCorrectCount(List<Expression> expressions)
+	{
 		int count = 0;
-		for (Expression e : expressions) {
-			if (e.isCorrect()) {
+		for (Expression e : expressions)
+		{
+			if (e.isCorrect())
+			{
 				count++;
 			}
 		}
@@ -128,13 +146,17 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Gets the incorrect count.
 	 *
-	 * @param expressions the expressions
+	 * @param expressions
+	 *            the expressions
 	 * @return the incorrect count
 	 */
-	private int getIncorrectCount(List<Expression> expressions) {
+	private int getIncorrectCount(List<Expression> expressions)
+	{
 		int count = 0;
-		for (Expression e : expressions) {
-			if (!e.isCorrect()) {
+		for (Expression e : expressions)
+		{
+			if (!e.isCorrect())
+			{
 				count++;
 			}
 		}
@@ -144,51 +166,52 @@ public class ExpressionCollectionView extends VerticalPanel {
 	/**
 	 * Gets the operator frequencies.
 	 *
-	 * @param expressions the expressions
+	 * @param expressions
+	 *            the expressions
 	 * @return the operator frequencies
 	 */
-	private Map<String, Integer> getOperatorFrequencies(
-			List<Expression> expressions) {
+	private Map<String, Integer> getOperatorFrequencies(List<Expression> expressions)
+	{
 		int plusFreq = 0;
 		int minusFreq = 0;
 		int divideFreq = 0;
 		int multiplyFreq = 0;
-		for (Expression e : expressions) {
-			if (e.getExpression().indexOf(
-					CalculatorKey.PLUS.getStringRepresentation()) != -1) {
+		for (Expression e : expressions)
+		{
+			if (e.getExpression().indexOf(CalculatorKey.PLUS.getStringRepresentation()) != -1)
+			{
 				plusFreq++;
 			}
-			if (e.getExpression().indexOf(
-					CalculatorKey.MINUS.getStringRepresentation()) != -1) {
+			if (e.getExpression().indexOf(CalculatorKey.MINUS.getStringRepresentation()) != -1)
+			{
 				minusFreq++;
 			}
-			if (e.getExpression().indexOf(
-					CalculatorKey.DIVIDE.getStringRepresentation()) != -1) {
+			if (e.getExpression().indexOf(CalculatorKey.DIVIDE.getStringRepresentation()) != -1)
+			{
 				divideFreq++;
 			}
-			if (e.getExpression().indexOf(
-					CalculatorKey.MULTIPLY.getStringRepresentation()) != -1) {
+			if (e.getExpression().indexOf(CalculatorKey.MULTIPLY.getStringRepresentation()) != -1)
+			{
 				multiplyFreq++;
 			}
 		}
 
 		Map<String, Integer> frequencies = new HashMap<String, Integer>();
 		frequencies.put(CalculatorKey.PLUS.getStringRepresentation(), plusFreq);
-		frequencies.put(CalculatorKey.MINUS.getStringRepresentation(),
-				minusFreq);
-		frequencies.put(CalculatorKey.DIVIDE.getStringRepresentation(),
-				divideFreq);
-		frequencies.put(CalculatorKey.MULTIPLY.getStringRepresentation(),
-				multiplyFreq);
+		frequencies.put(CalculatorKey.MINUS.getStringRepresentation(), minusFreq);
+		frequencies.put(CalculatorKey.DIVIDE.getStringRepresentation(), divideFreq);
+		frequencies.put(CalculatorKey.MULTIPLY.getStringRepresentation(), multiplyFreq);
 		return frequencies;
 	}
 
 	/**
 	 * Removes the all expressions from view.
 	 */
-	private void removeAllExpressionsFromView() {
+	private void removeAllExpressionsFromView()
+	{
 		int widgets = panelForExpressions.getWidgetCount();
-		for (int i = 0; i < widgets; i++) {
+		for (int i = 0; i < widgets; i++)
+		{
 			panelForExpressions.remove(i);
 		}
 	}

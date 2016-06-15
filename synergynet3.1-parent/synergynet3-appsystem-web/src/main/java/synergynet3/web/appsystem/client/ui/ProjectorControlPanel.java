@@ -18,7 +18,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ProjectorControlPanel.
  */
-public class ProjectorControlPanel extends VerticalPanel {
+public class ProjectorControlPanel extends VerticalPanel
+{
 
 	/** The projectors online. */
 	private DevicesOnlineWidget projectorsOnline;
@@ -29,7 +30,8 @@ public class ProjectorControlPanel extends VerticalPanel {
 	/**
 	 * Instantiates a new projector control panel.
 	 */
-	public ProjectorControlPanel() {
+	public ProjectorControlPanel()
+	{
 
 		setTitle("Projector Control");
 		setSpacing(5);
@@ -51,8 +53,7 @@ public class ProjectorControlPanel extends VerticalPanel {
 		projectorsOnline.setAllTablesCheckOptionEnabled(true);
 		projectorsOnline.updateList();
 
-		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel(
-				"Tables");
+		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel("Tables");
 		add(tableSelectionDisclosurePanel);
 		tableSelectionDisclosurePanel.setOpen(true);
 		tableSelectionDisclosurePanel.setWidth("272");
@@ -79,12 +80,16 @@ public class ProjectorControlPanel extends VerticalPanel {
 	 *
 	 * @return the projectors to send to
 	 */
-	private String[] getProjectorsToSendTo() {
+	private String[] getProjectorsToSendTo()
+	{
 		String[] toReturn;
-		if (projectorsOnline.getAllDevicesOptionCheck()) {
+		if (projectorsOnline.getAllDevicesOptionCheck())
+		{
 			toReturn = new String[1];
 			toReturn[0] = DevicesSelected.ALL_PROJECTORS_ID;
-		} else {
+		}
+		else
+		{
 			toReturn = new String[projectorsOnline.getDevicesSelected().size()];
 			projectorsOnline.getDevicesSelected().toArray(toReturn);
 		}
@@ -96,12 +101,16 @@ public class ProjectorControlPanel extends VerticalPanel {
 	 *
 	 * @return the tables to send to
 	 */
-	private String[] getTablesToSendTo() {
+	private String[] getTablesToSendTo()
+	{
 		String[] toReturn;
-		if (tablesOnline.getAllDevicesOptionCheck()) {
+		if (tablesOnline.getAllDevicesOptionCheck())
+		{
 			toReturn = new String[1];
 			toReturn[0] = DevicesSelected.ALL_TABLES_ID;
-		} else {
+		}
+		else
+		{
 			toReturn = new String[tablesOnline.getDevicesSelected().size()];
 			tablesOnline.getDevicesSelected().toArray(toReturn);
 		}
@@ -113,12 +122,15 @@ public class ProjectorControlPanel extends VerticalPanel {
 	 *
 	 * @return true, if is at least one projector selected
 	 */
-	private boolean isAtLeastOneProjectorSelected() {
-		if (projectorsOnline.getDevicesPresent().size() < 1) {
+	private boolean isAtLeastOneProjectorSelected()
+	{
+		if (projectorsOnline.getDevicesPresent().size() < 1)
+		{
 			new MessageDialogBox("No projectors present.").show();
 			return false;
-		} else if (!projectorsOnline.getAllDevicesOptionCheck()
-				&& (projectorsOnline.getDevicesSelected().size() < 1)) {
+		}
+		else if (!projectorsOnline.getAllDevicesOptionCheck() && (projectorsOnline.getDevicesSelected().size() < 1))
+		{
 			new MessageDialogBox("No projector selected.").show();
 			return false;
 		}
@@ -131,12 +143,15 @@ public class ProjectorControlPanel extends VerticalPanel {
 	 *
 	 * @return true, if is at least one table selected
 	 */
-	private boolean isAtLeastOneTableSelected() {
-		if (tablesOnline.getDevicesPresent().size() < 1) {
+	private boolean isAtLeastOneTableSelected()
+	{
+		if (tablesOnline.getDevicesPresent().size() < 1)
+		{
 			new MessageDialogBox("No tables present.").show();
 			return false;
-		} else if (!tablesOnline.getAllDevicesOptionCheck()
-				&& (tablesOnline.getDevicesSelected().size() < 1)) {
+		}
+		else if (!tablesOnline.getAllDevicesOptionCheck() && (tablesOnline.getDevicesSelected().size() < 1))
+		{
 			new MessageDialogBox("No table selected.").show();
 			return false;
 		}
@@ -146,9 +161,9 @@ public class ProjectorControlPanel extends VerticalPanel {
 	/**
 	 * Manage selected projectors.
 	 */
-	private void manageSelectedProjectors() {
-		DisclosurePanel pnlProjectorManagement = new DisclosurePanel(
-				"Manage Selected Projector(s)");
+	private void manageSelectedProjectors()
+	{
+		DisclosurePanel pnlProjectorManagement = new DisclosurePanel("Manage Selected Projector(s)");
 		pnlProjectorManagement.setOpen(false);
 		add(pnlProjectorManagement);
 		pnlProjectorManagement.setWidth("272px");
@@ -161,29 +176,27 @@ public class ProjectorControlPanel extends VerticalPanel {
 
 		Button buttonRemoveContents = new Button("Clear Contents");
 		buttonRemoveContents.setWidth("272px");
-		buttonRemoveContents.addClickHandler(new ClickHandler() {
+		buttonRemoveContents.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 
-				if (isAtLeastOneProjectorSelected()) {
-					SynergyNetAppSystemService.Util.get()
-							.clearProjectorContents(
-									new PerformActionMessage(
-											MESSAGESTATE.ACTIVATE),
-									getProjectorsToSendTo(),
-									new AsyncCallback<Void>() {
-										@Override
-										public void onFailure(Throwable caught) {
-											new MessageDialogBox(
-													"Communication error when aligning projector contents: "
-															+ caught.getMessage())
-													.show();
-										}
+				if (isAtLeastOneProjectorSelected())
+				{
+					SynergyNetAppSystemService.Util.get().clearProjectorContents(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getProjectorsToSendTo(), new AsyncCallback<Void>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							new MessageDialogBox("Communication error when aligning projector contents: " + caught.getMessage()).show();
+						}
 
-										@Override
-										public void onSuccess(Void result) {
-										}
-									});
+						@Override
+						public void onSuccess(Void result)
+						{
+						}
+					});
 				}
 			}
 		});
@@ -194,26 +207,27 @@ public class ProjectorControlPanel extends VerticalPanel {
 
 		Button buttonAlignContents = new Button("Align Contents");
 		buttonAlignContents.setWidth("272px");
-		buttonAlignContents.addClickHandler(new ClickHandler() {
+		buttonAlignContents.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 
-				if (isAtLeastOneProjectorSelected()) {
-					SynergyNetAppSystemService.Util.get().align(
-							new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-							getProjectorsToSendTo(), new AsyncCallback<Void>() {
-								@Override
-								public void onFailure(Throwable caught) {
-									new MessageDialogBox(
-											"Communication error when aligning projector contents: "
-													+ caught.getMessage())
-											.show();
-								}
+				if (isAtLeastOneProjectorSelected())
+				{
+					SynergyNetAppSystemService.Util.get().align(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getProjectorsToSendTo(), new AsyncCallback<Void>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							new MessageDialogBox("Communication error when aligning projector contents: " + caught.getMessage()).show();
+						}
 
-								@Override
-								public void onSuccess(Void result) {
-								}
-							});
+						@Override
+						public void onSuccess(Void result)
+						{
+						}
+					});
 				}
 			}
 		});
@@ -224,36 +238,35 @@ public class ProjectorControlPanel extends VerticalPanel {
 	/**
 	 * Transfer buttons.
 	 */
-	private void transferButtons() {
+	private void transferButtons()
+	{
 		HorizontalPanel horizontalTransferToTablePanel_1 = new HorizontalPanel();
 		horizontalTransferToTablePanel_1.setSpacing(5);
 		add(horizontalTransferToTablePanel_1);
 
-		Button buttonTransferScreenshotsToTable = new Button(
-				"Projectors --> Tables");
+		Button buttonTransferScreenshotsToTable = new Button("Projectors --> Tables");
 		buttonTransferScreenshotsToTable.setWidth("280px");
-		buttonTransferScreenshotsToTable.addClickHandler(new ClickHandler() {
+		buttonTransferScreenshotsToTable.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 
-				if (isAtLeastOneProjectorSelected()
-						&& isAtLeastOneTableSelected()) {
-					SynergyNetAppSystemService.Util.get()
-							.sendProjectedContentsToTable(getTablesToSendTo(),
-									getProjectorsToSendTo(),
-									new AsyncCallback<Void>() {
-										@Override
-										public void onFailure(Throwable caught) {
-											new MessageDialogBox(
-													"Communication error when aligning projector contents: "
-															+ caught.getMessage())
-													.show();
-										}
+				if (isAtLeastOneProjectorSelected() && isAtLeastOneTableSelected())
+				{
+					SynergyNetAppSystemService.Util.get().sendProjectedContentsToTable(getTablesToSendTo(), getProjectorsToSendTo(), new AsyncCallback<Void>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							new MessageDialogBox("Communication error when aligning projector contents: " + caught.getMessage()).show();
+						}
 
-										@Override
-										public void onSuccess(Void result) {
-										}
-									});
+						@Override
+						public void onSuccess(Void result)
+						{
+						}
+					});
 				}
 			}
 		});
@@ -263,75 +276,65 @@ public class ProjectorControlPanel extends VerticalPanel {
 		horizontalTransferToProjectorPanel_2.setSpacing(5);
 		add(horizontalTransferToProjectorPanel_2);
 
-		Button buttonTransferContentsToProjector = new Button(
-				"Projectors <-- Tables");
+		Button buttonTransferContentsToProjector = new Button("Projectors <-- Tables");
 		buttonTransferContentsToProjector.setWidth("280px");
-		buttonTransferContentsToProjector.addClickHandler(new ClickHandler() {
+		buttonTransferContentsToProjector.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 
-				if (isAtLeastOneProjectorSelected()
-						&& isAtLeastOneTableSelected()) {
-					SynergyNetAppSystemService.Util.get()
-							.sendContentsToProjector(getProjectorsToSendTo(),
-									getTablesToSendTo(),
-									new AsyncCallback<Void>() {
-										@Override
-										public void onFailure(Throwable caught) {
-											new MessageDialogBox(
-													"Communication error when aligning projector contents: "
-															+ caught.getMessage())
-													.show();
-										}
+				if (isAtLeastOneProjectorSelected() && isAtLeastOneTableSelected())
+				{
+					SynergyNetAppSystemService.Util.get().sendContentsToProjector(getProjectorsToSendTo(), getTablesToSendTo(), new AsyncCallback<Void>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							new MessageDialogBox("Communication error when aligning projector contents: " + caught.getMessage()).show();
+						}
 
-										@Override
-										public void onSuccess(Void result) {
-										}
-									});
+						@Override
+						public void onSuccess(Void result)
+						{
+						}
+					});
 				}
 			}
 		});
-		horizontalTransferToProjectorPanel_2
-				.add(buttonTransferContentsToProjector);
+		horizontalTransferToProjectorPanel_2.add(buttonTransferContentsToProjector);
 
 		HorizontalPanel horizontalTransferToProjectorPanel_1 = new HorizontalPanel();
 		horizontalTransferToProjectorPanel_1.setSpacing(5);
 		add(horizontalTransferToProjectorPanel_1);
 
-		Button buttonTransferScreenshotsToProjector = new Button(
-				"Show screenshots of tables");
+		Button buttonTransferScreenshotsToProjector = new Button("Show screenshots of tables");
 		buttonTransferScreenshotsToProjector.setWidth("280px");
-		buttonTransferScreenshotsToProjector
-				.addClickHandler(new ClickHandler() {
-					@Override
-					public void onClick(ClickEvent event) {
+		buttonTransferScreenshotsToProjector.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 
-						if (isAtLeastOneProjectorSelected()
-								&& isAtLeastOneTableSelected()) {
-							SynergyNetAppSystemService.Util.get()
-									.sendScreenshotsToProjector(
-											getProjectorsToSendTo(),
-											getTablesToSendTo(),
-											new AsyncCallback<Void>() {
-												@Override
-												public void onFailure(
-														Throwable caught) {
-													new MessageDialogBox(
-															"Communication error when aligning projector contents: "
-																	+ caught.getMessage())
-															.show();
-												}
-
-												@Override
-												public void onSuccess(
-														Void result) {
-												}
-											});
+				if (isAtLeastOneProjectorSelected() && isAtLeastOneTableSelected())
+				{
+					SynergyNetAppSystemService.Util.get().sendScreenshotsToProjector(getProjectorsToSendTo(), getTablesToSendTo(), new AsyncCallback<Void>()
+					{
+						@Override
+						public void onFailure(Throwable caught)
+						{
+							new MessageDialogBox("Communication error when aligning projector contents: " + caught.getMessage()).show();
 						}
-					}
-				});
-		horizontalTransferToProjectorPanel_1
-				.add(buttonTransferScreenshotsToProjector);
+
+						@Override
+						public void onSuccess(Void result)
+						{
+						}
+					});
+				}
+			}
+		});
+		horizontalTransferToProjectorPanel_1.add(buttonTransferScreenshotsToProjector);
 
 	}
 

@@ -28,12 +28,14 @@ import multiplicity3.input.IMultiTouchEventListener;
 /**
  * The Interface IMultiTouchInputFilter.
  */
-public interface IMultiTouchInputFilter extends IMultiTouchEventListener {
+public interface IMultiTouchInputFilter extends IMultiTouchEventListener
+{
 
 	/**
 	 * Sets the next.
 	 *
-	 * @param el the new next
+	 * @param el
+	 *            the new next
 	 */
 	public void setNext(IMultiTouchEventListener el);
 }

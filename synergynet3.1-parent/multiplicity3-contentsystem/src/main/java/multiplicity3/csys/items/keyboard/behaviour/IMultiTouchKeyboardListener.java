@@ -13,27 +13,34 @@ import multiplicity3.csys.items.keyboard.model.KeyboardKey;
  *
  * @see IMultiTouchKeyboardEvent
  */
-public interface IMultiTouchKeyboardListener {
+public interface IMultiTouchKeyboardListener
+{
 
 	/**
 	 * Key pressed.
 	 *
-	 * @param k the k
-	 * @param shiftDown the shift down
-	 * @param altDown the alt down
-	 * @param ctlDown the ctl down
+	 * @param k
+	 *            the k
+	 * @param shiftDown
+	 *            the shift down
+	 * @param altDown
+	 *            the alt down
+	 * @param ctlDown
+	 *            the ctl down
 	 */
-	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown);
+	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown);
 
 	/**
 	 * Key released.
 	 *
-	 * @param k the k
-	 * @param shiftDown the shift down
-	 * @param altDown the alt down
-	 * @param ctlDown the ctl down
+	 * @param k
+	 *            the k
+	 * @param shiftDown
+	 *            the shift down
+	 * @param altDown
+	 *            the alt down
+	 * @param ctlDown
+	 *            the ctl down
 	 */
-	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown);
+	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown);
 }

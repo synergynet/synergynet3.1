@@ -26,7 +26,8 @@ package multiplicity3.input.tuio.tuioobjects;
 /**
  * The Class TUIOFiducialObject.
  */
-public class TUIOFiducialObject extends TUIOObjectRepresentation {
+public class TUIOFiducialObject extends TUIOObjectRepresentation
+{
 
 	/** The angle. */
 	private float angle;
@@ -43,10 +44,13 @@ public class TUIOFiducialObject extends TUIOObjectRepresentation {
 	/**
 	 * Instantiates a new TUIO fiducial object.
 	 *
-	 * @param id the id
-	 * @param fiducial_id the fiducial_id
+	 * @param id
+	 *            the id
+	 * @param fiducial_id
+	 *            the fiducial_id
 	 */
-	public TUIOFiducialObject(long id, int fiducial_id) {
+	public TUIOFiducialObject(long id, int fiducial_id)
+	{
 		super();
 		setId(id);
 		this.fiducialId = fiducial_id;
@@ -57,7 +61,8 @@ public class TUIOFiducialObject extends TUIOObjectRepresentation {
 	 *
 	 * @return the angle
 	 */
-	public float getAngle() {
+	public float getAngle()
+	{
 		return angle;
 	}
 
@@ -66,7 +71,8 @@ public class TUIOFiducialObject extends TUIOObjectRepresentation {
 	 *
 	 * @return the angle acceleration
 	 */
-	public float getAngleAcceleration() {
+	public float getAngleAcceleration()
+	{
 		return angleAcceleration;
 	}
 
@@ -75,7 +81,8 @@ public class TUIOFiducialObject extends TUIOObjectRepresentation {
 	 *
 	 * @return the angle velocity
 	 */
-	public float getAngleVelocity() {
+	public float getAngleVelocity()
+	{
 		return angleVelocity;
 	}
 
@@ -84,43 +91,52 @@ public class TUIOFiducialObject extends TUIOObjectRepresentation {
 	 *
 	 * @return the fiducial id
 	 */
-	public int getFiducialId() {
+	public int getFiducialId()
+	{
 		return fiducialId;
 	}
 
 	/**
 	 * Sets the angle.
 	 *
-	 * @param angle the new angle
+	 * @param angle
+	 *            the new angle
 	 */
-	public void setAngle(float angle) {
+	public void setAngle(float angle)
+	{
 		this.angle = angle;
 	}
 
 	/**
 	 * Sets the angle acceleration.
 	 *
-	 * @param r_accel the new angle acceleration
+	 * @param r_accel
+	 *            the new angle acceleration
 	 */
-	public void setAngleAcceleration(float r_accel) {
+	public void setAngleAcceleration(float r_accel)
+	{
 		this.angleAcceleration = r_accel;
 	}
 
 	/**
 	 * Sets the angle velocity.
 	 *
-	 * @param r_speed the new angle velocity
+	 * @param r_speed
+	 *            the new angle velocity
 	 */
-	public void setAngleVelocity(float r_speed) {
+	public void setAngleVelocity(float r_speed)
+	{
 		this.angleVelocity = r_speed;
 	}
 
 	/**
 	 * Sets the fiducial id.
 	 *
-	 * @param fiducialId the new fiducial id
+	 * @param fiducialId
+	 *            the new fiducial id
 	 */
-	public void setFiducialId(int fiducialId) {
+	public void setFiducialId(int fiducialId)
+	{
 		this.fiducialId = fiducialId;
 	}
 
@@ -128,9 +144,10 @@ public class TUIOFiducialObject extends TUIOObjectRepresentation {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
-		return "TUIOFiducialObject(" + fiducialId + ") @" + this.getPosition()
-				+ " rot:" + angle + " rotVel:" + angleVelocity;
+	@Override
+	public String toString()
+	{
+		return "TUIOFiducialObject(" + fiducialId + ") @" + this.getPosition() + " rot:" + angle + " rotVel:" + angleVelocity;
 	}
 
 }

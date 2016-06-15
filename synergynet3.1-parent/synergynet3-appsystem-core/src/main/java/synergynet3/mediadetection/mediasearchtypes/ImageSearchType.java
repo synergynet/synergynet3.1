@@ -3,12 +3,14 @@ package synergynet3.mediadetection.mediasearchtypes;
 /**
  * The Class ImageSearchType.
  */
-public class ImageSearchType extends MediaSearchType {
+public class ImageSearchType extends MediaSearchType
+{
 
 	/**
 	 * Instantiates a new image search type.
 	 */
-	public ImageSearchType() {
+	public ImageSearchType()
+	{
 		extensions = new String[3];
 		extensions[0] = "jpg";
 		extensions[1] = "png";

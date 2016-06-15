@@ -29,7 +29,8 @@ import com.jme3.scene.Spatial;
 /**
  * The Class PickedSpatial.
  */
-public class PickedSpatial {
+public class PickedSpatial
+{
 
 	/** The point of selection. */
 	private Vector3f pointOfSelection;
@@ -40,10 +41,13 @@ public class PickedSpatial {
 	/**
 	 * Instantiates a new picked spatial.
 	 *
-	 * @param s the s
-	 * @param pointOfSelection the point of selection
+	 * @param s
+	 *            the s
+	 * @param pointOfSelection
+	 *            the point of selection
 	 */
-	public PickedSpatial(Spatial s, Vector3f pointOfSelection) {
+	public PickedSpatial(Spatial s, Vector3f pointOfSelection)
+	{
 		this.spatial = s;
 		this.pointOfSelection = pointOfSelection;
 	}
@@ -53,7 +57,8 @@ public class PickedSpatial {
 	 *
 	 * @return the point of selection
 	 */
-	public Vector3f getPointOfSelection() {
+	public Vector3f getPointOfSelection()
+	{
 		return pointOfSelection;
 	}
 
@@ -62,7 +67,8 @@ public class PickedSpatial {
 	 *
 	 * @return the spatial
 	 */
-	public Spatial getSpatial() {
+	public Spatial getSpatial()
+	{
 		return spatial;
 	}
 
@@ -70,8 +76,9 @@ public class PickedSpatial {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
-		return PickedSpatial.class.getName() + " picked " + spatial.getName()
-				+ " at " + pointOfSelection;
+	@Override
+	public String toString()
+	{
+		return PickedSpatial.class.getName() + " picked " + spatial.getName() + " at " + pointOfSelection;
 	}
 }

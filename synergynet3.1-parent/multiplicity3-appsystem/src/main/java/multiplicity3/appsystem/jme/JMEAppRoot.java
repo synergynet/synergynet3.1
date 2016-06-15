@@ -44,7 +44,8 @@ import com.jme3.util.BufferUtils;
  * </tr>
  * </table>
  */
-public abstract class JMEAppRoot extends Application {
+public abstract class JMEAppRoot extends Application
+{
 
 	/**
 	 * The listener interface for receiving appAction events. The class that is
@@ -56,7 +57,8 @@ public abstract class JMEAppRoot extends Application {
 	 *
 	 * @see AppActionEvent
 	 */
-	private class AppActionListener implements ActionListener {
+	private class AppActionListener implements ActionListener
+	{
 
 		/*
 		 * (non-Javadoc)
@@ -64,31 +66,38 @@ public abstract class JMEAppRoot extends Application {
 		 * com.jme3.input.controls.ActionListener#onAction(java.lang.String,
 		 * boolean, float)
 		 */
-		public void onAction(String name, boolean value, float tpf) {
-			if (!value) {
+		@Override
+		public void onAction(String name, boolean value, float tpf)
+		{
+			if (!value)
+			{
 				return;
 			}
 
-			if (name.equals("SIMPLEAPP_Exit")) {
+			if (name.equals("SIMPLEAPP_Exit"))
+			{
 				stop();
-			} else if (name.equals("SIMPLEAPP_CameraPos")) {
-				if (cam != null) {
+			}
+			else if (name.equals("SIMPLEAPP_CameraPos"))
+			{
+				if (cam != null)
+				{
 					Vector3f loc = cam.getLocation();
 					Quaternion rot = cam.getRotation();
-					log.info("Camera Position: (" + loc.x + ", " + loc.y + ", "
-							+ loc.z + ")");
+					log.info("Camera Position: (" + loc.x + ", " + loc.y + ", " + loc.z + ")");
 					log.info("Camera Rotation: " + rot);
 					log.info("Camera Direction: " + cam.getDirection());
 				}
-			} else if (name.equals("SIMPLEAPP_Memory")) {
+			}
+			else if (name.equals("SIMPLEAPP_Memory"))
+			{
 				BufferUtils.printCurrentDirectMemory(null);
 			}
 		}
 	}
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(JMEAppRoot.class
-			.getName());
+	private static final Logger log = Logger.getLogger(JMEAppRoot.class.getName());
 
 	/** The action listener. */
 	private AppActionListener actionListener = new AppActionListener();
@@ -114,7 +123,8 @@ public abstract class JMEAppRoot extends Application {
 	/**
 	 * Instantiates a new JME app root.
 	 */
-	public JMEAppRoot() {
+	public JMEAppRoot()
+	{
 		super();
 	}
 
@@ -123,7 +133,8 @@ public abstract class JMEAppRoot extends Application {
 	 *
 	 * @return the gui node
 	 */
-	public Node getGuiNode() {
+	public Node getGuiNode()
+	{
 		return multiplicityRootNode;
 	}
 
@@ -132,7 +143,8 @@ public abstract class JMEAppRoot extends Application {
 	 *
 	 * @return the root node
 	 */
-	public Node getRootNode() {
+	public Node getRootNode()
+	{
 		return rootNode;
 	}
 
@@ -141,7 +153,8 @@ public abstract class JMEAppRoot extends Application {
 	 * @see com.jme3.app.Application#initialize()
 	 */
 	@Override
-	public void initialize() {
+	public void initialize()
+	{
 		super.initialize();
 
 		multiplicityRootNode.setQueueBucket(Bucket.Gui);
@@ -151,18 +164,16 @@ public abstract class JMEAppRoot extends Application {
 		viewPort.attachScene(rootNode);
 		guiViewPort.attachScene(multiplicityRootNode);
 
-		if (inputManager != null) {
-			if (context.getType() == Type.Display) {
-				inputManager.addMapping("SIMPLEAPP_Exit", new KeyTrigger(
-						KeyInput.KEY_ESCAPE));
+		if (inputManager != null)
+		{
+			if (context.getType() == Type.Display)
+			{
+				inputManager.addMapping("SIMPLEAPP_Exit", new KeyTrigger(KeyInput.KEY_ESCAPE));
 			}
 
-			inputManager.addMapping("SIMPLEAPP_CameraPos", new KeyTrigger(
-					KeyInput.KEY_C));
-			inputManager.addMapping("SIMPLEAPP_Memory", new KeyTrigger(
-					KeyInput.KEY_M));
-			inputManager.addListener(actionListener, "SIMPLEAPP_Exit",
-					"SIMPLEAPP_CameraPos", "SIMPLEAPP_Memory");
+			inputManager.addMapping("SIMPLEAPP_CameraPos", new KeyTrigger(KeyInput.KEY_C));
+			inputManager.addMapping("SIMPLEAPP_Memory", new KeyTrigger(KeyInput.KEY_M));
+			inputManager.addListener(actionListener, "SIMPLEAPP_Exit", "SIMPLEAPP_CameraPos", "SIMPLEAPP_Memory");
 		}
 
 		// call user code
@@ -172,7 +183,8 @@ public abstract class JMEAppRoot extends Application {
 	/**
 	 * Load fps text.
 	 */
-	public void loadFPSText() {
+	public void loadFPSText()
+	{
 		guiFont = assetManager.loadFont("Interface/Fonts/Default.fnt");
 		fpsText = new BitmapText(guiFont, false);
 		fpsText.setLocalTranslation(0, fpsText.getLineHeight(), 0);
@@ -183,9 +195,9 @@ public abstract class JMEAppRoot extends Application {
 	/**
 	 * Load stats view.
 	 */
-	public void loadStatsView() {
-		statsView = new StatsView("Statistics View", assetManager,
-				renderer.getStatistics());
+	public void loadStatsView()
+	{
+		statsView = new StatsView("Statistics View", assetManager, renderer.getStatistics());
 		// move it up so it appears above fps text
 		statsView.setLocalTranslation(0, fpsText.getLineHeight(), 0);
 		multiplicityRootNode.attachChild(statsView);
@@ -199,17 +211,21 @@ public abstract class JMEAppRoot extends Application {
 	/**
 	 * Simple render.
 	 *
-	 * @param rm the rm
+	 * @param rm
+	 *            the rm
 	 */
-	public void simpleRender(RenderManager rm) {
+	public void simpleRender(RenderManager rm)
+	{
 	}
 
 	/**
 	 * Simple update.
 	 *
-	 * @param tpf the tpf
+	 * @param tpf
+	 *            the tpf
 	 */
-	public void simpleUpdate(float tpf) {
+	public void simpleUpdate(float tpf)
+	{
 	}
 
 	/*
@@ -217,7 +233,8 @@ public abstract class JMEAppRoot extends Application {
 	 * @see com.jme3.app.Application#start()
 	 */
 	@Override
-	public void start() {
+	public void start()
+	{
 		DisplayPrefsItem dprefs = new DisplayPrefsItem();
 		AppSettings settings = new AppSettings(true);
 		settings.setTitle("Multiplicity v3.0");
@@ -237,8 +254,10 @@ public abstract class JMEAppRoot extends Application {
 	 * @see com.jme3.app.Application#update()
 	 */
 	@Override
-	public void update() {
-		if ((speed == 0) || paused) {
+	public void update()
+	{
+		if ((speed == 0) || paused)
+		{
 			return;
 		}
 
@@ -247,7 +266,8 @@ public abstract class JMEAppRoot extends Application {
 
 		secondCounter += timer.getTimePerFrame();
 		int fps = (int) timer.getFrameRate();
-		if (secondCounter >= 1.0f) {
+		if (secondCounter >= 1.0f)
+		{
 			fpsText.setText("Frames per second: " + fps);
 			secondCounter = 0.0f;
 		}
@@ -261,13 +281,16 @@ public abstract class JMEAppRoot extends Application {
 		multiplicityRootNode.updateLogicalState(tpf);
 		rootNode.updateGeometricState();
 
-		try {
+		try
+		{
 			multiplicityRootNode.updateGeometricState();
 
 			// render states
 			stateManager.render(renderManager);
 			renderManager.render(tpf);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			// Not a perfect solution but does make apps more stable
 		}
 		simpleRender(renderManager);

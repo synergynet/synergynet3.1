@@ -30,7 +30,8 @@ import com.jme3.audio.AudioNode;
 /**
  * The Class SNAudioController.
  */
-public class SNAudioController {
+public class SNAudioController
+{
 
 	/** The recording concurrently. */
 	public static boolean recordingConcurrently = false;
@@ -74,26 +75,32 @@ public class SNAudioController {
 	/**
 	 * Instantiates a new SN audio controller.
 	 */
-	public SNAudioController() {
+	public SNAudioController()
+	{
 		this.log = Logger.getLogger(SNAudioController.class.getName());
 	}
 
 	/**
 	 * Instantiates a new SN audio controller.
 	 *
-	 * @param log the log
+	 * @param log
+	 *            the log
 	 */
-	public SNAudioController(Logger log) {
+	public SNAudioController(Logger log)
+	{
 		this.log = log;
 	}
 
 	/**
 	 * Instantiates a new SN audio controller.
 	 *
-	 * @param log the log
-	 * @param audioItem the audio item
+	 * @param log
+	 *            the log
+	 * @param audioItem
+	 *            the audio item
 	 */
-	public SNAudioController(Logger log, IAudioItem audioItem) {
+	public SNAudioController(Logger log, IAudioItem audioItem)
+	{
 		this.log = log;
 		this.audioItem = audioItem;
 	}
@@ -103,7 +110,8 @@ public class SNAudioController {
 	 *
 	 * @return true, if is windows
 	 */
-	private static boolean isWindows() {
+	private static boolean isWindows()
+	{
 		return System.getProperty("os.name").startsWith("Windows");
 	}
 
@@ -112,7 +120,8 @@ public class SNAudioController {
 	 *
 	 * @return the audio file
 	 */
-	public File getAudioFile() {
+	public File getAudioFile()
+	{
 		return audioFile;
 	}
 
@@ -121,7 +130,8 @@ public class SNAudioController {
 	 *
 	 * @return the max recording time
 	 */
-	public int getMaxRecordingTime() {
+	public int getMaxRecordingTime()
+	{
 		return maxRecordingTime;
 	}
 
@@ -130,24 +140,29 @@ public class SNAudioController {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean hasAudioBeenSet() {
+	public boolean hasAudioBeenSet()
+	{
 		return audioSet;
 	}
 
 	/**
 	 * Reset audio recording.
 	 */
-	public void resetAudioRecording() {
+	public void resetAudioRecording()
+	{
 		audioSet = false;
 	}
 
 	/**
 	 * Sets the audio source.
 	 *
-	 * @param assetManager the asset manager
-	 * @param fileLocation the file location
+	 * @param assetManager
+	 *            the asset manager
+	 * @param fileLocation
+	 *            the file location
 	 */
-	public void setAudioSource(AssetManager assetManager, String fileLocation) {
+	public void setAudioSource(AssetManager assetManager, String fileLocation)
+	{
 		audioNode = new AudioNode(assetManager, fileLocation);
 		duration = audioNode.getAudioData().getDuration() * 1000f;
 		isLocal = true;
@@ -157,23 +172,31 @@ public class SNAudioController {
 	/**
 	 * Sets the audio source.
 	 *
-	 * @param f the new audio source
+	 * @param f
+	 *            the new audio source
 	 */
-	public void setAudioSource(File f) {
+	public void setAudioSource(File f)
+	{
 		audioFile = f;
-		try {
+		try
+		{
 			setAudioSource(f.toURI().toString());
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e)
+		{
 		}
 	}
 
 	/**
 	 * Sets the audio source.
 	 *
-	 * @param f the f
-	 * @param s the s
+	 * @param f
+	 *            the f
+	 * @param s
+	 *            the s
 	 */
-	public void setAudioSource(File f, String s) {
+	public void setAudioSource(File f, String s)
+	{
 		audioFile = f;
 		setAudioSource(s);
 	}
@@ -181,25 +204,29 @@ public class SNAudioController {
 	/**
 	 * Sets the audio source.
 	 *
-	 * @param recordingAddress the new audio source
+	 * @param recordingAddress
+	 *            the new audio source
 	 */
-	public void setAudioSource(String recordingAddress) {
-		try {
+	public void setAudioSource(String recordingAddress)
+	{
+		try
+		{
 			recordingAddress = recordingAddress.replace("file:/", "");
 			recordingAddress = recordingAddress.replace("%20", " ");
-			if (!isWindows()) {
+			if (!isWindows())
+			{
 				recordingAddress = File.separator + recordingAddress;
 			}
 			InputStream in = new FileInputStream(recordingAddress);
 			InputStream bufferedIn = new BufferedInputStream(in);
 			audio = AudioSystem.getClip();
-			AudioInputStream inputStream = AudioSystem
-					.getAudioInputStream(bufferedIn);
+			AudioInputStream inputStream = AudioSystem.getAudioInputStream(bufferedIn);
 			audio.open(inputStream);
-			duration = TimeUnit.MICROSECONDS.toMillis(audio
-					.getMicrosecondLength());
+			duration = TimeUnit.MICROSECONDS.toMillis(audio.getMicrosecondLength());
 			audioSet = true;
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			log.log(Level.SEVERE, "Unable to open recording.", e);
 			audioSet = false;
 			stopAudioItemRecording(false);
@@ -209,48 +236,56 @@ public class SNAudioController {
 	/**
 	 * Sets the max recording time.
 	 *
-	 * @param maxRecordingTime the new max recording time
+	 * @param maxRecordingTime
+	 *            the new max recording time
 	 */
-	public void setMaxRecordingTime(int maxRecordingTime) {
+	public void setMaxRecordingTime(int maxRecordingTime)
+	{
 		this.maxRecordingTime = maxRecordingTime;
 	}
 
 	/**
 	 * Start audio capture.
 	 */
-	public void startAudioCapture() {
-		if (!audioSet && !recordingConcurrently) {
+	public void startAudioCapture()
+	{
+		if (!audioSet && !recordingConcurrently)
+		{
 			recordingConcurrently = true;
-			try {
+			try
+			{
 				final AudioFormat format = getAudioFormat();
-				DataLine.Info info = new DataLine.Info(TargetDataLine.class,
-						format);
+				DataLine.Info info = new DataLine.Info(TargetDataLine.class, format);
 				targetDataLine = (TargetDataLine) AudioSystem.getLine(info);
 				final AudioFileFormat.Type fileType = AudioFileFormat.Type.WAVE;
 
-				SimpleDateFormat yearFormat = new SimpleDateFormat(
-						"yyyyMMddHHmmssSS");
-				String audioID = SynergyNetApp.getTableIdentity() + "_"
-						+ yearFormat.format(new Date());
-				audioFile = new File(CacheOrganisation.getAudioDir()
-						+ File.separator + audioID + ".wav");
+				SimpleDateFormat yearFormat = new SimpleDateFormat("yyyyMMddHHmmssSS");
+				String audioID = SynergyNetApp.getTableIdentity() + "_" + yearFormat.format(new Date());
+				audioFile = new File(CacheOrganisation.getAudioDir() + File.separator + audioID + ".wav");
 				audioFile.createNewFile();
 
-				Runnable recorderRunner = new Runnable() {
-					public void run() {
-						try {
+				Runnable recorderRunner = new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						try
+						{
 							isRecording = true;
 							recordingConcurrently = true;
 							targetDataLine.open(format);
 							targetDataLine.start();
-							AudioSystem.write(new AudioInputStream(
-									targetDataLine), fileType, audioFile);
+							AudioSystem.write(new AudioInputStream(targetDataLine), fileType, audioFile);
 							recordingConcurrently = false;
-						} catch (IOException ie) {
+						}
+						catch (IOException ie)
+						{
 							log.log(Level.SEVERE, "IO Exception.", ie);
 							recordingConcurrently = false;
 							stopAudioCapture(false);
-						} catch (LineUnavailableException le) {
+						}
+						catch (LineUnavailableException le)
+						{
 							log.log(Level.SEVERE, "Line unavailable.", le);
 							recordingConcurrently = false;
 							stopAudioCapture(false);
@@ -260,15 +295,22 @@ public class SNAudioController {
 				Thread captureThread = new Thread(recorderRunner);
 				captureThread.start();
 
-				Runnable timeOutRunner = new Runnable() {
-					public void run() {
-						try {
+				Runnable timeOutRunner = new Runnable()
+				{
+					@Override
+					public void run()
+					{
+						try
+						{
 							Thread.sleep(maxRecordingTime);
-							if (isRecording) {
+							if (isRecording)
+							{
 								recordingConcurrently = false;
 								stopAudioCapture(true);
 							}
-						} catch (InterruptedException e) {
+						}
+						catch (InterruptedException e)
+						{
 							log.log(Level.SEVERE, "Interrupted Exception.", e);
 						}
 					}
@@ -276,17 +318,23 @@ public class SNAudioController {
 				Thread timeOutThead = new Thread(timeOutRunner);
 				timeOutThead.start();
 
-			} catch (LineUnavailableException e) {
+			}
+			catch (LineUnavailableException e)
+			{
 				log.log(Level.SEVERE, "Line unavailable.", e);
 				recordingConcurrently = false;
 				stopAudioCapture(false);
-			} catch (IOException ie) {
+			}
+			catch (IOException ie)
+			{
 				log.log(Level.SEVERE, "Recording File unavailable.", ie);
 				recordingConcurrently = false;
 				audioSet = false;
 				stopAudioCapture(false);
 			}
-		} else {
+		}
+		else
+		{
 			stopAudioItemRecording(false);
 		}
 	}
@@ -294,20 +342,30 @@ public class SNAudioController {
 	/**
 	 * Start audio play back.
 	 */
-	public void startAudioPlayBack() {
-		if (audioSet) {
-			if (isLocal) {
-				MultiplicityClient.get().getAudioRenderer()
-						.playSource(audioNode);
-			} else {
+	public void startAudioPlayBack()
+	{
+		if (audioSet)
+		{
+			if (isLocal)
+			{
+				MultiplicityClient.get().getAudioRenderer().playSource(audioNode);
+			}
+			else
+			{
 				audio.start();
 			}
-			Runnable runner = new Runnable() {
-				public void run() {
-					try {
+			Runnable runner = new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					try
+					{
 						Thread.sleep((int) Math.ceil(duration));
 						stopAudioPlayBack();
-					} catch (InterruptedException e) {
+					}
+					catch (InterruptedException e)
+					{
 						log.log(Level.SEVERE, "Interrupted Exception.", e);
 					}
 				}
@@ -320,28 +378,40 @@ public class SNAudioController {
 	/**
 	 * Stop audio capture.
 	 *
-	 * @param success the success
+	 * @param success
+	 *            the success
 	 */
-	public void stopAudioCapture(boolean success) {
+	public void stopAudioCapture(boolean success)
+	{
 		isRecording = false;
-		if (targetDataLine != null) {
+		if (targetDataLine != null)
+		{
 			targetDataLine.stop();
 			targetDataLine.close();
 		}
 
 		isSuccess = success;
 
-		Runnable runner = new Runnable() {
-			public void run() {
-				try {
+		Runnable runner = new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				try
+				{
 					Thread.sleep(100);
-					if (isSuccess) {
+					if (isSuccess)
+					{
 						setAudioSource(audioFile);
-					} else {
+					}
+					else
+					{
 						audioSet = false;
 					}
 					stopAudioItemRecording(isSuccess);
-				} catch (InterruptedException e) {
+				}
+				catch (InterruptedException e)
+				{
 					log.log(Level.SEVERE, "Interrupted Exception.", e);
 				}
 			}
@@ -354,17 +424,25 @@ public class SNAudioController {
 	/**
 	 * Stop audio play back.
 	 */
-	public void stopAudioPlayBack() {
-		if (isLocal) {
+	public void stopAudioPlayBack()
+	{
+		if (isLocal)
+		{
 			MultiplicityClient.get().getAudioRenderer().stopSource(audioNode);
-		} else {
-			try {
+		}
+		else
+		{
+			try
+			{
 				audio.stop();
 				audio.setFramePosition(0);
-			} catch (NullPointerException e) {
+			}
+			catch (NullPointerException e)
+			{
 			}
 		}
-		if (audioItem != null) {
+		if (audioItem != null)
+		{
 			audioItem.stopPlay();
 		}
 	}
@@ -374,23 +452,26 @@ public class SNAudioController {
 	 *
 	 * @return the audio format
 	 */
-	private AudioFormat getAudioFormat() {
+	private AudioFormat getAudioFormat()
+	{
 		float sampleRate = 16000; // 8000,11025,16000,22050,44100
 		int sampleSizeInBits = 16; // 8,16
 		int channels = 2; // 1,2
 		boolean signed = true; // true,false
 		boolean bigEndian = true; // true,false
-		return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed,
-				bigEndian);
+		return new AudioFormat(sampleRate, sampleSizeInBits, channels, signed, bigEndian);
 	}
 
 	/**
 	 * Stop audio item recording.
 	 *
-	 * @param success the success
+	 * @param success
+	 *            the success
 	 */
-	private void stopAudioItemRecording(boolean success) {
-		if (audioItem != null) {
+	private void stopAudioItemRecording(boolean success)
+	{
+		if (audioItem != null)
+		{
 			audioItem.stopRecord(isSuccess);
 		}
 	}

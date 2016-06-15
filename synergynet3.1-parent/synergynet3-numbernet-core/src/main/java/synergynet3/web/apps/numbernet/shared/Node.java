@@ -7,7 +7,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Class Node.
  */
-public class Node implements Serializable, IsSerializable {
+public class Node implements Serializable, IsSerializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3955541802925698325L;
@@ -27,9 +28,11 @@ public class Node implements Serializable, IsSerializable {
 	/**
 	 * Instantiates a new node.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
-	public Node(String id) {
+	public Node(String id)
+	{
 		this.id = id;
 	}
 
@@ -38,7 +41,8 @@ public class Node implements Serializable, IsSerializable {
 	 *
 	 * @return the id
 	 */
-	public String getID() {
+	public String getID()
+	{
 		return id;
 	}
 
@@ -47,7 +51,8 @@ public class Node implements Serializable, IsSerializable {
 	 *
 	 * @return the x
 	 */
-	public float getX() {
+	public float getX()
+	{
 		return this.x;
 	}
 
@@ -56,7 +61,8 @@ public class Node implements Serializable, IsSerializable {
 	 *
 	 * @return the y
 	 */
-	public float getY() {
+	public float getY()
+	{
 		return this.y;
 	}
 
@@ -65,26 +71,32 @@ public class Node implements Serializable, IsSerializable {
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
-	public int hashCode() {
+	public int hashCode()
+	{
 		return id.hashCode();
 	}
 
 	/**
 	 * Sets the ignore.
 	 *
-	 * @param b the new ignore
+	 * @param b
+	 *            the new ignore
 	 */
-	public void setIgnore(boolean b) {
+	public void setIgnore(boolean b)
+	{
 		ignore = b;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public void setPosition(float x, float y) {
+	public void setPosition(float x, float y)
+	{
 		this.x = x;
 		this.y = y;
 	}
@@ -94,7 +106,8 @@ public class Node implements Serializable, IsSerializable {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean shouldIgnore() {
+	public boolean shouldIgnore()
+	{
 		return ignore;
 	}
 }

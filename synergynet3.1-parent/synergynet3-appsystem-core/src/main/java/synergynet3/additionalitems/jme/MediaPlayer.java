@@ -33,13 +33,14 @@ import com.jme3.math.Vector2f;
  * The Class MediaPlayer.
  */
 @ImplementsContentItem(target = IMediaPlayer.class)
-public class MediaPlayer extends JMEContainer implements IMediaPlayer,
-		IInitable, IItemCachable, IActionOnVideoEndListener {
+public class MediaPlayer extends JMEContainer implements IMediaPlayer, IInitable, IItemCachable, IActionOnVideoEndListener
+{
 
 	/**
 	 * The Enum LOCATION.
 	 */
-	private enum LOCATION {
+	private enum LOCATION
+	{
 		/** The local. */
 		LOCAL,
 		/** The remote. */
@@ -136,47 +137,51 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	/**
 	 * Instantiates a new media player.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public MediaPlayer(String name, UUID uuid) {
+	public MediaPlayer(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
 	/**
 	 * Reconstruct.
 	 *
-	 * @param galleryItem the gallery item
-	 * @param stage the stage
-	 * @param loc the loc
+	 * @param galleryItem
+	 *            the gallery item
+	 * @param stage
+	 *            the stage
+	 * @param loc
+	 *            the loc
 	 * @return the media player
 	 */
-	public static MediaPlayer reconstruct(
-			GalleryItemDatabaseFormat galleryItem, IStage stage, String loc) {
-		try {
-			MediaPlayer video = stage.getContentFactory().create(
-					IMediaPlayer.class,
-					(String) galleryItem.getValues().get(0), UUID.randomUUID());
+	public static MediaPlayer reconstruct(GalleryItemDatabaseFormat galleryItem, IStage stage, String loc)
+	{
+		try
+		{
+			MediaPlayer video = stage.getContentFactory().create(IMediaPlayer.class, (String) galleryItem.getValues().get(0), UUID.randomUUID());
 			video.setPosition((Float) galleryItem.getValues().get(2));
 			boolean isPlaying = (Boolean) galleryItem.getValues().get(3);
 			boolean isRepeated = (Boolean) galleryItem.getValues().get(4);
-			if (((String) galleryItem.getValues().get(0)).equals(LOCATION.LOCAL
-					.toString())) {
-				String mediaLocation = CacheOrganisation.getSpecificDir(loc)
-						+ File.separator
-						+ (String) galleryItem.getValues().get(1);
-				video.setLocalResource(mediaLocation, isPlaying, isRepeated,
-						stage);
-			} else {
-				video.setRemoteResource(
-						(String) galleryItem.getValues().get(1), isPlaying,
-						isRepeated, stage);
+			if (((String) galleryItem.getValues().get(0)).equals(LOCATION.LOCAL.toString()))
+			{
+				String mediaLocation = CacheOrganisation.getSpecificDir(loc) + File.separator + (String) galleryItem.getValues().get(1);
+				video.setLocalResource(mediaLocation, isPlaying, isRepeated, stage);
+			}
+			else
+			{
+				video.setRemoteResource((String) galleryItem.getValues().get(1), isPlaying, isRepeated, stage);
 			}
 			video.setSize(galleryItem.getWidth(), galleryItem.getHeight());
 			video.setCached(loc);
 
 			return video;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			return null;
 		}
 	}
@@ -186,20 +191,26 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * @see synergynet3.cachecontrol.IItemCachable#deconstruct(java.lang.String)
 	 */
 	@Override
-	public GalleryItemDatabaseFormat deconstruct(String loc) {
+	public GalleryItemDatabaseFormat deconstruct(String loc)
+	{
 		GalleryItemDatabaseFormat galleryItem = new GalleryItemDatabaseFormat();
 		galleryItem.setType(CACHABLE_TYPE);
 		galleryItem.setHeight(width);
 		galleryItem.setWidth(height);
-		if (videoLoc == LOCATION.LOCAL) {
+		if (videoLoc == LOCATION.LOCAL)
+		{
 			galleryItem.addValue(videoLoc.toString());
-			if (!cached.equalsIgnoreCase(loc)) {
-				if (resourceLocation != null) {
+			if (!cached.equalsIgnoreCase(loc))
+			{
+				if (resourceLocation != null)
+				{
 					ItemCaching.cacheFile(resourceLocation, loc);
 				}
 			}
 			galleryItem.addValue(filename);
-		} else if (videoLoc == LOCATION.REMOTE) {
+		}
+		else if (videoLoc == LOCATION.REMOTE)
+		{
 			galleryItem.addValue(videoLoc.toString());
 			galleryItem.addValue(videoURL);
 		}
@@ -213,8 +224,11 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IMediaPlayer#destroy()
 	 */
-	public void destroy() {
-		if (simpleMediaPlayer != null) {
+	@Override
+	public void destroy()
+	{
+		if (simpleMediaPlayer != null)
+		{
 			simpleMediaPlayer.destroy();
 		}
 	}
@@ -224,7 +238,8 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 *
 	 * @return the string
 	 */
-	public String isCached() {
+	public String isCached()
+	{
 		return cached;
 	}
 
@@ -232,7 +247,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IMediaPlayer#isRepeated()
 	 */
-	public boolean isRepeated() {
+	@Override
+	public boolean isRepeated()
+	{
 		return repeat;
 	}
 
@@ -243,11 +260,15 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * ()
 	 */
 	@Override
-	public void onVideoEnd() {
-		if (simpleMediaPlayer != null) {
-			if (!simpleMediaPlayer.getRepeat()) {
+	public void onVideoEnd()
+	{
+		if (simpleMediaPlayer != null)
+		{
+			if (!simpleMediaPlayer.getRepeat())
+			{
 				iconsToPauseStatus();
-				if (isCurrentPlaying()) {
+				if (isCurrentPlaying())
+				{
 					currentlyPlaying = null;
 				}
 			}
@@ -258,9 +279,12 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IMediaPlayer#pause()
 	 */
-	public void pause() {
+	@Override
+	public void pause()
+	{
 		isLocalPlaying = false;
-		if (isCurrentPlaying()) {
+		if (isCurrentPlaying())
+		{
 			currentlyPlaying = null;
 		}
 		simpleMediaPlayer.pause();
@@ -272,9 +296,12 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setBackgroundColour
 	 * (com.jme3.math.ColorRGBA)
 	 */
-	public void setBackgroundColour(ColorRGBA backgroundColour) {
+	@Override
+	public void setBackgroundColour(ColorRGBA backgroundColour)
+	{
 		this.backgroundColour = backgroundColour;
-		if (background != null) {
+		if (background != null)
+		{
 			background.setSolidBackgroundColour(backgroundColour);
 		}
 	}
@@ -285,16 +312,20 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setBorderColour(com
 	 * .jme3.math.ColorRGBA)
 	 */
-	public void setBorderColour(ColorRGBA borderColour) {
+	@Override
+	public void setBorderColour(ColorRGBA borderColour)
+	{
 		this.borderColour = borderColour;
 	}
 
 	/**
 	 * Sets the cached.
 	 *
-	 * @param cached the new cached
+	 * @param cached
+	 *            the new cached
 	 */
-	public void setCached(String cached) {
+	public void setCached(String cached)
+	{
 		this.cached = cached;
 	}
 
@@ -304,7 +335,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setDeceleration(float
 	 * )
 	 */
-	public void setDeceleration(float deceleration) {
+	@Override
+	public void setDeceleration(float deceleration)
+	{
 		this.deceleration = deceleration;
 	}
 
@@ -314,8 +347,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setLocalResource(
 	 * java.io.File, boolean, boolean, multiplicity3.csys.stage.IStage)
 	 */
-	public void setLocalResource(File file, boolean autostart, boolean repeat,
-			IStage stage) {
+	@Override
+	public void setLocalResource(File file, boolean autostart, boolean repeat, IStage stage)
+	{
 		initialiseVideo(stage, autostart, repeat);
 		videoLoc = LOCATION.LOCAL;
 		videoURL = file.toString();
@@ -331,8 +365,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setLocalResource(
 	 * java.lang.String, boolean, boolean, multiplicity3.csys.stage.IStage)
 	 */
-	public void setLocalResource(String localPath, boolean autostart,
-			boolean repeat, IStage stage) {
+	@Override
+	public void setLocalResource(String localPath, boolean autostart, boolean repeat, IStage stage)
+	{
 		initialiseVideo(stage, autostart, repeat);
 		videoLoc = LOCATION.LOCAL;
 		videoURL = localPath;
@@ -348,10 +383,15 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setPosition(float)
 	 */
-	public void setPosition(float pos) {
-		if (simpleMediaPlayer != null) {
+	@Override
+	public void setPosition(float pos)
+	{
+		if (simpleMediaPlayer != null)
+		{
 			simpleMediaPlayer.setPosition(pos);
-		} else {
+		}
+		else
+		{
 			startPosition = pos;
 		}
 	}
@@ -362,8 +402,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setRemoteResource
 	 * (java.lang.String, boolean, boolean, multiplicity3.csys.stage.IStage)
 	 */
-	public void setRemoteResource(String remotePath, boolean autostart,
-			boolean repeat, IStage stage) {
+	@Override
+	public void setRemoteResource(String remotePath, boolean autostart, boolean repeat, IStage stage)
+	{
 		initialiseVideo(stage, autostart, repeat);
 		videoLoc = LOCATION.REMOTE;
 		videoURL = remotePath;
@@ -375,7 +416,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setRepeated(boolean)
 	 */
-	public void setRepeated(boolean repeat) {
+	@Override
+	public void setRepeated(boolean repeat)
+	{
 		this.repeat = repeat;
 	}
 
@@ -385,7 +428,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * synergynet3.additionalitems.interfaces.IMediaPlayer#setScaleLimits(float,
 	 * float)
 	 */
-	public void setScaleLimits(float minScale, float maxScale) {
+	@Override
+	public void setScaleLimits(float minScale, float maxScale)
+	{
 		this.minScale = minScale;
 		this.maxScale = maxScale;
 	}
@@ -395,11 +440,14 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * @see synergynet3.additionalitems.interfaces.IMediaPlayer#setSize(float,
 	 * float)
 	 */
-	public void setSize(float width, float height) {
+	@Override
+	public void setSize(float width, float height)
+	{
 		this.width = width;
 		this.height = height;
 
-		if (simpleMediaPlayer != null) {
+		if (simpleMediaPlayer != null)
+		{
 			simpleMediaPlayer.setSize(width, height);
 			background.setSize(width, height);
 			mediaBorder.setSize(width, height);
@@ -412,13 +460,10 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 			setRelativeLocation(new Vector2f());
 			setRelativeScale(1);
 
-			playIcon.setRelativeLocation(new Vector2f((-width / 2)
-					+ (PP_ICON_SIZE / 2) + PADDING, (height / 2)
-					- (PP_ICON_SIZE / 2) - PADDING));
-			pauseIcon.setRelativeLocation(new Vector2f((-width / 2)
-					+ (PP_ICON_SIZE / 2) + PADDING, (height / 2)
-					- (PP_ICON_SIZE / 2) - PADDING));
-			if (audioIcon != null) {
+			playIcon.setRelativeLocation(new Vector2f((-width / 2) + (PP_ICON_SIZE / 2) + PADDING, (height / 2) - (PP_ICON_SIZE / 2) - PADDING));
+			pauseIcon.setRelativeLocation(new Vector2f((-width / 2) + (PP_ICON_SIZE / 2) + PADDING, (height / 2) - (PP_ICON_SIZE / 2) - PADDING));
+			if (audioIcon != null)
+			{
 				audioIcon.centerItem();
 			}
 
@@ -433,12 +478,17 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 * @see multiplicity3.jme3csys.items.item.JMEItem#setVisible(boolean)
 	 */
 	@Override
-	public void setVisible(boolean isVisible) {
+	public void setVisible(boolean isVisible)
+	{
 		super.setVisible(isVisible);
-		if (isVisible) {
-			if (isLocalPlaying) {
+		if (isVisible)
+		{
+			if (isLocalPlaying)
+			{
 				iconsToPlayStatus();
-			} else {
+			}
+			else
+			{
 				iconsToPauseStatus();
 			}
 		}
@@ -447,14 +497,18 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	/**
 	 * Audio icon check.
 	 *
-	 * @param stage the stage
-	 * @param file the file
+	 * @param stage
+	 *            the stage
+	 * @param file
+	 *            the file
 	 */
-	private void audioIconCheck(IStage stage, File file) {
-		if (new AudioSearchType().isFileOfSearchType(file)) {
-			try {
-				audioIcon = stage.getContentFactory().create(
-						ICachableImage.class, "audioIcon", UUID.randomUUID());
+	private void audioIconCheck(IStage stage, File file)
+	{
+		if (new AudioSearchType().isFileOfSearchType(file))
+		{
+			try
+			{
+				audioIcon = stage.getContentFactory().create(ICachableImage.class, "audioIcon", UUID.randomUUID());
 				audioIcon.setImage(RESOURCES_DIR + "audioIcon.png");
 				audioIcon.setSize(AUDIO_ICON_SIZE, AUDIO_ICON_SIZE);
 
@@ -462,7 +516,9 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 
 				this.zOrderManager.bringToTop(listener);
 
-			} catch (ContentTypeNotBoundException e) {
+			}
+			catch (ContentTypeNotBoundException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -473,8 +529,10 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 *
 	 * @return true, if successful
 	 */
-	private boolean canPlay() {
-		if (!SynergyNetApp.ONE_MEDIA_AT_A_TIME || (currentlyPlaying == null)) {
+	private boolean canPlay()
+	{
+		if (!SynergyNetApp.ONE_MEDIA_AT_A_TIME || (currentlyPlaying == null))
+		{
 			return true;
 		}
 		return false;
@@ -483,7 +541,8 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	/**
 	 * Icons to pause status.
 	 */
-	private void iconsToPauseStatus() {
+	private void iconsToPauseStatus()
+	{
 		playIcon.setVisible(false);
 		pauseIcon.setVisible(true);
 	}
@@ -491,7 +550,8 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	/**
 	 * Icons to play status.
 	 */
-	private void iconsToPlayStatus() {
+	private void iconsToPlayStatus()
+	{
 		pauseIcon.setVisible(false);
 		playIcon.setVisible(true);
 	}
@@ -499,49 +559,44 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	/**
 	 * Initialise video.
 	 *
-	 * @param stage the stage
-	 * @param autostart the autostart
-	 * @param repeat the repeat
+	 * @param stage
+	 *            the stage
+	 * @param autostart
+	 *            the autostart
+	 * @param repeat
+	 *            the repeat
 	 */
-	private void initialiseVideo(IStage stage, boolean autostart, boolean repeat) {
+	private void initialiseVideo(IStage stage, boolean autostart, boolean repeat)
+	{
 		instance = this;
-		try {
+		try
+		{
 
-			simpleMediaPlayer = stage.getContentFactory().create(
-					ISimpleMediaPlayer.class, "button", UUID.randomUUID());
+			simpleMediaPlayer = stage.getContentFactory().create(ISimpleMediaPlayer.class, "button", UUID.randomUUID());
 			simpleMediaPlayer.setSize(width, height);
 			simpleMediaPlayer.setPosition(startPosition);
 			simpleMediaPlayer.setActionOnVideoEndListener(this);
 
-			background = stage.getContentFactory().create(
-					IColourRectangle.class, "mediabg", UUID.randomUUID());
+			background = stage.getContentFactory().create(IColourRectangle.class, "mediabg", UUID.randomUUID());
 			background.setSolidBackgroundColour(backgroundColour);
 			background.setSize(width, height);
 
-			mediaBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "mediaBorder", UUID.randomUUID());
+			mediaBorder = stage.getContentFactory().create(IRoundedBorder.class, "mediaBorder", UUID.randomUUID());
 			mediaBorder.setBorderWidth(15f);
 			mediaBorder.setSize(width, height);
 			mediaBorder.setColor(borderColour);
 
-			playIcon = stage.getContentFactory().create(ICachableImage.class,
-					"playIcon", UUID.randomUUID());
+			playIcon = stage.getContentFactory().create(ICachableImage.class, "playIcon", UUID.randomUUID());
 			playIcon.setImage(RESOURCES_DIR + "playIcon.png");
 			playIcon.setSize(PP_ICON_SIZE, PP_ICON_SIZE);
-			playIcon.setRelativeLocation(new Vector2f((-width / 2)
-					+ (PP_ICON_SIZE / 2) + PADDING, (height / 2)
-					- (PP_ICON_SIZE / 2) - PADDING));
+			playIcon.setRelativeLocation(new Vector2f((-width / 2) + (PP_ICON_SIZE / 2) + PADDING, (height / 2) - (PP_ICON_SIZE / 2) - PADDING));
 
-			pauseIcon = stage.getContentFactory().create(ICachableImage.class,
-					"pauseIcon", UUID.randomUUID());
+			pauseIcon = stage.getContentFactory().create(ICachableImage.class, "pauseIcon", UUID.randomUUID());
 			pauseIcon.setImage(RESOURCES_DIR + "pauseIcon.png");
 			pauseIcon.setSize(PP_ICON_SIZE, PP_ICON_SIZE);
-			pauseIcon.setRelativeLocation(new Vector2f((-width / 2)
-					+ (PP_ICON_SIZE / 2) + PADDING, (height / 2)
-					- (PP_ICON_SIZE / 2) - PADDING));
+			pauseIcon.setRelativeLocation(new Vector2f((-width / 2) + (PP_ICON_SIZE / 2) + PADDING, (height / 2) - (PP_ICON_SIZE / 2) - PADDING));
 
-			listener = stage.getContentFactory().create(IImage.class,
-					"listenBlock", UUID.randomUUID());
+			listener = stage.getContentFactory().create(IImage.class, "listenBlock", UUID.randomUUID());
 			listener.setSize(width, height);
 
 			this.zOrderManager.setAutoBringToTop(false);
@@ -553,66 +608,78 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 			this.addItem(pauseIcon);
 			this.addItem(listener);
 
-			if (!autostart) {
+			if (!autostart)
+			{
 				iconsToPauseStatus();
-			} else {
+			}
+			else
+			{
 				iconsToPlayStatus();
 			}
 
-			listener.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							if (simpleMediaPlayer.isPlaying()) {
-								isLocalPlaying = false;
-								if (isCurrentPlaying()) {
-									currentlyPlaying = null;
-								}
-								simpleMediaPlayer.pause();
-								iconsToPauseStatus();
-							} else {
-								if (canPlay()) {
-									currentlyPlaying = instance;
-									simpleMediaPlayer.unpause();
-									isLocalPlaying = true;
-									iconsToPlayStatus();
-								}
-							}
+			listener.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					if (simpleMediaPlayer.isPlaying())
+					{
+						isLocalPlaying = false;
+						if (isCurrentPlaying())
+						{
+							currentlyPlaying = null;
 						}
-					});
+						simpleMediaPlayer.pause();
+						iconsToPauseStatus();
+					}
+					else
+					{
+						if (canPlay())
+						{
+							currentlyPlaying = instance;
+							simpleMediaPlayer.unpause();
+							isLocalPlaying = true;
+							iconsToPlayStatus();
+						}
+					}
+				}
+			});
 
-			RotateTranslateScaleBehaviour rtsBackground = stage
-					.getBehaviourMaker().addBehaviour(listener,
-							RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rtsBackground = stage.getBehaviourMaker().addBehaviour(listener, RotateTranslateScaleBehaviour.class);
 			rtsBackground.setItemActingOn(this);
-			RotateTranslateScaleBehaviour rtsBorder = stage.getBehaviourMaker()
-					.addBehaviour(mediaBorder,
-							RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rtsBorder = stage.getBehaviourMaker().addBehaviour(mediaBorder, RotateTranslateScaleBehaviour.class);
 			rtsBorder.setItemActingOn(this);
 
-			if ((minScale != -1) && (maxScale != -1)) {
+			if ((minScale != -1) && (maxScale != -1))
+			{
 				rtsBackground.setScaleLimits(minScale, maxScale);
 				rtsBorder.setScaleLimits(minScale, maxScale);
 			}
 
-			if (deceleration != -1) {
-				NetworkFlickBehaviour nf = stage.getBehaviourMaker()
-						.addBehaviour(listener, NetworkFlickBehaviour.class);
+			if (deceleration != -1)
+			{
+				NetworkFlickBehaviour nf = stage.getBehaviourMaker().addBehaviour(listener, NetworkFlickBehaviour.class);
 				nf.setMaxDimension(width);
 				nf.setItemActingOn(this);
 				nf.setDeceleration(deceleration);
 			}
 
-			if (canPlay()) {
+			if (canPlay())
+			{
 				isLocalPlaying = autostart;
-				if (autostart) {
+				if (autostart)
+				{
 					currentlyPlaying = instance;
 				}
-			} else {
+			}
+			else
+			{
 				isLocalPlaying = false;
 			}
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -622,12 +689,16 @@ public class MediaPlayer extends JMEContainer implements IMediaPlayer,
 	 *
 	 * @return true, if is current playing
 	 */
-	private boolean isCurrentPlaying() {
-		if (!SynergyNetApp.ONE_MEDIA_AT_A_TIME) {
+	private boolean isCurrentPlaying()
+	{
+		if (!SynergyNetApp.ONE_MEDIA_AT_A_TIME)
+		{
 			return true;
 		}
-		if (currentlyPlaying != null) {
-			if (currentlyPlaying == instance) {
+		if (currentlyPlaying != null)
+		{
+			if (currentlyPlaying == instance)
+			{
 				return true;
 			}
 		}

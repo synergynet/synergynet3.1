@@ -31,12 +31,11 @@ import com.jme3.math.Vector2f;
 /**
  * The Class SpringGraphBuilder.
  */
-public class SpringGraphBuilder implements IItemListener,
-		IExpressionSessionChangeListener {
+public class SpringGraphBuilder implements IItemListener, IExpressionSessionChangeListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(SpringGraphBuilder.class
-			.getName());
+	private static final Logger log = Logger.getLogger(SpringGraphBuilder.class.getName());
 
 	/** The content factory. */
 	private IContentFactory contentFactory;
@@ -82,8 +81,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * @param distanceForConnection
 	 * @param distanceForBreak
 	 */
-	public SpringGraphBuilder(IStage stage, float distanceForConnection,
-			float distanceForBreak, float desiredLineLength) {
+	public SpringGraphBuilder(IStage stage, float distanceForConnection, float distanceForBreak, float desiredLineLength)
+	{
 		log.fine("Creating a Spring Graph Builder");
 		this.contentFactory = stage.getContentFactory();
 		this.distanceForConnection = distanceForConnection;
@@ -106,7 +105,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * allExpressionsRemoved()
 	 */
 	@Override
-	public void allExpressionsRemoved() {
+	public void allExpressionsRemoved()
+	{
 	}
 
 	/*
@@ -116,11 +116,12 @@ public class SpringGraphBuilder implements IItemListener,
 	 * (synergynet3.web.apps.numbernet.shared.Expression)
 	 */
 	@Override
-	public void expressionAddedFromCalculator(Expression e) {
+	public void expressionAddedFromCalculator(Expression e)
+	{
 		log.info("SGB registering latest expression " + e.getExpression());
-		IContainer container = expressionDisplay
-				.getExpressionContainerForExpression(e);
-		if (container == null) {
+		IContainer container = expressionDisplay.getExpressionContainerForExpression(e);
+		if (container == null)
+		{
 			log.warning("Could not get an expression visual for the expression just added.");
 			return;
 		}
@@ -134,7 +135,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * (synergynet3.web.apps.numbernet.shared.Expression)
 	 */
 	@Override
-	public void expressionAddedFromNetwork(Expression e) {
+	public void expressionAddedFromNetwork(Expression e)
+	{
 	}
 
 	/*
@@ -143,7 +145,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * expressionRemoved(synergynet3.web.apps.numbernet.shared.Expression)
 	 */
 	@Override
-	public void expressionRemoved(Expression expression) {
+	public void expressionRemoved(Expression expression)
+	{
 	}
 
 	/**
@@ -151,7 +154,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 *
 	 * @return the line colour
 	 */
-	public ColorRGBA getLineColour() {
+	public ColorRGBA getLineColour()
+	{
 		return lineColour;
 	}
 
@@ -162,7 +166,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorChanged(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorChanged(IItem item, MultiTouchCursorEvent event)
+	{
 	} // unneeded
 
 	/*
@@ -172,7 +177,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorClicked(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorClicked(IItem item, MultiTouchCursorEvent event)
+	{
 	} // unneeded
 
 	/*
@@ -182,8 +188,10 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorPressed(IItem item, MultiTouchCursorEvent event) {
-		if (!item.isVisible()) {
+	public void itemCursorPressed(IItem item, MultiTouchCursorEvent event)
+	{
+		if (!item.isVisible())
+		{
 			return;
 		}
 		linkingGraph.pressedOn(item.getUUID().toString());
@@ -196,7 +204,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorReleased(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorReleased(IItem item, MultiTouchCursorEvent event)
+	{
 		linkingGraph.releasedOn(item.getUUID().toString());
 	}
 
@@ -207,13 +216,16 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemMoved(IItem item) {
-		try {
+	public void itemMoved(IItem item)
+	{
+		try
+		{
 			connectOrBreak(item);
 			Vector2f coords = item.getWorldLocation();
-			linkingGraph.getNodeForItem(item.getUUID().toString()).setPosition(
-					coords.x, coords.y);
-		} catch (ContentTypeNotBoundException e) {
+			linkingGraph.getNodeForItem(item.getUUID().toString()).setPosition(coords.x, coords.y);
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -225,7 +237,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemRotated(IItem item) {
+	public void itemRotated(IItem item)
+	{
 	} // unneeded
 
 	/*
@@ -235,7 +248,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemScaled(IItem item) {
+	public void itemScaled(IItem item)
+	{
 	} // unneeded
 
 	// ********* unneeded methods ********
@@ -246,7 +260,8 @@ public class SpringGraphBuilder implements IItemListener,
 	 * multiplicity3.csys.items.item.IItem, boolean)
 	 */
 	@Override
-	public void itemVisibilityChanged(IItem item, boolean isVisible) {
+	public void itemVisibilityChanged(IItem item, boolean isVisible)
+	{
 	}
 
 	/*
@@ -256,15 +271,18 @@ public class SpringGraphBuilder implements IItemListener,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemZOrderChanged(IItem item) {
+	public void itemZOrderChanged(IItem item)
+	{
 	} // unneeded
 
 	/**
 	 * Register all currently on screen items for connecting.
 	 */
-	public void registerAllCurrentlyOnScreenItemsForConnecting() {
+	public void registerAllCurrentlyOnScreenItemsForConnecting()
+	{
 		log.info("Registering items for connecting...");
-		for (IContainer container : expressionDisplay.getAllItems()) {
+		for (IContainer container : expressionDisplay.getAllItems())
+		{
 			log.info("  item " + container);
 			registerItemForConnecting(container);
 		}
@@ -272,38 +290,49 @@ public class SpringGraphBuilder implements IItemListener,
 
 	/**
 	 * Will only try and connect together those items that are registered.
-	 * 
+	 *
 	 * @param item
 	 */
-	public void registerItemForConnecting(IItem item) {
-		if (!registeredItems.contains(item)) {
-			log.fine("Registering item for connecting: "
-					+ item.getClass().getName());
+	public void registerItemForConnecting(IItem item)
+	{
+		if (!registeredItems.contains(item))
+		{
+			log.fine("Registering item for connecting: " + item.getClass().getName());
 			this.registeredItems.add(item);
 			item.addItemListener(this);
-		} else {
-			log.fine("Did not register item for connecting: "
-					+ item.getClass().getName());
+		}
+		else
+		{
+			log.fine("Did not register item for connecting: " + item.getClass().getName());
 		}
 	}
 
 	/**
 	 * Sets the active.
 	 *
-	 * @param active the active
-	 * @param forTarget the for target
+	 * @param active
+	 *            the active
+	 * @param forTarget
+	 *            the for target
 	 */
-	public void setActive(boolean active, double forTarget) {
-		if (active) {
+	public void setActive(boolean active, double forTarget)
+	{
+		if (active)
+		{
 			this.target = forTarget;
 			registerAllCurrentlyOnScreenItemsForConnecting();
 			buildGraphFromNetwork();
-			try {
+			try
+			{
 				buildLinesFromGraph();
-			} catch (ContentTypeNotBoundException e) {
+			}
+			catch (ContentTypeNotBoundException e)
+			{
 				e.printStackTrace();
 			}
-		} else {
+		}
+		else
+		{
 			unregisterAllItems();
 			removeAllLines();
 		}
@@ -314,15 +343,18 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Sets the expression session and display.
 	 *
-	 * @param session the session
-	 * @param expressionDisplay the expression display
-	 * @param graphingLinesContainer the graphing lines container
+	 * @param session
+	 *            the session
+	 * @param expressionDisplay
+	 *            the expression display
+	 * @param graphingLinesContainer
+	 *            the graphing lines container
 	 */
-	public void setExpressionSessionAndDisplay(ExpressionSession session,
-			ExpressionDisplay expressionDisplay,
-			IContainer graphingLinesContainer) {
+	public void setExpressionSessionAndDisplay(ExpressionSession session, ExpressionDisplay expressionDisplay, IContainer graphingLinesContainer)
+	{
 		this.graphingLinesContainer = graphingLinesContainer;
-		if (this.session != null) {
+		if (this.session != null)
+		{
 			this.session.removeChangeListener(this);
 		}
 
@@ -334,9 +366,11 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Sets the line colour.
 	 *
-	 * @param lineColour the new line colour
+	 * @param lineColour
+	 *            the new line colour
 	 */
-	public void setLineColour(ColorRGBA lineColour) {
+	public void setLineColour(ColorRGBA lineColour)
+	{
 		this.lineColour = lineColour;
 	}
 
@@ -346,14 +380,17 @@ public class SpringGraphBuilder implements IItemListener,
 	 * targetChanged(java.lang.Double)
 	 */
 	@Override
-	public void targetChanged(Double newValue) {
+	public void targetChanged(Double newValue)
+	{
 	}
 
 	/**
 	 * Unregister all items.
 	 */
-	public void unregisterAllItems() {
-		for (IItem item : registeredItems) {
+	public void unregisterAllItems()
+	{
+		for (IItem item : registeredItems)
+		{
 			item.removeItemListener(this);
 		}
 		registeredItems.clear();
@@ -362,10 +399,11 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Unregister an item - will ensure that it will no longer be able to be
 	 * connected.
-	 * 
+	 *
 	 * @param item
 	 */
-	public void unregisterItemForConnecting(IItem item) {
+	public void unregisterItemForConnecting(IItem item)
+	{
 		item.removeItemListener(this);
 		registeredItems.remove(item);
 	}
@@ -373,23 +411,25 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Adds the line.
 	 *
-	 * @param e the e
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param e
+	 *            the e
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void addLine(Edge e) throws ContentTypeNotBoundException {
-		DistributedMap<String, Edge> distmap = TargetMaps.get()
-				.getEdgesMapForTarget(target);
+	private void addLine(Edge e) throws ContentTypeNotBoundException
+	{
+		DistributedMap<String, Edge> distmap = TargetMaps.get().getEdgesMapForTarget(target);
 		distmap.put(e.getKey(), e);
 
 		IItem item = getItemByID(e.a.getID());
 		IItem closest = getItemByID(e.b.getID());
-		if ((item == null) || (closest == null)) {
+		if ((item == null) || (closest == null))
+		{
 			log.warning("Could not find items for edge");
 			log.warning("Will not be able to add a line.");
 			return;
 		}
-		ICachableLine linkLine = contentFactory.create(ICachableLine.class,
-				item.getUUID() + " to " + closest.getUUID(), UUID.randomUUID());
+		ICachableLine linkLine = contentFactory.create(ICachableLine.class, item.getUUID() + " to " + closest.getUUID(), UUID.randomUUID());
 		linkLine.setLineWidth(4f);
 		linkLine.setLineColour(getLineColour());
 		linkLine.setSourceItem(item);
@@ -404,10 +444,9 @@ public class SpringGraphBuilder implements IItemListener,
 
 		item.setWorldLocation(item.getWorldLocation()); // force line to update
 		closest.setWorldLocation(closest.getWorldLocation()); // force line to
-																// update
+		// update
 
-		ProjectorTransferUtilities.get().addToTransferableContents(linkLine,
-				4f, 4f, item.getUUID() + " to " + closest.getUUID());
+		ProjectorTransferUtilities.get().addToTransferableContents(linkLine, 4f, 4f, item.getUUID() + " to " + closest.getUUID());
 
 		// app.getZOrderManager().registerForZOrdering(linkLine);
 		// app.getZOrderManager().bringToTop(item, null);
@@ -418,22 +457,26 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Associate line with edge.
 	 *
-	 * @param e the e
-	 * @param line the line
+	 * @param e
+	 *            the e
+	 * @param line
+	 *            the line
 	 */
-	private void associateLineWithEdge(Edge e, ICachableLine line) {
+	private void associateLineWithEdge(Edge e, ICachableLine line)
+	{
 		edgeToLine.put(e.getKey(), line);
 	}
 
 	/**
 	 * Builds the graph from network.
 	 */
-	private void buildGraphFromNetwork() {
+	private void buildGraphFromNetwork()
+	{
 		log.fine("Finding edges on network...");
-		DistributedMap<String, Edge> edges = TargetMaps.get()
-				.getEdgesMapForTarget(target);
+		DistributedMap<String, Edge> edges = TargetMaps.get().getEdgesMapForTarget(target);
 		log.fine("Found " + edges.size() + " edges.");
-		for (Edge e : edges.values()) {
+		for (Edge e : edges.values())
+		{
 			linkingGraph.forceConnect(e.a.getID(), e.b.getID());
 		}
 	}
@@ -441,11 +484,14 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Builds the lines from graph.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void buildLinesFromGraph() throws ContentTypeNotBoundException {
+	private void buildLinesFromGraph() throws ContentTypeNotBoundException
+	{
 		log.info("Creating visible edges...");
-		for (Edge e : linkingGraph.getEdges()) {
+		for (Edge e : linkingGraph.getEdges())
+		{
 			log.fine("Adding visible line for " + e.getKey());
 			addLine(e);
 		}
@@ -454,36 +500,41 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Connect or break.
 	 *
-	 * @param item the item
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param item
+	 *            the item
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void connectOrBreak(IItem item) throws ContentTypeNotBoundException {
+	private void connectOrBreak(IItem item) throws ContentTypeNotBoundException
+	{
 		IItem closest = findClosestItemTo(item, distanceForConnection);
-		if (closest != null) {
-			if (!closest.isVisible()) {
+		if (closest != null)
+		{
+			if (!closest.isVisible())
+			{
 				return;
 			}
 
-			if (!linkingGraph.isConnected(item.getUUID().toString(), closest
-					.getUUID().toString())) {
-				Edge e = linkingGraph.connect(item.getUUID().toString(),
-						closest.getUUID().toString());
-				if (e != null) {
+			if (!linkingGraph.isConnected(item.getUUID().toString(), closest.getUUID().toString()))
+			{
+				Edge e = linkingGraph.connect(item.getUUID().toString(), closest.getUUID().toString());
+				if (e != null)
+				{
 					addLine(e);
 				}
 			}
-		} else {
-			List<Edge> linesToRemove = linkingGraph
-					.getEdgesLongerThanDistanceIgnoringCurrentlyInteractingEdges(distanceForBreak);
+		}
+		else
+		{
+			List<Edge> linesToRemove = linkingGraph.getEdgesLongerThanDistanceIgnoringCurrentlyInteractingEdges(distanceForBreak);
 			linkingGraph.removeEdges(linesToRemove);
 
-			for (Edge e : linesToRemove) {
+			for (Edge e : linesToRemove)
+			{
 				ICachableLine line = getLineForEdge(e);
 				graphingLinesContainer.removeItem(line);
-				ProjectorTransferUtilities.get()
-						.removeFromTransferableContents(line);
-				DistributedMap<String, Edge> distmap = TargetMaps.get()
-						.getEdgesMapForTarget(target);
+				ProjectorTransferUtilities.get().removeFromTransferableContents(line);
+				DistributedMap<String, Edge> distmap = TargetMaps.get().getEdgesMapForTarget(target);
 				distmap.remove(e.getKey());
 			}
 
@@ -493,20 +544,25 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Find closest item to.
 	 *
-	 * @param item the item
-	 * @param maxDistance the max distance
+	 * @param item
+	 *            the item
+	 * @param maxDistance
+	 *            the max distance
 	 * @return the i item
 	 */
-	private IItem findClosestItemTo(IItem item, float maxDistance) {
+	private IItem findClosestItemTo(IItem item, float maxDistance)
+	{
 		float minDist = Float.MAX_VALUE;
 		IItem closest = null;
-		for (IItem x : registeredItems) {
-			if (item == x) {
+		for (IItem x : registeredItems)
+		{
+			if (item == x)
+			{
 				continue;
 			}
-			float distBetween = item.getRelativeLocation().distance(
-					x.getRelativeLocation());
-			if ((distBetween < minDist) && (distBetween <= maxDistance)) {
+			float distBetween = item.getRelativeLocation().distance(x.getRelativeLocation());
+			if ((distBetween < minDist) && (distBetween <= maxDistance))
+			{
 				closest = x;
 				minDist = distBetween;
 			}
@@ -517,12 +573,16 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Gets the item by id.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 * @return the item by id
 	 */
-	private IItem getItemByID(String id) {
-		for (IItem item : registeredItems) {
-			if (item.getUUID().toString().equals(id)) {
+	private IItem getItemByID(String id)
+	{
+		for (IItem item : registeredItems)
+		{
+			if (item.getUUID().toString().equals(id))
+			{
 				return item;
 			}
 		}
@@ -532,22 +592,25 @@ public class SpringGraphBuilder implements IItemListener,
 	/**
 	 * Gets the line for edge.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 * @return the line for edge
 	 */
-	private ICachableLine getLineForEdge(Edge e) {
+	private ICachableLine getLineForEdge(Edge e)
+	{
 		return edgeToLine.get(e.getKey());
 	}
 
 	/**
 	 * Removes the all lines.
 	 */
-	private void removeAllLines() {
+	private void removeAllLines()
+	{
 		log.info("Removing " + edgeToLine.size() + " lines");
-		for (ICachableLine line : edgeToLine.values()) {
+		for (ICachableLine line : edgeToLine.values())
+		{
 			graphingLinesContainer.removeItem(line);
-			ProjectorTransferUtilities.get().removeFromTransferableContents(
-					line);
+			ProjectorTransferUtilities.get().removeFromTransferableContents(line);
 		}
 		edgeToLine.clear();
 	}

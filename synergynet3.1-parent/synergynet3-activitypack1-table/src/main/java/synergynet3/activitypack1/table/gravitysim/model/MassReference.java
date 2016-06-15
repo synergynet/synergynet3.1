@@ -3,7 +3,8 @@ package synergynet3.activitypack1.table.gravitysim.model;
 /**
  * The Class MassReference.
  */
-public class MassReference {
+public class MassReference
+{
 
 	/** The mass. */
 	private double mass;
@@ -11,9 +12,11 @@ public class MassReference {
 	/**
 	 * Instantiates a new mass reference.
 	 *
-	 * @param mass the mass
+	 * @param mass
+	 *            the mass
 	 */
-	public MassReference(double mass) {
+	public MassReference(double mass)
+	{
 		this.setMass(mass);
 	}
 
@@ -22,16 +25,19 @@ public class MassReference {
 	 *
 	 * @return the mass
 	 */
-	public double getMass() {
+	public double getMass()
+	{
 		return mass;
 	}
 
 	/**
 	 * Sets the mass.
 	 *
-	 * @param mass the new mass
+	 * @param mass
+	 *            the new mass
 	 */
-	public void setMass(double mass) {
+	public void setMass(double mass)
+	{
 		this.mass = mass;
 	}
 }

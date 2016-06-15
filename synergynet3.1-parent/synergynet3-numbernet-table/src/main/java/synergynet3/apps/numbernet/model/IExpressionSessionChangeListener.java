@@ -13,7 +13,8 @@ import synergynet3.web.apps.numbernet.shared.Expression;
  *
  * @see IExpressionSessionChangeEvent
  */
-public interface IExpressionSessionChangeListener {
+public interface IExpressionSessionChangeListener
+{
 
 	/**
 	 * All expressions removed.
@@ -23,28 +24,32 @@ public interface IExpressionSessionChangeListener {
 	/**
 	 * Expression added from calculator.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
 	public void expressionAddedFromCalculator(Expression e);
 
 	/**
 	 * Expression added from network.
 	 *
-	 * @param e the e
+	 * @param e
+	 *            the e
 	 */
 	public void expressionAddedFromNetwork(Expression e);
 
 	/**
 	 * Expression removed.
 	 *
-	 * @param expression the expression
+	 * @param expression
+	 *            the expression
 	 */
 	public void expressionRemoved(Expression expression);
 
 	/**
 	 * Target changed.
 	 *
-	 * @param newValue the new value
+	 * @param newValue
+	 *            the new value
 	 */
 	public void targetChanged(Double newValue);
 }

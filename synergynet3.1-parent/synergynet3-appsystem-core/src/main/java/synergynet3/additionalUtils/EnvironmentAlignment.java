@@ -3,7 +3,8 @@ package synergynet3.additionalUtils;
 /**
  * The Enum EnvironmentAlignment.
  */
-public enum EnvironmentAlignment {
+public enum EnvironmentAlignment
+{
 
 	/** The horizontal. */
 	HORIZONTAL,

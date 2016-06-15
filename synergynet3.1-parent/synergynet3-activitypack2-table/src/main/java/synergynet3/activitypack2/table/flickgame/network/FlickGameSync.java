@@ -10,7 +10,8 @@ import com.hazelcast.core.Member;
 /**
  * The Class FlickGameSync.
  */
-public class FlickGameSync {
+public class FlickGameSync
+{
 
 	/** The c. */
 	private FlickGameDeviceControl c;
@@ -19,10 +20,11 @@ public class FlickGameSync {
 	private FlickGameApp flickGame;
 
 	/** The score changed action. */
-	private DistributedPropertyChangedAction<FlickGameScore> scoreChangedAction = new DistributedPropertyChangedAction<FlickGameScore>() {
+	private DistributedPropertyChangedAction<FlickGameScore> scoreChangedAction = new DistributedPropertyChangedAction<FlickGameScore>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member member,
-				FlickGameScore oldValue, FlickGameScore newValue) {
+		public void distributedPropertyDidChange(Member member, FlickGameScore oldValue, FlickGameScore newValue)
+		{
 			flickGame.updateScore(newValue);
 		}
 	};
@@ -30,10 +32,13 @@ public class FlickGameSync {
 	/**
 	 * Instantiates a new flick game sync.
 	 *
-	 * @param c the c
-	 * @param flickGame the flick game
+	 * @param c
+	 *            the c
+	 * @param flickGame
+	 *            the flick game
 	 */
-	public FlickGameSync(FlickGameDeviceControl c, FlickGameApp flickGame) {
+	public FlickGameSync(FlickGameDeviceControl c, FlickGameApp flickGame)
+	{
 		this.c = c;
 		this.flickGame = flickGame;
 		addSync();
@@ -42,14 +47,16 @@ public class FlickGameSync {
 	/**
 	 * Stop.
 	 */
-	public void stop() {
+	public void stop()
+	{
 		c.getScore().unregisterChangeListener(scoreChangedAction);
 	}
 
 	/**
 	 * Adds the sync.
 	 */
-	private void addSync() {
+	private void addSync()
+	{
 		c.getScore().registerChangeListener(scoreChangedAction);
 	}
 

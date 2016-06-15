@@ -13,61 +13,61 @@ import com.hazelcast.core.Member;
 /**
  * The Class ProjectionModeSynchronizer.
  */
-public class ProjectionModeSynchronizer {
+public class ProjectionModeSynchronizer
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(ProjectionModeSynchronizer.class.getName());
+	private static final Logger log = Logger.getLogger(ProjectionModeSynchronizer.class.getName());
 
 	/**
 	 * Instantiates a new projection mode synchronizer.
 	 *
-	 * @param device the device
-	 * @param projectScoresUI the project scores ui
-	 * @param scoresSync the scores sync
-	 * @param projectExpressionsUI the project expressions ui
+	 * @param device
+	 *            the device
+	 * @param projectScoresUI
+	 *            the project scores ui
+	 * @param scoresSync
+	 *            the scores sync
+	 * @param projectExpressionsUI
+	 *            the project expressions ui
 	 */
-	public ProjectionModeSynchronizer(ProjectorDevice device,
-			final ProjectScoresUI projectScoresUI,
-			final ScoresSynchronizer scoresSync,
-			final ProjectExpressionsUI projectExpressionsUI) {
-		device.getProjectionDisplayModeControlVariable()
-				.registerChangeListener(
-						new DistributedPropertyChangedAction<ProjectionDisplayMode>() {
+	public ProjectionModeSynchronizer(ProjectorDevice device, final ProjectScoresUI projectScoresUI, final ScoresSynchronizer scoresSync, final ProjectExpressionsUI projectExpressionsUI)
+	{
+		device.getProjectionDisplayModeControlVariable().registerChangeListener(new DistributedPropertyChangedAction<ProjectionDisplayMode>()
+		{
 
-							@Override
-							public void distributedPropertyDidChange(
-									Member member,
-									ProjectionDisplayMode oldValue,
-									ProjectionDisplayMode newValue) {
-								switch (newValue) {
-									case BLANK: {
-										log.fine("Blanking projection.");
-										projectExpressionsUI
-												.setVisibility(false);
-										projectScoresUI.setVisibility(false);
-										break;
-									}
+			@Override
+			public void distributedPropertyDidChange(Member member, ProjectionDisplayMode oldValue, ProjectionDisplayMode newValue)
+			{
+				switch (newValue)
+				{
+					case BLANK:
+					{
+						log.fine("Blanking projection.");
+						projectExpressionsUI.setVisibility(false);
+						projectScoresUI.setVisibility(false);
+						break;
+					}
 
-									case SCORES: {
-										log.fine("Displaying scores.");
-										scoresSync.update();
-										projectExpressionsUI
-												.setVisibility(false);
-										projectScoresUI.setVisibility(true);
-										break;
-									}
+					case SCORES:
+					{
+						log.fine("Displaying scores.");
+						scoresSync.update();
+						projectExpressionsUI.setVisibility(false);
+						projectScoresUI.setVisibility(true);
+						break;
+					}
 
-									case TABLE_CLONE: {
-										log.fine("Displaying cloned table.");
-										projectExpressionsUI
-												.setVisibility(true);
-										projectScoresUI.setVisibility(false);
-										break;
-									}
-								}
-							}
-						});
+					case TABLE_CLONE:
+					{
+						log.fine("Displaying cloned table.");
+						projectExpressionsUI.setVisibility(true);
+						projectScoresUI.setVisibility(false);
+						break;
+					}
+				}
+			}
+		});
 	}
 
 }

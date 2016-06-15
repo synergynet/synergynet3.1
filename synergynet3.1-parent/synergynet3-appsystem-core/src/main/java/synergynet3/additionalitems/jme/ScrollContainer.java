@@ -29,8 +29,8 @@ import com.jme3.math.Vector2f;
  * The Class ScrollContainer.
  */
 @ImplementsContentItem(target = IScrollContainer.class)
-public class ScrollContainer extends JMEContainer implements IScrollContainer,
-		IInitable {
+public class ScrollContainer extends JMEContainer implements IScrollContainer, IInitable
+{
 
 	/** The Constant SCROLL_BUTTON_IMAGE. */
 	private static final String SCROLL_BUTTON_IMAGE = "synergynet3/additionalitems/scrollButton.png";
@@ -98,10 +98,13 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Instantiates a new scroll container.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public ScrollContainer(String name, UUID uuid) {
+	public ScrollContainer(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -109,8 +112,11 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#addFrame()
 	 */
-	public int addFrame() {
-		if (frames.size() == 1) {
+	@Override
+	public int addFrame()
+	{
+		if (frames.size() == 1)
+		{
 			showScrollButtons();
 		}
 		frames.add(new ArrayList<IItem>());
@@ -123,11 +129,15 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#addListenerToArrows
 	 * (multiplicity3.input.MultiTouchEventAdapter)
 	 */
-	public void addListenerToArrows(MultiTouchEventAdapter mTEA) {
-		if (scrollUp != null) {
+	@Override
+	public void addListenerToArrows(MultiTouchEventAdapter mTEA)
+	{
+		if (scrollUp != null)
+		{
 			scrollUp.getMultiTouchDispatcher().addListener(mTEA);
 		}
-		if (scrollDown != null) {
+		if (scrollDown != null)
+		{
 			scrollDown.getMultiTouchDispatcher().addListener(mTEA);
 		}
 	}
@@ -138,7 +148,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#addToAllFrames
 	 * (multiplicity3.csys.items.item.IItem, int, int)
 	 */
-	public void addToAllFrames(IItem item, int x, int y) {
+	@Override
+	public void addToAllFrames(IItem item, int x, int y)
+	{
 		addItem(item);
 		positionCorrectlyOnFrame(item, x, y);
 	}
@@ -148,11 +160,15 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#addToFrame(
 	 * multiplicity3.csys.items.item.IItem, int, int, int)
 	 */
-	public void addToFrame(IItem item, int frame, int x, int y) {
-		if ((frame >= 0) && (frame < frames.size())) {
+	@Override
+	public void addToFrame(IItem item, int frame, int x, int y)
+	{
+		if ((frame >= 0) && (frame < frames.size()))
+		{
 			frames.get(frame).add(item);
 			positionCorrectlyOnFrame(item, x, y);
-			if (frame != currentFrame) {
+			if (frame != currentFrame)
+			{
 				hideItem(item);
 			}
 		}
@@ -163,7 +179,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#getBackground()
 	 */
-	public IColourRectangle getBackground() {
+	@Override
+	public IColourRectangle getBackground()
+	{
 		return background;
 	}
 
@@ -171,7 +189,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#getBorder()
 	 */
-	public IRoundedBorder getBorder() {
+	@Override
+	public IRoundedBorder getBorder()
+	{
 		return frameBorder;
 	}
 
@@ -180,7 +200,8 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 *
 	 * @return the border width
 	 */
-	public float getBorderWidth() {
+	public float getBorderWidth()
+	{
 		return borderWidth;
 	}
 
@@ -189,7 +210,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#getCurrentFrame()
 	 */
-	public int getCurrentFrame() {
+	@Override
+	public int getCurrentFrame()
+	{
 		return currentFrame;
 	}
 
@@ -197,7 +220,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#getHeight()
 	 */
-	public int getHeight() {
+	@Override
+	public int getHeight()
+	{
 		return height;
 	}
 
@@ -206,7 +231,8 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 *
 	 * @return the number of frames
 	 */
-	public int getNumberOfFrames() {
+	public int getNumberOfFrames()
+	{
 		return frames.size();
 	}
 
@@ -215,7 +241,8 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 *
 	 * @return the owner
 	 */
-	public String getOwner() {
+	public String getOwner()
+	{
 		return this.owner;
 	}
 
@@ -223,7 +250,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#getWidth()
 	 */
-	public int getWidth() {
+	@Override
+	public int getWidth()
+	{
 		return width;
 	}
 
@@ -233,7 +262,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#hideScrollButtons
 	 * ()
 	 */
-	public void hideScrollButtons() {
+	@Override
+	public void hideScrollButtons()
+	{
 		hideItem(scrollUp);
 		hideItem(scrollDown);
 	}
@@ -243,17 +274,25 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * @see
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#removeFrame(int)
 	 */
-	public void removeFrame(int toRemove) {
-		if (toRemove >= 0) {
+	@Override
+	public void removeFrame(int toRemove)
+	{
+		if (toRemove >= 0)
+		{
 			tidyAwayFrameContents(toRemove);
-			if (frames.size() == 1) {
+			if (frames.size() == 1)
+			{
 				frames.get(0).clear();
-			} else if (frames.size() > 1) {
+			}
+			else if (frames.size() > 1)
+			{
 				frames.remove(toRemove);
-				if (frames.size() == 1) {
+				if (frames.size() == 1)
+				{
 					hideScrollButtons();
 				}
-				if (currentFrame == toRemove) {
+				if (currentFrame == toRemove)
+				{
 					scrollBack();
 				}
 			}
@@ -267,10 +306,14 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * .items.item.IItem)
 	 */
 	@Override
-	public void removeItem(IItem item) {
-		for (ArrayList<IItem> items : frames) {
-			for (IItem isItem : items) {
-				if (isItem.equals(item)) {
+	public void removeItem(IItem item)
+	{
+		for (ArrayList<IItem> items : frames)
+		{
+			for (IItem isItem : items)
+			{
+				if (isItem.equals(item))
+				{
 					super.removeItem(item);
 				}
 				items.remove(isItem);
@@ -285,7 +328,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#scrollToFrame
 	 * (int)
 	 */
-	public void scrollToFrame(int frame) {
+	@Override
+	public void scrollToFrame(int frame)
+	{
 		hideCurrentFrameContents();
 		currentFrame = frame;
 		showCurrentFrameContents();
@@ -297,11 +342,15 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#setActive(boolean
 	 * )
 	 */
-	public void setActive(boolean active) {
-		if (rts != null) {
+	@Override
+	public void setActive(boolean active)
+	{
+		if (rts != null)
+		{
 			rts.setActive(active);
 		}
-		if (rtsbg != null) {
+		if (rtsbg != null)
+		{
 			rtsbg.setActive(active);
 		}
 	}
@@ -311,7 +360,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#
 	 * setArrowHeightOverride(float)
 	 */
-	public void setArrowHeightOverride(float newHeight) {
+	@Override
+	public void setArrowHeightOverride(float newHeight)
+	{
 		arrowHeight = newHeight;
 	}
 
@@ -321,7 +372,9 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#setArrowWidthOverride
 	 * (float)
 	 */
-	public void setArrowWidthOverride(float newWidth) {
+	@Override
+	public void setArrowWidthOverride(float newWidth)
+	{
 		arrowWidth = newWidth;
 	}
 
@@ -331,16 +384,20 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#setArrowYOverride
 	 * (float)
 	 */
-	public void setArrowYOverride(float newY) {
+	@Override
+	public void setArrowYOverride(float newY)
+	{
 		arrowY = newY;
 	}
 
 	/**
 	 * Sets the background colour.
 	 *
-	 * @param colour the new background colour
+	 * @param colour
+	 *            the new background colour
 	 */
-	public void setBackgroundColour(ColorRGBA colour) {
+	public void setBackgroundColour(ColorRGBA colour)
+	{
 		background.setSolidBackgroundColour(colour);
 	}
 
@@ -350,23 +407,24 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#setDimensions
 	 * (multiplicity3.csys.stage.IStage, java.util.logging.Logger, int, int)
 	 */
-	public void setDimensions(IStage stage, Logger log, int width, int height) {
+	@Override
+	public void setDimensions(IStage stage, Logger log, int width, int height)
+	{
 
 		this.width = width;
 		this.height = height;
 
-		try {
+		try
+		{
 			contentFactory = stage.getContentFactory();
 
 			frames.add(new ArrayList<IItem>());
 
-			background = contentFactory.create(IColourRectangle.class, "bg",
-					UUID.randomUUID());
+			background = contentFactory.create(IColourRectangle.class, "bg", UUID.randomUUID());
 			background.setSolidBackgroundColour(ColorRGBA.Black);
 			background.setSize(width, height);
 
-			frameBorder = contentFactory.create(IRoundedBorder.class, "border",
-					UUID.randomUUID());
+			frameBorder = contentFactory.create(IRoundedBorder.class, "border", UUID.randomUUID());
 			frameBorder.setBorderWidth(borderWidth);
 			frameBorder.setSize(width, height);
 			frameBorder.setColor(new ColorRGBA(1, 1, 1, 0.75f));
@@ -379,15 +437,15 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 
 			this.getZOrderManager().setAutoBringToTop(false);
 
-			rts = stage.getBehaviourMaker().addBehaviour(frameBorder,
-					RotateTranslateScaleBehaviour.class);
+			rts = stage.getBehaviourMaker().addBehaviour(frameBorder, RotateTranslateScaleBehaviour.class);
 			rts.setItemActingOn(this);
-			rtsbg = stage.getBehaviourMaker().addBehaviour(background,
-					RotateTranslateScaleBehaviour.class);
+			rtsbg = stage.getBehaviourMaker().addBehaviour(background, RotateTranslateScaleBehaviour.class);
 			rtsbg.setItemActingOn(this);
 			applyScaleability();
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -398,25 +456,31 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#setFrameColour
 	 * (com.jme3.math.ColorRGBA)
 	 */
-	public void setFrameColour(ColorRGBA colour) {
+	@Override
+	public void setFrameColour(ColorRGBA colour)
+	{
 		frameBorder.setColor(colour);
 	}
 
 	/**
 	 * Sets the owner.
 	 *
-	 * @param owner the new owner
+	 * @param owner
+	 *            the new owner
 	 */
-	public void setOwner(String owner) {
+	public void setOwner(String owner)
+	{
 		this.owner = owner;
 	}
 
 	/**
 	 * Sets the scalable.
 	 *
-	 * @param scalable the new scalable
+	 * @param scalable
+	 *            the new scalable
 	 */
-	public void setScalable(boolean scalable) {
+	public void setScalable(boolean scalable)
+	{
 		this.scalable = scalable;
 		applyScaleability();
 	}
@@ -427,18 +491,26 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * synergynet3.additionalitems.interfaces.IScrollContainer#setVisibility
 	 * (java.lang.Boolean)
 	 */
-	public void setVisibility(final Boolean isVisible) {
+	@Override
+	public void setVisibility(final Boolean isVisible)
+	{
 
-		if (!isVisible) {
-			new PerformActionOnAllDescendents(this, false, false) {
+		if (!isVisible)
+		{
+			new PerformActionOnAllDescendents(this, false, false)
+			{
 				@Override
-				protected void actionOnDescendent(IItem child) {
+				protected void actionOnDescendent(IItem child)
+				{
 					child.setVisible(isVisible);
 				}
 			};
-		} else {
+		}
+		else
+		{
 			setVisible(isVisible);
-			for (int i = 0; i < frames.size(); i++) {
+			for (int i = 0; i < frames.size(); i++)
+			{
 				scrollForward();
 			}
 		}
@@ -449,8 +521,11 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	 * @see synergynet3.additionalitems.interfaces.IScrollContainer#
 	 * showCurrentFrameContents()
 	 */
-	public void showCurrentFrameContents() {
-		for (IItem item : frames.get(currentFrame)) {
+	@Override
+	public void showCurrentFrameContents()
+	{
+		for (IItem item : frames.get(currentFrame))
+		{
 			showItem(item);
 		}
 	}
@@ -458,11 +533,14 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Apply scaleability.
 	 */
-	private void applyScaleability() {
-		if (rts != null) {
+	private void applyScaleability()
+	{
+		if (rts != null)
+		{
 			rts.setScaleEnabled(scalable);
 		}
-		if (rtsbg != null) {
+		if (rtsbg != null)
+		{
 			rtsbg.setScaleEnabled(scalable);
 		}
 	}
@@ -470,9 +548,12 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Hide current frame contents.
 	 */
-	private void hideCurrentFrameContents() {
-		if (currentFrame < frames.size()) {
-			for (IItem item : frames.get(currentFrame)) {
+	private void hideCurrentFrameContents()
+	{
+		if (currentFrame < frames.size())
+		{
+			for (IItem item : frames.get(currentFrame))
+			{
 				hideItem(item);
 			}
 		}
@@ -481,10 +562,13 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Hide item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void hideItem(IItem item) {
-		if (item != null) {
+	private void hideItem(IItem item)
+	{
+		if (item != null)
+		{
 			item.setVisible(false);
 			item.setInteractionEnabled(false);
 		}
@@ -493,11 +577,15 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Position correctly on frame.
 	 *
-	 * @param item the item
-	 * @param x the x
-	 * @param y the y
+	 * @param item
+	 *            the item
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	private void positionCorrectlyOnFrame(IItem item, int x, int y) {
+	private void positionCorrectlyOnFrame(IItem item, int x, int y)
+	{
 		float rotation = getRelativeRotation();
 		Vector2f position = getRelativeLocation();
 		float scale = getRelativeScale();
@@ -514,9 +602,11 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Scroll back.
 	 */
-	private void scrollBack() {
+	private void scrollBack()
+	{
 		int targetFrame = currentFrame - 1;
-		if (targetFrame < 0) {
+		if (targetFrame < 0)
+		{
 			targetFrame = frames.size() - 1;
 		}
 		scrollToFrame(targetFrame);
@@ -525,9 +615,11 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Scroll forward.
 	 */
-	private void scrollForward() {
+	private void scrollForward()
+	{
 		int targetFrame = currentFrame + 1;
-		if (targetFrame >= frames.size()) {
+		if (targetFrame >= frames.size())
+		{
 			targetFrame = 0;
 		}
 		scrollToFrame(targetFrame);
@@ -536,10 +628,13 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Show item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void showItem(IItem item) {
-		if (item != null) {
+	private void showItem(IItem item)
+	{
+		if (item != null)
+		{
 			item.setVisible(true);
 			item.setInteractionEnabled(true);
 		}
@@ -548,8 +643,10 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Show scroll buttons.
 	 */
-	private void showScrollButtons() {
-		if (!arrowsPresent) {
+	private void showScrollButtons()
+	{
+		if (!arrowsPresent)
+		{
 			createArrows();
 		}
 		showItem(scrollUp);
@@ -559,10 +656,13 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Tidy away frame contents.
 	 *
-	 * @param toRemove the to remove
+	 * @param toRemove
+	 *            the to remove
 	 */
-	private void tidyAwayFrameContents(int toRemove) {
-		for (IItem item : frames.get(toRemove)) {
+	private void tidyAwayFrameContents(int toRemove)
+	{
+		for (IItem item : frames.get(toRemove))
+		{
 			super.removeItem(item);
 		}
 	}
@@ -570,47 +670,47 @@ public class ScrollContainer extends JMEContainer implements IScrollContainer,
 	/**
 	 * Creates the arrows.
 	 */
-	protected void createArrows() {
-		try {
-			scrollUp = contentFactory.create(ICachableImage.class, "scrollUp",
-					UUID.randomUUID());
+	protected void createArrows()
+	{
+		try
+		{
+			scrollUp = contentFactory.create(ICachableImage.class, "scrollUp", UUID.randomUUID());
 			scrollUp.setImage(SCROLL_BUTTON_IMAGE);
 			scrollUp.setSize(arrowWidth, arrowHeight);
 			scrollUp.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
-			scrollUp.setRelativeLocation(new Vector2f((width / 2)
-					- (((scrollUp.getWidth() / 2) + frameBorder
-							.getBorderWidth())), arrowY));
+			scrollUp.setRelativeLocation(new Vector2f((width / 2) - (((scrollUp.getWidth() / 2) + frameBorder.getBorderWidth())), arrowY));
 
-			scrollUp.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							scrollForward();
-						}
-					});
+			scrollUp.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					scrollForward();
+				}
+			});
 
-			scrollDown = contentFactory.create(ICachableImage.class,
-					"scrollDown", UUID.randomUUID());
+			scrollDown = contentFactory.create(ICachableImage.class, "scrollDown", UUID.randomUUID());
 			scrollDown.setImage(SCROLL_BUTTON_IMAGE);
 			scrollDown.setSize(arrowWidth, arrowHeight);
-			scrollDown.setRelativeLocation(new Vector2f(
-					-((width / 2) - (((scrollDown.getWidth() / 2) + frameBorder
-							.getBorderWidth()))), arrowY));
+			scrollDown.setRelativeLocation(new Vector2f(-((width / 2) - (((scrollDown.getWidth() / 2) + frameBorder.getBorderWidth()))), arrowY));
 
-			scrollDown.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							scrollBack();
-						}
-					});
+			scrollDown.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					scrollBack();
+				}
+			});
 
 			addItem(scrollUp);
 			addItem(scrollDown);
 
 			arrowsPresent = true;
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}

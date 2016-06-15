@@ -18,7 +18,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class MediaControlUI.
  */
-public class MediaControlUI extends VerticalPanel {
+public class MediaControlUI extends VerticalPanel
+{
 
 	/** The devices online. */
 	private DevicesOnlineWidget devicesOnline;
@@ -26,12 +27,12 @@ public class MediaControlUI extends VerticalPanel {
 	/**
 	 * Instantiates a new media control ui.
 	 */
-	public MediaControlUI() {
+	public MediaControlUI()
+	{
 		setTitle("Media Control");
 		setSpacing(5);
 
-		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel(
-				"Tables Online");
+		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel("Tables Online");
 		add(tableSelectionDisclosurePanel);
 		tableSelectionDisclosurePanel.setOpen(true);
 		tableSelectionDisclosurePanel.setWidth("270px");
@@ -54,9 +55,9 @@ public class MediaControlUI extends VerticalPanel {
 	/**
 	 * Additional controls.
 	 */
-	private void additionalControls() {
-		DisclosurePanel bringStudentsToTopPanel = new DisclosurePanel(
-				"Additional controls");
+	private void additionalControls()
+	{
+		DisclosurePanel bringStudentsToTopPanel = new DisclosurePanel("Additional controls");
 		bringStudentsToTopPanel.setOpen(false);
 		add(bringStudentsToTopPanel);
 		bringStudentsToTopPanel.setWidth("270px");
@@ -70,24 +71,25 @@ public class MediaControlUI extends VerticalPanel {
 		tidyContentsVerticalPanel.add(bringStudentsToTopHorizontalPanel);
 		bringStudentsToTopHorizontalPanel.setWidth("262px");
 
-		Button bringStudentsToTopButton = new Button(
-				"Bring student icons to top");
-		bringStudentsToTopButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().bringStudentsToTop(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when bringing students to the top: "
-												+ caught.getMessage()).show();
-							}
+		Button bringStudentsToTopButton = new Button("Bring student icons to top");
+		bringStudentsToTopButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().bringStudentsToTop(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when bringing students to the top: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		bringStudentsToTopButton.setWidth("272px");
@@ -99,22 +101,24 @@ public class MediaControlUI extends VerticalPanel {
 		screenshotHorizontalPanel.setWidth("262px");
 
 		Button takeScreenshotButton = new Button("Take Screenshot");
-		takeScreenshotButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().takeScreenshot(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when taking screenshot: "
-												+ caught.getMessage()).show();
-							}
+		takeScreenshotButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().takeScreenshot(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when taking screenshot: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		takeScreenshotButton.setWidth("272px");
@@ -126,12 +130,16 @@ public class MediaControlUI extends VerticalPanel {
 	 *
 	 * @return the device to send to
 	 */
-	private String[] getDeviceToSendTo() {
+	private String[] getDeviceToSendTo()
+	{
 		String[] toReturn;
-		if (devicesOnline.getAllDevicesOptionCheck()) {
+		if (devicesOnline.getAllDevicesOptionCheck())
+		{
 			toReturn = new String[1];
 			toReturn[0] = DevicesSelected.ALL_TABLES_ID;
-		} else {
+		}
+		else
+		{
 			toReturn = new String[devicesOnline.getDevicesSelected().size()];
 			devicesOnline.getDevicesSelected().toArray(toReturn);
 		}
@@ -141,34 +149,36 @@ public class MediaControlUI extends VerticalPanel {
 	/**
 	 * Main buttons.
 	 */
-	private void mainButtons() {
+	private void mainButtons()
+	{
 		HorizontalPanel removeAdditionalContentHorizontalPanel = new HorizontalPanel();
 		removeAdditionalContentHorizontalPanel.setSpacing(5);
 		add(removeAdditionalContentHorizontalPanel);
 		removeAdditionalContentHorizontalPanel.setWidth("280px");
 
 		Button removeAdditionalContentButton = new Button("Clear content");
-		removeAdditionalContentButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().removeAdditionalContent(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when removing additional content: "
-												+ caught.getMessage()).show();
-							}
+		removeAdditionalContentButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().removeAdditionalContent(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when removing additional content: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		removeAdditionalContentButton.setWidth("280px");
-		removeAdditionalContentHorizontalPanel
-				.add(removeAdditionalContentButton);
+		removeAdditionalContentHorizontalPanel.add(removeAdditionalContentButton);
 
 		HorizontalPanel freezeContentHorizontalPanel = new HorizontalPanel();
 		freezeContentHorizontalPanel.setSpacing(5);
@@ -176,22 +186,24 @@ public class MediaControlUI extends VerticalPanel {
 		freezeContentHorizontalPanel.setWidth("280px");
 
 		Button freezeAdditionalContentButton = new Button("Freeze/Unfreeze");
-		freezeAdditionalContentButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().toggleFreeze(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when removing additional content: "
-												+ caught.getMessage()).show();
-							}
+		freezeAdditionalContentButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().toggleFreeze(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when removing additional content: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		freezeAdditionalContentButton.setWidth("280px");
@@ -201,9 +213,9 @@ public class MediaControlUI extends VerticalPanel {
 	/**
 	 * Network flick buttons.
 	 */
-	private void networkFlickButtons() {
-		DisclosurePanel networkFlickPanel = new DisclosurePanel(
-				"Network Flick Control");
+	private void networkFlickButtons()
+	{
+		DisclosurePanel networkFlickPanel = new DisclosurePanel("Network Flick Control");
 		networkFlickPanel.setOpen(false);
 		add(networkFlickPanel);
 		networkFlickPanel.setWidth("270px");
@@ -218,22 +230,24 @@ public class MediaControlUI extends VerticalPanel {
 		horizontalNetworkFlickEnablePanel.setWidth("262px");
 
 		Button enableNetworkFlickButton = new Button("Enable Network Flick");
-		enableNetworkFlickButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().setNetworkFlick(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when enabling network flick: "
-												+ caught.getMessage()).show();
-							}
+		enableNetworkFlickButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().setNetworkFlick(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when enabling network flick: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		enableNetworkFlickButton.setWidth("272px");
@@ -245,22 +259,24 @@ public class MediaControlUI extends VerticalPanel {
 		horizontalNetworkFlickDisablePanel.setWidth("262px");
 
 		Button disableNetworkFlickButton = new Button("Disable Network Flick");
-		disableNetworkFlickButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().setNetworkFlick(
-						new PerformActionMessage(MESSAGESTATE.DEACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when disabling network flick: "
-												+ caught.getMessage()).show();
-							}
+		disableNetworkFlickButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().setNetworkFlick(new PerformActionMessage(MESSAGESTATE.DEACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when disabling network flick: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		disableNetworkFlickButton.setWidth("272px");
@@ -270,9 +286,9 @@ public class MediaControlUI extends VerticalPanel {
 	/**
 	 * Reload contents controls.
 	 */
-	private void reloadContentsControls() {
-		DisclosurePanel reloadPanel = new DisclosurePanel(
-				"Reload contents for selected tables");
+	private void reloadContentsControls()
+	{
+		DisclosurePanel reloadPanel = new DisclosurePanel("Reload contents for selected tables");
 		reloadPanel.setOpen(false);
 		add(reloadPanel);
 		reloadPanel.setWidth("270px");
@@ -287,22 +303,24 @@ public class MediaControlUI extends VerticalPanel {
 		horizontalReloadServerContentsPanel.setWidth("262px");
 
 		Button serverReloadButton = new Button("Reload Contents From Server");
-		serverReloadButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util.get().reloadServerContents(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(
-										"Communication error when reloading server contents: "
-												+ caught.getMessage()).show();
-							}
+		serverReloadButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().reloadServerContents(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when reloading server contents: " + caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		serverReloadButton.setWidth("272px");
@@ -313,32 +331,29 @@ public class MediaControlUI extends VerticalPanel {
 		verticalReloadPanel.add(horizontalReloadRemovableMediaContentsPanel);
 		horizontalReloadRemovableMediaContentsPanel.setWidth("262px");
 
-		Button removableDriveReloadButton = new Button(
-				"Reload contents from removable media");
-		removableDriveReloadButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				SynergyNetAppSystemService.Util
-						.get()
-						.reloadRemovableDriveContents(
-								new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-								getDeviceToSendTo(), new AsyncCallback<Void>() {
-									@Override
-									public void onFailure(Throwable caught) {
-										new MessageDialogBox(
-												"Communication error when reloading removable media contents: "
-														+ caught.getMessage())
-												.show();
-									}
+		Button removableDriveReloadButton = new Button("Reload contents from removable media");
+		removableDriveReloadButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				SynergyNetAppSystemService.Util.get().reloadRemovableDriveContents(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox("Communication error when reloading removable media contents: " + caught.getMessage()).show();
+					}
 
-									@Override
-									public void onSuccess(Void result) {
-									}
-								});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		removableDriveReloadButton.setWidth("272px");
-		horizontalReloadRemovableMediaContentsPanel
-				.add(removableDriveReloadButton);
+		horizontalReloadRemovableMediaContentsPanel.add(removableDriveReloadButton);
 	}
 
 }

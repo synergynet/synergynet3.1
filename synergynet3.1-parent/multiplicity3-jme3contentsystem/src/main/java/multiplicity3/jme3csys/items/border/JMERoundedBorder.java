@@ -22,8 +22,8 @@ import com.jme3.scene.VertexBuffer.Type;
  * The Class JMERoundedBorder.
  */
 @ImplementsContentItem(target = IRoundedBorder.class)
-public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
-		IInitable {
+public class JMERoundedBorder extends JMEItem implements IRoundedBorder, IInitable
+{
 
 	/** The border geometry. */
 	private Geometry borderGeometry;
@@ -49,10 +49,13 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	/**
 	 * Instantiates a new JME rounded border.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMERoundedBorder(String name, UUID uuid) {
+	public JMERoundedBorder(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -61,7 +64,8 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * @see multiplicity3.csys.items.border.IRoundedBorder#getBorderWidth()
 	 */
 	@Override
-	public float getBorderWidth() {
+	public float getBorderWidth()
+	{
 		return this.borderSize;
 	}
 
@@ -70,7 +74,8 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return borderGeometry;
 	}
 
@@ -79,7 +84,8 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * @see multiplicity3.csys.items.border.IRoundedBorder#getSize()
 	 */
 	@Override
-	public Vector2f getSize() {
+	public Vector2f getSize()
+	{
 		return new Vector2f(this.innerWidth, this.innerHeight);
 	}
 
@@ -90,7 +96,8 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		updateVertices();
 
 		mat = new Material(assetManager, "Common/MatDefs/Misc/VertexColor.j3md");
@@ -110,7 +117,8 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * @see multiplicity3.csys.items.border.IRoundedBorder#setBorderWidth(float)
 	 */
 	@Override
-	public void setBorderWidth(float borderSize) {
+	public void setBorderWidth(float borderSize)
+	{
 		this.borderSize = borderSize;
 		updateVertices();
 		borderGeometry.setMesh(borderMesh);
@@ -123,12 +131,13 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * .ColorRGBA)
 	 */
 	@Override
-	public void setColor(ColorRGBA color) {
+	public void setColor(ColorRGBA color)
+	{
 		this.colour = color;
-		FloatBuffer colourBuffer = (FloatBuffer) borderMesh.getBuffer(
-				Type.Color).getData();
+		FloatBuffer colourBuffer = (FloatBuffer) borderMesh.getBuffer(Type.Color).getData();
 		colourBuffer.rewind();
-		for (int i = 0; i < borderMesh.getVertexCount(); i++) {
+		for (int i = 0; i < borderMesh.getVertexCount(); i++)
+		{
 			colourBuffer.put(color.r).put(color.g).put(color.b).put(color.a);
 		}
 	}
@@ -138,7 +147,8 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * @see multiplicity3.csys.items.border.IRoundedBorder#setSize(float, float)
 	 */
 	@Override
-	public void setSize(float width, float height) {
+	public void setSize(float width, float height)
+	{
 		this.innerWidth = width;
 		this.innerHeight = height;
 		updateVertices();
@@ -152,25 +162,27 @@ public class JMERoundedBorder extends JMEItem implements IRoundedBorder,
 	 * Vector2f)
 	 */
 	@Override
-	public void setSize(Vector2f size) {
+	public void setSize(Vector2f size)
+	{
 		setSize(size.x, size.y);
 	}
 
 	/**
 	 * Update vertices.
 	 */
-	private void updateVertices() {
+	private void updateVertices()
+	{
 		float radius = borderSize;
 		float outerWidth = innerWidth + (2 * radius);
 		float outerHeight = innerHeight + (2 * radius);
 		int cornerDivisions = 8;
-		borderMesh = new BorderMesh(innerWidth, innerHeight, outerWidth,
-				outerHeight, radius, cornerDivisions);
+		borderMesh = new BorderMesh(innerWidth, innerHeight, outerWidth, outerHeight, radius, cornerDivisions);
 
 		int vertexCount = borderMesh.getVertexCount();
 		float[] vertexColours = new float[vertexCount * 4];
 
-		for (int i = 0; i < vertexColours.length; i += 4) {
+		for (int i = 0; i < vertexColours.length; i += 4)
+		{
 			vertexColours[i] = this.colour.r;
 			vertexColours[i + 1] = this.colour.g;
 			vertexColours[i + 2] = this.colour.b;

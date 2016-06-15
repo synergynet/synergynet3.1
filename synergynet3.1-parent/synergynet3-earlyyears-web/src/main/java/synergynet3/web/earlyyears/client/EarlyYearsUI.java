@@ -24,7 +24,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class EarlyYearsUI.
  */
-public class EarlyYearsUI extends VerticalPanel {
+public class EarlyYearsUI extends VerticalPanel
+{
 
 	/** The Constant ALL_TABLES_ID. */
 	public static final String ALL_TABLES_ID = "ALL TABLES";
@@ -56,12 +57,12 @@ public class EarlyYearsUI extends VerticalPanel {
 	/**
 	 * Instantiates a new early years ui.
 	 */
-	public EarlyYearsUI() {
+	public EarlyYearsUI()
+	{
 		setTitle("Early Years");
 		setSpacing(5);
 
-		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel(
-				"Tables Online");
+		DisclosurePanel tableSelectionDisclosurePanel = new DisclosurePanel("Tables Online");
 		add(tableSelectionDisclosurePanel);
 		tableSelectionDisclosurePanel.setOpen(true);
 		tableSelectionDisclosurePanel.setWidth("347px");
@@ -90,65 +91,74 @@ public class EarlyYearsUI extends VerticalPanel {
 		horizontalActivityPanel.setWidth("262px");
 
 		Button stickerbookButton = new Button("Sticker Book");
-		stickerbookButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				EarlyYearsService.Util.get().setActivity(
-						EarlyYearsActivity.STICKER_BOOK, getDeviceToSendTo(),
-						new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(caught.getMessage())
-										.show();
-							}
+		stickerbookButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				EarlyYearsService.Util.get().setActivity(EarlyYearsActivity.STICKER_BOOK, getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox(caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		stickerbookButton.setWidth("100px");
 		horizontalActivityPanel.add(stickerbookButton);
 
 		Button environmentExplorer = new Button("Explorer");
-		environmentExplorer.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		environmentExplorer.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				environmentExplorerSettingsPanel.setOpen(true);
-				EarlyYearsService.Util.get().setActivity(
-						EarlyYearsActivity.ENVIRONMENT_EXPLORER,
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(caught.getMessage())
-										.show();
-							}
+				EarlyYearsService.Util.get().setActivity(EarlyYearsActivity.ENVIRONMENT_EXPLORER, getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox(caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		environmentExplorer.setWidth("100px");
 		horizontalActivityPanel.add(environmentExplorer);
 
 		Button trainButton = new Button("Train Tracks");
-		trainButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		trainButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				traintrackSettingsPanel.setOpen(true);
-				EarlyYearsService.Util.get().setActivity(
-						EarlyYearsActivity.TRAIN_TRACKS, getDeviceToSendTo(),
-						new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(caught.getMessage())
-										.show();
-							}
+				EarlyYearsService.Util.get().setActivity(EarlyYearsActivity.TRAIN_TRACKS, getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox(caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		trainButton.setWidth("100px");
@@ -176,19 +186,24 @@ public class EarlyYearsUI extends VerticalPanel {
 		cornerNumBox.setValue(6);
 		traintrackCornersHorizontalPanel.add(cornerNumBox);
 
-		cornerNumBox.addKeyUpHandler(new KeyUpHandler() {
+		cornerNumBox.addKeyUpHandler(new KeyUpHandler()
+		{
 			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			public void onKeyUp(KeyUpEvent event)
+			{
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				{
 					cornerUpdate();
 				}
 			}
 		});
 
 		Button buttonCornerDecrease = new Button("Set");
-		buttonCornerDecrease.addClickHandler(new ClickHandler() {
+		buttonCornerDecrease.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				cornerUpdate();
 			}
 
@@ -208,19 +223,24 @@ public class EarlyYearsUI extends VerticalPanel {
 		crossNumBox.setValue(1);
 		traintrackCrossesHorizontalPanel.add(crossNumBox);
 
-		crossNumBox.addKeyUpHandler(new KeyUpHandler() {
+		crossNumBox.addKeyUpHandler(new KeyUpHandler()
+		{
 			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			public void onKeyUp(KeyUpEvent event)
+			{
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				{
 					crossUpdate();
 				}
 			}
 		});
 
 		Button buttonCrossDecrease = new Button("Set");
-		buttonCrossDecrease.addClickHandler(new ClickHandler() {
+		buttonCrossDecrease.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				crossUpdate();
 			}
 		});
@@ -239,19 +259,24 @@ public class EarlyYearsUI extends VerticalPanel {
 		straightNum.setValue(4);
 		traintrackStraightsHorizontalPanel.add(straightNum);
 
-		straightNum.addKeyUpHandler(new KeyUpHandler() {
+		straightNum.addKeyUpHandler(new KeyUpHandler()
+		{
 			@Override
-			public void onKeyUp(KeyUpEvent event) {
-				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER) {
+			public void onKeyUp(KeyUpEvent event)
+			{
+				if (event.getNativeKeyCode() == KeyCodes.KEY_ENTER)
+				{
 					straightUpdate();
 				}
 			}
 		});
 
 		Button buttonStraightDecrease = new Button("Set");
-		buttonStraightDecrease.addClickHandler(new ClickHandler() {
+		buttonStraightDecrease.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				straightUpdate();
 			}
 		});
@@ -265,22 +290,22 @@ public class EarlyYearsUI extends VerticalPanel {
 		roadModeCheckBox.setText("Road Mode");
 		traintrackRoadModeHorizontalPanel.add(roadModeCheckBox);
 
-		roadModeCheckBox.addClickHandler(new ClickHandler() {
+		roadModeCheckBox.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				roadModeUpdate();
 			}
 		});
 
-		environmentExplorerSettingsPanel = new DisclosurePanel(
-				"Explorer Settings");
+		environmentExplorerSettingsPanel = new DisclosurePanel("Explorer Settings");
 		environmentExplorerSettingsPanel.setOpen(false);
 		add(environmentExplorerSettingsPanel);
 		environmentExplorerSettingsPanel.setWidth("380px");
 
 		VerticalPanel environmentExplorerSettingsVerticalPanel = new VerticalPanel();
-		environmentExplorerSettingsPanel
-				.setContent(environmentExplorerSettingsVerticalPanel);
+		environmentExplorerSettingsPanel.setContent(environmentExplorerSettingsVerticalPanel);
 		environmentExplorerSettingsVerticalPanel.setSize("344px", "65px");
 
 		HorizontalPanel horizontalExplorerPanel = new HorizontalPanel();
@@ -289,41 +314,47 @@ public class EarlyYearsUI extends VerticalPanel {
 		horizontalExplorerPanel.setWidth("262px");
 
 		Button showTeacherControlButton = new Button("Show Teacher Controls");
-		showTeacherControlButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				EarlyYearsService.Util.get().showExplorerTeacherConsole(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(caught.getMessage())
-										.show();
-							}
+		showTeacherControlButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				EarlyYearsService.Util.get().showExplorerTeacherConsole(new PerformActionMessage(MESSAGESTATE.ACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox(caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		horizontalExplorerPanel.add(showTeacherControlButton);
 
 		Button hideTeacherControlButton = new Button("Hide Teacher Controls");
-		hideTeacherControlButton.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
-				EarlyYearsService.Util.get().showExplorerTeacherConsole(
-						new PerformActionMessage(MESSAGESTATE.DEACTIVATE),
-						getDeviceToSendTo(), new AsyncCallback<Void>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								new MessageDialogBox(caught.getMessage())
-										.show();
-							}
+		hideTeacherControlButton.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
+				EarlyYearsService.Util.get().showExplorerTeacherConsole(new PerformActionMessage(MESSAGESTATE.DEACTIVATE), getDeviceToSendTo(), new AsyncCallback<Void>()
+				{
+					@Override
+					public void onFailure(Throwable caught)
+					{
+						new MessageDialogBox(caught.getMessage()).show();
+					}
 
-							@Override
-							public void onSuccess(Void result) {
-							}
-						});
+					@Override
+					public void onSuccess(Void result)
+					{
+					}
+				});
 			}
 		});
 		horizontalExplorerPanel.add(hideTeacherControlButton);
@@ -333,42 +364,50 @@ public class EarlyYearsUI extends VerticalPanel {
 	/**
 	 * Corner update.
 	 */
-	private void cornerUpdate() {
+	private void cornerUpdate()
+	{
 		Integer toSend = getTrainTrackPiecesNum(cornerNumBox);
-		if (toSend != null) {
-			EarlyYearsService.Util.get().setRailwayCornerNum(toSend,
-					getDeviceToSendTo(), new AsyncCallback<Void>() {
+		if (toSend != null)
+		{
+			EarlyYearsService.Util.get().setRailwayCornerNum(toSend, getDeviceToSendTo(), new AsyncCallback<Void>()
+			{
 
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(caught.getMessage()).show();
-						}
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox(caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 		}
 	}
 
 	/**
 	 * Cross update.
 	 */
-	private void crossUpdate() {
+	private void crossUpdate()
+	{
 		Integer toSend = getTrainTrackPiecesNum(crossNumBox);
-		if (toSend != null) {
-			EarlyYearsService.Util.get().setRailwayCrossNum(toSend,
-					getDeviceToSendTo(), new AsyncCallback<Void>() {
+		if (toSend != null)
+		{
+			EarlyYearsService.Util.get().setRailwayCrossNum(toSend, getDeviceToSendTo(), new AsyncCallback<Void>()
+			{
 
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(caught.getMessage()).show();
-						}
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox(caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 		}
 	}
 
@@ -377,12 +416,16 @@ public class EarlyYearsUI extends VerticalPanel {
 	 *
 	 * @return the device to send to
 	 */
-	private String[] getDeviceToSendTo() {
+	private String[] getDeviceToSendTo()
+	{
 		String[] toReturn;
-		if (devicesOnline.getAllDevicesOptionCheck()) {
+		if (devicesOnline.getAllDevicesOptionCheck())
+		{
 			toReturn = new String[1];
 			toReturn[0] = ALL_TABLES_ID;
-		} else {
+		}
+		else
+		{
 			toReturn = new String[devicesOnline.getDevicesSelected().size()];
 			devicesOnline.getDevicesSelected().toArray(toReturn);
 		}
@@ -392,17 +435,23 @@ public class EarlyYearsUI extends VerticalPanel {
 	/**
 	 * Gets the train track pieces num.
 	 *
-	 * @param box the box
+	 * @param box
+	 *            the box
 	 * @return the train track pieces num
 	 */
-	private Integer getTrainTrackPiecesNum(IntegerBox box) {
+	private Integer getTrainTrackPiecesNum(IntegerBox box)
+	{
 		Integer toSend = box.getValue();
-		if (toSend == null) {
+		if (toSend == null)
+		{
 			return null;
 		}
-		if (toSend < 0) {
+		if (toSend < 0)
+		{
 			toSend = 0;
-		} else if (toSend > PIECE_LIMIT) {
+		}
+		else if (toSend > PIECE_LIMIT)
+		{
 			toSend = PIECE_LIMIT;
 		}
 		return toSend;
@@ -411,46 +460,56 @@ public class EarlyYearsUI extends VerticalPanel {
 	/**
 	 * Road mode update.
 	 */
-	private void roadModeUpdate() {
+	private void roadModeUpdate()
+	{
 		PerformActionMessage message = null;
-		if (roadModeCheckBox.getValue()) {
+		if (roadModeCheckBox.getValue())
+		{
 			message = new PerformActionMessage(MESSAGESTATE.ACTIVATE);
-		} else {
+		}
+		else
+		{
 			message = new PerformActionMessage(MESSAGESTATE.DEACTIVATE);
 		}
 
-		EarlyYearsService.Util.get().setRoadMode(message, getDeviceToSendTo(),
-				new AsyncCallback<Void>() {
+		EarlyYearsService.Util.get().setRoadMode(message, getDeviceToSendTo(), new AsyncCallback<Void>()
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 	}
 
 	/**
 	 * Straight update.
 	 */
-	private void straightUpdate() {
+	private void straightUpdate()
+	{
 		Integer toSend = getTrainTrackPiecesNum(straightNum);
-		if (toSend != null) {
-			EarlyYearsService.Util.get().setRailwayStraightNum(toSend,
-					getDeviceToSendTo(), new AsyncCallback<Void>() {
+		if (toSend != null)
+		{
+			EarlyYearsService.Util.get().setRailwayStraightNum(toSend, getDeviceToSendTo(), new AsyncCallback<Void>()
+			{
 
-						@Override
-						public void onFailure(Throwable caught) {
-							new MessageDialogBox(caught.getMessage()).show();
-						}
+				@Override
+				public void onFailure(Throwable caught)
+				{
+					new MessageDialogBox(caught.getMessage()).show();
+				}
 
-						@Override
-						public void onSuccess(Void result) {
-						}
-					});
+				@Override
+				public void onSuccess(Void result)
+				{
+				}
+			});
 		}
 	}
 

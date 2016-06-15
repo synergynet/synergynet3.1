@@ -26,7 +26,8 @@ package multiplicity3.input.simulator;
 /**
  * The Class AbstractSimCursor.
  */
-public abstract class AbstractSimCursor {
+public abstract class AbstractSimCursor
+{
 
 	/** The Constant KEY_CONTROL. */
 	public static final String KEY_CONTROL = "control";
@@ -49,49 +50,62 @@ public abstract class AbstractSimCursor {
 	/**
 	 * Key pressed.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 */
 	public abstract void keyPressed(String key);
 
 	/**
 	 * Key released.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 */
 	public abstract void keyReleased(String key);
 
 	/**
 	 * Mouse dragged.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param buttonNumber the button number
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param buttonNumber
+	 *            the button number
 	 */
 	public abstract void mouseDragged(float x, float y, int buttonNumber);
 
 	/**
 	 * Mouse moved.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
 	public abstract void mouseMoved(float x, float y);
 
 	/**
 	 * Mouse pressed.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param buttonNumber the button number
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param buttonNumber
+	 *            the button number
 	 */
 	public abstract void mousePressed(float x, float y, int buttonNumber);
 
 	/**
 	 * Mouse released.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param buttonNumber the button number
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param buttonNumber
+	 *            the button number
 	 */
 	public abstract void mouseReleased(float x, float y, int buttonNumber);
 

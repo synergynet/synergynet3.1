@@ -11,7 +11,8 @@ package synergynet3.additionalitems.interfaces;
  *
  * @see IActionOnVideoEndEvent
  */
-public interface IActionOnVideoEndListener {
+public interface IActionOnVideoEndListener
+{
 
 	/**
 	 * On video end.

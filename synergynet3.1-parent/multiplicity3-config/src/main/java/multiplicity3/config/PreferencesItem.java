@@ -28,7 +28,8 @@ import javax.swing.JPanel;
 /**
  * The Interface PreferencesItem.
  */
-public interface PreferencesItem {
+public interface PreferencesItem
+{
 
 	/**
 	 * Gets the configuration panel.

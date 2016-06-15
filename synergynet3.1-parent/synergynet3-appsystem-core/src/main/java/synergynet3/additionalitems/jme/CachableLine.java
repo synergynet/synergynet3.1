@@ -19,8 +19,8 @@ import com.jme3.math.Vector2f;
  * The Class CachableLine.
  */
 @ImplementsContentItem(target = ICachableLine.class)
-public class CachableLine extends JMELine implements ICachableLine, IInitable,
-		IItemCachable {
+public class CachableLine extends JMELine implements ICachableLine, IInitable, IItemCachable
+{
 
 	/** The Constant CACHABLE_TYPE. */
 	public static final String CACHABLE_TYPE = "CACHABLE_LINE";
@@ -28,37 +28,43 @@ public class CachableLine extends JMELine implements ICachableLine, IInitable,
 	/**
 	 * Instantiates a new cachable line.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public CachableLine(String name, UUID uuid) {
+	public CachableLine(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
 	/**
 	 * Reconstruct.
 	 *
-	 * @param galleryItem the gallery item
-	 * @param stage the stage
-	 * @param loc the loc
+	 * @param galleryItem
+	 *            the gallery item
+	 * @param stage
+	 *            the stage
+	 * @param loc
+	 *            the loc
 	 * @return the cachable line
 	 */
-	public static CachableLine reconstruct(
-			GalleryItemDatabaseFormat galleryItem, IStage stage, String loc) {
-		try {
-			CachableLine line = stage.getContentFactory().create(
-					ICachableLine.class, "line", UUID.randomUUID());
+	public static CachableLine reconstruct(GalleryItemDatabaseFormat galleryItem, IStage stage, String loc)
+	{
+		try
+		{
+			CachableLine line = stage.getContentFactory().create(ICachableLine.class, "line", UUID.randomUUID());
 			line.setLineWidth(4f);
-			if ((Boolean) galleryItem.getValues().get(0)) {
+			if ((Boolean) galleryItem.getValues().get(0))
+			{
 				String from = (String) galleryItem.getValues().get(1);
 				String to = (String) galleryItem.getValues().get(2);
 
-				IItem source = ProjectorTransferUtilities.get().getContents()
-						.get(from);
-				IItem destination = ProjectorTransferUtilities.get()
-						.getContents().get(to);
+				IItem source = ProjectorTransferUtilities.get().getContents().get(from);
+				IItem destination = ProjectorTransferUtilities.get().getContents().get(to);
 
-				if ((source != null) && (destination != null)) {
+				if ((source != null) && (destination != null))
+				{
 					line.setSourceItem(source);
 					line.setDestinationItem(destination);
 				}
@@ -66,18 +72,22 @@ public class CachableLine extends JMELine implements ICachableLine, IInitable,
 				line.setStartPosition(source.getRelativeLocation());
 				line.setEndPosition(destination.getRelativeLocation());
 
-			} else {
-				Vector2f from = new Vector2f((Float) galleryItem.getValues()
-						.get(1), (Float) galleryItem.getValues().get(2));
-				Vector2f to = new Vector2f((Float) galleryItem.getValues().get(
-						3), (Float) galleryItem.getValues().get(4));
+			}
+			else
+			{
+				Vector2f from = new Vector2f((Float) galleryItem.getValues().get(1), (Float) galleryItem.getValues().get(2));
+				Vector2f to = new Vector2f((Float) galleryItem.getValues().get(3), (Float) galleryItem.getValues().get(4));
 				line.setStartPosition(from);
 				line.setEndPosition(to);
 			}
 			return line;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			return null;
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e)
+		{
 			return null;
 		}
 	}
@@ -87,32 +97,38 @@ public class CachableLine extends JMELine implements ICachableLine, IInitable,
 	 * @see synergynet3.cachecontrol.IItemCachable#deconstruct(java.lang.String)
 	 */
 	@Override
-	public GalleryItemDatabaseFormat deconstruct(String loc) {
+	public GalleryItemDatabaseFormat deconstruct(String loc)
+	{
 
 		boolean itemMode = true;
 
 		String from = "";
 		String to = "";
-		if ((getSourceItem() != null) && (getDestinationItem() != null)) {
-			from = ProjectorTransferUtilities.get().getContentKey(
-					getSourceItem());
-			to = ProjectorTransferUtilities.get().getContentKey(
-					getDestinationItem());
+		if ((getSourceItem() != null) && (getDestinationItem() != null))
+		{
+			from = ProjectorTransferUtilities.get().getContentKey(getSourceItem());
+			to = ProjectorTransferUtilities.get().getContentKey(getDestinationItem());
 
-			if ((from == null) || (to == null)) {
+			if ((from == null) || (to == null))
+			{
 				itemMode = false;
 			}
-		} else {
+		}
+		else
+		{
 			itemMode = false;
 		}
 
 		GalleryItemDatabaseFormat galleryItem = new GalleryItemDatabaseFormat();
 		galleryItem.setType(CACHABLE_TYPE);
 		galleryItem.addValue(itemMode);
-		if (itemMode) {
+		if (itemMode)
+		{
 			galleryItem.addValue(from);
 			galleryItem.addValue(to);
-		} else {
+		}
+		else
+		{
 			galleryItem.addValue(getStartPosition().x);
 			galleryItem.addValue(getStartPosition().y);
 			galleryItem.addValue(getEndPosition().x);

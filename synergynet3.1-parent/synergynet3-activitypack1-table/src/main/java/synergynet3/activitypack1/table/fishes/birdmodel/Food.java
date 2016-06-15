@@ -23,23 +23,29 @@ import java.awt.Color;
  * @author Michael LaLena
  * @version 1.0
  */
-public class Food extends Bird {
+public class Food extends Bird
+{
 	/**
 	 * This is the constructor for the food.
 	 *
-	 * @param x The X coordinate of the Food
-	 * @param y The Y coordinate of the Food
+	 * @param x
+	 *            The X coordinate of the Food
+	 * @param y
+	 *            The Y coordinate of the Food
 	 */
-	public Food(float x, float y) {
+	public Food(float x, float y)
+	{
 		super(x, y, 0, Color.magenta);
 	}
 
 	/**
 	 * The food class overrides the move function to do nothing.
 	 *
-	 * @param angle not used
+	 * @param angle
+	 *            not used
 	 */
-	public void move(int angle) {
+	public void move(int angle)
+	{
 		// food does not move
 	}
 

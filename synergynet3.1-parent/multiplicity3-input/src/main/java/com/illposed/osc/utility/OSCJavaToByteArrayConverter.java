@@ -38,7 +38,8 @@ import java.util.Vector;
 /**
  * The Class OSCJavaToByteArrayConverter.
  */
-public class OSCJavaToByteArrayConverter {
+public class OSCJavaToByteArrayConverter
+{
 
 	/** The stream. */
 	protected ByteArrayOutputStream stream = new ByteArrayOutputStream();
@@ -51,90 +52,110 @@ public class OSCJavaToByteArrayConverter {
 
 	/**
 	 * Creation date: (2/23/2001 2:43:25 AM)
-	 * 
-	 * @param anArray java.lang.Object[]
+	 *
+	 * @param anArray
+	 *            java.lang.Object[]
 	 */
-	public void appendNullCharToAlignStream() {
+	public void appendNullCharToAlignStream()
+	{
 		int mod = stream.size() % 4;
 		int pad = 4 - mod;
-		for (int i = 0; i < pad; i++) {
+		for (int i = 0; i < pad; i++)
+		{
 			stream.write(0);
 		}
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:21:53 AM)
-	 * 
+	 *
 	 * @return byte[]
 	 */
-	public byte[] toByteArray() {
+	public byte[] toByteArray()
+	{
 		return stream.toByteArray();
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:14:23 AM)
-	 * 
-	 * @param bytes byte[]
+	 *
+	 * @param bytes
+	 *            byte[]
 	 */
-	public void write(byte[] bytes) {
+	public void write(byte[] bytes)
+	{
 		writeBigEndToFourByteBoundry(bytes);
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:08:36 AM)
-	 * 
-	 * @param c char
+	 *
+	 * @param c
+	 *            char
 	 */
-	public void write(char c) {
+	public void write(char c)
+	{
 		stream.write(c);
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:03:57 AM)
-	 * 
-	 * @param f java.lang.Float
+	 *
+	 * @param f
+	 *            java.lang.Float
 	 */
-	public void write(Float f) {
+	public void write(Float f)
+	{
 		writeIntegerToByteArray(Float.floatToIntBits(f.floatValue()));
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:21:04 AM)
-	 * 
-	 * @param i int
+	 *
+	 * @param i
+	 *            int
 	 */
-	public void write(int i) {
+	public void write(int i)
+	{
 		writeIntegerToByteArray(i);
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:08:36 AM)
-	 * 
-	 * @param i java.lang.Integer
+	 *
+	 * @param i
+	 *            java.lang.Integer
 	 */
-	public void write(Integer i) {
+	public void write(Integer i)
+	{
 		writeIntegerToByteArray(i.intValue());
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:02:54 AM)
-	 * 
-	 * @param anObject java.lang.Object
+	 *
+	 * @param anObject
+	 *            java.lang.Object
 	 */
-	public void write(Object anObject) {
+	public void write(Object anObject)
+	{
 		// Can't do switch on class
-		if (null == anObject) {
+		if (null == anObject)
+		{
 			return;
 		}
-		if (anObject instanceof Float) {
+		if (anObject instanceof Float)
+		{
 			write((Float) anObject);
 			return;
 		}
-		if (anObject instanceof String) {
+		if (anObject instanceof String)
+		{
 			write((String) anObject);
 			return;
 		}
-		if (anObject instanceof Integer) {
+		if (anObject instanceof Integer)
+		{
 			write((Integer) anObject);
 			return;
 		}
@@ -142,46 +163,56 @@ public class OSCJavaToByteArrayConverter {
 
 	/**
 	 * Creation date: (2/23/2001 1:57:35 AM)
-	 * 
-	 * @param str java.lang.String
+	 *
+	 * @param str
+	 *            java.lang.String
 	 */
-	public void write(String str) {
+	public void write(String str)
+	{
 		writeLittleEndToFourByteBoundry(str.getBytes());
 	}
 
 	/**
 	 * Creation date: (2/23/2001 2:43:25 AM)
-	 * 
-	 * @param aClass Class
+	 *
+	 * @param aClass
+	 *            Class
 	 */
-	public void writeType(Class<?> c) {
+	public void writeType(Class<?> c)
+	{
 		// A big ol' case statement -- what's polymorphism mean, again?
 		// I really wish I could extend the base classes!
 
 		// use the appropriate flags to tell SuperCollider what kind of
 		// thing it is looking at
 
-		if (Integer.class.equals(c)) {
+		if (Integer.class.equals(c))
+		{
 			stream.write('i');
 			return;
 		}
-		if (java.math.BigInteger.class.equals(c)) {
+		if (java.math.BigInteger.class.equals(c))
+		{
 			stream.write('h');
 			return;
 		}
-		if (Float.class.equals(c)) {
+		if (Float.class.equals(c))
+		{
 			stream.write('f');
 			return;
 		}
-		if (Double.class.equals(c)) {
+		if (Double.class.equals(c))
+		{
 			stream.write('d');
 			return;
 		}
-		if (String.class.equals(c)) {
+		if (String.class.equals(c))
+		{
 			stream.write('s');
 			return;
 		}
-		if (Character.class.equals(c)) {
+		if (Character.class.equals(c))
+		{
 			stream.write('c');
 			return;
 		}
@@ -190,24 +221,29 @@ public class OSCJavaToByteArrayConverter {
 	/**
 	 * Same as writeSuperColliderTypes(Object[]), just that it takes a vector
 	 * (for jdk1.1 compatibility), rather than an array.
-	 * 
-	 * @param vector the collection I am to write out types for
+	 *
+	 * @param vector
+	 *            the collection I am to write out types for
 	 */
-	public void writeTypes(Vector<Object> vector) {
+	public void writeTypes(Vector<Object> vector)
+	{
 		// A big ol' case statement in a for loop -- what's polymorphism mean,
 		// again?
 		// I really wish I could extend the base classes!
 
 		Enumeration<Object> enm = vector.elements();
 		Object nextObject;
-		while (enm.hasMoreElements()) {
+		while (enm.hasMoreElements())
+		{
 			nextObject = enm.nextElement();
-			if (null == nextObject) {
+			if (null == nextObject)
+			{
 				continue;
 			}
 			// if the array at i is a type of array write a [
 			// This is used for nested arguments
-			if (nextObject.getClass().isArray()) {
+			if (nextObject.getClass().isArray())
+			{
 				stream.write('[');
 				// fill the [] with the SuperCollider types corresponding to the
 				// object
@@ -218,11 +254,13 @@ public class OSCJavaToByteArrayConverter {
 				continue;
 			}
 			// Create a way to deal with Boolean type objects
-			if (Boolean.TRUE.equals(nextObject)) {
+			if (Boolean.TRUE.equals(nextObject))
+			{
 				stream.write('T');
 				continue;
 			}
-			if (Boolean.FALSE.equals(nextObject)) {
+			if (Boolean.FALSE.equals(nextObject))
+			{
 				stream.write('F');
 				continue;
 			}
@@ -238,21 +276,26 @@ public class OSCJavaToByteArrayConverter {
 
 	/**
 	 * Creation date: (2/23/2001 2:43:25 AM)
-	 * 
-	 * @param anArray java.lang.Object[]
+	 *
+	 * @param anArray
+	 *            java.lang.Object[]
 	 */
-	public void writeTypesArray(Object[] array) {
+	public void writeTypesArray(Object[] array)
+	{
 		// A big ol' case statement in a for loop -- what's polymorphism mean,
 		// again?
 		// I really wish I could extend the base classes!
 
-		for (int i = 0; i < array.length; i++) {
-			if (null == array[i]) {
+		for (int i = 0; i < array.length; i++)
+		{
+			if (null == array[i])
+			{
 				continue;
 			}
 			// if the array at i is a type of array write a [
 			// This is used for nested arguments
-			if (array[i].getClass().isArray()) {
+			if (array[i].getClass().isArray())
+			{
 				stream.write('[');
 				// fill the [] with the SuperCollider types corresponding to the
 				// object
@@ -263,11 +306,13 @@ public class OSCJavaToByteArrayConverter {
 				continue;
 			}
 			// Create a way to deal with Boolean type objects
-			if (Boolean.TRUE.equals(array[i])) {
+			if (Boolean.TRUE.equals(array[i]))
+			{
 				stream.write('T');
 				continue;
 			}
-			if (Boolean.FALSE.equals(array[i])) {
+			if (Boolean.FALSE.equals(array[i]))
+			{
 				stream.write('F');
 				continue;
 			}
@@ -284,17 +329,22 @@ public class OSCJavaToByteArrayConverter {
 	/**
 	 * Line up the BigEnd of the bytes to a 4 byte boundry
 	 *
-	 * @param bytes byte[]
+	 * @param bytes
+	 *            byte[]
 	 */
-	private void writeBigEndToFourByteBoundry(byte[] bytes) {
+	private void writeBigEndToFourByteBoundry(byte[] bytes)
+	{
 		int mod = bytes.length % 4;
 		// if the remainder == 0 write the bytes
-		if (mod == 0) {
-			try {
+		if (mod == 0)
+		{
+			try
+			{
 				stream.write(bytes);
-			} catch (IOException e) {
-				throw new RuntimeException(
-						"You're screwed: IOException writing to a ByteArrayOutputStream");
+			}
+			catch (IOException e)
+			{
+				throw new RuntimeException("You're screwed: IOException writing to a ByteArrayOutputStream");
 			}
 			return;
 		}
@@ -303,20 +353,24 @@ public class OSCJavaToByteArrayConverter {
 		byte[] newBytes = new byte[pad + bytes.length];
 		System.arraycopy(bytes, 0, newBytes, pad, bytes.length);
 
-		try {
+		try
+		{
 			stream.write(newBytes);
-		} catch (IOException e) {
-			throw new RuntimeException(
-					"You're screwed: IOException writing to a ByteArrayOutputStream");
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException("You're screwed: IOException writing to a ByteArrayOutputStream");
 		}
 	}
 
 	/**
 	 * convert an integer to byte array
 	 *
-	 * @param value int
+	 * @param value
+	 *            int
 	 */
-	private void writeIntegerToByteArray(int value) {
+	private void writeIntegerToByteArray(int value)
+	{
 		byte[] intBytes = new byte[4];
 
 		intBytes[3] = (byte) value;
@@ -327,28 +381,35 @@ public class OSCJavaToByteArrayConverter {
 		value >>>= 8;
 		intBytes[0] = (byte) value;
 
-		try {
+		try
+		{
 			stream.write(intBytes);
-		} catch (IOException e) {
-			throw new RuntimeException(
-					"You're screwed: IOException writing to a ByteArrayOutputStream");
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException("You're screwed: IOException writing to a ByteArrayOutputStream");
 		}
 	}
 
 	/**
 	 * Line up the LittleEnd of the bytes to a 4 byte boundry
 	 *
-	 * @param bytes byte[]
+	 * @param bytes
+	 *            byte[]
 	 */
-	private void writeLittleEndToFourByteBoundry(byte[] bytes) {
+	private void writeLittleEndToFourByteBoundry(byte[] bytes)
+	{
 		int mod = bytes.length % 4;
 		// if the remainder == 0 write the bytes
-		if (mod == 4) {
-			try {
+		if (mod == 4)
+		{
+			try
+			{
 				stream.write(bytes);
-			} catch (IOException e) {
-				throw new RuntimeException(
-						"You're screwed: IOException writing to a ByteArrayOutputStream");
+			}
+			catch (IOException e)
+			{
+				throw new RuntimeException("You're screwed: IOException writing to a ByteArrayOutputStream");
 			}
 			return;
 		}
@@ -357,11 +418,13 @@ public class OSCJavaToByteArrayConverter {
 		byte[] newBytes = new byte[pad + bytes.length];
 		System.arraycopy(bytes, 0, newBytes, 0, bytes.length);
 
-		try {
+		try
+		{
 			stream.write(newBytes);
-		} catch (IOException e) {
-			throw new RuntimeException(
-					"You're screwed: IOException writing to a ByteArrayOutputStream");
+		}
+		catch (IOException e)
+		{
+			throw new RuntimeException("You're screwed: IOException writing to a ByteArrayOutputStream");
 		}
 	}
 

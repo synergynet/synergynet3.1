@@ -10,12 +10,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * The Interface GravitySimService.
  */
 @RemoteServiceRelativePath("GravitySimService")
-public interface GravitySimService extends RemoteService {
+public interface GravitySimService extends RemoteService
+{
 
 	/**
 	 * The Class Util.
 	 */
-	public static class Util {
+	public static class Util
+	{
 
 		/** The instance. */
 		private static GravitySimServiceAsync instance;
@@ -25,8 +27,10 @@ public interface GravitySimService extends RemoteService {
 		 *
 		 * @return the gravity sim service async
 		 */
-		public static GravitySimServiceAsync get() {
-			if (instance == null) {
+		public static GravitySimServiceAsync get()
+		{
+			if (instance == null)
+			{
 				instance = GWT.create(GravitySimService.class);
 			}
 			return instance;
@@ -61,14 +65,16 @@ public interface GravitySimService extends RemoteService {
 	/**
 	 * Sets the body limit.
 	 *
-	 * @param newLimit the new body limit
+	 * @param newLimit
+	 *            the new body limit
 	 */
 	public void setBodyLimit(int newLimit);
 
 	/**
 	 * Sets the scenario.
 	 *
-	 * @param scenario the new scenario
+	 * @param scenario
+	 *            the new scenario
 	 */
 	public void setScenario(UniverseScenario scenario);
 

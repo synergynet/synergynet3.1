@@ -5,12 +5,14 @@ import java.io.Serializable;
 /**
  * The Class PerformActionMessage.
  */
-public class PerformActionMessage implements Serializable {
+public class PerformActionMessage implements Serializable
+{
 
 	/**
 	 * The Enum MESSAGESTATE.
 	 */
-	public enum MESSAGESTATE {
+	public enum MESSAGESTATE
+	{
 		/** The activate. */
 		ACTIVATE, /** The deactivate. */
 		DEACTIVATE, /** The do nothing. */
@@ -29,16 +31,19 @@ public class PerformActionMessage implements Serializable {
 	/**
 	 * Instantiates a new perform action message.
 	 */
-	public PerformActionMessage() {
+	public PerformActionMessage()
+	{
 		messageID = MessageSystem.generateMessageID();
 	}
 
 	/**
 	 * Instantiates a new perform action message.
 	 *
-	 * @param state the state
+	 * @param state
+	 *            the state
 	 */
-	public PerformActionMessage(MESSAGESTATE state) {
+	public PerformActionMessage(MESSAGESTATE state)
+	{
 		this.state = state;
 		messageID = MessageSystem.generateMessageID();
 	}
@@ -48,7 +53,8 @@ public class PerformActionMessage implements Serializable {
 	 *
 	 * @return the message id
 	 */
-	public String getMessageID() {
+	public String getMessageID()
+	{
 		return messageID;
 	}
 
@@ -57,7 +63,8 @@ public class PerformActionMessage implements Serializable {
 	 *
 	 * @return the message state
 	 */
-	public MESSAGESTATE getMessageState() {
+	public MESSAGESTATE getMessageState()
+	{
 		return state;
 	}
 
@@ -66,14 +73,16 @@ public class PerformActionMessage implements Serializable {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean messageAlreadyReceived() {
+	public boolean messageAlreadyReceived()
+	{
 		return MessageSystem.messageAlreadyReceived(this);
 	}
 
 	/**
 	 * Regenerate id.
 	 */
-	public void regenerateID() {
+	public void regenerateID()
+	{
 		messageID = MessageSystem.generateMessageID();
 	}
 }

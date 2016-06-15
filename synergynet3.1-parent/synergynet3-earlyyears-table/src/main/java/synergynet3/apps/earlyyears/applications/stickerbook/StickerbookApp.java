@@ -22,7 +22,8 @@ import synergynet3.web.earlyyears.shared.EarlyYearsActivity;
 /**
  * The Class StickerbookApp.
  */
-public class StickerbookApp extends EarlyYearsApp {
+public class StickerbookApp extends EarlyYearsApp
+{
 
 	/** The touch enabled. */
 	private HashMap<IItem, Boolean> touchEnabled = new HashMap<IItem, Boolean>();
@@ -30,11 +31,15 @@ public class StickerbookApp extends EarlyYearsApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -49,11 +54,13 @@ public class StickerbookApp extends EarlyYearsApp {
 	/**
 	 * Stop flick.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void stopFlick(IItem item) {
-		for (NetworkFlickBehaviour behaviour : item
-				.getBehaviours(NetworkFlickBehaviour.class)) {
+	private void stopFlick(IItem item)
+	{
+		for (NetworkFlickBehaviour behaviour : item.getBehaviours(NetworkFlickBehaviour.class))
+		{
 			behaviour.reset();
 		}
 	}
@@ -63,7 +70,8 @@ public class StickerbookApp extends EarlyYearsApp {
 	 * @see synergynet3.SynergyNetApp#getSpecificFriendlyAppName()
 	 */
 	@Override
-	protected String getSpecificFriendlyAppName() {
+	protected String getSpecificFriendlyAppName()
+	{
 		return "Stickerbook";
 	}
 
@@ -72,8 +80,8 @@ public class StickerbookApp extends EarlyYearsApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 
 		feedbackTypes.add(SimpleTrafficLightFeedback.class);
 		feedbackTypes.add(AudioFeedback.class);
@@ -90,34 +98,38 @@ public class StickerbookApp extends EarlyYearsApp {
 	 * .items.item.IItem[])
 	 */
 	@Override
-	protected void onAddingAdditionalMaterials(IItem[] items) {
-		for (final IItem item : items) {
+	protected void onAddingAdditionalMaterials(IItem[] items)
+	{
+		for (final IItem item : items)
+		{
 			touchEnabled.put(item, true);
-			item.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							if (touchEnabled.get(item)) {
-								stopFlick(item);
-								for (IBehaviour behaviour : item
-										.getBehaviours()) {
-									behaviour.setActive(false);
-								}
-								stage.getZOrderManager().sendToBottom(item);
-								stage.getZOrderManager()
-										.unregisterForZOrdering(item);
-								touchEnabled.put(item, false);
-							} else {
-								for (IBehaviour behaviour : item
-										.getBehaviours()) {
-									behaviour.setActive(true);
-								}
-								stage.getZOrderManager().registerForZOrdering(
-										item);
-								touchEnabled.put(item, true);
-							}
+			item.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					if (touchEnabled.get(item))
+					{
+						stopFlick(item);
+						for (IBehaviour behaviour : item.getBehaviours())
+						{
+							behaviour.setActive(false);
 						}
-					});
+						stage.getZOrderManager().sendToBottom(item);
+						stage.getZOrderManager().unregisterForZOrdering(item);
+						touchEnabled.put(item, false);
+					}
+					else
+					{
+						for (IBehaviour behaviour : item.getBehaviours())
+						{
+							behaviour.setActive(true);
+						}
+						stage.getZOrderManager().registerForZOrdering(item);
+						touchEnabled.put(item, true);
+					}
+				}
+			});
 		}
 		AdditionalSynergyNetUtilities.pile(items, 0, 0, 20, 0);
 	}

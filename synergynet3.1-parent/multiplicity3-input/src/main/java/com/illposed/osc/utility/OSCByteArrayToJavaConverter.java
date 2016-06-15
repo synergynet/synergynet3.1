@@ -37,7 +37,8 @@ import com.illposed.osc.OSCPacket;
 /**
  * @author cramakrishnan
  */
-public class OSCByteArrayToJavaConverter {
+public class OSCByteArrayToJavaConverter
+{
 
 	/** The float bytes. */
 	private byte[] floatBytes = new byte[4];
@@ -67,13 +68,17 @@ public class OSCByteArrayToJavaConverter {
 	 * public OSCByteArrayToJavaConverter() { super(); }
 	 */
 
-	public OSCPacket convert(byte[] byteArray, int bytesLength) {
+	public OSCPacket convert(byte[] byteArray, int bytesLength)
+	{
 		bytes = byteArray;
 		this.bytesLength = bytesLength;
 		streamPosition = 0;
-		if (isBundle()) {
+		if (isBundle())
+		{
 			return convertBundle();
-		} else {
+		}
+		else
+		{
 			return convertMessage();
 		}
 	}
@@ -83,19 +88,20 @@ public class OSCByteArrayToJavaConverter {
 	 *
 	 * @return the OSC bundle
 	 */
-	private OSCBundle convertBundle() {
+	private OSCBundle convertBundle()
+	{
 		// skip the "#bundle " stuff
 		streamPosition = 8;
 		Date timestamp = readTimeTag();
 		OSCBundle bundle = new OSCBundle(timestamp);
 		OSCByteArrayToJavaConverter myConverter = new OSCByteArrayToJavaConverter();
-		while (streamPosition < bytesLength) {
+		while (streamPosition < bytesLength)
+		{
 			// recursively read through the stream and convert packets you find
 			int packetLength = ((Integer) readInteger()).intValue();
 			byte[] packetBytes = new byte[packetLength];
 			// streamPosition++;
-			System.arraycopy(bytes, streamPosition, packetBytes, 0,
-					packetLength);
+			System.arraycopy(bytes, streamPosition, packetBytes, 0, packetLength);
 			streamPosition += packetLength;
 			// for (int i = 0; i < packetLength; i++)
 			// packetBytes[i] = bytes[streamPosition++];
@@ -110,24 +116,31 @@ public class OSCByteArrayToJavaConverter {
 	 *
 	 * @return the OSC message
 	 */
-	private OSCMessage convertMessage() {
+	private OSCMessage convertMessage()
+	{
 		OSCMessage message = new OSCMessage();
 		message.setAddress(readString());
 		char[] types = readTypes();
-		if (null == types) {
+		if (null == types)
+		{
 			// we are done
 			return message;
 		}
 		moveToFourByteBoundry();
-		for (int i = 0; i < types.length; i++) {
-			if ('[' == types[i]) {
+		for (int i = 0; i < types.length; i++)
+		{
+			if ('[' == types[i])
+			{
 				// we're looking at an array -- read it in
 				message.addArgument(readArray(types, i));
 				// then increment i to the end of the array
-				while (']' != types[i]) {
+				while (']' != types[i])
+				{
 					i++;
 				}
-			} else {
+			}
+			else
+			{
 				message.addArgument(readArgument(types[i]));
 			}
 		}
@@ -139,7 +152,8 @@ public class OSCByteArrayToJavaConverter {
 	 *
 	 * @return true, if is bundle
 	 */
-	private boolean isBundle() {
+	private boolean isBundle()
+	{
 		// only need the first 7 to check if it is a bundle
 		String bytesAsString = new String(bytes, 0, 7);
 		return bytesAsString.startsWith("#bundle");
@@ -150,9 +164,11 @@ public class OSCByteArrayToJavaConverter {
 	 *
 	 * @return the int
 	 */
-	private int lengthOfCurrentString() {
+	private int lengthOfCurrentString()
+	{
 		int i = 0;
-		while (bytes[streamPosition + i] != 0) {
+		while (bytes[streamPosition + i] != 0)
+		{
 			i++;
 		}
 		return i;
@@ -161,18 +177,22 @@ public class OSCByteArrayToJavaConverter {
 	/**
 	 * Move to four byte boundry.
 	 */
-	private void moveToFourByteBoundry() {
+	private void moveToFourByteBoundry()
+	{
 		// If i'm already at a 4 byte boundry, I need to move to the next one
 		int mod = streamPosition % 4;
 		streamPosition += (4 - mod);
 	}
 
 	/**
-	 * @param c type of argument
+	 * @param c
+	 *            type of argument
 	 * @return a Java representation of the argument
 	 */
-	private Object readArgument(char c) {
-		switch (c) {
+	private Object readArgument(char c)
+	{
+		switch (c)
+		{
 			case 'i':
 				return readInteger();
 			case 'h':
@@ -199,13 +219,16 @@ public class OSCByteArrayToJavaConverter {
 	 * @param i
 	 * @return an Array
 	 */
-	private Object[] readArray(char[] types, int i) {
+	private Object[] readArray(char[] types, int i)
+	{
 		int arrayLen = 0;
-		while (types[i + arrayLen] != ']') {
+		while (types[i + arrayLen] != ']')
+		{
 			arrayLen++;
 		}
 		Object[] array = new Object[arrayLen];
-		for (int j = 0; i < arrayLen; j++) {
+		for (int j = 0; i < arrayLen; j++)
+		{
 			array[j] = readArgument(types[i + j]);
 		}
 		return array;
@@ -214,15 +237,15 @@ public class OSCByteArrayToJavaConverter {
 	/**
 	 * @return a BigInteger
 	 */
-	private Object readBigInteger() {
+	private Object readBigInteger()
+	{
 		// byte[] intBytes = new byte[4];
 		intBytes[0] = bytes[streamPosition++];
 		intBytes[1] = bytes[streamPosition++];
 		intBytes[2] = bytes[streamPosition++];
 		intBytes[3] = bytes[streamPosition++];
 
-		int intBits = ((intBytes[3] & 0xFF)) + ((intBytes[2] & 0xFF) << 8)
-				+ ((intBytes[1] & 0xFF) << 16) + ((intBytes[0] & 0xFF) << 24);
+		int intBits = ((intBytes[3] & 0xFF)) + ((intBytes[2] & 0xFF) << 8) + ((intBytes[1] & 0xFF) << 16) + ((intBytes[0] & 0xFF) << 24);
 
 		return new Integer(intBits);
 	}
@@ -230,31 +253,31 @@ public class OSCByteArrayToJavaConverter {
 	/**
 	 * @return a Character
 	 */
-	private Object readChar() {
+	private Object readChar()
+	{
 		return new Character((char) bytes[streamPosition++]);
 	}
 
 	/**
 	 * @return a Double
 	 */
-	private Object readDouble() {
+	private Object readDouble()
+	{
 		return readFloat();
 	}
 
 	/**
 	 * @return a Float
 	 */
-	private Object readFloat() {
+	private Object readFloat()
+	{
 		// byte[] floatBytes = new byte[4];
 		floatBytes[0] = bytes[streamPosition++];
 		floatBytes[1] = bytes[streamPosition++];
 		floatBytes[2] = bytes[streamPosition++];
 		floatBytes[3] = bytes[streamPosition++];
 
-		int floatBits = ((floatBytes[3] & 0xFF))
-				+ ((floatBytes[2] & 0xFF) << 8)
-				+ ((floatBytes[1] & 0xFF) << 16)
-				+ ((floatBytes[0] & 0xFF) << 24);
+		int floatBits = ((floatBytes[3] & 0xFF)) + ((floatBytes[2] & 0xFF) << 8) + ((floatBytes[1] & 0xFF) << 16) + ((floatBytes[0] & 0xFF) << 24);
 
 		return new Float(Float.intBitsToFloat(floatBits));
 	}
@@ -262,15 +285,15 @@ public class OSCByteArrayToJavaConverter {
 	/**
 	 * @return an Integer
 	 */
-	private Object readInteger() {
+	private Object readInteger()
+	{
 		// byte[] intBytes = new byte[4];
 		intBytes[0] = bytes[streamPosition++];
 		intBytes[1] = bytes[streamPosition++];
 		intBytes[2] = bytes[streamPosition++];
 		intBytes[3] = bytes[streamPosition++];
 
-		int intBits = ((intBytes[3] & 0xFF)) + ((intBytes[2] & 0xFF) << 8)
-				+ ((intBytes[1] & 0xFF) << 16) + ((intBytes[0] & 0xFF) << 24);
+		int intBits = ((intBytes[3] & 0xFF)) + ((intBytes[2] & 0xFF) << 8) + ((intBytes[1] & 0xFF) << 16) + ((intBytes[0] & 0xFF) << 24);
 
 		return new Integer(intBits);
 	}
@@ -280,12 +303,14 @@ public class OSCByteArrayToJavaConverter {
 	 *
 	 * @return the string
 	 */
-	private String readString() {
+	private String readString()
+	{
 		int strLen = lengthOfCurrentString();
 		char[] stringChars = new char[strLen];
 		// System.arraycopy(bytes,streamPosition,stringChars,0,strLen);
 		// streamPosition+=strLen;
-		for (int i = 0; i < strLen; i++) {
+		for (int i = 0; i < strLen; i++)
+		{
 			stringChars[i] = (char) bytes[streamPosition++];
 		}
 		moveToFourByteBoundry();
@@ -295,7 +320,8 @@ public class OSCByteArrayToJavaConverter {
 	/**
 	 * @return a Date
 	 */
-	private Date readTimeTag() {
+	private Date readTimeTag()
+	{
 		// byte[] secondBytes = new byte[8];
 		// byte[] picosecBytes = new byte[8];
 		/*
@@ -309,9 +335,9 @@ public class OSCByteArrayToJavaConverter {
 		streamPosition += 4;
 
 		BigInteger secsSince1900 = new BigInteger(secondBytes);
-		long secsSince1970 = secsSince1900.longValue()
-				- OSCBundle.SECONDS_FROM_1900_to_1970.longValue();
-		if (secsSince1970 < 0) {
+		long secsSince1970 = secsSince1900.longValue() - OSCBundle.SECONDS_FROM_1900_to_1970.longValue();
+		if (secsSince1970 < 0)
+		{
 			secsSince1970 = 0; // no point maintaining times in the distant past
 		}
 		BigInteger picosecs = new BigInteger(picosecBytes);
@@ -322,20 +348,24 @@ public class OSCByteArrayToJavaConverter {
 	/**
 	 * @return a char array with the types of the arguments
 	 */
-	private char[] readTypes() {
+	private char[] readTypes()
+	{
 		// the next byte should be a ","
-		if (bytes[streamPosition] != 0x2C) {
+		if (bytes[streamPosition] != 0x2C)
+		{
 			return null;
 		}
 		streamPosition++;
 		// find out how long the list of types is
 		int typesLen = lengthOfCurrentString();
-		if (0 == typesLen) {
+		if (0 == typesLen)
+		{
 			return null;
 		}
 		// read in the types
 		char[] typesChars = new char[typesLen];
-		for (int i = 0; i < typesLen; i++) {
+		for (int i = 0; i < typesLen; i++)
+		{
 			typesChars[i] = (char) bytes[streamPosition++];
 		}
 		return typesChars;

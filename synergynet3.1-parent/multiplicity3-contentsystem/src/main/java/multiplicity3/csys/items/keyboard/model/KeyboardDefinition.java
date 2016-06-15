@@ -11,7 +11,8 @@ import java.util.Map;
 /**
  * The Class KeyboardDefinition.
  */
-public class KeyboardDefinition {
+public class KeyboardDefinition
+{
 
 	/** The keys collection. */
 	private List<KeyboardKey> keysCollection = new ArrayList<KeyboardKey>();
@@ -22,9 +23,11 @@ public class KeyboardDefinition {
 	/**
 	 * Adds the key.
 	 *
-	 * @param k the k
+	 * @param k
+	 *            the k
 	 */
-	public void addKey(KeyboardKey k) {
+	public void addKey(KeyboardKey k)
+	{
 		keysCollection.add(k);
 		stringToKeyMap.put(k.getKeyStringRepresentation(), k);
 	}
@@ -32,10 +35,13 @@ public class KeyboardDefinition {
 	/**
 	 * Adds the keys.
 	 *
-	 * @param qwertyKeys the qwerty keys
+	 * @param qwertyKeys
+	 *            the qwerty keys
 	 */
-	public void addKeys(Collection<KeyboardKey> qwertyKeys) {
-		for (KeyboardKey k : qwertyKeys) {
+	public void addKeys(Collection<KeyboardKey> qwertyKeys)
+	{
+		for (KeyboardKey k : qwertyKeys)
+		{
 			addKey(k);
 		}
 	}
@@ -45,39 +51,46 @@ public class KeyboardDefinition {
 	 *
 	 * @return the bounds
 	 */
-	public Rectangle2D getBounds() {
+	public Rectangle2D getBounds()
+	{
 		Rectangle2D rect = new Rectangle2D.Float();
-		if (keysCollection.size() > 0) {
+		if (keysCollection.size() > 0)
+		{
 			rect.setRect(keysCollection.get(0).getKeyShape().getBounds());
 		}
-		for (KeyboardKey k : keysCollection) {
+		for (KeyboardKey k : keysCollection)
+		{
 			rect = rect.createUnion(k.getKeyShape().getBounds());
 		}
-		rect.setRect(rect.getX(), rect.getY(),
-				rect.getWidth() + rect.getMinX(),
-				rect.getHeight() + rect.getMinY());
+		rect.setRect(rect.getX(), rect.getY(), rect.getWidth() + rect.getMinX(), rect.getHeight() + rect.getMinY());
 		return rect;
 	}
 
 	/**
 	 * Gets the key.
 	 *
-	 * @param stringRep the string rep
+	 * @param stringRep
+	 *            the string rep
 	 * @return the key
 	 */
-	public KeyboardKey getKey(String stringRep) {
+	public KeyboardKey getKey(String stringRep)
+	{
 		return stringToKeyMap.get(stringRep);
 	}
 
 	/**
 	 * Gets the key at.
 	 *
-	 * @param p the p
+	 * @param p
+	 *            the p
 	 * @return the key at
 	 */
-	public KeyboardKey getKeyAt(Point2D p) {
-		for (KeyboardKey k : keysCollection) {
-			if (k.getKeyShape().contains(p)) {
+	public KeyboardKey getKeyAt(Point2D p)
+	{
+		for (KeyboardKey k : keysCollection)
+		{
+			if (k.getKeyShape().contains(p))
+			{
 				return k;
 			}
 		}
@@ -89,7 +102,8 @@ public class KeyboardDefinition {
 	 *
 	 * @return the keys iterator
 	 */
-	public Iterable<KeyboardKey> getKeysIterator() {
+	public Iterable<KeyboardKey> getKeysIterator()
+	{
 		return keysCollection;
 	}
 }

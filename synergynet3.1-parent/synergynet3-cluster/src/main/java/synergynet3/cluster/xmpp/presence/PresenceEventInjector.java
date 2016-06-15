@@ -10,11 +10,11 @@ import java.util.logging.Logger;
 /**
  * The Class PresenceEventInjector.
  */
-public class PresenceEventInjector implements IPresenceListener {
+public class PresenceEventInjector implements IPresenceListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(PresenceEventInjector.class.getName());
+	private static final Logger log = Logger.getLogger(PresenceEventInjector.class.getName());
 
 	/** The listeners. */
 	private List<IPresenceListener> listeners;
@@ -25,7 +25,8 @@ public class PresenceEventInjector implements IPresenceListener {
 	/**
 	 * Instantiates a new presence event injector.
 	 */
-	public PresenceEventInjector() {
+	public PresenceEventInjector()
+	{
 		listeners = new ArrayList<IPresenceListener>();
 		updateList = new ConcurrentLinkedQueue<Callable<Void>>();
 	}
@@ -37,13 +38,18 @@ public class PresenceEventInjector implements IPresenceListener {
 	 * .lang.String)
 	 */
 	@Override
-	public void deviceAvailable(final String id) {
+	public void deviceAvailable(final String id)
+	{
 		log.log(Level.FINER, "Device " + id + " is now available.");
-		updateList.add(new Callable<Void>() {
+		updateList.add(new Callable<Void>()
+		{
 			@Override
-			public Void call() throws Exception {
-				synchronized (listeners) {
-					for (IPresenceListener listener : listeners) {
+			public Void call() throws Exception
+			{
+				synchronized (listeners)
+				{
+					for (IPresenceListener listener : listeners)
+					{
 						listener.deviceAvailable(id);
 					}
 				}
@@ -60,12 +66,17 @@ public class PresenceEventInjector implements IPresenceListener {
 	 * (java.lang.String)
 	 */
 	@Override
-	public void deviceUnavailable(final String id) {
-		updateList.add(new Callable<Void>() {
+	public void deviceUnavailable(final String id)
+	{
+		updateList.add(new Callable<Void>()
+		{
 			@Override
-			public Void call() throws Exception {
-				synchronized (listeners) {
-					for (IPresenceListener listener : listeners) {
+			public Void call() throws Exception
+			{
+				synchronized (listeners)
+				{
+					for (IPresenceListener listener : listeners)
+					{
 						listener.deviceUnavailable(id);
 					}
 				}
@@ -77,10 +88,13 @@ public class PresenceEventInjector implements IPresenceListener {
 	/**
 	 * Register presence listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void registerPresenceListener(IPresenceListener listener) {
-		if (listeners.contains(listener)) {
+	public void registerPresenceListener(IPresenceListener listener)
+	{
+		if (listeners.contains(listener))
+		{
 			return;
 		}
 		listeners.add(listener);
@@ -89,17 +103,22 @@ public class PresenceEventInjector implements IPresenceListener {
 	/**
 	 * Update.
 	 */
-	public void update() {
-		if (updateList.size() < 1) {
+	public void update()
+	{
+		if (updateList.size() < 1)
+		{
 			return;
 		}
-		log.log(Level.FINER, "Calling update on " + updateList.size()
-				+ " callable items.");
-		for (Callable<Void> c : updateList) {
-			try {
+		log.log(Level.FINER, "Calling update on " + updateList.size() + " callable items.");
+		for (Callable<Void> c : updateList)
+		{
+			try
+			{
 				log.log(Level.FINER, "calling.");
 				c.call();
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				e.printStackTrace();
 			}
 			log.log(Level.FINER, "removing.");

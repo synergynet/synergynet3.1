@@ -3,7 +3,8 @@ package synergynet3.cluster.xmpp.messaging.appcontrol;
 /**
  * The Class SwitchToApplication.
  */
-public class SwitchToApplication extends AppControlMessage {
+public class SwitchToApplication extends AppControlMessage
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5340810309039900348L;
@@ -14,9 +15,11 @@ public class SwitchToApplication extends AppControlMessage {
 	/**
 	 * Instantiates a new switch to application.
 	 *
-	 * @param classname the classname
+	 * @param classname
+	 *            the classname
 	 */
-	public SwitchToApplication(String classname) {
+	public SwitchToApplication(String classname)
+	{
 		setClassname(classname);
 	}
 
@@ -25,16 +28,19 @@ public class SwitchToApplication extends AppControlMessage {
 	 *
 	 * @return the classname
 	 */
-	public String getClassname() {
+	public String getClassname()
+	{
 		return classname;
 	}
 
 	/**
 	 * Sets the classname.
 	 *
-	 * @param classname the new classname
+	 * @param classname
+	 *            the new classname
 	 */
-	public void setClassname(String classname) {
+	public void setClassname(String classname)
+	{
 		this.classname = classname;
 	}
 }

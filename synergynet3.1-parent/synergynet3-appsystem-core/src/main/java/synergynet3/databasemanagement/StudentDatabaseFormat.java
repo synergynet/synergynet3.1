@@ -5,7 +5,8 @@ import java.util.ArrayList;
 /**
  * The Class StudentDatabaseFormat.
  */
-public class StudentDatabaseFormat {
+public class StudentDatabaseFormat
+{
 
 	/** The classname. */
 	private String classname = "";
@@ -25,13 +26,17 @@ public class StudentDatabaseFormat {
 	/**
 	 * Instantiates a new student database format.
 	 *
-	 * @param name the name
-	 * @param studentID the student id
-	 * @param classname the classname
-	 * @param colour the colour
+	 * @param name
+	 *            the name
+	 * @param studentID
+	 *            the student id
+	 * @param classname
+	 *            the classname
+	 * @param colour
+	 *            the colour
 	 */
-	public StudentDatabaseFormat(String name, String studentID,
-			String classname, String colour) {
+	public StudentDatabaseFormat(String name, String studentID, String classname, String colour)
+	{
 		this.name = name;
 		this.studentID = studentID;
 		this.classname = classname;
@@ -39,9 +44,11 @@ public class StudentDatabaseFormat {
 	}
 
 	/**
-	 * @param galleryItems the galleryItems to set
+	 * @param galleryItems
+	 *            the galleryItems to set
 	 */
-	public void addGalleryItem(GalleryItemDatabaseFormat galleryItem) {
+	public void addGalleryItem(GalleryItemDatabaseFormat galleryItem)
+	{
 		galleryItems.add(galleryItem);
 	}
 
@@ -50,21 +57,24 @@ public class StudentDatabaseFormat {
 	 *
 	 * @return the class name
 	 */
-	public String getClassName() {
+	public String getClassName()
+	{
 		return classname;
 	}
 
 	/**
 	 * @return the colour
 	 */
-	public String getColour() {
+	public String getColour()
+	{
 		return colour;
 	}
 
 	/**
 	 * @return the galleryItems
 	 */
-	public ArrayList<GalleryItemDatabaseFormat> getGalleryItems() {
+	public ArrayList<GalleryItemDatabaseFormat> getGalleryItems()
+	{
 		return galleryItems;
 	}
 
@@ -73,7 +83,8 @@ public class StudentDatabaseFormat {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -82,41 +93,50 @@ public class StudentDatabaseFormat {
 	 *
 	 * @return the student id
 	 */
-	public String getStudentID() {
+	public String getStudentID()
+	{
 		return studentID;
 	}
 
 	/**
 	 * Sets the classname.
 	 *
-	 * @param classname the new classname
+	 * @param classname
+	 *            the new classname
 	 */
-	public void setClassname(String classname) {
+	public void setClassname(String classname)
+	{
 		this.classname = classname;
 	}
 
 	/**
-	 * @param colour the colour to set
+	 * @param colour
+	 *            the colour to set
 	 */
-	public void setColour(String colour) {
+	public void setColour(String colour)
+	{
 		this.colour = colour;
 	}
 
 	/**
 	 * Sets the name.
 	 *
-	 * @param name the new name
+	 * @param name
+	 *            the new name
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 
 	/**
 	 * Sets the student id.
 	 *
-	 * @param studentID the new student id
+	 * @param studentID
+	 *            the new student id
 	 */
-	public void setStudentId(String studentID) {
+	public void setStudentId(String studentID)
+	{
 		this.studentID = studentID;
 	}
 

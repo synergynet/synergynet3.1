@@ -14,7 +14,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class ScoresUI.
  */
-public class ScoresUI {
+public class ScoresUI
+{
 
 	/** The container. */
 	private IItem container;
@@ -31,9 +32,11 @@ public class ScoresUI {
 	/**
 	 * Instantiates a new scores ui.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 */
-	public ScoresUI(IStage stage) {
+	public ScoresUI(IStage stage)
+	{
 		this.contentFactory = stage.getContentFactory();
 	}
 
@@ -41,10 +44,13 @@ public class ScoresUI {
 	 * Gets the content item.
 	 *
 	 * @return the content item
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public IItem getContentItem() throws ContentTypeNotBoundException {
-		if (container == null) {
+	public IItem getContentItem() throws ContentTypeNotBoundException
+	{
+		if (container == null)
+		{
 			createUI();
 		}
 		return container;
@@ -53,10 +59,13 @@ public class ScoresUI {
 	/**
 	 * Sets the scores.
 	 *
-	 * @param correct the correct
-	 * @param incorrect the incorrect
+	 * @param correct
+	 *            the correct
+	 * @param incorrect
+	 *            the incorrect
 	 */
-	public void setScores(int correct, int incorrect) {
+	public void setScores(int correct, int incorrect)
+	{
 		correctLine.setText(getCorrectScoreLabelTextForScore(correct));
 		incorrectLine.setText(getIncorrectScoreLabelTextForScore(incorrect));
 	}
@@ -64,27 +73,28 @@ public class ScoresUI {
 	/**
 	 * Sets the visible.
 	 *
-	 * @param b the new visible
+	 * @param b
+	 *            the new visible
 	 */
-	public void setVisible(boolean b) {
+	public void setVisible(boolean b)
+	{
 		this.container.setVisible(b);
 	}
 
 	/**
 	 * Creates the ui.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void createUI() throws ContentTypeNotBoundException {
-		container = contentFactory.create(IContainer.class, "scores",
-				UUID.randomUUID());
+	private void createUI() throws ContentTypeNotBoundException
+	{
+		container = contentFactory.create(IContainer.class, "scores", UUID.randomUUID());
 
-		correctLine = contentFactory.create(IMutableLabel.class,
-				"correctscore", UUID.randomUUID());
+		correctLine = contentFactory.create(IMutableLabel.class, "correctscore", UUID.randomUUID());
 		correctLine.setText(getCorrectScoreLabelTextForScore(0));
 
-		incorrectLine = contentFactory.create(IMutableLabel.class,
-				"correctscore", UUID.randomUUID());
+		incorrectLine = contentFactory.create(IMutableLabel.class, "correctscore", UUID.randomUUID());
 		incorrectLine.setText(getIncorrectScoreLabelTextForScore(0));
 		incorrectLine.setRelativeLocation(new Vector2f(0, -30f));
 
@@ -97,20 +107,24 @@ public class ScoresUI {
 	/**
 	 * Gets the correct score label text for score.
 	 *
-	 * @param score the score
+	 * @param score
+	 *            the score
 	 * @return the correct score label text for score
 	 */
-	private String getCorrectScoreLabelTextForScore(int score) {
+	private String getCorrectScoreLabelTextForScore(int score)
+	{
 		return "Correct: " + score;
 	}
 
 	/**
 	 * Gets the incorrect score label text for score.
 	 *
-	 * @param score the score
+	 * @param score
+	 *            the score
 	 * @return the incorrect score label text for score
 	 */
-	private String getIncorrectScoreLabelTextForScore(int score) {
+	private String getIncorrectScoreLabelTextForScore(int score)
+	{
 		return "Incorrect: " + score;
 	}
 }

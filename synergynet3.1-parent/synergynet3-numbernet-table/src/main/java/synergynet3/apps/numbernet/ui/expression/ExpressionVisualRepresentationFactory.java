@@ -20,7 +20,8 @@ import com.jme3.math.Vector2f;
 /**
  * A factory for creating ExpressionVisualRepresentation objects.
  */
-public class ExpressionVisualRepresentationFactory {
+public class ExpressionVisualRepresentationFactory
+{
 
 	/** The Constant EXPRESSION_HEIGHT. */
 	private static final float EXPRESSION_HEIGHT = 45f;
@@ -34,11 +35,13 @@ public class ExpressionVisualRepresentationFactory {
 	/**
 	 * Instantiates a new expression visual representation factory.
 	 *
-	 * @param parentContainer the parent container
-	 * @param stage the stage
+	 * @param parentContainer
+	 *            the parent container
+	 * @param stage
+	 *            the stage
 	 */
-	public ExpressionVisualRepresentationFactory(IContainer parentContainer,
-			IStage stage) {
+	public ExpressionVisualRepresentationFactory(IContainer parentContainer, IStage stage)
+	{
 		this.parentContainer = parentContainer;
 		this.stage = stage;
 	}
@@ -46,58 +49,61 @@ public class ExpressionVisualRepresentationFactory {
 	/**
 	 * Creates a new ExpressionVisualRepresentation object.
 	 *
-	 * @param expression the expression
-	 * @param rotation the rotation
-	 * @param worldLocation the world location
+	 * @param expression
+	 *            the expression
+	 * @param rotation
+	 *            the rotation
+	 * @param worldLocation
+	 *            the world location
 	 * @return the i container
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public IContainer createExpressionVisualRepresentation(
-			Expression expression, float rotation, Vector2f worldLocation)
-			throws ContentTypeNotBoundException {
+	public IContainer createExpressionVisualRepresentation(Expression expression, float rotation, Vector2f worldLocation) throws ContentTypeNotBoundException
+	{
 
 		UUID idToUse = UUID.fromString(expression.getId());
 
-		Color color = ColourUtils.colorFromString(expression
-				.getCreatedOnTable());
+		Color color = ColourUtils.colorFromString(expression.getCreatedOnTable());
 		ColorRGBA crgba = ColourUtils.getColorRGBAFromColor(color);
-		if (color != null) {
+		if (color != null)
+		{
 			crgba.a = 0.5f;
-		} else {
+		}
+		else
+		{
 			crgba = new ColorRGBA(1, 1, 1, 1f);
 		}
 
-		final ITextbox textItem = stage.getContentFactory().create(
-				ITextbox.class, "", idToUse);
+		final ITextbox textItem = stage.getContentFactory().create(ITextbox.class, "", idToUse);
 		textItem.setMovable(true);
 		textItem.setColours(ColorRGBA.DarkGray, crgba, FontColour.White);
 		textItem.setHeight(EXPRESSION_HEIGHT);
 		textItem.setText(expression.getExpression(), stage);
 		textItem.setScaleLimits(1f, 1f);
 
-		ProjectorTransferUtilities.get().addToTransferableContents(textItem,
-				textItem.getWidth(), textItem.getHeight(), idToUse.toString());
+		ProjectorTransferUtilities.get().addToTransferableContents(textItem, textItem.getWidth(), textItem.getHeight(), idToUse.toString());
 
 		this.parentContainer.addItem(textItem);
 		textItem.setRelativeRotation(rotation);
 		textItem.setWorldLocation(worldLocation);
 
-		stage.getDragAndDropSystem().registerDragSource(
-				textItem.getListenBlock());
+		stage.getDragAndDropSystem().registerDragSource(textItem.getListenBlock());
 
-		textItem.getListenBlock().getMultiTouchDispatcher()
-				.addListener(new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						textItem.getMultiTouchDispatcher().cursorPressed(event);
-					}
+		textItem.getListenBlock().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				textItem.getMultiTouchDispatcher().cursorPressed(event);
+			}
 
-					@Override
-					public void cursorReleased(MultiTouchCursorEvent event) {
-						textItem.getMultiTouchDispatcher()
-								.cursorReleased(event);
-					}
-				});
+			@Override
+			public void cursorReleased(MultiTouchCursorEvent event)
+			{
+				textItem.getMultiTouchDispatcher().cursorReleased(event);
+			}
+		});
 
 		return (IContainer) textItem;
 	}

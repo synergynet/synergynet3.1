@@ -10,11 +10,12 @@ import multiplicity3.input.tuio.TUIOPrefsItem;
 /**
  * The Class DisplayPrefsItem.
  */
-public class DisplayPrefsItem implements PreferencesItem {
+public class DisplayPrefsItem implements PreferencesItem
+{
 
 	/** The Constant INPUT_TYPES. */
-	public static final String[] INPUT_TYPES = { "Mouse and Keyboard", "TUIO",
-			"Evoluce MIM", "Windows Touch", "Windows Touch (64bit Java)" };
+	public static final String[] INPUT_TYPES =
+	{ "Mouse and Keyboard", "TUIO", "Evoluce MIM", "Windows Touch", "Windows Touch (64bit Java)" };
 
 	/** The Constant DISPLAY_ALPHA_BITS. */
 	private static final String DISPLAY_ALPHA_BITS = "DISPLAY_ALPHA_BITS";
@@ -50,8 +51,7 @@ public class DisplayPrefsItem implements PreferencesItem {
 	private static final String DISPLAY_WIDTH = "DISPLAY_WIDTH";
 
 	/** The prefs. */
-	private static Preferences prefs = Preferences
-			.userNodeForPackage(DisplayPrefsItem.class);
+	private static Preferences prefs = Preferences.userNodeForPackage(DisplayPrefsItem.class);
 
 	/** The Constant PREFS_INPUT_TYPE. */
 	private static final String PREFS_INPUT_TYPE = "INPUT_DEVICE_TYPE";
@@ -62,7 +62,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	/**
 	 * Instantiates a new display prefs item.
 	 */
-	public DisplayPrefsItem() {
+	public DisplayPrefsItem()
+	{
 	}
 
 	/**
@@ -70,7 +71,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the alpha bits
 	 */
-	public int getAlphaBits() {
+	public int getAlphaBits()
+	{
 		return prefs.getInt(DISPLAY_ALPHA_BITS, 0);
 	}
 
@@ -79,7 +81,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the bits per pixel
 	 */
-	public int getBitsPerPixel() {
+	public int getBitsPerPixel()
+	{
 		return prefs.getInt(DISPLAY_BITS_PER_PIXEL, 16);
 	}
 
@@ -88,7 +91,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		DisplayConfigPanel dp2 = new DisplayConfigPanel(this);
 		return dp2;
 	}
@@ -98,7 +102,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Interface";
 	}
 
@@ -107,7 +112,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the depth bits
 	 */
-	public int getDepthBits() {
+	public int getDepthBits()
+	{
 		return prefs.getInt(DISPLAY_DEPTH_BITS, 8);
 	}
 
@@ -116,7 +122,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the display renderer
 	 */
-	public String getDisplayRenderer() {
+	public String getDisplayRenderer()
+	{
 		return prefs.get(DISPLAY_RENDERER, "LWJGL");
 	}
 
@@ -125,7 +132,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the frequency
 	 */
-	public int getFrequency() {
+	public int getFrequency()
+	{
 		return prefs.getInt(DISPLAY_FREQ, -1);
 	}
 
@@ -134,7 +142,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the full screen
 	 */
-	public boolean getFullScreen() {
+	public boolean getFullScreen()
+	{
 		return prefs.getBoolean(DISPLAY_FULLSCREEN, false);
 	}
 
@@ -143,7 +152,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the height
 	 */
-	public int getHeight() {
+	public int getHeight()
+	{
 		return prefs.getInt(DISPLAY_HEIGHT, 768);
 	}
 
@@ -152,7 +162,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the input type
 	 */
-	public String getInputType() {
+	public String getInputType()
+	{
 		return prefs.get(PREFS_INPUT_TYPE, INPUT_TYPES[0]);
 	}
 
@@ -161,7 +172,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the minimum anti alias samples
 	 */
-	public int getMinimumAntiAliasSamples() {
+	public int getMinimumAntiAliasSamples()
+	{
 		return prefs.getInt(DISPLAY_MIN_AA_SAMPLES, 0);
 	}
 
@@ -170,7 +182,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the real width
 	 */
-	public float getRealWidth() {
+	public float getRealWidth()
+	{
 		return prefs.getFloat(DISPLAY_REAL_WIDTH, 1.5f);
 	}
 
@@ -179,7 +192,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the stencil bits
 	 */
-	public int getStencilBits() {
+	public int getStencilBits()
+	{
 		return prefs.getInt(DISPLAY_STENCIL_BITS, 8);
 	}
 
@@ -188,7 +202,8 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the tuio port
 	 */
-	public int getTuioPort() {
+	public int getTuioPort()
+	{
 		return tuioPrefs.getTuioPort();
 	}
 
@@ -197,124 +212,151 @@ public class DisplayPrefsItem implements PreferencesItem {
 	 *
 	 * @return the width
 	 */
-	public int getWidth() {
+	public int getWidth()
+	{
 		return prefs.getInt(DISPLAY_WIDTH, 1024);
 	}
 
 	/**
 	 * Sets the alpha bits.
 	 *
-	 * @param bits the new alpha bits
+	 * @param bits
+	 *            the new alpha bits
 	 */
-	public void setAlphaBits(int bits) {
+	public void setAlphaBits(int bits)
+	{
 		prefs.putInt(DISPLAY_ALPHA_BITS, bits);
 	}
 
 	/**
 	 * Sets the bits per pixel.
 	 *
-	 * @param bpp the new bits per pixel
+	 * @param bpp
+	 *            the new bits per pixel
 	 */
-	public void setBitsPerPixel(int bpp) {
+	public void setBitsPerPixel(int bpp)
+	{
 		prefs.putInt(DISPLAY_BITS_PER_PIXEL, bpp);
 	}
 
 	/**
 	 * Sets the depth bits.
 	 *
-	 * @param b the new depth bits
+	 * @param b
+	 *            the new depth bits
 	 */
-	public void setDepthBits(int b) {
+	public void setDepthBits(int b)
+	{
 		prefs.putInt(DISPLAY_DEPTH_BITS, b);
 	}
 
 	/**
 	 * Sets the display renderer.
 	 *
-	 * @param renderer the new display renderer
+	 * @param renderer
+	 *            the new display renderer
 	 */
-	public void setDisplayRenderer(String renderer) {
+	public void setDisplayRenderer(String renderer)
+	{
 		prefs.put(DISPLAY_RENDERER, renderer);
 	}
 
 	/**
 	 * Sets the frequency.
 	 *
-	 * @param f the new frequency
+	 * @param f
+	 *            the new frequency
 	 */
-	public void setFrequency(int f) {
+	public void setFrequency(int f)
+	{
 		prefs.putInt(DISPLAY_FREQ, f);
 	}
 
 	/**
 	 * Sets the full screen.
 	 *
-	 * @param fs the new full screen
+	 * @param fs
+	 *            the new full screen
 	 */
-	public void setFullScreen(boolean fs) {
+	public void setFullScreen(boolean fs)
+	{
 		prefs.putBoolean(DISPLAY_FULLSCREEN, fs);
 	}
 
 	/**
 	 * Sets the height.
 	 *
-	 * @param h the new height
+	 * @param h
+	 *            the new height
 	 */
-	public void setHeight(int h) {
+	public void setHeight(int h)
+	{
 		prefs.putInt(DISPLAY_HEIGHT, h);
 	}
 
 	/**
 	 * Sets the input type.
 	 *
-	 * @param type the new input type
+	 * @param type
+	 *            the new input type
 	 */
-	public void setInputType(String type) {
+	public void setInputType(String type)
+	{
 		prefs.put(PREFS_INPUT_TYPE, type);
 	}
 
 	/**
 	 * Sets the minimum anti alias samples.
 	 *
-	 * @param samples the new minimum anti alias samples
+	 * @param samples
+	 *            the new minimum anti alias samples
 	 */
-	public void setMinimumAntiAliasSamples(int samples) {
+	public void setMinimumAntiAliasSamples(int samples)
+	{
 		prefs.putInt(DISPLAY_MIN_AA_SAMPLES, samples);
 	}
 
 	/**
 	 * Sets the real width.
 	 *
-	 * @param w the new real width
+	 * @param w
+	 *            the new real width
 	 */
-	public void setRealWidth(float w) {
+	public void setRealWidth(float w)
+	{
 		prefs.putFloat(DISPLAY_REAL_WIDTH, w);
 	}
 
 	/**
 	 * Sets the stencil bits.
 	 *
-	 * @param bits the new stencil bits
+	 * @param bits
+	 *            the new stencil bits
 	 */
-	public void setStencilBits(int bits) {
+	public void setStencilBits(int bits)
+	{
 		prefs.putInt(DISPLAY_STENCIL_BITS, bits);
 	}
 
 	/**
 	 * Sets the tuio port.
 	 *
-	 * @param port the new tuio port
+	 * @param port
+	 *            the new tuio port
 	 */
-	public void setTuioPort(int port) {
+	public void setTuioPort(int port)
+	{
 		tuioPrefs.setTuioPort(port);
 	}
 
 	/**
 	 * Sets the width.
 	 *
-	 * @param w the new width
+	 * @param w
+	 *            the new width
 	 */
-	public void setWidth(int w) {
+	public void setWidth(int w)
+	{
 		prefs.putInt(DISPLAY_WIDTH, w);
 	}
 

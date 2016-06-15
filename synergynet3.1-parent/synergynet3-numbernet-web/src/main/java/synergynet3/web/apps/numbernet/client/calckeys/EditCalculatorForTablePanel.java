@@ -11,7 +11,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class EditCalculatorForTablePanel.
  */
-public class EditCalculatorForTablePanel extends VerticalPanel {
+public class EditCalculatorForTablePanel extends VerticalPanel
+{
 
 	/** The key control panel. */
 	private CalculatorKeyControlPanel keyControlPanel;
@@ -22,7 +23,8 @@ public class EditCalculatorForTablePanel extends VerticalPanel {
 	/**
 	 * Instantiates a new edits the calculator for table panel.
 	 */
-	public EditCalculatorForTablePanel() {
+	public EditCalculatorForTablePanel()
+	{
 		super();
 
 		lbltableName = new Label(" ");
@@ -34,29 +36,33 @@ public class EditCalculatorForTablePanel extends VerticalPanel {
 	/**
 	 * Sets the calculator key control panel delegate.
 	 *
-	 * @param delegate the new calculator key control panel delegate
+	 * @param delegate
+	 *            the new calculator key control panel delegate
 	 */
-	public void setCalculatorKeyControlPanelDelegate(
-			CalculatorKeyControlPanelDelegate delegate) {
+	public void setCalculatorKeyControlPanelDelegate(CalculatorKeyControlPanelDelegate delegate)
+	{
 		keyControlPanel.delegate = delegate;
 	}
 
 	/**
 	 * Sets the table name.
 	 *
-	 * @param name the new table name
+	 * @param name
+	 *            the new table name
 	 */
-	public void setTableName(String name) {
+	public void setTableName(String name)
+	{
 		lbltableName.setText(name);
 	}
 
 	/**
 	 * Sets the values for check boxes with key state info.
 	 *
-	 * @param keyStateInfo the key state info
+	 * @param keyStateInfo
+	 *            the key state info
 	 */
-	public void setValuesForCheckBoxesWithKeyStateInfo(
-			Map<CalculatorKey, Boolean> keyStateInfo) {
+	public void setValuesForCheckBoxesWithKeyStateInfo(Map<CalculatorKey, Boolean> keyStateInfo)
+	{
 		keyControlPanel.setValuesForCheckBoxesWithKeyStateInfo(keyStateInfo);
 	}
 }

@@ -10,14 +10,14 @@ import com.jme3.font.BitmapFont;
 /**
  * The Class FontCache.
  */
-public class FontCache {
+public class FontCache
+{
 
 	/** The instance. */
 	private static FontCache instance;
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(FontCache.class
-			.getName());
+	private static final Logger log = Logger.getLogger(FontCache.class.getName());
 
 	/** The cache map. */
 	private Map<String, BitmapFont> cacheMap;
@@ -25,7 +25,8 @@ public class FontCache {
 	/**
 	 * Instantiates a new font cache.
 	 */
-	private FontCache() {
+	private FontCache()
+	{
 		cacheMap = new HashMap<String, BitmapFont>();
 	}
 
@@ -34,9 +35,12 @@ public class FontCache {
 	 *
 	 * @return the font cache
 	 */
-	public static FontCache get() {
-		synchronized (FontCache.class) {
-			if (instance == null) {
+	public static FontCache get()
+	{
+		synchronized (FontCache.class)
+		{
+			if (instance == null)
+			{
 				instance = new FontCache();
 			}
 			return instance;
@@ -46,15 +50,20 @@ public class FontCache {
 	/**
 	 * Gets the font.
 	 *
-	 * @param resource the resource
-	 * @param assetManager the asset manager
+	 * @param resource
+	 *            the resource
+	 * @param assetManager
+	 *            the asset manager
 	 * @return the font
 	 */
-	public BitmapFont getFont(String resource, AssetManager assetManager) {
+	public BitmapFont getFont(String resource, AssetManager assetManager)
+	{
 		BitmapFont font = cacheMap.get(resource);
-		if (font == null) {
+		if (font == null)
+		{
 			font = assetManager.loadFont(resource);
-			if (font == null) {
+			if (font == null)
+			{
 				log.severe("Looks like you need to do a clean on the workspace:");
 				log.severe("  Couldn't find font resource " + resource);
 				log.severe("  Either this doesn't exist OR ");

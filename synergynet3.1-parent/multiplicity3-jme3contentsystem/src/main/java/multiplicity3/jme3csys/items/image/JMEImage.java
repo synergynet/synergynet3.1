@@ -25,11 +25,11 @@ import com.jme3.texture.Texture.WrapMode;
  * The Class JMEImage.
  */
 @ImplementsContentItem(target = IImage.class)
-public class JMEImage extends JMEItem implements IImage, IInitable {
+public class JMEImage extends JMEItem implements IImage, IInitable
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(JMEImage.class.getName());
+	private static final Logger log = Logger.getLogger(JMEImage.class.getName());
 
 	/** The asset manager. */
 	private AssetManager assetManager;
@@ -52,10 +52,13 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	/**
 	 * Instantiates a new JME image.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEImage(String name, UUID uuid) {
+	public JMEImage(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -64,7 +67,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getHeight()
 	 */
 	@Override
-	public float getHeight() {
+	public float getHeight()
+	{
 		return quad.getHeight();
 	}
 
@@ -73,7 +77,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.image.IImage#getImage()
 	 */
 	@Override
-	public String getImage() {
+	public String getImage()
+	{
 		return imageResource;
 	}
 
@@ -82,7 +87,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return quadGeometry;
 	}
 
@@ -91,7 +97,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getSize()
 	 */
 	@Override
-	public Vector2f getSize() {
+	public Vector2f getSize()
+	{
 		return new Vector2f(quad.getWidth(), quad.getHeight());
 	}
 
@@ -100,7 +107,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getWidth()
 	 */
 	@Override
-	public float getWidth() {
+	public float getWidth()
+	{
 		return quad.getWidth();
 	}
 
@@ -111,7 +119,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		this.assetManager = assetManager;
 		quad = new CenteredQuad(100, 100);
 		quadGeometry = new Geometry("quad_geom", quad);
@@ -119,8 +128,7 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 		// reminder of where to find j3md stuff: jme3/src/core-data
 		// mat = new Material(assetManager,
 		// "Common/MatDefs/Misc/SimpleTextured.j3md");
-		mat = new Material(assetManager,
-				"multiplicity3/jme3csys/resources/shaders/Textured.j3md");
+		mat = new Material(assetManager, "multiplicity3/jme3csys/resources/shaders/Textured.j3md");
 		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 		setImage("multiplicity3/jme3csys/resources/placeholders/transparent_16.png");
 		// Texture tex = assetManager.loadTexture();
@@ -137,10 +145,10 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.image.IImage#setImage(java.io.File)
 	 */
 	@Override
-	public void setImage(File imageFile) {
+	public void setImage(File imageFile)
+	{
 		File parent = imageFile.getParentFile();
-		assetManager.registerLocator(parent.getAbsolutePath(),
-				FileLocator.class);
+		assetManager.registerLocator(parent.getAbsolutePath(), FileLocator.class);
 		setImage(imageFile.getName());
 	}
 
@@ -149,7 +157,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.image.IImage#setImage(java.lang.String)
 	 */
 	@Override
-	public void setImage(String imageResource) {
+	public void setImage(String imageResource)
+	{
 		this.imageResource = imageResource;
 		Texture tex = assetManager.loadTexture(imageResource);
 		setTexture(tex);
@@ -160,7 +169,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.image.IImage#setSize(float, float)
 	 */
 	@Override
-	public void setSize(float width, float height) {
+	public void setSize(float width, float height)
+	{
 		setSize(new Vector2f(width, height));
 	}
 
@@ -171,7 +181,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * .Vector2f)
 	 */
 	@Override
-	public void setSize(Vector2f size) {
+	public void setSize(Vector2f size)
+	{
 		quad = new CenteredQuad(size.x, size.y);
 		quadGeometry.setMesh(quad);
 	}
@@ -183,10 +194,14 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * )
 	 */
 	@Override
-	public void setTexture(Texture tex) {
-		if (wrap) {
+	public void setTexture(Texture tex)
+	{
+		if (wrap)
+		{
 			tex.setWrap(WrapMode.Repeat);
-		} else {
+		}
+		else
+		{
 			tex.setWrap(WrapMode.EdgeClamp);
 		}
 		mat.setTexture("m_ColorMap", tex);
@@ -197,7 +212,8 @@ public class JMEImage extends JMEItem implements IImage, IInitable {
 	 * @see multiplicity3.csys.items.image.IImage#setWrapping(float, float)
 	 */
 	@Override
-	public void setWrapping(float xscale, float yscale) {
+	public void setWrapping(float xscale, float yscale)
+	{
 		this.wrap = true;
 		quad.scaleTextureCoordinates(new Vector2f(xscale, yscale));
 		setImage(this.imageResource); // force a refresh

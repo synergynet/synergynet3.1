@@ -32,7 +32,8 @@ import multiplicity3.csys.animation.elements.AnimationElement;
 /**
  * The Class AnimationSystem.
  */
-public class AnimationSystem implements IUpdateable {
+public class AnimationSystem implements IUpdateable
+{
 
 	/** The instance. */
 	private static AnimationSystem instance;
@@ -43,7 +44,8 @@ public class AnimationSystem implements IUpdateable {
 	/**
 	 * Instantiates a new animation system.
 	 */
-	private AnimationSystem() {
+	private AnimationSystem()
+	{
 	}
 
 	/**
@@ -51,9 +53,12 @@ public class AnimationSystem implements IUpdateable {
 	 *
 	 * @return single instance of AnimationSystem
 	 */
-	public static AnimationSystem getInstance() {
-		synchronized (AnimationSystem.class) {
-			if (instance == null) {
+	public static AnimationSystem getInstance()
+	{
+		synchronized (AnimationSystem.class)
+		{
+			if (instance == null)
+			{
 				instance = new AnimationSystem();
 			}
 			return instance;
@@ -63,10 +68,13 @@ public class AnimationSystem implements IUpdateable {
 	/**
 	 * Adds the.
 	 *
-	 * @param element the element
+	 * @param element
+	 *            the element
 	 */
-	public void add(AnimationElement element) {
-		if (!elements.contains(element)) {
+	public void add(AnimationElement element)
+	{
+		if (!elements.contains(element))
+		{
 			elements.add(element);
 		}
 	}
@@ -74,9 +82,11 @@ public class AnimationSystem implements IUpdateable {
 	/**
 	 * Removes the.
 	 *
-	 * @param element the element
+	 * @param element
+	 *            the element
 	 */
-	public void remove(AnimationElement element) {
+	public void remove(AnimationElement element)
+	{
 		elements.remove(element);
 	}
 
@@ -85,21 +95,27 @@ public class AnimationSystem implements IUpdateable {
 	 * @see multiplicity3.csys.IUpdateable#update(float)
 	 */
 	@Override
-	public void update(float timePerFrameSeconds) {
+	public void update(float timePerFrameSeconds)
+	{
 		List<AnimationElement> scheduledForRemoval = new ArrayList<AnimationElement>();
 
 		// not sure why iterator can't be used here
 		AnimationElement t;
-		for (int i = 0; i < elements.size(); i++) {
+		for (int i = 0; i < elements.size(); i++)
+		{
 			t = elements.get(i);
-			if (t.isFinished()) {
+			if (t.isFinished())
+			{
 				scheduledForRemoval.add(t);
-			} else {
+			}
+			else
+			{
 				t.updateState(timePerFrameSeconds);
 			}
 		}
 
-		if (scheduledForRemoval.size() > 0) {
+		if (scheduledForRemoval.size() > 0)
+		{
 			elements.removeAll(scheduledForRemoval);
 		}
 	}

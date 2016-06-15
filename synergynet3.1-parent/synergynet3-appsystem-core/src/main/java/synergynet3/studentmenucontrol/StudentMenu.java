@@ -27,12 +27,14 @@ import com.jme3.math.Vector2f;
 /**
  * The Class StudentMenu.
  */
-public class StudentMenu {
+public class StudentMenu
+{
 
 	/**
 	 * The Enum DefaultStudentMenuOptions.
 	 */
-	public enum DefaultStudentMenuOptions {
+	public enum DefaultStudentMenuOptions
+	{
 		/** The feedback. */
 		FEEDBACK, /** The gallery. */
 		GALLERY, /** The screenshot. */
@@ -90,47 +92,55 @@ public class StudentMenu {
 	/**
 	 * Instantiates a new student menu.
 	 *
-	 * @param student the student
-	 * @param stage the stage
-	 * @param log the log
-	 * @param app the app
+	 * @param student
+	 *            the student
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
+	 * @param app
+	 *            the app
 	 */
-	public StudentMenu(StudentRepresentation student, IStage stage, Logger log,
-			SynergyNetApp app) {
-		if (log == null) {
+	public StudentMenu(StudentRepresentation student, IStage stage, Logger log, SynergyNetApp app)
+	{
+		if (log == null)
+		{
 			this.log = Logger.getLogger(StudentMenu.class.getName());
-		} else {
+		}
+		else
+		{
 			this.log = log;
 		}
 		this.stage = stage;
 		this.student = student;
 		this.app = app;
 
-		IItem studentIcon = StudentIconGenerator.generateIcon(stage, 75, 75, 6,
-				true, student.getStudentId());
-		try {
-			radialMenu = stage.getContentFactory().create(IRadialMenu.class,
-					"menu", UUID.randomUUID());
-			radialMenu.setRootItem(studentIcon, stage, log,
-					student.getStudentColour());
-			radialMenu.setRelativeLocation(new Vector2f(-stage
-					.getDisplayWidth() - 300, 0));
+		IItem studentIcon = StudentIconGenerator.generateIcon(stage, 75, 75, 6, true, student.getStudentId());
+		try
+		{
+			radialMenu = stage.getContentFactory().create(IRadialMenu.class, "menu", UUID.randomUUID());
+			radialMenu.setRootItem(studentIcon, stage, log, student.getStudentColour());
+			radialMenu.setRelativeLocation(new Vector2f(-stage.getDisplayWidth() - 300, 0));
 			radialMenu.setRadius(150);
 			stage.addItem(radialMenu);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 
-		for (IItem child : studentIcon.getChildItems()) {
-			if (child.getName().contains("userImage")) {
-				child.getMultiTouchDispatcher().addListener(
-						new MultiTouchEventAdapter() {
-							@Override
-							public void cursorClicked(
-									MultiTouchCursorEvent event) {
-								onRootItemClickAction();
-							}
-						});
+		for (IItem child : studentIcon.getChildItems())
+		{
+			if (child.getName().contains("userImage"))
+			{
+				child.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+				{
+					@Override
+					public void cursorClicked(MultiTouchCursorEvent event)
+					{
+						onRootItemClickAction();
+					}
+				});
 			}
 		}
 
@@ -143,10 +153,12 @@ public class StudentMenu {
 	/**
 	 * Adds the option.
 	 *
-	 * @param option the option
+	 * @param option
+	 *            the option
 	 * @return the int
 	 */
-	public int addOption(RadialMenuOption option) {
+	public int addOption(RadialMenuOption option)
+	{
 		return radialMenu.addOption(option);
 	}
 
@@ -155,28 +167,40 @@ public class StudentMenu {
 	 *
 	 * @return the radial menu
 	 */
-	public IRadialMenu getRadialMenu() {
+	public IRadialMenu getRadialMenu()
+	{
 		return radialMenu;
 	}
 
 	/**
 	 * On root item click action.
 	 */
-	public void onRootItemClickAction() {
-		if (!galleryMode) {
-			if (feedbackMode == 0) {
+	public void onRootItemClickAction()
+	{
+		if (!galleryMode)
+		{
+			if (feedbackMode == 0)
+			{
 				radialMenu.toggleOptionVisibility();
-			} else if (feedbackMode == 1) {
-				if (selector != null) {
+			}
+			else if (feedbackMode == 1)
+			{
+				if (selector != null)
+				{
 					selector.tidyAway();
 				}
 				feedbackMode = 0;
-			} else if (feedbackMode == 2) {
-				if (setter != null) {
+			}
+			else if (feedbackMode == 2)
+			{
+				if (setter != null)
+				{
 					setter.tidyAwayFeedbackSetter();
 				}
 			}
-		} else {
+		}
+		else
+		{
 			gallery.setVisibility(false);
 			galleryMode = false;
 		}
@@ -185,10 +209,13 @@ public class StudentMenu {
 	/**
 	 * Re add default option.
 	 *
-	 * @param defaultOption the default option
+	 * @param defaultOption
+	 *            the default option
 	 */
-	public void reAddDefaultOption(DefaultStudentMenuOptions defaultOption) {
-		switch (defaultOption) {
+	public void reAddDefaultOption(DefaultStudentMenuOptions defaultOption)
+	{
+		switch (defaultOption)
+		{
 			case SCREENSHOT:
 				generateScreenshotOption();
 				break;
@@ -204,10 +231,13 @@ public class StudentMenu {
 	/**
 	 * Removes the default option.
 	 *
-	 * @param defaultOption the default option
+	 * @param defaultOption
+	 *            the default option
 	 */
-	public void removeDefaultOption(DefaultStudentMenuOptions defaultOption) {
-		switch (defaultOption) {
+	public void removeDefaultOption(DefaultStudentMenuOptions defaultOption)
+	{
+		switch (defaultOption)
+		{
 			case SCREENSHOT:
 				removeScreenshotOption();
 				break;
@@ -223,12 +253,15 @@ public class StudentMenu {
 	/**
 	 * Removes the menu.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 */
-	public void removeMenu(IStage stage) {
+	public void removeMenu(IStage stage)
+	{
 		radialMenu.setOptionVisibility(false);
 		stage.removeItem(radialMenu);
-		if (gallery != null) {
+		if (gallery != null)
+		{
 			gallery.removeFrom(stage);
 		}
 	}
@@ -236,18 +269,22 @@ public class StudentMenu {
 	/**
 	 * Removes the option.
 	 *
-	 * @param optionIndex the option index
+	 * @param optionIndex
+	 *            the option index
 	 */
-	public void removeOption(int optionIndex) {
+	public void removeOption(int optionIndex)
+	{
 		radialMenu.removeOption(optionIndex);
 	}
 
 	/**
 	 * Sets the feedback mode select.
 	 *
-	 * @param setter the new feedback mode select
+	 * @param setter
+	 *            the new feedback mode select
 	 */
-	public void setFeedbackModeSelect(FeedbackItem setter) {
+	public void setFeedbackModeSelect(FeedbackItem setter)
+	{
 		this.setter = setter;
 		feedbackMode = 2;
 	}
@@ -255,46 +292,54 @@ public class StudentMenu {
 	/**
 	 * Sets the visibility.
 	 *
-	 * @param b the new visibility
+	 * @param b
+	 *            the new visibility
 	 */
-	public void setVisibility(boolean b) {
+	public void setVisibility(boolean b)
+	{
 		radialMenu.setVisible(b);
 	}
 
 	/**
 	 * Turn feedback mode off.
 	 */
-	public void turnFeedbackModeOff() {
+	public void turnFeedbackModeOff()
+	{
 		feedbackMode = 0;
 	}
 
 	/**
 	 * Creates the option wrapper.
 	 *
-	 * @param stage the stage
-	 * @param item the item
-	 * @param log the log
-	 * @param borderWidth the border width
+	 * @param stage
+	 *            the stage
+	 * @param item
+	 *            the item
+	 * @param log
+	 *            the log
+	 * @param borderWidth
+	 *            the border width
 	 * @return the i item
 	 */
-	private IItem createOptionWrapper(IStage stage, ICachableImage item,
-			Logger log, int borderWidth) {
-		try {
+	private IItem createOptionWrapper(IStage stage, ICachableImage item, Logger log, int borderWidth)
+	{
+		try
+		{
 
-			IContainer wrapperFrame = stage.getContentFactory().create(
-					IContainer.class, "userIconWrap", UUID.randomUUID());
+			IContainer wrapperFrame = stage.getContentFactory().create(IContainer.class, "userIconWrap", UUID.randomUUID());
 
 			wrapperFrame.addItem(item);
 
-			IRoundedBorder frameBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "border", UUID.randomUUID());
+			IRoundedBorder frameBorder = stage.getContentFactory().create(IRoundedBorder.class, "border", UUID.randomUUID());
 			frameBorder.setBorderWidth(borderWidth);
 			frameBorder.setSize(item.getWidth(), item.getHeight());
 			frameBorder.setColor(student.getStudentColour());
 			wrapperFrame.addItem(frameBorder);
 
 			return wrapperFrame;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: ", e);
 			return null;
 		}
@@ -303,24 +348,28 @@ public class StudentMenu {
 	/**
 	 * Generate feedback option.
 	 */
-	private void generateFeedbackOption() {
-		try {
-			ICachableImage feedbackImage = stage.getContentFactory().create(
-					ICachableImage.class, "play", UUID.randomUUID());
+	private void generateFeedbackOption()
+	{
+		try
+		{
+			ICachableImage feedbackImage = stage.getContentFactory().create(ICachableImage.class, "play", UUID.randomUUID());
 			feedbackImage.setImage(FEEDBACK_MENU_ICON);
 			feedbackImage.setSize(75, 75);
 
-			IItem wrapperOption = createOptionWrapper(stage, feedbackImage,
-					log, 5);
+			IItem wrapperOption = createOptionWrapper(stage, feedbackImage, log, 5);
 
-			RadialMenuOption option = new RadialMenuOption(wrapperOption) {
+			RadialMenuOption option = new RadialMenuOption(wrapperOption)
+			{
 				@Override
-				public void onOptionSelect() {
+				public void onOptionSelect()
+				{
 					onFeedbackGenerate();
 				}
 			};
 			feedbackOptionIndex = addOption(option);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: ", e);
 		}
 	}
@@ -328,39 +377,42 @@ public class StudentMenu {
 	/**
 	 * Generate gallery option.
 	 */
-	private void generateGalleryOption() {
-		try {
-			ICachableImage galleryImage = stage.getContentFactory().create(
-					ICachableImage.class, "play", UUID.randomUUID());
+	private void generateGalleryOption()
+	{
+		try
+		{
+			ICachableImage galleryImage = stage.getContentFactory().create(ICachableImage.class, "play", UUID.randomUUID());
 			galleryImage.setImage(GALLERY_MENU_ICON);
 			galleryImage.setSize(75, 75);
 
-			IItem wrapperOption = createOptionWrapper(stage, galleryImage, log,
-					5);
+			IItem wrapperOption = createOptionWrapper(stage, galleryImage, log, 5);
 
-			RadialMenuOption option = new RadialMenuOption(wrapperOption) {
+			RadialMenuOption option = new RadialMenuOption(wrapperOption)
+			{
 				@Override
-				public void onOptionSelect() {
+				public void onOptionSelect()
+				{
 					radialMenu.toggleOptionVisibility();
 
-					if (gallery == null) {
+					if (gallery == null)
+					{
 						gallery = student.getGallery();
 						gallery.generateGallery(stage);
 					}
 
 					gallery.setVisibility(true);
 
-					gallery.asItem().setRelativeLocation(
-							radialMenu.getRelativeLocation());
-					gallery.asItem().setRelativeRotation(
-							radialMenu.getRelativeRotation());
+					gallery.asItem().setRelativeLocation(radialMenu.getRelativeLocation());
+					gallery.asItem().setRelativeRotation(radialMenu.getRelativeRotation());
 
 					galleryMode = true;
 
 				}
 			};
 			galleryOptionIndex = addOption(option);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: ", e);
 		}
 	}
@@ -368,26 +420,29 @@ public class StudentMenu {
 	/**
 	 * Generate screenshot option.
 	 */
-	private void generateScreenshotOption() {
-		try {
-			ICachableImage screenshotImage = stage.getContentFactory().create(
-					ICachableImage.class, "play", UUID.randomUUID());
+	private void generateScreenshotOption()
+	{
+		try
+		{
+			ICachableImage screenshotImage = stage.getContentFactory().create(ICachableImage.class, "play", UUID.randomUUID());
 			screenshotImage.setImage(SCREENSHOT_MENU_ICON);
 			screenshotImage.setSize(75, 75);
 
-			IItem wrapperOption = createOptionWrapper(stage, screenshotImage,
-					log, 5);
+			IItem wrapperOption = createOptionWrapper(stage, screenshotImage, log, 5);
 
-			RadialMenuOption option = new RadialMenuOption(wrapperOption) {
+			RadialMenuOption option = new RadialMenuOption(wrapperOption)
+			{
 				@Override
-				public void onOptionSelect() {
+				public void onOptionSelect()
+				{
 					radialMenu.toggleOptionVisibility();
-					app.createScreenShotItem(radialMenu.getRelativeLocation(),
-							radialMenu.getRelativeRotation());
+					app.createScreenShotItem(radialMenu.getRelativeLocation(), radialMenu.getRelativeRotation());
 				}
 			};
 			screenshotOptionIndex = addOption(option);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: ", e);
 		}
 	}
@@ -395,17 +450,18 @@ public class StudentMenu {
 	/**
 	 * On feedback generate.
 	 */
-	private void onFeedbackGenerate() {
+	private void onFeedbackGenerate()
+	{
 		radialMenu.toggleOptionVisibility();
 		feedbackMode = 1;
-		selector = FeedbackSystem.createSetter(stage, log,
-				app.getFeedbackTypes(), student, this);
+		selector = FeedbackSystem.createSetter(stage, log, app.getFeedbackTypes(), student, this);
 	}
 
 	/**
 	 * Removes the feedback option.
 	 */
-	private void removeFeedbackOption() {
+	private void removeFeedbackOption()
+	{
 		removeOption(feedbackOptionIndex);
 		feedbackOptionIndex = -1;
 	}
@@ -413,7 +469,8 @@ public class StudentMenu {
 	/**
 	 * Removes the gallery option.
 	 */
-	private void removeGalleryOption() {
+	private void removeGalleryOption()
+	{
 		removeOption(galleryOptionIndex);
 		galleryOptionIndex = -1;
 	}
@@ -421,7 +478,8 @@ public class StudentMenu {
 	/**
 	 * Removes the screenshot option.
 	 */
-	private void removeScreenshotOption() {
+	private void removeScreenshotOption()
+	{
 		removeOption(screenshotOptionIndex);
 		screenshotOptionIndex = -1;
 	}

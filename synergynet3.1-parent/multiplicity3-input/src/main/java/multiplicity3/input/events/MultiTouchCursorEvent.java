@@ -34,7 +34,8 @@ import com.jme3.math.Vector2f;
  *
  * @author dcs0ah1
  */
-public class MultiTouchCursorEvent extends MultiTouchEvent {
+public class MultiTouchCursorEvent extends MultiTouchEvent
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3249909209093608288L;
@@ -45,35 +46,47 @@ public class MultiTouchCursorEvent extends MultiTouchEvent {
 	/**
 	 * Instantiates a new multi touch cursor event.
 	 *
-	 * @param id the id
-	 * @param position the position
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
 	 */
-	public MultiTouchCursorEvent(long id, Vector2f position) {
+	public MultiTouchCursorEvent(long id, Vector2f position)
+	{
 		super(id, position);
 	}
 
 	/**
 	 * Instantiates a new multi touch cursor event.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param velocity the velocity
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
 	 */
-	public MultiTouchCursorEvent(long id, Vector2f position, Vector2f velocity) {
+	public MultiTouchCursorEvent(long id, Vector2f position, Vector2f velocity)
+	{
 		super(id, position, velocity);
 	}
 
 	/**
 	 * Instantiates a new multi touch cursor event.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param velocity the velocity
-	 * @param pressure the pressure
-	 * @param angle the angle
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
+	 * @param pressure
+	 *            the pressure
+	 * @param angle
+	 *            the angle
 	 */
-	public MultiTouchCursorEvent(long id, Vector2f position, Vector2f velocity,
-			float pressure, double angle) {
+	public MultiTouchCursorEvent(long id, Vector2f position, Vector2f velocity, float pressure, double angle)
+	{
 		super(id, position, velocity, pressure, angle);
 	}
 
@@ -82,16 +95,19 @@ public class MultiTouchCursorEvent extends MultiTouchEvent {
 	 *
 	 * @return the click count
 	 */
-	public int getClickCount() {
+	public int getClickCount()
+	{
 		return clickCount;
 	}
 
 	/**
 	 * Sets the click count.
 	 *
-	 * @param clickCount the new click count
+	 * @param clickCount
+	 *            the new click count
 	 */
-	public void setClickCount(int clickCount) {
+	public void setClickCount(int clickCount)
+	{
 		this.clickCount = clickCount;
 	}
 
@@ -99,8 +115,9 @@ public class MultiTouchCursorEvent extends MultiTouchEvent {
 	 * (non-Javadoc)
 	 * @see multiplicity3.input.events.MultiTouchEvent#toString()
 	 */
-	public String toString() {
-		return this.getClass().getName() + " id:" + this.getCursorID() + " @"
-				+ this.getPosition();
+	@Override
+	public String toString()
+	{
+		return this.getClass().getName() + " id:" + this.getCursorID() + " @" + this.getPosition();
 	}
 }

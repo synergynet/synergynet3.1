@@ -30,8 +30,8 @@ import com.jme3.math.Vector2f;
  * The Class SimpleKeyboard.
  */
 @ImplementsContentItem(target = ISimpleKeyboard.class)
-public class SimpleKeyboard extends JMEContainer implements IInitable,
-		ISimpleKeyboard {
+public class SimpleKeyboard extends JMEContainer implements IInitable, ISimpleKeyboard
+{
 
 	/** The Constant BUTTON_SIZE. */
 	private static final float BUTTON_SIZE = 40;
@@ -105,10 +105,13 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Instantiates a new simple keyboard.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public SimpleKeyboard(String name, UUID uuid) {
+	public SimpleKeyboard(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -118,20 +121,19 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	 * multiplicity3.csys.stage.IStage, synergynet3.keyboard.KeyboardOutput)
 	 */
 	@Override
-	public void generateKeys(final IStage stage,
-			final KeyboardOutput keyboardOutput) {
+	public void generateKeys(final IStage stage, final KeyboardOutput keyboardOutput)
+	{
 		this.stage = stage;
 		this.keyboardOutput = keyboardOutput;
 
-		try {
-			IColourRectangle background = stage.getContentFactory().create(
-					IColourRectangle.class, "keyboardBg", UUID.randomUUID());
+		try
+		{
+			IColourRectangle background = stage.getContentFactory().create(IColourRectangle.class, "keyboardBg", UUID.randomUUID());
 			background.enableTransparency();
 			background.setSolidBackgroundColour(bgColour);
 			background.setSize(width, height);
 
-			IRoundedBorder keyboardBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "keyboardBorder", UUID.randomUUID());
+			IRoundedBorder keyboardBorder = stage.getContentFactory().create(IRoundedBorder.class, "keyboardBorder", UUID.randomUUID());
 			keyboardBorder.setBorderWidth(15f);
 			keyboardBorder.setSize(width, height);
 			keyboardBorder.setColor(boardBorderColour);
@@ -139,26 +141,23 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 			this.addItem(background);
 			this.addItem(keyboardBorder);
 
-			if (keyColour.getAlpha() > 0) {
-				IImage keyBackgrounds = stage.getContentFactory().create(
-						IImage.class, "keyBackgrounds", UUID.randomUUID());
-				keyBackgrounds
-						.setImage(getKeyboardKeyBackgroundColour(keyColour));
+			if (keyColour.getAlpha() > 0)
+			{
+				IImage keyBackgrounds = stage.getContentFactory().create(IImage.class, "keyBackgrounds", UUID.randomUUID());
+				keyBackgrounds.setImage(getKeyboardKeyBackgroundColour(keyColour));
 				keyBackgrounds.setSize(696, 246);
 				this.addItem(keyBackgrounds);
 			}
 
-			if (keyBorderColour.getAlpha() > 0) {
-				IImage keyBorders = stage.getContentFactory().create(
-						IImage.class, "keyBorders", UUID.randomUUID());
-				keyBorders
-						.setImage(getKeyboardKeyBorderColour(keyBorderColour));
+			if (keyBorderColour.getAlpha() > 0)
+			{
+				IImage keyBorders = stage.getContentFactory().create(IImage.class, "keyBorders", UUID.randomUUID());
+				keyBorders.setImage(getKeyboardKeyBorderColour(keyBorderColour));
 				keyBorders.setSize(696, 246);
 				this.addItem(keyBorders);
 			}
 
-			IImage specialKeys = stage.getContentFactory().create(IImage.class,
-					"specialKey", UUID.randomUUID());
+			IImage specialKeys = stage.getContentFactory().create(IImage.class, "specialKey", UUID.randomUUID());
 			specialKeys.setImage(getKeyboardKeySpecialColour(fontColour));
 			specialKeys.setSize(696, 246);
 			this.addItem(specialKeys);
@@ -238,71 +237,82 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 
 			generateSpaceKey();
 
-			listener = stage.getContentFactory().create(IImage.class,
-					"listenBlock", UUID.randomUUID());
+			listener = stage.getContentFactory().create(IImage.class, "listenBlock", UUID.randomUUID());
 			listener.setSize(width + 30f, height + 30f);
 			this.addItem(listener);
 
-			final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+			final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+			{
 				@Override
-				public void onAction(MultiTouchCursorEvent event) {
-					Vector2f eventLoc = new Vector2f(event.getPosition().x
-							* stage.getDisplayWidth(), event.getPosition().y
-							* stage.getDisplayHeight());
+				public void onAction(MultiTouchCursorEvent event)
+				{
+					Vector2f eventLoc = new Vector2f(event.getPosition().x * stage.getDisplayWidth(), event.getPosition().y * stage.getDisplayHeight());
 
 					String closest = "";
 					float distance = stage.getDisplayWidth();
-					if (caps) {
-						for (IMutableLabel key : capKeys) {
-							float currentDistance = eventLoc.distance(key
-									.getWorldLocation());
-							if (currentDistance < distance) {
-								closest = key.getText();
-								distance = currentDistance;
-							}
-						}
-					} else {
-						for (IMutableLabel key : lowerKeys) {
-							float currentDistance = eventLoc.distance(key
-									.getWorldLocation());
-							if (currentDistance < distance) {
+					if (caps)
+					{
+						for (IMutableLabel key : capKeys)
+						{
+							float currentDistance = eventLoc.distance(key.getWorldLocation());
+							if (currentDistance < distance)
+							{
 								closest = key.getText();
 								distance = currentDistance;
 							}
 						}
 					}
-					if (!closest.equals("")) {
-						if (distance < (BUTTON_SIZE / 2)) {
+					else
+					{
+						for (IMutableLabel key : lowerKeys)
+						{
+							float currentDistance = eventLoc.distance(key.getWorldLocation());
+							if (currentDistance < distance)
+							{
+								closest = key.getText();
+								distance = currentDistance;
+							}
+						}
+					}
+					if (!closest.equals(""))
+					{
+						if (distance < (BUTTON_SIZE / 2))
+						{
 							keyboardOutput.onKeyboardOutput(closest);
 						}
 					}
 				}
 			};
 
-			listener.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							clicker.click(event);
-						}
-					});
+			listener.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					clicker.click(event);
+				}
+			});
 
-			for (IItem item : toAddAtEndOfSetup) {
+			for (IItem item : toAddAtEndOfSetup)
+			{
 				this.addItem(item);
 			}
 
 			this.zOrderManager.setAutoBringToTop(false);
 
-			if (movable) {
-				rts = stage.getBehaviourMaker().addBehaviour(listener,
-						RotateTranslateScaleBehaviour.class);
+			if (movable)
+			{
+				rts = stage.getBehaviourMaker().addBehaviour(listener, RotateTranslateScaleBehaviour.class);
 				rts.setItemActingOn(this);
-				if (scaleLimitsSet) {
+				if (scaleLimitsSet)
+				{
 					rts.setScaleLimits(minScale, maxScale);
 				}
 			}
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 		}
 	}
 
@@ -310,14 +320,18 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleKeyboard#getHeight()
 	 */
-	public float getHeight() {
+	@Override
+	public float getHeight()
+	{
 		return height;
 	}
 
 	/**
 	 * @return the listener
 	 */
-	public IImage getListener() {
+	@Override
+	public IImage getListener()
+	{
 		return listener;
 	}
 
@@ -325,7 +339,9 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleKeyboard#getWidth()
 	 */
-	public float getWidth() {
+	@Override
+	public float getWidth()
+	{
 		return width;
 	}
 
@@ -337,9 +353,8 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	 * com.jme3.math.ColorRGBA, synergynet3.fonts.FontColour)
 	 */
 	@Override
-	public void setColours(ColorRGBA bgColour, ColorRGBA keyColour,
-			ColorRGBA keyBorderColour, ColorRGBA boardBorderColour,
-			FontColour fontColour) {
+	public void setColours(ColorRGBA bgColour, ColorRGBA keyColour, ColorRGBA keyBorderColour, ColorRGBA boardBorderColour, FontColour fontColour)
+	{
 		this.bgColour = bgColour;
 		this.keyColour = keyColour;
 		this.keyBorderColour = keyBorderColour;
@@ -354,7 +369,8 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	 * )
 	 */
 	@Override
-	public void setMovable(boolean movable) {
+	public void setMovable(boolean movable)
+	{
 		this.movable = movable;
 	}
 
@@ -364,10 +380,13 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	 * synergynet3.additionalitems.interfaces.ISimpleKeyboard#setScaleLimits
 	 * (float, float)
 	 */
-	public void setScaleLimits(float minScale, float maxScale) {
+	@Override
+	public void setScaleLimits(float minScale, float maxScale)
+	{
 		this.minScale = minScale;
 		this.maxScale = maxScale;
-		if (rts != null) {
+		if (rts != null)
+		{
 			rts.setScaleLimits(minScale, maxScale);
 		}
 		scaleLimitsSet = true;
@@ -376,34 +395,59 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Colour rgba to string.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the string
 	 */
-	private String colourRGBAToString(ColorRGBA colour) {
+	private String colourRGBAToString(ColorRGBA colour)
+	{
 		String toReturn = "white";
-		if (colour.equals(ColorRGBA.Black)) {
+		if (colour.equals(ColorRGBA.Black))
+		{
 			toReturn = "black";
-		} else if (colour.equals(ColorRGBA.Blue)) {
+		}
+		else if (colour.equals(ColorRGBA.Blue))
+		{
 			toReturn = "blue";
-		} else if (colour.equals(ColorRGBA.Cyan)) {
+		}
+		else if (colour.equals(ColorRGBA.Cyan))
+		{
 			toReturn = "cyan";
-		} else if (colour.equals(ColorRGBA.Green)) {
+		}
+		else if (colour.equals(ColorRGBA.Green))
+		{
 			toReturn = "green";
-		} else if (colour.equals(ColorRGBA.Magenta)) {
+		}
+		else if (colour.equals(ColorRGBA.Magenta))
+		{
 			toReturn = "magenta";
-		} else if (colour.equals(ColorRGBA.Orange)) {
+		}
+		else if (colour.equals(ColorRGBA.Orange))
+		{
 			toReturn = "orange";
-		} else if (colour.equals(ColorRGBA.Red)) {
+		}
+		else if (colour.equals(ColorRGBA.Red))
+		{
 			toReturn = "red";
-		} else if (colour.equals(ColorRGBA.White)) {
+		}
+		else if (colour.equals(ColorRGBA.White))
+		{
 			toReturn = "white";
-		} else if (colour.equals(ColorRGBA.Yellow)) {
+		}
+		else if (colour.equals(ColorRGBA.Yellow))
+		{
 			toReturn = "yellow";
-		} else if (colour.equals(ColorRGBA.Gray)) {
+		}
+		else if (colour.equals(ColorRGBA.Gray))
+		{
 			toReturn = "grey";
-		} else if (colour.equals(ColorRGBA.DarkGray)) {
+		}
+		else if (colour.equals(ColorRGBA.DarkGray))
+		{
 			toReturn = "dark_grey";
-		} else {
+		}
+		else
+		{
 			toReturn = "white";
 		}
 		return toReturn;
@@ -412,48 +456,51 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Font colour to string.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the string
 	 */
-	private String fontColourToString(FontColour colour) {
+	private String fontColourToString(FontColour colour)
+	{
 		String toReturn = "white";
-		switch (colour) {
+		switch (colour)
+		{
 			case Black:
 				toReturn = "black";
-			break;
+				break;
 			case Blue:
 				toReturn = "blue";
-			break;
+				break;
 			case Cyan:
 				toReturn = "cyan";
-			break;
+				break;
 			case Green:
 				toReturn = "green";
-			break;
+				break;
 			case Magenta:
 				toReturn = "magenta";
-			break;
+				break;
 			case Orange:
 				toReturn = "orange";
-			break;
+				break;
 			case Red:
 				toReturn = "red";
-			break;
+				break;
 			case White:
 				toReturn = "white";
-			break;
+				break;
 			case Yellow:
 				toReturn = "yellow";
-			break;
+				break;
 			case Grey:
 				toReturn = "grey";
-			break;
+				break;
 			case Dark_Grey:
 				toReturn = "dark_grey";
-			break;
+				break;
 			default:
 				toReturn = "white";
-			break;
+				break;
 		}
 		return toReturn;
 	}
@@ -461,11 +508,13 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate alphabetical key.
 	 *
-	 * @param key the key
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param key
+	 *            the key
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateAlphabeticalKey(String key)
-			throws ContentTypeNotBoundException {
+	private void generateAlphabeticalKey(String key) throws ContentTypeNotBoundException
+	{
 		generateKey(key.toLowerCase(), key.toUpperCase());
 		x += BUTTON_SPACING;
 	}
@@ -473,33 +522,35 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate backspace key.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateBackspaceKey() throws ContentTypeNotBoundException {
+	private void generateBackspaceKey() throws ContentTypeNotBoundException
+	{
 		float backSpaceKeyWidth = BUTTON_SIZE + BUTTON_SPACING;
 		float gap = BUTTON_SPACING - BUTTON_SIZE;
-		x += (((backSpaceKeyWidth / 2)) + gap + (BUTTON_SIZE / 2))
-				- BUTTON_SPACING;
+		x += (((backSpaceKeyWidth / 2)) + gap + (BUTTON_SIZE / 2)) - BUTTON_SPACING;
 
-		IImage button = stage.getContentFactory().create(IImage.class,
-				"button", UUID.randomUUID());
+		IImage button = stage.getContentFactory().create(IImage.class, "button", UUID.randomUUID());
 		button.setSize(backSpaceKeyWidth, BUTTON_SIZE);
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				keyboardOutput.onKeyboardOutput(KeyboardSpecialKeys.BACKSPACE
-						.toString());
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				keyboardOutput.onKeyboardOutput(KeyboardSpecialKeys.BACKSPACE.toString());
 			}
 		};
 
-		button.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		button.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 		button.setRelativeLocation(new Vector2f(x, y));
 
 		toAddAtEndOfSetup.add(button);
@@ -508,33 +559,36 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate enter key.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateEnterKey() throws ContentTypeNotBoundException {
+	private void generateEnterKey() throws ContentTypeNotBoundException
+	{
 
 		float enterKeyWidth = BUTTON_SIZE + (BUTTON_SPACING * 0.5f);
 		float gap = BUTTON_SPACING - BUTTON_SIZE;
 		x += (((enterKeyWidth / 2)) + gap + (BUTTON_SIZE / 2)) - BUTTON_SPACING;
 
-		IImage button = stage.getContentFactory().create(IImage.class,
-				"button", UUID.randomUUID());
+		IImage button = stage.getContentFactory().create(IImage.class, "button", UUID.randomUUID());
 		button.setSize(enterKeyWidth, (BUTTON_SIZE * 2) + gap);
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				keyboardOutput.onKeyboardOutput(KeyboardSpecialKeys.ENTER
-						.toString());
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				keyboardOutput.onKeyboardOutput(KeyboardSpecialKeys.ENTER.toString());
 			}
 		};
 
-		button.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		button.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 		button.setRelativeLocation(new Vector2f(x, y));
 
 		toAddAtEndOfSetup.add(button);
@@ -543,23 +597,24 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate key.
 	 *
-	 * @param lowerLetter the lower letter
-	 * @param upperLetter the upper letter
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param lowerLetter
+	 *            the lower letter
+	 * @param upperLetter
+	 *            the upper letter
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateKey(final String lowerLetter, final String upperLetter)
-			throws ContentTypeNotBoundException {
+	private void generateKey(final String lowerLetter, final String upperLetter) throws ContentTypeNotBoundException
+	{
 
-		IMutableLabel textLabelOff = stage.getContentFactory().create(
-				IMutableLabel.class, "textLabel", UUID.randomUUID());
+		IMutableLabel textLabelOff = stage.getContentFactory().create(IMutableLabel.class, "textLabel", UUID.randomUUID());
 		textLabelOff.setFont(FontUtil.getFont(fontColour));
 		textLabelOff.setRelativeScale(0.8f);
 		textLabelOff.setBoxSize(BUTTON_SIZE, BUTTON_SIZE);
 		textLabelOff.setText(lowerLetter);
 		textLabelOff.setRelativeLocation(new Vector2f(x, y));
 
-		IMutableLabel textLabelOn = stage.getContentFactory().create(
-				IMutableLabel.class, "textLabel", UUID.randomUUID());
+		IMutableLabel textLabelOn = stage.getContentFactory().create(IMutableLabel.class, "textLabel", UUID.randomUUID());
 		textLabelOn.setFont(FontUtil.getFont(fontColour));
 		textLabelOn.setRelativeScale(0.8f);
 		textLabelOn.setBoxSize(BUTTON_SIZE, BUTTON_SIZE);
@@ -577,12 +632,15 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate non alphabetical key.
 	 *
-	 * @param keyLower the key lower
-	 * @param keyHigher the key higher
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param keyLower
+	 *            the key lower
+	 * @param keyHigher
+	 *            the key higher
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateNonAlphabeticalKey(String keyLower, String keyHigher)
-			throws ContentTypeNotBoundException {
+	private void generateNonAlphabeticalKey(String keyLower, String keyHigher) throws ContentTypeNotBoundException
+	{
 		generateKey(keyLower, keyHigher);
 		x += BUTTON_SPACING;
 	}
@@ -590,38 +648,44 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate shift key.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateShiftKey() throws ContentTypeNotBoundException {
+	private void generateShiftKey() throws ContentTypeNotBoundException
+	{
 		float capsKeyWidth = BUTTON_SIZE + BUTTON_SPACING;
 
 		float gap = BUTTON_SPACING - BUTTON_SIZE;
 		x += ((capsKeyWidth / 2) + gap + (BUTTON_SIZE / 2)) - BUTTON_SPACING;
 
-		IImage button = stage.getContentFactory().create(IImage.class,
-				"button", UUID.randomUUID());
+		IImage button = stage.getContentFactory().create(IImage.class, "button", UUID.randomUUID());
 		button.setSize(capsKeyWidth, BUTTON_SIZE);
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				caps = !caps;
-				for (IMutableLabel key : capKeys) {
+				for (IMutableLabel key : capKeys)
+				{
 					key.setVisible(caps);
 				}
-				for (IMutableLabel key : lowerKeys) {
+				for (IMutableLabel key : lowerKeys)
+				{
 					key.setVisible(!caps);
 				}
 			}
 		};
 
-		button.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		button.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 		button.setRelativeLocation(new Vector2f(x, y));
 		toAddAtEndOfSetup.add(button);
 	}
@@ -629,27 +693,31 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Generate space key.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateSpaceKey() throws ContentTypeNotBoundException {
-		IImage button = stage.getContentFactory().create(IImage.class,
-				"button", UUID.randomUUID());
+	private void generateSpaceKey() throws ContentTypeNotBoundException
+	{
+		IImage button = stage.getContentFactory().create(IImage.class, "button", UUID.randomUUID());
 		button.setSize(BUTTON_SIZE * 8, BUTTON_SIZE);
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				keyboardOutput.onKeyboardOutput(" ");
 			}
 		};
 
-		button.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		button.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 
 		button.setRelativeLocation(new Vector2f(x, y));
 		toAddAtEndOfSetup.add(button);
@@ -658,10 +726,12 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Gets the keyboard key background colour.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the keyboard key background colour
 	 */
-	private String getKeyboardKeyBackgroundColour(ColorRGBA colour) {
+	private String getKeyboardKeyBackgroundColour(ColorRGBA colour)
+	{
 		String toReturn = keyboardLoc + "keybackgrounds/";
 		toReturn += colourRGBAToString(colour);
 		toReturn += "_keyboard_key_background.png";
@@ -671,10 +741,12 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Gets the keyboard key border colour.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the keyboard key border colour
 	 */
-	private String getKeyboardKeyBorderColour(ColorRGBA colour) {
+	private String getKeyboardKeyBorderColour(ColorRGBA colour)
+	{
 		String toReturn = keyboardLoc + "keyborders/";
 		toReturn += colourRGBAToString(colour);
 		toReturn += "_keyboard_key_borders.png";
@@ -684,10 +756,12 @@ public class SimpleKeyboard extends JMEContainer implements IInitable,
 	/**
 	 * Gets the keyboard key special colour.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the keyboard key special colour
 	 */
-	private String getKeyboardKeySpecialColour(FontColour colour) {
+	private String getKeyboardKeySpecialColour(FontColour colour)
+	{
 		String toReturn = keyboardLoc + "specialkeys/";
 		toReturn += fontColourToString(colour);
 		toReturn += "_keyboard_special_keys.png";

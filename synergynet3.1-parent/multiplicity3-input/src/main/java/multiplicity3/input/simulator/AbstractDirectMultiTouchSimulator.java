@@ -33,12 +33,11 @@ import com.jme3.math.Vector2f;
 /**
  * The Class AbstractDirectMultiTouchSimulator.
  */
-public abstract class AbstractDirectMultiTouchSimulator extends
-		AbstractMultiTouchSimulator {
+public abstract class AbstractDirectMultiTouchSimulator extends AbstractMultiTouchSimulator
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(AbstractDirectMultiTouchSimulator.class.getName());
+	private static final Logger log = Logger.getLogger(AbstractDirectMultiTouchSimulator.class.getName());
 
 	/*
 	 * (non-Javadoc)
@@ -47,22 +46,26 @@ public abstract class AbstractDirectMultiTouchSimulator extends
 	 * (int, float, float)
 	 */
 	@Override
-	public void deleteCursor(int id, float x, float y) {
+	public void deleteCursor(int id, float x, float y)
+	{
 		Vector2f pos = new Vector2f(x, y);
 
 		MultiTouchCursorEvent event = new MultiTouchCursorEvent(id, pos);
 		int clickCount = clickDetector.cursorReleasedGetClickCount(id, pos);
 
-		if (clickCount > 0) {
+		if (clickCount > 0)
+		{
 			log.finer("Dispatching cursorClicked " + event);
-			for (IMultiTouchEventListener l : listeners) {
+			for (IMultiTouchEventListener l : listeners)
+			{
 				l.cursorClicked(event);
 			}
 		}
 
 		log.finer("Dispatching cursorReleased " + event);
 
-		for (IMultiTouchEventListener l : listeners) {
+		for (IMultiTouchEventListener l : listeners)
+		{
 			l.cursorReleased(event);
 		}
 	}
@@ -74,8 +77,8 @@ public abstract class AbstractDirectMultiTouchSimulator extends
 	 * (int, float, float, int, float, float)
 	 */
 	@Override
-	public void deleteTwoCursors(int id1, float x1, float y1, int id2,
-			float x2, float y2) {
+	public void deleteTwoCursors(int id1, float x1, float y1, int id2, float x2, float y2)
+	{
 		deleteCursor(id1, x1, y1);
 		deleteCursor(id2, x2, y2);
 	}
@@ -87,14 +90,16 @@ public abstract class AbstractDirectMultiTouchSimulator extends
 	 * float, float)
 	 */
 	@Override
-	public void newCursor(int id, float x, float y) {
+	public void newCursor(int id, float x, float y)
+	{
 		Vector2f pos = new Vector2f(x, y);
 		MultiTouchCursorEvent event = new MultiTouchCursorEvent(id, pos);
 		clickDetector.newCursorPressed(id, pos);
 
 		log.finer("Dispatching cursorPressed: " + event);
 
-		for (IMultiTouchEventListener l : listeners) {
+		for (IMultiTouchEventListener l : listeners)
+		{
 			l.cursorPressed(event);
 		}
 	}
@@ -106,11 +111,13 @@ public abstract class AbstractDirectMultiTouchSimulator extends
 	 * (int, float, float)
 	 */
 	@Override
-	public void updateCursor(int id, float x, float y) {
+	public void updateCursor(int id, float x, float y)
+	{
 		Vector2f pos = new Vector2f(x, y);
 		MultiTouchCursorEvent event = new MultiTouchCursorEvent(id, pos);
 		log.finer("Dispatching cursorChanged " + event);
-		for (IMultiTouchEventListener l : listeners) {
+		for (IMultiTouchEventListener l : listeners)
+		{
 			l.cursorChanged(event);
 		}
 	}
@@ -122,8 +129,8 @@ public abstract class AbstractDirectMultiTouchSimulator extends
 	 * (int, float, float, int, float, float)
 	 */
 	@Override
-	public void updateTwoCursors(int id1, float x, float y, int id2, float x2,
-			float y2) {
+	public void updateTwoCursors(int id1, float x, float y, int id2, float x2, float y2)
+	{
 		updateCursor(id1, x, y);
 		updateCursor(id2, x2, y2);
 	}

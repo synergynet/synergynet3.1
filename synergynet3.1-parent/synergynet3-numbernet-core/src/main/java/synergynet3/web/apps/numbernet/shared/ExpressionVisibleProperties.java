@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * The Class ExpressionVisibleProperties.
  */
-public class ExpressionVisibleProperties implements Serializable {
+public class ExpressionVisibleProperties implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5807409666128523227L;
@@ -25,6 +26,7 @@ public class ExpressionVisibleProperties implements Serializable {
 	/**
 	 * Instantiates a new expression visible properties.
 	 */
-	public ExpressionVisibleProperties() {
+	public ExpressionVisibleProperties()
+	{
 	}
 }

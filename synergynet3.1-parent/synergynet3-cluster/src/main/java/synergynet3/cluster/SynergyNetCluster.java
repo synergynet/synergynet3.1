@@ -18,14 +18,14 @@ import com.hazelcast.core.Hazelcast;
 /**
  * The Class SynergyNetCluster.
  */
-public class SynergyNetCluster {
+public class SynergyNetCluster
+{
 
 	/** The instance. */
 	private static SynergyNetCluster instance;
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(SynergyNetCluster.class
-			.getName());
+	private static final Logger log = Logger.getLogger(SynergyNetCluster.class.getName());
 
 	/** The server config prefs item. */
 	private static WebConfigPrefsItem serverConfigPrefsItem = new WebConfigPrefsItem();
@@ -51,9 +51,11 @@ public class SynergyNetCluster {
 	/**
 	 * Instantiates a new synergy net cluster.
 	 *
-	 * @param identity the identity
+	 * @param identity
+	 *            the identity
 	 */
-	public SynergyNetCluster(String identity) {
+	public SynergyNetCluster(String identity)
+	{
 		log.info("SynergyNetCluster() for " + identity);
 		this.identity = identity;
 	}
@@ -63,10 +65,13 @@ public class SynergyNetCluster {
 	 *
 	 * @return the synergy net cluster
 	 */
-	public static SynergyNetCluster get() {
-		synchronized (SynergyNetCluster.class) {
+	public static SynergyNetCluster get()
+	{
+		synchronized (SynergyNetCluster.class)
+		{
 			String identity = serverConfigPrefsItem.getClusterUserName();
-			if (instance == null) {
+			if (instance == null)
+			{
 				instance = new SynergyNetCluster(identity);
 				instance.getPresenceManager(); // forces cluster to go online
 			}
@@ -79,8 +84,10 @@ public class SynergyNetCluster {
 	 *
 	 * @return the device cluster manager
 	 */
-	public ClusteredDeviceManager getDeviceClusterManager() {
-		if (deviceManager == null) {
+	public ClusteredDeviceManager getDeviceClusterManager()
+	{
+		if (deviceManager == null)
+		{
 			Hazelcast.getDefaultInstance();
 			this.deviceManager = new ClusteredDeviceManager(this.identity);
 		}
@@ -92,10 +99,11 @@ public class SynergyNetCluster {
 	 *
 	 * @return the file share utility
 	 */
-	public FileShareSystem getFileShareUtility() {
-		if (fileShareUtility == null) {
-			fileShareUtility = new FileShareSystem(this.identity,
-					getLocalFileCacheDirectory());
+	public FileShareSystem getFileShareUtility()
+	{
+		if (fileShareUtility == null)
+		{
+			fileShareUtility = new FileShareSystem(this.identity, getLocalFileCacheDirectory());
 		}
 		return fileShareUtility;
 	}
@@ -105,7 +113,8 @@ public class SynergyNetCluster {
 	 *
 	 * @return the identity
 	 */
-	public String getIdentity() {
+	public String getIdentity()
+	{
 		return this.identity;
 	}
 
@@ -114,8 +123,10 @@ public class SynergyNetCluster {
 	 *
 	 * @return the messaging manager
 	 */
-	public MessagingManager getMessagingManager() {
-		if (messagingManager == null) {
+	public MessagingManager getMessagingManager()
+	{
+		if (messagingManager == null)
+		{
 			messagingManager = new MessagingManager();
 			messagingManager.setConnection(getXMPPConnection());
 		}
@@ -127,8 +138,10 @@ public class SynergyNetCluster {
 	 *
 	 * @return the presence manager
 	 */
-	public PresenceManager getPresenceManager() {
-		if (presenceManager == null) {
+	public PresenceManager getPresenceManager()
+	{
+		if (presenceManager == null)
+		{
 			presenceManager = new PresenceManager();
 			presenceManager.setConnection(getXMPPConnection());
 		}
@@ -141,17 +154,21 @@ public class SynergyNetCluster {
 	 *
 	 * @return the XMPP connection
 	 */
-	public XMPPConnection getXMPPConnection() {
-		if (this.xmpp == null) {
-			ConnectionConfiguration config = new ConnectionConfiguration(
-					serverConfigPrefsItem.getClusterHost(), serverConfigPrefsItem.getPort());
+	public XMPPConnection getXMPPConnection()
+	{
+		if (this.xmpp == null)
+		{
+			ConnectionConfiguration config = new ConnectionConfiguration(serverConfigPrefsItem.getClusterHost(), serverConfigPrefsItem.getPort());
 			config.setSASLAuthenticationEnabled(false);
 			config.setDebuggerEnabled(false);
 			this.xmpp = new XMPPConnection(config);
-			try {
+			try
+			{
 				xmpp.connect();
 				xmpp.login(identity, serverConfigPrefsItem.getClusterPassword());
-			} catch (XMPPException e) {
+			}
+			catch (XMPPException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -161,7 +178,8 @@ public class SynergyNetCluster {
 	/**
 	 * Shutdown.
 	 */
-	public void shutdown() {
+	public void shutdown()
+	{
 		xmpp.disconnect();
 		Hazelcast.shutdownAll();
 	}
@@ -171,7 +189,8 @@ public class SynergyNetCluster {
 	 *
 	 * @return the local file cache directory
 	 */
-	private File getLocalFileCacheDirectory() {
+	private File getLocalFileCacheDirectory()
+	{
 		File userHomeDirectory = new File(System.getProperty("user.home"));
 		File synergynet3Directory = new File(userHomeDirectory, ".synergynet3");
 		File identityDirectory = new File(synergynet3Directory, this.identity);

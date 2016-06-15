@@ -11,11 +11,11 @@ import com.hazelcast.core.IMap;
 /**
  * The Class ClusteredDevice.
  */
-public abstract class ClusteredDevice {
+public abstract class ClusteredDevice
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(ClusteredDevice.class
-			.getName());
+	private static final Logger log = Logger.getLogger(ClusteredDevice.class.getName());
 
 	/** The distributed property map. */
 	private DistributedPropertyMap distributedPropertyMap;
@@ -26,14 +26,14 @@ public abstract class ClusteredDevice {
 	/**
 	 * Instantiates a new clustered device.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	public ClusteredDevice(String deviceName) {
+	public ClusteredDevice(String deviceName)
+	{
 		this.name = deviceName;
-		distributedPropertyMap = new DistributedPropertyMap(
-				getControlVariableMapForDevice());
-		log.fine(getClass().getName() + " with cluster time "
-				+ Hazelcast.getCluster().getClusterTime());
+		distributedPropertyMap = new DistributedPropertyMap(getControlVariableMapForDevice());
+		log.fine(getClass().getName() + " with cluster time " + Hazelcast.getCluster().getClusterTime());
 		SynergyNetCluster.get().getDeviceClusterManager().add(this);
 	}
 
@@ -42,7 +42,8 @@ public abstract class ClusteredDevice {
 	 *
 	 * @return the distributed property map
 	 */
-	public DistributedPropertyMap getDistributedPropertyMap() {
+	public DistributedPropertyMap getDistributedPropertyMap()
+	{
 		return distributedPropertyMap;
 	}
 
@@ -51,7 +52,8 @@ public abstract class ClusteredDevice {
 	 *
 	 * @return the name of owner device
 	 */
-	public String getNameOfOwnerDevice() {
+	public String getNameOfOwnerDevice()
+	{
 		return this.name;
 	}
 
@@ -60,10 +62,12 @@ public abstract class ClusteredDevice {
 	/**
 	 * Gets the control variable map for device.
 	 *
-	 * @param <T> the generic type
+	 * @param <T>
+	 *            the generic type
 	 * @return the control variable map for device
 	 */
-	private <T> IMap<String, T> getControlVariableMapForDevice() {
+	private <T> IMap<String, T> getControlVariableMapForDevice()
+	{
 		log.info("Getting map " + name + "_cvars");
 		return Hazelcast.getMap(name + "_cvars");
 	}

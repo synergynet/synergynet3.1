@@ -25,8 +25,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class SynergyNetWebEntryPoint.
  */
-public class SynergyNetWebEntryPoint implements EntryPoint,
-		SynergyNetAppServiceUIDelegate {
+public class SynergyNetWebEntryPoint implements EntryPoint, SynergyNetAppServiceUIDelegate
+{
 
 	/** The activity pack1 ui. */
 	private ActivityPack1UI activityPack1UI;
@@ -46,10 +46,13 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	/**
 	 * Adds the to tab panel.
 	 *
-	 * @param vp the vp
-	 * @param title the title
+	 * @param vp
+	 *            the vp
+	 * @param title
+	 *            the title
 	 */
-	public void addToTabPanel(VerticalPanel vp, String title) {
+	public void addToTabPanel(VerticalPanel vp, String title)
+	{
 		tabPanel.add(vp, title);
 		int index = tabPanel.getWidgetIndex(vp);
 		addCloseButtonToPanel(vp, index);
@@ -61,21 +64,17 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	 * @see com.google.gwt.core.client.EntryPoint#onModuleLoad()
 	 */
 	@Override
-	public void onModuleLoad() {
+	public void onModuleLoad()
+	{
 
 		Map<String, String> availableAppNamesToClassName = new HashMap<String, String>();
-		availableAppNamesToClassName.put("Number Net",
-				"synergynet3.apps.numbernet.NumberNet");
-		availableAppNamesToClassName.put("Gravity Sim",
-				"synergynet3.activitypack1.table.gravitysim.GravitySim");
-		availableAppNamesToClassName
-				.put("Early Years",
-						"synergynet3.apps.earlyyears.applications.stickerbook.StickerbookApp");
+		availableAppNamesToClassName.put("Number Net", "synergynet3.apps.numbernet.NumberNet");
+		availableAppNamesToClassName.put("Gravity Sim", "synergynet3.activitypack1.table.gravitysim.GravitySim");
+		availableAppNamesToClassName.put("Early Years", "synergynet3.apps.earlyyears.applications.stickerbook.StickerbookApp");
 
 		SynergyNetAppSystemUI appSystemUI = new SynergyNetAppSystemUI();
 		appSystemUI.setDelegate(this);
-		appSystemUI
-				.setKnownApplicationNamesWithClasses(availableAppNamesToClassName);
+		appSystemUI.setKnownApplicationNamesWithClasses(availableAppNamesToClassName);
 
 		ProjectorControlPanel projectorControlUI = new ProjectorControlPanel();
 
@@ -95,20 +94,22 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 		rootPanel.add(tabPanel);
 		tabPanel.selectTab(0);
 
-		SynergyNetWebService.Util.getInstance().test("",
-				new AsyncCallback<Void>() {
+		SynergyNetWebService.Util.getInstance().test("", new AsyncCallback<Void>()
+		{
 
-					@Override
-					public void onFailure(Throwable caught) {
-						// System.out.println("unwoot");
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				// System.out.println("unwoot");
 
-					}
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-						// System.out.println("woot");
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+				// System.out.println("woot");
+			}
+		});
 	}
 
 	/*
@@ -117,7 +118,8 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	 * SynergyNetAppServiceUIDelegate#shouldHideDBControls()
 	 */
 	@Override
-	public void shouldHideDBControls() {
+	public void shouldHideDBControls()
+	{
 		tabPanel.selectTab(0);
 		tabPanel.remove(1);
 	}
@@ -129,20 +131,25 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	 * #shouldOpenManagementUIForClassName(java.lang.String)
 	 */
 	@Override
-	public void shouldOpenManagementUIForClassName(String appClass) {
-		if (appClass == null) {
+	public void shouldOpenManagementUIForClassName(String appClass)
+	{
+		if (appClass == null)
+		{
 			return;
 		}
-		if (appClass.equals("synergynet3.apps.numbernet.NumberNet")) {
+		if (appClass.equals("synergynet3.apps.numbernet.NumberNet"))
+		{
 			addToTabPanel(getNumberNetUI(), "NumberNet");
 			showLastTab(tabPanel);
-		} else if (appClass
-				.equals("synergynet3.activitypack1.table.gravitysim.GravitySim")) {
+		}
+		else if (appClass.equals("synergynet3.activitypack1.table.gravitysim.GravitySim"))
+		{
 			ActivityPack1UI apui = getActivityPack1UI("gravity");
 			addToTabPanel(apui, "Gravity Sim");
 			showLastTab(tabPanel);
-		} else if (appClass
-				.equals("synergynet3.apps.earlyyears.applications.stickerbook.StickerbookApp")) {
+		}
+		else if (appClass.equals("synergynet3.apps.earlyyears.applications.stickerbook.StickerbookApp"))
+		{
 			addToTabPanel(getEarlyYearsUI(), "Early Years");
 			showLastTab(tabPanel);
 		}
@@ -151,18 +158,25 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	/**
 	 * Adds the close button to panel.
 	 *
-	 * @param vp the vp
-	 * @param tabIndex the tab index
+	 * @param vp
+	 *            the vp
+	 * @param tabIndex
+	 *            the tab index
 	 */
-	private void addCloseButtonToPanel(VerticalPanel vp, final int tabIndex) {
-		if (!hasCloseButton.containsKey(vp)) {
+	private void addCloseButtonToPanel(VerticalPanel vp, final int tabIndex)
+	{
+		if (!hasCloseButton.containsKey(vp))
+		{
 			hasCloseButton.put(vp, false);
 		}
-		if (!hasCloseButton.get(vp)) {
+		if (!hasCloseButton.get(vp))
+		{
 			Button b = new Button("Close Tab");
-			b.addClickHandler(new ClickHandler() {
+			b.addClickHandler(new ClickHandler()
+			{
 				@Override
-				public void onClick(ClickEvent event) {
+				public void onClick(ClickEvent event)
+				{
 					tabPanel.selectTab(0);
 					tabPanel.remove(tabIndex);
 				}
@@ -175,11 +189,14 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	/**
 	 * Gets the activity pack1 ui.
 	 *
-	 * @param app the app
+	 * @param app
+	 *            the app
 	 * @return the activity pack1 ui
 	 */
-	private ActivityPack1UI getActivityPack1UI(String app) {
-		if (activityPack1UI == null) {
+	private ActivityPack1UI getActivityPack1UI(String app)
+	{
+		if (activityPack1UI == null)
+		{
 			activityPack1UI = new ActivityPack1UI(app);
 		}
 		return activityPack1UI;
@@ -190,8 +207,10 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	 *
 	 * @return the early years ui
 	 */
-	private EarlyYearsUI getEarlyYearsUI() {
-		if (earlyyearsUI == null) {
+	private EarlyYearsUI getEarlyYearsUI()
+	{
+		if (earlyyearsUI == null)
+		{
 			earlyyearsUI = new EarlyYearsUI();
 		}
 		return earlyyearsUI;
@@ -202,8 +221,10 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	 *
 	 * @return the number net ui
 	 */
-	private VerticalPanel getNumberNetUI() {
-		if (numbernetUI == null) {
+	private VerticalPanel getNumberNetUI()
+	{
+		if (numbernetUI == null)
+		{
 			numbernetUI = new NumberNetUI();
 		}
 		return numbernetUI;
@@ -212,9 +233,11 @@ public class SynergyNetWebEntryPoint implements EntryPoint,
 	/**
 	 * Show last tab.
 	 *
-	 * @param tabPanel2 the tab panel2
+	 * @param tabPanel2
+	 *            the tab panel2
 	 */
-	private void showLastTab(TabPanel tabPanel2) {
+	private void showLastTab(TabPanel tabPanel2)
+	{
 		tabPanel.selectTab(tabPanel.getWidgetCount() - 1);
 	}
 }

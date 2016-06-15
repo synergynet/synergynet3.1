@@ -6,7 +6,8 @@ import java.io.Serializable;
 /**
  * The Class LocalFileCacheEntry.
  */
-public class LocalFileCacheEntry implements Serializable {
+public class LocalFileCacheEntry implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 3191230924406069447L;
@@ -20,10 +21,13 @@ public class LocalFileCacheEntry implements Serializable {
 	/**
 	 * Instantiates a new local file cache entry.
 	 *
-	 * @param hash the hash
-	 * @param file the file
+	 * @param hash
+	 *            the hash
+	 * @param file
+	 *            the file
 	 */
-	public LocalFileCacheEntry(MD5Hash hash, File file) {
+	public LocalFileCacheEntry(MD5Hash hash, File file)
+	{
 		this.hash = hash;
 		this.file = file;
 	}
@@ -32,14 +36,18 @@ public class LocalFileCacheEntry implements Serializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object obj) {
-		if (obj instanceof LocalFileCacheEntry) {
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj instanceof LocalFileCacheEntry)
+		{
 			LocalFileCacheEntry comparison = (LocalFileCacheEntry) obj;
-			if (comparison == this) {
+			if (comparison == this)
+			{
 				return true;
 			}
-			if (comparison.getHash().equals(getHash())
-					&& comparison.getFile().equals(getFile())) {
+			if (comparison.getHash().equals(getHash()) && comparison.getFile().equals(getFile()))
+			{
 				return true;
 			}
 		}
@@ -51,7 +59,8 @@ public class LocalFileCacheEntry implements Serializable {
 	 *
 	 * @return the file
 	 */
-	public File getFile() {
+	public File getFile()
+	{
 		return file;
 	}
 
@@ -60,7 +69,8 @@ public class LocalFileCacheEntry implements Serializable {
 	 *
 	 * @return the hash
 	 */
-	public MD5Hash getHash() {
+	public MD5Hash getHash()
+	{
 		return hash;
 	}
 }

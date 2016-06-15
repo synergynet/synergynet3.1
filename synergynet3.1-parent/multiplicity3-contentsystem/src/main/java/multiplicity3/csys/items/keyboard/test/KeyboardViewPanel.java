@@ -11,7 +11,8 @@ import multiplicity3.csys.items.keyboard.model.KeyboardDefinition;
 /**
  * The Class KeyboardViewPanel.
  */
-public class KeyboardViewPanel extends JPanel {
+public class KeyboardViewPanel extends JPanel
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 2179702392158132563L;
@@ -25,9 +26,11 @@ public class KeyboardViewPanel extends JPanel {
 	/**
 	 * Instantiates a new keyboard view panel.
 	 *
-	 * @param kd the kd
+	 * @param kd
+	 *            the kd
 	 */
-	public KeyboardViewPanel(KeyboardDefinition kd) {
+	public KeyboardViewPanel(KeyboardDefinition kd)
+	{
 		this.kbd = kd;
 		kir = new SimpleAlphaKeyboardRenderer(kbd);
 	}
@@ -36,7 +39,9 @@ public class KeyboardViewPanel extends JPanel {
 	 * (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
-	public void paintComponent(Graphics g) {
+	@Override
+	public void paintComponent(Graphics g)
+	{
 		clear(g);
 		kir.drawKeyboard((Graphics2D) g, false, false, false);
 	}
@@ -44,9 +49,11 @@ public class KeyboardViewPanel extends JPanel {
 	/**
 	 * Clear.
 	 *
-	 * @param g the g
+	 * @param g
+	 *            the g
 	 */
-	protected void clear(Graphics g) {
+	protected void clear(Graphics g)
+	{
 		super.paintComponent(g);
 	}
 }

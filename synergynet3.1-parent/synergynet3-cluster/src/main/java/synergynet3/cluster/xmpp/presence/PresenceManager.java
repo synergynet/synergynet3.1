@@ -20,14 +20,14 @@ import org.jivesoftware.smack.util.StringUtils;
 /**
  * The Class PresenceManager.
  */
-public class PresenceManager implements RosterListener {
+public class PresenceManager implements RosterListener
+{
 
 	/** The Constant MULTIPLICITY_DEVICES_GROUP. */
 	public static final String MULTIPLICITY_DEVICES_GROUP = "multiplicitydevices";
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(PresenceManager.class
-			.getName());
+	private static final Logger log = Logger.getLogger(PresenceManager.class.getName());
 
 	/** The connection. */
 	private XMPPConnection connection;
@@ -47,7 +47,8 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Instantiates a new presence manager.
 	 */
-	public PresenceManager() {
+	public PresenceManager()
+	{
 		log.log(Level.FINE, "Creating XMPP Presence Manager");
 		currentDevicesPresent = new HashSet<String>();
 		listeners = new ArrayList<IPresenceListener>();
@@ -59,7 +60,8 @@ public class PresenceManager implements RosterListener {
 	 * org.jivesoftware.smack.RosterListener#entriesAdded(java.util.Collection)
 	 */
 	@Override
-	public void entriesAdded(Collection<String> addresses) {
+	public void entriesAdded(Collection<String> addresses)
+	{
 	} // unneeded, concerned with CRUD on Roster
 
 	/*
@@ -69,7 +71,8 @@ public class PresenceManager implements RosterListener {
 	 * )
 	 */
 	@Override
-	public void entriesDeleted(Collection<String> addresses) {
+	public void entriesDeleted(Collection<String> addresses)
+	{
 	} // unneeded, concerned with CRUD on Roster
 
 	/*
@@ -79,7 +82,8 @@ public class PresenceManager implements RosterListener {
 	 * )
 	 */
 	@Override
-	public void entriesUpdated(Collection<String> addresses) {
+	public void entriesUpdated(Collection<String> addresses)
+	{
 	} // unneeded, concerned with CRUD on Roster
 
 	/**
@@ -87,7 +91,8 @@ public class PresenceManager implements RosterListener {
 	 *
 	 * @return the connection
 	 */
-	public XMPPConnection getConnection() {
+	public XMPPConnection getConnection()
+	{
 		return connection;
 	}
 
@@ -96,36 +101,46 @@ public class PresenceManager implements RosterListener {
 	 *
 	 * @return the current devices present
 	 */
-	public Collection<String> getCurrentDevicesPresent() {
+	public Collection<String> getCurrentDevicesPresent()
+	{
 		return Collections.unmodifiableCollection(currentDevicesPresent);
 	}
 
 	/**
 	 * Gets the device names online.
 	 *
-	 * @param deviceType the device type
+	 * @param deviceType
+	 *            the device type
 	 * @return the device names online
 	 */
-	public List<String> getDeviceNamesOnline(String deviceType) {
+	public List<String> getDeviceNamesOnline(String deviceType)
+	{
 		List<String> list = new ArrayList<String>();
-		if (connection == null) {
+		if (connection == null)
+		{
 			return list;
 		}
 
 		Roster roster = connection.getRoster();
-		if (roster == null) {
+		if (roster == null)
+		{
 			return list;
 		}
 
-		try {
+		try
+		{
 			RosterGroup rg = roster.getGroup(deviceType);
-			for (RosterEntry re : rg.getEntries()) {
+			for (RosterEntry re : rg.getEntries())
+			{
 				Presence p = connection.getRoster().getPresence(re.getUser());
-				if (p.isAvailable()) {
+				if (p.isAvailable())
+				{
 					list.add(re.getName());
 				}
 			}
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e)
+		{
 
 		}
 		return list;
@@ -138,16 +153,21 @@ public class PresenceManager implements RosterListener {
 	 * .smack.packet.Presence)
 	 */
 	@Override
-	public void presenceChanged(Presence presence) {
+	public void presenceChanged(Presence presence)
+	{
 		log.fine("Presence change from " + presence.getFrom());
 		String name = StringUtils.parseName(presence.getFrom());
-		if (!isMultiplicityDevice(name)) {
+		if (!isMultiplicityDevice(name))
+		{
 			return;
 		}
 
-		if (presence.isAvailable()) {
+		if (presence.isAvailable())
+		{
 			notifyDeviceAvailable(name);
-		} else {
+		}
+		else
+		{
 			notifyDeviceUnavailable(name);
 		}
 	}
@@ -155,10 +175,13 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Register presence listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void registerPresenceListener(IPresenceListener listener) {
-		if (listeners.contains(listener)) {
+	public void registerPresenceListener(IPresenceListener listener)
+	{
+		if (listeners.contains(listener))
+		{
 			return;
 		}
 		listeners.add(listener);
@@ -169,9 +192,11 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Sets the connection.
 	 *
-	 * @param connection the new connection
+	 * @param connection
+	 *            the new connection
 	 */
-	public void setConnection(XMPPConnection connection) {
+	public void setConnection(XMPPConnection connection)
+	{
 		this.connection = connection;
 		roster = connection.getRoster();
 		roster.addRosterListener(this);
@@ -182,12 +207,16 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Checks if is multiplicity device.
 	 *
-	 * @param from the from
+	 * @param from
+	 *            the from
 	 * @return true, if is multiplicity device
 	 */
-	private boolean isMultiplicityDevice(String from) {
-		for (RosterEntry re : multiplicityGroup.getEntries()) {
-			if (re.getName().equals(from)) {
+	private boolean isMultiplicityDevice(String from)
+	{
+		for (RosterEntry re : multiplicityGroup.getEntries())
+		{
+			if (re.getName().equals(from))
+			{
 				return true;
 			}
 		}
@@ -199,19 +228,23 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Notify current presence.
 	 *
-	 * @param connection the connection
+	 * @param connection
+	 *            the connection
 	 */
-	private void notifyCurrentPresence(XMPPConnection connection) {
-		if (multiplicityGroup == null) {
-			log.log(Level.WARNING,
-					"Could not find the multiplicity roster group.");
+	private void notifyCurrentPresence(XMPPConnection connection)
+	{
+		if (multiplicityGroup == null)
+		{
+			log.log(Level.WARNING, "Could not find the multiplicity roster group.");
 			return;
 		}
 		log.log(Level.FINE, "Loading roster entries.");
-		for (RosterEntry re : multiplicityGroup.getEntries()) {
+		for (RosterEntry re : multiplicityGroup.getEntries())
+		{
 			log.finer("Roster entry check availability on " + re.getUser());
 			Presence presence = roster.getPresence(re.getUser());
-			if (presence.isAvailable()) {
+			if (presence.isAvailable())
+			{
 				log.finer("  is available!");
 				notifyDeviceAvailable(re.getName());
 			}
@@ -221,21 +254,24 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Notify device available.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
-	private void notifyDeviceAvailable(final String id) {
-		synchronized (currentDevicesPresent) {
-			if (currentDevicesPresent.add(id)) {
-				log.log(Level.FINER,
-						"Added "
-								+ id
-								+ " to currentDevicesPresent list. Notifying listeners.");
-				for (IPresenceListener l : listeners) {
+	private void notifyDeviceAvailable(final String id)
+	{
+		synchronized (currentDevicesPresent)
+		{
+			if (currentDevicesPresent.add(id))
+			{
+				log.log(Level.FINER, "Added " + id + " to currentDevicesPresent list. Notifying listeners.");
+				for (IPresenceListener l : listeners)
+				{
 					l.deviceAvailable(id);
 				}
-			} else {
-				log.log(Level.FINER, "Already had " + id
-						+ " in the currentDevicesPresent list.");
+			}
+			else
+			{
+				log.log(Level.FINER, "Already had " + id + " in the currentDevicesPresent list.");
 			}
 		}
 	}
@@ -243,12 +279,17 @@ public class PresenceManager implements RosterListener {
 	/**
 	 * Notify device unavailable.
 	 *
-	 * @param id the id
+	 * @param id
+	 *            the id
 	 */
-	private void notifyDeviceUnavailable(final String id) {
-		synchronized (currentDevicesPresent) {
-			if (currentDevicesPresent.remove(id)) {
-				for (IPresenceListener l : listeners) {
+	private void notifyDeviceUnavailable(final String id)
+	{
+		synchronized (currentDevicesPresent)
+		{
+			if (currentDevicesPresent.remove(id))
+			{
+				for (IPresenceListener l : listeners)
+				{
 					l.deviceUnavailable(id);
 				}
 			}

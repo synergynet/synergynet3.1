@@ -5,14 +5,16 @@ import multiplicity3.csys.IUpdateable;
 /**
  * The Class SpringLayout.
  */
-public class SpringLayout implements IUpdateable {
+public class SpringLayout implements IUpdateable
+{
 
 	/*
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.IUpdateable#update(float)
 	 */
 	@Override
-	public void update(float timePerFrameSeconds) {
+	public void update(float timePerFrameSeconds)
+	{
 		// TODO Auto-generated method stub
 
 	}

@@ -7,7 +7,8 @@ import multiplicity3.csys.items.item.IItem;
 /**
  * The Interface IAudioRecorder.
  */
-public interface IAudioRecorder extends IItem {
+public interface IAudioRecorder extends IItem
+{
 
 	/**
 	 * Gets the audio file.

@@ -5,11 +5,11 @@ import java.util.prefs.Preferences;
 /**
  * The Class TUIOPrefsItem.
  */
-public class TUIOPrefsItem {
+public class TUIOPrefsItem
+{
 
 	/** The prefs. */
-	private static Preferences prefs = Preferences
-			.userNodeForPackage(TUIOPrefsItem.class);
+	private static Preferences prefs = Preferences.userNodeForPackage(TUIOPrefsItem.class);
 
 	/** The Constant TUIO_PORT. */
 	private static final String TUIO_PORT = "TUIO_PORT";
@@ -17,7 +17,8 @@ public class TUIOPrefsItem {
 	/**
 	 * Instantiates a new TUIO prefs item.
 	 */
-	public TUIOPrefsItem() {
+	public TUIOPrefsItem()
+	{
 	}
 
 	/**
@@ -25,16 +26,19 @@ public class TUIOPrefsItem {
 	 *
 	 * @return the tuio port
 	 */
-	public int getTuioPort() {
+	public int getTuioPort()
+	{
 		return prefs.getInt(TUIO_PORT, 3333);
 	}
 
 	/**
 	 * Sets the tuio port.
 	 *
-	 * @param port the new tuio port
+	 * @param port
+	 *            the new tuio port
 	 */
-	public void setTuioPort(int port) {
+	public void setTuioPort(int port)
+	{
 		prefs.putInt(TUIO_PORT, port);
 	}
 

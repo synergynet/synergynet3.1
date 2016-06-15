@@ -17,11 +17,11 @@ import synergynet3.activitypack1.core.lightbox.lightboxmodel.items.ImageItem;
 /**
  * The Class ImageItemConvertor.
  */
-public class ImageItemConvertor extends Convertor {
+public class ImageItemConvertor extends Convertor
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(ImageItemConvertor.class
-			.getName());
+	private static final Logger log = Logger.getLogger(ImageItemConvertor.class.getName());
 
 	/** The image file. */
 	private File imageFile;
@@ -44,12 +44,15 @@ public class ImageItemConvertor extends Convertor {
 	/**
 	 * Instantiates a new image item convertor.
 	 *
-	 * @param shape the shape
-	 * @param slideSize the slide size
-	 * @param lightboxDirectory the lightbox directory
+	 * @param shape
+	 *            the shape
+	 * @param slideSize
+	 *            the slide size
+	 * @param lightboxDirectory
+	 *            the lightbox directory
 	 */
-	public ImageItemConvertor(Picture shape, Dimension slideSize,
-			File lightboxDirectory) {
+	public ImageItemConvertor(Picture shape, Dimension slideSize, File lightboxDirectory)
+	{
 		super(shape, slideSize);
 		this.shape = shape;
 		this.lightboxDirectory = lightboxDirectory;
@@ -59,15 +62,17 @@ public class ImageItemConvertor extends Convertor {
 	/**
 	 * Convert picture shape.
 	 *
-	 * @param shape the shape
-	 * @param slideSize the slide size
-	 * @param lightboxDirectory the lightbox directory
+	 * @param shape
+	 *            the shape
+	 * @param slideSize
+	 *            the slide size
+	 * @param lightboxDirectory
+	 *            the lightbox directory
 	 * @return the image item
 	 */
-	public static ImageItem convertPictureShape(Picture shape,
-			Dimension slideSize, File lightboxDirectory) {
-		return new ImageItemConvertor(shape, slideSize, lightboxDirectory)
-				.convert();
+	public static ImageItem convertPictureShape(Picture shape, Dimension slideSize, File lightboxDirectory)
+	{
+		return new ImageItemConvertor(shape, slideSize, lightboxDirectory).convert();
 	}
 
 	/**
@@ -75,7 +80,8 @@ public class ImageItemConvertor extends Convertor {
 	 *
 	 * @return the image item
 	 */
-	private ImageItem convert() {
+	private ImageItem convert()
+	{
 		extractData();
 		ImageItem imageItem = new ImageItem();
 		populateImageItemWithData(imageItem);
@@ -85,10 +91,14 @@ public class ImageItemConvertor extends Convertor {
 	/**
 	 * Extract data.
 	 */
-	private void extractData() {
-		try {
+	private void extractData()
+	{
+		try
+		{
 			extractImageData();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			log.log(Level.WARNING, "Error extracting image data", e);
 		}
 		this.isMoveable = interpretMoveablePropertyFromBackgroundFillColour();
@@ -99,14 +109,15 @@ public class ImageItemConvertor extends Convertor {
 	/**
 	 * Extract image data.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private void extractImageData() throws IOException {
+	private void extractImageData() throws IOException
+	{
 		String fileExtension = getExtension();
 		String imageFileName = getUniqueFileName() + fileExtension;
 		this.imageFile = new File(lightboxDirectory, imageFileName);
-		OutputStream imageFileOutputStream = new FileOutputStream(
-				this.imageFile);
+		OutputStream imageFileOutputStream = new FileOutputStream(this.imageFile);
 		imageFileOutputStream.write(shape.getPictureData().getData());
 		imageFileOutputStream.close();
 	}
@@ -116,9 +127,11 @@ public class ImageItemConvertor extends Convertor {
 	 *
 	 * @return the extension
 	 */
-	private String getExtension() {
+	private String getExtension()
+	{
 		String extension = ".unknown";
-		switch (shape.getPictureData().getType()) {
+		switch (shape.getPictureData().getType())
+		{
 			case Picture.JPEG:
 				extension = ".jpg";
 				break;
@@ -143,7 +156,8 @@ public class ImageItemConvertor extends Convertor {
 	 *
 	 * @return the unique file name
 	 */
-	private String getUniqueFileName() {
+	private String getUniqueFileName()
+	{
 		UUID randomUUID = UUID.randomUUID();
 		return randomUUID.toString();
 	}
@@ -151,9 +165,11 @@ public class ImageItemConvertor extends Convertor {
 	/**
 	 * Populate image item with data.
 	 *
-	 * @param imageItem the image item
+	 * @param imageItem
+	 *            the image item
 	 */
-	private void populateImageItemWithData(ImageItem imageItem) {
+	private void populateImageItemWithData(ImageItem imageItem)
+	{
 		imageItem.setImageFileName(this.imageFile.getName());
 		imageItem.setSize(this.imageSize);
 		imageItem.setPosition(this.imagePosition);

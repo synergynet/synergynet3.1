@@ -10,11 +10,11 @@ import java.util.logging.LogRecord;
 /**
  * The Class ConsoleFormatter.
  */
-public class ConsoleFormatter extends Formatter {
+public class ConsoleFormatter extends Formatter
+{
 
 	/** The date format. */
-	private DateFormat dateFormat = new SimpleDateFormat(
-			"yyyy-MM-dd HH:mm:ss Z");
+	private DateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss Z");
 
 	/** The show date. */
 	private boolean showDate = false;
@@ -22,14 +22,15 @@ public class ConsoleFormatter extends Formatter {
 	/**
 	 * Instantiates a new console formatter.
 	 */
-	public ConsoleFormatter() {
-		String showDateProperty = LogManager.getLogManager().getProperty(
-				getClass().getName() + ".showDate");
-		if ("true".equals(showDateProperty)) {
+	public ConsoleFormatter()
+	{
+		String showDateProperty = LogManager.getLogManager().getProperty(getClass().getName() + ".showDate");
+		if ("true".equals(showDateProperty))
+		{
 			showDate = true;
-			String dateFormatProperty = LogManager.getLogManager().getProperty(
-					getClass().getName() + ".dateFormat");
-			if (dateFormatProperty != null) {
+			String dateFormatProperty = LogManager.getLogManager().getProperty(getClass().getName() + ".dateFormat");
+			if (dateFormatProperty != null)
+			{
 				dateFormat = new SimpleDateFormat(dateFormatProperty);
 			}
 		}
@@ -40,16 +41,17 @@ public class ConsoleFormatter extends Formatter {
 	 * @see java.util.logging.Formatter#format(java.util.logging.LogRecord)
 	 */
 	@Override
-	public String format(LogRecord record) {
+	public String format(LogRecord record)
+	{
 		String logString = "";
 
-		if (showDate) {
+		if (showDate)
+		{
 			logString += dateFormat.format(new Date(record.getMillis())) + " ";
 		}
 
 		logString += "[" + record.getLevel().getName() + "] ";
-		logString += record.getSourceClassName() + "."
-				+ record.getSourceMethodName() + " ";
+		logString += record.getSourceClassName() + "." + record.getSourceMethodName() + " ";
 		logString += record.getMessage();
 		logString += "\n";
 

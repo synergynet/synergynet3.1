@@ -3,12 +3,14 @@ package synergynet3.apps.numbernet.validation;
 /**
  * The Interface IValidationChecker.
  */
-public interface IValidationChecker {
+public interface IValidationChecker
+{
 
 	/**
 	 * The Enum ValidationResult.
 	 */
-	public static enum ValidationResult {
+	public static enum ValidationResult
+	{
 
 		/** The duplicate. */
 		DUPLICATE,
@@ -26,7 +28,8 @@ public interface IValidationChecker {
 	/**
 	 * Checks if is valid.
 	 *
-	 * @param expression the expression
+	 * @param expression
+	 *            the expression
 	 * @return the validation result
 	 */
 	public ValidationResult isValid(String expression);

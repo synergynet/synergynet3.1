@@ -40,7 +40,8 @@ import multiplicity3.input.filters.IMultiTouchInputFilter;
  *
  * @author dcs0ah1
  */
-public class LoggingFilter implements IMultiTouchInputFilter {
+public class LoggingFilter implements IMultiTouchInputFilter
+{
 
 	/** The Constant CURSOR_CHANGED. */
 	public static final String CURSOR_CHANGED = "CURSOR_CHANGED";
@@ -75,10 +76,13 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	/**
 	 * Instantiates a new logging filter.
 	 *
-	 * @param appClass the app class
-	 * @throws FileNotFoundException the file not found exception
+	 * @param appClass
+	 *            the app class
+	 * @throws FileNotFoundException
+	 *             the file not found exception
 	 */
-	public LoggingFilter(Class<?> appClass) throws FileNotFoundException {
+	public LoggingFilter(Class<?> appClass) throws FileNotFoundException
+	{
 		recordFile = new File(new File("logs"), getFileNameFromDate());
 		pw = new PrintWriter(new FileOutputStream(recordFile));
 		writeFileHeader(appClass);
@@ -90,7 +94,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorChanged(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	@Override
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(CURSOR_CHANGED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -109,7 +115,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorClicked(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	@Override
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(CURSOR_CLICKED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -128,7 +136,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorPressed(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	@Override
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(CURSOR_PRESSED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -147,7 +157,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#cursorReleased(multiplicity3
 	 * .input.events.MultiTouchCursorEvent)
 	 */
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	@Override
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(CURSOR_RELEASED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -166,7 +178,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#objectAdded(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectAdded(MultiTouchObjectEvent event) {
+	@Override
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(OBJECT_ADDED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -185,7 +199,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#objectChanged(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectChanged(MultiTouchObjectEvent event) {
+	@Override
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(OBJECT_CHANGED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -204,7 +220,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.IMultiTouchEventListener#objectRemoved(multiplicity3
 	 * .input.events.MultiTouchObjectEvent)
 	 */
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	@Override
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		pw.print(System.nanoTime() + ",");
 		pw.print(OBJECT_REMOVED + ",");
 		pw.print(event.getCursorID() + ",");
@@ -223,7 +241,9 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 * multiplicity3.input.filters.IMultiTouchInputFilter#setNext(multiplicity3
 	 * .input.IMultiTouchEventListener)
 	 */
-	public void setNext(IMultiTouchEventListener el) {
+	@Override
+	public void setNext(IMultiTouchEventListener el)
+	{
 		this.next = el;
 	}
 
@@ -232,18 +252,20 @@ public class LoggingFilter implements IMultiTouchInputFilter {
 	 *
 	 * @return the file name from date
 	 */
-	private String getFileNameFromDate() {
-		SimpleDateFormat formatter = new SimpleDateFormat(
-				"yyyy-MM-dd HH.mm.ss.S");
+	private String getFileNameFromDate()
+	{
+		SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH.mm.ss.S");
 		return formatter.format(new Date());
 	}
 
 	/**
 	 * Write file header.
 	 *
-	 * @param appClass the app class
+	 * @param appClass
+	 *            the app class
 	 */
-	private void writeFileHeader(Class<?> appClass) {
+	private void writeFileHeader(Class<?> appClass)
+	{
 		pw.println("# Recorded from LoggingFilter v0.1");
 		pw.println("# App: " + appClass.getName());
 		pw.println("# Recording started at " + new Date().toString());

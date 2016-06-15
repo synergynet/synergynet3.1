@@ -38,7 +38,8 @@ import com.sun.jna.platform.win32.WinDef.HWND;
 /**
  * Input source for native Windows 7 WM_TOUCH messages for single/multi-touch.
  */
-public class Win7NativeTouchSource {
+public class Win7NativeTouchSource
+{
 
 	/** The Constant dllName32. */
 	private static final String dllName32 = "Win7Touch";
@@ -47,8 +48,7 @@ public class Win7NativeTouchSource {
 	private static final String dllName64 = "Win7Touch64";
 
 	/** The Constant logger. */
-	private static final Logger logger = Logger
-			.getLogger(Win7NativeTouchSource.class.getName());
+	private static final Logger logger = Logger.getLogger(Win7NativeTouchSource.class.getName());
 
 	/** The loaded. */
 	static boolean loaded = false;
@@ -80,7 +80,8 @@ public class Win7NativeTouchSource {
 	/**
 	 * Instantiates a new win7 native touch source.
 	 */
-	public Win7NativeTouchSource(Win7TouchInput win7TouchInputIn) {
+	public Win7NativeTouchSource(Win7TouchInput win7TouchInputIn)
+	{
 		this.win7TouchInput = win7TouchInputIn;
 
 		this.success = false;
@@ -88,33 +89,40 @@ public class Win7NativeTouchSource {
 		String platform = System.getProperty("os.name").toLowerCase();
 		logger.info("Platform: \"" + platform + "\"");
 
-		if (!platform.contains("windows")) {
+		if (!platform.contains("windows"))
+		{
 			logger.severe("Win7NativeTouchSource input source can only be used on windows.");
 		}
 
-		if (!loaded) {
+		if (!loaded)
+		{
 			loaded = true;
 
 			// Copy dll to temp directory to avoid loading issues from jar
-			AccessController.doPrivileged(new PrivilegedAction<Void>() {
-				public Void run() {
+			AccessController.doPrivileged(new PrivilegedAction<Void>()
+			{
+				@Override
+				public Void run()
+				{
 
 					String dllName = dllName32;
-					if (win7TouchInput.isIs64bitJava()) {
+					if (win7TouchInput.isIs64bitJava())
+					{
 						dllName = dllName64;
 					}
 
 					File tmpDir = new File(System.getProperty("java.io.tmpdir"));
 					File tmpFile = new File(tmpDir, dllName + ".dll");
 
-					try {
-						InputStream in = Win7NativeTouchSource.class
-								.getResourceAsStream(dllName + ".dll");
+					try
+					{
+						InputStream in = Win7NativeTouchSource.class.getResourceAsStream(dllName + ".dll");
 						OutputStream out = new FileOutputStream(tmpFile);
 
 						byte[] buf = new byte[8192];
 						int len;
-						while ((len = in.read(buf)) != -1) {
+						while ((len = in.read(buf)) != -1)
+						{
 							out.write(buf, 0, len);
 						}
 
@@ -123,9 +131,13 @@ public class Win7NativeTouchSource {
 
 						System.load(tmpFile.getAbsolutePath());
 
-					} catch (FileNotFoundException fnfe) {
+					}
+					catch (FileNotFoundException fnfe)
+					{
 						logger.warning("Could not create temporary dll.");
-					} catch (IOException ioe) {
+					}
+					catch (IOException ioe)
+					{
 						logger.warning("Could not copy dll.");
 					}
 
@@ -133,17 +145,22 @@ public class Win7NativeTouchSource {
 				}
 			});
 
-		} else {
+		}
+		else
+		{
 			logger.warning("Win7NativeTouchSource may only be instantiated once.");
 			return;
 		}
 
 		boolean touchAvailable = this.getSystemMetrics();
-		if (!touchAvailable) {
+		if (!touchAvailable)
+		{
 			logger.severe("Windows 7 Touch Input currently not available!");
 			System.exit(0);
 			return;
-		} else {
+		}
+		else
+		{
 			logger.info("Windows 7 Touch Input available.");
 		}
 
@@ -158,9 +175,13 @@ public class Win7NativeTouchSource {
 		this.getNativeWindowHandles();
 		success = true;
 
-		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
-			public void run() {
-				if (isSuccessfullySetup()) {
+		Runtime.getRuntime().addShutdownHook(new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				if (isSuccessfullySetup())
+				{
 					logger.info("Cleaning up Win7 touch source..");
 					quit();
 				}
@@ -174,19 +195,25 @@ public class Win7NativeTouchSource {
 	 *
 	 * @return true, if is successfully setup
 	 */
-	public boolean isSuccessfullySetup() {
+	public boolean isSuccessfullySetup()
+	{
 		return success;
 	}
 
 	/**
 	 * Poll events.
 	 */
-	public void pollEvents() {
-		if (initialized) { // Only poll events if native c++ core was
-							// initialized successfully
-			while (pollEvent(wmTouchEvent)) {
-				switch (wmTouchEvent.type) {
-					case Windows7TouchEvent.TOUCH_DOWN: {
+	public void pollEvents()
+	{
+		if (initialized)
+		{ // Only poll events if native c++ core was
+			// initialized successfully
+			while (pollEvent(wmTouchEvent))
+			{
+				switch (wmTouchEvent.type)
+				{
+					case Windows7TouchEvent.TOUCH_DOWN:
+					{
 						// logger.info("TOUCH_DOWN ==> ID:" + wmTouchEvent.id +
 						// " x:" + wmTouchEvent.x + " y:" + wmTouchEvent.y);
 
@@ -194,13 +221,15 @@ public class Win7NativeTouchSource {
 
 						break;
 					}
-					case Windows7TouchEvent.TOUCH_MOVE: {
+					case Windows7TouchEvent.TOUCH_MOVE:
+					{
 						// logger.info("TOUCH_MOVE ==> ID:" + wmTouchEvent.id +
 						// " x:" + wmTouchEvent.x + " y:" + wmTouchEvent.y);
 						win7TouchInput.updateTouchCursor(wmTouchEvent);
 						break;
 					}
-					case Windows7TouchEvent.TOUCH_UP: {
+					case Windows7TouchEvent.TOUCH_UP:
+					{
 						// logger.info("TOUCH_UP ==> ID:" + wmTouchEvent.id +
 						// " x:" + wmTouchEvent.x + " y:" + wmTouchEvent.y);
 
@@ -218,8 +247,10 @@ public class Win7NativeTouchSource {
 	/**
 	 * Find window.
 	 *
-	 * @param tmpTitle the tmp title
-	 * @param subWindowTitle the sub window title
+	 * @param tmpTitle
+	 *            the tmp title
+	 * @param subWindowTitle
+	 *            the sub window title
 	 * @return the int
 	 */
 	private native int findWindow(String tmpTitle, String subWindowTitle);
@@ -229,16 +260,19 @@ public class Win7NativeTouchSource {
 	 *
 	 * @return the native window handles
 	 */
-	private void getNativeWindowHandles() {
+	private void getNativeWindowHandles()
+	{
 
-		SwingUtilities.invokeLater(new Runnable() {
-			public void run() {
+		SwingUtilities.invokeLater(new Runnable()
+		{
+			@Override
+			public void run()
+			{
 				HWND fgWindow = User32.INSTANCE.GetForegroundWindow();
 				int titleLength = User32.INSTANCE.GetWindowTextLength(fgWindow) + 1;
 				char[] title = new char[titleLength];
 				User32.INSTANCE.GetWindowText(fgWindow, title, titleLength);
-				int awtCanvasHandle = (int) Pointer.nativeValue(fgWindow
-						.getPointer());
+				int awtCanvasHandle = (int) Pointer.nativeValue(fgWindow.getPointer());
 				setApplicationHandle(awtCanvasHandle);
 			}
 		});
@@ -254,7 +288,8 @@ public class Win7NativeTouchSource {
 	/**
 	 * Inits the.
 	 *
-	 * @param HWND the hwnd
+	 * @param HWND
+	 *            the hwnd
 	 * @return true, if successful
 	 */
 	private native boolean init(long HWND);
@@ -262,7 +297,8 @@ public class Win7NativeTouchSource {
 	/**
 	 * Poll event.
 	 *
-	 * @param myEvent the my event
+	 * @param myEvent
+	 *            the my event
 	 * @return true, if successful
 	 */
 	private native boolean pollEvent(Windows7TouchEvent myEvent);
@@ -279,15 +315,20 @@ public class Win7NativeTouchSource {
 	/**
 	 * Sets the application handle.
 	 *
-	 * @param HWND the new application handle
+	 * @param HWND
+	 *            the new application handle
 	 */
-	private void setApplicationHandle(int HWND) {
-		if (HWND > 0) {
+	private void setApplicationHandle(int HWND)
+	{
+		if (HWND > 0)
+		{
 			appHandle = HWND;
 			logger.info("-> Found application HWND: " + appHandle);
 			init(appHandle); // Initialises the c++ core in the native dll
 			initialized = true;
-		} else {
+		}
+		else
+		{
 			logger.severe("-> Couldnt retrieve the application handle!");
 		}
 	}

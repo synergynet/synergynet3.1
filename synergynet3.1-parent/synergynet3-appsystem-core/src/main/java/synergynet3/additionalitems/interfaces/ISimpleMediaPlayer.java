@@ -8,15 +8,16 @@ import uk.co.caprica.vlcj.player.MediaPlayerEventAdapter;
 /**
  * The Interface ISimpleMediaPlayer.
  */
-public interface ISimpleMediaPlayer extends IItem {
+public interface ISimpleMediaPlayer extends IItem
+{
 
 	/**
 	 * Adds the media player event listener.
 	 *
-	 * @param mediaPlayerEventAdapter the media player event adapter
+	 * @param mediaPlayerEventAdapter
+	 *            the media player event adapter
 	 */
-	public void addMediaPlayerEventListener(
-			MediaPlayerEventAdapter mediaPlayerEventAdapter);
+	public void addMediaPlayerEventListener(MediaPlayerEventAdapter mediaPlayerEventAdapter);
 
 	/**
 	 * Destroy.
@@ -71,54 +72,64 @@ public interface ISimpleMediaPlayer extends IItem {
 	/**
 	 * Sets the action on video end listener.
 	 *
-	 * @param actionOnVideoEndListener the new action on video end listener
+	 * @param actionOnVideoEndListener
+	 *            the new action on video end listener
 	 */
-	public void setActionOnVideoEndListener(
-			IActionOnVideoEndListener actionOnVideoEndListener);
+	public void setActionOnVideoEndListener(IActionOnVideoEndListener actionOnVideoEndListener);
 
 	/**
 	 * Sets the local resource.
 	 *
-	 * @param file the file
-	 * @param autostart the autostart
+	 * @param file
+	 *            the file
+	 * @param autostart
+	 *            the autostart
 	 */
 	public void setLocalResource(File file, boolean autostart);
 
 	/**
 	 * Sets the local resource.
 	 *
-	 * @param localPath the local path
-	 * @param autostart the autostart
+	 * @param localPath
+	 *            the local path
+	 * @param autostart
+	 *            the autostart
 	 */
 	public void setLocalResource(String localPath, boolean autostart);
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param pos the new position
+	 * @param pos
+	 *            the new position
 	 */
 	public void setPosition(float pos);
 
 	/**
 	 * Sets the remote resource.
 	 *
-	 * @param remotePath the remote path
-	 * @param autostart the autostart
+	 * @param remotePath
+	 *            the remote path
+	 * @param autostart
+	 *            the autostart
 	 */
 	public void setRemoteResource(String remotePath, boolean autostart);
 
 	/**
 	 * Sets the repeat.
 	 *
-	 * @param repeat the new repeat
+	 * @param repeat
+	 *            the new repeat
 	 */
 	public void setRepeat(boolean repeat);
 
 	/**
 	 * Sets the size.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public void setSize(float width, float height);
 

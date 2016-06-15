@@ -14,11 +14,11 @@ import synergynet3.web.apps.numbernet.shared.ExpressionVisibleProperties;
 /**
  * The Class ExpressionPositionSync.
  */
-public class ExpressionPositionSync {
+public class ExpressionPositionSync
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(ExpressionPositionSync.class.getName());
+	private static final Logger log = Logger.getLogger(ExpressionPositionSync.class.getName());
 
 	// private NumberNetStudentTableClusteredData tableData;
 	/** The expression display. */
@@ -30,11 +30,13 @@ public class ExpressionPositionSync {
 	/**
 	 * Instantiates a new expression position sync.
 	 *
-	 * @param expressionDisplay the expression display
-	 * @param tableData the table data
+	 * @param expressionDisplay
+	 *            the expression display
+	 * @param tableData
+	 *            the table data
 	 */
-	public ExpressionPositionSync(ExpressionDisplay expressionDisplay,
-			NumberNetStudentTableClusteredData tableData) {
+	public ExpressionPositionSync(ExpressionDisplay expressionDisplay, NumberNetStudentTableClusteredData tableData)
+	{
 		this.expressionDisplay = expressionDisplay;
 		// this.tableData = tableData;
 
@@ -43,21 +45,24 @@ public class ExpressionPositionSync {
 	/**
 	 * Start.
 	 */
-	public void start() {
+	public void start()
+	{
 		initExpressionPositionSync();
 	}
 
 	/**
 	 * Stop.
 	 */
-	public void stop() {
+	public void stop()
+	{
 		updatePositionInfoTimer.cancel();
 	}
 
 	/**
 	 * Inits the expression position sync.
 	 */
-	private void initExpressionPositionSync() {
+	private void initExpressionPositionSync()
+	{
 		// tableData.getExpressionVisualPropertiesMap().registerChangeListener(new
 		// DistributedPropertyChangedAction<Map<String,ExpressionVisibleProperties>>()
 		// {
@@ -72,19 +77,20 @@ public class ExpressionPositionSync {
 		// });
 
 		updatePositionInfoTimer = new Timer();
-		updatePositionInfoTimer.scheduleAtFixedRate(new TimerTask() {
+		updatePositionInfoTimer.scheduleAtFixedRate(new TimerTask()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				log.info("Updating position info");
 
 				Double target = expressionDisplay.getCurrentTarget();
-				if (target != null) {
-					Map<String, ExpressionVisibleProperties> posInfo = expressionDisplay
-							.getCurrentIDToExpressionVisibleMap();
-					DistributedMap<String, ExpressionVisibleProperties> dmap = TargetMaps
-							.get().getExpressionVisiblePropertiesMapForTarget(
-									target);
-					for (ExpressionVisibleProperties evp : posInfo.values()) {
+				if (target != null)
+				{
+					Map<String, ExpressionVisibleProperties> posInfo = expressionDisplay.getCurrentIDToExpressionVisibleMap();
+					DistributedMap<String, ExpressionVisibleProperties> dmap = TargetMaps.get().getExpressionVisiblePropertiesMapForTarget(target);
+					for (ExpressionVisibleProperties evp : posInfo.values())
+					{
 						dmap.put(evp.id, evp);
 					}
 				}

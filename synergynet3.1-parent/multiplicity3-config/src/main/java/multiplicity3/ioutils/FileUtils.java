@@ -11,27 +11,33 @@ import java.util.List;
 /**
  * The Class FileUtils.
  */
-public class FileUtils {
+public class FileUtils
+{
 
 	/**
 	 * Gets the extension.
 	 *
-	 * @param file the file
+	 * @param file
+	 *            the file
 	 * @return the extension
 	 */
-	public static String getExtension(File file) {
+	public static String getExtension(File file)
+	{
 		return getExtension(file.getName());
 	}
 
 	/**
 	 * Gets the extension.
 	 *
-	 * @param fileName the file name
+	 * @param fileName
+	 *            the file name
 	 * @return the extension
 	 */
-	public static String getExtension(String fileName) {
+	public static String getExtension(String fileName)
+	{
 		int lastdot = fileName.lastIndexOf('.');
-		if (lastdot < 0) {
+		if (lastdot < 0)
+		{
 			return null;
 		}
 		return fileName.substring(lastdot + 1, fileName.length());
@@ -40,22 +46,29 @@ public class FileUtils {
 	/**
 	 * Read as string list.
 	 *
-	 * @param is the is
-	 * @param ignoreEmptyLines the ignore empty lines
+	 * @param is
+	 *            the is
+	 * @param ignoreEmptyLines
+	 *            the ignore empty lines
 	 * @return the list
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public static List<String> readAsStringList(InputStream is,
-			boolean ignoreEmptyLines) throws IOException {
+	public static List<String> readAsStringList(InputStream is, boolean ignoreEmptyLines) throws IOException
+	{
 		List<String> contents = new ArrayList<String>();
 
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		String line;
 
-		while ((line = br.readLine()) != null) {
-			if (ignoreEmptyLines && (line.length() <= 0)) {
+		while ((line = br.readLine()) != null)
+		{
+			if (ignoreEmptyLines && (line.length() <= 0))
+			{
 				// ignore
-			} else {
+			}
+			else
+			{
 				contents.add(line);
 			}
 		}

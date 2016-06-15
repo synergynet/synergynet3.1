@@ -43,7 +43,8 @@ import com.sun.pdfview.PDFPage;
 /**
  * The Class PDFViewerItem.
  */
-public class PDFViewerItem {
+public class PDFViewerItem
+{
 
 	/** The converted pages. */
 	private static HashMap<String, File> convertedPages = new HashMap<String, File>();
@@ -52,8 +53,7 @@ public class PDFViewerItem {
 	private static final String FONT_LOC = "synergynet3/activitypack1/table/common/arial64_white.fnt";
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(PDFViewerItem.class
-			.getName());
+	private static final Logger log = Logger.getLogger(PDFViewerItem.class.getName());
 
 	/** The pdf sizes. */
 	private static HashMap<String, Vector2f> pdfSizes = new HashMap<String, Vector2f>();
@@ -91,15 +91,21 @@ public class PDFViewerItem {
 	/**
 	 * Instantiates a new PDF viewer item.
 	 *
-	 * @param stage the stage
-	 * @param pdfFile the pdf file
+	 * @param stage
+	 *            the stage
+	 * @param pdfFile
+	 *            the pdf file
 	 */
-	public PDFViewerItem(IStage stage, File pdfFile) {
+	public PDFViewerItem(IStage stage, File pdfFile)
+	{
 		this.stage = stage;
 
-		try {
+		try
+		{
 			generateImages(pdfFile);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -107,19 +113,23 @@ public class PDFViewerItem {
 	/**
 	 * Adds the to stage.
 	 */
-	public void addToStage() {
+	public void addToStage()
+	{
 		stage.addItem(wrapperFrame);
 	}
 
 	/**
 	 * Destroy.
 	 */
-	public void destroy() {
-		for (int i = 0; i < frames.size(); i++) {
+	public void destroy()
+	{
+		for (int i = 0; i < frames.size(); i++)
+		{
 			tidyAwayFrameContents(i);
 		}
 		frames.clear();
-		if (wrapperFrame.getParentItem() != null) {
+		if (wrapperFrame.getParentItem() != null)
+		{
 			wrapperFrame.getParentItem().removeItem(wrapperFrame);
 		}
 	}
@@ -127,9 +137,11 @@ public class PDFViewerItem {
 	/**
 	 * Sets the location.
 	 *
-	 * @param loc the new location
+	 * @param loc
+	 *            the new location
 	 */
-	public void setLocation(Vector2f loc) {
+	public void setLocation(Vector2f loc)
+	{
 		wrapperFrame.setRelativeLocation(loc);
 	}
 
@@ -138,8 +150,10 @@ public class PDFViewerItem {
 	 *
 	 * @return the int
 	 */
-	private int addFrame() {
-		if (frames.size() == 1) {
+	private int addFrame()
+	{
+		if (frames.size() == 1)
+		{
 			showScrollButtons();
 		}
 		frames.add(new ArrayList<IItem>());
@@ -149,16 +163,23 @@ public class PDFViewerItem {
 	/**
 	 * Adds the to frame.
 	 *
-	 * @param item the item
-	 * @param frame the frame
-	 * @param x the x
-	 * @param y the y
+	 * @param item
+	 *            the item
+	 * @param frame
+	 *            the frame
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	private void addToFrame(IItem item, int frame, int x, int y) {
-		if ((frame >= 0) && (frame < frames.size())) {
+	private void addToFrame(IItem item, int frame, int x, int y)
+	{
+		if ((frame >= 0) && (frame < frames.size()))
+		{
 			frames.get(frame).add(item);
 			positionCorrectlyOnFrame(item, x, y);
-			if (frame != currentFrame) {
+			if (frame != currentFrame)
+			{
 				hideItem(item);
 			}
 		}
@@ -167,48 +188,50 @@ public class PDFViewerItem {
 	/**
 	 * Creates the arrows.
 	 */
-	private void createArrows() {
-		try {
+	private void createArrows()
+	{
+		try
+		{
 
 			String scrollButtonImage = RESOURCE_PATH + "scrollButton.png";
 
-			scrollUp = contentFactory.create(IImage.class, "scrollUp",
-					UUID.randomUUID());
+			scrollUp = contentFactory.create(IImage.class, "scrollUp", UUID.randomUUID());
 			scrollUp.setImage(scrollButtonImage);
 			scrollUp.setSize(120, 490);
 			scrollUp.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
-			scrollUp.setRelativeLocation(new Vector2f(
-					(pdfDimensions.getX() / 2) + 70, 0));
+			scrollUp.setRelativeLocation(new Vector2f((pdfDimensions.getX() / 2) + 70, 0));
 
-			scrollUp.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							scrollForward();
-						}
-					});
+			scrollUp.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					scrollForward();
+				}
+			});
 
-			scrollDown = contentFactory.create(IImage.class, "scrollDown",
-					UUID.randomUUID());
+			scrollDown = contentFactory.create(IImage.class, "scrollDown", UUID.randomUUID());
 			scrollDown.setImage(scrollButtonImage);
 			scrollDown.setSize(120, 490);
-			scrollDown.setRelativeLocation(new Vector2f(
-					-(pdfDimensions.getX() / 2) - 70, 0));
+			scrollDown.setRelativeLocation(new Vector2f(-(pdfDimensions.getX() / 2) - 70, 0));
 
-			scrollDown.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							scrollBack();
-						}
-					});
+			scrollDown.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					scrollBack();
+				}
+			});
 
 			wrapperFrame.addItem(scrollUp);
 			wrapperFrame.addItem(scrollDown);
 
 			arrowsPresent = true;
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -216,25 +239,28 @@ public class PDFViewerItem {
 	/**
 	 * Creates the exit button.
 	 */
-	private void createExitButton() {
-		try {
-			IImage exitButton = contentFactory.create(IImage.class, "destroy",
-					UUID.randomUUID());
+	private void createExitButton()
+	{
+		try
+		{
+			IImage exitButton = contentFactory.create(IImage.class, "destroy", UUID.randomUUID());
 			exitButton.setImage(RESOURCE_PATH + "destroyButton.png");
 			exitButton.setSize(128, 128);
 			exitButton.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
-			exitButton.setRelativeLocation(new Vector2f(0, -(pdfDimensions
-					.getY() / 2) - 74));
+			exitButton.setRelativeLocation(new Vector2f(0, -(pdfDimensions.getY() / 2) - 74));
 			wrapperFrame.addItem(exitButton);
 
-			exitButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							destroy();
-						}
-					});
-		} catch (ContentTypeNotBoundException e) {
+			exitButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					destroy();
+				}
+			});
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -242,26 +268,33 @@ public class PDFViewerItem {
 	/**
 	 * Generate image.
 	 *
-	 * @param imageName the image name
-	 * @param imageFile the image file
-	 * @param width the width
-	 * @param height the height
+	 * @param imageName
+	 *            the image name
+	 * @param imageFile
+	 *            the image file
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 * @return the i image
 	 */
-	private IImage generateImage(String imageName, File imageFile, int width,
-			int height) {
-		try {
-			IImage image = contentFactory.create(IImage.class, "",
-					UUID.randomUUID());
+	private IImage generateImage(String imageName, File imageFile, int width, int height)
+	{
+		try
+		{
+			IImage image = contentFactory.create(IImage.class, "", UUID.randomUUID());
 			image.setImage(imageFile);
 			image.setSize(width, height);
-			if (!convertedPages.containsKey(imageName)) {
+			if (!convertedPages.containsKey(imageName))
+			{
 				convertedPages.put(imageName, imageFile);
 			}
 
 			return image;
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 		return null;
@@ -270,52 +303,54 @@ public class PDFViewerItem {
 	/**
 	 * Generate images.
 	 *
-	 * @param file the file
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param file
+	 *            the file
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private void generateImages(File file) throws IOException {
+	private void generateImages(File file) throws IOException
+	{
 
 		contentFactory = stage.getContentFactory();
 
 		// load a pdf from a byte buffer
 		RandomAccessFile raf = new RandomAccessFile(file, "r");
 		FileChannel channel = raf.getChannel();
-		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0,
-				channel.size());
+		ByteBuffer buf = channel.map(FileChannel.MapMode.READ_ONLY, 0, channel.size());
 		PDFFile pdffile = new PDFFile(buf);
 
 		int numPgs = pdffile.getNumPages();
 
 		ArrayList<IImage> images = new ArrayList<IImage>();
 
-		for (int i = 0; i < numPgs; i++) {
+		for (int i = 0; i < numPgs; i++)
+		{
 
 			String pdfName = file.getName();
 			String imageName = pdfName + i;
 
-			if (convertedPages.containsKey(imageName)) {
-				images.add(generateImage(imageName,
-						convertedPages.get(imageName),
-						(int) pdfSizes.get(pdfName).getX(),
-						(int) pdfSizes.get(pdfName).getY()));
+			if (convertedPages.containsKey(imageName))
+			{
+				images.add(generateImage(imageName, convertedPages.get(imageName), (int) pdfSizes.get(pdfName).getX(), (int) pdfSizes.get(pdfName).getY()));
 				pdfDimensions = pdfSizes.get(pdfName);
-			} else {
+			}
+			else
+			{
 
 				// draw the page to an image
 				PDFPage page = pdffile.getPage(i);
 
 				// get the width and height for the doc at the default zoom
-				Rectangle rect = new Rectangle(0, 0, (int) page.getBBox()
-						.getWidth(), (int) page.getBBox().getHeight());
+				Rectangle rect = new Rectangle(0, 0, (int) page.getBBox().getWidth(), (int) page.getBBox().getHeight());
 
 				double pw = page.getWidth() * 2;
 				double ph = page.getHeight() * 2;
 
 				// generate the image
-				Image img = page.getImage((int) pw, (int) ph, rect, null, true,
-						true);
+				Image img = page.getImage((int) pw, (int) ph, rect, null, true, true);
 
-				if (!pdfSizes.containsKey(pdfName)) {
+				if (!pdfSizes.containsKey(pdfName))
+				{
 					Vector2f dimensions = new Vector2f((int) pw, (int) ph);
 					pdfDimensions = dimensions;
 					pdfSizes.put(pdfName, dimensions);
@@ -328,8 +363,7 @@ public class PDFViewerItem {
 				imageFile.deleteOnExit();
 				ImageIO.write(bImg, "png", imageFile);
 
-				images.add(generateImage(imageName, imageFile, (int) pw,
-						(int) ph));
+				images.add(generateImage(imageName, imageFile, (int) pw, (int) ph));
 			}
 		}
 		raf.close();
@@ -340,20 +374,23 @@ public class PDFViewerItem {
 	/**
 	 * Generate pdf label.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	private void generatePDFLabel(String name) {
-		try {
-			IMutableLabel pdfLabel = this.stage.getContentFactory().create(
-					IMutableLabel.class, "pdfLabel", UUID.randomUUID());
+	private void generatePDFLabel(String name)
+	{
+		try
+		{
+			IMutableLabel pdfLabel = this.stage.getContentFactory().create(IMutableLabel.class, "pdfLabel", UUID.randomUUID());
 			pdfLabel.setFont(FONT_LOC);
 			pdfLabel.setText(name);
 			pdfLabel.setBoxSize(pdfDimensions.getY(), 50);
 			pdfLabel.setFontScale(1.5f);
-			pdfLabel.setRelativeLocation(new Vector2f(0,
-					(pdfDimensions.getY() / 2) + 35));
+			pdfLabel.setRelativeLocation(new Vector2f(0, (pdfDimensions.getY() / 2) + 35));
 			wrapperFrame.addItem(pdfLabel);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -361,22 +398,27 @@ public class PDFViewerItem {
 	/**
 	 * Generate pdf viewer.
 	 *
-	 * @param pdfName the pdf name
-	 * @param images the images
+	 * @param pdfName
+	 *            the pdf name
+	 * @param images
+	 *            the images
 	 */
-	private void generatePDFViewer(String pdfName, ArrayList<IImage> images) {
-		try {
+	private void generatePDFViewer(String pdfName, ArrayList<IImage> images)
+	{
+		try
+		{
 			frames.add(new ArrayList<IItem>());
 
-			wrapperFrame = contentFactory.create(IContainer.class, "wrapper",
-					UUID.randomUUID());
+			wrapperFrame = contentFactory.create(IContainer.class, "wrapper", UUID.randomUUID());
 
 			createExitButton();
 
 			generatePDFLabel(pdfName);
 
-			for (int i = 0; i < images.size(); i++) {
-				if (i > 0) {
+			for (int i = 0; i < images.size(); i++)
+			{
+				if (i > 0)
+				{
 					addFrame();
 				}
 				addToFrame(images.get(i), i, 0, 0);
@@ -384,11 +426,12 @@ public class PDFViewerItem {
 
 			wrapperFrame.setRelativeScale(0.25f);
 
-			InertiaBehaviour ib = stage.getBehaviourMaker().addBehaviour(
-					wrapperFrame, InertiaBehaviour.class);
+			InertiaBehaviour ib = stage.getBehaviourMaker().addBehaviour(wrapperFrame, InertiaBehaviour.class);
 			ib.setDeceleration(200f);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 	}
@@ -396,9 +439,12 @@ public class PDFViewerItem {
 	/**
 	 * Hide current frame contents.
 	 */
-	private void hideCurrentFrameContents() {
-		if (currentFrame < frames.size()) {
-			for (IItem item : frames.get(currentFrame)) {
+	private void hideCurrentFrameContents()
+	{
+		if (currentFrame < frames.size())
+		{
+			for (IItem item : frames.get(currentFrame))
+			{
 				hideItem(item);
 			}
 		}
@@ -407,10 +453,13 @@ public class PDFViewerItem {
 	/**
 	 * Hide item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void hideItem(IItem item) {
-		if (item != null) {
+	private void hideItem(IItem item)
+	{
+		if (item != null)
+		{
 			item.setVisible(false);
 			item.setInteractionEnabled(false);
 		}
@@ -419,11 +468,15 @@ public class PDFViewerItem {
 	/**
 	 * Position correctly on frame.
 	 *
-	 * @param item the item
-	 * @param x the x
-	 * @param y the y
+	 * @param item
+	 *            the item
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	private void positionCorrectlyOnFrame(IItem item, int x, int y) {
+	private void positionCorrectlyOnFrame(IItem item, int x, int y)
+	{
 		float rotation = wrapperFrame.getRelativeRotation();
 		Vector2f position = wrapperFrame.getRelativeLocation();
 		wrapperFrame.setRelativeRotation(0);
@@ -432,8 +485,7 @@ public class PDFViewerItem {
 		wrapperFrame.addItem(item);
 		wrapperFrame.setRelativeRotation(rotation);
 		wrapperFrame.setRelativeLocation(position);
-		RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker()
-				.addBehaviour(item, RotateTranslateScaleBehaviour.class);
+		RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker().addBehaviour(item, RotateTranslateScaleBehaviour.class);
 		rts.setItemActingOn(wrapperFrame);
 		rts.setScaleLimits(0.25f, 1.5f);
 	}
@@ -441,9 +493,11 @@ public class PDFViewerItem {
 	/**
 	 * Scroll back.
 	 */
-	private void scrollBack() {
+	private void scrollBack()
+	{
 		int targetFrame = currentFrame - 1;
-		if (targetFrame < 0) {
+		if (targetFrame < 0)
+		{
 			targetFrame = frames.size() - 1;
 		}
 		scrollToFrame(targetFrame);
@@ -452,9 +506,11 @@ public class PDFViewerItem {
 	/**
 	 * Scroll forward.
 	 */
-	private void scrollForward() {
+	private void scrollForward()
+	{
 		int targetFrame = currentFrame + 1;
-		if (targetFrame >= frames.size()) {
+		if (targetFrame >= frames.size())
+		{
 			targetFrame = 0;
 		}
 		scrollToFrame(targetFrame);
@@ -463,9 +519,11 @@ public class PDFViewerItem {
 	/**
 	 * Scroll to frame.
 	 *
-	 * @param frame the frame
+	 * @param frame
+	 *            the frame
 	 */
-	private void scrollToFrame(int frame) {
+	private void scrollToFrame(int frame)
+	{
 		hideCurrentFrameContents();
 		currentFrame = frame;
 		showCurrentFrameContents();
@@ -474,8 +532,10 @@ public class PDFViewerItem {
 	/**
 	 * Show current frame contents.
 	 */
-	private void showCurrentFrameContents() {
-		for (IItem item : frames.get(currentFrame)) {
+	private void showCurrentFrameContents()
+	{
+		for (IItem item : frames.get(currentFrame))
+		{
 			showItem(item);
 		}
 	}
@@ -483,10 +543,13 @@ public class PDFViewerItem {
 	/**
 	 * Show item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void showItem(IItem item) {
-		if (item != null) {
+	private void showItem(IItem item)
+	{
+		if (item != null)
+		{
 			item.setVisible(true);
 			item.setInteractionEnabled(true);
 		}
@@ -495,8 +558,10 @@ public class PDFViewerItem {
 	/**
 	 * Show scroll buttons.
 	 */
-	private void showScrollButtons() {
-		if (!arrowsPresent) {
+	private void showScrollButtons()
+	{
+		if (!arrowsPresent)
+		{
 			createArrows();
 		}
 		showItem(scrollUp);
@@ -506,10 +571,13 @@ public class PDFViewerItem {
 	/**
 	 * Tidy away frame contents.
 	 *
-	 * @param toRemove the to remove
+	 * @param toRemove
+	 *            the to remove
 	 */
-	private void tidyAwayFrameContents(int toRemove) {
-		for (IItem item : frames.get(currentFrame)) {
+	private void tidyAwayFrameContents(int toRemove)
+	{
+		for (IItem item : frames.get(currentFrame))
+		{
 			wrapperFrame.removeItem(item);
 		}
 	}
@@ -517,13 +585,18 @@ public class PDFViewerItem {
 	/**
 	 * To buffered image.
 	 *
-	 * @param image the image
-	 * @param width the width
-	 * @param height the height
+	 * @param image
+	 *            the image
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 * @return the buffered image
 	 */
-	private BufferedImage toBufferedImage(Image image, int width, int height) {
-		if (image instanceof BufferedImage) {
+	private BufferedImage toBufferedImage(Image image, int width, int height)
+	{
+		if (image instanceof BufferedImage)
+		{
 			return (BufferedImage) image;
 		}
 
@@ -533,10 +606,10 @@ public class PDFViewerItem {
 		// Create a buffered image with a format that's compatible with the
 		// screen
 		BufferedImage bimage = null;
-		GraphicsEnvironment ge = GraphicsEnvironment
-				.getLocalGraphicsEnvironment();
+		GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
 
-		try {
+		try
+		{
 			// Determine the type of transparency of the new buffered image
 			int transparency = Transparency.OPAQUE;
 
@@ -544,11 +617,14 @@ public class PDFViewerItem {
 			GraphicsDevice gs = ge.getDefaultScreenDevice();
 			GraphicsConfiguration gc = gs.getDefaultConfiguration();
 			bimage = gc.createCompatibleImage(width, height, transparency);
-		} catch (HeadlessException e) {
+		}
+		catch (HeadlessException e)
+		{
 			System.out.println("The system does not have a screen");
 		}
 
-		if (bimage == null) {
+		if (bimage == null)
+		{
 			int type = BufferedImage.TYPE_INT_RGB;
 			bimage = new BufferedImage(width, height, type);
 		}

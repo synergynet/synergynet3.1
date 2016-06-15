@@ -18,11 +18,11 @@ import com.jme3.scene.Node;
 /**
  * The Class ContentSystemPicker.
  */
-public class ContentSystemPicker implements IPickSystem {
+public class ContentSystemPicker implements IPickSystem
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(ContentSystemPicker.class.getName());
+	private static final Logger log = Logger.getLogger(ContentSystemPicker.class.getName());
 
 	/** The display height. */
 	private int displayHeight;
@@ -36,12 +36,15 @@ public class ContentSystemPicker implements IPickSystem {
 	/**
 	 * Instantiates a new content system picker.
 	 *
-	 * @param rootOrthoNode the root ortho node
-	 * @param displayWidth the display width
-	 * @param displayHeight the display height
+	 * @param rootOrthoNode
+	 *            the root ortho node
+	 * @param displayWidth
+	 *            the display width
+	 * @param displayHeight
+	 *            the display height
 	 */
-	public ContentSystemPicker(Node rootOrthoNode, int displayWidth,
-			int displayHeight) {
+	public ContentSystemPicker(Node rootOrthoNode, int displayWidth, int displayHeight)
+	{
 		this.rootNode = rootOrthoNode;
 		this.displayWidth = displayWidth;
 		this.displayHeight = displayHeight;
@@ -54,51 +57,59 @@ public class ContentSystemPicker implements IPickSystem {
 	 * com.jme3.math.Vector2f)
 	 */
 	@Override
-	public List<IItem> findItemsOnTableAtPosition(Vector2f pickPoint) {
+	public List<IItem> findItemsOnTableAtPosition(Vector2f pickPoint)
+	{
 		List<IItem> foundItems = new ArrayList<IItem>();
 
 		log.finer("Find items at position " + pickPoint);
 		CollisionResults results = new CollisionResults();
-		Vector3f loc = new Vector3f(pickPoint.x * displayWidth, pickPoint.y
-				* displayHeight, 999999);
+		Vector3f loc = new Vector3f(pickPoint.x * displayWidth, pickPoint.y * displayHeight, 999999);
 		Ray ray = new Ray(loc, new Vector3f(0, 0, -1f));
 		rootNode.updateGeometricState();
 		rootNode.collideWith(ray, results);
-		if (results.size() < 1) {
+		if (results.size() < 1)
+		{
 			log.fine("  Did not find any geometry under cursor.");
-		} else {
+		}
+		else
+		{
 			log.fine("  Found " + results.size() + " hits.");
 		}
 
 		// TODO: make sure pick distance sorting is working
-		for (int i = 0; i < results.size(); i++) {
+		for (int i = 0; i < results.size(); i++)
+		{
 			log.fine("  Examining geometry at index " + i);
 			float dist = results.getCollision(i).getDistance();
 			Vector3f pt = results.getCollision(i).getContactPoint();
 			String hit = results.getCollision(i).getGeometry().getName();
-			log.fine("    Hit geometry " + hit + " at " + pt + ", " + dist
-					+ " world units away.");
-			log.fine("    Geometry is a "
-					+ results.getCollision(i).getGeometry().getClass()
-							.getName());
+			log.fine("    Hit geometry " + hit + " at " + pt + ", " + dist + " world units away.");
+			log.fine("    Geometry is a " + results.getCollision(i).getGeometry().getClass().getName());
 			log.fine("    Testing for a UUID");
-			try {
-				String uuidStr = (String) results.getCollision(i).getGeometry()
-						.getUserData(JMEItem.KEY_JMEITEMDATA);
-				if (uuidStr != null) {
+			try
+			{
+				String uuidStr = (String) results.getCollision(i).getGeometry().getUserData(JMEItem.KEY_JMEITEMDATA);
+				if (uuidStr != null)
+				{
 					UUID uuid = UUID.fromString(uuidStr);
 					log.fine("    UUID found: " + uuid);
 					List<IItem> items = ItemMap.getItem(uuid);
-					for (IItem itm : items) {
-						if (itm.isVisible()) {
+					for (IItem itm : items)
+					{
+						if (itm.isVisible())
+						{
 							foundItems.add(itm);
 						}
 					}
 
-				} else {
+				}
+				else
+				{
 					log.fine("    No UUID associated with " + hit);
 				}
-			} catch (IllegalArgumentException ex) {
+			}
+			catch (IllegalArgumentException ex)
+			{
 				// TODO: propagate?
 			}
 		}

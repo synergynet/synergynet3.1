@@ -14,12 +14,11 @@ import com.jme3.math.Vector2f;
 /**
  * The Class RotateTranslateScaleBehaviour.
  */
-public class RotateTranslateScaleBehaviour implements IBehaviour,
-		IMultiTouchEventListener {
+public class RotateTranslateScaleBehaviour implements IBehaviour, IMultiTouchEventListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(RotateTranslateScaleBehaviour.class.getName());
+	private static final Logger log = Logger.getLogger(RotateTranslateScaleBehaviour.class.getName());
 
 	/** The active. */
 	private boolean active = true;
@@ -70,16 +69,20 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
 		updateCursor(event);
 
-		if (getCursorCount() == 1) {
+		if (getCursorCount() == 1)
+		{
 			applySingleCursorTransform();
-		} else if ((getCursorCount() == 2)
-				&& (event.getCursorID() == cursor2ID)) {
+		}
+		else if ((getCursorCount() == 2) && (event.getCursorID() == cursor2ID))
+		{
 			applyMultiCursorTransform();
 		}
 	}
@@ -91,7 +94,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -101,20 +105,25 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!active) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!active)
+		{
 			return;
 		}
-		if ((event.getCursorID() == cursor1ID)
-				|| (event.getCursorID() == cursor2ID)) {
+		if ((event.getCursorID() == cursor1ID) || (event.getCursorID() == cursor2ID))
+		{
 			return;
 		}
 
-		if (cursor1ID == Long.MAX_VALUE) {
+		if (cursor1ID == Long.MAX_VALUE)
+		{
 			stage.tableToWorld(event.getPosition(), cursor1WorldPosition);
 			stage.tableToWorld(event.getPosition(), cursor1OldWorldPosition);
 			cursor1ID = event.getCursorID();
-		} else if (cursor2ID == Long.MAX_VALUE) {
+		}
+		else if (cursor2ID == Long.MAX_VALUE)
+		{
 			stage.tableToWorld(event.getPosition(), cursor2WorldPosition);
 			stage.tableToWorld(event.getPosition(), cursor2OldWorldPosition);
 			cursor2ID = event.getCursorID();
@@ -128,15 +137,19 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if ((event.getCursorID() == cursor1ID) && (cursor1ID != Long.MAX_VALUE)) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if ((event.getCursorID() == cursor1ID) && (cursor1ID != Long.MAX_VALUE))
+		{
 			cursor1ID = Long.MAX_VALUE;
-		} else if ((event.getCursorID() == cursor2ID)
-				&& (cursor2ID != Long.MAX_VALUE)) {
+		}
+		else if ((event.getCursorID() == cursor2ID) && (cursor2ID != Long.MAX_VALUE))
+		{
 			cursor2ID = Long.MAX_VALUE;
 		}
 
-		if (getCursorCount() == 1) {
+		if (getCursorCount() == 1)
+		{
 			updateCursor(event);
 			applySingleCursorTransform();
 		}
@@ -147,7 +160,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 *
 	 * @return true, if is active
 	 */
-	public boolean isActive() {
+	public boolean isActive()
+	{
 		return getCursorCount() > 0;
 	}
 
@@ -156,7 +170,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 *
 	 * @return true, if is rotation enabled
 	 */
-	public boolean isRotationEnabled() {
+	public boolean isRotationEnabled()
+	{
 		return rotationDisabled;
 	}
 
@@ -165,7 +180,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 *
 	 * @return true, if is scale enabled
 	 */
-	public boolean isScaleEnabled() {
+	public boolean isScaleEnabled()
+	{
 		return !scaleDisabled;
 	}
 
@@ -176,7 +192,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -186,7 +203,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -196,7 +214,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -204,7 +223,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
@@ -215,14 +235,17 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem newSourceItem) {
-		if (newSourceItem == eventSourceItem) {
+	public void setEventSource(IItem newSourceItem)
+	{
+		if (newSourceItem == eventSourceItem)
+		{
 			// no change
 			return;
 		}
 
 		// already have an event source, so unregister it
-		if (this.eventSourceItem != null) {
+		if (this.eventSourceItem != null)
+		{
 			this.eventSourceItem.getMultiTouchDispatcher().remove(this);
 		}
 
@@ -237,7 +260,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setItemActingOn(IItem item) {
+	public void setItemActingOn(IItem item)
+	{
 		log.fine("Adding rotate translate scale behaviour to " + item);
 		this.affectedItem = item;
 	}
@@ -245,28 +269,35 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Sets the rotation enabled.
 	 *
-	 * @param b the new rotation enabled
+	 * @param b
+	 *            the new rotation enabled
 	 */
-	public void setRotationEnabled(boolean b) {
+	public void setRotationEnabled(boolean b)
+	{
 		rotationDisabled = !b;
 	}
 
 	/**
 	 * Sets the scale enabled.
 	 *
-	 * @param b the new scale enabled
+	 * @param b
+	 *            the new scale enabled
 	 */
-	public void setScaleEnabled(boolean b) {
+	public void setScaleEnabled(boolean b)
+	{
 		scaleDisabled = !b;
 	}
 
 	/**
 	 * Sets the scale limits.
 	 *
-	 * @param minScale the min scale
-	 * @param maxScale the max scale
+	 * @param minScale
+	 *            the min scale
+	 * @param maxScale
+	 *            the max scale
 	 */
-	public void setScaleLimits(float minScale, float maxScale) {
+	public void setScaleLimits(float minScale, float maxScale)
+	{
 		this.minScale = minScale;
 		this.maxScale = maxScale;
 	}
@@ -274,18 +305,22 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Sets the scale max limit.
 	 *
-	 * @param maxScale the new scale max limit
+	 * @param maxScale
+	 *            the new scale max limit
 	 */
-	public void setScaleMaxLimit(float maxScale) {
+	public void setScaleMaxLimit(float maxScale)
+	{
 		this.maxScale = maxScale;
 	}
 
 	/**
 	 * Sets the scale min limit.
 	 *
-	 * @param minScale the new scale min limit
+	 * @param minScale
+	 *            the new scale min limit
 	 */
-	public void setScaleMinLimit(float minScale) {
+	public void setScaleMinLimit(float minScale)
+	{
 		this.minScale = minScale;
 	}
 
@@ -296,7 +331,8 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		this.stage = stage;
 	}
 
@@ -305,66 +341,56 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Apply multi cursor transform.
 	 */
-	private void applyMultiCursorTransform() {
+	private void applyMultiCursorTransform()
+	{
 		log.fine("multi-cursor on item at " + affectedItem.getWorldLocation());
 
 		Vector2f oldCenter = new Vector2f();
-		oldCenter.interpolate(cursor1OldWorldPosition, cursor2OldWorldPosition,
-				0.5f);
+		oldCenter.interpolate(cursor1OldWorldPosition, cursor2OldWorldPosition, 0.5f);
 		Vector2f currentCenter = new Vector2f();
-		currentCenter.interpolate(cursor1WorldPosition, cursor2WorldPosition,
-				0.5f);
+		currentCenter.interpolate(cursor1WorldPosition, cursor2WorldPosition, 0.5f);
 
-		float oldAngle = cursor2OldWorldPosition.subtract(
-				cursor1OldWorldPosition).getAngle();
-		float curAngle = cursor2WorldPosition.subtract(cursor1WorldPosition)
-				.getAngle();
+		float oldAngle = cursor2OldWorldPosition.subtract(cursor1OldWorldPosition).getAngle();
+		float curAngle = cursor2WorldPosition.subtract(cursor1WorldPosition).getAngle();
 		float angleChange = curAngle - oldAngle;
 
-		if (rotationDisabled) {
+		if (rotationDisabled)
+		{
 			angleChange = 0f;
 		}
 
-		Vector2f centerToSpatial = affectedItem.getWorldLocation().subtract(
-				oldCenter);
+		Vector2f centerToSpatial = affectedItem.getWorldLocation().subtract(oldCenter);
 
-		float currentCenterToSpatialAngle = centerToSpatial.getAngle()
-				+ angleChange;
+		float currentCenterToSpatialAngle = centerToSpatial.getAngle() + angleChange;
 
-		float oldLength = cursor2OldWorldPosition.subtract(
-				cursor1OldWorldPosition).length();
-		float newLength = cursor2WorldPosition.subtract(cursor1WorldPosition)
-				.length();
+		float oldLength = cursor2OldWorldPosition.subtract(cursor1OldWorldPosition).length();
+		float newLength = cursor2WorldPosition.subtract(cursor1WorldPosition).length();
 		float scaleChange = newLength / oldLength;
 
-		if (scaleDisabled
-				|| ((affectedItem.getRelativeScale() * scaleChange) < minScale)
-				|| ((affectedItem.getRelativeScale() * scaleChange) > maxScale)) {
+		if (scaleDisabled || ((affectedItem.getRelativeScale() * scaleChange) < minScale) || ((affectedItem.getRelativeScale() * scaleChange) > maxScale))
+		{
 			scaleChange = 1f;
 		}
 
-		float newDistFromCurrentCenterToSpatial = scaleChange
-				* centerToSpatial.length();
+		float newDistFromCurrentCenterToSpatial = scaleChange * centerToSpatial.length();
 
-		float dx = newDistFromCurrentCenterToSpatial
-				* FastMath.cos(currentCenterToSpatialAngle);
-		float dy = newDistFromCurrentCenterToSpatial
-				* FastMath.sin(currentCenterToSpatialAngle);
+		float dx = newDistFromCurrentCenterToSpatial * FastMath.cos(currentCenterToSpatialAngle);
+		float dy = newDistFromCurrentCenterToSpatial * FastMath.sin(currentCenterToSpatialAngle);
 
 		Vector2f dxdy = new Vector2f(dx, dy);
 		Vector2f newScreenPosition = currentCenter.add(dxdy);
-		if (Float.isNaN(dx) || Float.isNaN(dy)) {
+		if (Float.isNaN(dx) || Float.isNaN(dy))
+		{
 			newScreenPosition = currentCenter;
 		}
 
 		affectedItem.setWorldLocation(newScreenPosition);
-		affectedItem.setRelativeRotation(affectedItem.getRelativeRotation()
-				+ angleChange);
-		affectedItem.setRelativeScale(affectedItem.getRelativeScale()
-				* scaleChange);
+		affectedItem.setRelativeRotation(affectedItem.getRelativeRotation() + angleChange);
+		affectedItem.setRelativeScale(affectedItem.getRelativeScale() * scaleChange);
 
 		float angle = affectedItem.getRelativeRotation();
-		if (affectedItem.getRelativeRotation() < 0) {
+		if (affectedItem.getRelativeRotation() < 0)
+		{
 			angle = FastMath.TWO_PI - angle;
 		}
 	}
@@ -372,13 +398,15 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Apply single cursor transform.
 	 */
-	private void applySingleCursorTransform() {
-		if (cursor1ID != Long.MAX_VALUE) {
-			affectedItem.setWorldLocation(affectedItem.getWorldLocation().add(
-					cursor1WorldPosition.subtract(cursor1OldWorldPosition)));
-		} else if (cursor2ID != Long.MAX_VALUE) {
-			affectedItem.setWorldLocation(affectedItem.getWorldLocation().add(
-					cursor2WorldPosition.subtract(cursor2OldWorldPosition)));
+	private void applySingleCursorTransform()
+	{
+		if (cursor1ID != Long.MAX_VALUE)
+		{
+			affectedItem.setWorldLocation(affectedItem.getWorldLocation().add(cursor1WorldPosition.subtract(cursor1OldWorldPosition)));
+		}
+		else if (cursor2ID != Long.MAX_VALUE)
+		{
+			affectedItem.setWorldLocation(affectedItem.getWorldLocation().add(cursor2WorldPosition.subtract(cursor2OldWorldPosition)));
 		}
 	}
 
@@ -387,12 +415,15 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	 *
 	 * @return the cursor count
 	 */
-	private int getCursorCount() {
+	private int getCursorCount()
+	{
 		int count = 0;
-		if (cursor1ID != Long.MAX_VALUE) {
+		if (cursor1ID != Long.MAX_VALUE)
+		{
 			count++;
 		}
-		if (cursor2ID != Long.MAX_VALUE) {
+		if (cursor2ID != Long.MAX_VALUE)
+		{
 			count++;
 		}
 		return count;
@@ -401,12 +432,17 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Update cursor.
 	 *
-	 * @param event the event
+	 * @param event
+	 *            the event
 	 */
-	protected void updateCursor(MultiTouchCursorEvent event) {
-		if (event.getCursorID() == cursor1ID) {
+	protected void updateCursor(MultiTouchCursorEvent event)
+	{
+		if (event.getCursorID() == cursor1ID)
+		{
 			updateCursor1(event);
-		} else if (event.getCursorID() == cursor2ID) {
+		}
+		else if (event.getCursorID() == cursor2ID)
+		{
 			updateCursor2(event);
 		}
 	}
@@ -414,9 +450,11 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Update cursor1.
 	 *
-	 * @param event the event
+	 * @param event
+	 *            the event
 	 */
-	protected void updateCursor1(MultiTouchCursorEvent event) {
+	protected void updateCursor1(MultiTouchCursorEvent event)
+	{
 		cursor1OldWorldPosition.x = cursor1WorldPosition.x;
 		cursor1OldWorldPosition.y = cursor1WorldPosition.y;
 		stage.tableToWorld(event.getPosition(), cursor1WorldPosition);
@@ -425,9 +463,11 @@ public class RotateTranslateScaleBehaviour implements IBehaviour,
 	/**
 	 * Update cursor2.
 	 *
-	 * @param event the event
+	 * @param event
+	 *            the event
 	 */
-	protected void updateCursor2(MultiTouchCursorEvent event) {
+	protected void updateCursor2(MultiTouchCursorEvent event)
+	{
 		cursor2OldWorldPosition.x = cursor2WorldPosition.x;
 		cursor2OldWorldPosition.y = cursor2WorldPosition.y;
 		stage.tableToWorld(event.getPosition(), cursor2WorldPosition);

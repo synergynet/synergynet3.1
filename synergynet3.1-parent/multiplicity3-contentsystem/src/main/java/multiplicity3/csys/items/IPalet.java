@@ -5,12 +5,14 @@ import multiplicity3.csys.items.item.IItem;
 /**
  * The Interface IPalet.
  */
-public interface IPalet extends IItem {
+public interface IPalet extends IItem
+{
 
 	/**
 	 * Lock palet.
 	 *
-	 * @param locked the locked
+	 * @param locked
+	 *            the locked
 	 */
 	public void lockPalet(boolean locked);
 

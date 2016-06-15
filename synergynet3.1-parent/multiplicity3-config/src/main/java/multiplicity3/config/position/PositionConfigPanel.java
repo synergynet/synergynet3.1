@@ -37,7 +37,8 @@ import javax.swing.JTextField;
 /**
  * The Class PositionConfigPanel.
  */
-public class PositionConfigPanel extends JPanel {
+public class PositionConfigPanel extends JPanel
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 1959347964564852506L;
@@ -120,9 +121,11 @@ public class PositionConfigPanel extends JPanel {
 	/**
 	 * Instantiates a new position config panel.
 	 *
-	 * @param positionConfigPrefsItem the position config prefs item
+	 * @param positionConfigPrefsItem
+	 *            the position config prefs item
 	 */
-	public PositionConfigPanel(PositionConfigPrefsItem positionConfigPrefsItem) {
+	public PositionConfigPanel(PositionConfigPrefsItem positionConfigPrefsItem)
+	{
 		this.prefsItem = positionConfigPrefsItem;
 		initComponents();
 	}
@@ -130,35 +133,46 @@ public class PositionConfigPanel extends JPanel {
 	/**
 	 * Enable developer mode.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void enableDeveloperMode(ActionEvent evt) {
+	private void enableDeveloperMode(ActionEvent evt)
+	{
 		prefsItem.setDeveloperMode(cbEnableDeveloperMode.isSelected());
 	}
 
 	/**
 	 * Enable horizontal placement.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void enableHorizontalPlacement(ActionEvent evt) {
+	private void enableHorizontalPlacement(ActionEvent evt)
+	{
 		prefsItem.setHorizontalPlacement(horizontal.isSelected());
 	}
 
 	/**
 	 * Gets the float from text field.
 	 *
-	 * @param tf the tf
-	 * @param previousValue the previous value
+	 * @param tf
+	 *            the tf
+	 * @param previousValue
+	 *            the previous value
 	 * @return the float from text field
 	 */
-	private Float getFloatFromTextField(JTextField tf, float previousValue) {
-		if (tf.getText().length() > 0) {
-			try {
+	private Float getFloatFromTextField(JTextField tf, float previousValue)
+	{
+		if (tf.getText().length() > 0)
+		{
+			try
+			{
 				float num = Float.parseFloat(tf.getText());
 				tf.setForeground(Color.black);
 				return num;
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 				tf.setForeground(Color.red);
 			}
 		}
@@ -168,17 +182,24 @@ public class PositionConfigPanel extends JPanel {
 	/**
 	 * Gets the integer from text field.
 	 *
-	 * @param tf the tf
-	 * @param previousValue the previous value
+	 * @param tf
+	 *            the tf
+	 * @param previousValue
+	 *            the previous value
 	 * @return the integer from text field
 	 */
-	private int getIntegerFromTextField(JTextField tf, int previousValue) {
-		if (tf.getText().length() > 0) {
-			try {
+	private int getIntegerFromTextField(JTextField tf, int previousValue)
+	{
+		if (tf.getText().length() > 0)
+		{
+			try
+			{
 				int num = Integer.parseInt(tf.getText());
 				tf.setForeground(Color.black);
 				return num;
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 				tf.setForeground(Color.red);
 			}
 		}
@@ -188,108 +209,118 @@ public class PositionConfigPanel extends JPanel {
 	/**
 	 * Inits the components.
 	 */
-	private void initComponents() {
+	private void initComponents()
+	{
 
 		setLayout(null);
 
 		jLabelTableOrientation.setText("Orientation (degrees) = ");
 
-		jTextFieldTableAngle.addKeyListener(new KeyAdapter() {
+		jTextFieldTableAngle.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setAngle(getFloatFromTextField(jTextFieldTableAngle,
-						prefsItem.getAngle()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setAngle(getFloatFromTextField(jTextFieldTableAngle, prefsItem.getAngle()));
 			}
 		});
 
 		jLabelTableHeight.setText("Table Height (m) =");
 
-		jTextFieldTableHeight.addKeyListener(new KeyAdapter() {
+		jTextFieldTableHeight.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setTableHeight(getFloatFromTextField(
-						jTextFieldTableHeight, prefsItem.getTableHeight()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setTableHeight(getFloatFromTextField(jTextFieldTableHeight, prefsItem.getTableHeight()));
 			}
 		});
 
-		cbEnableNormalPositionMode
-				.setText("Enable User Defined Table Positioning");
+		cbEnableNormalPositionMode.setText("Enable User Defined Table Positioning");
 		cbEnableNormalPositionMode.setSelected(!prefsItem.getDeveloperMode());
-		cbEnableNormalPositionMode
-				.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-		cbEnableNormalPositionMode
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						if (cbEnableNormalPositionMode.isSelected()) {
-							cbEnableDeveloperMode
-									.setSelected(!cbEnableNormalPositionMode
-											.isSelected());
-							enableDeveloperMode(evt);
-						} else {
-							cbEnableNormalPositionMode.setSelected(true);
-						}
-					}
-				});
+		cbEnableNormalPositionMode.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+		cbEnableNormalPositionMode.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				if (cbEnableNormalPositionMode.isSelected())
+				{
+					cbEnableDeveloperMode.setSelected(!cbEnableNormalPositionMode.isSelected());
+					enableDeveloperMode(evt);
+				}
+				else
+				{
+					cbEnableNormalPositionMode.setSelected(true);
+				}
+			}
+		});
 
 		jLabelTablePosition.setText("Position (m):");
 
 		jLabelX.setText(" X = ");
 
-		jTextFieldPositionX.addKeyListener(new KeyAdapter() {
+		jTextFieldPositionX.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setXPos(getFloatFromTextField(jTextFieldPositionX,
-						prefsItem.getXPos()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setXPos(getFloatFromTextField(jTextFieldPositionX, prefsItem.getXPos()));
 			}
 		});
 
 		jLabelY.setText(" Y = ");
 
-		jTextFieldPositionY.addKeyListener(new KeyAdapter() {
+		jTextFieldPositionY.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setYPos(getFloatFromTextField(jTextFieldPositionY,
-						prefsItem.getYPos()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setYPos(getFloatFromTextField(jTextFieldPositionY, prefsItem.getYPos()));
 			}
 		});
 
 		cbEnableDeveloperMode.setText("Enable Developer Mode");
 		cbEnableDeveloperMode.setSelected(prefsItem.getDeveloperMode());
-		cbEnableDeveloperMode
-				.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-		cbEnableDeveloperMode
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						if (cbEnableDeveloperMode.isSelected()) {
-							cbEnableNormalPositionMode
-									.setSelected(!cbEnableNormalPositionMode
-											.isSelected());
-							enableDeveloperMode(evt);
-						} else {
-							cbEnableDeveloperMode.setSelected(true);
-						}
-					}
-				});
+		cbEnableDeveloperMode.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+		cbEnableDeveloperMode.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				if (cbEnableDeveloperMode.isSelected())
+				{
+					cbEnableNormalPositionMode.setSelected(!cbEnableNormalPositionMode.isSelected());
+					enableDeveloperMode(evt);
+				}
+				else
+				{
+					cbEnableDeveloperMode.setSelected(true);
+				}
+			}
+		});
 
 		jLabelTableDistances.setText("Distances between displays (m):");
 
 		jLabelXDistance.setText(" X = ");
 
-		jTextFieldDistanceX.addKeyListener(new KeyAdapter() {
+		jTextFieldDistanceX.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setXDistance(getFloatFromTextField(
-						jTextFieldDistanceX, prefsItem.getGridDistanceX()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setXDistance(getFloatFromTextField(jTextFieldDistanceX, prefsItem.getGridDistanceX()));
 			}
 		});
 
 		jLabelYDistance.setText(" Y = ");
 
-		jTextFieldDistanceY.addKeyListener(new KeyAdapter() {
+		jTextFieldDistanceY.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setYDistance(getFloatFromTextField(
-						jTextFieldDistanceY, prefsItem.getGridDistanceY()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setYDistance(getFloatFromTextField(jTextFieldDistanceY, prefsItem.getGridDistanceY()));
 			}
 		});
 
@@ -297,21 +328,23 @@ public class PositionConfigPanel extends JPanel {
 
 		jLabelXLimit.setText(" X = ");
 
-		jTextFieldLimitX.addKeyListener(new KeyAdapter() {
+		jTextFieldLimitX.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setXLimit(getIntegerFromTextField(jTextFieldLimitX,
-						prefsItem.getGridLimitX()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setXLimit(getIntegerFromTextField(jTextFieldLimitX, prefsItem.getGridLimitX()));
 			}
 		});
 
 		jLabelYLimit.setText(" Y = ");
 
-		jTextFieldLimitY.addKeyListener(new KeyAdapter() {
+		jTextFieldLimitY.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefsItem.setYLimit(getIntegerFromTextField(jTextFieldLimitY,
-						prefsItem.getGridLimitY()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefsItem.setYLimit(getIntegerFromTextField(jTextFieldLimitY, prefsItem.getGridLimitY()));
 			}
 		});
 
@@ -319,12 +352,18 @@ public class PositionConfigPanel extends JPanel {
 
 		horizontal.setText("Horizontal");
 		horizontal.setSelected(prefsItem.getHorizontalPlacement());
-		horizontal.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (horizontal.isSelected()) {
+		horizontal.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				if (horizontal.isSelected())
+				{
 					vertical.setSelected(!horizontal.isSelected());
 					enableHorizontalPlacement(evt);
-				} else {
+				}
+				else
+				{
 					horizontal.setSelected(true);
 				}
 			}
@@ -333,12 +372,18 @@ public class PositionConfigPanel extends JPanel {
 		vertical.setText("Vertical");
 		vertical.setSelected(!prefsItem.getHorizontalPlacement());
 
-		vertical.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
-				if (horizontal.isSelected()) {
+		vertical.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				if (horizontal.isSelected())
+				{
 					horizontal.setSelected(!vertical.isSelected());
 					enableHorizontalPlacement(evt);
-				} else {
+				}
+				else
+				{
 					vertical.setSelected(false);
 				}
 			}
@@ -401,7 +446,8 @@ public class PositionConfigPanel extends JPanel {
 	/**
 	 * Load preferences.
 	 */
-	private void loadPreferences() {
+	private void loadPreferences()
+	{
 		jTextFieldTableAngle.setText("" + prefsItem.getAngle());
 		jTextFieldTableHeight.setText("" + prefsItem.getTableHeight());
 		jTextFieldPositionX.setText("" + prefsItem.getXPos());

@@ -5,7 +5,8 @@ import multiplicity3.input.exceptions.MultiTouchInputException;
 /**
  * The Class LuminSystemException.
  */
-public class LuminSystemException extends MultiTouchInputException {
+public class LuminSystemException extends MultiTouchInputException
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 669142604850871346L;
@@ -16,9 +17,11 @@ public class LuminSystemException extends MultiTouchInputException {
 	/**
 	 * Instantiates a new lumin system exception.
 	 *
-	 * @param t the t
+	 * @param t
+	 *            the t
 	 */
-	public LuminSystemException(Throwable t) {
+	public LuminSystemException(Throwable t)
+	{
 		super();
 		this.setCause(t);
 	}
@@ -27,16 +30,20 @@ public class LuminSystemException extends MultiTouchInputException {
 	 * (non-Javadoc)
 	 * @see java.lang.Throwable#getCause()
 	 */
-	public Throwable getCause() {
+	@Override
+	public Throwable getCause()
+	{
 		return cause;
 	}
 
 	/**
 	 * Sets the cause.
 	 *
-	 * @param cause the new cause
+	 * @param cause
+	 *            the new cause
 	 */
-	public void setCause(Throwable cause) {
+	public void setCause(Throwable cause)
+	{
 		this.cause = cause;
 	}
 

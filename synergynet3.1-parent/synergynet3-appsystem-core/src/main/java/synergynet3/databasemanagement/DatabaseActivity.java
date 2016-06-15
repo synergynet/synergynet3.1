@@ -19,29 +19,37 @@ import com.db4o.cs.config.ClientConfiguration;
 /**
  * The Class DatabaseActivity.
  */
-public class DatabaseActivity {
+public class DatabaseActivity
+{
 
 	/**
 	 * Delete student.
 	 *
-	 * @param studentID the student id
-	 * @param hostName the host name
+	 * @param studentID
+	 *            the student id
+	 * @param hostName
+	 *            the host name
 	 */
-	public static void deleteStudent(String studentID, String hostName) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps != null) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getStudentID().equals(studentID)) {
+	public static void deleteStudent(String studentID, String hostName)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps != null)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getStudentID().equals(studentID))
+					{
 						db.delete(dbRep);
 						break;
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 	}
@@ -49,24 +57,31 @@ public class DatabaseActivity {
 	/**
 	 * Gets the student colour.
 	 *
-	 * @param studentID the student id
-	 * @param hostName the host name
+	 * @param studentID
+	 *            the student id
+	 * @param hostName
+	 *            the host name
 	 * @return the student colour
 	 */
-	public static String getStudentColour(String studentID, String hostName) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps.size() > 0) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getStudentID().equals(studentID)) {
+	public static String getStudentColour(String studentID, String hostName)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps.size() > 0)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getStudentID().equals(studentID))
+					{
 						return dbRep.getColour();
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 		return "white";
@@ -75,25 +90,31 @@ public class DatabaseActivity {
 	/**
 	 * Gets the student gallery.
 	 *
-	 * @param studentID the student id
-	 * @param hostName the host name
+	 * @param studentID
+	 *            the student id
+	 * @param hostName
+	 *            the host name
 	 * @return the student gallery
 	 */
-	public static ArrayList<GalleryItemDatabaseFormat> getStudentGallery(
-			String studentID, String hostName) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps.size() > 0) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getStudentID().equals(studentID)) {
+	public static ArrayList<GalleryItemDatabaseFormat> getStudentGallery(String studentID, String hostName)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps.size() > 0)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getStudentID().equals(studentID))
+					{
 						return dbRep.getGalleryItems();
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 		return new ArrayList<GalleryItemDatabaseFormat>();
@@ -102,29 +123,35 @@ public class DatabaseActivity {
 	/**
 	 * Gets the student representation from database.
 	 *
-	 * @param studentID the student id
-	 * @param hostName the host name
-	 * @param stage the stage
+	 * @param studentID
+	 *            the student id
+	 * @param hostName
+	 *            the host name
+	 * @param stage
+	 *            the stage
 	 * @return the student representation from database
 	 */
-	public static StudentRepresentation getStudentRepresentationFromDatabase(
-			final String studentID, String hostName, IStage stage) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
+	public static StudentRepresentation getStudentRepresentationFromDatabase(final String studentID, String hostName, IStage stage)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
 
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps.size() > 0) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getStudentID().equals(studentID)) {
-						StudentRepresentation studentRep = dbToStudentRep(
-								dbRep, stage);
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps.size() > 0)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getStudentID().equals(studentID))
+					{
+						StudentRepresentation studentRep = dbToStudentRep(dbRep, stage);
 						return studentRep;
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 		return null;
@@ -133,24 +160,29 @@ public class DatabaseActivity {
 	/**
 	 * Gets the students from database.
 	 *
-	 * @param hostName the host name
+	 * @param hostName
+	 *            the host name
 	 * @return the students from database
 	 */
-	public static ArrayList<Student> getStudentsFromDatabase(String hostName) {
+	public static ArrayList<Student> getStudentsFromDatabase(String hostName)
+	{
 		ArrayList<Student> toReturn = new ArrayList<Student>();
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
 
-			if (dbReps.size() > 0) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
+			if (dbReps.size() > 0)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
 					Student student = dbToStudent(dbRep);
 					toReturn.add(student);
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 		return toReturn;
@@ -159,23 +191,28 @@ public class DatabaseActivity {
 	/**
 	 * Modify student.
 	 *
-	 * @param student the student
-	 * @param hostName the host name
+	 * @param student
+	 *            the student
+	 * @param hostName
+	 *            the host name
 	 */
-	public static void modifyStudent(Student student, String hostName) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps != null) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getStudentID().equals(student.getStudentID())) {
-						ArrayList<GalleryItemDatabaseFormat> galleryItems = dbRep
-								.getGalleryItems();
+	public static void modifyStudent(Student student, String hostName)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps != null)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getStudentID().equals(student.getStudentID()))
+					{
+						ArrayList<GalleryItemDatabaseFormat> galleryItems = dbRep.getGalleryItems();
 						db.delete(dbRep);
 						StudentDatabaseFormat dbRepNew = studentTodb(student);
-						for (GalleryItemDatabaseFormat galleryItem : galleryItems) {
+						for (GalleryItemDatabaseFormat galleryItem : galleryItems)
+						{
 							dbRepNew.addGalleryItem(galleryItem);
 						}
 						db.store(dbRepNew);
@@ -183,7 +220,9 @@ public class DatabaseActivity {
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 	}
@@ -191,20 +230,25 @@ public class DatabaseActivity {
 	/**
 	 * Move student.
 	 *
-	 * @param studentID the student id
-	 * @param newClass the new class
-	 * @param hostName the host name
+	 * @param studentID
+	 *            the student id
+	 * @param newClass
+	 *            the new class
+	 * @param hostName
+	 *            the host name
 	 */
-	public static void moveStudent(String studentID, String newClass,
-			String hostName) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps.size() > 0) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getStudentID().equals(studentID)) {
+	public static void moveStudent(String studentID, String newClass, String hostName)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps.size() > 0)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getStudentID().equals(studentID))
+					{
 						dbRep.setClassname(newClass);
 						db.delete(dbRep);
 						db.store(dbRep);
@@ -212,7 +256,9 @@ public class DatabaseActivity {
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 	}
@@ -220,23 +266,30 @@ public class DatabaseActivity {
 	/**
 	 * Removes the students of class.
 	 *
-	 * @param className the class name
-	 * @param hostName the host name
+	 * @param className
+	 *            the class name
+	 * @param hostName
+	 *            the host name
 	 */
-	public static void removeStudentsOfClass(String className, String hostName) {
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
-			List<StudentDatabaseFormat> dbReps = db
-					.query(StudentDatabaseFormat.class);
-			if (dbReps != null) {
-				for (StudentDatabaseFormat dbRep : dbReps) {
-					if (dbRep.getClassName().equalsIgnoreCase(className)) {
+	public static void removeStudentsOfClass(String className, String hostName)
+	{
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
+			List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
+			if (dbReps != null)
+			{
+				for (StudentDatabaseFormat dbRep : dbReps)
+				{
+					if (dbRep.getClassName().equalsIgnoreCase(className))
+					{
 						db.delete(dbRep);
 					}
 				}
 			}
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 	}
@@ -244,16 +297,21 @@ public class DatabaseActivity {
 	/**
 	 * Store student.
 	 *
-	 * @param student the student
-	 * @param hostName the host name
+	 * @param student
+	 *            the student
+	 * @param hostName
+	 *            the host name
 	 */
-	public static void storeStudent(Student student, String hostName) {
+	public static void storeStudent(Student student, String hostName)
+	{
 		StudentDatabaseFormat dbRep = studentTodb(student);
-		ObjectContainer db = Db4oClientServer.openClient(generateConfig(),
-				hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
-		try {
+		ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+		try
+		{
 			db.store(dbRep);
-		} finally {
+		}
+		finally
+		{
 			db.close();
 		}
 	}
@@ -261,24 +319,29 @@ public class DatabaseActivity {
 	/**
 	 * Update student rep.
 	 *
-	 * @param student the student
-	 * @param hostName the host name
+	 * @param student
+	 *            the student
+	 * @param hostName
+	 *            the host name
 	 */
-	public static void updateStudentRep(final StudentRepresentation student,
-			final String hostName) {
-		Thread cachingThread = new Thread(new Runnable() {
-			public void run() {
-				ObjectContainer db = Db4oClientServer.openClient(
-						generateConfig(), hostName, Database.DB_PORT,
-						Database.DB_USER, Database.DB_PASS);
-				try {
-					List<StudentDatabaseFormat> dbReps = db
-							.query(StudentDatabaseFormat.class);
+	public static void updateStudentRep(final StudentRepresentation student, final String hostName)
+	{
+		Thread cachingThread = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				ObjectContainer db = Db4oClientServer.openClient(generateConfig(), hostName, Database.DB_PORT, Database.DB_USER, Database.DB_PASS);
+				try
+				{
+					List<StudentDatabaseFormat> dbReps = db.query(StudentDatabaseFormat.class);
 
-					if (dbReps != null) {
-						for (StudentDatabaseFormat dbRep : dbReps) {
-							if (dbRep.getStudentID().equals(
-									student.getStudentId())) {
+					if (dbReps != null)
+					{
+						for (StudentDatabaseFormat dbRep : dbReps)
+						{
+							if (dbRep.getStudentID().equals(student.getStudentId()))
+							{
 								db.delete(dbRep);
 								StudentDatabaseFormat dbRepToStore = studentRepTodb(student);
 								db.store(dbRepToStore);
@@ -286,7 +349,9 @@ public class DatabaseActivity {
 							}
 						}
 					}
-				} finally {
+				}
+				finally
+				{
 					db.close();
 				}
 			}
@@ -297,10 +362,12 @@ public class DatabaseActivity {
 	/**
 	 * Db to student.
 	 *
-	 * @param dbRep the db rep
+	 * @param dbRep
+	 *            the db rep
 	 * @return the student
 	 */
-	private static Student dbToStudent(StudentDatabaseFormat dbRep) {
+	private static Student dbToStudent(StudentDatabaseFormat dbRep)
+	{
 		Student student = new Student();
 		student.setName(dbRep.getName());
 		student.setClassName(dbRep.getClassName());
@@ -312,30 +379,33 @@ public class DatabaseActivity {
 	/**
 	 * Db to student rep.
 	 *
-	 * @param dbRep the db rep
-	 * @param stage the stage
+	 * @param dbRep
+	 *            the db rep
+	 * @param stage
+	 *            the stage
 	 * @return the student representation
 	 */
-	private static StudentRepresentation dbToStudentRep(
-			StudentDatabaseFormat dbRep, IStage stage) {
+	private static StudentRepresentation dbToStudentRep(StudentDatabaseFormat dbRep, IStage stage)
+	{
 		Student student = new Student();
 		student.setName(dbRep.getName());
 		student.setClassName(dbRep.getClassName());
 		student.setColour(dbRep.getColour());
 		student.setStudentID(dbRep.getStudentID());
 		StudentRepresentation studentRep = new StudentRepresentation(student);
-		for (int i = 0; i < dbRep.getGalleryItems().size(); i++) {
-			try {
-				IItem item = ItemCaching.reconstructItem(
-						dbRep.getGalleryItems().get(i),
-						stage,
-						CacheOrganisation.STUDENT_DIR + File.separator
-								+ dbRep.getStudentID());
-				if (item != null) {
+		for (int i = 0; i < dbRep.getGalleryItems().size(); i++)
+		{
+			try
+			{
+				IItem item = ItemCaching.reconstructItem(dbRep.getGalleryItems().get(i), stage, CacheOrganisation.STUDENT_DIR + File.separator + dbRep.getStudentID());
+				if (item != null)
+				{
 					stage.addItem(item);
 					studentRep.getGallery().addToGallery(item, stage);
 				}
-			} catch (NullPointerException e) {
+			}
+			catch (NullPointerException e)
+			{
 			}
 		}
 		return studentRep;
@@ -346,35 +416,30 @@ public class DatabaseActivity {
 	 *
 	 * @return the client configuration
 	 */
-	private static ClientConfiguration generateConfig() {
+	private static ClientConfiguration generateConfig()
+	{
 		ClientConfiguration config = Db4oClientServer.newClientConfiguration();
-		config.common().objectClass(StudentDatabaseFormat.class)
-				.cascadeOnActivate(true);
-		config.common().objectClass(StudentDatabaseFormat.class)
-				.cascadeOnUpdate(true);
-		config.common().objectClass(StudentDatabaseFormat.class)
-				.cascadeOnDelete(true);
+		config.common().objectClass(StudentDatabaseFormat.class).cascadeOnActivate(true);
+		config.common().objectClass(StudentDatabaseFormat.class).cascadeOnUpdate(true);
+		config.common().objectClass(StudentDatabaseFormat.class).cascadeOnDelete(true);
 		return config;
 	}
 
 	/**
 	 * Student rep todb.
 	 *
-	 * @param studentRep the student rep
+	 * @param studentRep
+	 *            the student rep
 	 * @return the student database format
 	 */
-	private static StudentDatabaseFormat studentRepTodb(
-			StudentRepresentation studentRep) {
-		StudentDatabaseFormat studentDbRep = new StudentDatabaseFormat(
-				studentRep.getName(), studentRep.getStudentId(),
-				studentRep.getClassName(), studentRep.getStudent().getColour());
-		for (int i = 0; i < studentRep.getGallery().getGalleryItems().size(); i++) {
-			GalleryItemDatabaseFormat itemRep = ItemCaching.deconstructItem(
-					studentRep.getGallery().getGalleryItems().get(i),
-					studentRep.getGallery().getGalleryItemsInfo().get(i),
-					CacheOrganisation.STUDENT_DIR + File.separator
-							+ studentRep.getStudentId());
-			if (itemRep != null) {
+	private static StudentDatabaseFormat studentRepTodb(StudentRepresentation studentRep)
+	{
+		StudentDatabaseFormat studentDbRep = new StudentDatabaseFormat(studentRep.getName(), studentRep.getStudentId(), studentRep.getClassName(), studentRep.getStudent().getColour());
+		for (int i = 0; i < studentRep.getGallery().getGalleryItems().size(); i++)
+		{
+			GalleryItemDatabaseFormat itemRep = ItemCaching.deconstructItem(studentRep.getGallery().getGalleryItems().get(i), studentRep.getGallery().getGalleryItemsInfo().get(i), CacheOrganisation.STUDENT_DIR + File.separator + studentRep.getStudentId());
+			if (itemRep != null)
+			{
 				studentDbRep.addGalleryItem(itemRep);
 			}
 		}
@@ -384,13 +449,13 @@ public class DatabaseActivity {
 	/**
 	 * Student todb.
 	 *
-	 * @param student the student
+	 * @param student
+	 *            the student
 	 * @return the student database format
 	 */
-	private static StudentDatabaseFormat studentTodb(Student student) {
-		return new StudentDatabaseFormat(student.getName(),
-				student.getStudentID(), student.getClassName(),
-				student.getColour());
+	private static StudentDatabaseFormat studentTodb(Student student)
+	{
+		return new StudentDatabaseFormat(student.getName(), student.getStudentID(), student.getClassName(), student.getColour());
 	}
 
 }

@@ -41,12 +41,14 @@ import com.jme3.math.Vector2f;
  * @author dcs0ah1
  */
 
-public class ClickDetector {
+public class ClickDetector
+{
 
 	/**
 	 * The Class CursorDownRecord.
 	 */
-	private class CursorDownRecord {
+	private class CursorDownRecord
+	{
 
 		/** The area. */
 		public Rectangle2D.Float area = new Rectangle2D.Float();
@@ -72,13 +74,17 @@ public class ClickDetector {
 		/**
 		 * Instantiates a new cursor down record.
 		 *
-		 * @param id the id
-		 * @param detector the detector
-		 * @param time the time
-		 * @param position the position
+		 * @param id
+		 *            the id
+		 * @param detector
+		 *            the detector
+		 * @param time
+		 *            the time
+		 * @param position
+		 *            the position
 		 */
-		public CursorDownRecord(long id, ClickDetector detector, long time,
-				Vector2f position) {
+		public CursorDownRecord(long id, ClickDetector detector, long time, Vector2f position)
+		{
 			this.id = id;
 			this.pressTime = time;
 			this.position = position;
@@ -106,43 +112,51 @@ public class ClickDetector {
 
 	/**
 	 * Click detector, based on supplied sensitivity values.
-	 * 
+	 *
 	 * @param time
 	 * @param distance
 	 */
-	public ClickDetector(long time, float distance) {
+	public ClickDetector(long time, float distance)
+	{
 		setSensitivity(time, distance);
 	}
 
 	/**
 	 * Returns true if the released cursor is within the sensitivity values
 	 * required to constitute a single click.
-	 * 
+	 *
 	 * @param id
 	 * @param position
 	 * @return
 	 */
-	public int cursorReleasedGetClickCount(long id, Vector2f position) {
+	public int cursorReleasedGetClickCount(long id, Vector2f position)
+	{
 		CursorDownRecord record = records.get(id);
-		if (record == null) {
+		if (record == null)
+		{
 			return -1;
 		}
 		record.releaseTime = System.currentTimeMillis();
 		boolean isDoubleClick = false;
-		boolean isSingleClick = ((System.currentTimeMillis() - record.pressTime) < time)
-				&& isCloseEnough(position, record.position);
-		if (isSingleClick) {
+		boolean isSingleClick = ((System.currentTimeMillis() - record.pressTime) < time) && isCloseEnough(position, record.position);
+		if (isSingleClick)
+		{
 			record.wasClick = isSingleClick;
 			isDoubleClick = isCursorReleaseADoubleClick(id, position, record);
 			record.wasDoubleClick = isDoubleClick;
 		}
 
 		cullOldRecords();
-		if (isDoubleClick) {
+		if (isDoubleClick)
+		{
 			return 2;
-		} else if (isSingleClick) {
+		}
+		else if (isSingleClick)
+		{
 			return 1;
-		} else {
+		}
+		else
+		{
 			return 0;
 		}
 	}
@@ -152,7 +166,8 @@ public class ClickDetector {
 	 *
 	 * @return the distance sensitivity
 	 */
-	public float getDistanceSensitivity() {
+	public float getDistanceSensitivity()
+	{
 		return this.distance;
 	}
 
@@ -161,7 +176,8 @@ public class ClickDetector {
 	 *
 	 * @return the double click time threshold
 	 */
-	public long getDoubleClickTimeThreshold() {
+	public long getDoubleClickTimeThreshold()
+	{
 		return doubleClickTimeThreshold;
 	}
 
@@ -170,32 +186,37 @@ public class ClickDetector {
 	 *
 	 * @return the time sensitivity
 	 */
-	public long getTimeSensitivity() {
+	public long getTimeSensitivity()
+	{
 		return this.time;
 	}
 
 	/**
 	 * Checks if is cursor release a double click.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param causedBy the caused by
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param causedBy
+	 *            the caused by
 	 * @return true, if is cursor release a double click
 	 */
-	public boolean isCursorReleaseADoubleClick(long id, Vector2f position,
-			CursorDownRecord causedBy) {
+	public boolean isCursorReleaseADoubleClick(long id, Vector2f position, CursorDownRecord causedBy)
+	{
 		CursorDownRecord record = records.get(id);
-		if (record == null) {
+		if (record == null)
+		{
 			return false;
 		}
-		for (CursorDownRecord r : records.values()) {
-			if (r == causedBy) {
+		for (CursorDownRecord r : records.values())
+		{
+			if (r == causedBy)
+			{
 				continue;
 			}
-			if (r.area.contains(new Point2D.Float(position.x, position.y))
-					&& r.wasClick
-					&& !r.wasDoubleClick
-					&& ((System.currentTimeMillis() - r.releaseTime) < getDoubleClickTimeThreshold())) {
+			if (r.area.contains(new Point2D.Float(position.x, position.y)) && r.wasClick && !r.wasDoubleClick && ((System.currentTimeMillis() - r.releaseTime) < getDoubleClickTimeThreshold()))
+			{
 				return true;
 			}
 		}
@@ -205,32 +226,34 @@ public class ClickDetector {
 	/**
 	 * Register cursor - only registered cursors will ever pass the test of
 	 * being a single click when isCursorReleaseASingleClick is called.
-	 * 
+	 *
 	 * @param id
 	 * @param position
 	 */
-	public void newCursorPressed(long id, Vector2f position) {
-		records.put(id,
-				new CursorDownRecord(id, this, System.currentTimeMillis(),
-						position));
+	public void newCursorPressed(long id, Vector2f position)
+	{
+		records.put(id, new CursorDownRecord(id, this, System.currentTimeMillis(), position));
 	}
 
 	/**
 	 * Sets the double click time threshold.
 	 *
-	 * @param doubleClickTimeThreshold the new double click time threshold
+	 * @param doubleClickTimeThreshold
+	 *            the new double click time threshold
 	 */
-	public void setDoubleClickTimeThreshold(long doubleClickTimeThreshold) {
+	public void setDoubleClickTimeThreshold(long doubleClickTimeThreshold)
+	{
 		this.doubleClickTimeThreshold = doubleClickTimeThreshold;
 	}
 
 	/**
 	 * Set new sensitivity values.
-	 * 
+	 *
 	 * @param time
 	 * @param distance
 	 */
-	public void setSensitivity(long time, float distance) {
+	public void setSensitivity(long time, float distance)
+	{
 		this.time = time;
 		this.distance = distance;
 	}
@@ -238,14 +261,18 @@ public class ClickDetector {
 	/**
 	 * Cull old records.
 	 */
-	private void cullOldRecords() {
+	private void cullOldRecords()
+	{
 		List<Long> toDelete = new ArrayList<Long>();
-		for (CursorDownRecord r : records.values()) {
-			if ((System.currentTimeMillis() - r.releaseTime) > oldRecordTimeThreshold) {
+		for (CursorDownRecord r : records.values())
+		{
+			if ((System.currentTimeMillis() - r.releaseTime) > oldRecordTimeThreshold)
+			{
 				toDelete.add(r.id);
 			}
 		}
-		for (Long idToDelete : toDelete) {
+		for (Long idToDelete : toDelete)
+		{
 			records.remove(idToDelete);
 		}
 	}
@@ -253,19 +280,24 @@ public class ClickDetector {
 	/**
 	 * Checks if is close enough.
 	 *
-	 * @param a the a
-	 * @param b the b
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 * @return true, if is close enough
 	 */
-	private boolean isCloseEnough(Vector2f a, Vector2f b) {
+	private boolean isCloseEnough(Vector2f a, Vector2f b)
+	{
 		return Point2D.distance(a.x, a.y, b.x, b.y) < distance;
 	}
 
 	/**
 	 * Prints the records.
 	 */
-	protected void printRecords() {
-		for (CursorDownRecord r : records.values()) {
+	protected void printRecords()
+	{
+		for (CursorDownRecord r : records.values())
+		{
 			System.out.println(r.id + ": " + r.wasClick);
 		}
 

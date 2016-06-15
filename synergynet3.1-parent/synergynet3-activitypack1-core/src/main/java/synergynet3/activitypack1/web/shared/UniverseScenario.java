@@ -5,7 +5,8 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Enum UniverseScenario.
  */
-public enum UniverseScenario implements IsSerializable {
+public enum UniverseScenario implements IsSerializable
+{
 
 	/** The binary star system. */
 	BINARY_STAR_SYSTEM,

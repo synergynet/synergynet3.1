@@ -3,7 +3,8 @@ package synergynet3.web.apps.numbernet.expressionevaluator;
 /**
  * The Class ExpressionEvaluator.
  */
-public class ExpressionEvaluator {
+public class ExpressionEvaluator
+{
 
 	/** The instance. */
 	private static ExpressionEvaluator instance;
@@ -14,7 +15,8 @@ public class ExpressionEvaluator {
 	/**
 	 * Instantiates a new expression evaluator.
 	 */
-	public ExpressionEvaluator() {
+	public ExpressionEvaluator()
+	{
 		evaluator = new MathEvaluator();
 	}
 
@@ -23,9 +25,12 @@ public class ExpressionEvaluator {
 	 *
 	 * @return single instance of ExpressionEvaluator
 	 */
-	public static ExpressionEvaluator getInstance() {
-		synchronized (ExpressionEvaluator.class) {
-			if (instance == null) {
+	public static ExpressionEvaluator getInstance()
+	{
+		synchronized (ExpressionEvaluator.class)
+		{
+			if (instance == null)
+			{
 				instance = new ExpressionEvaluator();
 			}
 		}
@@ -35,15 +40,20 @@ public class ExpressionEvaluator {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		MathEvaluator m = new MathEvaluator();
 		m.setExpression("(4+3)*2");
-		try {
+		try
+		{
 			Double value = m.getValue();
 			System.out.println(value);
-		} catch (Exception ex) {
+		}
+		catch (Exception ex)
+		{
 			System.out.println("Does not evaluate. " + ex.getMessage());
 		}
 	}
@@ -51,11 +61,14 @@ public class ExpressionEvaluator {
 	/**
 	 * Evaluate.
 	 *
-	 * @param expression the expression
+	 * @param expression
+	 *            the expression
 	 * @return the double
-	 * @throws Exception the exception
+	 * @throws Exception
+	 *             the exception
 	 */
-	public double evaluate(String expression) throws Exception {
+	public double evaluate(String expression) throws Exception
+	{
 		evaluator.setExpression(expression);
 		return evaluator.getValue();
 	}

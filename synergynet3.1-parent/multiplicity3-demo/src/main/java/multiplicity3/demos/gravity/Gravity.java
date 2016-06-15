@@ -30,8 +30,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class Gravity.
  */
-public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
-		UniverseChangeDelegate {
+public class Gravity implements IMultiplicityApp, IMultiTouchEventListener, UniverseChangeDelegate
+{
 
 	/** The Constant MASS_EARTH. */
 	public static final double MASS_EARTH = 1;
@@ -72,9 +72,11 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		MultiplicityClient client = MultiplicityClient.get();
 		client.start();
 		Gravity app = new Gravity();
@@ -87,7 +89,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * multiplicity3.demos.gravity.model.Body)
 	 */
 	@Override
-	public void bodyAdded(Body b) {
+	public void bodyAdded(Body b)
+	{
 	}
 
 	/*
@@ -97,7 +100,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * (multiplicity3.demos.gravity.model.Body)
 	 */
 	@Override
-	public void bodyPositionChanged(Body body) {
+	public void bodyPositionChanged(Body body)
+	{
 	}
 
 	/*
@@ -107,7 +111,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * multiplicity3.demos.gravity.model.Body)
 	 */
 	@Override
-	public void bodyRemoved(Body b) {
+	public void bodyRemoved(Body b)
+	{
 		log.fine(b + " removed");
 		stage.removeItem(b.getRepresentation());
 	}
@@ -119,22 +124,26 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 		Vector2f worldPositionOfCursor = new Vector2f();
 		stage.tableToWorld(event.getPosition(), worldPositionOfCursor);
 
 		Cursor c = cursorMap.get(event.getCursorID());
-		if (c == null) {
+		if (c == null)
+		{
 			return;
 		}
 
 		c.setCurrentPosition(worldPositionOfCursor);
 		IItem item = itemMap.get(event.getCursorID());
-		if (item != null) {
+		if (item != null)
+		{
 			item.setWorldLocation(worldPositionOfCursor);
 		}
 		ILine line = lines.get(event.getCursorID());
-		if (line != null) {
+		if (line != null)
+		{
 			line.setEndPosition(worldPositionOfCursor);
 		}
 	}
@@ -146,7 +155,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -156,13 +166,15 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (!universe.canAddMore()) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (!universe.canAddMore())
+		{
 			return;
 		}
-		try {
-			IImage moon = contentFactory.create(IImage.class, "moon",
-					UUID.randomUUID());
+		try
+		{
+			IImage moon = contentFactory.create(IImage.class, "moon", UUID.randomUUID());
 			moon.setImage("multiplicity3/demos/gravity/moon_64.png");
 			moon.setSize(8, 8);
 			stage.addItem(moon);
@@ -175,16 +187,16 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 			Cursor c = new Cursor(event.getCursorID(), worldPositionOfCursor);
 			cursorMap.put(event.getCursorID(), c);
 			itemMap.put(event.getCursorID(), moon);
-			ILine line = contentFactory.create(ILine.class, "line",
-					UUID.randomUUID());
+			ILine line = contentFactory.create(ILine.class, "line", UUID.randomUUID());
 			stage.addItem(line);
 			line.setStartPosition(worldPositionOfCursor);
-			line.setEndPosition(worldPositionOfCursor.add(new Vector2f(0.1f,
-					0.1f)));
+			line.setEndPosition(worldPositionOfCursor.add(new Vector2f(0.1f, 0.1f)));
 
 			lines.put(event.getCursorID(), line);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -196,24 +208,27 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		Vector2f screenPos = new Vector2f();
 		stage.tableToScreen(event.getPosition(), screenPos);
 		Cursor c = cursorMap.get(event.getCursorID());
-		if (c == null) {
+		if (c == null)
+		{
 			return;
 		}
 		c.setEndPosition(screenPos);
 		Vector2f velocity = c.startpos.subtract(c.endpos);
 		velocity.multLocal(5e3f);
 		IItem representation = itemMap.get(event.getCursorID());
-		if (representation != null) {
-			Body b = new Body("earth", representation, earthMass, screenPos,
-					velocity);
+		if (representation != null)
+		{
+			Body b = new Body("earth", representation, earthMass, screenPos, velocity);
 			universe.addBody(b);
 		}
 		ILine line = lines.get(event.getCursorID());
-		if (line != null) {
+		if (line != null)
+		{
 			stage.removeItem(line);
 		}
 	}
@@ -223,7 +238,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * @see multiplicity3.appsystem.IMultiplicityApp#getFriendlyAppName()
 	 */
 	@Override
-	public String getFriendlyAppName() {
+	public String getFriendlyAppName()
+	{
 		return "Gravity";
 	}
 
@@ -234,7 +250,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -244,7 +261,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -254,7 +272,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -262,7 +281,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * @see multiplicity3.appsystem.IMultiplicityApp#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 	}
 
 	/*
@@ -272,7 +292,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * .MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		log.info("init");
 		universe = new Universe(this);
 		this.input = input;
@@ -282,27 +303,27 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 		this.contentFactory = stage.getContentFactory();
 		stage.getAnimationSystem().add(universe);
 
-		try {
-			IImage bg = contentFactory.create(IImage.class, "bg",
-					UUID.randomUUID());
+		try
+		{
+			IImage bg = contentFactory.create(IImage.class, "bg", UUID.randomUUID());
 			bg.setImage("multiplicity3/demos/gravity/starfield.png");
 			bg.setSize(1024, 768);
 			stage.addItem(bg);
 			stage.getZOrderManager().ignoreItemClickedBehaviour(bg);
 
-			IImage sun = contentFactory.create(IImage.class, "sun",
-					UUID.randomUUID());
+			IImage sun = contentFactory.create(IImage.class, "sun", UUID.randomUUID());
 			sun.setImage("multiplicity3/demos/gravity/sun_128.png");
 			sun.setSize(32, 32);
 			stage.addItem(sun);
 			stage.getZOrderManager().bringToTop(sun);
 
-			universe.addBody(new Body("sun", sun, sunMass, new Vector2f(0, 0),
-					new Vector2f(0, 0)));
+			universe.addBody(new Body("sun", sun, sunMass, new Vector2f(0, 0), new Vector2f(0, 0)));
 
 			universe.setMaxBodies(1000);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -312,7 +333,8 @@ public class Gravity implements IMultiplicityApp, IMultiTouchEventListener,
 	 * @see multiplicity3.appsystem.IMultiplicityApp#shouldStop()
 	 */
 	@Override
-	public void shouldStop() {
+	public void shouldStop()
+	{
 		stage.getAnimationSystem().remove(universe);
 		this.input.unregisterMultiTouchEventListener(this);
 	}

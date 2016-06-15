@@ -10,8 +10,8 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 /**
  * The Class ClassWideCalculatorSync.
  */
-public class ClassWideCalculatorSync implements
-		CalculatorKeyControlPanelDelegate {
+public class ClassWideCalculatorSync implements CalculatorKeyControlPanelDelegate
+{
 
 	/*
 	 * (non-Javadoc)
@@ -22,17 +22,20 @@ public class ClassWideCalculatorSync implements
 	 * boolean)
 	 */
 	@Override
-	public void keyStateChanged(CalculatorKey key, boolean state) {
-		NumberNetService.Util.getInstance().setCalculatorKeyStateForAllTables(
-				key, state, new AsyncCallback<Void>() {
-					@Override
-					public void onFailure(Throwable caught) {
-						new MessageDialogBox(caught.getMessage()).show();
-					}
+	public void keyStateChanged(CalculatorKey key, boolean state)
+	{
+		NumberNetService.Util.getInstance().setCalculatorKeyStateForAllTables(key, state, new AsyncCallback<Void>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				new MessageDialogBox(caught.getMessage()).show();
+			}
 
-					@Override
-					public void onSuccess(Void result) {
-					}
-				});
+			@Override
+			public void onSuccess(Void result)
+			{
+			}
+		});
 	}
 }

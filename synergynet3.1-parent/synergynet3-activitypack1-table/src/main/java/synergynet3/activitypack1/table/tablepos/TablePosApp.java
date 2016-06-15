@@ -32,14 +32,14 @@ import com.jme3.math.Vector2f;
 /**
  * The Class TablePosApp.
  */
-public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
+public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp
+{
 
 	/** The actual line to a angle. */
 	private static float actualLineToBAngle, actualLineToAAngle = 0;
 
 	/** The actuald. */
-	private static float actualS, actualT, actualR, actualA, actualB,
-			actuald = 0;
+	private static float actualS, actualT, actualR, actualA, actualB, actuald = 0;
 
 	/** The actual table o. */
 	private static float actualTableX, actualTableY, actualTableO = 0;
@@ -54,8 +54,7 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	private static final float LINE_WIDTH = 10f;
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(TablePosApp.class
-			.getName());
+	private static final Logger log = Logger.getLogger(TablePosApp.class.getName());
 
 	/** The log address. */
 	private static String logAddress = "";
@@ -169,86 +168,102 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 
 		boolean isReset = false;
-		try {
-			isReset = Boolean.parseBoolean(ManagementFactory.getRuntimeMXBean()
-					.getSystemProperties().get("reset"));
-		} catch (Exception e) {
+		try
+		{
+			isReset = Boolean.parseBoolean(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("reset"));
+		}
+		catch (Exception e)
+		{
 		}
 
-		if (isReset) {
+		if (isReset)
+		{
 
 			log.info("Reset mode selected.");
 
 			PositionConfigPrefsItem prefs = new PositionConfigPrefsItem();
-			try {
-				float x = Float.parseFloat(ManagementFactory.getRuntimeMXBean()
-						.getSystemProperties().get("x"));
+			try
+			{
+				float x = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("x"));
 				log.info("Setting X to " + x);
 				prefs.setXPos(x);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				log.info("No valid X value given, table position's X value will not be overwritten.");
 			}
-			try {
-				float y = Float.parseFloat(ManagementFactory.getRuntimeMXBean()
-						.getSystemProperties().get("y"));
+			try
+			{
+				float y = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("y"));
 				log.info("Setting Y to " + y);
 				prefs.setYPos(y);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				log.info("No valid Y value given, table position's Y value will not be overwritten.");
 			}
 
-			try {
-				float angle = Float.parseFloat(ManagementFactory
-						.getRuntimeMXBean().getSystemProperties().get("angle"));
+			try
+			{
+				float angle = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("angle"));
 				log.info("Setting Orientation to " + angle);
 				prefs.setAngle(angle);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				log.info("No valid Y value given, table position's Y value will not be overwritten.");
 			}
-		} else {
+		}
+		else
+		{
 
-			try {
-				referenceDistance = Float.parseFloat(ManagementFactory
-						.getRuntimeMXBean().getSystemProperties()
-						.get("referencedistance"));
-			} catch (Exception e) {
+			try
+			{
+				referenceDistance = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("referencedistance"));
+			}
+			catch (Exception e)
+			{
 				log.info("No reference distance set in arguments, using default.");
 			}
-			log.info("Reference Distance 1 set to: " + referenceDistance
-					+ " metres");
-			try {
-				logAddress = ManagementFactory.getRuntimeMXBean()
-						.getSystemProperties().get("log");
+			log.info("Reference Distance 1 set to: " + referenceDistance + " metres");
+			try
+			{
+				logAddress = ManagementFactory.getRuntimeMXBean().getSystemProperties().get("log");
 				log.info("Using log at: " + logAddress);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				log.info("No valid log address in arguments, no logging will take place.");
 			}
-			try {
-				loops = Integer.parseInt(ManagementFactory.getRuntimeMXBean()
-						.getSystemProperties().get("loops"));
+			try
+			{
+				loops = Integer.parseInt(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("loops"));
 				log.info("Using log at: " + logAddress);
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				log.info("No valid log address in arguments, no logging will take place.");
 			}
 
-			try {
-				actualTableX = Float.parseFloat(ManagementFactory
-						.getRuntimeMXBean().getSystemProperties().get("x"));
-				actualTableY = Float.parseFloat(ManagementFactory
-						.getRuntimeMXBean().getSystemProperties().get("y"));
-				actualTableO = FastMath.DEG_TO_RAD
-						* Float.parseFloat(ManagementFactory.getRuntimeMXBean()
-								.getSystemProperties().get("angle"));
+			try
+			{
+				actualTableX = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("x"));
+				actualTableY = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("y"));
+				actualTableO = FastMath.DEG_TO_RAD * Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("angle"));
 
 				calculateOptimalTableValues();
 
 				log.info("Setting actual Table Position");
-			} catch (Exception e) {
+			}
+			catch (Exception e)
+			{
 				log.info("Tables actual position not defined, log will not give accurate deviation values.");
 			}
 
@@ -262,21 +277,16 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	/**
 	 * Calculate optimal table values.
 	 */
-	private static void calculateOptimalTableValues() {
-		actuald = FastMath.sqrt(FastMath.sqr(actualTableX)
-				+ FastMath.sqr(actualTableY));
-		actualT = FastMath.asin((actualTableX * FastMath
-				.sin(FastMath.DEG_TO_RAD * 90)) / actuald);
+	private static void calculateOptimalTableValues()
+	{
+		actuald = FastMath.sqrt(FastMath.sqr(actualTableX) + FastMath.sqr(actualTableY));
+		actualT = FastMath.asin((actualTableX * FastMath.sin(FastMath.DEG_TO_RAD * 90)) / actuald);
 		actualR = (FastMath.DEG_TO_RAD * 90) - actualT;
 		actualA = (FastMath.DEG_TO_RAD * 90) - actualR;
-		float e = FastMath.sqrt((FastMath.sqr(referenceDistance) + FastMath
-				.sqr(actuald))
-				- (2 * referenceDistance * actuald * FastMath.cos(actualT)));
-		actualS = FastMath
-				.asin((referenceDistance * FastMath.sin(actualT)) / e);
+		float e = FastMath.sqrt((FastMath.sqr(referenceDistance) + FastMath.sqr(actuald)) - (2 * referenceDistance * actuald * FastMath.cos(actualT)));
+		actualS = FastMath.asin((referenceDistance * FastMath.sin(actualT)) / e);
 		actualB = (FastMath.DEG_TO_RAD * 180) - actualS - actualA;
-		actualLineToAAngle = (actualT + (FastMath.DEG_TO_RAD * 180))
-				- actualTableO;
+		actualLineToAAngle = (actualT + (FastMath.DEG_TO_RAD * 180)) - actualTableO;
 		actualLineToBAngle = actualLineToAAngle + actualS;
 	}
 
@@ -287,9 +297,12 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (arrowTime) {
-			if (lineMovingTouches.containsKey(event.getCursorID())) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (arrowTime)
+		{
+			if (lineMovingTouches.containsKey(event.getCursorID()))
+			{
 				moveLine(event, lineMovingTouches.get(event.getCursorID()));
 			}
 		}
@@ -302,7 +315,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -312,34 +326,39 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 
-		if (currentLoop < loops) {
-			if (firstTouch[currentLoop] == null) {
+		if (currentLoop < loops)
+		{
+			if (firstTouch[currentLoop] == null)
+			{
 				firstTouch[currentLoop] = new Date();
 			}
 		}
 
-		if (arrowTime) {
+		if (arrowTime)
+		{
 			positioningTouchCount[currentLoop]++;
 			ILine line = lineOne;
 
 			Vector2f worldPositionOfCursor = new Vector2f();
 			stage.tableToWorld(event.getPosition(), worldPositionOfCursor);
 
-			float distance = arrowOne.getWorldLocation().distance(
-					worldPositionOfCursor);
+			float distance = arrowOne.getWorldLocation().distance(worldPositionOfCursor);
 
-			float distanceOfLineTwo = arrowTwo.getWorldLocation().distance(
-					worldPositionOfCursor);
+			float distanceOfLineTwo = arrowTwo.getWorldLocation().distance(worldPositionOfCursor);
 
-			if (distanceOfLineTwo < distance) {
+			if (distanceOfLineTwo < distance)
+			{
 				distance = distanceOfLineTwo;
 				line = lineTwo;
 			}
 
-			if (distance < THRESHOLD_DISTANCE) {
-				if (!lineMovingTouches.containsValue(line)) {
+			if (distance < THRESHOLD_DISTANCE)
+			{
+				if (!lineMovingTouches.containsValue(line))
+				{
 					lineMovingTouches.put(event.getCursorID(), line);
 					moveLine(event, line);
 				}
@@ -354,9 +373,12 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (arrowTime) {
-			if (lineMovingTouches.containsKey(event.getCursorID())) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (arrowTime)
+		{
+			if (lineMovingTouches.containsKey(event.getCursorID()))
+			{
 				lineMovingTouches.remove(event.getCursorID());
 			}
 		}
@@ -365,7 +387,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	/**
 	 * Fresh start.
 	 */
-	public void freshStart() {
+	public void freshStart()
+	{
 		currentLoop = 0;
 		startTime = new Date();
 		tableOArray = new float[loops];
@@ -396,26 +419,27 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * @see multiplicity3.appsystem.IMultiplicityApp#getFriendlyAppName()
 	 */
 	@Override
-	public String getFriendlyAppName() {
+	public String getFriendlyAppName()
+	{
 		return "TablePos";
 	}
 
 	/**
 	 * Move line.
 	 *
-	 * @param event the event
-	 * @param line the line
+	 * @param event
+	 *            the event
+	 * @param line
+	 *            the line
 	 */
-	public void moveLine(MultiTouchCursorEvent event, ILine line) {
+	public void moveLine(MultiTouchCursorEvent event, ILine line)
+	{
 		Vector2f worldPositionOfCursor = new Vector2f();
 		stage.tableToWorld(event.getPosition(), worldPositionOfCursor);
-		float arrowDistanceFromOrigin = pointOne
-				.distance(worldPositionOfCursor);
+		float arrowDistanceFromOrigin = pointOne.distance(worldPositionOfCursor);
 
-		float x = worldPositionOfCursor.x
-				+ (((worldPositionOfCursor.x - pointOne.x) / arrowDistanceFromOrigin) * INITIAL_ARROW_OFFSET);
-		float y = worldPositionOfCursor.y
-				+ (((worldPositionOfCursor.y - pointOne.y) / arrowDistanceFromOrigin) * INITIAL_ARROW_OFFSET);
+		float x = worldPositionOfCursor.x + (((worldPositionOfCursor.x - pointOne.x) / arrowDistanceFromOrigin) * INITIAL_ARROW_OFFSET);
+		float y = worldPositionOfCursor.y + (((worldPositionOfCursor.y - pointOne.y) / arrowDistanceFromOrigin) * INITIAL_ARROW_OFFSET);
 
 		line.setEndPosition(new Vector2f(x, y));
 		setArrowPosAndRot(worldPositionOfCursor, line);
@@ -428,7 +452,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -438,7 +463,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -448,7 +474,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -456,7 +483,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * @see multiplicity3.appsystem.IMultiplicityApp#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 	}
 
 	// private float getStandardDeviationOfAngles(float[] range){
@@ -503,7 +531,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * .MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		input.registerMultiTouchEventListener(this);
 		log.info("init");
 		this.stage = MultiplicityEnvironment.get().getLocalStages().get(0);
@@ -516,22 +545,22 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	 * @see multiplicity3.appsystem.IMultiplicityApp#shouldStop()
 	 */
 	@Override
-	public void shouldStop() {
+	public void shouldStop()
+	{
 	}
 
 	/**
 	 * Calculate table info.
 	 */
-	private void calculateTableInfo() {
+	private void calculateTableInfo()
+	{
 		tableO = TablePosUtilities.getAverageOfAngles(tableOArray);
-		float lineToBAngle = TablePosUtilities
-				.getAverageOfAngles(lineToBAngleArray);
-		float lineToAAngle = TablePosUtilities
-				.getAverageOfAngles(lineToAAngleArray);
-		float S = FastMath.abs(TablePosUtilities.angleBetweenLines(lineOne,
-				lineTwo));
+		float lineToBAngle = TablePosUtilities.getAverageOfAngles(lineToBAngleArray);
+		float lineToAAngle = TablePosUtilities.getAverageOfAngles(lineToAAngleArray);
+		float S = FastMath.abs(TablePosUtilities.angleBetweenLines(lineOne, lineTwo));
 		float T = TablePosUtilities.angleBetweenLines(worldSouth, lineTwo);
-		if (S < 0) {
+		if (S < 0)
+		{
 			T += (FastMath.DEG_TO_RAD * 380);
 		}
 		float R = (FastMath.DEG_TO_RAD * 90) - T;
@@ -541,36 +570,21 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 		tableX = FastMath.sin(T) * (d / FastMath.sin(FastMath.DEG_TO_RAD * 90));
 		tableY = FastMath.sin(R) * (d / FastMath.sin(FastMath.DEG_TO_RAD * 90));
 
-		TablePosUtilities.writeToLog(logAddress, startTime, lineToBAngle,
-				lineToAAngle, S, T, R, A, B, d, actualLineToAAngle,
-				actualLineToBAngle, actualS, actualT, actualR, actualA,
-				actualB, actuald, actualTableX, actualTableY, actualTableO,
-				referenceDistance, loops, firstTouch, changeOver, lastTouch,
-				orientationTouchCount, positioningTouchCount,
-				lineToAAngleArray, lineToBAngleArray, SArray, TArray, RArray,
-				AArray, BArray, tableOArray, XArray, YArray, dArray, tableX,
-				tableY, tableO, redoLog);
+		TablePosUtilities.writeToLog(logAddress, startTime, lineToBAngle, lineToAAngle, S, T, R, A, B, d, actualLineToAAngle, actualLineToBAngle, actualS, actualT, actualR, actualA, actualB, actuald, actualTableX, actualTableY, actualTableO, referenceDistance, loops, firstTouch, changeOver, lastTouch, orientationTouchCount, positioningTouchCount, lineToAAngleArray, lineToBAngleArray, SArray, TArray, RArray, AArray, BArray, tableOArray, XArray, YArray, dArray, tableX, tableY, tableO, redoLog);
 	}
 
 	/**
 	 * Ok on arrows.
 	 */
-	private void okOnArrows() {
+	private void okOnArrows()
+	{
 		lastTouch[currentLoop] = new Date();
 		recordLineAngles();
 
-		if (!TablePosUtilities.isWithinXDegreesOf(FastMath.DEG_TO_RAD * 100,
-				actualTableO, tableOArray[currentLoop])) {
+		if (!TablePosUtilities.isWithinXDegreesOf(FastMath.DEG_TO_RAD * 100, actualTableO, tableOArray[currentLoop]))
+		{
 			setupInitialContent();
-			redoLog.add("Execution "
-					+ (currentLoop + 1)
-					+ ","
-					+ (FastMath.RAD_TO_DEG * tableOArray[currentLoop])
-					+ ", "
-					+ (FastMath.RAD_TO_DEG * lineToAAngleArray[currentLoop])
-					+ ", "
-					+ (FastMath.RAD_TO_DEG * lineToBAngleArray[currentLoop])
-					+ "User's orientation is over 100 degrees from the table's actual orientation.");
+			redoLog.add("Execution " + (currentLoop + 1) + "," + (FastMath.RAD_TO_DEG * tableOArray[currentLoop]) + ", " + (FastMath.RAD_TO_DEG * lineToAAngleArray[currentLoop]) + ", " + (FastMath.RAD_TO_DEG * lineToBAngleArray[currentLoop]) + "User's orientation is over 100 degrees from the table's actual orientation.");
 			return;
 		}
 
@@ -586,7 +600,8 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 		currentLoop++;
 		// }
 
-		if (currentLoop >= loops) {
+		if (currentLoop >= loops)
+		{
 
 			// toRedo.clear();
 			//
@@ -620,10 +635,11 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 			// }else{
 			calculateTableInfo();
 			arrowTime = false;
-			TablePosUtilities.displayResults(stage, tableX, tableY, tableO,
-					this);
+			TablePosUtilities.displayResults(stage, tableX, tableY, tableO, this);
 			// }
-		} else {
+		}
+		else
+		{
 			setupInitialContent();
 		}
 	}
@@ -631,88 +647,84 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	/**
 	 * Record line angles.
 	 */
-	private void recordLineAngles() {
-		float lineToBAngle = TablePosUtilities.angleBetweenLines(localNorth,
-				lineOne);
-		if (lineToBAngle < 0) {
+	private void recordLineAngles()
+	{
+		float lineToBAngle = TablePosUtilities.angleBetweenLines(localNorth, lineOne);
+		if (lineToBAngle < 0)
+		{
 			lineToBAngle += (FastMath.DEG_TO_RAD * 360);
 		}
 		lineToBAngleArray[currentLoop] = lineToBAngle;
 
-		float lineToAAngle = TablePosUtilities.angleBetweenLines(localNorth,
-				lineTwo);
-		if (lineToAAngle < 0) {
+		float lineToAAngle = TablePosUtilities.angleBetweenLines(localNorth, lineTwo);
+		if (lineToAAngle < 0)
+		{
 			lineToAAngle += (FastMath.DEG_TO_RAD * 360);
 		}
 		lineToAAngleArray[currentLoop] = lineToAAngle;
 
-		SArray[currentLoop] = FastMath.abs(TablePosUtilities.angleBetweenLines(
-				lineOne, lineTwo));
-		TArray[currentLoop] = TablePosUtilities.angleBetweenLines(worldSouth,
-				lineTwo);
-		if (SArray[currentLoop] < 0) {
+		SArray[currentLoop] = FastMath.abs(TablePosUtilities.angleBetweenLines(lineOne, lineTwo));
+		TArray[currentLoop] = TablePosUtilities.angleBetweenLines(worldSouth, lineTwo);
+		if (SArray[currentLoop] < 0)
+		{
 			TArray[currentLoop] += (FastMath.DEG_TO_RAD * 380);
 		}
 		RArray[currentLoop] = (FastMath.DEG_TO_RAD * 90) - TArray[currentLoop];
 		AArray[currentLoop] = (FastMath.DEG_TO_RAD * 90) - RArray[currentLoop];
-		BArray[currentLoop] = (FastMath.DEG_TO_RAD * 180) - SArray[currentLoop]
-				- AArray[currentLoop];
-		dArray[currentLoop] = FastMath.sin(BArray[currentLoop])
-				* (referenceDistance / FastMath.sin(SArray[currentLoop]));
-		XArray[currentLoop] = FastMath.sin(TArray[currentLoop])
-				* (dArray[currentLoop] / FastMath.sin(FastMath.DEG_TO_RAD * 90));
-		YArray[currentLoop] = FastMath.sin(RArray[currentLoop])
-				* (dArray[currentLoop] / FastMath.sin(FastMath.DEG_TO_RAD * 90));
+		BArray[currentLoop] = (FastMath.DEG_TO_RAD * 180) - SArray[currentLoop] - AArray[currentLoop];
+		dArray[currentLoop] = FastMath.sin(BArray[currentLoop]) * (referenceDistance / FastMath.sin(SArray[currentLoop]));
+		XArray[currentLoop] = FastMath.sin(TArray[currentLoop]) * (dArray[currentLoop] / FastMath.sin(FastMath.DEG_TO_RAD * 90));
+		YArray[currentLoop] = FastMath.sin(RArray[currentLoop]) * (dArray[currentLoop] / FastMath.sin(FastMath.DEG_TO_RAD * 90));
 	}
 
 	/**
 	 * Sets the arrow pos and rot.
 	 *
-	 * @param worldPositionOfCursor the world position of cursor
-	 * @param line the line
+	 * @param worldPositionOfCursor
+	 *            the world position of cursor
+	 * @param line
+	 *            the line
 	 */
-	private void setArrowPosAndRot(Vector2f worldPositionOfCursor, ILine line) {
+	private void setArrowPosAndRot(Vector2f worldPositionOfCursor, ILine line)
+	{
 		IImage arrow = arrowOne;
-		if (line.equals(lineTwo)) {
+		if (line.equals(lineTwo))
+		{
 			arrow = arrowTwo;
 		}
-		arrow.setRelativeRotation(-FastMath.atan2(line.getEndPosition().x
-				- line.getStartPosition().x,
-				line.getEndPosition().y - line.getStartPosition().y));
+		arrow.setRelativeRotation(-FastMath.atan2(line.getEndPosition().x - line.getStartPosition().x, line.getEndPosition().y - line.getStartPosition().y));
 		arrow.setWorldLocation(worldPositionOfCursor);
 	}
 
 	/**
 	 * Setup arrow content.
 	 */
-	private void setupArrowContent() {
+	private void setupArrowContent()
+	{
 		pointOne = new Vector2f(0, 0);
-		try {
+		try
+		{
 
 			arrowTime = true;
 			lineMovingTouches.clear();
 
-			IImage okButton = this.stage.getContentFactory().create(
-					IImage.class, "originOne", UUID.randomUUID());
+			IImage okButton = this.stage.getContentFactory().create(IImage.class, "originOne", UUID.randomUUID());
 			okButton.setImage(RESOURCE_PATH + "okpoint.png");
 			okButton.setSize(ORIGIN_SIZE, ORIGIN_SIZE);
-			okButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							okOnArrows();
-						}
-					});
+			okButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					okOnArrows();
+				}
+			});
 
-			okButton.setRelativeLocation(new Vector2f(
-					(stage.getDisplayWidth() / 2) - ORIGIN_SIZE - 25, (stage
-							.getDisplayHeight() / 2) - ORIGIN_SIZE - 25));
+			okButton.setRelativeLocation(new Vector2f((stage.getDisplayWidth() / 2) - ORIGIN_SIZE - 25, (stage.getDisplayHeight() / 2) - ORIGIN_SIZE - 25));
 
-			pointOne = new Vector2f(stage.getDisplayWidth() / 2,
-					stage.getDisplayHeight() / 2);
+			pointOne = new Vector2f(stage.getDisplayWidth() / 2, stage.getDisplayHeight() / 2);
 
-			lineOne = this.stage.getContentFactory().create(ILine.class,
-					"lineOne", UUID.randomUUID());
+			lineOne = this.stage.getContentFactory().create(ILine.class, "lineOne", UUID.randomUUID());
 			lineOne.setStartPosition(pointOne);
 			lineOne.setLineWidth(LINE_WIDTH / 2);
 			lineOne.setLineColour(ColorRGBA.Orange);
@@ -720,16 +732,14 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 			lineOne.getZOrderManager().setAutoBringToTop(false);
 			lineOne.getZOrderManager().setBringToTopPropagatesUp(false);
 
-			arrowOne = this.stage.getContentFactory().create(IImage.class,
-					"arrowOne", UUID.randomUUID());
+			arrowOne = this.stage.getContentFactory().create(IImage.class, "arrowOne", UUID.randomUUID());
 			arrowOne.setImage(RESOURCE_PATH + "orangeArrow.png");
 			arrowOne.setSize(ARROW_SIZE * 3, ARROW_SIZE);
 
 			arrowOne.getZOrderManager().setAutoBringToTop(false);
 			arrowOne.getZOrderManager().setBringToTopPropagatesUp(false);
 
-			lineTwo = this.stage.getContentFactory().create(ILine.class,
-					"lineTwo", UUID.randomUUID());
+			lineTwo = this.stage.getContentFactory().create(ILine.class, "lineTwo", UUID.randomUUID());
 			lineTwo.setStartPosition(pointOne);
 			lineTwo.setLineWidth(LINE_WIDTH / 2);
 			lineTwo.setLineColour(ColorRGBA.Cyan);
@@ -737,8 +747,7 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 			lineTwo.getZOrderManager().setAutoBringToTop(false);
 			lineTwo.getZOrderManager().setBringToTopPropagatesUp(false);
 
-			arrowTwo = this.stage.getContentFactory().create(IImage.class,
-					"arrowTwo = this", UUID.randomUUID());
+			arrowTwo = this.stage.getContentFactory().create(IImage.class, "arrowTwo = this", UUID.randomUUID());
 			arrowTwo.setImage(RESOURCE_PATH + "cyanArrow.png");
 			arrowTwo.setSize(ARROW_SIZE * 3, ARROW_SIZE);
 
@@ -748,24 +757,19 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 			stage.addItem(lineOne);
 			stage.addItem(lineTwo);
 
-			lineOne.setEndPosition(new Vector2f(stage.getDisplayWidth() / 2,
-					(stage.getDisplayHeight() / 2) + (INITIAL_ARROW_OFFSET / 2)));
-			lineTwo.setEndPosition(new Vector2f(stage.getDisplayWidth() / 2,
-					(stage.getDisplayHeight() / 2) - (INITIAL_ARROW_OFFSET / 2)));
+			lineOne.setEndPosition(new Vector2f(stage.getDisplayWidth() / 2, (stage.getDisplayHeight() / 2) + (INITIAL_ARROW_OFFSET / 2)));
+			lineTwo.setEndPosition(new Vector2f(stage.getDisplayWidth() / 2, (stage.getDisplayHeight() / 2) - (INITIAL_ARROW_OFFSET / 2)));
 
-			localNorth = this.stage.getContentFactory().create(ILine.class,
-					"localNorth", UUID.randomUUID());
+			localNorth = this.stage.getContentFactory().create(ILine.class, "localNorth", UUID.randomUUID());
 			localNorth.setStartPosition(pointOne);
 			localNorth.setLineWidth(0f);
 			localNorth.setLineColour(ColorRGBA.Black);
 			localNorth.setVisible(false);
 			localNorth.setInteractionEnabled(false);
 			stage.addItem(localNorth);
-			localNorth.setEndPosition(new Vector2f(stage.getDisplayWidth() / 2,
-					(stage.getDisplayWidth() / 2) + 100f));
+			localNorth.setEndPosition(new Vector2f(stage.getDisplayWidth() / 2, (stage.getDisplayWidth() / 2) + 100f));
 
-			worldSouth = this.stage.getContentFactory().create(ILine.class,
-					"worldSouth", UUID.randomUUID());
+			worldSouth = this.stage.getContentFactory().create(ILine.class, "worldSouth", UUID.randomUUID());
 			worldSouth.setStartPosition(pointOne);
 			worldSouth.setLineWidth(0f);
 			worldSouth.setLineColour(ColorRGBA.Black);
@@ -782,22 +786,19 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 			stage.addItem(arrowOne);
 			stage.addItem(arrowTwo);
 
-			arrowOne.setWorldLocation(new Vector2f(stage.getDisplayWidth() / 2,
-					(stage.getDisplayHeight() / 2) + SECONDARY_ARROW_OFFSET));
-			arrowTwo.setWorldLocation(new Vector2f(stage.getDisplayWidth() / 2,
-					(stage.getDisplayHeight() / 2) - SECONDARY_ARROW_OFFSET));
+			arrowOne.setWorldLocation(new Vector2f(stage.getDisplayWidth() / 2, (stage.getDisplayHeight() / 2) + SECONDARY_ARROW_OFFSET));
+			arrowTwo.setWorldLocation(new Vector2f(stage.getDisplayWidth() / 2, (stage.getDisplayHeight() / 2) - SECONDARY_ARROW_OFFSET));
 
 			arrowTwo.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
 
-			TablePosUtilities
-					.generatePrompt(
-							"Drag the arrows to point to the landmarks of the same colour.",
-							stage, currentLoop, loops);
+			TablePosUtilities.generatePrompt("Drag the arrows to point to the landmarks of the same colour.", stage, currentLoop, loops);
 			TablePosUtilities.addPivot(stage, ORIGIN_SIZE);
 
 			stage.addItem(okButton);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "Content Type Not Bound", e);
 		}
 
@@ -806,18 +807,18 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 	/**
 	 * Setup initial content.
 	 */
-	private void setupInitialContent() {
-		try {
+	private void setupInitialContent()
+	{
+		try
+		{
 
 			positioningTouchCount[currentLoop] = 0;
 			orientationTouchCount[currentLoop] = 0;
 
 			stage.removeAllItems(true);
 
-			background = this.stage.getContentFactory().create(
-					IColourRectangle.class, "background", UUID.randomUUID());
-			background.setSize(stage.getDisplayWidth(),
-					stage.getDisplayHeight());
+			background = this.stage.getContentFactory().create(IColourRectangle.class, "background", UUID.randomUUID());
+			background.setSize(stage.getDisplayWidth(), stage.getDisplayHeight());
 			background.setRelativeLocation(new Vector2f());
 			background.getZOrderManager().setAutoBringToTop(false);
 			background.getZOrderManager().setBringToTopPropagatesUp(false);
@@ -825,76 +826,60 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 
 			stage.addItem(background);
 
-			IImage okButton = this.stage.getContentFactory().create(
-					IImage.class, "okButton", UUID.randomUUID());
+			IImage okButton = this.stage.getContentFactory().create(IImage.class, "okButton", UUID.randomUUID());
 			okButton.setImage(RESOURCE_PATH + "okpoint.png");
 			okButton.setSize(ORIGIN_SIZE, ORIGIN_SIZE);
-			okButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							orientationTouchCount[currentLoop]++;
-							stage.removeAllItems(true);
-							tableOArray[currentLoop] = container
-									.getRelativeRotation();
-							log.info("tableO," + (FastMath.RAD_TO_DEG * tableO)
-									+ ", degrees");
-							changeOver[currentLoop] = new Date();
-							setupArrowContent();
-						}
-					});
-			okButton.setRelativeLocation(new Vector2f(
-					(-stage.getDisplayWidth() / 2) + ORIGIN_SIZE + 25, (stage
-							.getDisplayHeight() / 2) - ORIGIN_SIZE - 25));
+			okButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					orientationTouchCount[currentLoop]++;
+					stage.removeAllItems(true);
+					tableOArray[currentLoop] = container.getRelativeRotation();
+					log.info("tableO," + (FastMath.RAD_TO_DEG * tableO) + ", degrees");
+					changeOver[currentLoop] = new Date();
+					setupArrowContent();
+				}
+			});
+			okButton.setRelativeLocation(new Vector2f((-stage.getDisplayWidth() / 2) + ORIGIN_SIZE + 25, (stage.getDisplayHeight() / 2) - ORIGIN_SIZE - 25));
 
-			try {
-				container = stage.getContentFactory().create(IContainer.class,
-						"rotArrowContainer", UUID.randomUUID());
+			try
+			{
+				container = stage.getContentFactory().create(IContainer.class, "rotArrowContainer", UUID.randomUUID());
 
-				ILine lineA = this.stage.getContentFactory().create(
-						ILine.class, "lineA", UUID.randomUUID());
+				ILine lineA = this.stage.getContentFactory().create(ILine.class, "lineA", UUID.randomUUID());
 				lineA.setStartPosition(new Vector2f(0, 0));
 				lineA.setLineWidth(LINE_WIDTH * 2);
 				lineA.setLineColour(ColorRGBA.White);
 				lineA.setEndPosition(new Vector2f(0, INITIAL_ARROW_OFFSET));
 
-				IImage labelA = this.stage.getContentFactory().create(
-						IImage.class, "arrowOne", UUID.randomUUID());
+				IImage labelA = this.stage.getContentFactory().create(IImage.class, "arrowOne", UUID.randomUUID());
 				labelA.setImage(RESOURCE_PATH + "orangeLabel.png");
 				labelA.setSize(ARROW_SIZE * 3, ARROW_SIZE);
-				labelA.setRelativeLocation(new Vector2f(0,
-						SECONDARY_ARROW_OFFSET * 1.5f));
+				labelA.setRelativeLocation(new Vector2f(0, SECONDARY_ARROW_OFFSET * 1.5f));
 
-				IColourRectangle orangeBox = stage.getContentFactory().create(
-						IColourRectangle.class, "orangeBox", UUID.randomUUID());
+				IColourRectangle orangeBox = stage.getContentFactory().create(IColourRectangle.class, "orangeBox", UUID.randomUUID());
 				orangeBox.setSolidBackgroundColour(ColorRGBA.Orange);
-				orangeBox.setSize(stage.getDisplayWidth() * 2,
-						stage.getDisplayHeight());
-				orangeBox.setRelativeLocation(new Vector2f(0, stage
-						.getDisplayHeight() - 20));
+				orangeBox.setSize(stage.getDisplayWidth() * 2, stage.getDisplayHeight());
+				orangeBox.setRelativeLocation(new Vector2f(0, stage.getDisplayHeight() - 20));
 
-				ILine lineB = this.stage.getContentFactory().create(
-						ILine.class, "lineB", UUID.randomUUID());
+				ILine lineB = this.stage.getContentFactory().create(ILine.class, "lineB", UUID.randomUUID());
 				lineB.setStartPosition(new Vector2f(0, 0));
 				lineB.setLineWidth(LINE_WIDTH * 2);
 				lineB.setLineColour(ColorRGBA.White);
 				lineB.setEndPosition(new Vector2f(0, -INITIAL_ARROW_OFFSET));
 
-				IImage labelB = this.stage.getContentFactory().create(
-						IImage.class, "arrowTwo = this", UUID.randomUUID());
+				IImage labelB = this.stage.getContentFactory().create(IImage.class, "arrowTwo = this", UUID.randomUUID());
 				labelB.setImage(RESOURCE_PATH + "cyanLabel.png");
 				labelB.setSize(ARROW_SIZE * 3, ARROW_SIZE);
-				labelB.setRelativeLocation(new Vector2f(0,
-						-SECONDARY_ARROW_OFFSET * 1.5f));
+				labelB.setRelativeLocation(new Vector2f(0, -SECONDARY_ARROW_OFFSET * 1.5f));
 				labelB.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
 
-				IColourRectangle blueBox = stage.getContentFactory().create(
-						IColourRectangle.class, "blueBox", UUID.randomUUID());
+				IColourRectangle blueBox = stage.getContentFactory().create(IColourRectangle.class, "blueBox", UUID.randomUUID());
 				blueBox.setSolidBackgroundColour(ColorRGBA.Cyan);
-				blueBox.setSize(stage.getDisplayWidth() * 2,
-						stage.getDisplayHeight());
-				blueBox.setRelativeLocation(new Vector2f(0, -stage
-						.getDisplayHeight() + 20));
+				blueBox.setSize(stage.getDisplayWidth() * 2, stage.getDisplayHeight());
+				blueBox.setRelativeLocation(new Vector2f(0, -stage.getDisplayHeight() + 20));
 
 				container.addItem(orangeBox);
 				container.addItem(lineA);
@@ -903,34 +888,27 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 				container.addItem(lineB);
 				container.addItem(labelB);
 
-				MultiTouchEventAdapter rotateEvent = new MultiTouchEventAdapter() {
+				MultiTouchEventAdapter rotateEvent = new MultiTouchEventAdapter()
+				{
 					private HashMap<Long, Float> angles = new HashMap<Long, Float>();
 					private float dragAngle = 0;
-					private Vector2f origin = new Vector2f(
-							stage.getDisplayWidth() / 2,
-							stage.getDisplayHeight() / 2);
+					private Vector2f origin = new Vector2f(stage.getDisplayWidth() / 2, stage.getDisplayHeight() / 2);
 					private HashMap<Long, Vector2f> touchDowns = new HashMap<Long, Vector2f>();
 
-					public void cursorChanged(MultiTouchCursorEvent event) {
-						if (angles.containsKey(event.getCursorID())) {
+					@Override
+					public void cursorChanged(MultiTouchCursorEvent event)
+					{
+						if (angles.containsKey(event.getCursorID()))
+						{
 
 							Vector2f worldPositionOfCursor = new Vector2f();
-							stage.tableToWorld(event.getPosition(),
-									worldPositionOfCursor);
+							stage.tableToWorld(event.getPosition(), worldPositionOfCursor);
 
-							Vector2f touchDrag = new Vector2f(
-									worldPositionOfCursor.x,
-									worldPositionOfCursor.y);
+							Vector2f touchDrag = new Vector2f(worldPositionOfCursor.x, worldPositionOfCursor.y);
 
-							float angle = new Vector2f(touchDrag.x - origin.x,
-									touchDrag.y - origin.y)
-									.angleBetween(new Vector2f(touchDowns
-											.get(event.getCursorID()).x
-											- origin.x, touchDowns.get(event
-											.getCursorID()).y - origin.y));
+							float angle = new Vector2f(touchDrag.x - origin.x, touchDrag.y - origin.y).angleBetween(new Vector2f(touchDowns.get(event.getCursorID()).x - origin.x, touchDowns.get(event.getCursorID()).y - origin.y));
 
-							dragAngle += angles.get(event.getCursorID())
-									- angle;
+							dragAngle += angles.get(event.getCursorID()) - angle;
 							dragAngle %= (FastMath.DEG_TO_RAD * 360);
 
 							container.setRelativeRotation(dragAngle);
@@ -939,22 +917,24 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 						}
 					}
 
-					public void cursorPressed(MultiTouchCursorEvent event) {
+					@Override
+					public void cursorPressed(MultiTouchCursorEvent event)
+					{
 
 						orientationTouchCount[currentLoop]++;
 
 						Vector2f worldPositionOfCursor = new Vector2f();
-						stage.tableToWorld(event.getPosition(),
-								worldPositionOfCursor);
+						stage.tableToWorld(event.getPosition(), worldPositionOfCursor);
 
 						angles.put(event.getCursorID(), 0f);
-						touchDowns.put(event.getCursorID(), new Vector2f(
-								worldPositionOfCursor.x,
-								worldPositionOfCursor.y));
+						touchDowns.put(event.getCursorID(), new Vector2f(worldPositionOfCursor.x, worldPositionOfCursor.y));
 					}
 
-					public void cursorReleased(MultiTouchCursorEvent event) {
-						if (angles.containsKey(event.getCursorID())) {
+					@Override
+					public void cursorReleased(MultiTouchCursorEvent event)
+					{
+						if (angles.containsKey(event.getCursorID()))
+						{
 							touchDowns.remove(event.getCursorID());
 							angles.remove(event.getCursorID());
 						}
@@ -972,7 +952,9 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 
 				background.getMultiTouchDispatcher().addListener(rotateEvent);
 
-			} catch (ContentTypeNotBoundException e) {
+			}
+			catch (ContentTypeNotBoundException e)
+			{
 			}
 
 			stage.addItem(container);
@@ -983,12 +965,11 @@ public class TablePosApp implements IMultiTouchEventListener, IMultiplicityApp {
 
 			TablePosUtilities.addPivot(stage, ORIGIN_SIZE);
 
-			TablePosUtilities
-					.generatePrompt(
-							"Rotate the line to run parallel to the wall between the landmarks.",
-							stage, currentLoop, loops);
+			TablePosUtilities.generatePrompt("Rotate the line to run parallel to the wall between the landmarks.", stage, currentLoop, loops);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "Content Type Not Bound", e);
 		}
 	}

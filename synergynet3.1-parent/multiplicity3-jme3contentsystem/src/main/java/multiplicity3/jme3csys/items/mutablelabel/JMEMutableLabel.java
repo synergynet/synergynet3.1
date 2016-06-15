@@ -22,8 +22,8 @@ import com.jme3.scene.Spatial;
  * The Class JMEMutableLabel.
  */
 @ImplementsContentItem(target = IMutableLabel.class)
-public class JMEMutableLabel extends JMEItem implements IMutableLabel,
-		IInitable {
+public class JMEMutableLabel extends JMEItem implements IMutableLabel, IInitable
+{
 
 	/** The asset manager. */
 	private AssetManager assetManager;
@@ -49,10 +49,13 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	/**
 	 * Instantiates a new JME mutable label.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEMutableLabel(String name, UUID uuid) {
+	public JMEMutableLabel(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -61,7 +64,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * @see multiplicity3.csys.items.mutablelabel.IMutableLabel#appendChar(char)
 	 */
 	@Override
-	public void appendChar(char theChar) {
+	public void appendChar(char theChar)
+	{
 		text = text + theChar;
 		setText(text);
 	}
@@ -71,7 +75,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return txt;
 	}
 
@@ -80,7 +85,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * @see multiplicity3.csys.items.mutablelabel.IMutableLabel#getText()
 	 */
 	@Override
-	public String getText() {
+	public String getText()
+	{
 		return text;
 	}
 
@@ -89,7 +95,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * @see multiplicity3.csys.items.mutablelabel.IMutableLabel#getTextSize()
 	 */
 	@Override
-	public Vector2f getTextSize() {
+	public Vector2f getTextSize()
+	{
 		return new Vector2f(fnt.getLineWidth(currentText), txt.getHeight());
 	}
 
@@ -100,10 +107,10 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		this.assetManager = assetManager;
-		fnt = FontCache.get().getFont("Interface/Fonts/Default.fnt",
-				assetManager);
+		fnt = FontCache.get().getFont("Interface/Fonts/Default.fnt", assetManager);
 		txt = new BitmapText(fnt, false);
 		doUpdate();
 		attachChild(txt);
@@ -114,7 +121,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * @see multiplicity3.csys.items.mutablelabel.IMutableLabel#isBoxSizeSet()
 	 */
 	@Override
-	public boolean isBoxSizeSet() {
+	public boolean isBoxSizeSet()
+	{
 		return boundingBox != null;
 	}
 
@@ -123,8 +131,10 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * @see multiplicity3.csys.items.mutablelabel.IMutableLabel#removeChar()
 	 */
 	@Override
-	public void removeChar() {
-		if (text.length() > 0) {
+	public void removeChar()
+	{
+		if (text.length() > 0)
+		{
 			text = text.substring(0, text.length() - 1);
 		}
 		setText(text);
@@ -137,7 +147,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * float)
 	 */
 	@Override
-	public void setBoxSize(float width, float height) {
+	public void setBoxSize(float width, float height)
+	{
 		this.boundingBox = new Rectangle(0, 0, width, height);
 		doUpdate();
 	}
@@ -149,12 +160,14 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * .String)
 	 */
 	@Override
-	public void setFont(String resourcePath) {
+	public void setFont(String resourcePath)
+	{
 		fnt = FontCache.get().getFont(resourcePath, assetManager);
 
 		detachChild(txt);
 
-		for (Spatial c : txt.getChildren()) {
+		for (Spatial c : txt.getChildren())
+		{
 			ItemMap.unregister(c, this);
 		}
 		txt = new BitmapText(fnt, false);
@@ -169,7 +182,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * multiplicity3.csys.items.mutablelabel.IMutableLabel#setFontScale(float)
 	 */
 	@Override
-	public void setFontScale(float scale) {
+	public void setFontScale(float scale)
+	{
 		this.fontScale = scale;
 		doUpdate();
 	}
@@ -181,7 +195,8 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	 * .String)
 	 */
 	@Override
-	public void setText(String text) {
+	public void setText(String text)
+	{
 		this.currentText = text;
 		this.text = text;
 		this.setName(text);
@@ -192,13 +207,16 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 	/**
 	 * Do update.
 	 */
-	private void doUpdate() {
+	private void doUpdate()
+	{
 
-		for (Spatial c : txt.getChildren()) {
+		for (Spatial c : txt.getChildren())
+		{
 			ItemMap.unregister(c, this);
 		}
 
-		if (boundingBox != null) {
+		if (boundingBox != null)
+		{
 			txt.setBox(boundingBox);
 			txt.setAlignment(Align.Center);
 			txt.setVerticalAlignment(VAlign.Center);
@@ -207,14 +225,17 @@ public class JMEMutableLabel extends JMEItem implements IMutableLabel,
 		txt.setSize(32 * fontScale);
 		txt.setText(currentText);
 
-		for (Spatial c : txt.getChildren()) {
+		for (Spatial c : txt.getChildren())
+		{
 			ItemMap.register(c, this);
 		}
 
-		if (boundingBox != null) {
-			txt.setLocalTranslation(-txt.getLineWidth() / 2f,
-					txt.getHeight() / 2f, 0);
-		} else {
+		if (boundingBox != null)
+		{
+			txt.setLocalTranslation(-txt.getLineWidth() / 2f, txt.getHeight() / 2f, 0);
+		}
+		else
+		{
 			float lineWidth = fnt.getLineWidth(currentText);
 			float textHeight = txt.getLineHeight();
 			txt.setLocalTranslation(-lineWidth / 2f, textHeight / 2f, 0);

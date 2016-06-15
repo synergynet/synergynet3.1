@@ -8,7 +8,8 @@ import synergynet3.mediadetection.mediasearch.Searcher;
 /**
  * The Class SearchRemoveableMediaThread.
  */
-public class SearchRemoveableMediaThread extends SearchThread {
+public class SearchRemoveableMediaThread extends SearchThread
+{
 
 	/** The discovered roots. */
 	private ArrayList<File> discoveredRoots = new ArrayList<File>();
@@ -22,21 +23,25 @@ public class SearchRemoveableMediaThread extends SearchThread {
 	 * reloadDiscoveredContents()
 	 */
 	@Override
-	public File[] reloadDiscoveredContents() {
+	public File[] reloadDiscoveredContents()
+	{
 
 		ArrayList<File[]> allFilesOnDiscoveredRoots = new ArrayList<File[]>();
-		for (File r : discoveredRoots) {
-			allFilesOnDiscoveredRoots.add(Searcher.searchDirectoryTree(r,
-					mediaSearchTypes, order, numberToReturn));
+		for (File r : discoveredRoots)
+		{
+			allFilesOnDiscoveredRoots.add(Searcher.searchDirectoryTree(r, mediaSearchTypes, order, numberToReturn));
 		}
 		int count = 0;
-		for (File[] discovered : allFilesOnDiscoveredRoots) {
+		for (File[] discovered : allFilesOnDiscoveredRoots)
+		{
 			count += discovered.length;
 		}
 		File[] toReturn = new File[count];
 		int i = 0;
-		for (File[] discovered : allFilesOnDiscoveredRoots) {
-			for (File f : discovered) {
+		for (File[] discovered : allFilesOnDiscoveredRoots)
+		{
+			for (File f : discovered)
+			{
 				toReturn[i] = f;
 				i++;
 			}
@@ -47,14 +52,17 @@ public class SearchRemoveableMediaThread extends SearchThread {
 	/**
 	 * Find files.
 	 *
-	 * @param f the f
+	 * @param f
+	 *            the f
 	 */
-	private void findFiles(File f) {
+	private void findFiles(File f)
+	{
 		File[] foundFiles = null;
-		foundFiles = Searcher.searchDirectoryTree(f, mediaSearchTypes, order,
-				numberToReturn);
-		if (foundFiles != null) {
-			if (foundFiles.length > 0) {
+		foundFiles = Searcher.searchDirectoryTree(f, mediaSearchTypes, order, numberToReturn);
+		if (foundFiles != null)
+		{
+			if (foundFiles.length > 0)
+			{
 				filesFound(foundFiles);
 			}
 		}
@@ -63,13 +71,17 @@ public class SearchRemoveableMediaThread extends SearchThread {
 	/**
 	 * Checks if is not present in roots.
 	 *
-	 * @param f the f
+	 * @param f
+	 *            the f
 	 * @return true, if is not present in roots
 	 */
-	private boolean isNotPresentInRoots(File f) {
+	private boolean isNotPresentInRoots(File f)
+	{
 		boolean isNotPresent = true;
-		for (File r : roots) {
-			if (r.equals(f)) {
+		for (File r : roots)
+		{
+			if (r.equals(f))
+			{
 				isNotPresent = false;
 				break;
 			}
@@ -83,11 +95,16 @@ public class SearchRemoveableMediaThread extends SearchThread {
 	 * checkForNewDirectories()
 	 */
 	@Override
-	protected void checkForNewDirectories() {
-		if (roots.length != File.listRoots().length) {
-			if (roots.length < File.listRoots().length) {
-				for (File f : File.listRoots()) {
-					if (isNotPresentInRoots(f)) {
+	protected void checkForNewDirectories()
+	{
+		if (roots.length != File.listRoots().length)
+		{
+			if (roots.length < File.listRoots().length)
+			{
+				for (File f : File.listRoots())
+				{
+					if (isNotPresentInRoots(f))
+					{
 						discoveredRoots.add(f);
 						findFiles(f);
 					}
@@ -104,7 +121,8 @@ public class SearchRemoveableMediaThread extends SearchThread {
 	 * checkInitialDirectories()
 	 */
 	@Override
-	protected void checkInitialDirectories() {
+	protected void checkInitialDirectories()
+	{
 		roots = File.listRoots();
 	}
 

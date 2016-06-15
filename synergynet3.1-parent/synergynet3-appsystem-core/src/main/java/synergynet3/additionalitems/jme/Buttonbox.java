@@ -24,7 +24,8 @@ import com.jme3.math.Vector2f;
  * The Class Buttonbox.
  */
 @ImplementsContentItem(target = IButtonbox.class)
-public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
+public class Buttonbox extends JMEContainer implements IButtonbox, IInitable
+{
 
 	/** The background. */
 	private IColourRectangle background;
@@ -47,10 +48,13 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	/**
 	 * Instantiates a new buttonbox.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public Buttonbox(String name, UUID uuid) {
+	public Buttonbox(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -58,7 +62,9 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IButtonbox#getHeight()
 	 */
-	public float getHeight() {
+	@Override
+	public float getHeight()
+	{
 		return height;
 	}
 
@@ -66,7 +72,9 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IButtonbox#getListener()
 	 */
-	public IImage getListener() {
+	@Override
+	public IImage getListener()
+	{
 		return listener;
 	}
 
@@ -75,7 +83,8 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * @see synergynet3.additionalitems.interfaces.IButtonbox#getText()
 	 */
 	@Override
-	public String getText() {
+	public String getText()
+	{
 		return textLabel.getText();
 	}
 
@@ -83,7 +92,9 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IButtonbox#getTextBorder()
 	 */
-	public IRoundedBorder getTextBorder() {
+	@Override
+	public IRoundedBorder getTextBorder()
+	{
 		return textBorder;
 	}
 
@@ -91,7 +102,9 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IButtonbox#getTextLabel()
 	 */
-	public IMutableLabel getTextLabel() {
+	@Override
+	public IMutableLabel getTextLabel()
+	{
 		return textLabel;
 	}
 
@@ -99,16 +112,20 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.IButtonbox#getWidth()
 	 */
-	public float getWidth() {
+	@Override
+	public float getWidth()
+	{
 		return width;
 	}
 
 	/**
 	 * Sets the background colour.
 	 *
-	 * @param colour the new background colour
+	 * @param colour
+	 *            the new background colour
 	 */
-	public void setBackgroundColour(ColorRGBA colour) {
+	public void setBackgroundColour(ColorRGBA colour)
+	{
 		background.setSolidBackgroundColour(colour);
 	}
 
@@ -120,11 +137,11 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * com.jme3.math.ColorRGBA, float, float, multiplicity3.csys.stage.IStage)
 	 */
 	@Override
-	public void setImage(IImage image, ColorRGBA bgColour,
-			ColorRGBA borderColour, float width, float height, IStage stage) {
-		try {
-			background = stage.getContentFactory().create(
-					IColourRectangle.class, "bg", UUID.randomUUID());
+	public void setImage(IImage image, ColorRGBA bgColour, ColorRGBA borderColour, float width, float height, IStage stage)
+	{
+		try
+		{
+			background = stage.getContentFactory().create(IColourRectangle.class, "bg", UUID.randomUUID());
 			background.setSolidBackgroundColour(bgColour);
 			background.setSize(width, height);
 			this.addItem(background);
@@ -135,21 +152,21 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 			image.setSize(width, height);
 			this.addItem(image);
 
-			textBorder = stage.getContentFactory().create(IRoundedBorder.class,
-					"textBorder", UUID.randomUUID());
+			textBorder = stage.getContentFactory().create(IRoundedBorder.class, "textBorder", UUID.randomUUID());
 			textBorder.setBorderWidth(3);
 			textBorder.setSize(width, height);
 			textBorder.setColor(borderColour);
 			this.addItem(textBorder);
 
-			listener = stage.getContentFactory().create(IImage.class,
-					"listenBlock", UUID.randomUUID());
+			listener = stage.getContentFactory().create(IImage.class, "listenBlock", UUID.randomUUID());
 			listener.setSize(width, height);
 			this.addItem(listener);
 
 			this.getZOrderManager().setAutoBringToTop(false);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 		}
 	}
 
@@ -162,45 +179,42 @@ public class Buttonbox extends JMEContainer implements IButtonbox, IInitable {
 	 * multiplicity3.csys.stage.IStage)
 	 */
 	@Override
-	public void setText(String text, ColorRGBA bgColour,
-			ColorRGBA borderColour, FontColour fontColour, float width,
-			float height, IStage stage) {
+	public void setText(String text, ColorRGBA bgColour, ColorRGBA borderColour, FontColour fontColour, float width, float height, IStage stage)
+	{
 		this.width = width;
 		this.height = height;
 
-		try {
+		try
+		{
 
-			background = stage.getContentFactory().create(
-					IColourRectangle.class, "bg", UUID.randomUUID());
+			background = stage.getContentFactory().create(IColourRectangle.class, "bg", UUID.randomUUID());
 			background.enableTransparency();
-			background.setGradientBackground(new Gradient(bgColour, bgColour,
-					GradientDirection.DIAGONAL));
+			background.setGradientBackground(new Gradient(bgColour, bgColour, GradientDirection.DIAGONAL));
 			background.setSize(width, height);
 			this.addItem(background);
 
-			textLabel = stage.getContentFactory().create(IMutableLabel.class,
-					"textLabel", UUID.randomUUID());
+			textLabel = stage.getContentFactory().create(IMutableLabel.class, "textLabel", UUID.randomUUID());
 			textLabel.setFont(FontUtil.getFont(fontColour));
 			textLabel.setRelativeScale(0.8f);
 			textLabel.setBoxSize(width, height);
 			textLabel.setText(text);
 			this.addItem(textLabel);
 
-			textBorder = stage.getContentFactory().create(IRoundedBorder.class,
-					"textBorder", UUID.randomUUID());
+			textBorder = stage.getContentFactory().create(IRoundedBorder.class, "textBorder", UUID.randomUUID());
 			textBorder.setBorderWidth(3);
 			textBorder.setSize(width, height);
 			textBorder.setColor(borderColour);
 			this.addItem(textBorder);
 
-			listener = stage.getContentFactory().create(IImage.class,
-					"listenBlock", UUID.randomUUID());
+			listener = stage.getContentFactory().create(IImage.class, "listenBlock", UUID.randomUUID());
 			listener.setSize(width, height);
 			this.addItem(listener);
 
 			this.getZOrderManager().setAutoBringToTop(false);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 		}
 	}
 

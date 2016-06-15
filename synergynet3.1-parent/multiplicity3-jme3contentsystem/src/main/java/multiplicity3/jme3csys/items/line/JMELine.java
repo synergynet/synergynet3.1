@@ -27,7 +27,8 @@ import com.jme3.scene.VertexBuffer.Type;
  * The Class JMELine.
  */
 @ImplementsContentItem(target = ILine.class)
-public class JMELine extends JMEItem implements ILine, IInitable, IItemListener {
+public class JMELine extends JMEItem implements ILine, IInitable, IItemListener
+{
 
 	/** The q. */
 	private static Quaternion q = new Quaternion();
@@ -83,10 +84,13 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	/**
 	 * Instantiates a new JME line.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMELine(String name, UUID uuid) {
+	public JMELine(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -95,7 +99,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#getDestinationItem()
 	 */
 	@Override
-	public IItem getDestinationItem() {
+	public IItem getDestinationItem()
+	{
 		return destItem;
 	}
 
@@ -104,7 +109,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#getEndPosition()
 	 */
 	@Override
-	public Vector2f getEndPosition() {
+	public Vector2f getEndPosition()
+	{
 		return endPosition;
 	}
 
@@ -113,9 +119,9 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#getLength()
 	 */
 	@Override
-	public float getLength() {
-		return destItem.getWorldLocation()
-				.subtract(sourceItem.getWorldLocation()).length();
+	public float getLength()
+	{
+		return destItem.getWorldLocation().subtract(sourceItem.getWorldLocation()).length();
 	}
 
 	/*
@@ -123,7 +129,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return quadGeometry;
 	}
 
@@ -132,7 +139,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#getMode()
 	 */
 	@Override
-	public LineMode getMode() {
+	public LineMode getMode()
+	{
 		return mode;
 	}
 
@@ -141,7 +149,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#getSourceItem()
 	 */
 	@Override
-	public IItem getSourceItem() {
+	public IItem getSourceItem()
+	{
 		return sourceItem;
 	}
 
@@ -150,7 +159,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#getStartPosition()
 	 */
 	@Override
-	public Vector2f getStartPosition() {
+	public Vector2f getStartPosition()
+	{
 		return startPosition;
 	}
 
@@ -161,7 +171,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		quad = new CenteredQuad(100, 100);
 		quadGeometry = new Geometry("_quad_geom", quad);
 
@@ -169,8 +180,7 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 		quadGeometry.getMesh().setBuffer(Type.Color, 4, colorArray);
 		updateColours();
 
-		mat = new Material(assetManager,
-				"multiplicity3/jme3csys/resources/shaders/VertexColour.j3md");
+		mat = new Material(assetManager, "multiplicity3/jme3csys/resources/shaders/VertexColour.j3md");
 		quadGeometry.setMaterial(mat);
 
 		ItemMap.register(quadGeometry, this);
@@ -184,7 +194,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorChanged(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorChanged(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -194,7 +205,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorClicked(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorClicked(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -204,7 +216,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem, multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorPressed(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorPressed(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -214,7 +227,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * multiplicity3.input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void itemCursorReleased(IItem item, MultiTouchCursorEvent event) {
+	public void itemCursorReleased(IItem item, MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -224,7 +238,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemMoved(IItem item) {
+	public void itemMoved(IItem item)
+	{
 		updateLinkedLine();
 	}
 
@@ -235,7 +250,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemRotated(IItem item) {
+	public void itemRotated(IItem item)
+	{
 	}
 
 	/*
@@ -245,7 +261,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemScaled(IItem item) {
+	public void itemScaled(IItem item)
+	{
 	}
 
 	/*
@@ -254,8 +271,10 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * multiplicity3.csys.items.item.IItem, boolean)
 	 */
 	@Override
-	public void itemVisibilityChanged(IItem item, boolean isVisible) {
-		if (itemVisibilityChangesLineVisibility && itemIsLinkedByThisLine(item)) {
+	public void itemVisibilityChanged(IItem item, boolean isVisible)
+	{
+		if (itemVisibilityChangesLineVisibility && itemIsLinkedByThisLine(item))
+		{
 			this.setVisible(isVisible);
 		}
 	}
@@ -267,7 +286,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void itemZOrderChanged(IItem item) {
+	public void itemZOrderChanged(IItem item)
+	{
 	}
 
 	/*
@@ -277,16 +297,19 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * csys.items.item.IItem)
 	 */
 	@Override
-	public void setDestinationItem(IItem item) {
+	public void setDestinationItem(IItem item)
+	{
 		this.destItem = item;
-		if (this.destItem != null) {
+		if (this.destItem != null)
+		{
 			this.destItem.removeItemListener(this);
 		}
 		this.destItem = item;
 		this.destItem.addItemListener(this);
 		setEndPosition(destItem.getWorldLocation());
 
-		if ((this.sourceItem != null) && (this.destItem != null)) {
+		if ((this.sourceItem != null) && (this.destItem != null))
+		{
 			this.mode = LineMode.LINKED;
 		}
 	}
@@ -298,7 +321,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * )
 	 */
 	@Override
-	public void setEndPosition(Vector2f v) {
+	public void setEndPosition(Vector2f v)
+	{
 		this.endPosition = v;
 		updateLine();
 	}
@@ -310,7 +334,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * )
 	 */
 	@Override
-	public void setLineColour(ColorRGBA c) {
+	public void setLineColour(ColorRGBA c)
+	{
 		topLeft = c;
 		topRight = c;
 		bottomLeft = c;
@@ -324,8 +349,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * setLineVisibilityChangesWithItemVisibility(boolean)
 	 */
 	@Override
-	public void setLineVisibilityChangesWithItemVisibility(
-			boolean autoVisibilityChange) {
+	public void setLineVisibilityChangesWithItemVisibility(boolean autoVisibilityChange)
+	{
 		this.itemVisibilityChangesLineVisibility = autoVisibilityChange;
 	}
 
@@ -334,7 +359,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * @see multiplicity3.csys.items.line.ILine#setLineWidth(float)
 	 */
 	@Override
-	public void setLineWidth(float width) {
+	public void setLineWidth(float width)
+	{
 		this.lineWidth = width;
 		updateLinkedLine();
 	}
@@ -346,15 +372,18 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * items.item.IItem)
 	 */
 	@Override
-	public void setSourceItem(IItem item) {
-		if (this.sourceItem != null) {
+	public void setSourceItem(IItem item)
+	{
+		if (this.sourceItem != null)
+		{
 			this.sourceItem.removeItemListener(this);
 		}
 		this.sourceItem = item;
 		this.sourceItem.addItemListener(this);
 		setStartPosition(sourceItem.getWorldLocation());
 
-		if ((this.sourceItem != null) && (this.destItem != null)) {
+		if ((this.sourceItem != null) && (this.destItem != null))
+		{
 			this.mode = LineMode.LINKED;
 		}
 	}
@@ -366,7 +395,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 * )
 	 */
 	@Override
-	public void setStartPosition(Vector2f v) {
+	public void setStartPosition(Vector2f v)
+	{
 		this.startPosition = v;
 		updateLine();
 	}
@@ -376,25 +406,28 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	 *
 	 * @return the line height
 	 */
-	private float getLineHeight() {
-		return Math.max(minLineLength, endPosition.subtract(startPosition)
-				.length());
+	private float getLineHeight()
+	{
+		return Math.max(minLineLength, endPosition.subtract(startPosition).length());
 	}
 
 	/**
 	 * Item is linked by this line.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 * @return true, if successful
 	 */
-	private boolean itemIsLinkedByThisLine(IItem item) {
+	private boolean itemIsLinkedByThisLine(IItem item)
+	{
 		return (item == sourceItem) || (item == destItem);
 	}
 
 	/**
 	 * Update colours.
 	 */
-	private void updateColours() {
+	private void updateColours()
+	{
 		FloatBuffer fb = (FloatBuffer) quad.getBuffer(Type.Color).getData();
 		fb.rewind();
 		fb.put(bottomLeft.r);
@@ -418,7 +451,8 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	/**
 	 * Update line.
 	 */
-	private void updateLine() {
+	private void updateLine()
+	{
 		quad.updateGeometry(lineWidth, getLineHeight());
 		Vector2f delta = endPosition.subtract(startPosition);
 		Vector2f center = startPosition.add(delta.mult(0.5f));
@@ -430,8 +464,7 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 		worldTranslation.y = center.y;
 
 		Vector3f localTranslation = new Vector3f();
-		quadGeometry.getParent().worldToLocal(worldTranslation,
-				localTranslation);
+		quadGeometry.getParent().worldToLocal(worldTranslation, localTranslation);
 
 		quadGeometry.setLocalTranslation(localTranslation);
 
@@ -443,8 +476,10 @@ public class JMELine extends JMEItem implements ILine, IInitable, IItemListener 
 	/**
 	 * Update linked line.
 	 */
-	private void updateLinkedLine() {
-		if ((destItem == null) || (sourceItem == null)) {
+	private void updateLinkedLine()
+	{
+		if ((destItem == null) || (sourceItem == null))
+		{
 			return;
 		}
 		this.startPosition = sourceItem.getWorldLocation().clone();

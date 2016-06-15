@@ -7,7 +7,8 @@ import synergynet3.cluster.sharedmemory.DistributedProperty;
 /**
  * The Class GravitySimDeviceControl.
  */
-public class GravitySimDeviceControl extends ClusteredDevice {
+public class GravitySimDeviceControl extends ClusteredDevice
+{
 
 	/** The instance. */
 	private static GravitySimDeviceControl instance;
@@ -30,23 +31,20 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	/**
 	 * Instantiates a new gravity sim device control.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	private GravitySimDeviceControl(String deviceName) {
+	private GravitySimDeviceControl(String deviceName)
+	{
 		super(deviceName);
-		gravityControl = getDistributedPropertyMap().createDistributedProperty(
-				"gravityControl");
+		gravityControl = getDistributedPropertyMap().createDistributedProperty("gravityControl");
 		initWithDefault(gravityControl, 1e5);
-		timeControl = getDistributedPropertyMap().createDistributedProperty(
-				"timeControl");
+		timeControl = getDistributedPropertyMap().createDistributedProperty("timeControl");
 		initWithDefault(timeControl, 0.001);
-		scenario = getDistributedPropertyMap().createDistributedProperty(
-				"scenarioName");
+		scenario = getDistributedPropertyMap().createDistributedProperty("scenarioName");
 		initWithDefault(scenario, UniverseScenario.SUN_AND_MOONS);
-		clearBodiesTrigger = getDistributedPropertyMap()
-				.createDistributedProperty("clearBodiesTrigger");
-		bodyLimitControl = getDistributedPropertyMap()
-				.createDistributedProperty("bodyLimitControl");
+		clearBodiesTrigger = getDistributedPropertyMap().createDistributedProperty("clearBodiesTrigger");
+		bodyLimitControl = getDistributedPropertyMap().createDistributedProperty("bodyLimitControl");
 		initWithDefault(bodyLimitControl, 4);
 	}
 
@@ -55,8 +53,10 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the gravity sim device control
 	 */
-	public static GravitySimDeviceControl get() {
-		if (instance == null) {
+	public static GravitySimDeviceControl get()
+	{
+		if (instance == null)
+		{
 			instance = new GravitySimDeviceControl("gsim");
 		}
 		return instance;
@@ -67,7 +67,8 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the body limit
 	 */
-	public DistributedProperty<Integer> getBodyLimit() {
+	public DistributedProperty<Integer> getBodyLimit()
+	{
 		return bodyLimitControl;
 	}
 
@@ -76,7 +77,8 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the clear bodies trigger
 	 */
-	public DistributedProperty<Integer> getClearBodiesTrigger() {
+	public DistributedProperty<Integer> getClearBodiesTrigger()
+	{
 		return clearBodiesTrigger;
 	}
 
@@ -85,7 +87,8 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the gravity control
 	 */
-	public DistributedProperty<Double> getGravityControl() {
+	public DistributedProperty<Double> getGravityControl()
+	{
 		return gravityControl;
 	}
 
@@ -94,7 +97,8 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the scenario
 	 */
-	public DistributedProperty<UniverseScenario> getScenario() {
+	public DistributedProperty<UniverseScenario> getScenario()
+	{
 		return scenario;
 	}
 
@@ -103,19 +107,23 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	 *
 	 * @return the time control
 	 */
-	public DistributedProperty<Double> getTimeControl() {
+	public DistributedProperty<Double> getTimeControl()
+	{
 		return timeControl;
 	}
 
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<Boolean> control,
-			boolean defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<Boolean> control, boolean defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -123,12 +131,15 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<Double> control,
-			double defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<Double> control, double defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -136,12 +147,15 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<Integer> control,
-			int defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<Integer> control, int defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -149,12 +163,15 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<String> control,
-			String defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<String> control, String defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -162,13 +179,15 @@ public class GravitySimDeviceControl extends ClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(
-			DistributedProperty<UniverseScenario> control,
-			UniverseScenario defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<UniverseScenario> control, UniverseScenario defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}

@@ -7,7 +7,8 @@ import multiplicity3.csys.items.item.IItem;
 /**
  * The Interface IAudioPlayer.
  */
-public interface IAudioPlayer extends IItem {
+public interface IAudioPlayer extends IItem
+{
 
 	/**
 	 * Gets the height.
@@ -31,7 +32,8 @@ public interface IAudioPlayer extends IItem {
 	/**
 	 * Sets the audio recording.
 	 *
-	 * @param recording the new audio recording
+	 * @param recording
+	 *            the new audio recording
 	 */
 	public void setAudioRecording(File recording);
 

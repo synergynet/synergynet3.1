@@ -7,12 +7,14 @@ import java.io.File;
 /**
  * The Interface IMediaSearcher.
  */
-public interface IMediaSearcher {
+public interface IMediaSearcher
+{
 
 	/**
 	 * On find.
 	 *
-	 * @param files the files
+	 * @param files
+	 *            the files
 	 */
 	public void onFind(File[] files);
 

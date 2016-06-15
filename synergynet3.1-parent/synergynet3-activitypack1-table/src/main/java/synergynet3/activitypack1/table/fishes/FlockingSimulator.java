@@ -14,7 +14,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class FlockingSimulator.
  */
-public class FlockingSimulator extends AnimationElement {
+public class FlockingSimulator extends AnimationElement
+{
 
 	/** The Constant MAX_BIRDS. */
 	private static final int MAX_BIRDS = 150;
@@ -114,23 +115,30 @@ public class FlockingSimulator extends AnimationElement {
 	/**
 	 * Instantiates a new flocking simulator.
 	 *
-	 * @param birds the birds
+	 * @param birds
+	 *            the birds
 	 */
-	public FlockingSimulator(BirdCollection birds) {
+	public FlockingSimulator(BirdCollection birds)
+	{
 		this.birds = birds;
 	}
 
 	/**
 	 * Adds the birds at.
 	 *
-	 * @param c the c
-	 * @param pos the pos
+	 * @param c
+	 *            the c
+	 * @param pos
+	 *            the pos
 	 */
-	public void addBirdsAt(Color c, Vector2f pos) {
-		if (birds.eatableBirdCount() > MAX_BIRDS) {
+	public void addBirdsAt(Color c, Vector2f pos)
+	{
+		if (birds.eatableBirdCount() > MAX_BIRDS)
+		{
 			return;
 		}
-		for (int i = 0; i < numberOfGreenBirds; i++) {
+		for (int i = 0; i < numberOfGreenBirds; i++)
+		{
 			Bird bird = new Bird(c);
 			bird.setSpeed(greenBirdSpeed);
 			bird.setMaxTurnTheta(greenBirdMaxTheta);
@@ -142,9 +150,11 @@ public class FlockingSimulator extends AnimationElement {
 	/**
 	 * Adds the food at.
 	 *
-	 * @param pos the pos
+	 * @param pos
+	 *            the pos
 	 */
-	public void addFoodAt(Vector2f pos) {
+	public void addFoodAt(Vector2f pos)
+	{
 		Food f = new Food(pos.x, pos.y);
 		flock.addBird(f);
 	}
@@ -152,9 +162,11 @@ public class FlockingSimulator extends AnimationElement {
 	/**
 	 * Adds the obstacle at.
 	 *
-	 * @param pos the pos
+	 * @param pos
+	 *            the pos
 	 */
-	public void addObstacleAt(Vector2f pos) {
+	public void addObstacleAt(Vector2f pos)
+	{
 		Obstacle o = new Obstacle(pos.x, pos.y);
 		flock.addBird(o);
 	}
@@ -162,11 +174,14 @@ public class FlockingSimulator extends AnimationElement {
 	/**
 	 * Adds the predators birds at.
 	 *
-	 * @param pos the pos
+	 * @param pos
+	 *            the pos
 	 */
-	public void addPredatorsBirdsAt(Vector2f pos) {
+	public void addPredatorsBirdsAt(Vector2f pos)
+	{
 		// if(birds.size() > MAX_BIRDS) return;
-		for (int i = 0; i < numberOfRedPredators; i++) {
+		for (int i = 0; i < numberOfRedPredators; i++)
+		{
 			Predator bird = new Predator();
 			bird.setSpeed(redPredatorSpeed);
 			bird.setMaxTurnTheta(redPredatorMaxTheta);
@@ -183,7 +198,8 @@ public class FlockingSimulator extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -191,7 +207,8 @@ public class FlockingSimulator extends AnimationElement {
 	/**
 	 * Inits the with defaults.
 	 */
-	public void initWithDefaults() {
+	public void initWithDefaults()
+	{
 		numberOfGreenBirds = DEFAULT_NUMBER_GREEN;
 		numberOfBlueBirds = DEFAULT_NUMBER_BLUE;
 		numberOfRedPredators = DEFAULT_NUMBER_RED;
@@ -225,7 +242,8 @@ public class FlockingSimulator extends AnimationElement {
 		// bird.setMaxTurnTheta( blueBirdMaxTheta );
 		// flock.addBird(bird);
 		// }
-		for (int i = 0; i < numberOfRedPredators; i++) {
+		for (int i = 0; i < numberOfRedPredators; i++)
+		{
 			Predator bird = new Predator();
 			bird.setSpeed(redPredatorSpeed);
 			bird.setMaxTurnTheta(redPredatorMaxTheta);
@@ -239,7 +257,8 @@ public class FlockingSimulator extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -249,7 +268,8 @@ public class FlockingSimulator extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -261,7 +281,8 @@ public class FlockingSimulator extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
+	public void updateAnimationState(float tpf)
+	{
 		flock.move();
 		birds.update();
 	}

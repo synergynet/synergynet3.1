@@ -27,7 +27,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class TrainTracksApp.
  */
-public class TrainTracksApp extends EarlyYearsApp {
+public class TrainTracksApp extends EarlyYearsApp
+{
 
 	/** The Constant RESOURCES_DIR. */
 	private static final String RESOURCES_DIR = "synergynet3/earlyyears/table/applications/traintracks/";
@@ -39,7 +40,7 @@ public class TrainTracksApp extends EarlyYearsApp {
 	private static final int TRACK_DIMENSION = 200;
 
 	/** The Constant TRAIN. */
-	private static final String TRAIN = "tt";	
+	private static final String TRAIN = "tt";
 
 	/** The mode. */
 	private static String MODE = TRAIN;
@@ -65,11 +66,15 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -84,21 +89,24 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Adds the corner.
 	 */
-	public void addCorner() {
+	public void addCorner()
+	{
 		createTrackPiece("corner");
 	}
 
 	/**
 	 * Adds the cross.
 	 */
-	public void addCross() {
+	public void addCross()
+	{
 		createTrackPiece("cross");
 	}
 
 	/**
 	 * Adds the straight.
 	 */
-	public void addStraight() {
+	public void addStraight()
+	{
 		createTrackPiece("straight");
 	}
 
@@ -107,7 +115,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	 *
 	 * @return the num of corners
 	 */
-	public Integer getNumOfCorners() {
+	public Integer getNumOfCorners()
+	{
 		return corners.size();
 	}
 
@@ -116,7 +125,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	 *
 	 * @return the num of crosses
 	 */
-	public Integer getNumOfCrosses() {
+	public Integer getNumOfCrosses()
+	{
 		return crosses.size();
 	}
 
@@ -125,14 +135,16 @@ public class TrainTracksApp extends EarlyYearsApp {
 	 *
 	 * @return the num of straights
 	 */
-	public Integer getNumOfStraights() {
+	public Integer getNumOfStraights()
+	{
 		return straights.size();
 	}
 
 	/**
 	 * Removes the corner.
 	 */
-	public void removeCorner() {
+	public void removeCorner()
+	{
 		stage.removeItem(corners.get(corners.size() - 1));
 		corners.remove(corners.get(corners.size() - 1));
 		updateTrackedPieces();
@@ -141,7 +153,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Removes the cross.
 	 */
-	public void removeCross() {
+	public void removeCross()
+	{
 		stage.removeItem(crosses.get(crosses.size() - 1));
 		crosses.remove(crosses.get(crosses.size() - 1));
 		updateTrackedPieces();
@@ -150,7 +163,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Removes the straight.
 	 */
-	public void removeStraight() {
+	public void removeStraight()
+	{
 		stage.removeItem(straights.get(straights.size() - 1));
 		straights.remove(straights.get(straights.size() - 1));
 		updateTrackedPieces();
@@ -159,12 +173,17 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Sets the mode.
 	 *
-	 * @param mode the new mode
+	 * @param mode
+	 *            the new mode
 	 */
-	public void setMode(boolean mode) {
-		if (mode) {
+	public void setMode(boolean mode)
+	{
+		if (mode)
+		{
 			setRoadMode();
-		} else {
+		}
+		else
+		{
 			setTrainMode();
 		}
 	}
@@ -172,14 +191,18 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Change piece images.
 	 */
-	private void changePieceImages() {
-		for (ICachableImage trackPiece : crosses) {
+	private void changePieceImages()
+	{
+		for (ICachableImage trackPiece : crosses)
+		{
 			trackPiece.setImage(RESOURCES_DIR + MODE + "cross" + ".png");
 		}
-		for (ICachableImage trackPiece : corners) {
+		for (ICachableImage trackPiece : corners)
+		{
 			trackPiece.setImage(RESOURCES_DIR + MODE + "corner" + ".png");
 		}
-		for (ICachableImage trackPiece : straights) {
+		for (ICachableImage trackPiece : straights)
+		{
 			trackPiece.setImage(RESOURCES_DIR + MODE + "straight" + ".png");
 		}
 	}
@@ -187,11 +210,15 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Creates the pieces.
 	 *
-	 * @param number the number
-	 * @param name the name
+	 * @param number
+	 *            the number
+	 * @param name
+	 *            the name
 	 */
-	private void createPieces(int number, String name) {
-		for (int i = 0; i < number; i++) {
+	private void createPieces(int number, String name)
+	{
+		for (int i = 0; i < number; i++)
+		{
 			createTrackPiece(name);
 		}
 	}
@@ -200,122 +227,127 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Creates the track piece.
 	 *
-	 * @param piece the piece
+	 * @param piece
+	 *            the piece
 	 */
-	private void createTrackPiece(String piece) {
-		try {
-			final ICachableImage trackPiece = contentFactory.create(
-					ICachableImage.class, "trackPiece" + trackPieceCount,
-					UUID.randomUUID());
+	private void createTrackPiece(String piece)
+	{
+		try
+		{
+			final ICachableImage trackPiece = contentFactory.create(ICachableImage.class, "trackPiece" + trackPieceCount, UUID.randomUUID());
 			trackPiece.setImage(RESOURCES_DIR + MODE + piece + ".png");
-			behaviourMaker.addBehaviour(trackPiece,
-					RotateTranslateScaleBehaviour.class).setScaleEnabled(false);
+			behaviourMaker.addBehaviour(trackPiece, RotateTranslateScaleBehaviour.class).setScaleEnabled(false);
 			stage.addItem(trackPiece);
 			randomlyPlaceTrackPiece(trackPiece);
 			randomlyRotateTrackPiece(trackPiece);
 
-			if (piece.equals("corner")) {
+			if (piece.equals("corner"))
+			{
 				trackPiece.setSize(TRACK_DIMENSION, TRACK_DIMENSION);
-				ProjectorTransferUtilities.get().addToTransferableContents(
-						trackPiece, 163, 164, "corner" + corners.size());
+				ProjectorTransferUtilities.get().addToTransferableContents(trackPiece, 163, 164, "corner" + corners.size());
 				corners.add(trackPiece);
-			} else if (piece.equals("cross")) {
+			}
+			else if (piece.equals("cross"))
+			{
 				trackPiece.setSize(TRACK_DIMENSION, TRACK_DIMENSION);
-				ProjectorTransferUtilities.get().addToTransferableContents(
-						trackPiece, 208, 208, "cross" + crosses.size());
+				ProjectorTransferUtilities.get().addToTransferableContents(trackPiece, 208, 208, "cross" + crosses.size());
 				crosses.add(trackPiece);
-			} else {
+			}
+			else
+			{
 				trackPiece.setSize(TRACK_DIMENSION, TRACK_DIMENSION);
-				ProjectorTransferUtilities.get().addToTransferableContents(
-						trackPiece, 257, 120, "straight" + straights.size());
+				ProjectorTransferUtilities.get().addToTransferableContents(trackPiece, 257, 120, "straight" + straights.size());
 				straights.add(trackPiece);
 			}
 
-			trackPiece.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorReleased(MultiTouchCursorEvent event) {
+			trackPiece.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorReleased(MultiTouchCursorEvent event)
+				{
 
-							Vector2f target = null;
-							float distance = 0;
+					Vector2f target = null;
+					float distance = 0;
 
-							for (Vector2f potentialTarget : snapPoints) {
-								if (target == null) {
-									target = potentialTarget;
-									distance = potentialTarget
-											.distance(trackPiece
-													.getWorldLocation());
-								} else {
-									float potentialDistance = potentialTarget
-											.distance(trackPiece
-													.getWorldLocation());
-									if (potentialDistance < distance) {
-										target = potentialTarget;
-										distance = potentialTarget
-												.distance(trackPiece
-														.getWorldLocation());
-									}
-								}
-							}
-
-							for (ICachableImage placedTrackPiece : placedTrackPieces) {
-								if (placedTrackPiece != trackPiece) {
-									if (target.distance(placedTrackPiece
-											.getWorldLocation()) < 0.1) {
-										return;
-									}
-								}
-							}
-
-							trackPiece.setWorldLocation(target);
-
-							float angle = trackPiece.getRelativeRotation()
-									* FastMath.RAD_TO_DEG;
-							float offSetAngle = 0;
-							if ((angle % 90) > 45) {
-								offSetAngle = 1;
-							}
-							angle = (FastMath.floor(angle / 90) + offSetAngle) * 90;
-							trackPiece.setRelativeRotation(angle
-									* FastMath.DEG_TO_RAD);
-
-							stage.getZOrderManager().sendToBottom(trackPiece);
+					for (Vector2f potentialTarget : snapPoints)
+					{
+						if (target == null)
+						{
+							target = potentialTarget;
+							distance = potentialTarget.distance(trackPiece.getWorldLocation());
 						}
-					});
+						else
+						{
+							float potentialDistance = potentialTarget.distance(trackPiece.getWorldLocation());
+							if (potentialDistance < distance)
+							{
+								target = potentialTarget;
+								distance = potentialTarget.distance(trackPiece.getWorldLocation());
+							}
+						}
+					}
+
+					for (ICachableImage placedTrackPiece : placedTrackPieces)
+					{
+						if (placedTrackPiece != trackPiece)
+						{
+							if (target.distance(placedTrackPiece.getWorldLocation()) < 0.1)
+							{
+								return;
+							}
+						}
+					}
+
+					trackPiece.setWorldLocation(target);
+
+					float angle = trackPiece.getRelativeRotation() * FastMath.RAD_TO_DEG;
+					float offSetAngle = 0;
+					if ((angle % 90) > 45)
+					{
+						offSetAngle = 1;
+					}
+					angle = (FastMath.floor(angle / 90) + offSetAngle) * 90;
+					trackPiece.setRelativeRotation(angle * FastMath.DEG_TO_RAD);
+
+					stage.getZOrderManager().sendToBottom(trackPiece);
+				}
+			});
 
 			updateTrackedPieces();
 			trackPieceCount++;
 
-		} catch (ContentTypeNotBoundException e) {
-			AdditionalSynergyNetUtilities.log(Level.SEVERE,
-					"ContentTypeNotBoundException", e);
+		}
+		catch (ContentTypeNotBoundException e)
+		{
+			AdditionalSynergyNetUtilities.log(Level.SEVERE, "ContentTypeNotBoundException", e);
 		}
 	}
 
 	/**
 	 * Randomly place track piece.
 	 *
-	 * @param trackPiece the track piece
+	 * @param trackPiece
+	 *            the track piece
 	 */
-	private void randomlyPlaceTrackPiece(ICachableImage trackPiece) {
-		int lowerBound = (int) ((-displayWidth / 2)
-				+ (trackPiece.getWidth() / 2) + 0.5);
+	private void randomlyPlaceTrackPiece(ICachableImage trackPiece)
+	{
+		int lowerBound = (int) ((-displayWidth / 2) + (trackPiece.getWidth() / 2) + 0.5);
 		int upperBound = (int) (((displayWidth / 2) - (trackPiece.getWidth() / 2)) + 0.5);
-		int x = lowerBound
-				+ (int) ((Math.random() * (upperBound - lowerBound)) + 0.5);
+		int x = lowerBound + (int) ((Math.random() * (upperBound - lowerBound)) + 0.5);
 		lowerBound = (int) ((-displayHeight / 2) + (trackPiece.getHeight() / 2) + 0.5);
 		upperBound = (int) (((displayHeight / 2) - (trackPiece.getHeight() / 2)) + 0.5);
-		int y = lowerBound
-				+ (int) ((Math.random() * (upperBound - lowerBound)) + 0.5);
+		int y = lowerBound + (int) ((Math.random() * (upperBound - lowerBound)) + 0.5);
 		trackPiece.setRelativeLocation(new Vector2f(x, y));
 	}
 
 	/**
 	 * Randomly rotate track piece.
 	 *
-	 * @param trackPiece the track piece
+	 * @param trackPiece
+	 *            the track piece
 	 */
-	private void randomlyRotateTrackPiece(ICachableImage trackPiece) {
+	private void randomlyRotateTrackPiece(ICachableImage trackPiece)
+	{
 		int angle = (int) ((Math.random() * (360)) + 0.5);
 		trackPiece.setRelativeRotation((float) Math.toRadians(angle));
 	}
@@ -323,7 +355,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Sets the road mode.
 	 */
-	private void setRoadMode() {
+	private void setRoadMode()
+	{
 		MODE = ROAD;
 		changePieceImages();
 	}
@@ -331,7 +364,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Sets the train mode.
 	 */
-	private void setTrainMode() {
+	private void setTrainMode()
+	{
 		MODE = TRAIN;
 		changePieceImages();
 	}
@@ -339,11 +373,14 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Setup snap points.
 	 */
-	private void setupSnapPoints() {
+	private void setupSnapPoints()
+	{
 		float x = TRACK_DIMENSION / 2;
-		while (x < displayWidth) {
+		while (x < displayWidth)
+		{
 			float y = TRACK_DIMENSION / 2;
-			while (y < displayHeight) {
+			while (y < displayHeight)
+			{
 				snapPoints.add(new Vector2f(x, y));
 				y += TRACK_DIMENSION;
 			}
@@ -354,7 +391,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	/**
 	 * Update tracked pieces.
 	 */
-	private void updateTrackedPieces() {
+	private void updateTrackedPieces()
+	{
 		placedTrackPieces.clear();
 		placedTrackPieces.addAll(corners);
 		placedTrackPieces.addAll(crosses);
@@ -366,7 +404,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	 * @see synergynet3.SynergyNetApp#getSpecificFriendlyAppName()
 	 */
 	@Override
-	protected String getSpecificFriendlyAppName() {
+	protected String getSpecificFriendlyAppName()
+	{
 		return "TrainTracks";
 	}
 
@@ -375,8 +414,8 @@ public class TrainTracksApp extends EarlyYearsApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 
 		feedbackTypes.add(SimpleTrafficLightFeedback.class);
 		feedbackTypes.add(AudioFeedback.class);

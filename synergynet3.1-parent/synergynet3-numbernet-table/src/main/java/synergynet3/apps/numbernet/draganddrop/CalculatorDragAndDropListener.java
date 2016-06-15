@@ -18,11 +18,11 @@ import synergynet3.apps.numbernet.ui.calculator.Calculator;
  *
  * @see CalculatorDragAndDropEvent
  */
-public class CalculatorDragAndDropListener implements DragAndDropListener {
+public class CalculatorDragAndDropListener implements DragAndDropListener
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(CalculatorDragAndDropListener.class.getName());
+	private static final Logger log = Logger.getLogger(CalculatorDragAndDropListener.class.getName());
 
 	/** The calculator. */
 	protected Calculator calculator;
@@ -33,11 +33,13 @@ public class CalculatorDragAndDropListener implements DragAndDropListener {
 	/**
 	 * Instantiates a new calculator drag and drop listener.
 	 *
-	 * @param c the c
-	 * @param controller the controller
+	 * @param c
+	 *            the c
+	 * @param controller
+	 *            the controller
 	 */
-	public CalculatorDragAndDropListener(Calculator c,
-			CalculatorEventProcessor controller) {
+	public CalculatorDragAndDropListener(Calculator c, CalculatorEventProcessor controller)
+	{
 		this.eventProcessor = controller;
 		this.calculator = c;
 	}
@@ -50,21 +52,21 @@ public class CalculatorDragAndDropListener implements DragAndDropListener {
 	 * multiplicity3.csys.items.item.IItem, int)
 	 */
 	@Override
-	public void itemDraggedAndDropped(IItem itemDropped, IItem onto,
-			int indexOfDrop) {
-		if (itemDropped == null) {
+	public void itemDraggedAndDropped(IItem itemDropped, IItem onto, int indexOfDrop)
+	{
+		if (itemDropped == null)
+		{
 			log.warning("No actual dropping occurred!");
 			return;
 		}
 
-		if (!itemDropped.isVisible()) {
+		if (!itemDropped.isVisible())
+		{
 			log.fine("Item is not visible, no further action.");
 			return;
 		}
 
-		log.fine("Item drag and dropped: " + itemDropped + " onto " + onto
-				+ " at index " + indexOfDrop);
-		eventProcessor.calculatorDragAndDropEvent(calculator, itemDropped,
-				onto, indexOfDrop);
+		log.fine("Item drag and dropped: " + itemDropped + " onto " + onto + " at index " + indexOfDrop);
+		eventProcessor.calculatorDragAndDropEvent(calculator, itemDropped, onto, indexOfDrop);
 	}
 }

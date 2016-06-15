@@ -21,7 +21,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Class StudentIconGenerator.
  */
-public class StudentIconGenerator {
+public class StudentIconGenerator
+{
 
 	/** The Constant DEFAULT_ICON_LOCATION. */
 	private static final String DEFAULT_ICON_LOCATION = "synergynet3/personalcontentcontrol/defaultUserIcon.png";
@@ -29,73 +30,85 @@ public class StudentIconGenerator {
 	/**
 	 * Generate icon.
 	 *
-	 * @param stage the stage
-	 * @param width the width
-	 * @param height the height
-	 * @param borderWidth the border width
-	 * @param movable the movable
-	 * @param studentID the student id
+	 * @param stage
+	 *            the stage
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param borderWidth
+	 *            the border width
+	 * @param movable
+	 *            the movable
+	 * @param studentID
+	 *            the student id
 	 * @return the i item
 	 */
-	public static IItem generateIcon(IStage stage, int width, int height,
-			int borderWidth, boolean movable, String studentID) {
-		try {
+	public static IItem generateIcon(IStage stage, int width, int height, int borderWidth, boolean movable, String studentID)
+	{
+		try
+		{
 
-			IContainer wrapperFrame = stage.getContentFactory().create(
-					IContainer.class, "userIconWrap", UUID.randomUUID());
+			IContainer wrapperFrame = stage.getContentFactory().create(IContainer.class, "userIconWrap", UUID.randomUUID());
 
-			IColourRectangle rect = stage.getContentFactory().create(
-					IColourRectangle.class, "solidbox", UUID.randomUUID());
+			IColourRectangle rect = stage.getContentFactory().create(IColourRectangle.class, "solidbox", UUID.randomUUID());
 			rect.setSolidBackgroundColour(ColorRGBA.Black);
 			rect.setSize(width, height);
 			rect.setInteractionEnabled(false);
 			wrapperFrame.addItem(rect);
 
-			ICachableImage studentImage = stage.getContentFactory().create(
-					ICachableImage.class, "userImage", UUID.randomUUID());
+			ICachableImage studentImage = stage.getContentFactory().create(ICachableImage.class, "userImage", UUID.randomUUID());
 
-			try {
+			try
+			{
 				studentImage.setImage(getIconLocation(studentID));
-			} catch (Exception e) {
-				try {
+			}
+			catch (Exception e)
+			{
+				try
+				{
 					studentImage.setImage(new File(getIconLocation(studentID)));
-				} catch (NullPointerException n) {
-					studentImage
-							.setImage(getIconLocation(DEFAULT_ICON_LOCATION));
+				}
+				catch (NullPointerException n)
+				{
+					studentImage.setImage(getIconLocation(DEFAULT_ICON_LOCATION));
 				}
 			}
 			studentImage.setSize(width, height);
 			wrapperFrame.addItem(studentImage);
 
-			if (movable) {
-				RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker()
-						.addBehaviour(studentImage,
-								RotateTranslateScaleBehaviour.class);
+			if (movable)
+			{
+				RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker().addBehaviour(studentImage, RotateTranslateScaleBehaviour.class);
 				rts.setItemActingOn(wrapperFrame);
 				rts.setScaleEnabled(false);
-			} else {
+			}
+			else
+			{
 				studentImage.setInteractionEnabled(false);
 			}
 
-			IRoundedBorder frameBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "border", UUID.randomUUID());
+			IRoundedBorder frameBorder = stage.getContentFactory().create(IRoundedBorder.class, "border", UUID.randomUUID());
 			frameBorder.setBorderWidth(borderWidth);
 			frameBorder.setSize(width, height);
 			frameBorder.setColor(getStudentColour(studentID));
 			wrapperFrame.addItem(frameBorder);
 
-			if (movable) {
-				RotateTranslateScaleBehaviour rtsTwo = stage
-						.getBehaviourMaker().addBehaviour(frameBorder,
-								RotateTranslateScaleBehaviour.class);
+			if (movable)
+			{
+				RotateTranslateScaleBehaviour rtsTwo = stage.getBehaviourMaker().addBehaviour(frameBorder, RotateTranslateScaleBehaviour.class);
 				rtsTwo.setItemActingOn(wrapperFrame);
 				rtsTwo.setScaleEnabled(false);
-			} else {
+			}
+			else
+			{
 				frameBorder.setInteractionEnabled(false);
 			}
 
 			return wrapperFrame;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			return null;
 		}
 	}
@@ -103,19 +116,23 @@ public class StudentIconGenerator {
 	/**
 	 * Gets the extension.
 	 *
-	 * @param f the f
+	 * @param f
+	 *            the f
 	 * @return the extension
 	 */
-	public static String getExtension(File f) {
+	public static String getExtension(File f)
+	{
 		String ext = null;
 		String s = f.getName();
 		int i = s.lastIndexOf('.');
 
-		if ((i > 0) && (i < (s.length() - 1))) {
+		if ((i > 0) && (i < (s.length() - 1)))
+		{
 			ext = s.substring(i + 1).toLowerCase();
 		}
 
-		if (ext == null) {
+		if (ext == null)
+		{
 			return "";
 		}
 
@@ -125,22 +142,24 @@ public class StudentIconGenerator {
 	/**
 	 * Gets the icon location.
 	 *
-	 * @param studentID the student id
+	 * @param studentID
+	 *            the student id
 	 * @return the icon location
 	 */
-	private static String getIconLocation(String studentID) {
+	private static String getIconLocation(String studentID)
+	{
 		String iconLocation = DEFAULT_ICON_LOCATION;
-		File iconCacheDir = new File(
-				CacheOrganisation.getSpecificStudentIconDir(studentID));
-		for (File f : iconCacheDir.listFiles()) {
-			if (f.isFile()) {
+		File iconCacheDir = new File(CacheOrganisation.getSpecificStudentIconDir(studentID));
+		for (File f : iconCacheDir.listFiles())
+		{
+			if (f.isFile())
+			{
 				String ext = getExtension(f);
-				if (!ext.equals("")) {
-					if (ext.equalsIgnoreCase("jpg")
-							|| ext.equalsIgnoreCase("png")) {
-						iconLocation = CacheOrganisation
-								.getSpecificStudentIconDir(studentID)
-								+ File.separator + f.getName();
+				if (!ext.equals(""))
+				{
+					if (ext.equalsIgnoreCase("jpg") || ext.equalsIgnoreCase("png"))
+					{
+						iconLocation = CacheOrganisation.getSpecificStudentIconDir(studentID) + File.separator + f.getName();
 						break;
 					}
 				}
@@ -153,13 +172,14 @@ public class StudentIconGenerator {
 	/**
 	 * Gets the student colour.
 	 *
-	 * @param studentID the student id
+	 * @param studentID
+	 *            the student id
 	 * @return the student colour
 	 */
-	private static ColorRGBA getStudentColour(String studentID) {
+	private static ColorRGBA getStudentColour(String studentID)
+	{
 
-		String colour = DatabaseActivity.getStudentColour(studentID,
-				SynergyNetCluster.get().getXMPPConnection().getHost());
+		String colour = DatabaseActivity.getStudentColour(studentID, SynergyNetCluster.get().getXMPPConnection().getHost());
 		float[] rgb = ColourManager.getRGBForColour(colour);
 		return new ColorRGBA(rgb[0], rgb[1], rgb[2], 1f);
 	}

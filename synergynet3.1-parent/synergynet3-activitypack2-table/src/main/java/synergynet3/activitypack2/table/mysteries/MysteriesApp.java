@@ -15,15 +15,19 @@ import synergynet3.projector.network.ProjectorTransferUtilities;
 /**
  * The Class MysteriesApp.
  */
-public class MysteriesApp extends SynergyNetApp {
+public class MysteriesApp extends SynergyNetApp
+{
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		if (args.length > 0) {
+	public static void main(String[] args)
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -39,8 +43,8 @@ public class MysteriesApp extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 
 		ProjectorTransferUtilities.get().setDecelerationOnArrival(-1);
 

@@ -22,7 +22,8 @@ import com.thoughtworks.xstream.XStream;
 /**
  * The Class DataWriter.
  */
-public class DataWriter implements Runnable {
+public class DataWriter implements Runnable
+{
 
 	/** The time between writes seconds. */
 	private int timeBetweenWritesSeconds = 30;
@@ -33,7 +34,8 @@ public class DataWriter implements Runnable {
 	/**
 	 * Instantiates a new data writer.
 	 */
-	public DataWriter() {
+	public DataWriter()
+	{
 		xstream = new XStream();
 		Thread t = new Thread(this);
 		t.setDaemon(true);
@@ -45,18 +47,26 @@ public class DataWriter implements Runnable {
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
-	public void run() {
-		while (true) {
-			try {
+	public void run()
+	{
+		while (true)
+		{
+			try
+			{
 				writeAllExpressionData();
 				writeAllGraphingData();
 				writeAllPositionData();
-			} catch (IOException e1) {
+			}
+			catch (IOException e1)
+			{
 				e1.printStackTrace();
 			}
-			try {
+			try
+			{
 				Thread.sleep(timeBetweenWritesSeconds * 1000);
-			} catch (InterruptedException e) {
+			}
+			catch (InterruptedException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -67,7 +77,8 @@ public class DataWriter implements Runnable {
 	 *
 	 * @return the date string
 	 */
-	private String getDateString() {
+	private String getDateString()
+	{
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy.MMddHH.mmss");
 		return sdf.format(cal.getTime());
@@ -78,9 +89,11 @@ public class DataWriter implements Runnable {
 	 * Gets the edge map handle for writing.
 	 *
 	 * @return the edge map handle for writing
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private File getEdgeMapHandleForWriting() throws IOException {
+	private File getEdgeMapHandleForWriting() throws IOException
+	{
 		String dateStr = getDateString();
 		return File.createTempFile(dateStr + "_edge", ".xml");
 	}
@@ -89,9 +102,11 @@ public class DataWriter implements Runnable {
 	 * Gets the expression file handle for writing.
 	 *
 	 * @return the expression file handle for writing
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private File getExpressionFileHandleForWriting() throws IOException {
+	private File getExpressionFileHandleForWriting() throws IOException
+	{
 		String dateStr = getDateString();
 		return File.createTempFile(dateStr + "_expr", ".xml");
 	}
@@ -100,9 +115,11 @@ public class DataWriter implements Runnable {
 	 * Gets the position data handle for writing.
 	 *
 	 * @return the position data handle for writing
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private File getPositionDataHandleForWriting() throws IOException {
+	private File getPositionDataHandleForWriting() throws IOException
+	{
 		String dateStr = getDateString();
 		return File.createTempFile(dateStr + "_pos", ".xml");
 	}
@@ -110,13 +127,16 @@ public class DataWriter implements Runnable {
 	/**
 	 * Write all expression data.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private void writeAllExpressionData() throws IOException {
-		FileOutputStream outputStream = new FileOutputStream(
-				getExpressionFileHandleForWriting());
-		for (TableTarget tt : TeacherControlComms.get().getTableTargets()) {
-			if (tt.getTarget() != null) {
+	private void writeAllExpressionData() throws IOException
+	{
+		FileOutputStream outputStream = new FileOutputStream(getExpressionFileHandleForWriting());
+		for (TableTarget tt : TeacherControlComms.get().getTableTargets())
+		{
+			if (tt.getTarget() != null)
+			{
 				writeExpressionDataForTarget(tt.getTarget(), outputStream);
 			}
 		}
@@ -126,16 +146,18 @@ public class DataWriter implements Runnable {
 	/**
 	 * Write all graphing data.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private void writeAllGraphingData() throws IOException {
-		FileOutputStream outputStream = new FileOutputStream(
-				getEdgeMapHandleForWriting());
-		for (TableTarget tt : TeacherControlComms.get().getTableTargets()) {
-			if (tt.getTarget() != null) {
+	private void writeAllGraphingData() throws IOException
+	{
+		FileOutputStream outputStream = new FileOutputStream(getEdgeMapHandleForWriting());
+		for (TableTarget tt : TeacherControlComms.get().getTableTargets())
+		{
+			if (tt.getTarget() != null)
+			{
 				double target = tt.getTarget();
-				Collection<Edge> edges = TargetMaps.get()
-						.getEdgesMapForTarget(target).values();
+				Collection<Edge> edges = TargetMaps.get().getEdgesMapForTarget(target).values();
 				List<Edge> edgesToWrite = new ArrayList<Edge>();
 				edgesToWrite.addAll(edges);
 				writeEdges(edgesToWrite, outputStream);
@@ -147,17 +169,18 @@ public class DataWriter implements Runnable {
 	/**
 	 * Write all position data.
 	 *
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private void writeAllPositionData() throws IOException {
-		FileOutputStream outputStream = new FileOutputStream(
-				getPositionDataHandleForWriting());
-		for (TableTarget tt : TeacherControlComms.get().getTableTargets()) {
-			if (tt.getTarget() != null) {
+	private void writeAllPositionData() throws IOException
+	{
+		FileOutputStream outputStream = new FileOutputStream(getPositionDataHandleForWriting());
+		for (TableTarget tt : TeacherControlComms.get().getTableTargets())
+		{
+			if (tt.getTarget() != null)
+			{
 				double target = tt.getTarget();
-				DistributedMap<String, ExpressionVisibleProperties> vismap = TargetMaps
-						.get().getExpressionVisiblePropertiesMapForTarget(
-								target);
+				DistributedMap<String, ExpressionVisibleProperties> vismap = TargetMaps.get().getExpressionVisiblePropertiesMapForTarget(target);
 				List<ExpressionVisibleProperties> visProps = new ArrayList<ExpressionVisibleProperties>();
 				visProps.addAll(vismap.values());
 				writeVisProperties(visProps, outputStream);
@@ -169,47 +192,55 @@ public class DataWriter implements Runnable {
 	/**
 	 * Write edges.
 	 *
-	 * @param edges the edges
-	 * @param outputStream the output stream
+	 * @param edges
+	 *            the edges
+	 * @param outputStream
+	 *            the output stream
 	 */
-	private void writeEdges(Collection<Edge> edges,
-			FileOutputStream outputStream) {
+	private void writeEdges(Collection<Edge> edges, FileOutputStream outputStream)
+	{
 		xstream.toXML(edges, outputStream);
 	}
 
 	/**
 	 * Write expression data for target.
 	 *
-	 * @param target the target
-	 * @param outputStream the output stream
+	 * @param target
+	 *            the target
+	 * @param outputStream
+	 *            the output stream
 	 */
-	private void writeExpressionDataForTarget(Double target,
-			FileOutputStream outputStream) {
-		List<Expression> expressions = TeacherControlComms.get()
-				.getExpressionsForTarget(target);
+	private void writeExpressionDataForTarget(Double target, FileOutputStream outputStream)
+	{
+		List<Expression> expressions = TeacherControlComms.get().getExpressionsForTarget(target);
 		writeExpressionsForTarget(target, expressions, outputStream);
 	}
 
 	/**
 	 * Write expressions for target.
 	 *
-	 * @param target the target
-	 * @param expressions the expressions
-	 * @param outputStream the output stream
+	 * @param target
+	 *            the target
+	 * @param expressions
+	 *            the expressions
+	 * @param outputStream
+	 *            the output stream
 	 */
-	private void writeExpressionsForTarget(Double target,
-			List<Expression> expressions, FileOutputStream outputStream) {
+	private void writeExpressionsForTarget(Double target, List<Expression> expressions, FileOutputStream outputStream)
+	{
 		xstream.toXML(expressions, outputStream);
 	}
 
 	/**
 	 * Write vis properties.
 	 *
-	 * @param visProps the vis props
-	 * @param outputStream the output stream
+	 * @param visProps
+	 *            the vis props
+	 * @param outputStream
+	 *            the output stream
 	 */
-	private void writeVisProperties(List<ExpressionVisibleProperties> visProps,
-			FileOutputStream outputStream) {
+	private void writeVisProperties(List<ExpressionVisibleProperties> visProps, FileOutputStream outputStream)
+	{
 		xstream.toXML(visProps);
 	}
 

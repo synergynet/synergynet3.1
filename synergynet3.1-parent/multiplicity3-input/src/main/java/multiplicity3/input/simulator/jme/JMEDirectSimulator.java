@@ -30,7 +30,8 @@ import com.jme3.input.InputManager;
 /**
  * The Class JMEDirectSimulator.
  */
-public class JMEDirectSimulator extends AbstractDirectMultiTouchSimulator {
+public class JMEDirectSimulator extends AbstractDirectMultiTouchSimulator
+{
 
 	/** The input listener. */
 	protected JMEMouseKeyboardInputManager inputListener;
@@ -38,15 +39,17 @@ public class JMEDirectSimulator extends AbstractDirectMultiTouchSimulator {
 	/**
 	 * Instantiates a new JME direct simulator.
 	 *
-	 * @param inputManager the input manager
-	 * @param displayWidth the display width
-	 * @param displayHeight the display height
+	 * @param inputManager
+	 *            the input manager
+	 * @param displayWidth
+	 *            the display width
+	 * @param displayHeight
+	 *            the display height
 	 */
-	public JMEDirectSimulator(InputManager inputManager, int displayWidth,
-			int displayHeight) {
+	public JMEDirectSimulator(InputManager inputManager, int displayWidth, int displayHeight)
+	{
 		super();
-		inputListener = new JMEMouseKeyboardInputManager(this, inputManager,
-				displayWidth, displayHeight);
+		inputListener = new JMEMouseKeyboardInputManager(this, inputManager, displayWidth, displayHeight);
 	}
 
 	/*
@@ -54,7 +57,8 @@ public class JMEDirectSimulator extends AbstractDirectMultiTouchSimulator {
 	 * @see multiplicity3.input.IMultiTouchInputSource#endListening()
 	 */
 	@Override
-	public void endListening() {
+	public void endListening()
+	{
 	}
 
 	/*
@@ -62,7 +66,8 @@ public class JMEDirectSimulator extends AbstractDirectMultiTouchSimulator {
 	 * @see multiplicity3.input.IMultiTouchInputSource#requiresMouseDisplay()
 	 */
 	@Override
-	public boolean requiresMouseDisplay() {
+	public boolean requiresMouseDisplay()
+	{
 		return true;
 	}
 
@@ -71,6 +76,7 @@ public class JMEDirectSimulator extends AbstractDirectMultiTouchSimulator {
 	 * @see multiplicity3.input.IMultiTouchInputSource#update(float)
 	 */
 	@Override
-	public void update(float tpf) {
+	public void update(float tpf)
+	{
 	}
 }

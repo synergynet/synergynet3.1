@@ -37,15 +37,14 @@ import com.jme3.math.Vector2f;
 /**
  * The Class FlickStudyApp.
  */
-public class FlickStudyApp extends SynergyNetApp implements
-		IMultiTouchEventListener {
+public class FlickStudyApp extends SynergyNetApp implements IMultiTouchEventListener
+{
 
 	/** The bounce limit. */
 	private static int bounceLimit = 0;
 
 	/** The Constant DATE_FORMAT. */
-	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat(
-			"dd/MM/yyyy");
+	private static final SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy");
 
 	/** The deceleration. */
 	private static float DECELERATION = 7.5f;
@@ -54,8 +53,7 @@ public class FlickStudyApp extends SynergyNetApp implements
 	private static FLICKTYPE flickMode = FLICKTYPE.PROPORTIONAL;
 
 	/** The Constant LOG_NAME_FORMAT. */
-	private static final SimpleDateFormat LOG_NAME_FORMAT = new SimpleDateFormat(
-			"yyyy-MM-dd_HH-mm-ss");
+	private static final SimpleDateFormat LOG_NAME_FORMAT = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
 
 	/** The log address. */
 	private static String logAddress = "";
@@ -67,12 +65,11 @@ public class FlickStudyApp extends SynergyNetApp implements
 	private static final String RESOURCES_DIR = "synergynet3/activitypack2/table/flickstudy/";
 
 	/** The Constant tables. */
-	private static final String[] tables = { "", "green", "blue", "yellow",
-			"red" };
+	private static final String[] tables =
+	{ "", "green", "blue", "yellow", "red" };
 
 	/** The Constant TIME_FORMAT. */
-	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat(
-			"HH:mm ss.SS");
+	private static final SimpleDateFormat TIME_FORMAT = new SimpleDateFormat("HH:mm ss.SS");
 
 	/** The first touch. */
 	private Date firstTouch = null;
@@ -95,53 +92,57 @@ public class FlickStudyApp extends SynergyNetApp implements
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		if (args.length > 0) {
+	public static void main(String[] args)
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
 
-		try {
-			logAddress = ManagementFactory.getRuntimeMXBean()
-					.getSystemProperties().get("log");
-			AdditionalSynergyNetUtilities
-					.logInfo("Using log at: " + logAddress);
-		} catch (Exception e) {
-			AdditionalSynergyNetUtilities
-					.logInfo("No valid log address in arguments, no logging will take place.");
+		try
+		{
+			logAddress = ManagementFactory.getRuntimeMXBean().getSystemProperties().get("log");
+			AdditionalSynergyNetUtilities.logInfo("Using log at: " + logAddress);
+		}
+		catch (Exception e)
+		{
+			AdditionalSynergyNetUtilities.logInfo("No valid log address in arguments, no logging will take place.");
 		}
 
-		try {
-			if (Boolean.parseBoolean(ManagementFactory.getRuntimeMXBean()
-					.getSystemProperties().get("instant"))) {
+		try
+		{
+			if (Boolean.parseBoolean(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("instant")))
+			{
 				flickMode = FLICKTYPE.INSTANT;
 			}
-			AdditionalSynergyNetUtilities.logInfo("Flick mode set to "
-					+ flickMode);
-		} catch (Exception e) {
-			AdditionalSynergyNetUtilities
-					.logInfo("No flick mode setting given, defaulting to PROPORTIONAL.");
+			AdditionalSynergyNetUtilities.logInfo("Flick mode set to " + flickMode);
+		}
+		catch (Exception e)
+		{
+			AdditionalSynergyNetUtilities.logInfo("No flick mode setting given, defaulting to PROPORTIONAL.");
 		}
 
-		try {
-			DECELERATION = Float.parseFloat(ManagementFactory
-					.getRuntimeMXBean().getSystemProperties()
-					.get("deceleration"));
-		} catch (Exception e) {
-			AdditionalSynergyNetUtilities
-					.logInfo("No valid deceleration value given, using default.");
+		try
+		{
+			DECELERATION = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("deceleration"));
 		}
-		AdditionalSynergyNetUtilities.logInfo("Using deceleration of: "
-				+ DECELERATION);
+		catch (Exception e)
+		{
+			AdditionalSynergyNetUtilities.logInfo("No valid deceleration value given, using default.");
+		}
+		AdditionalSynergyNetUtilities.logInfo("Using deceleration of: " + DECELERATION);
 
-		try {
-			bounceLimit = Integer.parseInt(ManagementFactory.getRuntimeMXBean()
-					.getSystemProperties().get("limit"));
-			AdditionalSynergyNetUtilities.logInfo("Limit of bounces set to: "
-					+ bounceLimit);
-		} catch (Exception e) {
+		try
+		{
+			bounceLimit = Integer.parseInt(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("limit"));
+			AdditionalSynergyNetUtilities.logInfo("Limit of bounces set to: " + bounceLimit);
+		}
+		catch (Exception e)
+		{
 			AdditionalSynergyNetUtilities.logInfo("No limit for bounces set.");
 		}
 
@@ -158,7 +159,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -168,7 +170,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -178,8 +181,10 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
-		if (firstTouch == null) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
+		if (firstTouch == null)
+		{
 			firstTouch = new Date();
 		}
 		touchCount++;
@@ -192,7 +197,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		lastTouch = new Date();
 	}
 
@@ -201,7 +207,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * @see synergynet3.SynergyNetApp#getSpecificFriendlyAppName()
 	 */
 	@Override
-	public String getSpecificFriendlyAppName() {
+	public String getSpecificFriendlyAppName()
+	{
 		return "FlickTest";
 	}
 
@@ -212,7 +219,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -222,7 +230,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -232,7 +241,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -242,12 +252,11 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * .messages.FlickMessage)
 	 */
 	@Override
-	public void onFlickArrival(
-			synergynet3.behaviours.networkflick.messages.FlickMessage message) {
-		IItem item = BehaviourUtilities.onFlickArrival(message, stage,
-				tableIdentity, deceleration);
-		for (RotateTranslateScaleBehaviour rts : item
-				.getBehaviours(RotateTranslateScaleBehaviour.class)) {
+	public void onFlickArrival(synergynet3.behaviours.networkflick.messages.FlickMessage message)
+	{
+		IItem item = BehaviourUtilities.onFlickArrival(message, stage, tableIdentity, deceleration);
+		for (RotateTranslateScaleBehaviour rts : item.getBehaviours(RotateTranslateScaleBehaviour.class))
+		{
 			rts.setScaleLimits(0.5f, 1f);
 		}
 
@@ -259,7 +268,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		input.registerMultiTouchEventListener(this);
 		super.shouldStart(input, iqo);
 	}
@@ -269,7 +279,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * @see synergynet3.SynergyNetApp#shouldStop()
 	 */
 	@Override
-	public void shouldStop() {
+	public void shouldStop()
+	{
 		writeToLog();
 		super.shouldStop();
 	}
@@ -277,31 +288,32 @@ public class FlickStudyApp extends SynergyNetApp implements
 	/**
 	 * Generate flick item.
 	 *
-	 * @param targetTable the target table
+	 * @param targetTable
+	 *            the target table
 	 */
-	private void generateFlickItem(int targetTable) {
-		if (!id.equals(tables[targetTable])) {
-			try {
+	private void generateFlickItem(int targetTable)
+	{
+		if (!id.equals(tables[targetTable]))
+		{
+			try
+			{
 				String fileName = targetTable + ".png";
-				ICachableImage flickItem = contentFactory.create(
-						ICachableImage.class, fileName, UUID.randomUUID());
+				ICachableImage flickItem = contentFactory.create(ICachableImage.class, fileName, UUID.randomUUID());
 				flickItem.setImage(RESOURCES_DIR + fileName);
 				flickItem.setSize(200f, 200f);
 				flickItem.setRelativeScale(0.5f);
-				RotateTranslateScaleBehaviour rt = behaviourMaker.addBehaviour(
-						flickItem, RotateTranslateScaleBehaviour.class);
+				RotateTranslateScaleBehaviour rt = behaviourMaker.addBehaviour(flickItem, RotateTranslateScaleBehaviour.class);
 				rt.setScaleLimits(0.5f, 1f);
-				NetworkFlickBehaviour nf = behaviourMaker.addBehaviour(
-						flickItem, NetworkFlickBehaviour.class);
+				NetworkFlickBehaviour nf = behaviourMaker.addBehaviour(flickItem, NetworkFlickBehaviour.class);
 				nf.setDeceleration(DECELERATION);
 				nf.setMaxDimension(200f);
 				flickItem.setRelativeLocation(new Vector2f(getXPos(), 0));
 				stage.addItem(flickItem);
-				FeedbackSystem.registerAsFeedbackEligible(flickItem, 200, 200,
-						stage);
-			} catch (ContentTypeNotBoundException e) {
-				AdditionalSynergyNetUtilities.log(Level.SEVERE,
-						"Content Type Not Bound", e);
+				FeedbackSystem.registerAsFeedbackEligible(flickItem, 200, 200, stage);
+			}
+			catch (ContentTypeNotBoundException e)
+			{
+				AdditionalSynergyNetUtilities.log(Level.SEVERE, "Content Type Not Bound", e);
 			}
 		}
 	}
@@ -309,26 +321,28 @@ public class FlickStudyApp extends SynergyNetApp implements
 	/**
 	 * Generate prompt.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 */
-	private void generatePrompt(String message) {
-		try {
-			IMutableLabel promptLabel = this.stage.getContentFactory().create(
-					IMutableLabel.class, "positionLabel", UUID.randomUUID());
+	private void generatePrompt(String message)
+	{
+		try
+		{
+			IMutableLabel promptLabel = this.stage.getContentFactory().create(IMutableLabel.class, "positionLabel", UUID.randomUUID());
 			promptLabel.setFont(FontUtil.getFont(FontColour.White));
 			promptLabel.setText(message);
 			promptLabel.setBoxSize((stage.getDisplayWidth()), 50);
 			promptLabel.setFontScale(0.75f);
-			promptLabel.setRelativeLocation(new Vector2f(0, (-stage
-					.getDisplayHeight() / 2) + 25));
+			promptLabel.setRelativeLocation(new Vector2f(0, (-stage.getDisplayHeight() / 2) + 25));
 			promptLabel.setInteractionEnabled(false);
 
 			stage.addItem(promptLabel);
 			promptLabel.getZOrderManager().setAutoBringToTop(true);
 			promptLabel.getZOrderManager().setBringToTopPropagatesUp(false);
-		} catch (ContentTypeNotBoundException e) {
-			AdditionalSynergyNetUtilities.log(Level.SEVERE,
-					"Content Type Not Bound", e);
+		}
+		catch (ContentTypeNotBoundException e)
+		{
+			AdditionalSynergyNetUtilities.log(Level.SEVERE, "Content Type Not Bound", e);
 		}
 	}
 
@@ -337,7 +351,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 *
 	 * @return the x pos
 	 */
-	private float getXPos() {
+	private float getXPos()
+	{
 		float toReturn = xPos;
 		xPos += OFFSET;
 		return toReturn;
@@ -346,34 +361,38 @@ public class FlickStudyApp extends SynergyNetApp implements
 	/**
 	 * Write to log.
 	 */
-	private void writeToLog() {
-		if ((firstTouch == null) || (lastTouch == null)) {
+	private void writeToLog()
+	{
+		if ((firstTouch == null) || (lastTouch == null))
+		{
 			return;
 		}
-		if (logAddress != null) {
-			if (!logAddress.equals("")) {
-				String address = logAddress + File.separator
-						+ LOG_NAME_FORMAT.format(startTime) + "_" + id
-						+ "_FlickingLog.csv";
+		if (logAddress != null)
+		{
+			if (!logAddress.equals(""))
+			{
+				String address = logAddress + File.separator + LOG_NAME_FORMAT.format(startTime) + "_" + id + "_FlickingLog.csv";
 				File logFile = new File(address);
-				if (!logFile.isFile()) {
-					AdditionalSynergyNetUtilities
-							.logInfo("No log file found, creating new one.");
-					try {
-						if (!logFile.createNewFile()) {
-							AdditionalSynergyNetUtilities
-									.logInfo("Unable to create new log file.");
+				if (!logFile.isFile())
+				{
+					AdditionalSynergyNetUtilities.logInfo("No log file found, creating new one.");
+					try
+					{
+						if (!logFile.createNewFile())
+						{
+							AdditionalSynergyNetUtilities.logInfo("Unable to create new log file.");
 							return;
 						}
-					} catch (IOException e1) {
-						AdditionalSynergyNetUtilities
-								.logInfo("Unable to create new log file.");
+					}
+					catch (IOException e1)
+					{
+						AdditionalSynergyNetUtilities.logInfo("Unable to create new log file.");
 						return;
 					}
 				}
-				AdditionalSynergyNetUtilities.logInfo("Saving data to "
-						+ address);
-				try {
+				AdditionalSynergyNetUtilities.logInfo("Saving data to " + address);
+				try
+				{
 					FileWriter out = new FileWriter(address, true);
 					BufferedWriter writer = new BufferedWriter(out);
 
@@ -387,9 +406,12 @@ public class FlickStudyApp extends SynergyNetApp implements
 					writer.newLine();
 					writer.newLine();
 
-					if (flickMode == FLICKTYPE.INSTANT) {
+					if (flickMode == FLICKTYPE.INSTANT)
+					{
 						writer.write("Mode,Instant");
-					} else {
+					}
+					else
+					{
 						writer.write("Mode,Proportional");
 					}
 					writer.newLine();
@@ -399,8 +421,7 @@ public class FlickStudyApp extends SynergyNetApp implements
 					writer.newLine();
 					writer.newLine();
 
-					writer.write("First Touch,"
-							+ TIME_FORMAT.format(firstTouch));
+					writer.write("First Touch," + TIME_FORMAT.format(firstTouch));
 					writer.newLine();
 					writer.write("Last Touch," + TIME_FORMAT.format(lastTouch));
 					writer.newLine();
@@ -410,49 +431,49 @@ public class FlickStudyApp extends SynergyNetApp implements
 					writer.newLine();
 					writer.newLine();
 
-					if (bounceLimit > 0) {
+					if (bounceLimit > 0)
+					{
 						writer.write("Bounce Limit," + bounceLimit);
-					} else {
+					}
+					else
+					{
 						writer.write("No Bounce Limit Set.");
 					}
 					writer.newLine();
 					writer.newLine();
 
-					writer.write("Bounces due to innacuracy,"
-							+ NetworkFlickLogging.INACCURATE_BOUNCE_COUNT);
+					writer.write("Bounces due to innacuracy," + NetworkFlickLogging.INACCURATE_BOUNCE_COUNT);
 					writer.newLine();
-					writer.write("Bounces due to lack of momentum,"
-							+ NetworkFlickLogging.LACK_OF_MOMENTUM_BOUNCE_COUNT);
+					writer.write("Bounces due to lack of momentum," + NetworkFlickLogging.LACK_OF_MOMENTUM_BOUNCE_COUNT);
 					writer.newLine();
 					writer.newLine();
 
-					writer.write("Flick Departures,"
-							+ NetworkFlickLogging.DEPARTURE_COUNT);
+					writer.write("Flick Departures," + NetworkFlickLogging.DEPARTURE_COUNT);
 					writer.newLine();
-					writer.write("Flick Arrivals,"
-							+ NetworkFlickLogging.ARRIVAL_COUNT);
+					writer.write("Flick Arrivals," + NetworkFlickLogging.ARRIVAL_COUNT);
 					writer.newLine();
 					writer.newLine();
 
-					String[] bounceLogMessages = NetworkFlickLogging.BOUNCE_LOG
-							.split(NetworkFlickLogging.LOG_PARSE_TOKEN);
-					for (String message : bounceLogMessages) {
+					String[] bounceLogMessages = NetworkFlickLogging.BOUNCE_LOG.split(NetworkFlickLogging.LOG_PARSE_TOKEN);
+					for (String message : bounceLogMessages)
+					{
 						writer.write(message);
 						writer.newLine();
 					}
 					writer.newLine();
 
-					String[] flickLogMessages = NetworkFlickLogging.FLICK_LOG
-							.split(NetworkFlickLogging.LOG_PARSE_TOKEN);
-					for (String message : flickLogMessages) {
+					String[] flickLogMessages = NetworkFlickLogging.FLICK_LOG.split(NetworkFlickLogging.LOG_PARSE_TOKEN);
+					for (String message : flickLogMessages)
+					{
 						writer.write(message);
 						writer.newLine();
 					}
 
 					writer.close();
-				} catch (IOException e1) {
-					AdditionalSynergyNetUtilities
-							.logInfo("Unable to write to log file.");
+				}
+				catch (IOException e1)
+				{
+					AdditionalSynergyNetUtilities.logInfo("Unable to write to log file.");
 				}
 			}
 		}
@@ -462,10 +483,12 @@ public class FlickStudyApp extends SynergyNetApp implements
 	 * (non-Javadoc)
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
-	protected void loadDefaultContent() {
+	@Override
+	protected void loadDefaultContent()
+	{
 		id = getTableIdentity();
-		if (id.equals("green") || id.equals("blue") || id.equals("yellow")
-				|| id.equals("red")) {
+		if (id.equals("green") || id.equals("blue") || id.equals("yellow") || id.equals("red"))
+		{
 
 			deceleration = DECELERATION;
 
@@ -474,7 +497,8 @@ public class FlickStudyApp extends SynergyNetApp implements
 			NetworkFlickLogging.LOGGING_ENABLED = true;
 			NetworkFlickLogging.BOUNCE_LIMIT = bounceLimit;
 
-			for (int i = 1; i <= 4; i++) {
+			for (int i = 1; i <= 4; i++)
+			{
 				generateFlickItem(i);
 			}
 

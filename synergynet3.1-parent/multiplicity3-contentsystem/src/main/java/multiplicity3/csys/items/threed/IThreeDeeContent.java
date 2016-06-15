@@ -11,18 +11,21 @@ import com.jme3.math.Vector3f;
 /**
  * The Interface IThreeDeeContent.
  */
-public interface IThreeDeeContent extends IItem {
+public interface IThreeDeeContent extends IItem
+{
 
 	/*
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.items.item.IItem#getMultiTouchDispatcher()
 	 */
+	@Override
 	public MultiTouchEventDispatcher getMultiTouchDispatcher();
 
 	/*
 	 * (non-Javadoc)
 	 * @see multiplicity3.csys.items.item.IItem#getUUID()
 	 */
+	@Override
 	public UUID getUUID();
 
 	/**
@@ -49,37 +52,44 @@ public interface IThreeDeeContent extends IItem {
 	/**
 	 * Sets the model.
 	 *
-	 * @param modelFile the new model
+	 * @param modelFile
+	 *            the new model
 	 */
 	void setModel(File modelFile);
 
 	/**
 	 * Sets the model.
 	 *
-	 * @param modelResource the new model
+	 * @param modelResource
+	 *            the new model
 	 */
 	void setModel(String modelResource);
 
 	/**
 	 * Sets the size.
 	 *
-	 * @param width the width
-	 * @param height the height
-	 * @param depth the depth
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param depth
+	 *            the depth
 	 */
 	void setSize(float width, float height, float depth);
 
 	/**
 	 * Sets the texture.
 	 *
-	 * @param textureFile the new texture
+	 * @param textureFile
+	 *            the new texture
 	 */
 	void setTexture(File textureFile);
 
 	/**
 	 * Sets the texture.
 	 *
-	 * @param textureResource the new texture
+	 * @param textureResource
+	 *            the new texture
 	 */
 	void setTexture(String textureResource);
 }

@@ -6,7 +6,8 @@ import java.util.ArrayList;
 /**
  * The Class GalleryItemDatabaseFormat.
  */
-public class GalleryItemDatabaseFormat implements Serializable {
+public class GalleryItemDatabaseFormat implements Serializable
+{
 
 	/**
 	 *
@@ -28,74 +29,89 @@ public class GalleryItemDatabaseFormat implements Serializable {
 	/**
 	 * Adds the feedback item.
 	 *
-	 * @param feedbackItem the feedback item
+	 * @param feedbackItem
+	 *            the feedback item
 	 */
-	public void addFeedbackItem(Object[] feedbackItem) {
+	public void addFeedbackItem(Object[] feedbackItem)
+	{
 		feedbackItems.add(feedbackItem);
 	}
 
 	/**
 	 * Adds the value.
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 */
-	public void addValue(Object value) {
+	public void addValue(Object value)
+	{
 		values.add(value);
 	}
 
 	/**
 	 * @return the feedbackItems
 	 */
-	public ArrayList<Object[]> getFeedbackItems() {
+	public ArrayList<Object[]> getFeedbackItems()
+	{
 		return feedbackItems;
 	}
 
 	/**
 	 * @return the height
 	 */
-	public float getHeight() {
+	public float getHeight()
+	{
 		return height;
 	}
 
 	/**
 	 * @return the type
 	 */
-	public String getType() {
+	public String getType()
+	{
 		return type;
 	}
 
 	/**
 	 * @return the values
 	 */
-	public ArrayList<Object> getValues() {
+	public ArrayList<Object> getValues()
+	{
 		return values;
 	}
 
 	/**
 	 * @return the width
 	 */
-	public float getWidth() {
+	public float getWidth()
+	{
 		return width;
 	}
 
 	/**
-	 * @param height the height to set
+	 * @param height
+	 *            the height to set
 	 */
-	public void setHeight(float height) {
+	public void setHeight(float height)
+	{
 		this.height = height;
 	}
 
 	/**
-	 * @param type the type to set
+	 * @param type
+	 *            the type to set
 	 */
-	public void setType(String type) {
+	public void setType(String type)
+	{
 		this.type = type;
 	}
 
 	/**
-	 * @param width the width to set
+	 * @param width
+	 *            the width to set
 	 */
-	public void setWidth(float width) {
+	public void setWidth(float width)
+	{
 		this.width = width;
 	}
 

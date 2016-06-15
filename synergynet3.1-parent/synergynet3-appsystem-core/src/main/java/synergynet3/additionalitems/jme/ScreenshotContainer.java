@@ -25,8 +25,8 @@ import com.jme3.math.ColorRGBA;
  * The Class ScreenshotContainer.
  */
 @ImplementsContentItem(target = IScreenshotContainer.class)
-public class ScreenshotContainer extends JMEContainer implements
-		IScreenshotContainer, IInitable, IItemCachable {
+public class ScreenshotContainer extends JMEContainer implements IScreenshotContainer, IInitable, IItemCachable
+{
 
 	/** The Constant CACHABLE_TYPE. */
 	public static final String CACHABLE_TYPE = "CACHABLE_SCREENSHOTCONTAINER";
@@ -40,40 +40,46 @@ public class ScreenshotContainer extends JMEContainer implements
 	/**
 	 * Instantiates a new screenshot container.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public ScreenshotContainer(String name, UUID uuid) {
+	public ScreenshotContainer(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
 	/**
 	 * Reconstruct.
 	 *
-	 * @param galleryItem the gallery item
-	 * @param stage the stage
-	 * @param loc the loc
+	 * @param galleryItem
+	 *            the gallery item
+	 * @param stage
+	 *            the stage
+	 * @param loc
+	 *            the loc
 	 * @return the screenshot container
 	 */
-	public static ScreenshotContainer reconstruct(
-			GalleryItemDatabaseFormat galleryItem, IStage stage, String loc) {
-		try {
-			ScreenshotContainer screenshotWrapperFrame = stage
-					.getContentFactory().create(IScreenshotContainer.class,
-							"screenshotwf", UUID.randomUUID());
-			File screenShotFile = new File(
-					CacheOrganisation.getSpecificDir(loc) + File.separator
-							+ (String) galleryItem.getValues().get(0));
-			if (!screenShotFile.isFile()) {
+	public static ScreenshotContainer reconstruct(GalleryItemDatabaseFormat galleryItem, IStage stage, String loc)
+	{
+		try
+		{
+			ScreenshotContainer screenshotWrapperFrame = stage.getContentFactory().create(IScreenshotContainer.class, "screenshotwf", UUID.randomUUID());
+			File screenShotFile = new File(CacheOrganisation.getSpecificDir(loc) + File.separator + (String) galleryItem.getValues().get(0));
+			if (!screenShotFile.isFile())
+			{
 				return null;
 			}
-			if (!screenshotWrapperFrame.setScreenShotImage(screenShotFile,
-					stage, galleryItem.getWidth(), galleryItem.getHeight())) {
+			if (!screenshotWrapperFrame.setScreenShotImage(screenShotFile, stage, galleryItem.getWidth(), galleryItem.getHeight()))
+			{
 				return null;
 			}
 			screenshotWrapperFrame.setCached(loc);
 			return screenshotWrapperFrame;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			return null;
 		}
 	}
@@ -83,16 +89,20 @@ public class ScreenshotContainer extends JMEContainer implements
 	 * @see synergynet3.cachecontrol.IItemCachable#deconstruct(java.lang.String)
 	 */
 	@Override
-	public GalleryItemDatabaseFormat deconstruct(String loc) {
+	public GalleryItemDatabaseFormat deconstruct(String loc)
+	{
 		GalleryItemDatabaseFormat galleryItem = new GalleryItemDatabaseFormat();
 		galleryItem.setType(CACHABLE_TYPE);
-		if (screenShotFile == null) {
+		if (screenShotFile == null)
+		{
 			return null;
 		}
-		if (!screenShotFile.isFile()) {
+		if (!screenShotFile.isFile())
+		{
 			return null;
 		}
-		if (!cached.equalsIgnoreCase(loc)) {
+		if (!cached.equalsIgnoreCase(loc))
+		{
 			ItemCaching.cacheFile(screenShotFile, loc);
 		}
 		galleryItem.addValue(screenShotFile.getName());
@@ -102,14 +112,17 @@ public class ScreenshotContainer extends JMEContainer implements
 	/**
 	 * @return the cached
 	 */
-	public String isCached() {
+	public String isCached()
+	{
 		return cached;
 	}
 
 	/**
-	 * @param cached the cached to set
+	 * @param cached
+	 *            the cached to set
 	 */
-	public void setCached(String cached) {
+	public void setCached(String cached)
+	{
 		this.cached = cached;
 	}
 
@@ -120,25 +133,22 @@ public class ScreenshotContainer extends JMEContainer implements
 	 * float)
 	 */
 	@Override
-	public boolean setScreenShotImage(File screenShotFile, IStage stage,
-			float width, float height) {
+	public boolean setScreenShotImage(File screenShotFile, IStage stage, float width, float height)
+	{
 
 		this.screenShotFile = screenShotFile;
 
-		try {
+		try
+		{
 
-			IColourRectangle background = stage.getContentFactory().create(
-					IColourRectangle.class, "screenshotbg", UUID.randomUUID());
+			IColourRectangle background = stage.getContentFactory().create(IColourRectangle.class, "screenshotbg", UUID.randomUUID());
 			background.setSolidBackgroundColour(ColorRGBA.Black);
 			background.setSize(width, height);
 
-			ICachableImage screenShotImage = stage.getContentFactory().create(
-					ICachableImage.class, "screenshot", UUID.randomUUID());
+			ICachableImage screenShotImage = stage.getContentFactory().create(ICachableImage.class, "screenshot", UUID.randomUUID());
 			screenShotImage.setImage(screenShotFile);
 			screenShotImage.setSize(width, height);
-			IRoundedBorder screenshotBorder = stage.getContentFactory()
-					.create(IRoundedBorder.class, "screenshotborder",
-							UUID.randomUUID());
+			IRoundedBorder screenshotBorder = stage.getContentFactory().create(IRoundedBorder.class, "screenshotborder", UUID.randomUUID());
 			screenshotBorder.setBorderWidth(15f);
 			screenshotBorder.setSize(width, height);
 			screenshotBorder.setColor(new ColorRGBA(1, 1, 1, 0.75f));
@@ -147,29 +157,26 @@ public class ScreenshotContainer extends JMEContainer implements
 			this.addItem(screenShotImage);
 			this.addItem(screenshotBorder);
 
-			RotateTranslateScaleBehaviour rtsBackground = stage
-					.getBehaviourMaker().addBehaviour(background,
-							RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rtsBackground = stage.getBehaviourMaker().addBehaviour(background, RotateTranslateScaleBehaviour.class);
 			rtsBackground.setItemActingOn(this);
-			RotateTranslateScaleBehaviour rtsImage = stage.getBehaviourMaker()
-					.addBehaviour(screenShotImage,
-							RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rtsImage = stage.getBehaviourMaker().addBehaviour(screenShotImage, RotateTranslateScaleBehaviour.class);
 			rtsImage.setItemActingOn(this);
-			RotateTranslateScaleBehaviour rtsBorder = stage.getBehaviourMaker()
-					.addBehaviour(screenshotBorder,
-							RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rtsBorder = stage.getBehaviourMaker().addBehaviour(screenshotBorder, RotateTranslateScaleBehaviour.class);
 			rtsBorder.setItemActingOn(this);
 
-			NetworkFlickBehaviour nfImage = stage.getBehaviourMaker()
-					.addBehaviour(screenShotImage, NetworkFlickBehaviour.class);
+			NetworkFlickBehaviour nfImage = stage.getBehaviourMaker().addBehaviour(screenShotImage, NetworkFlickBehaviour.class);
 			nfImage.setMaxDimension(width);
 			nfImage.setItemActingOn(this);
 			nfImage.setDeceleration(100f);
 
 			return true;
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			return false;
-		} catch (NullPointerException e) {
+		}
+		catch (NullPointerException e)
+		{
 			return false;
 		}
 

@@ -5,7 +5,8 @@ import synergynet3.cluster.sharedmemory.DistributedProperty;
 /**
  * The Class StudentTableClusteredDevice.
  */
-public class StudentTableClusteredDevice extends ClusteredDevice {
+public class StudentTableClusteredDevice extends ClusteredDevice
+{
 
 	/** The touch enabled control. */
 	private DistributedProperty<Boolean> touchEnabledControl;
@@ -13,12 +14,13 @@ public class StudentTableClusteredDevice extends ClusteredDevice {
 	/**
 	 * Instantiates a new student table clustered device.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	public StudentTableClusteredDevice(String deviceName) {
+	public StudentTableClusteredDevice(String deviceName)
+	{
 		super(deviceName);
-		touchEnabledControl = getDistributedPropertyMap()
-				.createDistributedProperty("touchenabled");
+		touchEnabledControl = getDistributedPropertyMap().createDistributedProperty("touchenabled");
 	}
 
 	/**
@@ -26,7 +28,8 @@ public class StudentTableClusteredDevice extends ClusteredDevice {
 	 *
 	 * @return the touch enabled control variable
 	 */
-	public DistributedProperty<Boolean> getTouchEnabledControlVariable() {
+	public DistributedProperty<Boolean> getTouchEnabledControlVariable()
+	{
 		return touchEnabledControl;
 	}
 

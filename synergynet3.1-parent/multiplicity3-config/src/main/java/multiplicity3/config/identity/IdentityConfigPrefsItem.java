@@ -33,11 +33,11 @@ import multiplicity3.config.PreferencesItem;
 /**
  * The Class IdentityConfigPrefsItem.
  */
-public class IdentityConfigPrefsItem implements PreferencesItem {
+public class IdentityConfigPrefsItem implements PreferencesItem
+{
 
 	/** The Constant prefs. */
-	private static final Preferences prefs = ConfigurationApplication
-			.getPreferences(IdentityConfigPrefsItem.class);
+	private static final Preferences prefs = ConfigurationApplication.getPreferences(IdentityConfigPrefsItem.class);
 
 	/** The Constant PREFS_TABLE_ID. */
 	private static final String PREFS_TABLE_ID = "TABLE_ID";
@@ -47,7 +47,8 @@ public class IdentityConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		return new IdentityConfigPanel();
 	}
 
@@ -56,7 +57,8 @@ public class IdentityConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Identity";
 	}
 
@@ -65,16 +67,19 @@ public class IdentityConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the id
 	 */
-	public String getID() {
+	public String getID()
+	{
 		return prefs.get(PREFS_TABLE_ID, "<no identity>");
 	}
 
 	/**
 	 * Sets the id.
 	 *
-	 * @param uid the new id
+	 * @param uid
+	 *            the new id
 	 */
-	public void setID(String uid) {
+	public void setID(String uid)
+	{
 		prefs.put(PREFS_TABLE_ID, uid);
 	}
 

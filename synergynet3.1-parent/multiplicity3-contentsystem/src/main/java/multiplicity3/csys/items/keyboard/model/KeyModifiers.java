@@ -3,7 +3,8 @@ package multiplicity3.csys.items.keyboard.model;
 /**
  * The Enum KeyModifiers.
  */
-public enum KeyModifiers {
+public enum KeyModifiers
+{
 
 	/** The alt. */
 	ALT,

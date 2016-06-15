@@ -7,8 +7,8 @@ import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 /**
  * The Class SynergyNetWebServiceImpl.
  */
-public class SynergyNetWebServiceImpl extends RemoteServiceServlet implements
-		SynergyNetWebService {
+public class SynergyNetWebServiceImpl extends RemoteServiceServlet implements SynergyNetWebService
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5496870039773489395L;
@@ -20,7 +20,8 @@ public class SynergyNetWebServiceImpl extends RemoteServiceServlet implements
 	 * )
 	 */
 	@Override
-	public void test(String in) {
+	public void test(String in)
+	{
 
 	}
 

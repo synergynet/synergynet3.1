@@ -15,7 +15,8 @@ import com.hazelcast.core.Member;
 /**
  * The Class CalculatorKeySynchronizer.
  */
-public class CalculatorKeySynchronizer {
+public class CalculatorKeySynchronizer
+{
 
 	/** The calculator collection manager. */
 	private CalculatorCollectionManager calculatorCollectionManager;
@@ -26,12 +27,13 @@ public class CalculatorKeySynchronizer {
 	/**
 	 * Instantiates a new calculator key synchronizer.
 	 *
-	 * @param calculatorCollectionManager the calculator collection manager
-	 * @param studentTableDataCluster the student table data cluster
+	 * @param calculatorCollectionManager
+	 *            the calculator collection manager
+	 * @param studentTableDataCluster
+	 *            the student table data cluster
 	 */
-	public CalculatorKeySynchronizer(
-			CalculatorCollectionManager calculatorCollectionManager,
-			NumberNetStudentTableClusteredData studentTableDataCluster) {
+	public CalculatorKeySynchronizer(CalculatorCollectionManager calculatorCollectionManager, NumberNetStudentTableClusteredData studentTableDataCluster)
+	{
 		this.calculatorCollectionManager = calculatorCollectionManager;
 		this.studentTableDataCluster = studentTableDataCluster;
 	}
@@ -39,47 +41,48 @@ public class CalculatorKeySynchronizer {
 	/**
 	 * Start.
 	 */
-	public void start() {
-		this.studentTableDataCluster
-				.getCalculatorKeyStateMap()
-				.registerChangeListener(
-						new DistributedPropertyChangedAction<Map<CalculatorKey, Boolean>>() {
-							@Override
-							public void distributedPropertyDidChange(Member m,
-									Map<CalculatorKey, Boolean> oldValue,
-									Map<CalculatorKey, Boolean> newValue) {
-								updateAllCalculatorsSetKeyStateWithValue(newValue);
-							}
-						});
+	public void start()
+	{
+		this.studentTableDataCluster.getCalculatorKeyStateMap().registerChangeListener(new DistributedPropertyChangedAction<Map<CalculatorKey, Boolean>>()
+		{
+			@Override
+			public void distributedPropertyDidChange(Member m, Map<CalculatorKey, Boolean> oldValue, Map<CalculatorKey, Boolean> newValue)
+			{
+				updateAllCalculatorsSetKeyStateWithValue(newValue);
+			}
+		});
 	}
 
 	/**
 	 * Update calculator set key state with value.
 	 *
-	 * @param calc the calc
-	 * @param itemKey the item key
-	 * @param state the state
+	 * @param calc
+	 *            the calc
+	 * @param itemKey
+	 *            the item key
+	 * @param state
+	 *            the state
 	 */
-	private void updateCalculatorSetKeyStateWithValue(Calculator calc,
-			CalculatorKey itemKey, Boolean state) {
+	private void updateCalculatorSetKeyStateWithValue(Calculator calc, CalculatorKey itemKey, Boolean state)
+	{
 		calc.setKeyVisible(itemKey.getStringRepresentation(), state);
 	}
 
 	/**
 	 * Update all calculators set key state with value.
 	 *
-	 * @param keyMap the key map
+	 * @param keyMap
+	 *            the key map
 	 */
-	protected void updateAllCalculatorsSetKeyStateWithValue(
-			Map<CalculatorKey, Boolean> keyMap) {
-		Collection<String> users = calculatorCollectionManager
-				.getUsersWhoHaveCalculators();
-		for (String user : users) {
-			Calculator calc = calculatorCollectionManager
-					.getCalculatorForUser(user);
-			for (Entry<CalculatorKey, Boolean> entry : keyMap.entrySet()) {
-				updateCalculatorSetKeyStateWithValue(calc, entry.getKey(),
-						entry.getValue());
+	protected void updateAllCalculatorsSetKeyStateWithValue(Map<CalculatorKey, Boolean> keyMap)
+	{
+		Collection<String> users = calculatorCollectionManager.getUsersWhoHaveCalculators();
+		for (String user : users)
+		{
+			Calculator calc = calculatorCollectionManager.getCalculatorForUser(user);
+			for (Entry<CalculatorKey, Boolean> entry : keyMap.entrySet())
+			{
+				updateCalculatorSetKeyStateWithValue(calc, entry.getKey(), entry.getValue());
 			}
 		}
 

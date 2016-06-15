@@ -19,7 +19,8 @@ import multiplicity3.csys.items.keyboard.model.KeyboardKey;
 /**
  * The Class SimpleAlphaKeyboardRenderer.
  */
-public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
+public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer
+{
 
 	/** The bg gradient paint. */
 	private GradientPaint bgGradientPaint;
@@ -35,15 +36,17 @@ public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
 
 	/** The key stroke. */
 	private Stroke keyStroke = new BasicStroke(3.0f, // Line width
-			BasicStroke.CAP_ROUND, // End-cap style
-			BasicStroke.JOIN_ROUND);
+	BasicStroke.CAP_ROUND, // End-cap style
+	BasicStroke.JOIN_ROUND);
 
 	/**
 	 * Instantiates a new simple alpha keyboard renderer.
 	 *
-	 * @param kbd the kbd
+	 * @param kbd
+	 *            the kbd
 	 */
-	public SimpleAlphaKeyboardRenderer(KeyboardDefinition kbd) {
+	public SimpleAlphaKeyboardRenderer(KeyboardDefinition kbd)
+	{
 		this.kbd = kbd;
 	}
 
@@ -54,24 +57,23 @@ public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	 * (java.awt.Graphics2D, boolean, boolean, boolean)
 	 */
 	@Override
-	public void drawKeyboard(Graphics2D g2d, boolean shiftDown,
-			boolean altDown, boolean ctlDown) {
+	public void drawKeyboard(Graphics2D g2d, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
 
 		// g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 		// RenderingHints.VALUE_ANTIALIAS_ON);
 
-		if (fontMetrics == null) {
+		if (fontMetrics == null)
+		{
 			fontMetrics = g2d.getFontMetrics(keyboardFont);
 		}
-		bgGradientPaint = new GradientPaint(0, (float) kbd.getBounds()
-				.getMaxY() / 3, Color.white, 0, (float) kbd.getBounds()
-				.getMaxY(), Color.lightGray);
+		bgGradientPaint = new GradientPaint(0, (float) kbd.getBounds().getMaxY() / 3, Color.white, 0, (float) kbd.getBounds().getMaxY(), Color.lightGray);
 		g2d.setPaint(bgGradientPaint);
-		g2d.fillRect(0, 0, (int) kbd.getBounds().getMaxX(), (int) kbd
-				.getBounds().getMaxY());
+		g2d.fillRect(0, 0, (int) kbd.getBounds().getMaxX(), (int) kbd.getBounds().getMaxY());
 		g2d.setColor(Color.black);
 
-		for (KeyboardKey k : kbd.getKeysIterator()) {
+		for (KeyboardKey k : kbd.getKeysIterator())
+		{
 			Point p = getShapeCenter(k.getKeyShape());
 			g2d.setColor(k.getBackgroundColour());
 			g2d.fill(k.getKeyShape());
@@ -79,18 +81,15 @@ public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
 			g2d.setColor(k.getKeyTextColour());
 			g2d.draw(k.getKeyShape());
 			g2d.setFont(keyboardFont);
-			if (shiftDown) {
-				int strWidth = fontMetrics.stringWidth(k
-						.getKeyStringRepresentation().toUpperCase());
-				g2d.drawString(k.getKeyStringRepresentation().toUpperCase(),
-						p.x - (strWidth / 2), p.y
-								+ (fontMetrics.getAscent() / 2));
-			} else {
-				int strWidth = fontMetrics.stringWidth(k
-						.getKeyStringRepresentation().toLowerCase());
-				g2d.drawString(k.getKeyStringRepresentation().toLowerCase(),
-						p.x - (strWidth / 2), p.y
-								+ (fontMetrics.getAscent() / 2));
+			if (shiftDown)
+			{
+				int strWidth = fontMetrics.stringWidth(k.getKeyStringRepresentation().toUpperCase());
+				g2d.drawString(k.getKeyStringRepresentation().toUpperCase(), p.x - (strWidth / 2), p.y + (fontMetrics.getAscent() / 2));
+			}
+			else
+			{
+				int strWidth = fontMetrics.stringWidth(k.getKeyStringRepresentation().toLowerCase());
+				g2d.drawString(k.getKeyStringRepresentation().toLowerCase(), p.x - (strWidth / 2), p.y + (fontMetrics.getAscent() / 2));
 			}
 
 		}
@@ -105,9 +104,10 @@ public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	 * boolean, boolean)
 	 */
 	@Override
-	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
-		if (k.getKeyCode() == KeyEvent.VK_SHIFT) {
+	public void keyPressed(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
+		if (k.getKeyCode() == KeyEvent.VK_SHIFT)
+		{
 			shiftDown = true;
 		}
 	}
@@ -120,9 +120,10 @@ public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	 * boolean, boolean, boolean)
 	 */
 	@Override
-	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown,
-			boolean ctlDown) {
-		if (k.getKeyCode() == KeyEvent.VK_SHIFT) {
+	public void keyReleased(KeyboardKey k, boolean shiftDown, boolean altDown, boolean ctlDown)
+	{
+		if (k.getKeyCode() == KeyEvent.VK_SHIFT)
+		{
 			shiftDown = false;
 		}
 	}
@@ -130,13 +131,14 @@ public class SimpleAlphaKeyboardRenderer implements IKeyboardGraphicsRenderer {
 	/**
 	 * Gets the shape center.
 	 *
-	 * @param keyShape the key shape
+	 * @param keyShape
+	 *            the key shape
 	 * @return the shape center
 	 */
-	private Point getShapeCenter(Shape keyShape) {
+	private Point getShapeCenter(Shape keyShape)
+	{
 		Rectangle2D bounds = keyShape.getBounds2D();
-		Point p = new Point((int) bounds.getCenterX(),
-				(int) bounds.getCenterY());
+		Point p = new Point((int) bounds.getCenterX(), (int) bounds.getCenterY());
 		return p;
 	}
 }

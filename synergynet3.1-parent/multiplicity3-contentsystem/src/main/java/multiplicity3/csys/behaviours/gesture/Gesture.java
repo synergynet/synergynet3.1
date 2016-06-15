@@ -17,7 +17,8 @@ import com.jme3.math.Vector2f;
  * @author dcs0ah1
  */
 
-public class Gesture implements Serializable {
+public class Gesture implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -6367313496201753269L;
@@ -43,30 +44,37 @@ public class Gesture implements Serializable {
 	/**
 	 * Instantiates a new gesture.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 */
-	public Gesture(String name) {
+	public Gesture(String name)
+	{
 		this.name = name;
 	}
 
 	/**
 	 * Dot product.
 	 *
-	 * @param a the a
-	 * @param b the b
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 * @return the float
 	 */
-	public static float dotProduct(Gesture a, Gesture b) {
+	public static float dotProduct(Gesture a, Gesture b)
+	{
 		float dotProduct = 0f;
 
 		List<Vector2f> as = a.getPoints();
 		List<Vector2f> bs = b.getPoints();
 
-		if (as.size() != bs.size()) {
+		if (as.size() != bs.size())
+		{
 			return -1f;
 		}
 
-		for (int i = 0; i < as.size(); i++) {
+		for (int i = 0; i < as.size(); i++)
+		{
 			dotProduct += as.get(i).dot(bs.get(i));
 		}
 
@@ -76,9 +84,11 @@ public class Gesture implements Serializable {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		writeCircleLine();
 		// testMatching();
 	}
@@ -86,15 +96,19 @@ public class Gesture implements Serializable {
 	/**
 	 * Match.
 	 *
-	 * @param a the a
-	 * @param b the b
+	 * @param a
+	 *            the a
+	 * @param b
+	 *            the b
 	 * @return the float
 	 */
-	public static float match(Gesture a, Gesture b) {
+	public static float match(Gesture a, Gesture b)
+	{
 		float dotProductAB = dotProduct(a, b);
 		float dotProductAA = dotProduct(a, a);
 		float dotProductBB = dotProduct(b, b);
-		if (dotProductAB <= 0) {
+		if (dotProductAB <= 0)
+		{
 			return 0f;
 		}
 		float score = dotProductAB;
@@ -105,7 +119,8 @@ public class Gesture implements Serializable {
 	/**
 	 * Test matching.
 	 */
-	public static void testMatching() {
+	public static void testMatching()
+	{
 		GestureLibrary.getInstance().loadGesture("circle");
 		GestureLibrary.getInstance().loadGesture("line");
 
@@ -113,7 +128,8 @@ public class Gesture implements Serializable {
 
 		float i = FastMath.PI / 8;
 		float r = 1f;
-		for (float theta = 0f; theta < (2 * FastMath.PI); theta += i) {
+		for (float theta = 0f; theta < (2 * FastMath.PI); theta += i)
+		{
 			float x = r * FastMath.cos(theta);
 			float y = r * FastMath.sin(theta);
 			in.addPoint(new Vector2f(x, y));
@@ -121,23 +137,24 @@ public class Gesture implements Serializable {
 
 		in = in.normalizeResolution(32);
 
-		GestureMatch match = GestureLibrary.getInstance().findGestureMatch(in,
-				0.9f);
-		if (match != null) {
-			System.out.println("matched with " + match.gesture + " with score "
-					+ match.matchScore);
+		GestureMatch match = GestureLibrary.getInstance().findGestureMatch(in, 0.9f);
+		if (match != null)
+		{
+			System.out.println("matched with " + match.gesture + " with score " + match.matchScore);
 		}
 	}
 
 	/**
 	 * Write circle line.
 	 */
-	public static void writeCircleLine() {
+	public static void writeCircleLine()
+	{
 		Gesture circle = new Gesture("circle");
 
 		float i = FastMath.PI / 32;
 		float r = 1f;
-		for (float theta = 0f; theta < (2 * FastMath.PI); theta += i) {
+		for (float theta = 0f; theta < (2 * FastMath.PI); theta += i)
+		{
 			float x = r * FastMath.cos(theta);
 			float y = r * FastMath.sin(theta);
 			circle.addPoint(new Vector2f(x, y));
@@ -148,21 +165,25 @@ public class Gesture implements Serializable {
 		circle.normalizeCenter();
 
 		Gesture line = new Gesture("line");
-		for (float x = 0; x < 32; x += 1f) {
+		for (float x = 0; x < 32; x += 1f)
+		{
 			line.addPoint(new Vector2f(x, 0));
 		}
 		line.normalizeSize();
 		line = line.normalizeResolution(32);
 		line.normalizeCenter();
 
-		try {
-			GestureLibrary.getInstance().writeGesture("circle", circle,
-					new File("."));
-			GestureLibrary.getInstance().writeGesture("line", line,
-					new File("."));
-		} catch (FileNotFoundException e) {
+		try
+		{
+			GestureLibrary.getInstance().writeGesture("circle", circle, new File("."));
+			GestureLibrary.getInstance().writeGesture("line", line, new File("."));
+		}
+		catch (FileNotFoundException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 
@@ -172,20 +193,26 @@ public class Gesture implements Serializable {
 	/**
 	 * Adds the point.
 	 *
-	 * @param p the p
+	 * @param p
+	 *            the p
 	 */
-	public void addPoint(Vector2f p) {
+	public void addPoint(Vector2f p)
+	{
 		points.add(p.clone());
-		if (p.x < minExtents.x) {
+		if (p.x < minExtents.x)
+		{
 			minExtents.x = p.x;
 		}
-		if (p.x > maxExtents.x) {
+		if (p.x > maxExtents.x)
+		{
 			maxExtents.x = p.x;
 		}
-		if (p.y < minExtents.y) {
+		if (p.y < minExtents.y)
+		{
 			minExtents.y = p.y;
 		}
-		if (p.y > maxExtents.y) {
+		if (p.y > maxExtents.y)
+		{
 			maxExtents.y = p.y;
 		}
 	}
@@ -193,10 +220,12 @@ public class Gesture implements Serializable {
 	/**
 	 * Compare to.
 	 *
-	 * @param g the g
+	 * @param g
+	 *            the g
 	 * @return the float
 	 */
-	public float compareTo(Gesture g) {
+	public float compareTo(Gesture g)
+	{
 		return match(this, g);
 	}
 
@@ -205,7 +234,8 @@ public class Gesture implements Serializable {
 	 *
 	 * @return the height
 	 */
-	public float getHeight() {
+	public float getHeight()
+	{
 		return height;
 	}
 
@@ -214,17 +244,20 @@ public class Gesture implements Serializable {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
 	/**
 	 * Gets the point.
 	 *
-	 * @param index the index
+	 * @param index
+	 *            the index
 	 * @return the point
 	 */
-	public Vector2f getPoint(int index) {
+	public Vector2f getPoint(int index)
+	{
 		return this.points.get(index);
 	}
 
@@ -233,18 +266,21 @@ public class Gesture implements Serializable {
 	 *
 	 * @return the width
 	 */
-	public float getWidth() {
+	public float getWidth()
+	{
 		return width;
 	}
 
 	/**
 	 * Normalize center.
 	 */
-	public void normalizeCenter() {
+	public void normalizeCenter()
+	{
 		float cx = 0f;
 		float cy = 0f;
 
-		for (Vector2f v : points) {
+		for (Vector2f v : points)
+		{
 			cx += v.x;
 			cy += v.y;
 		}
@@ -252,7 +288,8 @@ public class Gesture implements Serializable {
 		cx /= points.size();
 		cy /= points.size();
 
-		for (Vector2f v : points) {
+		for (Vector2f v : points)
+		{
 			v.x -= cx;
 			v.y -= cy;
 		}
@@ -261,11 +298,14 @@ public class Gesture implements Serializable {
 	/**
 	 * Normalize resolution.
 	 *
-	 * @param numPoints the num points
+	 * @param numPoints
+	 *            the num points
 	 * @return the gesture
 	 */
-	public Gesture normalizeResolution(int numPoints) {
-		if (points.size() < 2) {
+	public Gesture normalizeResolution(int numPoints)
+	{
+		if (points.size() < 2)
+		{
 			return null;
 		}
 
@@ -276,23 +316,27 @@ public class Gesture implements Serializable {
 		float lengthConsumedThisSegment = 0f;
 
 		int i = 0;
-		while (i < (points.size() - 1)) {
+		while (i < (points.size() - 1))
+		{
 			Vector2f a = points.get(i);
 			Vector2f b = points.get(i + 1);
 			float lengthAB = b.subtract(a).length();
-			if ((lengthAB - (lengthConsumedThisSegment)) > distanceToNextPoint) {
+			if ((lengthAB - (lengthConsumedThisSegment)) > distanceToNextPoint)
+			{
 				Vector2f dirAB = b.subtract(a).normalizeLocal();
-				Vector2f newPoint = a.add(dirAB.mult(lengthConsumedThisSegment
-						+ distanceToNextPoint));
+				Vector2f newPoint = a.add(dirAB.mult(lengthConsumedThisSegment + distanceToNextPoint));
 				s.addPoint(newPoint);
 				lengthConsumedThisSegment += distanceToNextPoint;
 				distanceToNextPoint = lengthBetweenPoints;
-			} else {
+			}
+			else
+			{
 				distanceToNextPoint = distanceToNextPoint - lengthAB;
 				i++;
 			}
 		}
-		if (s.numPoints() < numPoints) {
+		if (s.numPoints() < numPoints)
+		{
 			s.addPoint(points.get(points.size() - 1));
 		}
 
@@ -302,15 +346,18 @@ public class Gesture implements Serializable {
 	/**
 	 * Normalize size.
 	 */
-	public void normalizeSize() {
-		if (points.size() < 2) {
+	public void normalizeSize()
+	{
+		if (points.size() < 2)
+		{
 			return;
 		}
 		width = maxExtents.x - minExtents.x;
 		height = maxExtents.y - minExtents.y;
 		float scale = (width > height) ? width : height;
 		scale = 1.0f / scale;
-		for (Vector2f p : points) {
+		for (Vector2f p : points)
+		{
 			p.x *= scale;
 			p.y *= scale;
 		}
@@ -321,17 +368,21 @@ public class Gesture implements Serializable {
 	 *
 	 * @return the int
 	 */
-	public int numPoints() {
+	public int numPoints()
+	{
 		return points.size();
 	}
 
 	/**
 	 * Sets the point.
 	 *
-	 * @param index the index
-	 * @param v the v
+	 * @param index
+	 *            the index
+	 * @param v
+	 *            the v
 	 */
-	public void setPoint(int index, Vector2f v) {
+	public void setPoint(int index, Vector2f v)
+	{
 		this.points.get(index).set(v);
 	}
 
@@ -339,7 +390,9 @@ public class Gesture implements Serializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return Gesture.class.getName() + " [" + name + "]";
 	}
 
@@ -348,7 +401,8 @@ public class Gesture implements Serializable {
 	 *
 	 * @return the points
 	 */
-	private List<Vector2f> getPoints() {
+	private List<Vector2f> getPoints()
+	{
 		return points;
 	}
 
@@ -357,13 +411,16 @@ public class Gesture implements Serializable {
 	 *
 	 * @return the stroke length
 	 */
-	private float getStrokeLength() {
-		if (points.size() < 2) {
+	private float getStrokeLength()
+	{
+		if (points.size() < 2)
+		{
 			return 0f;
 		}
 		float len = 0f;
 
-		for (int i = 0; i < (points.size() - 1); i++) {
+		for (int i = 0; i < (points.size() - 1); i++)
+		{
 			len += points.get(i + 1).distance(points.get(i));
 		}
 

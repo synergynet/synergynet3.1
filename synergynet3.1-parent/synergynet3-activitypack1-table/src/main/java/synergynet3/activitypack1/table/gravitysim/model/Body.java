@@ -5,7 +5,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class Body.
  */
-public class Body {
+public class Body
+{
 
 	/** The global id. */
 	private static int globalId = 0;
@@ -31,13 +32,17 @@ public class Body {
 	/**
 	 * Instantiates a new body.
 	 *
-	 * @param name the name
-	 * @param mass the mass
-	 * @param position the position
-	 * @param velocity the velocity
+	 * @param name
+	 *            the name
+	 * @param mass
+	 *            the mass
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
 	 */
-	public Body(String name, MassReference mass, Vector2f position,
-			Vector2f velocity) {
+	public Body(String name, MassReference mass, Vector2f position, Vector2f velocity)
+	{
 		id = globalId;
 		globalId++;
 		this.name = name;
@@ -51,7 +56,8 @@ public class Body {
 	 *
 	 * @return the id
 	 */
-	public int getId() {
+	public int getId()
+	{
 		return this.id;
 	}
 
@@ -60,7 +66,8 @@ public class Body {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return this.name;
 	}
 
@@ -69,49 +76,59 @@ public class Body {
 	 *
 	 * @return the position
 	 */
-	public Vector2f getPosition() {
+	public Vector2f getPosition()
+	{
 		return pos;
 	}
 
 	/**
 	 * Sets the active.
 	 */
-	public void setActive() {
+	public void setActive()
+	{
 		ignore = false;
 	}
 
 	/**
 	 * Sets the ignore.
 	 */
-	public void setIgnore() {
+	public void setIgnore()
+	{
 		ignore = true;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public void setPosition(float x, float y) {
+	public void setPosition(float x, float y)
+	{
 		this.pos.set(x, y);
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param pos the new position
+	 * @param pos
+	 *            the new position
 	 */
-	public void setPosition(Vector2f pos) {
+	public void setPosition(Vector2f pos)
+	{
 		this.pos.set(pos);
 	}
 
 	/**
 	 * Sets the velocity.
 	 *
-	 * @param v the new velocity
+	 * @param v
+	 *            the new velocity
 	 */
-	public void setVelocity(Vector2f v) {
+	public void setVelocity(Vector2f v)
+	{
 		this.velocity.set(v);
 	}
 
@@ -120,7 +137,8 @@ public class Body {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean shouldIgnore() {
+	public boolean shouldIgnore()
+	{
 		return ignore;
 	}
 
@@ -128,7 +146,9 @@ public class Body {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return name + "[" + mass + "]";
 	}
 

@@ -14,7 +14,8 @@ import com.jme3.math.Vector2f;
  * trajectories when an item bounces off a display border and detects when an
  * item should be transferred. Initiates network transfers when required.
  */
-public class CollisionBoxAnimationElement extends AnimationElement {
+public class CollisionBoxAnimationElement extends AnimationElement
+{
 
 	/**
 	 * Objects for the item to collide with
@@ -42,17 +43,22 @@ public class CollisionBoxAnimationElement extends AnimationElement {
 	 * the flick motion by repositioning the managed item using JME's animation
 	 * system.
 	 *
-	 * @param item The item to be influenced by this animation.
-	 * @param stage The stage the item currently resides in.
+	 * @param item
+	 *            The item to be influenced by this animation.
+	 * @param stage
+	 *            The stage the item currently resides in.
 	 */
-	public CollisionBoxAnimationElement(IItem item) {
+	public CollisionBoxAnimationElement(IItem item)
+	{
 		this.item = item;
 	}
 
 	/**
-	 * @param collidables the collidables to set
+	 * @param collidables
+	 *            the collidables to set
 	 */
-	public void addCollidable(IItem item, Vector2f dimensions) {
+	public void addCollidable(IItem item, Vector2f dimensions)
+	{
 		collidables.put(item, dimensions);
 		collidingWith.put(item, false);
 	}
@@ -64,7 +70,8 @@ public class CollisionBoxAnimationElement extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 	}
 
 	/*
@@ -72,14 +79,17 @@ public class CollisionBoxAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
 	/**
-	 * @param collidables the collidable item to remove
+	 * @param collidables
+	 *            the collidable item to remove
 	 */
-	public void removeCollidable(IItem item) {
+	public void removeCollidable(IItem item)
+	{
 		collidables.remove(item);
 		collidingWith.remove(item);
 	}
@@ -89,7 +99,8 @@ public class CollisionBoxAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		finished = true;
 	}
 
@@ -100,20 +111,24 @@ public class CollisionBoxAnimationElement extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
-		if (!finished) {
-			for (Entry<IItem, Vector2f> entry : collidables.entrySet()) {
-				if (collidingWith.get(entry.getKey())) {
-					if (!AdditionalSynergyNetUtilities.inBox(item
-							.getRelativeLocation(), entry.getKey()
-							.getRelativeLocation(), entry.getValue())) {
+	public void updateAnimationState(float tpf)
+	{
+		if (!finished)
+		{
+			for (Entry<IItem, Vector2f> entry : collidables.entrySet())
+			{
+				if (collidingWith.get(entry.getKey()))
+				{
+					if (!AdditionalSynergyNetUtilities.inBox(item.getRelativeLocation(), entry.getKey().getRelativeLocation(), entry.getValue()))
+					{
 						collidingWith.put(entry.getKey(), false);
 						onLeavingCollision(entry.getKey());
 					}
-				} else {
-					if (AdditionalSynergyNetUtilities.inBox(item
-							.getRelativeLocation(), entry.getKey()
-							.getRelativeLocation(), entry.getValue())) {
+				}
+				else
+				{
+					if (AdditionalSynergyNetUtilities.inBox(item.getRelativeLocation(), entry.getKey().getRelativeLocation(), entry.getValue()))
+					{
 						collidingWith.put(entry.getKey(), true);
 						onEnteringCollision(entry.getKey());
 					}
@@ -126,18 +141,22 @@ public class CollisionBoxAnimationElement extends AnimationElement {
 	 * Override this method to set what action should be performed on entering a
 	 * collision.
 	 *
-	 * @param collidale The item the managed item collided with.
+	 * @param collidale
+	 *            The item the managed item collided with.
 	 */
-	protected void onEnteringCollision(IItem collidale) {
+	protected void onEnteringCollision(IItem collidale)
+	{
 	}
 
 	/**
 	 * Override this method to set what action should be performed on leaving a
 	 * collision.
 	 *
-	 * @param collidale The item the managed item collided with.
+	 * @param collidale
+	 *            The item the managed item collided with.
 	 */
-	protected void onLeavingCollision(IItem collidale) {
+	protected void onLeavingCollision(IItem collidale)
+	{
 	}
 
 }

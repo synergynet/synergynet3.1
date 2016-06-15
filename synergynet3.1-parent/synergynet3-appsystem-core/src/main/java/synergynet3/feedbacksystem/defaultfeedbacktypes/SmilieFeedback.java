@@ -15,7 +15,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class SmilieFeedback.
  */
-public class SmilieFeedback extends FeedbackItem {
+public class SmilieFeedback extends FeedbackItem
+{
 
 	/** The Constant CACHABLE_TYPE. */
 	public static final String CACHABLE_TYPE = "CACHABLE_FEEDBACK_SMILIE";
@@ -59,10 +60,12 @@ public class SmilieFeedback extends FeedbackItem {
 	/**
 	 * Reconstruct.
 	 *
-	 * @param feedbackItem the feedback item
+	 * @param feedbackItem
+	 *            the feedback item
 	 * @return the smilie feedback
 	 */
-	public static SmilieFeedback reconstruct(Object[] feedbackItem) {
+	public static SmilieFeedback reconstruct(Object[] feedbackItem)
+	{
 		SmilieFeedback feedback = new SmilieFeedback();
 		feedback.setStudentID((String) feedbackItem[1]);
 		feedback.setRotationToApply((Float) feedbackItem[2]);
@@ -78,7 +81,8 @@ public class SmilieFeedback extends FeedbackItem {
 	 * String)
 	 */
 	@Override
-	public Object[] deconstruct(String studentIDin) {
+	public Object[] deconstruct(String studentIDin)
+	{
 		Object[] feedbackItem = new Object[5];
 		feedbackItem[0] = CACHABLE_TYPE;
 		feedbackItem[1] = studentID;
@@ -90,7 +94,8 @@ public class SmilieFeedback extends FeedbackItem {
 	/**
 	 * @return the heightToApply
 	 */
-	public float getHeightToApply() {
+	public float getHeightToApply()
+	{
 		return heightToApply;
 	}
 
@@ -99,52 +104,65 @@ public class SmilieFeedback extends FeedbackItem {
 	 * @see synergynet3.feedbacksystem.FeedbackItem#getIcon()
 	 */
 	@Override
-	public String getIcon() {
+	public String getIcon()
+	{
 		return "synergynet3/feedbacksystem/defaultfeedbacktypes/smilieFeedback.png";
 	}
 
 	/**
 	 * @return the rotationToApply
 	 */
-	public float getRotationToApply() {
+	public float getRotationToApply()
+	{
 		return rotationToApply;
 	}
 
 	/**
-	 * @param heightToApply the heightToApply to set
+	 * @param heightToApply
+	 *            the heightToApply to set
 	 */
-	public void setHeightToApply(float heightToApply) {
+	public void setHeightToApply(float heightToApply)
+	{
 		this.heightToApply = heightToApply;
 	}
 
 	/**
-	 * @param rotationToApply the rotationToApply to set
+	 * @param rotationToApply
+	 *            the rotationToApply to set
 	 */
-	public void setRotationToApply(float rotationToApply) {
+	public void setRotationToApply(float rotationToApply)
+	{
 		this.rotationToApply = rotationToApply;
 	}
 
 	/**
 	 * Apply rating.
 	 */
-	private void applyRating() {
+	private void applyRating()
+	{
 
 		int height = maxSmileHeight;
 
-		if (rating > 0.5) {
-			if (smile.getRelativeRotation() != 0) {
+		if (rating > 0.5)
+		{
+			if (smile.getRelativeRotation() != 0)
+			{
 				smile.setRelativeRotation(0);
 			}
 			height = (int) (((rating - 0.5f) / 0.5f) * maxSmileHeight);
 
-		} else {
-			if (smile.getRelativeRotation() != (FastMath.DEG_TO_RAD * 180)) {
+		}
+		else
+		{
+			if (smile.getRelativeRotation() != (FastMath.DEG_TO_RAD * 180))
+			{
 				smile.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
 			}
 			height = (int) ((((1 - rating) - 0.5f) / 0.5f) * maxSmileHeight);
 		}
 
-		if (height < 3) {
+		if (height < 3)
+		{
 			height = 3;
 		}
 
@@ -160,57 +178,53 @@ public class SmilieFeedback extends FeedbackItem {
 	 *
 	 * @return the smile adapter
 	 */
-	private MultiTouchEventAdapter getSmileAdapter() {
-		MultiTouchEventAdapter smileAdapter = new MultiTouchEventAdapter() {
+	private MultiTouchEventAdapter getSmileAdapter()
+	{
+		MultiTouchEventAdapter smileAdapter = new MultiTouchEventAdapter()
+		{
 
 			private boolean newTouch = true;
 			private float previousTopToBottomRatio = 0.5f;
 
 			@Override
-			public void cursorChanged(MultiTouchCursorEvent event) {
+			public void cursorChanged(MultiTouchCursorEvent event)
+			{
 
-				Vector2f realTouchLocation = new Vector2f(
-						(event.getPosition().x * (getStage().getWorldLocation().x * 2))
-								- getStage().getWorldLocation().x,
-						(event.getPosition().y * (getStage().getWorldLocation().y * 2))
-								- getStage().getWorldLocation().y);
+				Vector2f realTouchLocation = new Vector2f((event.getPosition().x * (getStage().getWorldLocation().x * 2)) - getStage().getWorldLocation().x, (event.getPosition().y * (getStage().getWorldLocation().y * 2)) - getStage().getWorldLocation().y);
 
-				if (realTouchLocation.distance(setter.getRelativeLocation()) < (smilieBackGround
-						.getWidth() / 2)) {
+				if (realTouchLocation.distance(setter.getRelativeLocation()) < (smilieBackGround.getWidth() / 2))
+				{
 
 					Vector2f topVector = new Vector2f(0, 200);
 					Vector2f bottomVector = new Vector2f(0, -200);
 
-					topVector.rotateAroundOrigin(setter.getRelativeRotation(),
-							false);
-					bottomVector.rotateAroundOrigin(
-							setter.getRelativeRotation(), false);
+					topVector.rotateAroundOrigin(setter.getRelativeRotation(), false);
+					bottomVector.rotateAroundOrigin(setter.getRelativeRotation(), false);
 
-					topVector.set(setter.getRelativeLocation().x + topVector.x,
-							setter.getRelativeLocation().y + topVector.y);
-					bottomVector.set(setter.getRelativeLocation().x
-							+ bottomVector.x, setter.getRelativeLocation().y
-							+ bottomVector.y);
+					topVector.set(setter.getRelativeLocation().x + topVector.x, setter.getRelativeLocation().y + topVector.y);
+					bottomVector.set(setter.getRelativeLocation().x + bottomVector.x, setter.getRelativeLocation().y + bottomVector.y);
 
 					float distanceToTop = realTouchLocation.distance(topVector);
-					float distanceToBottom = realTouchLocation
-							.distance(bottomVector);
+					float distanceToBottom = realTouchLocation.distance(bottomVector);
 
-					if (newTouch) {
+					if (newTouch)
+					{
 						newTouch = false;
-						previousTopToBottomRatio = distanceToBottom
-								/ (distanceToTop + distanceToBottom);
-					} else {
+						previousTopToBottomRatio = distanceToBottom / (distanceToTop + distanceToBottom);
+					}
+					else
+					{
 
-						float currentTopToBottomRatio = distanceToBottom
-								/ (distanceToTop + distanceToBottom);
-						float changeInRating = previousTopToBottomRatio
-								- currentTopToBottomRatio;
+						float currentTopToBottomRatio = distanceToBottom / (distanceToTop + distanceToBottom);
+						float changeInRating = previousTopToBottomRatio - currentTopToBottomRatio;
 
 						rating -= changeInRating;
-						if (rating < 0) {
+						if (rating < 0)
+						{
 							rating = 0;
-						} else if (rating > 1) {
+						}
+						else if (rating > 1)
+						{
 							rating = 1;
 						}
 
@@ -224,7 +238,8 @@ public class SmilieFeedback extends FeedbackItem {
 			}
 
 			@Override
-			public void cursorPressed(MultiTouchCursorEvent event) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
 				newTouch = true;
 				setter.getZOrderManager().bringToTop(smile);
 			}
@@ -238,10 +253,10 @@ public class SmilieFeedback extends FeedbackItem {
 	 * @see synergynet3.feedbacksystem.FeedbackItem#addSettings()
 	 */
 	@Override
-	protected void addSettings() throws ContentTypeNotBoundException {
+	protected void addSettings() throws ContentTypeNotBoundException
+	{
 
-		smilieBackGround = getStage().getContentFactory().create(IImage.class,
-				"play", UUID.randomUUID());
+		smilieBackGround = getStage().getContentFactory().create(IImage.class, "play", UUID.randomUUID());
 		smilieBackGround.setImage(SMILIE_BACKGROUND_IMAGE);
 		smilieBackGround.setSize(200, 200);
 		smilieBackGround.getZOrderManager().setAutoBringToTop(false);
@@ -249,14 +264,12 @@ public class SmilieFeedback extends FeedbackItem {
 
 		setter.addToFrame(smilieBackGround, 0, 0, 0);
 
-		smile = getStage().getContentFactory().create(IImage.class, "play",
-				UUID.randomUUID());
+		smile = getStage().getContentFactory().create(IImage.class, "play", UUID.randomUUID());
 		smile.setImage(SMILE_IMAGE);
 		smile.setSize(smileWidth, maxSmileHeight);
 		setter.addToFrame(smile, 0, 0, yOffset);
 
-		smilieBackGround.getMultiTouchDispatcher().addListener(
-				getSmileAdapter());
+		smilieBackGround.getMultiTouchDispatcher().addListener(getSmileAdapter());
 		smile.getMultiTouchDispatcher().addListener(getSmileAdapter());
 
 		applyRating();
@@ -270,30 +283,28 @@ public class SmilieFeedback extends FeedbackItem {
 	 * .feedbacksystem.FeedbackViewer, int)
 	 */
 	@Override
-	protected void generateFeedbackView(final FeedbackViewer feedbackViewer,
-			int frameNo) throws ContentTypeNotBoundException {
+	protected void generateFeedbackView(final FeedbackViewer feedbackViewer, int frameNo) throws ContentTypeNotBoundException
+	{
 
-		IImage finalSmilieBackGround = getStage().getContentFactory().create(
-				IImage.class, "play", UUID.randomUUID());
+		IImage finalSmilieBackGround = getStage().getContentFactory().create(IImage.class, "play", UUID.randomUUID());
 		finalSmilieBackGround.setImage(SMILIE_BACKGROUND_IMAGE);
 		finalSmilieBackGround.setSize(200, 200);
 		feedbackViewer.addToFeedbackFrame(finalSmilieBackGround, frameNo, 0, 0);
 
-		finalSmile = getStage().getContentFactory().create(IImage.class,
-				"play", UUID.randomUUID());
+		finalSmile = getStage().getContentFactory().create(IImage.class, "play", UUID.randomUUID());
 		finalSmile.setImage(SMILE_IMAGE);
 		finalSmile.setSize(smileWidth, heightToApply);
 		finalSmile.setRelativeRotation(rotationToApply);
 		feedbackViewer.addToFeedbackFrame(finalSmile, frameNo, 0, yOffset);
 
-		finalSmilieBackGround.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						feedbackViewer.getContainer().getZOrderManager()
-								.bringToTop(finalSmile);
-					}
-				});
+		finalSmilieBackGround.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				feedbackViewer.getContainer().getZOrderManager().bringToTop(finalSmile);
+			}
+		});
 
 	}
 
@@ -302,7 +313,8 @@ public class SmilieFeedback extends FeedbackItem {
 	 * @see synergynet3.feedbacksystem.FeedbackItem#getAllSettingsMade()
 	 */
 	@Override
-	protected boolean getAllSettingsMade() {
+	protected boolean getAllSettingsMade()
+	{
 		return allSettingsMade;
 	}
 

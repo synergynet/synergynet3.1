@@ -11,7 +11,8 @@ import javax.swing.JOptionPane;
 /**
  * @author dcs0ah1
  */
-public class NetworkPreferencesPanel extends javax.swing.JPanel {
+public class NetworkPreferencesPanel extends javax.swing.JPanel
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 7749882192186771339L;
@@ -35,7 +36,8 @@ public class NetworkPreferencesPanel extends javax.swing.JPanel {
 	private javax.swing.JTextField txtProxyPort;
 
 	/** Creates new form NetworkPrefsPanel2 */
-	public NetworkPreferencesPanel(NetworkConfigPrefsItem networkConfigPrefsItem) {
+	public NetworkPreferencesPanel(NetworkConfigPrefsItem networkConfigPrefsItem)
+	{
 		this.prefs = networkConfigPrefsItem;
 		initComponents();
 		loadPrefs();
@@ -44,9 +46,11 @@ public class NetworkPreferencesPanel extends javax.swing.JPanel {
 	/**
 	 * Check proxy enabled item state changed.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void checkProxyEnabledItemStateChanged(java.awt.event.ItemEvent evt) {// GEN-FIRST:event_checkProxyEnabledItemStateChanged
+	private void checkProxyEnabledItemStateChanged(java.awt.event.ItemEvent evt)
+	{// GEN-FIRST:event_checkProxyEnabledItemStateChanged
 
 		prefs.setProxyEnabled(checkProxyEnabled.isSelected());
 	}// GEN-LAST:event_checkProxyEnabledItemStateChanged
@@ -59,7 +63,8 @@ public class NetworkPreferencesPanel extends javax.swing.JPanel {
 	// @SuppressWarnings("unchecked")
 	// <editor-fold defaultstate="collapsed"
 	// desc="Generated Code">//GEN-BEGIN:initComponents
-	private void initComponents() {
+	private void initComponents()
+	{
 
 		jLabel1 = new javax.swing.JLabel();
 		jLabel2 = new javax.swing.JLabel();
@@ -72,24 +77,32 @@ public class NetworkPreferencesPanel extends javax.swing.JPanel {
 		jLabel2.setText("HTTP Proxy Port:");
 
 		txtProxyHost.setText("jTextField1");
-		txtProxyHost.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
+		txtProxyHost.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
 				txtProxyHostKeyReleased(evt);
 			}
 		});
 
 		txtProxyPort.setText("jTextField1");
-		txtProxyPort.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
+		txtProxyPort.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
 				txtProxyPortKeyReleased(evt);
 			}
 		});
 
 		checkProxyEnabled.setText("Proxy Enabled");
-		checkProxyEnabled
-				.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
-		checkProxyEnabled.addItemListener(new java.awt.event.ItemListener() {
-			public void itemStateChanged(java.awt.event.ItemEvent evt) {
+		checkProxyEnabled.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+		checkProxyEnabled.addItemListener(new java.awt.event.ItemListener()
+		{
+			@Override
+			public void itemStateChanged(java.awt.event.ItemEvent evt)
+			{
 				checkProxyEnabledItemStateChanged(evt);
 			}
 		});
@@ -115,7 +128,8 @@ public class NetworkPreferencesPanel extends javax.swing.JPanel {
 	/**
 	 * Load prefs.
 	 */
-	private void loadPrefs() {
+	private void loadPrefs()
+	{
 		txtProxyHost.setText(prefs.getProxyHost());
 		txtProxyPort.setText("" + prefs.getProxyPort());
 		checkProxyEnabled.setSelected(prefs.getProxyEnabled());
@@ -124,28 +138,30 @@ public class NetworkPreferencesPanel extends javax.swing.JPanel {
 	/**
 	 * Txt proxy host key released.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void txtProxyHostKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtProxyHostKeyReleased
+	private void txtProxyHostKeyReleased(java.awt.event.KeyEvent evt)
+	{// GEN-FIRST:event_txtProxyHostKeyReleased
 		prefs.setProxyHost(txtProxyHost.getText());
 	}// GEN-LAST:event_txtProxyHostKeyReleased
 
 	/**
 	 * Txt proxy port key released.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void txtProxyPortKeyReleased(java.awt.event.KeyEvent evt) {// GEN-FIRST:event_txtProxyPortKeyReleased
+	private void txtProxyPortKeyReleased(java.awt.event.KeyEvent evt)
+	{// GEN-FIRST:event_txtProxyPortKeyReleased
 		int currentPort = prefs.getProxyPort();
-		try {
+		try
+		{
 			prefs.setProxyPort(Integer.parseInt(txtProxyPort.getText()));
-		} catch (NumberFormatException ex) {
-			JOptionPane
-					.showMessageDialog(this,
-							"Can't convert " + txtProxyPort.getText()
-									+ " to a number.",
-							"Port should be an integer number.",
-							JOptionPane.ERROR_MESSAGE);
+		}
+		catch (NumberFormatException ex)
+		{
+			JOptionPane.showMessageDialog(this, "Can't convert " + txtProxyPort.getText() + " to a number.", "Port should be an integer number.", JOptionPane.ERROR_MESSAGE);
 			txtProxyPort.setText("" + currentPort);
 		}
 	}// GEN-LAST:event_txtProxyPortKeyReleased

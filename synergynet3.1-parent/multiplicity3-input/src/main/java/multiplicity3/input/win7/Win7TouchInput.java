@@ -32,7 +32,8 @@ import com.jme3.math.Vector2f;
 /**
  * Input source for native Windows 7 WM_TOUCH messages for single/multi-touch.
  */
-public class Win7TouchInput implements IMultiTouchInputSource {
+public class Win7TouchInput implements IMultiTouchInputSource
+{
 
 	/** The height. */
 	private float height = 768f;
@@ -61,7 +62,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	/**
 	 * Instantiates a new win7 native touch source.
 	 */
-	public Win7TouchInput(float width, float height, boolean is64bitJava) {
+	public Win7TouchInput(float width, float height, boolean is64bitJava)
+	{
 		this.width = width;
 		this.height = height;
 		this.is64bitJava = is64bitJava;
@@ -71,17 +73,21 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	/**
 	 * Adds the touch cursor.
 	 *
-	 * @param wmTouchEvent the wm touch event
+	 * @param wmTouchEvent
+	 *            the wm touch event
 	 */
-	public void addTouchCursor(final Windows7TouchEvent wmTouchEvent) {
+	public void addTouchCursor(final Windows7TouchEvent wmTouchEvent)
+	{
 
 		final long touchID = wmTouchEvent.id;
 		Win7Cursor fingerCursor = fingerCursors.get(touchID);
-		if (fingerCursor == null) {
+		if (fingerCursor == null)
+		{
 			fingerCursor = new Win7Cursor();
 			fingerCursors.put(touchID, fingerCursor);
 
-			Callable<Object> c = new Callable<Object>() {
+			Callable<Object> c = new Callable<Object>()
+			{
 
 				float xContactSize = wmTouchEvent.contactSizeX;
 				float xpos = wmTouchEvent.x / width;
@@ -89,27 +95,26 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 				float ypos = wmTouchEvent.y / height;
 
 				@Override
-				public Object call() throws Exception {
+				public Object call() throws Exception
+				{
 
 					final Win7Cursor fingerCursor = fingerCursors.get(touchID);
-					if (fingerCursor != null) {
+					if (fingerCursor != null)
+					{
 						fingerCursor.setPosition(new Vector2f(xpos, 1 - ypos));
-						fingerCursor.setContactSize(new Vector2f(xContactSize,
-								yContactSize));
-						for (IMultiTouchEventListener listener : listeners) {
-							clickDetector.newCursorPressed(
-									fingerCursor.getId(),
-									fingerCursor.getPosition());
-							MultiTouchCursorEvent evt = new MultiTouchCursorEvent(
-									fingerCursor.getId(),
-									fingerCursor.getPosition());
+						fingerCursor.setContactSize(new Vector2f(xContactSize, yContactSize));
+						for (IMultiTouchEventListener listener : listeners)
+						{
+							clickDetector.newCursorPressed(fingerCursor.getId(), fingerCursor.getPosition());
+							MultiTouchCursorEvent evt = new MultiTouchCursorEvent(fingerCursor.getId(), fingerCursor.getPosition());
 							listener.cursorPressed(evt);
 						}
 					}
 					return null;
 				}
 			};
-			synchronized (callingList) {
+			synchronized (callingList)
+			{
 				callingList.add(c);
 			}
 		}
@@ -120,7 +125,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#endListening()
 	 */
 	@Override
-	public void endListening() {
+	public void endListening()
+	{
 	}
 
 	/**
@@ -128,7 +134,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 *
 	 * @return true, if is is64bit java
 	 */
-	public boolean isIs64bitJava() {
+	public boolean isIs64bitJava()
+	{
 		return is64bitJava;
 	}
 
@@ -139,9 +146,10 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
 	@Override
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
-		if (!listeners.contains(listener)) {
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(listener);
 		}
 	}
@@ -153,9 +161,10 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * (multiplicity3.input.IMultiTouchEventListener, int)
 	 */
 	@Override
-	public void registerMultiTouchEventListener(
-			IMultiTouchEventListener listener, int index) {
-		if (!listeners.contains(listener)) {
+	public void registerMultiTouchEventListener(IMultiTouchEventListener listener, int index)
+	{
+		if (!listeners.contains(listener))
+		{
 			listeners.add(index, listener);
 		}
 	}
@@ -163,28 +172,30 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	/**
 	 * Removes the touch cursor.
 	 *
-	 * @param wmTouchEvent the wm touch event
+	 * @param wmTouchEvent
+	 *            the wm touch event
 	 */
-	public void removeTouchCursor(final Windows7TouchEvent wmTouchEvent) {
-		Callable<Object> c = new Callable<Object>() {
+	public void removeTouchCursor(final Windows7TouchEvent wmTouchEvent)
+	{
+		Callable<Object> c = new Callable<Object>()
+		{
 
 			long touchID = wmTouchEvent.id;
 
 			@Override
-			public Object call() throws Exception {
+			public Object call() throws Exception
+			{
 				final Win7Cursor fingerCursor = fingerCursors.get(touchID);
 
-				if (fingerCursor != null) {
+				if (fingerCursor != null)
+				{
 
-					for (IMultiTouchEventListener l : listeners) {
-						MultiTouchCursorEvent event = new MultiTouchCursorEvent(
-								fingerCursor.getId(),
-								fingerCursor.getPosition());
-						int clickCount = clickDetector
-								.cursorReleasedGetClickCount(
-										fingerCursor.getId(),
-										fingerCursor.getPosition());
-						if (clickCount > 0) {
+					for (IMultiTouchEventListener l : listeners)
+					{
+						MultiTouchCursorEvent event = new MultiTouchCursorEvent(fingerCursor.getId(), fingerCursor.getPosition());
+						int clickCount = clickDetector.cursorReleasedGetClickCount(fingerCursor.getId(), fingerCursor.getPosition());
+						if (clickCount > 0)
+						{
 							event.setClickCount(clickCount);
 							l.cursorClicked(event);
 						}
@@ -197,7 +208,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 				return null;
 			}
 		};
-		synchronized (callingList) {
+		synchronized (callingList)
+		{
 			callingList.add(c);
 		}
 	}
@@ -207,7 +219,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#requiresMouseDisplay()
 	 */
 	@Override
-	public boolean requiresMouseDisplay() {
+	public boolean requiresMouseDisplay()
+	{
 		return false;
 	}
 
@@ -217,24 +230,29 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * float)
 	 */
 	@Override
-	public void setClickSensitivity(long time, float distance) {
+	public void setClickSensitivity(long time, float distance)
+	{
 		this.clickDetector = new ClickDetector(time, distance);
 	}
 
 	/**
 	 * Sets the is64bit java.
 	 *
-	 * @param is64bitJava the new is64bit java
+	 * @param is64bitJava
+	 *            the new is64bit java
 	 */
-	public void setIs64bitJava(boolean is64bitJava) {
+	public void setIs64bitJava(boolean is64bitJava)
+	{
 		this.is64bitJava = is64bitJava;
 	}
 
 	/**
 	 * Start.
 	 */
-	public void start() {
-		synchronized (this) {
+	public void start()
+	{
+		synchronized (this)
+		{
 			win7NativeTouchSource = new Win7NativeTouchSource(this);
 		}
 	}
@@ -246,8 +264,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * (multiplicity3.input.IMultiTouchEventListener)
 	 */
 	@Override
-	public void unregisterMultiTouchEventListener(
-			IMultiTouchEventListener listener) {
+	public void unregisterMultiTouchEventListener(IMultiTouchEventListener listener)
+	{
 		listeners.remove(listener);
 	}
 
@@ -256,13 +274,19 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	 * @see multiplicity3.input.IMultiTouchInputSource#update(float)
 	 */
 	@Override
-	public void update(float tpf) throws MultiTouchInputException {
+	public void update(float tpf) throws MultiTouchInputException
+	{
 		win7NativeTouchSource.pollEvents();
-		synchronized (callingList) {
-			for (Callable<Object> c : callingList) {
-				try {
+		synchronized (callingList)
+		{
+			for (Callable<Object> c : callingList)
+			{
+				try
+				{
 					c.call();
-				} catch (Exception e) {
+				}
+				catch (Exception e)
+				{
 					e.printStackTrace();
 				}
 			}
@@ -273,11 +297,14 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 	/**
 	 * Update touch cursor.
 	 *
-	 * @param wmTouchEvent the wm touch event
+	 * @param wmTouchEvent
+	 *            the wm touch event
 	 */
-	public void updateTouchCursor(final Windows7TouchEvent wmTouchEvent) {
+	public void updateTouchCursor(final Windows7TouchEvent wmTouchEvent)
+	{
 
-		Callable<Object> c = new Callable<Object>() {
+		Callable<Object> c = new Callable<Object>()
+		{
 
 			long touchID = wmTouchEvent.id;
 			float xContactSize = wmTouchEvent.contactSizeX;
@@ -287,16 +314,16 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 			float ypos = wmTouchEvent.y / height;
 
 			@Override
-			public Object call() throws Exception {
+			public Object call() throws Exception
+			{
 				final Win7Cursor fingerCursor = fingerCursors.get(touchID);
-				if (fingerCursor != null) {
+				if (fingerCursor != null)
+				{
 					fingerCursor.setPosition(new Vector2f(xpos, 1 - ypos));
-					fingerCursor.setContactSize(new Vector2f(xContactSize,
-							yContactSize));
-					for (IMultiTouchEventListener listener : listeners) {
-						MultiTouchCursorEvent evt = new MultiTouchCursorEvent(
-								fingerCursor.getId(),
-								fingerCursor.getPosition());
+					fingerCursor.setContactSize(new Vector2f(xContactSize, yContactSize));
+					for (IMultiTouchEventListener listener : listeners)
+					{
+						MultiTouchCursorEvent evt = new MultiTouchCursorEvent(fingerCursor.getId(), fingerCursor.getPosition());
 						listener.cursorChanged(evt);
 					}
 				}
@@ -304,7 +331,8 @@ public class Win7TouchInput implements IMultiTouchInputSource {
 			}
 		};
 
-		synchronized (callingList) {
+		synchronized (callingList)
+		{
 			callingList.add(c);
 		}
 	}

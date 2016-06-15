@@ -21,11 +21,11 @@ import synergynet3.feedbacksystem.defaultfeedbacktypes.SmilieFeedback;
 /**
  * The Class NumberNet.
  */
-public class NumberNet extends SynergyNetApp {
+public class NumberNet extends SynergyNetApp
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(NumberNet.class
-			.getName());
+	private static final Logger log = Logger.getLogger(NumberNet.class.getName());
 
 	/** The numbernet controller. */
 	private NumberNetController numbernetController;
@@ -33,11 +33,15 @@ public class NumberNet extends SynergyNetApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -53,7 +57,8 @@ public class NumberNet extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#getFriendlyAppName()
 	 */
 	@Override
-	public String getFriendlyAppName() {
+	public String getFriendlyAppName()
+	{
 		return "NumberNet";
 	}
 
@@ -63,21 +68,24 @@ public class NumberNet extends SynergyNetApp {
 	 * MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(final MultiTouchInputComponent input,
-			final IQueueOwner iqo) {
+	public void shouldStart(final MultiTouchInputComponent input, final IQueueOwner iqo)
+	{
 		super.shouldStart(input, iqo);
 		log.fine("Starting NumberNet");
 
 		feedbackTypes.add(AudioFeedback.class);
 		feedbackTypes.add(SmilieFeedback.class);
 
-		try {
+		try
+		{
 			setupNetworkThreading(iqo);
 			joinDataCluster();
 
 			numbernetController = new NumberNetController(input);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -87,26 +95,32 @@ public class NumberNet extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#shouldStop()
 	 */
 	@Override
-	public void shouldStop() {
+	public void shouldStop()
+	{
 		numbernetController.shutdown();
 	}
 
 	/**
 	 * Join data cluster.
 	 */
-	private void joinDataCluster() {
+	private void joinDataCluster()
+	{
 		SynergyNetCluster.get().getDeviceClusterManager().join();
 	}
 
 	/**
 	 * Sets the up network threading.
 	 *
-	 * @param iqo the new up network threading
+	 * @param iqo
+	 *            the new up network threading
 	 */
-	private void setupNetworkThreading(final IQueueOwner iqo) {
-		ClusterThreadManager.get().setQueueProcessor(new IQueueProcessor() {
+	private void setupNetworkThreading(final IQueueOwner iqo)
+	{
+		ClusterThreadManager.get().setQueueProcessor(new IQueueProcessor()
+		{
 			@Override
-			public <V> Future<V> enqueue(Callable<V> callable) {
+			public <V> Future<V> enqueue(Callable<V> callable)
+			{
 				return iqo.enqueue(callable);
 			}
 		});

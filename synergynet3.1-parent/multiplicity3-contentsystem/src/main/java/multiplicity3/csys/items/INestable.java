@@ -8,7 +8,8 @@ import multiplicity3.csys.zorder.IZOrderManager;
 /**
  * The Interface INestable.
  */
-public interface INestable {
+public interface INestable
+{
 	/**
 	 * The listener interface for receiving IChildrenChanged events. The class
 	 * that is interested in processing a IChildrenChanged event implements this
@@ -20,13 +21,16 @@ public interface INestable {
 	 *
 	 * @see IChildrenChangedEvent
 	 */
-	public static interface IChildrenChangedListener {
+	public static interface IChildrenChangedListener
+	{
 
 		/**
 		 * Children changed.
 		 *
-		 * @param node the node
-		 * @param list the list
+		 * @param node
+		 *            the node
+		 * @param list
+		 *            the list
 		 */
 		public void childrenChanged(INestable node, List<IItem> list);
 	}
@@ -35,7 +39,8 @@ public interface INestable {
 	/**
 	 * Adds the item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	public void addItem(IItem item);
 
@@ -43,10 +48,10 @@ public interface INestable {
 	/**
 	 * De register children changed listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void deRegisterChildrenChangedListener(
-			IChildrenChangedListener listener);
+	public void deRegisterChildrenChangedListener(IChildrenChangedListener listener);
 
 	/**
 	 * Gets the child items.
@@ -80,15 +85,16 @@ public interface INestable {
 	/**
 	 * Register children changed listener.
 	 *
-	 * @param listener the listener
+	 * @param listener
+	 *            the listener
 	 */
-	public void registerChildrenChangedListener(
-			IChildrenChangedListener listener);
+	public void registerChildrenChangedListener(IChildrenChangedListener listener);
 
 	/**
 	 * Removes the all items.
 	 *
-	 * @param recursive the recursive
+	 * @param recursive
+	 *            the recursive
 	 */
 	public void removeAllItems(boolean recursive);
 
@@ -96,7 +102,8 @@ public interface INestable {
 	/**
 	 * Removes the item.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
 	public void removeItem(IItem item);
 

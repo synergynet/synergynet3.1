@@ -10,12 +10,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * The Interface SynergyNetWebCommonsService.
  */
 @RemoteServiceRelativePath("SynergyNetWebCommonsService")
-public interface SynergyNetWebCommonsService extends RemoteService {
+public interface SynergyNetWebCommonsService extends RemoteService
+{
 
 	/**
 	 * The Class Util.
 	 */
-	public static class Util {
+	public static class Util
+	{
 
 		/** The instance. */
 		private static SynergyNetWebCommonsServiceAsync instance;
@@ -25,8 +27,10 @@ public interface SynergyNetWebCommonsService extends RemoteService {
 		 *
 		 * @return single instance of Util
 		 */
-		public static SynergyNetWebCommonsServiceAsync getInstance() {
-			if (instance == null) {
+		public static SynergyNetWebCommonsServiceAsync getInstance()
+		{
+			if (instance == null)
+			{
 				instance = GWT.create(SynergyNetWebCommonsService.class);
 			}
 			return instance;
@@ -36,7 +40,8 @@ public interface SynergyNetWebCommonsService extends RemoteService {
 	/**
 	 * Gets the devices currently online.
 	 *
-	 * @param deviceType the device type
+	 * @param deviceType
+	 *            the device type
 	 * @return the devices currently online
 	 */
 	List<String> getDevicesCurrentlyOnline(String deviceType);

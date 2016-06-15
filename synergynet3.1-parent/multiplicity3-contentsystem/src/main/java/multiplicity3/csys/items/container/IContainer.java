@@ -5,5 +5,6 @@ import multiplicity3.csys.items.item.IItem;
 /**
  * The Interface IContainer.
  */
-public interface IContainer extends IItem {
+public interface IContainer extends IItem
+{
 }

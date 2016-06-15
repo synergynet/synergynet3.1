@@ -26,8 +26,8 @@ import com.jme3.math.Vector2f;
  * The Class SimpleKeypad.
  */
 @ImplementsContentItem(target = ISimpleKeypad.class)
-public class SimpleKeypad extends JMEContainer implements IInitable,
-		ISimpleKeypad {
+public class SimpleKeypad extends JMEContainer implements IInitable, ISimpleKeypad
+{
 
 	/** The bg colour. */
 	private ColorRGBA bgColour = ColorRGBA.Black;
@@ -83,10 +83,13 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	/**
 	 * Instantiates a new simple keypad.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public SimpleKeypad(String name, UUID uuid) {
+	public SimpleKeypad(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -96,19 +99,19 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * multiplicity3.csys.stage.IStage, synergynet3.keyboard.KeyboardOutput)
 	 */
 	@Override
-	public void generateKeys(IStage stage, KeyboardOutput keyboardOutput) {
+	public void generateKeys(IStage stage, KeyboardOutput keyboardOutput)
+	{
 		this.stage = stage;
 		this.keyboardOutput = keyboardOutput;
 
-		try {
-			IColourRectangle background = stage.getContentFactory().create(
-					IColourRectangle.class, "keyboardBg", UUID.randomUUID());
+		try
+		{
+			IColourRectangle background = stage.getContentFactory().create(IColourRectangle.class, "keyboardBg", UUID.randomUUID());
 			background.enableTransparency();
 			background.setSolidBackgroundColour(bgColour);
 			background.setSize(width, height);
 
-			IRoundedBorder keyboardBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "keyboardBorder", UUID.randomUUID());
+			IRoundedBorder keyboardBorder = stage.getContentFactory().create(IRoundedBorder.class, "keyboardBorder", UUID.randomUUID());
 			keyboardBorder.setBorderWidth(10f);
 			keyboardBorder.setSize(width, height);
 			keyboardBorder.setColor(boardBorderColour);
@@ -151,20 +154,22 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 
 			this.zOrderManager.setAutoBringToTop(false);
 
-			if (movable) {
-				rtsBackground = stage.getBehaviourMaker().addBehaviour(
-						background, RotateTranslateScaleBehaviour.class);
+			if (movable)
+			{
+				rtsBackground = stage.getBehaviourMaker().addBehaviour(background, RotateTranslateScaleBehaviour.class);
 				rtsBackground.setItemActingOn(this);
-				rtsBorder = stage.getBehaviourMaker().addBehaviour(
-						keyboardBorder, RotateTranslateScaleBehaviour.class);
+				rtsBorder = stage.getBehaviourMaker().addBehaviour(keyboardBorder, RotateTranslateScaleBehaviour.class);
 				rtsBorder.setItemActingOn(this);
-				if (scaleLimitsSet) {
+				if (scaleLimitsSet)
+				{
 					rtsBackground.setScaleLimits(minScale, maxScale);
 					rtsBorder.setScaleLimits(minScale, maxScale);
 				}
 			}
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 		}
 	}
 
@@ -172,7 +177,9 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleKeypad#getHeight()
 	 */
-	public float getHeight() {
+	@Override
+	public float getHeight()
+	{
 		return height;
 	}
 
@@ -180,7 +187,9 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * (non-Javadoc)
 	 * @see synergynet3.additionalitems.interfaces.ISimpleKeypad#getWidth()
 	 */
-	public float getWidth() {
+	@Override
+	public float getWidth()
+	{
 		return width;
 	}
 
@@ -190,7 +199,9 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * synergynet3.additionalitems.interfaces.ISimpleKeypad#setButtonSizeAndSpacing
 	 * (float, float)
 	 */
-	public void setButtonSizeAndSpacing(float buttonSize, float buttonSpacing) {
+	@Override
+	public void setButtonSizeAndSpacing(float buttonSize, float buttonSpacing)
+	{
 		this.buttonSize = buttonSize;
 		this.buttonSpacing = buttonSpacing;
 
@@ -209,9 +220,8 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * com.jme3.math.ColorRGBA, synergynet3.fonts.FontColour)
 	 */
 	@Override
-	public void setColours(ColorRGBA bgColour, ColorRGBA keyColour,
-			ColorRGBA keyBorderColour, ColorRGBA boardBorderColour,
-			FontColour fontColour) {
+	public void setColours(ColorRGBA bgColour, ColorRGBA keyColour, ColorRGBA keyBorderColour, ColorRGBA boardBorderColour, FontColour fontColour)
+	{
 		this.bgColour = bgColour;
 		this.keyColour = keyColour;
 		this.keyBorderColour = keyBorderColour;
@@ -225,7 +235,8 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * synergynet3.additionalitems.interfaces.ISimpleKeypad#setMovable(boolean)
 	 */
 	@Override
-	public void setMovable(boolean movable) {
+	public void setMovable(boolean movable)
+	{
 		this.movable = movable;
 	}
 
@@ -235,13 +246,17 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * synergynet3.additionalitems.interfaces.ISimpleKeypad#setScaleLimits(float
 	 * , float)
 	 */
-	public void setScaleLimits(float minScale, float maxScale) {
+	@Override
+	public void setScaleLimits(float minScale, float maxScale)
+	{
 		this.minScale = minScale;
 		this.maxScale = maxScale;
-		if (rtsBackground != null) {
+		if (rtsBackground != null)
+		{
 			rtsBackground.setScaleLimits(minScale, maxScale);
 		}
-		if (rtsBorder != null) {
+		if (rtsBorder != null)
+		{
 			rtsBorder.setScaleLimits(minScale, maxScale);
 		}
 		scaleLimitsSet = true;
@@ -251,37 +266,36 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	 * Generate backspace key.
 	 *
 	 * @return the i buttonbox
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private IButtonbox generateBackspaceKey()
-			throws ContentTypeNotBoundException {
+	private IButtonbox generateBackspaceKey() throws ContentTypeNotBoundException
+	{
 
 		x -= buttonSpacing;
 
-		float backspaceKeyWidth = (buttonSize * 2)
-				+ (buttonSpacing - buttonSize);
-		x += ((buttonSize / 2) + (backspaceKeyWidth / 2))
-				+ (buttonSpacing - buttonSize);
+		float backspaceKeyWidth = (buttonSize * 2) + (buttonSpacing - buttonSize);
+		x += ((buttonSize / 2) + (backspaceKeyWidth / 2)) + (buttonSpacing - buttonSize);
 
-		IButtonbox button = stage.getContentFactory().create(IButtonbox.class,
-				"button", UUID.randomUUID());
-		button.setText("<", keyColour, keyBorderColour, fontColour,
-				backspaceKeyWidth, buttonSize, stage);
+		IButtonbox button = stage.getContentFactory().create(IButtonbox.class, "button", UUID.randomUUID());
+		button.setText("<", keyColour, keyBorderColour, fontColour, backspaceKeyWidth, buttonSize, stage);
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				keyboardOutput.onKeyboardOutput(KeyboardSpecialKeys.BACKSPACE
-						.toString());
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				keyboardOutput.onKeyboardOutput(KeyboardSpecialKeys.BACKSPACE.toString());
 			}
 		};
-		button.getListener().getMultiTouchDispatcher()
-				.addListener(new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		button.getListener().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 		button.setRelativeLocation(new Vector2f(x, y));
 
 		this.addItem(button);
@@ -291,31 +305,34 @@ public class SimpleKeypad extends JMEContainer implements IInitable,
 	/**
 	 * Generate key.
 	 *
-	 * @param key the key
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param key
+	 *            the key
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateKey(final String key)
-			throws ContentTypeNotBoundException {
+	private void generateKey(final String key) throws ContentTypeNotBoundException
+	{
 
-		IButtonbox button = stage.getContentFactory().create(IButtonbox.class,
-				"button", UUID.randomUUID());
-		button.setText(key, keyColour, keyBorderColour, fontColour, buttonSize,
-				buttonSize, stage);
+		IButtonbox button = stage.getContentFactory().create(IButtonbox.class, "button", UUID.randomUUID());
+		button.setText(key, keyColour, keyBorderColour, fontColour, buttonSize, buttonSize, stage);
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				keyboardOutput.onKeyboardOutput(key);
 			}
 		};
 
-		button.getListener().getMultiTouchDispatcher()
-				.addListener(new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		button.getListener().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 
 		button.setRelativeLocation(new Vector2f(x, y));
 		this.addItem(button);

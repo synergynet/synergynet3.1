@@ -3,7 +3,8 @@ package multiplicity3.csys.animation.elements;
 /**
  * The Class SimpleActionAnimationElement.
  */
-public abstract class SimpleActionAnimationElement extends AnimationElement {
+public abstract class SimpleActionAnimationElement extends AnimationElement
+{
 
 	/** The finished. */
 	private boolean finished = false;
@@ -20,7 +21,8 @@ public abstract class SimpleActionAnimationElement extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 		doSimpleAction();
 		finished = true;
 	}
@@ -30,7 +32,8 @@ public abstract class SimpleActionAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
@@ -39,7 +42,8 @@ public abstract class SimpleActionAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 	}
 
 	/*
@@ -49,7 +53,8 @@ public abstract class SimpleActionAnimationElement extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
+	public void updateAnimationState(float tpf)
+	{
 	}
 
 }

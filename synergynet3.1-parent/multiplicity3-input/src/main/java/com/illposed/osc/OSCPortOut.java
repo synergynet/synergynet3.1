@@ -45,7 +45,8 @@ import java.net.UnknownHostException;
 /**
  * The Class OSCPortOut.
  */
-public class OSCPortOut extends OSCPort {
+public class OSCPortOut extends OSCPort
+{
 
 	/** The address. */
 	protected InetAddress address;
@@ -55,41 +56,47 @@ public class OSCPortOut extends OSCPort {
 	 * port Default the address to localhost Default the port to the standard
 	 * one for SuperCollider
 	 */
-	public OSCPortOut() throws UnknownHostException, SocketException {
+	public OSCPortOut() throws UnknownHostException, SocketException
+	{
 		this(InetAddress.getLocalHost(), defaultSCOSCPort);
 	}
 
 	/**
 	 * Create an OSCPort that sends to newAddress, on the standard SuperCollider
 	 * port
-	 * 
-	 * @param newAddress InetAddress Default the port to the standard one for
+	 *
+	 * @param newAddress
+	 *            InetAddress Default the port to the standard one for
 	 *            SuperCollider
 	 */
-	public OSCPortOut(InetAddress newAddress) throws SocketException {
+	public OSCPortOut(InetAddress newAddress) throws SocketException
+	{
 		this(newAddress, defaultSCOSCPort);
 	}
 
 	/**
 	 * Create an OSCPort that sends to newAddress, newPort
-	 * 
-	 * @param newAddress InetAddress
-	 * @param newPort int
+	 *
+	 * @param newAddress
+	 *            InetAddress
+	 * @param newPort
+	 *            int
 	 */
-	public OSCPortOut(InetAddress newAddress, int newPort)
-			throws SocketException {
+	public OSCPortOut(InetAddress newAddress, int newPort) throws SocketException
+	{
 		socket = new DatagramSocket();
 		address = newAddress;
 		port = newPort;
 	}
 
 	/**
-	 * @param aPacket OSCPacket
+	 * @param aPacket
+	 *            OSCPacket
 	 */
-	public void send(OSCPacket aPacket) throws IOException {
+	public void send(OSCPacket aPacket) throws IOException
+	{
 		byte[] byteArray = aPacket.getByteArray();
-		DatagramPacket packet = new DatagramPacket(byteArray, byteArray.length,
-				address, port);
+		DatagramPacket packet = new DatagramPacket(byteArray, byteArray.length, address, port);
 		socket.send(packet);
 	}
 }

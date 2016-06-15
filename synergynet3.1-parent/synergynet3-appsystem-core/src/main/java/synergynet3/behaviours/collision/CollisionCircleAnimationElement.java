@@ -12,7 +12,8 @@ import synergynet3.additionalUtils.AdditionalSynergyNetUtilities;
  * trajectories when an item bounces off a display border and detects when an
  * item should be transferred. Initiates network transfers when required.
  */
-public class CollisionCircleAnimationElement extends AnimationElement {
+public class CollisionCircleAnimationElement extends AnimationElement
+{
 
 	/**
 	 * Objects for the item to collide with
@@ -40,17 +41,22 @@ public class CollisionCircleAnimationElement extends AnimationElement {
 	 * the flick motion by repositioning the managed item using JME's animation
 	 * system.
 	 *
-	 * @param item The item to be influenced by this animation.
-	 * @param stage The stage the item currently resides in.
+	 * @param item
+	 *            The item to be influenced by this animation.
+	 * @param stage
+	 *            The stage the item currently resides in.
 	 */
-	public CollisionCircleAnimationElement(IItem item) {
+	public CollisionCircleAnimationElement(IItem item)
+	{
 		this.item = item;
 	}
 
 	/**
-	 * @param collidables the collidables to set
+	 * @param collidables
+	 *            the collidables to set
 	 */
-	public void addCollidable(IItem item, Float radius) {
+	public void addCollidable(IItem item, Float radius)
+	{
 		collidables.put(item, radius);
 		collidingWith.put(item, false);
 	}
@@ -62,7 +68,8 @@ public class CollisionCircleAnimationElement extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 	}
 
 	/*
@@ -70,14 +77,17 @@ public class CollisionCircleAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
 	/**
-	 * @param collidables the collidable item to remove
+	 * @param collidables
+	 *            the collidable item to remove
 	 */
-	public void removeCollidable(IItem item) {
+	public void removeCollidable(IItem item)
+	{
 		collidables.remove(item);
 		collidingWith.remove(item);
 	}
@@ -87,7 +97,8 @@ public class CollisionCircleAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		finished = true;
 	}
 
@@ -98,20 +109,24 @@ public class CollisionCircleAnimationElement extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
-		if (!finished) {
-			for (Entry<IItem, Float> entry : collidables.entrySet()) {
-				if (collidingWith.get(entry.getKey())) {
-					if (!AdditionalSynergyNetUtilities.inRadius(item
-							.getRelativeLocation(), entry.getKey()
-							.getRelativeLocation(), entry.getValue())) {
+	public void updateAnimationState(float tpf)
+	{
+		if (!finished)
+		{
+			for (Entry<IItem, Float> entry : collidables.entrySet())
+			{
+				if (collidingWith.get(entry.getKey()))
+				{
+					if (!AdditionalSynergyNetUtilities.inRadius(item.getRelativeLocation(), entry.getKey().getRelativeLocation(), entry.getValue()))
+					{
 						collidingWith.put(entry.getKey(), false);
 						onLeavingCollision(entry.getKey());
 					}
-				} else {
-					if (AdditionalSynergyNetUtilities.inRadius(item
-							.getRelativeLocation(), entry.getKey()
-							.getRelativeLocation(), entry.getValue())) {
+				}
+				else
+				{
+					if (AdditionalSynergyNetUtilities.inRadius(item.getRelativeLocation(), entry.getKey().getRelativeLocation(), entry.getValue()))
+					{
 						collidingWith.put(entry.getKey(), true);
 						onEnteringCollision(entry.getKey());
 					}
@@ -124,18 +139,22 @@ public class CollisionCircleAnimationElement extends AnimationElement {
 	 * Override this method to set what action should be performed on entering a
 	 * collision.
 	 *
-	 * @param collidale The item the managed item collided with.
+	 * @param collidale
+	 *            The item the managed item collided with.
 	 */
-	protected void onEnteringCollision(IItem collidale) {
+	protected void onEnteringCollision(IItem collidale)
+	{
 	}
 
 	/**
 	 * Override this method to set what action should be performed on leaving a
 	 * collision.
 	 *
-	 * @param collidale The item the managed item collided with.
+	 * @param collidale
+	 *            The item the managed item collided with.
 	 */
-	protected void onLeavingCollision(IItem collidale) {
+	protected void onLeavingCollision(IItem collidale)
+	{
 	}
 
 }

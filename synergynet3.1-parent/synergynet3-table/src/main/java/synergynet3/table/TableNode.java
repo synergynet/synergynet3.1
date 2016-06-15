@@ -10,12 +10,14 @@ import synergynet3.table.appcontrol.handlers.SwitchToApplicationMessageHandler;
 /**
  * The Class TableNode.
  */
-public class TableNode {
+public class TableNode
+{
 
 	/**
 	 * Instantiates a new table node.
 	 */
-	public TableNode() {
+	public TableNode()
+	{
 		MultiplicityClient client = MultiplicityClient.get();
 		client.start();
 		initNetwork();
@@ -24,9 +26,11 @@ public class TableNode {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		new TableNode();
 	}
 
@@ -35,22 +39,20 @@ public class TableNode {
 	 *
 	 * @return the configured app controller
 	 */
-	private AppController getConfiguredAppController() {
+	private AppController getConfiguredAppController()
+	{
 		AppController appController = new AppController();
-		appController.addHandler(SwitchToApplication.class,
-				new SwitchToApplicationMessageHandler());
+		appController.addHandler(SwitchToApplication.class, new SwitchToApplicationMessageHandler());
 		return appController;
 	}
 
 	/**
 	 * Inits the network.
 	 */
-	private void initNetwork() {
+	private void initNetwork()
+	{
 		AppController appController = getConfiguredAppController();
-		SynergyNetCluster
-				.get()
-				.getMessagingManager()
-				.registerMessageListener(appController, AppControlMessage.class);
+		SynergyNetCluster.get().getMessagingManager().registerMessageListener(appController, AppControlMessage.class);
 
 	}
 }

@@ -11,11 +11,11 @@ import com.hazelcast.core.Member;
 /**
  * The Class MultiTouchEnabledSync.
  */
-public class MultiTouchEnabledSync {
+public class MultiTouchEnabledSync
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(MultiTouchEnabledSync.class.getName());
+	private static final Logger log = Logger.getLogger(MultiTouchEnabledSync.class.getName());
 
 	/** The input. */
 	private MultiTouchInputComponent input;
@@ -26,12 +26,13 @@ public class MultiTouchEnabledSync {
 	/**
 	 * Instantiates a new multi touch enabled sync.
 	 *
-	 * @param tableClusterData the table cluster data
-	 * @param mtInput the mt input
+	 * @param tableClusterData
+	 *            the table cluster data
+	 * @param mtInput
+	 *            the mt input
 	 */
-	public MultiTouchEnabledSync(
-			NumberNetStudentTableClusteredData tableClusterData,
-			MultiTouchInputComponent mtInput) {
+	public MultiTouchEnabledSync(NumberNetStudentTableClusteredData tableClusterData, MultiTouchInputComponent mtInput)
+	{
 		this.tableClusterData = tableClusterData;
 		this.input = mtInput;
 	}
@@ -39,32 +40,33 @@ public class MultiTouchEnabledSync {
 	/**
 	 * Start.
 	 */
-	public void start() {
+	public void start()
+	{
 		setupTableDataClusterListeners();
 	}
 
 	/**
 	 * Stop.
 	 */
-	public void stop() {
+	public void stop()
+	{
 		// nothing to do
 	}
 
 	/**
 	 * Setup table data cluster listeners.
 	 */
-	private void setupTableDataClusterListeners() {
-		tableClusterData.getTouchEnabledControlVariable()
-				.registerChangeListener(
-						new DistributedPropertyChangedAction<Boolean>() {
-							@Override
-							public void distributedPropertyDidChange(Member m,
-									Boolean oldValue, Boolean newValue) {
-								log.info("Setting multi-touch enabled property to "
-										+ newValue);
-								input.setMultiTouchInputEnabled(newValue);
-							}
-						});
+	private void setupTableDataClusterListeners()
+	{
+		tableClusterData.getTouchEnabledControlVariable().registerChangeListener(new DistributedPropertyChangedAction<Boolean>()
+		{
+			@Override
+			public void distributedPropertyDidChange(Member m, Boolean oldValue, Boolean newValue)
+			{
+				log.info("Setting multi-touch enabled property to " + newValue);
+				input.setMultiTouchInputEnabled(newValue);
+			}
+		});
 	}
 
 }

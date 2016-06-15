@@ -6,7 +6,8 @@ import java.util.Date;
 /**
  * The Class MessageSystem.
  */
-public class MessageSystem {
+public class MessageSystem
+{
 
 	/** The generated i ds. */
 	private static long generatedIDs = 0;
@@ -22,8 +23,10 @@ public class MessageSystem {
 	 *
 	 * @return the string
 	 */
-	public static String generateMessageID() {
-		if (tableID.equals("")) {
+	public static String generateMessageID()
+	{
+		if (tableID.equals(""))
+		{
 			tableID = "" + new Date().getTime();
 		}
 		String messageID = tableID + generatedIDs;
@@ -34,13 +37,18 @@ public class MessageSystem {
 	/**
 	 * Message already received.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 * @return true, if successful
 	 */
-	public static boolean messageAlreadyReceived(PerformActionMessage message) {
-		if (registeredIDs.contains(message.getMessageID())) {
+	public static boolean messageAlreadyReceived(PerformActionMessage message)
+	{
+		if (registeredIDs.contains(message.getMessageID()))
+		{
 			return true;
-		} else {
+		}
+		else
+		{
 			registeredIDs.add(message.getMessageID());
 			return false;
 		}
@@ -49,9 +57,11 @@ public class MessageSystem {
 	/**
 	 * Increment generated message i ds.
 	 */
-	private static void incrementGeneratedMessageIDs() {
+	private static void incrementGeneratedMessageIDs()
+	{
 		generatedIDs++;
-		if (generatedIDs == Long.MAX_VALUE) {
+		if (generatedIDs == Long.MAX_VALUE)
+		{
 			generatedIDs = 0;
 		}
 	}

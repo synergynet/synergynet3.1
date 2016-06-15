@@ -9,7 +9,8 @@ import multiplicity3.csys.items.item.IItem;
  * The Interface ImplementsContentItem.
  */
 @Retention(RetentionPolicy.RUNTIME)
-public @interface ImplementsContentItem {
+public @interface ImplementsContentItem
+{
 
 	/**
 	 * Target.

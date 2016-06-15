@@ -28,7 +28,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class TUIOObjectRepresentation.
  */
-public abstract class TUIOObjectRepresentation {
+public abstract class TUIOObjectRepresentation
+{
 
 	/** The creation time. */
 	private long creationTime;
@@ -48,7 +49,8 @@ public abstract class TUIOObjectRepresentation {
 	 *
 	 * @param id
 	 */
-	public TUIOObjectRepresentation() {
+	public TUIOObjectRepresentation()
+	{
 		setCreationTime(System.nanoTime());
 	}
 
@@ -57,7 +59,8 @@ public abstract class TUIOObjectRepresentation {
 	 *
 	 * @return the creation time
 	 */
-	public long getCreationTime() {
+	public long getCreationTime()
+	{
 		return creationTime;
 	}
 
@@ -66,7 +69,8 @@ public abstract class TUIOObjectRepresentation {
 	 *
 	 * @return the id
 	 */
-	public long getId() {
+	public long getId()
+	{
 		return id;
 	}
 
@@ -75,7 +79,8 @@ public abstract class TUIOObjectRepresentation {
 	 *
 	 * @return the position
 	 */
-	public Vector2f getPosition() {
+	public Vector2f getPosition()
+	{
 		return position;
 	}
 
@@ -84,43 +89,52 @@ public abstract class TUIOObjectRepresentation {
 	 *
 	 * @return the velocity
 	 */
-	public Vector2f getVelocity() {
+	public Vector2f getVelocity()
+	{
 		return velocity;
 	}
 
 	/**
 	 * Sets the creation time.
 	 *
-	 * @param creationTime the new creation time
+	 * @param creationTime
+	 *            the new creation time
 	 */
-	public void setCreationTime(long creationTime) {
+	public void setCreationTime(long creationTime)
+	{
 		this.creationTime = creationTime;
 	}
 
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
-	public void setId(long id) {
+	public void setId(long id)
+	{
 		this.id = id;
 	}
 
 	/**
 	 * Sets the position.
 	 *
-	 * @param position the new position
+	 * @param position
+	 *            the new position
 	 */
-	public void setPosition(Vector2f position) {
+	public void setPosition(Vector2f position)
+	{
 		this.position = position;
 	}
 
 	/**
 	 * Sets the velocity.
 	 *
-	 * @param velocity the new velocity
+	 * @param velocity
+	 *            the new velocity
 	 */
-	public void setVelocity(Vector2f velocity) {
+	public void setVelocity(Vector2f velocity)
+	{
 		this.velocity = velocity;
 	}
 

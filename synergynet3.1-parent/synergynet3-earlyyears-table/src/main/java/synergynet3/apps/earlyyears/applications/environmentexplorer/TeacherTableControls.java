@@ -18,7 +18,8 @@ import com.jme3.math.FastMath;
 /**
  * The Class TeacherTableControls.
  */
-public class TeacherTableControls {
+public class TeacherTableControls
+{
 
 	/** The Constant RESOURCE_DIR. */
 	private static final String RESOURCE_DIR = "synergynet3/earlyyears/table/applications/environmentexplorer/";
@@ -50,111 +51,111 @@ public class TeacherTableControls {
 	/**
 	 * Instantiates a new teacher table controls.
 	 *
-	 * @param stage the stage
-	 * @param app the app
+	 * @param stage
+	 *            the stage
+	 * @param app
+	 *            the app
 	 */
-	public TeacherTableControls(IStage stage, EnvironmentExplorerApp app) {
+	public TeacherTableControls(IStage stage, EnvironmentExplorerApp app)
+	{
 
 		application = app;
 
-		try {
+		try
+		{
 
 			Logger log = Logger.getLogger(TeacherTableControls.class.getName());
 
-			controlBox = stage.getContentFactory().create(
-					IScrollContainer.class, "menu", UUID.randomUUID());
+			controlBox = stage.getContentFactory().create(IScrollContainer.class, "menu", UUID.randomUUID());
 			controlBox.setDimensions(stage, log, 151, 50);
 			stage.addItem(controlBox);
 
-			targetLine = new TargetLine(stage, log, controlBox,
-					FeedbackSystem.getFedbackEligbleItems());
+			targetLine = new TargetLine(stage, log, controlBox, FeedbackSystem.getFedbackEligbleItems());
 
 			int optionsHeight = (controlBox.getHeight() / 2) - 25;
 			int optionsWidth = (-controlBox.getWidth() / 2) + 25;
 
-			toggleUpButton = stage.getContentFactory().create(
-					ICachableImage.class, "userIcon", UUID.randomUUID());
+			toggleUpButton = stage.getContentFactory().create(ICachableImage.class, "userIcon", UUID.randomUUID());
 			toggleUpButton.setImage(SCROLL_ARROW_LOC);
 			toggleUpButton.setSize(40, 40);
 
-			toggleUpButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							targetLine.getPreviousTarget();
-							if (targetLine.getCurrentTarget() != null) {
-								setAsMapButton.setImage(RESOURCE_DIR
-										+ "addToGallery.png");
-							} else {
-								setAsMapButton.setImage(RESOURCE_DIR
-										+ "addToGalleryFaded.png");
-							}
-						}
-					});
-			controlBox.addToAllFrames(toggleUpButton, optionsWidth,
-					optionsHeight);
+			toggleUpButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					targetLine.getPreviousTarget();
+					if (targetLine.getCurrentTarget() != null)
+					{
+						setAsMapButton.setImage(RESOURCE_DIR + "addToGallery.png");
+					}
+					else
+					{
+						setAsMapButton.setImage(RESOURCE_DIR + "addToGalleryFaded.png");
+					}
+				}
+			});
+			controlBox.addToAllFrames(toggleUpButton, optionsWidth, optionsHeight);
 
-			setAsMapButton = stage.getContentFactory().create(
-					ICachableImage.class, "userIcon", UUID.randomUUID());
+			setAsMapButton = stage.getContentFactory().create(ICachableImage.class, "userIcon", UUID.randomUUID());
 			setAsMapButton.setImage(RESOURCE_DIR + "addToGalleryFaded.png");
 			setAsMapButton.setSize(40, 40);
-			setAsMapButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							if (targetLine.getCurrentTarget() != null) {
-								if (targetLine.getCurrentTarget() != null) {
-									targetLine.hideLine();
-									application.setMap(targetLine
-											.getCurrentTarget());
-								}
-							}
+			setAsMapButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					if (targetLine.getCurrentTarget() != null)
+					{
+						if (targetLine.getCurrentTarget() != null)
+						{
+							targetLine.hideLine();
+							application.setMap(targetLine.getCurrentTarget());
 						}
-					});
-			controlBox.addToAllFrames(setAsMapButton, optionsWidth + 50,
-					optionsHeight);
+					}
+				}
+			});
+			controlBox.addToAllFrames(setAsMapButton, optionsWidth + 50, optionsHeight);
 
-			toggleDownButton = stage.getContentFactory().create(
-					ICachableImage.class, "userIcon", UUID.randomUUID());
+			toggleDownButton = stage.getContentFactory().create(ICachableImage.class, "userIcon", UUID.randomUUID());
 			toggleDownButton.setImage(SCROLL_ARROW_LOC);
 			toggleDownButton.setSize(40, 40);
 			toggleDownButton.setRelativeRotation(FastMath.DEG_TO_RAD * -180);
-			toggleDownButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							targetLine.getNextTarget();
-							if (targetLine.getCurrentTarget() != null) {
-								setAsMapButton.setImage(RESOURCE_DIR
-										+ "addToGallery.png");
-							} else {
-								setAsMapButton.setImage(RESOURCE_DIR
-										+ "addToGalleryFaded.png");
-							}
-						}
-					});
-			controlBox.addToAllFrames(toggleDownButton, optionsWidth + 100,
-					optionsHeight);
+			toggleDownButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					targetLine.getNextTarget();
+					if (targetLine.getCurrentTarget() != null)
+					{
+						setAsMapButton.setImage(RESOURCE_DIR + "addToGallery.png");
+					}
+					else
+					{
+						setAsMapButton.setImage(RESOURCE_DIR + "addToGalleryFaded.png");
+					}
+				}
+			});
+			controlBox.addToAllFrames(toggleDownButton, optionsWidth + 100, optionsHeight);
 
-			leaveMarkerButton = stage.getContentFactory().create(
-					ICachableImage.class, "userIcon", UUID.randomUUID());
+			leaveMarkerButton = stage.getContentFactory().create(ICachableImage.class, "userIcon", UUID.randomUUID());
 			leaveMarkerButton.setImage(RESOURCE_DIR + "removeFromGallery.png");
 			leaveMarkerButton.setSize(40, 40);
-			leaveMarkerButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorClicked(MultiTouchCursorEvent event) {
-							application.createMarker(
-									leaveMarkerButton.getWorldLocation(),
-									controlBox.getRelativeRotation());
-						}
-					});
-			controlBox.addToAllFrames(leaveMarkerButton, optionsWidth + 175,
-					optionsHeight);
+			leaveMarkerButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorClicked(MultiTouchCursorEvent event)
+				{
+					application.createMarker(leaveMarkerButton.getWorldLocation(), controlBox.getRelativeRotation());
+				}
+			});
+			controlBox.addToAllFrames(leaveMarkerButton, optionsWidth + 175, optionsHeight);
 
-		} catch (ContentTypeNotBoundException e) {
-			AdditionalSynergyNetUtilities.log(Level.SEVERE,
-					"ContentTypeNotBoundException: ", e);
+		}
+		catch (ContentTypeNotBoundException e)
+		{
+			AdditionalSynergyNetUtilities.log(Level.SEVERE, "ContentTypeNotBoundException: ", e);
 		}
 
 	}
@@ -162,13 +163,19 @@ public class TeacherTableControls {
 	/**
 	 * Sets the visibility.
 	 *
-	 * @param visibility the visibility
-	 * @param stage the stage
+	 * @param visibility
+	 *            the visibility
+	 * @param stage
+	 *            the stage
 	 */
-	public void setVisibility(boolean visibility, IStage stage) {
-		if (!visibility) {
+	public void setVisibility(boolean visibility, IStage stage)
+	{
+		if (!visibility)
+		{
 			setAsMapButton.setImage(RESOURCE_DIR + "addToGalleryFaded.png");
-		} else {
+		}
+		else
+		{
 			stage.getZOrderManager().bringToTop(controlBox);
 		}
 		controlBox.setVisibility(visibility);

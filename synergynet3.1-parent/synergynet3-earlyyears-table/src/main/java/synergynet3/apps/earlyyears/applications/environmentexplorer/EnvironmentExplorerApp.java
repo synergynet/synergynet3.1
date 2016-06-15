@@ -24,7 +24,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class EnvironmentExplorerApp.
  */
-public class EnvironmentExplorerApp extends EarlyYearsApp {
+public class EnvironmentExplorerApp extends EarlyYearsApp
+{
 
 	/** The Constant MARKER_IMAGE. */
 	private static final String MARKER_IMAGE = "synergynet3/earlyyears/table/applications/environmentexplorer/removeFromGallery.png";
@@ -41,11 +42,15 @@ public class EnvironmentExplorerApp extends EarlyYearsApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -60,51 +65,61 @@ public class EnvironmentExplorerApp extends EarlyYearsApp {
 	/**
 	 * Creates the marker.
 	 *
-	 * @param relativeLocation the relative location
-	 * @param relativeRotation the relative rotation
+	 * @param relativeLocation
+	 *            the relative location
+	 * @param relativeRotation
+	 *            the relative rotation
 	 */
-	public void createMarker(Vector2f relativeLocation, float relativeRotation) {
-		try {
-			ICachableImage marker = stage.getContentFactory().create(
-					ICachableImage.class, "userIcon", UUID.randomUUID());
+	public void createMarker(Vector2f relativeLocation, float relativeRotation)
+	{
+		try
+		{
+			ICachableImage marker = stage.getContentFactory().create(ICachableImage.class, "userIcon", UUID.randomUUID());
 			marker.setImage(MARKER_IMAGE);
 			marker.setSize(40, 40);
 			marker.setInteractionEnabled(false);
-			marker.setRelativeLocation(new Vector2f(relativeLocation.x
-					- (displayWidth / 2), relativeLocation.y
-					- (displayHeight / 2)));
+			marker.setRelativeLocation(new Vector2f(relativeLocation.x - (displayWidth / 2), relativeLocation.y - (displayHeight / 2)));
 			marker.setRelativeRotation(relativeRotation);
 			stage.addItem(marker);
 			marker.getZOrderManager().setBringToTopPropagatesUp(false);
 			marker.getZOrderManager().setAutoBringToTop(false);
 			markers.add(marker);
-		} catch (ContentTypeNotBoundException e) {
-			AdditionalSynergyNetUtilities.log(Level.SEVERE,
-					"Content Type NotBound Exception Exception.", e);
+		}
+		catch (ContentTypeNotBoundException e)
+		{
+			AdditionalSynergyNetUtilities.log(Level.SEVERE, "Content Type NotBound Exception Exception.", e);
 		}
 	}
 
 	/**
 	 * Sets the map.
 	 *
-	 * @param item the new map
+	 * @param item
+	 *            the new map
 	 */
-	public void setMap(IItem item) {
+	public void setMap(IItem item)
+	{
 
-		new PerformActionOnAllDescendents(item, false, true) {
+		new PerformActionOnAllDescendents(item, false, true)
+		{
 			@Override
-			protected void actionOnDescendent(IItem child) {
-				try {
+			protected void actionOnDescendent(IItem child)
+			{
+				try
+				{
 					ICachableImage image = (ICachableImage) child;
 					map.setImage(image.getImage());
 
-					for (ICachableImage marker : markers) {
+					for (ICachableImage marker : markers)
+					{
 						stage.removeItem(marker);
 					}
 					markers.clear();
 
 					stop = true;
-				} catch (ClassCastException e) {
+				}
+				catch (ClassCastException e)
+				{
 				}
 			}
 		};
@@ -113,9 +128,11 @@ public class EnvironmentExplorerApp extends EarlyYearsApp {
 	/**
 	 * Sets the teacher control visibility.
 	 *
-	 * @param visible the new teacher control visibility
+	 * @param visible
+	 *            the new teacher control visibility
 	 */
-	public void setTeacherControlVisibility(boolean visible) {
+	public void setTeacherControlVisibility(boolean visible)
+	{
 		teachTableControls.setVisibility(visible, stage);
 	}
 
@@ -124,7 +141,8 @@ public class EnvironmentExplorerApp extends EarlyYearsApp {
 	 * @see synergynet3.SynergyNetApp#getSpecificFriendlyAppName()
 	 */
 	@Override
-	protected String getSpecificFriendlyAppName() {
+	protected String getSpecificFriendlyAppName()
+	{
 		return "EnvironmentExplorer";
 	}
 
@@ -133,8 +151,8 @@ public class EnvironmentExplorerApp extends EarlyYearsApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 
 		feedbackTypes.add(SimpleTrafficLightFeedback.class);
 		feedbackTypes.add(AudioFeedback.class);
@@ -144,8 +162,7 @@ public class EnvironmentExplorerApp extends EarlyYearsApp {
 		teachTableControls = new TeacherTableControls(stage, this);
 		teachTableControls.setVisibility(false, stage);
 
-		map = stage.getContentFactory().create(ICachableImage.class,
-				"userIcon", UUID.randomUUID());
+		map = stage.getContentFactory().create(ICachableImage.class, "userIcon", UUID.randomUUID());
 		map.setSize(displayWidth, displayHeight);
 		map.setRelativeScale(0.8f);
 		map.setInteractionEnabled(false);

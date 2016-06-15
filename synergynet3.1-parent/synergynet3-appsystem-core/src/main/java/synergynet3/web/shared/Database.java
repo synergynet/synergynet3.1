@@ -1,7 +1,8 @@
 package synergynet3.web.shared;
 
 /** Class defining values to be used to access the DB4O database. */
-public class Database {
+public class Database
+{
 
 	/** Password for accessing the DB4O Database. */
 	public static final String DB_PASS = "1ReallyGoodPassword";

@@ -5,7 +5,8 @@ import multiplicity3.input.MultiTouchInputComponent;
 /**
  * The Interface IMultiplicityApp.
  */
-public interface IMultiplicityApp {
+public interface IMultiplicityApp
+{
 
 	/**
 	 * Gets the friendly app name.
@@ -22,8 +23,10 @@ public interface IMultiplicityApp {
 	/**
 	 * Should start.
 	 *
-	 * @param input the input
-	 * @param iqo the iqo
+	 * @param input
+	 *            the input
+	 * @param iqo
+	 *            the iqo
 	 */
 	void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo);
 

@@ -29,7 +29,8 @@ import com.jme3.math.Vector2f;
  * @author Michael LaLena
  * @version 1.0
  */
-public class Bird {
+public class Bird
+{
 	// The range at which birds can detect the birds, predators, and obstacles
 	/** The Detection range. */
 	public static int DetectionRange;
@@ -78,25 +79,30 @@ public class Bird {
 	/**
 	 * This constructor sets a random location and direction for the bird.
 	 *
-	 * @param birdColor The color of the bird.
+	 * @param birdColor
+	 *            The color of the bird.
 	 */
-	public Bird(Color birdColor) {
+	public Bird(Color birdColor)
+	{
 		// call the other constructor.
-		this((float) (Math.random() * Map.map.width),
-				(float) (Math.random() * Map.map.height),
-				(int) (Math.random() * 360), birdColor);
+		this((float) (Math.random() * Map.map.width), (float) (Math.random() * Map.map.height), (int) (Math.random() * 360), birdColor);
 	}
 
 	/**
 	 * This is the constructor for the birds.
 	 *
-	 * @param x Starting X coordinate of the Bird
-	 * @param y Starting Y coordinate of the Bird
-	 * @param theta Starting angle of the Bird - the direction the bird is
-	 *            facing in degrees
-	 * @param birdColor The color of the bird
+	 * @param x
+	 *            Starting X coordinate of the Bird
+	 * @param y
+	 *            Starting Y coordinate of the Bird
+	 * @param theta
+	 *            Starting angle of the Bird - the direction the bird is facing
+	 *            in degrees
+	 * @param birdColor
+	 *            The color of the bird
 	 */
-	Bird(float x, float y, int theta, Color birdColor) {
+	Bird(float x, float y, int theta, Color birdColor)
+	{
 		location.x = x;
 		location.y = y;
 		currentTheta = theta;
@@ -108,7 +114,8 @@ public class Bird {
 	 *
 	 * @return The color of this bird
 	 */
-	public Color getColor() {
+	public Color getColor()
+	{
 		return color;
 	}
 
@@ -132,7 +139,8 @@ public class Bird {
 	 * of the edges of the map, it will draw up to 4 circles for each bird so
 	 * that the circles are visible on the other edge of the map.
 	 *
-	 * @param g The graphics object to draw the bird on.
+	 * @param g
+	 *            The graphics object to draw the bird on.
 	 */
 	// public void drawRanges(Graphics g) {
 	// drawCircles(g, location.x, location.y);
@@ -176,9 +184,12 @@ public class Bird {
 	 * which birds will separate to aviod the obstacle. The outer circle is the
 	 * range at which the birds can detect the obstacle.
 	 *
-	 * @param g The graphics object to draw the bird on.
-	 * @param x The X coordinate of the bird
-	 * @param y The Y coordinate of the bird
+	 * @param g
+	 *            The graphics object to draw the bird on.
+	 * @param x
+	 *            The X coordinate of the bird
+	 * @param y
+	 *            The Y coordinate of the bird
 	 */
 	// protected void drawCircles( Graphics g, int x, int y ) {
 	// g.setColor(new Color((int)color.getRed()/2, (int)color.getGreen()/2,
@@ -193,10 +204,12 @@ public class Bird {
 	/**
 	 * Get the distance in pixels between this bird and another
 	 *
-	 * @param otherBird The other bird to measure the distance between
+	 * @param otherBird
+	 *            The other bird to measure the distance between
 	 * @return The distance to the other bird
 	 */
-	public float getDistance(Bird otherBird) {
+	public float getDistance(Bird otherBird)
+	{
 		float dX = otherBird.getLocation().x - location.x;
 		float dY = otherBird.getLocation().y - location.y;
 
@@ -206,10 +219,12 @@ public class Bird {
 	/**
 	 * Get the distance in pixels between this bird and a point
 	 *
-	 * @param p The point to measure the distance between
+	 * @param p
+	 *            The point to measure the distance between
 	 * @return The distance between this bird and the point
 	 */
-	public float getDistance(Vector2f p) {
+	public float getDistance(Vector2f p)
+	{
 		float dX = p.x - location.x;
 		float dY = p.y - location.y;
 
@@ -221,7 +236,8 @@ public class Bird {
 	 *
 	 * @return The location of this bird
 	 */
-	public Vector2f getLocation() {
+	public Vector2f getLocation()
+	{
 		return location;
 	}
 
@@ -230,7 +246,8 @@ public class Bird {
 	 *
 	 * @return The Maximum Theta for this bird
 	 */
-	public float getMaxTurnTheta() {
+	public float getMaxTurnTheta()
+	{
 		return maxTurnTheta;
 	}
 
@@ -239,7 +256,8 @@ public class Bird {
 	 *
 	 * @return the representation
 	 */
-	public IItem getRepresentation() {
+	public IItem getRepresentation()
+	{
 		return rep;
 	}
 
@@ -248,7 +266,8 @@ public class Bird {
 	 *
 	 * @return The direction that this bird is facing
 	 */
-	public float getTheta() {
+	public float getTheta()
+	{
 		return currentTheta;
 	}
 
@@ -256,21 +275,25 @@ public class Bird {
 	 * Causes the bird to attempt to face a new direction. Based on
 	 * maxTurnTheta, the bird may not be able to complete the turn.
 	 *
-	 * @param newHeading The direction in degrees that the bird should turn
-	 *            toward.
+	 * @param newHeading
+	 *            The direction in degrees that the bird should turn toward.
 	 */
-	public void move(float newHeading) {
+	public void move(float newHeading)
+	{
 		// determine if it is better to turn left or right for the new heading
 		float left = ((newHeading - currentTheta) + 360) % 360;
 		float right = ((currentTheta - newHeading) + 360) % 360;
 
 		// after deciding which way to turn, find out if we can turn that much
 		float thetaChange = 0;
-		if (left < right) {
+		if (left < right)
+		{
 			// if left > than the max turn, then we can't fully adopt the new
 			// heading
 			thetaChange = Math.min(maxTurnTheta, left);
-		} else {
+		}
+		else
+		{
 			// right turns are negative degrees
 			thetaChange = -Math.min(maxTurnTheta, right);
 		}
@@ -282,20 +305,20 @@ public class Bird {
 		// Note: Because values are truncated, a speed of 1 will result in no
 		// movement unless the bird is moving exactly vertically or
 		// horizontally.
-		location.x += (float) (currentSpeed * Math
-				.cos((currentTheta * Math.PI) / 180.0)) + Map.map.width;
+		location.x += (float) (currentSpeed * Math.cos((currentTheta * Math.PI) / 180.0)) + Map.map.width;
 		location.x %= Map.map.width;
-		location.y -= (float) (currentSpeed * Math
-				.sin((currentTheta * Math.PI) / 180.0)) - Map.map.height;
+		location.y -= (float) (currentSpeed * Math.sin((currentTheta * Math.PI) / 180.0)) - Map.map.height;
 		location.y %= Map.map.height;
 	}
 
 	/**
 	 * Sets the location.
 	 *
-	 * @param pos the new location
+	 * @param pos
+	 *            the new location
 	 */
-	public void setLocation(Vector2f pos) {
+	public void setLocation(Vector2f pos)
+	{
 		location.x = pos.x;
 		location.y = pos.y;
 	}
@@ -303,43 +326,50 @@ public class Bird {
 	/**
 	 * Set the maximum turn capability of the bird for each movement.
 	 *
-	 * @param theta The new maximum turning theta in degrees
+	 * @param theta
+	 *            The new maximum turning theta in degrees
 	 */
-	public void setMaxTurnTheta(float theta) {
+	public void setMaxTurnTheta(float theta)
+	{
 		maxTurnTheta = theta;
 	}
 
 	/**
 	 * Sets the representation.
 	 *
-	 * @param rep the new representation
+	 * @param rep
+	 *            the new representation
 	 */
-	public void setRepresentation(IItem rep) {
+	public void setRepresentation(IItem rep)
+	{
 		this.rep = rep;
 	}
 
 	/**
 	 * Set the current speed of the bird
 	 *
-	 * @param speed The new speed for the bird
+	 * @param speed
+	 *            The new speed for the bird
 	 */
-	public void setSpeed(double speed) {
+	public void setSpeed(double speed)
+	{
 		currentSpeed = speed;
 	}
 
 	/**
 	 * Update representation position.
 	 */
-	public void updateRepresentationPosition() {
+	public void updateRepresentationPosition()
+	{
 		this.rep.setRelativeLocation(new Vector2f(location.x, location.y));
 	}
 
 	/**
 	 * Update representation rotation.
 	 */
-	public void updateRepresentationRotation() {
-		this.rep.setRelativeRotation(FastMath.DEG_TO_RAD
-				* ((90 - +this.currentTheta) + 180));
+	public void updateRepresentationRotation()
+	{
+		this.rep.setRelativeRotation(FastMath.DEG_TO_RAD * ((90 - +this.currentTheta) + 180));
 
 	}
 

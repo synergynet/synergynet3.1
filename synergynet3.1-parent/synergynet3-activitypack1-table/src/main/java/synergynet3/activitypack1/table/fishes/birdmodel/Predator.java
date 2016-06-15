@@ -23,7 +23,8 @@ import java.awt.Color;
  * @author Michael LaLena
  * @version 1.0
  */
-public class Predator extends Bird {
+public class Predator extends Bird
+{
 
 	// How many birds this predator must eat before being removed from the map.
 	/** The current hunger. */
@@ -32,24 +33,29 @@ public class Predator extends Bird {
 	/**
 	 * Constructor for the predator. Places the predator at a random location
 	 */
-	public Predator() {
+	public Predator()
+	{
 		super(Color.red);
 	}
 
 	/**
 	 * This is the constructor for the predator.
 	 *
-	 * @param x The X coordinate of the Predator
-	 * @param y The Y coordinate of the Predator
+	 * @param x
+	 *            The X coordinate of the Predator
+	 * @param y
+	 *            The Y coordinate of the Predator
 	 */
-	Predator(int x, int y) {
+	Predator(int x, int y)
+	{
 		super(x, y, 0, Color.red);
 	}
 
 	/**
 	 * Reduces the hunger value by one.
 	 */
-	public void eatBird() {
+	public void eatBird()
+	{
 		currentHunger--;
 	}
 
@@ -58,17 +64,20 @@ public class Predator extends Bird {
 	 *
 	 * @return The hunger value for this predator.
 	 */
-	public int getHunger() {
+	public int getHunger()
+	{
 		return currentHunger;
 	}
 
 	/**
 	 * Set the hunger value
 	 *
-	 * @param hunger How many birds should this predator eat before being
-	 *            removed from the map.
+	 * @param hunger
+	 *            How many birds should this predator eat before being removed
+	 *            from the map.
 	 */
-	public void setHunger(int hunger) {
+	public void setHunger(int hunger)
+	{
 		currentHunger = hunger;
 	}
 }

@@ -12,7 +12,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface ITextbox.
  */
-public interface ITextbox extends IItem {
+public interface ITextbox extends IItem
+{
 
 	/**
 	 * Gets the background.
@@ -59,47 +60,56 @@ public interface ITextbox extends IItem {
 	/**
 	 * Sets the colours.
 	 *
-	 * @param bgColour the bg colour
-	 * @param borderColour the border colour
-	 * @param fontColour the font colour
+	 * @param bgColour
+	 *            the bg colour
+	 * @param borderColour
+	 *            the border colour
+	 * @param fontColour
+	 *            the font colour
 	 */
-	public void setColours(ColorRGBA bgColour, ColorRGBA borderColour,
-			FontColour fontColour);
+	public void setColours(ColorRGBA bgColour, ColorRGBA borderColour, FontColour fontColour);
 
 	/**
 	 * Sets the height.
 	 *
-	 * @param height the new height
+	 * @param height
+	 *            the new height
 	 */
 	public void setHeight(float height);
 
 	/**
 	 * Sets the movable.
 	 *
-	 * @param movable the new movable
+	 * @param movable
+	 *            the new movable
 	 */
 	public void setMovable(boolean movable);
 
 	/**
 	 * Sets the scale limits.
 	 *
-	 * @param scaleMin the scale min
-	 * @param scaleMax the scale max
+	 * @param scaleMin
+	 *            the scale min
+	 * @param scaleMax
+	 *            the scale max
 	 */
 	public void setScaleLimits(float scaleMin, float scaleMax);
 
 	/**
 	 * Sets the text.
 	 *
-	 * @param text the text
-	 * @param stage the stage
+	 * @param text
+	 *            the text
+	 * @param stage
+	 *            the stage
 	 */
 	public void setText(String text, IStage stage);
 
 	/**
 	 * Sets the width.
 	 *
-	 * @param width the new width
+	 * @param width
+	 *            the new width
 	 */
 	public void setWidth(float width);
 

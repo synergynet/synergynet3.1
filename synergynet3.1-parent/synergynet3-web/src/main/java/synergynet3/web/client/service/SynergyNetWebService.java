@@ -8,12 +8,14 @@ import com.google.gwt.user.client.rpc.RemoteServiceRelativePath;
  * The Interface SynergyNetWebService.
  */
 @RemoteServiceRelativePath("SynergyNetWebService")
-public interface SynergyNetWebService extends RemoteService {
+public interface SynergyNetWebService extends RemoteService
+{
 
 	/**
 	 * The Class Util.
 	 */
-	public static class Util {
+	public static class Util
+	{
 
 		/** The instance. */
 		private static SynergyNetWebServiceAsync instance;
@@ -23,8 +25,10 @@ public interface SynergyNetWebService extends RemoteService {
 		 *
 		 * @return single instance of Util
 		 */
-		public static SynergyNetWebServiceAsync getInstance() {
-			if (instance == null) {
+		public static SynergyNetWebServiceAsync getInstance()
+		{
+			if (instance == null)
+			{
 				instance = GWT.create(SynergyNetWebService.class);
 			}
 			return instance;
@@ -34,7 +38,8 @@ public interface SynergyNetWebService extends RemoteService {
 	/**
 	 * Test.
 	 *
-	 * @param in the in
+	 * @param in
+	 *            the in
 	 */
 	public void test(String in);
 }

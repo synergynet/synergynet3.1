@@ -3,9 +3,11 @@ package synergynet3.cluster.sharedmemory;
 /**
  * The Class DistributedProperty.
  *
- * @param <T> the generic type
+ * @param <T>
+ *            the generic type
  */
-public class DistributedProperty<T> {
+public class DistributedProperty<T>
+{
 
 	/** The key. */
 	private String key;
@@ -16,10 +18,13 @@ public class DistributedProperty<T> {
 	/**
 	 * Instantiates a new distributed property.
 	 *
-	 * @param map the map
-	 * @param key the key
+	 * @param map
+	 *            the map
+	 * @param key
+	 *            the key
 	 */
-	public DistributedProperty(DistributedPropertyMap map, String key) {
+	public DistributedProperty(DistributedPropertyMap map, String key)
+	{
 		this.map = map;
 		this.key = key;
 	}
@@ -29,7 +34,8 @@ public class DistributedProperty<T> {
 	 *
 	 * @return the key
 	 */
-	public String getKey() {
+	public String getKey()
+	{
 		return key;
 	}
 
@@ -39,37 +45,42 @@ public class DistributedProperty<T> {
 	 * @return the value
 	 */
 	@SuppressWarnings("unchecked")
-	public T getValue() {
+	public T getValue()
+	{
 		return (T) map.getMap().get(key);
 	}
 
 	/**
 	 * Register change listener.
 	 *
-	 * @param pca the pca
+	 * @param pca
+	 *            the pca
 	 */
-	public void registerChangeListener(DistributedPropertyChangedAction<T> pca) {
-		map.getDistributedPropertyChangedListener()
-				.registerPropertyChangedAction(getKey(), pca);
+	public void registerChangeListener(DistributedPropertyChangedAction<T> pca)
+	{
+		map.getDistributedPropertyChangedListener().registerPropertyChangedAction(getKey(), pca);
 	}
 
 	/**
 	 * Sets the value.
 	 *
-	 * @param value the new value
+	 * @param value
+	 *            the new value
 	 */
 	@SuppressWarnings("unchecked")
-	public void setValue(T value) {
+	public void setValue(T value)
+	{
 		map.getMap().put(key, value);
 	}
 
 	/**
 	 * Unregister change listener.
 	 *
-	 * @param pca the pca
+	 * @param pca
+	 *            the pca
 	 */
-	public void unregisterChangeListener(DistributedPropertyChangedAction<T> pca) {
-		map.getDistributedPropertyChangedListener()
-				.unregisterPropertyChangeAction(pca);
+	public void unregisterChangeListener(DistributedPropertyChangedAction<T> pca)
+	{
+		map.getDistributedPropertyChangedListener().unregisterPropertyChangeAction(pca);
 	}
 }

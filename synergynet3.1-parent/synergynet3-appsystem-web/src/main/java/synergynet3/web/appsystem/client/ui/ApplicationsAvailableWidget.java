@@ -8,7 +8,8 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class ApplicationsAvailableWidget.
  */
-public class ApplicationsAvailableWidget extends VerticalPanel {
+public class ApplicationsAvailableWidget extends VerticalPanel
+{
 
 	/** The buttons panel. */
 	private HorizontalPanel buttonsPanel;
@@ -19,7 +20,8 @@ public class ApplicationsAvailableWidget extends VerticalPanel {
 	/**
 	 * Instantiates a new applications available widget.
 	 */
-	public ApplicationsAvailableWidget() {
+	public ApplicationsAvailableWidget()
+	{
 		super();
 		listBox = new FixedSizeScrollableListBox();
 		listBox.setAllowsSelection(true);
@@ -32,9 +34,11 @@ public class ApplicationsAvailableWidget extends VerticalPanel {
 	/**
 	 * Adds the application name.
 	 *
-	 * @param appName the app name
+	 * @param appName
+	 *            the app name
 	 */
-	public void addApplicationName(String appName) {
+	public void addApplicationName(String appName)
+	{
 		listBox.addItem(appName);
 	}
 
@@ -43,7 +47,8 @@ public class ApplicationsAvailableWidget extends VerticalPanel {
 	 *
 	 * @return the buttons panel
 	 */
-	public HorizontalPanel getButtonsPanel() {
+	public HorizontalPanel getButtonsPanel()
+	{
 		return buttonsPanel;
 	}
 
@@ -52,23 +57,27 @@ public class ApplicationsAvailableWidget extends VerticalPanel {
 	 *
 	 * @return the selected application
 	 */
-	public String getSelectedApplication() {
+	public String getSelectedApplication()
+	{
 		return listBox.getSelectedItem();
 	}
 
 	/**
 	 * Removes the all applications.
 	 */
-	public void removeAllApplications() {
+	public void removeAllApplications()
+	{
 		listBox.removeAllItems();
 	}
 
 	/**
 	 * Sets the should allow selection.
 	 *
-	 * @param b the new should allow selection
+	 * @param b
+	 *            the new should allow selection
 	 */
-	public void setShouldAllowSelection(boolean b) {
+	public void setShouldAllowSelection(boolean b)
+	{
 		listBox.setAllowsSelection(b);
 	}
 
@@ -77,7 +86,9 @@ public class ApplicationsAvailableWidget extends VerticalPanel {
 	 * @see com.google.gwt.user.client.ui.UIObject#setSize(java.lang.String,
 	 * java.lang.String)
 	 */
-	public void setSize(String width, String height) {
+	@Override
+	public void setSize(String width, String height)
+	{
 		super.setSize(width, height);
 		listBox.setSize(width, height);
 	}

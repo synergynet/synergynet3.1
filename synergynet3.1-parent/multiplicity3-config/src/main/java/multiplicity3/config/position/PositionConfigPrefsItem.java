@@ -34,7 +34,8 @@ import multiplicity3.config.PreferencesItem;
 /**
  * The Class PositionConfigPrefsItem.
  */
-public class PositionConfigPrefsItem implements PreferencesItem {
+public class PositionConfigPrefsItem implements PreferencesItem
+{
 
 	/** The Constant GRID_DISTANCE_X. */
 	public static final String GRID_DISTANCE_X = "GRID_DISTANCE_X";
@@ -70,15 +71,15 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	public static final String TABLE_HEIGHT = "TABLE_HEIGHT";
 
 	/** The Constant prefs. */
-	private static final Preferences prefs = ConfigurationApplication
-			.getPreferences(PositionConfigPrefsItem.class);
+	private static final Preferences prefs = ConfigurationApplication.getPreferences(PositionConfigPrefsItem.class);
 
 	/**
 	 * Gets the angle.
 	 *
 	 * @return the angle
 	 */
-	public float getAngle() {
+	public float getAngle()
+	{
 		return prefs.getFloat(PREFS_ANGLE, 0);
 	}
 
@@ -87,7 +88,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		JPanel panel = new JPanel();
 		panel.add(new JButton("Position panel"));
 		return new PositionConfigPanel(this);
@@ -98,7 +100,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Position";
 	}
 
@@ -107,7 +110,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the developer mode
 	 */
-	public boolean getDeveloperMode() {
+	public boolean getDeveloperMode()
+	{
 		return prefs.get(PREFS_POS_DEVELOPER_MODE, "false").equals("true");
 	}
 
@@ -116,7 +120,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the grid distance x
 	 */
-	public float getGridDistanceX() {
+	public float getGridDistanceX()
+	{
 		return prefs.getFloat(GRID_DISTANCE_X, 1.5f);
 	}
 
@@ -125,7 +130,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the grid distance y
 	 */
-	public float getGridDistanceY() {
+	public float getGridDistanceY()
+	{
 		return prefs.getFloat(GRID_DISTANCE_Y, 0);
 	}
 
@@ -134,7 +140,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the grid limit x
 	 */
-	public int getGridLimitX() {
+	public int getGridLimitX()
+	{
 		return prefs.getInt(GRID_LIMIT_X, 0);
 	}
 
@@ -143,7 +150,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the grid limit y
 	 */
-	public int getGridLimitY() {
+	public int getGridLimitY()
+	{
 		return prefs.getInt(GRID_LIMIT_Y, 0);
 	}
 
@@ -152,7 +160,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the horizontal placement
 	 */
-	public boolean getHorizontalPlacement() {
+	public boolean getHorizontalPlacement()
+	{
 		return prefs.get(HORIZONTAL_PLACEMENT, "false").equals("true");
 	}
 
@@ -161,7 +170,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the table height
 	 */
-	public float getTableHeight() {
+	public float getTableHeight()
+	{
 		return prefs.getFloat(TABLE_HEIGHT, 1f);
 	}
 
@@ -170,7 +180,8 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the x pos
 	 */
-	public float getXPos() {
+	public float getXPos()
+	{
 		return prefs.getFloat(PREFS_LOCATION_X, 0);
 	}
 
@@ -179,25 +190,30 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the y pos
 	 */
-	public float getYPos() {
+	public float getYPos()
+	{
 		return prefs.getFloat(PREFS_LOCATION_Y, 0);
 	}
 
 	/**
 	 * Sets the angle.
 	 *
-	 * @param angle the new angle
+	 * @param angle
+	 *            the new angle
 	 */
-	public void setAngle(float angle) {
+	public void setAngle(float angle)
+	{
 		prefs.putFloat(PREFS_ANGLE, angle);
 	}
 
 	/**
 	 * Sets the developer mode.
 	 *
-	 * @param selected the new developer mode
+	 * @param selected
+	 *            the new developer mode
 	 */
-	public void setDeveloperMode(boolean selected) {
+	public void setDeveloperMode(boolean selected)
+	{
 		prefs.put(PREFS_POS_DEVELOPER_MODE, "" + selected);
 
 	}
@@ -205,9 +221,11 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	/**
 	 * Sets the horizontal placement.
 	 *
-	 * @param selected the new horizontal placement
+	 * @param selected
+	 *            the new horizontal placement
 	 */
-	public void setHorizontalPlacement(boolean selected) {
+	public void setHorizontalPlacement(boolean selected)
+	{
 		prefs.put(HORIZONTAL_PLACEMENT, "" + selected);
 
 	}
@@ -215,63 +233,77 @@ public class PositionConfigPrefsItem implements PreferencesItem {
 	/**
 	 * Sets the table height.
 	 *
-	 * @param height the new table height
+	 * @param height
+	 *            the new table height
 	 */
-	public void setTableHeight(float height) {
+	public void setTableHeight(float height)
+	{
 		prefs.putFloat(TABLE_HEIGHT, height);
 	}
 
 	/**
 	 * Sets the x distance.
 	 *
-	 * @param xDis the new x distance
+	 * @param xDis
+	 *            the new x distance
 	 */
-	public void setXDistance(float xDis) {
+	public void setXDistance(float xDis)
+	{
 		prefs.putFloat(GRID_DISTANCE_X, xDis);
 	}
 
 	/**
 	 * Sets the x limit.
 	 *
-	 * @param xLimit the new x limit
+	 * @param xLimit
+	 *            the new x limit
 	 */
-	public void setXLimit(int xLimit) {
+	public void setXLimit(int xLimit)
+	{
 		prefs.putInt(GRID_LIMIT_X, xLimit);
 	}
 
 	/**
 	 * Sets the x pos.
 	 *
-	 * @param xPos the new x pos
+	 * @param xPos
+	 *            the new x pos
 	 */
-	public void setXPos(float xPos) {
+	public void setXPos(float xPos)
+	{
 		prefs.putFloat(PREFS_LOCATION_X, xPos);
 	}
 
 	/**
 	 * Sets the y distance.
 	 *
-	 * @param yDis the new y distance
+	 * @param yDis
+	 *            the new y distance
 	 */
-	public void setYDistance(float yDis) {
+	public void setYDistance(float yDis)
+	{
 		prefs.putFloat(GRID_DISTANCE_Y, yDis);
 	}
 
 	/**
 	 * Sets the y limit.
 	 *
-	 * @param yLimit the new y limit
+	 * @param yLimit
+	 *            the new y limit
 	 */
-	public void setYLimit(int yLimit) {
+	public void setYLimit(int yLimit)
+	{
 		prefs.putInt(GRID_LIMIT_Y, yLimit);
 	}
 
 	/**
 	 * Sets the y pos.
 	 *
-	 * @param yPos the new y pos
+	 * @param yPos
+	 *            the new y pos
 	 */
-	public void setYPos(float yPos) {
+	public void setYPos(float yPos)
+	{
 		prefs.putFloat(PREFS_LOCATION_Y, yPos);
 	}
 

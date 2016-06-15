@@ -8,7 +8,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class MoveItem.
  */
-public class MoveItem extends AnimationElement {
+public class MoveItem extends AnimationElement
+{
 
 	/** The current pos. */
 	private Vector2f currentPos;
@@ -43,14 +44,19 @@ public class MoveItem extends AnimationElement {
 	/**
 	 * Instantiates a new move item.
 	 *
-	 * @param from the from
-	 * @param to the to
-	 * @param inSeconds the in seconds
-	 * @param item the item
-	 * @param inWorldCoords the in world coords
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
+	 * @param inSeconds
+	 *            the in seconds
+	 * @param item
+	 *            the item
+	 * @param inWorldCoords
+	 *            the in world coords
 	 */
-	public MoveItem(Vector2f from, Vector2f to, float inSeconds, IItem item,
-			boolean inWorldCoords) {
+	public MoveItem(Vector2f from, Vector2f to, float inSeconds, IItem item, boolean inWorldCoords)
+	{
 		this.inSeconds = inSeconds;
 		this.from = from;
 		this.to = to;
@@ -66,7 +72,8 @@ public class MoveItem extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 		currentPos = from.clone();
 		direction = to.subtract(from).normalize();
 		unitsPerSecond = to.subtract(from).length() / inSeconds;
@@ -78,7 +85,8 @@ public class MoveItem extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
@@ -87,7 +95,8 @@ public class MoveItem extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		finished = false;
 		currentPos = from.clone();
 		direction = to.subtract(from).normalize();
@@ -102,11 +111,13 @@ public class MoveItem extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
+	public void updateAnimationState(float tpf)
+	{
 		elapsedTime += tpf;
 		currentPos.addLocal(direction.mult(unitsPerSecond * tpf));
 		// if(currentPos.distance(to) < 0.2f) {
-		if (elapsedTime > inSeconds) {
+		if (elapsedTime > inSeconds)
+		{
 			currentPos.set(to);
 			finished = true;
 		}
@@ -116,10 +127,14 @@ public class MoveItem extends AnimationElement {
 	/**
 	 * Update position.
 	 */
-	private void updatePosition() {
-		if (relative) {
+	private void updatePosition()
+	{
+		if (relative)
+		{
 			item.setRelativeLocation(currentPos);
-		} else {
+		}
+		else
+		{
 			item.setWorldLocation(currentPos);
 		}
 	}

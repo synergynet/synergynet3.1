@@ -11,12 +11,11 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
 /**
  * The Class MoveBetweenContainerBehaviour.
  */
-public class MoveBetweenContainerBehaviour implements IBehaviour,
-		IMultiTouchEventListener {
+public class MoveBetweenContainerBehaviour implements IBehaviour, IMultiTouchEventListener
+{
 
 	/** The Constant logger. */
-	private final static Logger logger = Logger
-			.getLogger(MoveBetweenContainerBehaviour.class.getName());
+	private final static Logger logger = Logger.getLogger(MoveBetweenContainerBehaviour.class.getName());
 
 	/** The active. */
 	private boolean active;
@@ -31,7 +30,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -43,7 +43,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -55,7 +56,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -67,13 +69,14 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 
-		if (!active) {
+		if (!active)
+		{
 			return;
 		}
-		logger.info("cursor released caught event: "
-				+ item.getParentItem().getClass());
+		logger.info("cursor released caught event: " + item.getParentItem().getClass());
 	}
 
 	/*
@@ -83,7 +86,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -95,7 +99,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -107,7 +112,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 		// TODO Auto-generated method stub
 
 	}
@@ -117,7 +123,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * @see multiplicity3.csys.behaviours.IBehaviour#setActive(boolean)
 	 */
 	@Override
-	public void setActive(boolean active) {
+	public void setActive(boolean active)
+	{
 		this.active = active;
 	}
 
@@ -128,8 +135,10 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setEventSource(IItem eventSourceItem) {
-		if (eventSourceItem == null) {
+	public void setEventSource(IItem eventSourceItem)
+	{
+		if (eventSourceItem == null)
+		{
 			item.getMultiTouchDispatcher().remove(this);
 			return;
 		}
@@ -144,7 +153,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * .csys.items.item.IItem)
 	 */
 	@Override
-	public void setItemActingOn(IItem item) {
+	public void setItemActingOn(IItem item)
+	{
 	}
 
 	/*
@@ -154,7 +164,8 @@ public class MoveBetweenContainerBehaviour implements IBehaviour,
 	 * stage.IStage)
 	 */
 	@Override
-	public void setStage(IStage stage) {
+	public void setStage(IStage stage)
+	{
 		// TODO Auto-generated method stub
 	}
 

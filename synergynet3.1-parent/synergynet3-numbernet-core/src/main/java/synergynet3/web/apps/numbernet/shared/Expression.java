@@ -9,11 +9,11 @@ import com.google.gwt.user.client.rpc.IsSerializable;
 /**
  * The Class Expression.
  */
-public class Expression implements Serializable, IsSerializable {
+public class Expression implements Serializable, IsSerializable
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(Expression.class
-			.getName());
+	private static final Logger log = Logger.getLogger(Expression.class.getName());
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8512137832767638454L;
@@ -48,23 +48,32 @@ public class Expression implements Serializable, IsSerializable {
 	/**
 	 * Instantiates a new expression.
 	 */
-	public Expression() {
+	public Expression()
+	{
 	}
 
 	/**
 	 * Instantiates a new expression.
 	 *
-	 * @param id the id
-	 * @param expr the expr
-	 * @param value the value
-	 * @param target the target
-	 * @param error the error
-	 * @param createdBy the created by
-	 * @param onTable the on table
-	 * @param isEdit the is edit
+	 * @param id
+	 *            the id
+	 * @param expr
+	 *            the expr
+	 * @param value
+	 *            the value
+	 * @param target
+	 *            the target
+	 * @param error
+	 *            the error
+	 * @param createdBy
+	 *            the created by
+	 * @param onTable
+	 *            the on table
+	 * @param isEdit
+	 *            the is edit
 	 */
-	public Expression(String id, String expr, double value, double target,
-			String error, String createdBy, String onTable, boolean isEdit) {
+	public Expression(String id, String expr, double value, double target, String error, String createdBy, String onTable, boolean isEdit)
+	{
 		this.setId(id);
 		this.setCreatedBy(createdBy);
 		this.setCreatedOnTable(onTable);
@@ -81,30 +90,40 @@ public class Expression implements Serializable, IsSerializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
-	public boolean equals(Object obj) {
-		if (obj == null) {
+	@Override
+	public boolean equals(Object obj)
+	{
+		if (obj == null)
+		{
 			return false;
 		}
-		if (!(obj instanceof Expression)) {
+		if (!(obj instanceof Expression))
+		{
 			return false;
 		}
 		Expression e = (Expression) obj;
-		if (e.getId().equals(getId())) {
+		if (e.getId().equals(getId()))
+		{
 			return true;
 		}
-		if (!e.getExpression().equals(getExpression())) {
+		if (!e.getExpression().equals(getExpression()))
+		{
 			return false;
 		}
-		if (!(e.getTarget() == (getTarget()))) {
+		if (!(e.getTarget() == (getTarget())))
+		{
 			return false;
 		}
-		if (!(e.getValue() == (getValue()))) {
+		if (!(e.getValue() == (getValue())))
+		{
 			return false;
 		}
-		if (!e.getCreatedBy().equals(getCreatedBy())) {
+		if (!e.getCreatedBy().equals(getCreatedBy()))
+		{
 			return false;
 		}
-		if (!e.getCreatedOnTable().equals(getCreatedOnTable())) {
+		if (!e.getCreatedOnTable().equals(getCreatedOnTable()))
+		{
 			return false;
 		}
 		return true;
@@ -115,7 +134,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the created by
 	 */
-	public String getCreatedBy() {
+	public String getCreatedBy()
+	{
 		return createdBy;
 	}
 
@@ -124,7 +144,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the created date
 	 */
-	public Date getCreatedDate() {
+	public Date getCreatedDate()
+	{
 		return createdDate;
 	}
 
@@ -133,7 +154,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the created on table
 	 */
-	public String getCreatedOnTable() {
+	public String getCreatedOnTable()
+	{
 		return createdOnTable;
 	}
 
@@ -142,7 +164,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the error
 	 */
-	public String getError() {
+	public String getError()
+	{
 		return error;
 	}
 
@@ -151,7 +174,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the expression
 	 */
-	public String getExpression() {
+	public String getExpression()
+	{
 		return expression;
 	}
 
@@ -160,11 +184,9 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the full string
 	 */
-	public String getFullString() {
-		return "Expression: " + "\n   id: " + id + "\n   by: " + createdBy
-				+ "\n   on: " + createdOnTable + "\n    e: " + expression
-				+ "\n    v: " + value + "\n    t: " + target + "\n  err: "
-				+ error + "\n   ed: " + isEdit + "\n";
+	public String getFullString()
+	{
+		return "Expression: " + "\n   id: " + id + "\n   by: " + createdBy + "\n   on: " + createdOnTable + "\n    e: " + expression + "\n    v: " + value + "\n    t: " + target + "\n  err: " + error + "\n   ed: " + isEdit + "\n";
 	}
 
 	/**
@@ -172,7 +194,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the id
 	 */
-	public String getId() {
+	public String getId()
+	{
 		return id;
 	}
 
@@ -181,7 +204,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the target
 	 */
-	public double getTarget() {
+	public double getTarget()
+	{
 		return target;
 	}
 
@@ -190,7 +214,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return the value
 	 */
-	public double getValue() {
+	public double getValue()
+	{
 		return value;
 	}
 
@@ -199,7 +224,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return true, if is correct
 	 */
-	public boolean isCorrect() {
+	public boolean isCorrect()
+	{
 		return Math.abs(value - target) < 0.00001;
 	}
 
@@ -208,7 +234,8 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return true, if is edits the
 	 */
-	public boolean isEdit() {
+	public boolean isEdit()
+	{
 		return isEdit;
 	}
 
@@ -217,88 +244,107 @@ public class Expression implements Serializable, IsSerializable {
 	 *
 	 * @return true, if is erroneous
 	 */
-	public boolean isErroneous() {
+	public boolean isErroneous()
+	{
 		return error != null;
 	}
 
 	/**
 	 * Sets the created by.
 	 *
-	 * @param createdBy the new created by
+	 * @param createdBy
+	 *            the new created by
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(String createdBy)
+	{
 		this.createdBy = createdBy;
 	}
 
 	/**
 	 * Sets the created date.
 	 *
-	 * @param createdDate the new created date
+	 * @param createdDate
+	 *            the new created date
 	 */
-	public void setCreatedDate(Date createdDate) {
+	public void setCreatedDate(Date createdDate)
+	{
 		this.createdDate = createdDate;
 	}
 
 	/**
 	 * Sets the created on table.
 	 *
-	 * @param onTable the new created on table
+	 * @param onTable
+	 *            the new created on table
 	 */
-	public void setCreatedOnTable(String onTable) {
+	public void setCreatedOnTable(String onTable)
+	{
 		this.createdOnTable = onTable;
 	}
 
 	/**
 	 * Sets the edits the.
 	 *
-	 * @param isEdit the new edits the
+	 * @param isEdit
+	 *            the new edits the
 	 */
-	public void setEdit(boolean isEdit) {
+	public void setEdit(boolean isEdit)
+	{
 		this.isEdit = isEdit;
 	}
 
 	/**
 	 * Sets the error.
 	 *
-	 * @param error the new error
+	 * @param error
+	 *            the new error
 	 */
-	public void setError(String error) {
+	public void setError(String error)
+	{
 		this.error = error;
 	}
 
 	/**
 	 * Sets the expression.
 	 *
-	 * @param expression the new expression
+	 * @param expression
+	 *            the new expression
 	 */
-	public void setExpression(String expression) {
+	public void setExpression(String expression)
+	{
 		this.expression = expression;
 	}
 
 	/**
 	 * Sets the id.
 	 *
-	 * @param id the new id
+	 * @param id
+	 *            the new id
 	 */
-	public void setId(String id) {
+	public void setId(String id)
+	{
 		this.id = id;
 	}
 
 	/**
 	 * Sets the target.
 	 *
-	 * @param target the new target
+	 * @param target
+	 *            the new target
 	 */
-	public void setTarget(double target) {
+	public void setTarget(double target)
+	{
 		this.target = target;
 	}
 
 	/**
 	 * Sets the value.
 	 *
-	 * @param value the new value
+	 * @param value
+	 *            the new value
 	 */
-	public void setValue(double value) {
+	public void setValue(double value)
+	{
 		this.value = value;
 	}
 
@@ -306,7 +352,9 @@ public class Expression implements Serializable, IsSerializable {
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		return getValue() + " [" + getExpression() + "] target: " + target;
 	}
 }

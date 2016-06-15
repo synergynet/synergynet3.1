@@ -12,7 +12,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Interface IFrame.
  */
-public interface IFrame extends IItem {
+public interface IFrame extends IItem
+{
 
 	/**
 	 * Gets the border.
@@ -48,34 +49,40 @@ public interface IFrame extends IItem {
 	 * multiplicity3.csys.items.INestable#removeItem(multiplicity3.csys.items
 	 * .item.IItem)
 	 */
+	@Override
 	public void removeItem(IItem item);
 
 	/**
 	 * Sets the border.
 	 *
-	 * @param b the new border
+	 * @param b
+	 *            the new border
 	 */
 	public void setBorder(IRoundedBorder b);
 
 	/**
 	 * Sets the gradient background.
 	 *
-	 * @param g the new gradient background
+	 * @param g
+	 *            the new gradient background
 	 */
 	public void setGradientBackground(Gradient g);
 
 	/**
 	 * Sets the size.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
 	public void setSize(float width, float height);
 
 	/**
 	 * Sets the solid background colour.
 	 *
-	 * @param c the new solid background colour
+	 * @param c
+	 *            the new solid background colour
 	 */
 	public void setSolidBackgroundColour(Color c);
 }

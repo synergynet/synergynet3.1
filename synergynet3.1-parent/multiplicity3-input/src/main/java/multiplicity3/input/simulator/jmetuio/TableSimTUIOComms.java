@@ -33,13 +33,19 @@ import com.illposed.osc.OSCPortOut;
 /**
  * The Class TableSimTUIOComms.
  */
-public class TableSimTUIOComms {
+public class TableSimTUIOComms
+{
 
 	/** The Constant DEFAULT_PORT. */
 	public static final int DEFAULT_PORT = 3333;
 
 	/** The instance. */
 	private static TableSimTUIOComms instance;
+
+	static
+	{
+		instance = new TableSimTUIOComms();
+	}
 
 	/** The current frame. */
 	private int currentFrame;
@@ -50,12 +56,9 @@ public class TableSimTUIOComms {
 	/**
 	 * Instantiates a new table sim tuio comms.
 	 */
-	private TableSimTUIOComms() {
+	private TableSimTUIOComms()
+	{
 
-	}
-
-	static {
-		instance = new TableSimTUIOComms();
 	}
 
 	/**
@@ -63,14 +66,16 @@ public class TableSimTUIOComms {
 	 *
 	 * @return single instance of TableSimTUIOComms
 	 */
-	public static TableSimTUIOComms getInstance() {
+	public static TableSimTUIOComms getInstance()
+	{
 		return instance;
 	}
 
 	/**
 	 * Cursor delete.
 	 */
-	public void cursorDelete() {
+	public void cursorDelete()
+	{
 		OSCBundle cursorBundle = new OSCBundle();
 
 		OSCMessage remoteMessage = new OSCMessage("/tuio/2Dcur");
@@ -89,13 +94,19 @@ public class TableSimTUIOComms {
 	/**
 	 * Inits the.
 	 *
-	 * @param host the host
-	 * @param port the port
+	 * @param host
+	 *            the host
+	 * @param port
+	 *            the port
 	 */
-	public void init(String host, int port) {
-		try {
+	public void init(String host, int port)
+	{
+		try
+		{
 			oscPort = new OSCPortOut(java.net.InetAddress.getByName(host), port);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			oscPort = null;
 		}
 		reset();
@@ -106,9 +117,11 @@ public class TableSimTUIOComms {
 	/**
 	 * Multi cursor message.
 	 *
-	 * @param cursors the cursors
+	 * @param cursors
+	 *            the cursors
 	 */
-	public void multiCursorMessage(IndividualCursor[] cursors) {
+	public void multiCursorMessage(IndividualCursor[] cursors)
+	{
 		OSCBundle cursorBundle = new OSCBundle();
 
 		OSCMessage remoteMessage1 = new OSCMessage("/tuio/2Dcur");
@@ -117,14 +130,16 @@ public class TableSimTUIOComms {
 
 		OSCMessage aliveMessage1 = new OSCMessage("/tuio/2Dcur");
 		aliveMessage1.addArgument("alive");
-		for (int i = 0; i < cursors.length; i++) {
+		for (int i = 0; i < cursors.length; i++)
+		{
 			aliveMessage1.addArgument(new Integer(cursors[i].id));
 		}
 
 		cursorBundle.addPacket(remoteMessage1);
 		cursorBundle.addPacket(aliveMessage1);
 
-		for (int i = 0; i < cursors.length; i++) {
+		for (int i = 0; i < cursors.length; i++)
+		{
 			addCursorInfoToBundle(cursors[i], cursorBundle);
 		}
 
@@ -134,7 +149,8 @@ public class TableSimTUIOComms {
 	/**
 	 * Quit.
 	 */
-	public void quit() {
+	public void quit()
+	{
 		reset();
 		reset();
 		reset();
@@ -144,7 +160,8 @@ public class TableSimTUIOComms {
 	/**
 	 * Reset.
 	 */
-	public void reset() {
+	public void reset()
+	{
 		OSCBundle oscBundle = new OSCBundle();
 
 		OSCMessage remoteMessage = new OSCMessage("/tuio/2Dobj");
@@ -169,9 +186,11 @@ public class TableSimTUIOComms {
 	/**
 	 * Single cursor message.
 	 *
-	 * @param cursorInfo the cursor info
+	 * @param cursorInfo
+	 *            the cursor info
 	 */
-	public void singleCursorMessage(IndividualCursor cursorInfo) {
+	public void singleCursorMessage(IndividualCursor cursorInfo)
+	{
 		OSCBundle cursorBundle = new OSCBundle();
 
 		OSCMessage remoteMessage = new OSCMessage("/tuio/2Dcur");
@@ -192,10 +211,13 @@ public class TableSimTUIOComms {
 	/**
 	 * Adds the cursor info to bundle.
 	 *
-	 * @param cursor the cursor
-	 * @param bundle the bundle
+	 * @param cursor
+	 *            the cursor
+	 * @param bundle
+	 *            the bundle
 	 */
-	private void addCursorInfoToBundle(IndividualCursor cursor, OSCBundle bundle) {
+	private void addCursorInfoToBundle(IndividualCursor cursor, OSCBundle bundle)
+	{
 		OSCMessage setMessage = new OSCMessage("/tuio/2Dcur");
 		setMessage.addArgument("set");
 		setMessage.addArgument(new Integer(cursor.id));
@@ -210,12 +232,17 @@ public class TableSimTUIOComms {
 	/**
 	 * Send osc.
 	 *
-	 * @param packet the packet
+	 * @param packet
+	 *            the packet
 	 */
-	private void sendOSC(OSCPacket packet) {
-		try {
+	private void sendOSC(OSCPacket packet)
+	{
+		try
+		{
 			oscPort.send(packet);
-		} catch (java.io.IOException e) {
+		}
+		catch (java.io.IOException e)
+		{
 		}
 	}
 }

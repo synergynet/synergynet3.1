@@ -5,12 +5,14 @@ import synergynet3.cluster.xmpp.messaging.appcontrol.AppControlMessage;
 /**
  * The Interface AppControlMessageHandler.
  */
-public interface AppControlMessageHandler {
+public interface AppControlMessageHandler
+{
 
 	/**
 	 * Handle message.
 	 *
-	 * @param msg the msg
+	 * @param msg
+	 *            the msg
 	 */
 	public void handleMessage(AppControlMessage msg);
 }

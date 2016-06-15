@@ -28,7 +28,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class MultiTouchObjectEvent.
  */
-public class MultiTouchObjectEvent extends MultiTouchEvent {
+public class MultiTouchObjectEvent extends MultiTouchEvent
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5751562305155702721L;
@@ -36,25 +37,34 @@ public class MultiTouchObjectEvent extends MultiTouchEvent {
 	/**
 	 * Instantiates a new multi touch object event.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param velocity the velocity
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
 	 */
-	public MultiTouchObjectEvent(long id, Vector2f position, Vector2f velocity) {
+	public MultiTouchObjectEvent(long id, Vector2f position, Vector2f velocity)
+	{
 		super(id, position, velocity);
 	}
 
 	/**
 	 * Instantiates a new multi touch object event.
 	 *
-	 * @param id the id
-	 * @param position the position
-	 * @param velocity the velocity
-	 * @param pressure the pressure
-	 * @param angle the angle
+	 * @param id
+	 *            the id
+	 * @param position
+	 *            the position
+	 * @param velocity
+	 *            the velocity
+	 * @param pressure
+	 *            the pressure
+	 * @param angle
+	 *            the angle
 	 */
-	public MultiTouchObjectEvent(long id, Vector2f position, Vector2f velocity,
-			float pressure, double angle) {
+	public MultiTouchObjectEvent(long id, Vector2f position, Vector2f velocity, float pressure, double angle)
+	{
 		super(id, position, velocity, pressure, angle);
 	}
 }

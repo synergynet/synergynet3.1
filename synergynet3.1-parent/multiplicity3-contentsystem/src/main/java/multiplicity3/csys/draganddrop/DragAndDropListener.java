@@ -12,13 +12,16 @@ import multiplicity3.csys.items.item.IItem;
  *
  * @see DragAndDropEvent
  */
-public interface DragAndDropListener {
+public interface DragAndDropListener
+{
 	/**
-	 * @param itemDropped Item that was dropped onto drag destination.
-	 * @param onto Drag destination dropped onto.
-	 * @param indexOfDrop If the item was on top, this will be zero, otherwise,
-	 *            how far underneath the top item.
+	 * @param itemDropped
+	 *            Item that was dropped onto drag destination.
+	 * @param onto
+	 *            Drag destination dropped onto.
+	 * @param indexOfDrop
+	 *            If the item was on top, this will be zero, otherwise, how far
+	 *            underneath the top item.
 	 */
-	public void itemDraggedAndDropped(IItem itemDropped, IItem onto,
-			int indexOfDrop);
+	public void itemDraggedAndDropped(IItem itemDropped, IItem onto, int indexOfDrop);
 }

@@ -8,66 +8,79 @@ import com.google.gwt.user.client.rpc.AsyncCallback;
 /**
  * The Interface EarlyYearsServiceAsync.
  */
-public interface EarlyYearsServiceAsync {
+public interface EarlyYearsServiceAsync
+{
 
 	/**
 	 * Sets the activity.
 	 *
-	 * @param scenario the scenario
-	 * @param tables the tables
-	 * @param callback the callback
+	 * @param scenario
+	 *            the scenario
+	 * @param tables
+	 *            the tables
+	 * @param callback
+	 *            the callback
 	 */
-	void setActivity(EarlyYearsActivity scenario, String[] tables,
-			AsyncCallback<Void> callback);
+	void setActivity(EarlyYearsActivity scenario, String[] tables, AsyncCallback<Void> callback);
 
 	/**
 	 * Sets the railway corner num.
 	 *
-	 * @param i the i
-	 * @param tables the tables
-	 * @param asyncCallback the async callback
+	 * @param i
+	 *            the i
+	 * @param tables
+	 *            the tables
+	 * @param asyncCallback
+	 *            the async callback
 	 */
-	void setRailwayCornerNum(int i, String[] tables,
-			AsyncCallback<Void> asyncCallback);
+	void setRailwayCornerNum(int i, String[] tables, AsyncCallback<Void> asyncCallback);
 
 	/**
 	 * Sets the railway cross num.
 	 *
-	 * @param i the i
-	 * @param tables the tables
-	 * @param asyncCallback the async callback
+	 * @param i
+	 *            the i
+	 * @param tables
+	 *            the tables
+	 * @param asyncCallback
+	 *            the async callback
 	 */
-	void setRailwayCrossNum(int i, String[] tables,
-			AsyncCallback<Void> asyncCallback);
+	void setRailwayCrossNum(int i, String[] tables, AsyncCallback<Void> asyncCallback);
 
 	/**
 	 * Sets the railway straight num.
 	 *
-	 * @param i the i
-	 * @param tables the tables
-	 * @param asyncCallback the async callback
+	 * @param i
+	 *            the i
+	 * @param tables
+	 *            the tables
+	 * @param asyncCallback
+	 *            the async callback
 	 */
-	void setRailwayStraightNum(int i, String[] tables,
-			AsyncCallback<Void> asyncCallback);
+	void setRailwayStraightNum(int i, String[] tables, AsyncCallback<Void> asyncCallback);
 
 	/**
 	 * Sets the road mode.
 	 *
-	 * @param b the b
-	 * @param tables the tables
-	 * @param asyncCallback the async callback
+	 * @param b
+	 *            the b
+	 * @param tables
+	 *            the tables
+	 * @param asyncCallback
+	 *            the async callback
 	 */
-	void setRoadMode(PerformActionMessage b, String[] tables,
-			AsyncCallback<Void> asyncCallback);
+	void setRoadMode(PerformActionMessage b, String[] tables, AsyncCallback<Void> asyncCallback);
 
 	/**
 	 * Show explorer teacher console.
 	 *
-	 * @param b the b
-	 * @param deviceToSendTo the device to send to
-	 * @param asyncCallback the async callback
+	 * @param b
+	 *            the b
+	 * @param deviceToSendTo
+	 *            the device to send to
+	 * @param asyncCallback
+	 *            the async callback
 	 */
-	void showExplorerTeacherConsole(PerformActionMessage b,
-			String[] deviceToSendTo, AsyncCallback<Void> asyncCallback);
+	void showExplorerTeacherConsole(PerformActionMessage b, String[] deviceToSendTo, AsyncCallback<Void> asyncCallback);
 
 }

@@ -26,7 +26,8 @@ package multiplicity3.input.simulator;
 /**
  * The Class IndividualCursor.
  */
-public class IndividualCursor {
+public class IndividualCursor
+{
 
 	/** The id. */
 	public int id;
@@ -40,11 +41,15 @@ public class IndividualCursor {
 	/**
 	 * Instantiates a new individual cursor.
 	 *
-	 * @param id the id
-	 * @param x the x
-	 * @param y the y
+	 * @param id
+	 *            the id
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public IndividualCursor(int id, float x, float y) {
+	public IndividualCursor(int id, float x, float y)
+	{
 		this.id = id;
 		this.x = x;
 		this.y = y;

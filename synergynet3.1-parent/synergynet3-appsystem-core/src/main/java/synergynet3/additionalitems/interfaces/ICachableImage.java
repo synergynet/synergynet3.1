@@ -8,17 +8,20 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Interface ICachableImage.
  */
-public interface ICachableImage extends IImage {
+public interface ICachableImage extends IImage
+{
 
 	/**
 	 * Generate border.
 	 *
-	 * @param stage the stage
-	 * @param borderColour the border colour
-	 * @param borderWidth the border width
+	 * @param stage
+	 *            the stage
+	 * @param borderColour
+	 *            the border colour
+	 * @param borderWidth
+	 *            the border width
 	 */
-	public void generateBorder(IStage stage, ColorRGBA borderColour,
-			float borderWidth);
+	public void generateBorder(IStage stage, ColorRGBA borderColour, float borderWidth);
 
 	/**
 	 * Removes the border.

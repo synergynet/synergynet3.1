@@ -31,8 +31,10 @@ import com.jme3.system.JmeSystem;
 /**
  * @author dcs0ah1
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class DisplayConfigPanel extends JPanel implements PreferencesItem {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class DisplayConfigPanel extends JPanel implements PreferencesItem
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 8757133417077939163L;
@@ -94,9 +96,11 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Instantiates a new display config panel.
 	 *
-	 * @param prefs the prefs
+	 * @param prefs
+	 *            the prefs
 	 */
-	public DisplayConfigPanel(DisplayPrefsItem prefs) {
+	public DisplayConfigPanel(DisplayPrefsItem prefs)
+	{
 		this.prefs = prefs;
 		initComponents();
 		loadCurrentSettings();
@@ -107,7 +111,8 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		return this;
 	}
 
@@ -116,22 +121,24 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Display";
 	}
 
 	/**
 	 * Gets the current display mode.
 	 *
-	 * @param modes the modes
+	 * @param modes
+	 *            the modes
 	 * @return the current display mode
 	 */
-	public DisplayMode getCurrentDisplayMode(DisplayMode[] modes) {
-		for (DisplayMode m : modes) {
-			if ((m.getHeight() == prefs.getHeight())
-					&& (m.getWidth() == prefs.getWidth())
-					&& (m.getBitsPerPixel() == prefs.getBitsPerPixel())
-					&& (m.getFrequency() == prefs.getFrequency())) {
+	public DisplayMode getCurrentDisplayMode(DisplayMode[] modes)
+	{
+		for (DisplayMode m : modes)
+		{
+			if ((m.getHeight() == prefs.getHeight()) && (m.getWidth() == prefs.getWidth()) && (m.getBitsPerPixel() == prefs.getBitsPerPixel()) && (m.getFrequency() == prefs.getFrequency()))
+			{
 				return m;
 			}
 		}
@@ -142,11 +149,13 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Display selector item state changed.
 	 *
-	 * @param evt the evt
+	 * @param evt
+	 *            the evt
 	 */
-	private void displaySelectorItemStateChanged(java.awt.event.ItemEvent evt) {
-		if ((evt.getStateChange() == ItemEvent.SELECTED)
-				&& (displaySelector != null)) {
+	private void displaySelectorItemStateChanged(java.awt.event.ItemEvent evt)
+	{
+		if ((evt.getStateChange() == ItemEvent.SELECTED) && (displaySelector != null))
+		{
 			DisplayMode m = (DisplayMode) displaySelector.getSelectedItem();
 			setSelectedDisplayMode(m);
 		}
@@ -155,17 +164,18 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Gets the current display mode index.
 	 *
-	 * @param modes the modes
+	 * @param modes
+	 *            the modes
 	 * @return the current display mode index
 	 */
-	private int getCurrentDisplayModeIndex(DisplayMode[] modes) {
-		for (int i = 0; i < modes.length; i++) {
+	private int getCurrentDisplayModeIndex(DisplayMode[] modes)
+	{
+		for (int i = 0; i < modes.length; i++)
+		{
 			DisplayMode m = modes[i];
 
-			if ((m.getHeight() == prefs.getHeight())
-					&& (m.getWidth() == prefs.getWidth())
-					&& (m.getBitsPerPixel() == prefs.getBitsPerPixel())
-					&& (m.getFrequency() == prefs.getFrequency())) {
+			if ((m.getHeight() == prefs.getHeight()) && (m.getWidth() == prefs.getWidth()) && (m.getBitsPerPixel() == prefs.getBitsPerPixel()) && (m.getFrequency() == prefs.getFrequency()))
+			{
 				return i;
 			}
 		}
@@ -178,15 +188,19 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	 *
 	 * @return the display modes
 	 */
-	private DisplayMode[] getDisplayModes() {
+	private DisplayMode[] getDisplayModes()
+	{
 		DisplayMode[] modes = null;
-		try {
+		try
+		{
 			AppSettings settings = new AppSettings(true);
 			JmeSystem.initialize(settings);
 			modes = Display.getAvailableDisplayModes();
 			Arrays.sort(modes, new DisplayModeComparator());
 			Display.destroy();
-		} catch (LWJGLException e) {
+		}
+		catch (LWJGLException e)
+		{
 			e.printStackTrace();
 		}
 		return modes;
@@ -195,17 +209,24 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Gets the float from text field.
 	 *
-	 * @param tf the tf
-	 * @param previousValue the previous value
+	 * @param tf
+	 *            the tf
+	 * @param previousValue
+	 *            the previous value
 	 * @return the float from text field
 	 */
-	private Float getFloatFromTextField(JTextField tf, float previousValue) {
-		if (tf.getText().length() > 0) {
-			try {
+	private Float getFloatFromTextField(JTextField tf, float previousValue)
+	{
+		if (tf.getText().length() > 0)
+		{
+			try
+			{
 				float num = Float.parseFloat(tf.getText());
 				tf.setForeground(Color.black);
 				return num;
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 				tf.setForeground(Color.red);
 			}
 		}
@@ -215,17 +236,24 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Gets the integer from text field.
 	 *
-	 * @param tf the tf
-	 * @param previousValue the previous value
+	 * @param tf
+	 *            the tf
+	 * @param previousValue
+	 *            the previous value
 	 * @return the integer from text field
 	 */
-	private int getIntegerFromTextField(JTextField tf, int previousValue) {
-		if (tf.getText().length() > 0) {
-			try {
+	private int getIntegerFromTextField(JTextField tf, int previousValue)
+	{
+		if (tf.getText().length() > 0)
+		{
+			try
+			{
 				int num = Integer.parseInt(tf.getText());
 				tf.setForeground(Color.black);
 				return num;
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 				tf.setForeground(Color.red);
 			}
 		}
@@ -235,16 +263,20 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Inits the components.
 	 */
-	private void initComponents() {
+	private void initComponents()
+	{
 
 		displaySizeLabel.setText("Display Size:");
 		displaySizeLabel.setName("jLabel1");
 
-		displaySelector.setModel(new DefaultComboBoxModel(new String[] {
-				"Item 1", "Item 2", "Item 3", "Item 4" }));
+		displaySelector.setModel(new DefaultComboBoxModel(new String[]
+		{ "Item 1", "Item 2", "Item 3", "Item 4" }));
 		displaySelector.setName("displaySelector");
-		displaySelector.addItemListener(new java.awt.event.ItemListener() {
-			public void itemStateChanged(java.awt.event.ItemEvent evt) {
+		displaySelector.addItemListener(new java.awt.event.ItemListener()
+		{
+			@Override
+			public void itemStateChanged(java.awt.event.ItemEvent evt)
+			{
 				displaySelectorItemStateChanged(evt);
 			}
 		});
@@ -252,8 +284,11 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 		fullScreen.setText("Full Screen");
 		fullScreen.setHorizontalTextPosition(SwingConstants.LEADING);
 		fullScreen.setName("fullScreen");
-		fullScreen.addActionListener(new java.awt.event.ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		fullScreen.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
 				prefs.setFullScreen(fullScreen.isSelected());
 			}
 		});
@@ -263,10 +298,12 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 
 		antiAliasField.setText("jTextField1");
 		antiAliasField.setName("antiAlias");
-		antiAliasField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				prefs.setMinimumAntiAliasSamples(getIntegerFromTextField(
-						antiAliasField, prefs.getMinimumAntiAliasSamples()));
+		antiAliasField.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
+				prefs.setMinimumAntiAliasSamples(getIntegerFromTextField(antiAliasField, prefs.getMinimumAntiAliasSamples()));
 			}
 		});
 
@@ -275,10 +312,12 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 
 		stencilBitsField.setText("jTextField1");
 		stencilBitsField.setName("stencilBits");
-		stencilBitsField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				prefs.setStencilBits(getIntegerFromTextField(stencilBitsField,
-						prefs.getStencilBits()));
+		stencilBitsField.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
+				prefs.setStencilBits(getIntegerFromTextField(stencilBitsField, prefs.getStencilBits()));
 			}
 		});
 
@@ -287,10 +326,12 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 
 		alphaBitsField.setText("jTextField1");
 		alphaBitsField.setName("alphaBits");
-		alphaBitsField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				prefs.setAlphaBits(getIntegerFromTextField(alphaBitsField,
-						prefs.getAlphaBits()));
+		alphaBitsField.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
+				prefs.setAlphaBits(getIntegerFromTextField(alphaBitsField, prefs.getAlphaBits()));
 			}
 		});
 
@@ -299,10 +340,12 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 
 		depthBitsField.setText("jTextField1");
 		depthBitsField.setName("depthBits");
-		depthBitsField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				prefs.setDepthBits(getIntegerFromTextField(depthBitsField,
-						prefs.getDepthBits()));
+		depthBitsField.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
+				prefs.setDepthBits(getIntegerFromTextField(depthBitsField, prefs.getDepthBits()));
 			}
 		});
 
@@ -311,19 +354,23 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 
 		displayWidthField.setText("jTextField1");
 		displayWidthField.setName("displayWidth");
-		displayWidthField.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				prefs.setRealWidth(getFloatFromTextField(displayWidthField,
-						prefs.getRealWidth()));
+		displayWidthField.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
+				prefs.setRealWidth(getFloatFromTextField(displayWidthField, prefs.getRealWidth()));
 			}
 		});
 
 		inputType.setText("Input Type:");
 
 		initInputSelector();
-		jcb.addActionListener(new ActionListener() {
+		jcb.addActionListener(new ActionListener()
+		{
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e)
+			{
 				prefs.setInputType((String) jcb.getSelectedItem());
 				updateTuioOptionsVisibility();
 			}
@@ -332,10 +379,12 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 		tuioLabel.setText("TUIO Port: ");
 
 		tuioTextbox.setText("" + prefs.getTuioPort());
-		tuioTextbox.addKeyListener(new java.awt.event.KeyAdapter() {
-			public void keyReleased(java.awt.event.KeyEvent evt) {
-				prefs.setTuioPort(getIntegerFromTextField(tuioTextbox,
-						prefs.getTuioPort()));
+		tuioTextbox.addKeyListener(new java.awt.event.KeyAdapter()
+		{
+			@Override
+			public void keyReleased(java.awt.event.KeyEvent evt)
+			{
+				prefs.setTuioPort(getIntegerFromTextField(tuioTextbox, prefs.getTuioPort()));
 			}
 		});
 
@@ -391,39 +440,44 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Inits the display selector.
 	 */
-	private void initDisplaySelector() {
+	private void initDisplaySelector()
+	{
 		// get the saved display mode as loading the list causes a change
 		DisplayMode currentMode = getCurrentDisplayMode(getDisplayModes());
 
 		displaySelector.removeAllItems();
-		for (DisplayMode dm : getDisplayModes()) {
+		for (DisplayMode dm : getDisplayModes())
+		{
 			displaySelector.addItem(dm);
 		}
 
-		if (currentMode == null) {
+		if (currentMode == null)
+		{
 			// we didn't already have a display, pick the first
 			currentMode = getDisplayModes()[0];
 		}
 
 		// restore saved display mode
 		setSelectedDisplayMode(currentMode);
-		displaySelector
-				.setSelectedIndex(getCurrentDisplayModeIndex(getDisplayModes()));
+		displaySelector.setSelectedIndex(getCurrentDisplayModeIndex(getDisplayModes()));
 	}
 
 	/**
 	 * Inits the full screen.
 	 */
-	private void initFullScreen() {
+	private void initFullScreen()
+	{
 		fullScreen.setSelected(prefs.getFullScreen());
 	}
 
 	/**
 	 * Inits the input selector.
 	 */
-	private void initInputSelector() {
+	private void initInputSelector()
+	{
 		jcb.removeAllItems();
-		for (String input : DisplayPrefsItem.INPUT_TYPES) {
+		for (String input : DisplayPrefsItem.INPUT_TYPES)
+		{
 			jcb.addItem(input);
 		}
 		jcb.setSelectedItem(prefs.getInputType());
@@ -432,7 +486,8 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Load current settings.
 	 */
-	private void loadCurrentSettings() {
+	private void loadCurrentSettings()
+	{
 		initDisplaySelector();
 		initFullScreen();
 		antiAliasField.setText("" + prefs.getMinimumAntiAliasSamples());
@@ -445,9 +500,11 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Sets the selected display mode.
 	 *
-	 * @param m the new selected display mode
+	 * @param m
+	 *            the new selected display mode
 	 */
-	private void setSelectedDisplayMode(DisplayMode m) {
+	private void setSelectedDisplayMode(DisplayMode m)
+	{
 		prefs.setWidth(m.getWidth());
 		prefs.setHeight(m.getHeight());
 		prefs.setBitsPerPixel(m.getBitsPerPixel());
@@ -457,11 +514,10 @@ public class DisplayConfigPanel extends JPanel implements PreferencesItem {
 	/**
 	 * Update tuio options visibility.
 	 */
-	private void updateTuioOptionsVisibility() {
-		tuioLabel.setVisible(prefs.getInputType().equals(
-				DisplayPrefsItem.INPUT_TYPES[1]));
-		tuioTextbox.setVisible(prefs.getInputType().equals(
-				DisplayPrefsItem.INPUT_TYPES[1]));
+	private void updateTuioOptionsVisibility()
+	{
+		tuioLabel.setVisible(prefs.getInputType().equals(DisplayPrefsItem.INPUT_TYPES[1]));
+		tuioTextbox.setVisible(prefs.getInputType().equals(DisplayPrefsItem.INPUT_TYPES[1]));
 	}
 
 }

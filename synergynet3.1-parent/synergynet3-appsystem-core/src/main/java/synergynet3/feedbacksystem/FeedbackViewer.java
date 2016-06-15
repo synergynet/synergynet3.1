@@ -17,7 +17,8 @@ import synergynet3.additionalitems.interfaces.IScrollContainer;
 /**
  * The Class FeedbackViewer.
  */
-public class FeedbackViewer {
+public class FeedbackViewer
+{
 
 	/** The feedback container. */
 	private FeedbackContainer feedbackContainer;
@@ -46,19 +47,24 @@ public class FeedbackViewer {
 	/**
 	 * Instantiates a new feedback viewer.
 	 *
-	 * @param stage the stage
-	 * @param feedbackContainer the feedback container
+	 * @param stage
+	 *            the stage
+	 * @param feedbackContainer
+	 *            the feedback container
 	 */
-	public FeedbackViewer(IStage stage, FeedbackContainer feedbackContainer) {
+	public FeedbackViewer(IStage stage, FeedbackContainer feedbackContainer)
+	{
 		this.stage = stage;
 		this.feedbackContainer = feedbackContainer;
 
-		try {
-			scrollContainer = stage.getContentFactory().create(
-					IScrollContainer.class, "menu", UUID.randomUUID());
+		try
+		{
+			scrollContainer = stage.getContentFactory().create(IScrollContainer.class, "menu", UUID.randomUUID());
 			scrollContainer.setDimensions(stage, log, 512, 300);
 			stage.addItem(scrollContainer);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 
@@ -68,14 +74,19 @@ public class FeedbackViewer {
 	/**
 	 * Adds the feedback.
 	 *
-	 * @param feedback the feedback
+	 * @param feedback
+	 *            the feedback
 	 */
-	public void addFeedback(FeedbackItem feedback) {
+	public void addFeedback(FeedbackItem feedback)
+	{
 		feedbackItems.add(feedback);
-		if (firstFrame) {
+		if (firstFrame)
+		{
 			feedback.addFeedbackViewFrame(this, 0);
 			firstFrame = false;
-		} else {
+		}
+		else
+		{
 			int newFrameNo = scrollContainer.addFrame();
 			feedback.addFeedbackViewFrame(this, newFrameNo);
 		}
@@ -84,13 +95,17 @@ public class FeedbackViewer {
 	/**
 	 * Adds the to feedback frame.
 	 *
-	 * @param item the item
-	 * @param frameNo the frame no
-	 * @param width the width
-	 * @param height the height
+	 * @param item
+	 *            the item
+	 * @param frameNo
+	 *            the frame no
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
-	public void addToFeedbackFrame(IItem item, int frameNo, int width,
-			int height) {
+	public void addToFeedbackFrame(IItem item, int frameNo, int width, int height)
+	{
 		keepLineOnBottom(item);
 		scrollContainer.addToFrame(item, frameNo, width, height);
 	}
@@ -98,9 +113,11 @@ public class FeedbackViewer {
 	/**
 	 * Adds the to stage.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 */
-	public void addToStage(IStage stage) {
+	public void addToStage(IStage stage)
+	{
 		this.stage = stage;
 		stage.addItem(scrollContainer);
 		stage.addItem(line);
@@ -113,21 +130,24 @@ public class FeedbackViewer {
 	 *
 	 * @return the container
 	 */
-	public IScrollContainer getContainer() {
+	public IScrollContainer getContainer()
+	{
 		return scrollContainer;
 	}
 
 	/**
 	 * @return the feedbackItems
 	 */
-	public ArrayList<FeedbackItem> getFeedbackItems() {
+	public ArrayList<FeedbackItem> getFeedbackItems()
+	{
 		return feedbackItems;
 	}
 
 	/**
 	 * Removes the.
 	 */
-	public void remove() {
+	public void remove()
+	{
 		stage.removeItem(line);
 		stage.removeItem(scrollContainer);
 	}
@@ -135,20 +155,22 @@ public class FeedbackViewer {
 	/**
 	 * Sets the feedback container visibility.
 	 *
-	 * @param visibility the new feedback container visibility
+	 * @param visibility
+	 *            the new feedback container visibility
 	 */
-	public void setFeedbackContainerVisibility(boolean visibility) {
-		if (visibility) {
-			scrollContainer.setRelativeLocation(feedbackContainer.getWrapper()
-					.getRelativeLocation());
-			scrollContainer.setRelativeRotation(feedbackContainer.getWrapper()
-					.getRelativeRotation());
+	public void setFeedbackContainerVisibility(boolean visibility)
+	{
+		if (visibility)
+		{
+			scrollContainer.setRelativeLocation(feedbackContainer.getWrapper().getRelativeLocation());
+			scrollContainer.setRelativeRotation(feedbackContainer.getWrapper().getRelativeRotation());
 			scrollContainer.setVisibility(true);
 			scrollContainer.setInteractionEnabled(true);
 			line.setVisible(true);
-			ZManager.manageLineOrderFull(stage, line,
-					feedbackContainer.getWrapper(), scrollContainer);
-		} else {
+			ZManager.manageLineOrderFull(stage, line, feedbackContainer.getWrapper(), scrollContainer);
+		}
+		else
+		{
 			line.setVisible(false);
 			line.setInteractionEnabled(false);
 			scrollContainer.setVisibility(false);
@@ -158,29 +180,35 @@ public class FeedbackViewer {
 	}
 
 	/**
-	 * @param feedbackItems the feedbackItems to set
+	 * @param feedbackItems
+	 *            the feedbackItems to set
 	 */
-	public void setFeedbackItems(ArrayList<FeedbackItem> feedbackItems) {
+	public void setFeedbackItems(ArrayList<FeedbackItem> feedbackItems)
+	{
 		this.feedbackItems = feedbackItems;
 	}
 
 	/**
 	 * Toggle visibility.
 	 */
-	public void toggleVisibility() {
+	public void toggleVisibility()
+	{
 		setFeedbackContainerVisibility(!visible);
 	}
 
 	/**
 	 * Attach line.
 	 */
-	private void attachLine() {
-		try {
-			line = stage.getContentFactory().create(ILine.class, "line",
-					UUID.randomUUID());
+	private void attachLine()
+	{
+		try
+		{
+			line = stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 			line.setLineWidth(10f);
 			stage.addItem(line);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			log.log(Level.SEVERE, "ContentTypeNotBoundException: " + e);
 		}
 		toggleVisibility();
@@ -189,20 +217,24 @@ public class FeedbackViewer {
 	/**
 	 * Keep line on bottom.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void keepLineOnBottom(final IItem item) {
-		for (IItem child : item.getChildItems()) {
+	private void keepLineOnBottom(final IItem item)
+	{
+		for (IItem child : item.getChildItems())
+		{
 			keepLineOnBottom(child);
 		}
 
-		item.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						stage.getZOrderManager().sendToBottom(line);
-					}
-				});
+		item.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				stage.getZOrderManager().sendToBottom(line);
+			}
+		});
 	}
 
 }

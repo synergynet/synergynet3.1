@@ -19,7 +19,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Class TargetLine.
  */
-public class TargetLine {
+public class TargetLine
+{
 
 	/** The line. */
 	private ILine line;
@@ -45,17 +46,24 @@ public class TargetLine {
 	/**
 	 * Instantiates a new target line.
 	 *
-	 * @param stage the stage
-	 * @param log the log
-	 * @param source the source
-	 * @param targets the targets
+	 * @param stage
+	 *            the stage
+	 * @param log
+	 *            the log
+	 * @param source
+	 *            the source
+	 * @param targets
+	 *            the targets
 	 */
-	public TargetLine(IStage stage, Logger log, IItem source,
-			ArrayList<IItem> targets) {
+	public TargetLine(IStage stage, Logger log, IItem source, ArrayList<IItem> targets)
+	{
 		this.stage = stage;
-		if (log == null) {
+		if (log == null)
+		{
 			this.log = Logger.getLogger(AudioRecorder.class.getName());
-		} else {
+		}
+		else
+		{
 			this.log = log;
 		}
 		this.source = source;
@@ -67,8 +75,10 @@ public class TargetLine {
 	 *
 	 * @return the current target
 	 */
-	public IItem getCurrentTarget() {
-		if (target.equals(source)) {
+	public IItem getCurrentTarget()
+	{
+		if (target.equals(source))
+		{
 			return null;
 		}
 		return target;
@@ -79,20 +89,27 @@ public class TargetLine {
 	 *
 	 * @return the next target
 	 */
-	public boolean getNextTarget() {
-		if (targets.size() > 1) {
+	public boolean getNextTarget()
+	{
+		if (targets.size() > 1)
+		{
 			targetIndex++;
-			if (targetIndex >= targets.size()) {
+			if (targetIndex >= targets.size())
+			{
 				targetIndex = 0;
 			}
-			if (targets.get(targetIndex).equals(line)
-					|| targets.get(targetIndex).equals(source)) {
+			if (targets.get(targetIndex).equals(line) || targets.get(targetIndex).equals(source))
+			{
 				getNextTarget();
-			} else {
+			}
+			else
+			{
 				setTarget(targets.get(targetIndex));
 				return true;
 			}
-		} else if (targets.size() == 1) {
+		}
+		else if (targets.size() == 1)
+		{
 			setTarget(targets.get(0));
 			return true;
 		}
@@ -105,20 +122,27 @@ public class TargetLine {
 	 *
 	 * @return the previous target
 	 */
-	public boolean getPreviousTarget() {
-		if (targets.size() > 1) {
+	public boolean getPreviousTarget()
+	{
+		if (targets.size() > 1)
+		{
 			targetIndex--;
-			if (targetIndex < 0) {
+			if (targetIndex < 0)
+			{
 				targetIndex = targets.size() - 1;
 			}
-			if (targets.get(targetIndex).equals(line)
-					|| targets.get(targetIndex).equals(source)) {
+			if (targets.get(targetIndex).equals(line) || targets.get(targetIndex).equals(source))
+			{
 				getPreviousTarget();
-			} else {
+			}
+			else
+			{
 				setTarget(targets.get(targetIndex));
 				return true;
 			}
-		} else if (targets.size() == 1) {
+		}
+		else if (targets.size() == 1)
+		{
 			setTarget(targets.get(0));
 			return true;
 		}
@@ -129,8 +153,10 @@ public class TargetLine {
 	/**
 	 * Hide line.
 	 */
-	public void hideLine() {
-		if (line.isVisible()) {
+	public void hideLine()
+	{
+		if (line.isVisible())
+		{
 			line.setVisible(false);
 		}
 	}
@@ -138,24 +164,29 @@ public class TargetLine {
 	/**
 	 * Removes the.
 	 */
-	public void remove() {
+	public void remove()
+	{
 		stage.removeItem(line);
 	}
 
 	/**
 	 * Sets the colour.
 	 *
-	 * @param colour the new colour
+	 * @param colour
+	 *            the new colour
 	 */
-	public void setColour(ColorRGBA colour) {
+	public void setColour(ColorRGBA colour)
+	{
 		line.setLineColour(colour);
 	}
 
 	/**
 	 * Show line.
 	 */
-	public void showLine() {
-		if (!line.isVisible()) {
+	public void showLine()
+	{
+		if (!line.isVisible())
+		{
 			line.setVisible(true);
 		}
 	}
@@ -163,23 +194,26 @@ public class TargetLine {
 	/**
 	 * Creates the target line.
 	 *
-	 * @param targets the targets
+	 * @param targets
+	 *            the targets
 	 */
-	private void createTargetLine(ArrayList<IItem> targets) {
-		try {
+	private void createTargetLine(ArrayList<IItem> targets)
+	{
+		try
+		{
 			this.targets = targets;
-			line = this.stage.getContentFactory().create(ILine.class, "line",
-					UUID.randomUUID());
+			line = this.stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 			line.setSourceItem(source);
 			line.setLineWidth(10f);
-			line.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							source.setZOrder(line.getZOrder() + 1);
-							target.setZOrder(line.getZOrder() + 1);
-						}
-					});
+			line.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					source.setZOrder(line.getZOrder() + 1);
+					target.setZOrder(line.getZOrder() + 1);
+				}
+			});
 
 			line.setInteractionEnabled(false);
 
@@ -188,7 +222,9 @@ public class TargetLine {
 
 			hideLine();
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			this.log.log(Level.SEVERE, "Content not Bound.", e);
 		}
 	}
@@ -196,9 +232,11 @@ public class TargetLine {
 	/**
 	 * Sets the target.
 	 *
-	 * @param target the new target
+	 * @param target
+	 *            the new target
 	 */
-	private void setTarget(IItem target) {
+	private void setTarget(IItem target)
+	{
 		showLine();
 		this.target = target;
 		ZManager.manageLineOrderFull(stage, line, line.getSourceItem(), target);

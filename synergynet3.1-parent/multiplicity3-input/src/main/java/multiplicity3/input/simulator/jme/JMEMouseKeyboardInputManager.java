@@ -38,7 +38,8 @@ import com.jme3.input.controls.MouseButtonTrigger;
 /**
  * The Class JMEMouseKeyboardInputManager.
  */
-public class JMEMouseKeyboardInputManager {
+public class JMEMouseKeyboardInputManager
+{
 
 	/** The input manager. */
 	private InputManager inputManager;
@@ -47,26 +48,27 @@ public class JMEMouseKeyboardInputManager {
 	private boolean lmb, rmb, mmb; // left, middle, right mouse buttons down?
 
 	/** The mouse move listener. */
-	private AnalogListener mouseMoveListener = new AnalogListener() {
+	private AnalogListener mouseMoveListener = new AnalogListener()
+	{
 
 		@Override
-		public void onAnalog(String name, float isPressed, float tpf) {
-			if (lmb) {
-				simulator.mouseDragged(inputManager.getCursorPosition().x
-						/ screenWidth, inputManager.getCursorPosition().y
-						/ screenHeight, AbstractSimCursor.MOUSE_BUTTON_LEFT);
-			} else if (rmb) {
-				simulator.mouseDragged(inputManager.getCursorPosition().x
-						/ screenWidth, inputManager.getCursorPosition().y
-						/ screenHeight, AbstractSimCursor.MOUSE_BUTTON_RIGHT);
-			} else if (mmb) {
-				simulator.mouseDragged(inputManager.getCursorPosition().x
-						/ screenWidth, inputManager.getCursorPosition().y
-						/ screenHeight, AbstractSimCursor.MOUSE_BUTTON_MIDDLE);
-			} else {
-				simulator.mouseMoved(inputManager.getCursorPosition().x
-						/ screenWidth, inputManager.getCursorPosition().y
-						/ screenHeight);
+		public void onAnalog(String name, float isPressed, float tpf)
+		{
+			if (lmb)
+			{
+				simulator.mouseDragged(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_LEFT);
+			}
+			else if (rmb)
+			{
+				simulator.mouseDragged(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_RIGHT);
+			}
+			else if (mmb)
+			{
+				simulator.mouseDragged(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_MIDDLE);
+			}
+			else
+			{
+				simulator.mouseMoved(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight);
 			}
 		}
 
@@ -84,126 +86,131 @@ public class JMEMouseKeyboardInputManager {
 	/**
 	 * Instantiates a new JME mouse keyboard input manager.
 	 *
-	 * @param simulator the simulator
-	 * @param inputManager the input manager
-	 * @param screenWidth the screen width
-	 * @param screenHeight the screen height
+	 * @param simulator
+	 *            the simulator
+	 * @param inputManager
+	 *            the input manager
+	 * @param screenWidth
+	 *            the screen width
+	 * @param screenHeight
+	 *            the screen height
 	 */
-	public JMEMouseKeyboardInputManager(
-			final AbstractMultiTouchSimulator simulator,
-			final InputManager inputManager, final float screenWidth,
-			final float screenHeight) {
+	public JMEMouseKeyboardInputManager(final AbstractMultiTouchSimulator simulator, final InputManager inputManager, final float screenWidth, final float screenHeight)
+	{
 		this.simulator = simulator;
 		this.inputManager = inputManager;
 		this.screenWidth = screenWidth;
 		this.screenHeight = screenHeight;
 
-		inputManager.addMapping("MBL", new MouseButtonTrigger(
-				MouseInput.BUTTON_LEFT));
-		inputManager.addListener(new ActionListener() {
+		inputManager.addMapping("MBL", new MouseButtonTrigger(MouseInput.BUTTON_LEFT));
+		inputManager.addListener(new ActionListener()
+		{
 			@Override
-			public void onAction(String name, boolean isPressed, float tpf) {
-				if (isPressed) {
+			public void onAction(String name, boolean isPressed, float tpf)
+			{
+				if (isPressed)
+				{
 					lmb = true;
-					simulator.mousePressed(inputManager.getCursorPosition().x
-							/ screenWidth, inputManager.getCursorPosition().y
-							/ screenHeight, AbstractSimCursor.MOUSE_BUTTON_LEFT);
-				} else {
+					simulator.mousePressed(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_LEFT);
+				}
+				else
+				{
 					lmb = false;
-					simulator
-							.mouseReleased(inputManager.getCursorPosition().x
-									/ screenWidth,
-									inputManager.getCursorPosition().y
-											/ screenHeight,
-									AbstractSimCursor.MOUSE_BUTTON_LEFT);
+					simulator.mouseReleased(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_LEFT);
 				}
 			}
 		}, "MBL");
 
-		inputManager.addMapping("MBM", new MouseButtonTrigger(
-				MouseInput.BUTTON_MIDDLE));
-		inputManager.addListener(new ActionListener() {
+		inputManager.addMapping("MBM", new MouseButtonTrigger(MouseInput.BUTTON_MIDDLE));
+		inputManager.addListener(new ActionListener()
+		{
 			@Override
-			public void onAction(String name, boolean isPressed, float tpf) {
-				if (isPressed) {
+			public void onAction(String name, boolean isPressed, float tpf)
+			{
+				if (isPressed)
+				{
 					mmb = true;
-					simulator.mousePressed(inputManager.getCursorPosition().x
-							/ screenWidth, inputManager.getCursorPosition().y
-							/ screenHeight,
-							AbstractSimCursor.MOUSE_BUTTON_MIDDLE);
-				} else {
+					simulator.mousePressed(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_MIDDLE);
+				}
+				else
+				{
 					mmb = false;
-					simulator.mouseReleased(inputManager.getCursorPosition().x
-							/ screenWidth, inputManager.getCursorPosition().y
-							/ screenHeight,
-							AbstractSimCursor.MOUSE_BUTTON_MIDDLE);
+					simulator.mouseReleased(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_MIDDLE);
 				}
 			}
 		}, "MBM");
 
-		inputManager.addMapping("MBR", new MouseButtonTrigger(
-				MouseInput.BUTTON_RIGHT));
-		inputManager.addListener(new ActionListener() {
+		inputManager.addMapping("MBR", new MouseButtonTrigger(MouseInput.BUTTON_RIGHT));
+		inputManager.addListener(new ActionListener()
+		{
 			@Override
-			public void onAction(String name, boolean isPressed, float tpf) {
-				if (isPressed) {
+			public void onAction(String name, boolean isPressed, float tpf)
+			{
+				if (isPressed)
+				{
 					rmb = true;
-					simulator.mousePressed(inputManager.getCursorPosition().x
-							/ screenWidth, inputManager.getCursorPosition().y
-							/ screenHeight,
-							AbstractSimCursor.MOUSE_BUTTON_RIGHT);
-				} else {
+					simulator.mousePressed(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_RIGHT);
+				}
+				else
+				{
 					rmb = false;
-					simulator.mouseReleased(inputManager.getCursorPosition().x
-							/ screenWidth, inputManager.getCursorPosition().y
-							/ screenHeight,
-							AbstractSimCursor.MOUSE_BUTTON_RIGHT);
+					simulator.mouseReleased(inputManager.getCursorPosition().x / screenWidth, inputManager.getCursorPosition().y / screenHeight, AbstractSimCursor.MOUSE_BUTTON_RIGHT);
 				}
 			}
 		}, "MBR");
 
-		inputManager.addMapping("MY", new MouseAxisTrigger(MouseInput.AXIS_Y,
-				false));
-		inputManager.addMapping("MYN", new MouseAxisTrigger(MouseInput.AXIS_Y,
-				true));
-		inputManager.addMapping("MX", new MouseAxisTrigger(MouseInput.AXIS_X,
-				false));
-		inputManager.addMapping("MXN", new MouseAxisTrigger(MouseInput.AXIS_X,
-				true));
+		inputManager.addMapping("MY", new MouseAxisTrigger(MouseInput.AXIS_Y, false));
+		inputManager.addMapping("MYN", new MouseAxisTrigger(MouseInput.AXIS_Y, true));
+		inputManager.addMapping("MX", new MouseAxisTrigger(MouseInput.AXIS_X, false));
+		inputManager.addMapping("MXN", new MouseAxisTrigger(MouseInput.AXIS_X, true));
 		inputManager.addListener(mouseMoveListener, "MX", "MXN", "MY", "MYN");
 
 		inputManager.addMapping("SHIFT", new KeyTrigger(KeyInput.KEY_LSHIFT));
-		inputManager.addListener(new ActionListener() {
+		inputManager.addListener(new ActionListener()
+		{
 			@Override
-			public void onAction(String name, boolean isPressed, float tpf) {
-				if (isPressed) {
+			public void onAction(String name, boolean isPressed, float tpf)
+			{
+				if (isPressed)
+				{
 					simulator.keyPressed(AbstractSimCursor.KEY_SHIFT);
-				} else {
+				}
+				else
+				{
 					simulator.keyReleased(AbstractSimCursor.KEY_SHIFT);
 				}
 			}
 		}, "SHIFT");
 
-		inputManager.addMapping("CONTROL",
-				new KeyTrigger(KeyInput.KEY_LCONTROL));
-		inputManager.addListener(new ActionListener() {
+		inputManager.addMapping("CONTROL", new KeyTrigger(KeyInput.KEY_LCONTROL));
+		inputManager.addListener(new ActionListener()
+		{
 			@Override
-			public void onAction(String name, boolean isPressed, float tpf) {
-				if (isPressed) {
+			public void onAction(String name, boolean isPressed, float tpf)
+			{
+				if (isPressed)
+				{
 					simulator.keyPressed(AbstractSimCursor.KEY_CONTROL);
-				} else {
+				}
+				else
+				{
 					simulator.keyReleased(AbstractSimCursor.KEY_CONTROL);
 				}
 			}
 		}, "CONTROL");
 
 		inputManager.addMapping("SPACE", new KeyTrigger(KeyInput.KEY_SPACE));
-		inputManager.addListener(new ActionListener() {
+		inputManager.addListener(new ActionListener()
+		{
 			@Override
-			public void onAction(String name, boolean isPressed, float tpf) {
-				if (isPressed) {
+			public void onAction(String name, boolean isPressed, float tpf)
+			{
+				if (isPressed)
+				{
 					simulator.keyPressed(AbstractSimCursor.KEY_SPACE);
-				} else {
+				}
+				else
+				{
 					simulator.keyReleased(AbstractSimCursor.KEY_SPACE);
 				}
 			}
@@ -214,25 +221,42 @@ public class JMEMouseKeyboardInputManager {
 	/**
 	 * On key.
 	 *
-	 * @param character the character
-	 * @param keyCode the key code
-	 * @param pressed the pressed
+	 * @param character
+	 *            the character
+	 * @param keyCode
+	 *            the key code
+	 * @param pressed
+	 *            the pressed
 	 */
-	public void onKey(char character, int keyCode, boolean pressed) {
-		if (pressed) {
-			if (shiftKeysPressed(keyCode)) {
+	public void onKey(char character, int keyCode, boolean pressed)
+	{
+		if (pressed)
+		{
+			if (shiftKeysPressed(keyCode))
+			{
 				simulator.keyPressed(AbstractSimCursor.KEY_SHIFT);
-			} else if (controlKeysPressed(keyCode)) {
+			}
+			else if (controlKeysPressed(keyCode))
+			{
 				simulator.keyPressed(AbstractSimCursor.KEY_CONTROL);
-			} else if (spaceKeyPressed(keyCode)) {
+			}
+			else if (spaceKeyPressed(keyCode))
+			{
 				simulator.keyPressed(AbstractSimCursor.KEY_SPACE);
 			}
-		} else {
-			if (shiftKeysPressed(keyCode)) {
+		}
+		else
+		{
+			if (shiftKeysPressed(keyCode))
+			{
 				simulator.keyReleased(AbstractSimCursor.KEY_SHIFT);
-			} else if (controlKeysPressed(keyCode)) {
+			}
+			else if (controlKeysPressed(keyCode))
+			{
 				simulator.keyReleased(AbstractSimCursor.KEY_CONTROL);
-			} else if (spaceKeyPressed(keyCode)) {
+			}
+			else if (spaceKeyPressed(keyCode))
+			{
 				simulator.keyReleased(AbstractSimCursor.KEY_SPACE);
 			}
 		}
@@ -241,32 +265,36 @@ public class JMEMouseKeyboardInputManager {
 	/**
 	 * Control keys pressed.
 	 *
-	 * @param keyCode the key code
+	 * @param keyCode
+	 *            the key code
 	 * @return true, if successful
 	 */
-	private boolean controlKeysPressed(int keyCode) {
-		return (keyCode == KeyInput.KEY_LCONTROL)
-				|| (keyCode == KeyInput.KEY_RCONTROL);
+	private boolean controlKeysPressed(int keyCode)
+	{
+		return (keyCode == KeyInput.KEY_LCONTROL) || (keyCode == KeyInput.KEY_RCONTROL);
 	}
 
 	/**
 	 * Shift keys pressed.
 	 *
-	 * @param keyCode the key code
+	 * @param keyCode
+	 *            the key code
 	 * @return true, if successful
 	 */
-	private boolean shiftKeysPressed(int keyCode) {
-		return (keyCode == KeyInput.KEY_LSHIFT)
-				|| (keyCode == KeyInput.KEY_RSHIFT);
+	private boolean shiftKeysPressed(int keyCode)
+	{
+		return (keyCode == KeyInput.KEY_LSHIFT) || (keyCode == KeyInput.KEY_RSHIFT);
 	}
 
 	/**
 	 * Space key pressed.
 	 *
-	 * @param keyCode the key code
+	 * @param keyCode
+	 *            the key code
 	 * @return true, if successful
 	 */
-	private boolean spaceKeyPressed(int keyCode) {
+	private boolean spaceKeyPressed(int keyCode)
+	{
 		return keyCode == KeyInput.KEY_SPACE;
 	}
 

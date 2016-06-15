@@ -18,12 +18,14 @@ import com.google.gwt.user.client.ui.VerticalPanel;
 /**
  * The Class DevicesOnlineWidget.
  */
-public class DevicesOnlineWidget extends VerticalPanel {
+public class DevicesOnlineWidget extends VerticalPanel
+{
 
 	/**
 	 * The Interface DevicesOnlineListBoxDelegate.
 	 */
-	public static interface DevicesOnlineListBoxDelegate {
+	public static interface DevicesOnlineListBoxDelegate
+	{
 
 		/**
 		 * Devices online list box did reload.
@@ -33,14 +35,16 @@ public class DevicesOnlineWidget extends VerticalPanel {
 		/**
 		 * Devices online list box reload failed.
 		 *
-		 * @param caught the caught
+		 * @param caught
+		 *            the caught
 		 */
 		public void devicesOnlineListBoxReloadFailed(Throwable caught);
 
 		/**
 		 * Devices selected.
 		 *
-		 * @param device the device
+		 * @param device
+		 *            the device
 		 */
 		public void devicesSelected(List<String> device);
 
@@ -80,15 +84,19 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	/**
 	 * Instantiates a new devices online widget.
 	 */
-	public DevicesOnlineWidget() {
+	public DevicesOnlineWidget()
+	{
 		super();
 
 		listBox = new FixedSizeScrollableListBox();
-		listBox.addClickHandler(new ClickHandler() {
+		listBox.addClickHandler(new ClickHandler()
+		{
 			@Override
-			public void onClick(ClickEvent event) {
+			public void onClick(ClickEvent event)
+			{
 				List<String> itemsSelected = listBox.getSelectedItems();
-				if (delegate != null) {
+				if (delegate != null)
+				{
 					delegate.devicesSelected(itemsSelected);
 				}
 			}
@@ -99,8 +107,11 @@ public class DevicesOnlineWidget extends VerticalPanel {
 		buttonsPanel = new HorizontalPanel();
 
 		btnRefresh = new Button("Refresh");
-		btnRefresh.addClickHandler(new ClickHandler() {
-			public void onClick(ClickEvent event) {
+		btnRefresh.addClickHandler(new ClickHandler()
+		{
+			@Override
+			public void onClick(ClickEvent event)
+			{
 				loadOnlineTableList();
 			}
 		});
@@ -123,7 +134,8 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 *
 	 * @return the all devices option check
 	 */
-	public boolean getAllDevicesOptionCheck() {
+	public boolean getAllDevicesOptionCheck()
+	{
 		return allTables.getValue();
 	}
 
@@ -132,7 +144,8 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 *
 	 * @return the buttons panel
 	 */
-	public HorizontalPanel getButtonsPanel() {
+	public HorizontalPanel getButtonsPanel()
+	{
 		return this.buttonsPanel;
 	}
 
@@ -141,9 +154,11 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 *
 	 * @return the device selected
 	 */
-	public String getDeviceSelected() {
+	public String getDeviceSelected()
+	{
 		List<String> devices = getDevicesSelected();
-		if (devices.size() < 1) {
+		if (devices.size() < 1)
+		{
 			return null;
 		}
 		return devices.get(0);
@@ -154,7 +169,8 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 *
 	 * @return the devices present
 	 */
-	public List<String> getDevicesPresent() {
+	public List<String> getDevicesPresent()
+	{
 		return tablesPresent;
 	}
 
@@ -163,7 +179,8 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 *
 	 * @return the devices selected
 	 */
-	public List<String> getDevicesSelected() {
+	public List<String> getDevicesSelected()
+	{
 		return listBox.getSelectedItems();
 	}
 
@@ -172,30 +189,38 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 *
 	 * @return the refresh button
 	 */
-	public Button getRefreshButton() {
+	public Button getRefreshButton()
+	{
 		return btnRefresh;
 	}
 
 	/**
 	 * Sets the all tables check box offset.
 	 *
-	 * @param allTablesOffset the new all tables check box offset
+	 * @param allTablesOffset
+	 *            the new all tables check box offset
 	 */
-	public void setAllTablesCheckBoxOffset(String allTablesOffset) {
+	public void setAllTablesCheckBoxOffset(String allTablesOffset)
+	{
 		this.allTablesOffset = allTablesOffset;
 	}
 
 	/**
 	 * Sets the all tables check option enabled.
 	 *
-	 * @param allTablesSelect the new all tables check option enabled
+	 * @param allTablesSelect
+	 *            the new all tables check option enabled
 	 */
-	public void setAllTablesCheckOptionEnabled(boolean allTablesSelect) {
+	public void setAllTablesCheckOptionEnabled(boolean allTablesSelect)
+	{
 		allTables.setVisible(allTablesSelect);
 		allTables.setEnabled(allTablesSelect);
-		if (allTablesSelect) {
+		if (allTablesSelect)
+		{
 			bufferLabel.setWidth(allTablesOffset);
-		} else {
+		}
+		else
+		{
 			bufferLabel.setWidth("0px");
 		}
 	}
@@ -203,46 +228,57 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	/**
 	 * Sets the delegate.
 	 *
-	 * @param delegate the new delegate
+	 * @param delegate
+	 *            the new delegate
 	 */
-	public void setDelegate(DevicesOnlineListBoxDelegate delegate) {
+	public void setDelegate(DevicesOnlineListBoxDelegate delegate)
+	{
 		this.delegate = delegate;
 	}
 
 	/**
 	 * Sets the device type.
 	 *
-	 * @param deviceType the new device type
+	 * @param deviceType
+	 *            the new device type
 	 */
-	public void setDeviceType(String deviceType) {
+	public void setDeviceType(String deviceType)
+	{
 		this.deviceType = deviceType;
 	}
 
 	/**
 	 * Sets the list box size.
 	 *
-	 * @param width the width
-	 * @param height the height
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
 	 */
-	public void setListBoxSize(String width, String height) {
+	public void setListBoxSize(String width, String height)
+	{
 		listBox.setSize(width, height);
 	}
 
 	/**
 	 * Sets the multiple selection allowed.
 	 *
-	 * @param multipleSelect the new multiple selection allowed
+	 * @param multipleSelect
+	 *            the new multiple selection allowed
 	 */
-	public void setMultipleSelectionAllowed(boolean multipleSelect) {
+	public void setMultipleSelectionAllowed(boolean multipleSelect)
+	{
 		listBox.setMultipleSelect(multipleSelect);
 	}
 
 	/**
 	 * Sets the refresh button visibility.
 	 *
-	 * @param visible the new refresh button visibility
+	 * @param visible
+	 *            the new refresh button visibility
 	 */
-	public void setRefreshButtonVisibility(boolean visible) {
+	public void setRefreshButtonVisibility(boolean visible)
+	{
 		this.btnRefresh.setVisible(visible);
 	}
 
@@ -251,7 +287,9 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	 * @see com.google.gwt.user.client.ui.UIObject#setSize(java.lang.String,
 	 * java.lang.String)
 	 */
-	public void setSize(String width, String height) {
+	@Override
+	public void setSize(String width, String height)
+	{
 		super.setSize(width, height);
 		listBox.setSize(width, height);
 	}
@@ -259,48 +297,56 @@ public class DevicesOnlineWidget extends VerticalPanel {
 	/**
 	 * Update list.
 	 */
-	public void updateList() {
+	public void updateList()
+	{
 		loadOnlineTableList();
 	}
 
 	/**
 	 * Load online table list.
 	 */
-	protected void loadOnlineTableList() {
-		SynergyNetWebCommonsService.Util.getInstance()
-				.getDevicesCurrentlyOnline(deviceType,
-						new AsyncCallback<List<String>>() {
-							@Override
-							public void onFailure(Throwable caught) {
-								if (delegate != null) {
-									delegate.devicesOnlineListBoxReloadFailed(caught);
-								}
-							}
+	protected void loadOnlineTableList()
+	{
+		SynergyNetWebCommonsService.Util.getInstance().getDevicesCurrentlyOnline(deviceType, new AsyncCallback<List<String>>()
+		{
+			@Override
+			public void onFailure(Throwable caught)
+			{
+				if (delegate != null)
+				{
+					delegate.devicesOnlineListBoxReloadFailed(caught);
+				}
+			}
 
-							@Override
-							public void onSuccess(List<String> result) {
-								listBox.removeAllItems();
-								tablesPresent.clear();
-								if (result.size() > 0) {
-									for (int row = 0; row < result.size(); row++) {
-										listBox.addItem(result.get(row));
-										tablesPresent.add(result.get(row));
-									}
-								}
+			@Override
+			public void onSuccess(List<String> result)
+			{
+				listBox.removeAllItems();
+				tablesPresent.clear();
+				if (result.size() > 0)
+				{
+					for (int row = 0; row < result.size(); row++)
+					{
+						listBox.addItem(result.get(row));
+						tablesPresent.add(result.get(row));
+					}
+				}
 
-								if (delegate != null) {
-									delegate.devicesOnlineListBoxDidReload();
-									delegate.noDevicesSelected();
-								}
+				if (delegate != null)
+				{
+					delegate.devicesOnlineListBoxDidReload();
+					delegate.noDevicesSelected();
+				}
 
-								onRefresh();
-							}
-						});
+				onRefresh();
+			}
+		});
 	}
 
 	/**
 	 * On refresh.
 	 */
-	protected void onRefresh() {
+	protected void onRefresh()
+	{
 	}
 }

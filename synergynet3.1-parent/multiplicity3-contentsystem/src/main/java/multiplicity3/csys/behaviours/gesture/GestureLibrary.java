@@ -12,7 +12,8 @@ import java.util.Map;
 /**
  * The Class GestureLibrary.
  */
-public class GestureLibrary {
+public class GestureLibrary
+{
 
 	/** The instance. */
 	private static GestureLibrary instance;
@@ -23,7 +24,8 @@ public class GestureLibrary {
 	/**
 	 * Instantiates a new gesture library.
 	 */
-	private GestureLibrary() {
+	private GestureLibrary()
+	{
 	}
 
 	/**
@@ -31,9 +33,12 @@ public class GestureLibrary {
 	 *
 	 * @return single instance of GestureLibrary
 	 */
-	public static GestureLibrary getInstance() {
-		synchronized (GestureLibrary.class) {
-			if (instance == null) {
+	public static GestureLibrary getInstance()
+	{
+		synchronized (GestureLibrary.class)
+		{
+			if (instance == null)
+			{
 				instance = new GestureLibrary();
 			}
 			return instance;
@@ -43,25 +48,31 @@ public class GestureLibrary {
 	/**
 	 * Find gesture match.
 	 *
-	 * @param g the g
-	 * @param proximity the proximity
+	 * @param g
+	 *            the g
+	 * @param proximity
+	 *            the proximity
 	 * @return the gesture match
 	 */
-	public GestureMatch findGestureMatch(Gesture g, float proximity) {
+	public GestureMatch findGestureMatch(Gesture g, float proximity)
+	{
 		g.normalizeSize();
 		g = g.normalizeResolution(32);
 		g.normalizeCenter();
 
 		Gesture highestMatch = null;
 		float highestScore = Float.MIN_VALUE;
-		for (Gesture x : loadedGestures.values()) {
+		for (Gesture x : loadedGestures.values())
+		{
 			float score = g.compareTo(x);
-			if ((score > proximity) && (score > highestScore)) {
+			if ((score > proximity) && (score > highestScore))
+			{
 				highestMatch = x;
 				highestScore = score;
 			}
 		}
-		if (highestMatch == null) {
+		if (highestMatch == null)
+		{
 			return null;
 		}
 		return new GestureMatch(g, highestMatch, highestScore);
@@ -70,21 +81,27 @@ public class GestureLibrary {
 	/**
 	 * Load gesture.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 * @return the gesture
 	 */
-	public Gesture loadGesture(String name) {
-		try {
-			ObjectInputStream ois = new ObjectInputStream(
-					GestureLibrary.class.getResourceAsStream(name + ".gesture"));
+	public Gesture loadGesture(String name)
+	{
+		try
+		{
+			ObjectInputStream ois = new ObjectInputStream(GestureLibrary.class.getResourceAsStream(name + ".gesture"));
 			Gesture g = (Gesture) ois.readObject();
 			ois.close();
 			loadedGestures.put(name, g);
 			return g;
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			// TODO propagate
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			// TODO propagate
 			e.printStackTrace();
 		}
@@ -94,20 +111,24 @@ public class GestureLibrary {
 	/**
 	 * Write gesture.
 	 *
-	 * @param name the name
-	 * @param g the g
-	 * @param dir the dir
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param name
+	 *            the name
+	 * @param g
+	 *            the g
+	 * @param dir
+	 *            the dir
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	public void writeGesture(String name, Gesture g, File dir)
-			throws FileNotFoundException, IOException {
-		if (g.numPoints() != 32) {
-			throw new IllegalArgumentException(
-					"Gesture must contain 32 points.");
+	public void writeGesture(String name, Gesture g, File dir) throws FileNotFoundException, IOException
+	{
+		if (g.numPoints() != 32)
+		{
+			throw new IllegalArgumentException("Gesture must contain 32 points.");
 		}
-		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(
-				new File(dir, name + ".gesture")));
+		ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(new File(dir, name + ".gesture")));
 		oos.writeObject(g);
 		oos.close();
 	}

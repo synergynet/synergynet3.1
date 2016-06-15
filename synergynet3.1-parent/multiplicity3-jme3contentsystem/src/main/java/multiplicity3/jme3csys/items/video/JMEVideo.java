@@ -37,11 +37,11 @@ import com.jme3.video.plugins.jheora.AVThread;
  */
 @ImplementsContentItem(target = IVideo.class)
 @RequiresUpdate
-public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable {
+public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(JMEVideo.class.getName());
+	private static final Logger log = Logger.getLogger(JMEVideo.class.getName());
 
 	/** The audio renderer. */
 	private AudioRenderer audioRenderer;
@@ -94,10 +94,13 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	/**
 	 * Instantiates a new JME video.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEVideo(String name, UUID uuid) {
+	public JMEVideo(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -106,7 +109,8 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return quadGeometry;
 	}
 
@@ -117,7 +121,8 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		quad = new CenteredQuad(100, 100, true);
 		quadGeometry = new Geometry("_quad_geom", quad);
 		mat = new Material(assetManager, "Common/MatDefs/Gui/Gui.j3md");
@@ -135,7 +140,8 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.items.video.IVideo#isPlaying()
 	 */
 	@Override
-	public boolean isPlaying() {
+	public boolean isPlaying()
+	{
 		return playing;
 	}
 
@@ -144,7 +150,8 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.items.video.IVideo#setResource(java.lang.String)
 	 */
 	@Override
-	public void setResource(String resource) {
+	public void setResource(String resource)
+	{
 		this.resource = resource;
 	}
 
@@ -153,7 +160,8 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.items.video.IVideo#setSize(float, float)
 	 */
 	@Override
-	public void setSize(float width, float height) {
+	public void setSize(float width, float height)
+	{
 		quad = new CenteredQuad(width, height, true);
 		quadGeometry.setMesh(quad);
 	}
@@ -161,47 +169,65 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	/**
 	 * Simple update.
 	 *
-	 * @param tpf the tpf
+	 * @param tpf
+	 *            the tpf
 	 */
-	public void simpleUpdate(float tpf) {
-		if (!isPlaying()) {
+	public void simpleUpdate(float tpf)
+	{
+		if (!isPlaying())
+		{
 			return;
 		}
 
-		if (source == null) {
-			if (decoder.getAudioStream() != null) {
+		if (source == null)
+		{
+			if (decoder.getAudioStream() != null)
+			{
 				source = new AudioNode(decoder.getAudioStream(), null);
 				source.setPositional(false);
 				source.setReverbEnabled(false);
 				audioRenderer.playSource(source);
-			} else {
+			}
+			else
+			{
 				return;
 			}
 		}
 
-		if (waitTime > 0) {
+		if (waitTime > 0)
+		{
 			waitTime -= tpf;
-			if (waitTime > 0) {
+			if (waitTime > 0)
+			{
 				return;
-			} else {
+			}
+			else
+			{
 				waitTime = 0;
 				drawFrame(frameToDraw);
 				frameToDraw = null;
 			}
-		} else {
+		}
+		else
+		{
 			VFrame frame;
-			try {
+			try
+			{
 				frame = videoQueue.take();
-			} catch (InterruptedException ex) {
+			}
+			catch (InterruptedException ex)
+			{
 				stopPlaying();
 				return;
 			}
-			if (frame.getTime() < lastFrameTime) {
+			if (frame.getTime() < lastFrameTime)
+			{
 				videoQueue.returnFrame(frame);
 				return;
 			}
 
-			if (frame.getTime() == -2) {
+			if (frame.getTime() == -2)
+			{
 				System.out.println("End of stream");
 				stopPlaying();
 				return;
@@ -211,22 +237,28 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 
 			long delay = frame.getTime() - lastFrameTime;
 			long diff = frame.getTime() - masterClock.getTime();
-			long syncThresh = delay > AV_SYNC_THRESHOLD ? delay
-					: AV_SYNC_THRESHOLD;
+			long syncThresh = delay > AV_SYNC_THRESHOLD ? delay : AV_SYNC_THRESHOLD;
 
 			// if difference is more than 1 second, synchronize.
-			if (Math.abs(diff) < Clock.SECONDS_TO_NANOS) {
-				if (diff <= -syncThresh) {
+			if (Math.abs(diff) < Clock.SECONDS_TO_NANOS)
+			{
+				if (diff <= -syncThresh)
+				{
 					delay = 0;
-				} else if (diff >= syncThresh) {
+				}
+				else if (diff >= syncThresh)
+				{
 					delay = 2 * delay;
 				}
 			}
 
-			if (delay > 0) {
+			if (delay > 0)
+			{
 				waitNanos(delay);
 				drawFrame(frame);
-			} else {
+			}
+			else
+			{
 				videoQueue.returnFrame(frame);
 				lastFrameTime = frame.getTime();
 			}
@@ -238,29 +270,37 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.items.video.IVideo#startPlaying()
 	 */
 	@Override
-	public void startPlaying() throws CouldNotPlayVideoException {
-		if (playing) {
+	public void startPlaying() throws CouldNotPlayVideoException
+	{
+		if (playing)
+		{
 			return;
 		}
 
 		log.fine("Playing " + resource);
 
-		try {
+		try
+		{
 			fis = new FileInputStream(resource);
-			if (videoQueue == null) {
+			if (videoQueue == null)
+			{
 				videoQueue = new VQueue(5);
 			}
-			if (decoder == null) {
+			if (decoder == null)
+			{
 				decoder = new AVThread(fis, videoQueue);
 			}
 			videoThread = new Thread(decoder, "Jheora Video Decoder");
 			videoThread.setDaemon(true);
 			videoThread.start();
-			if (masterClock == null) {
+			if (masterClock == null)
+			{
 				masterClock = decoder.getMasterClock();
 			}
 			playing = true;
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			throw new CouldNotPlayVideoException();
 		}
 	}
@@ -270,14 +310,19 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.items.video.IVideo#stopPlaying()
 	 */
 	@Override
-	public void stopPlaying() {
+	public void stopPlaying()
+	{
 		decoder.stop();
-		if (source != null) {
+		if (source != null)
+		{
 			audioRenderer.stopSource(source);
 		}
-		try {
+		try
+		{
 			fis.close();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			log.warning("Problems closing video stream.");
 		}
 	}
@@ -287,16 +332,19 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	 * @see multiplicity3.csys.IUpdateable#update(float)
 	 */
 	@Override
-	public void update(float tpf) {
+	public void update(float tpf)
+	{
 		simpleUpdate(tpf);
 	}
 
 	/**
 	 * Draw frame.
 	 *
-	 * @param frame the frame
+	 * @param frame
+	 *            the frame
 	 */
-	private void drawFrame(VFrame frame) {
+	private void drawFrame(VFrame frame)
+	{
 		frame.setImage(frame.getImage());
 		mat.setTexture("m_Texture", frame);
 		renderer.setTexture(0, frame);
@@ -307,15 +355,20 @@ public class JMEVideo extends JMEItem implements IVideo, IInitable, IUpdateable 
 	/**
 	 * Wait nanos.
 	 *
-	 * @param time the time
+	 * @param time
+	 *            the time
 	 */
-	private void waitNanos(long time) {
+	private void waitNanos(long time)
+	{
 		long millis = time / Clock.MILLIS_TO_NANOS;
 		int nanos = (int) (time - (millis * Clock.MILLIS_TO_NANOS));
 
-		try {
+		try
+		{
 			Thread.sleep(millis, nanos);
-		} catch (InterruptedException ex) {
+		}
+		catch (InterruptedException ex)
+		{
 			// stop(); // would stop app
 			return;
 		}

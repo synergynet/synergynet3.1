@@ -29,7 +29,8 @@ import java.util.List;
 /**
  * The Class AnimationSequence.
  */
-public class AnimationSequence extends AnimationElement {
+public class AnimationSequence extends AnimationElement
+{
 
 	/** The current element. */
 	protected AnimationElement currentElement = null;
@@ -49,16 +50,20 @@ public class AnimationSequence extends AnimationElement {
 	/**
 	 * Instantiates a new animation sequence.
 	 */
-	public AnimationSequence() {
+	public AnimationSequence()
+	{
 	}
 
 	/**
 	 * Instantiates a new animation sequence.
 	 *
-	 * @param elems the elems
+	 * @param elems
+	 *            the elems
 	 */
-	public AnimationSequence(AnimationElement... elems) {
-		for (AnimationElement elem : elems) {
+	public AnimationSequence(AnimationElement... elems)
+	{
+		for (AnimationElement elem : elems)
+		{
 			addAnimationElement(elem);
 		}
 	}
@@ -66,10 +71,13 @@ public class AnimationSequence extends AnimationElement {
 	/**
 	 * Adds the animation element.
 	 *
-	 * @param elem the elem
+	 * @param elem
+	 *            the elem
 	 */
-	public void addAnimationElement(AnimationElement elem) {
-		if (currentElement == null) {
+	public void addAnimationElement(AnimationElement elem)
+	{
+		if (currentElement == null)
+		{
 			currentElement = elem;
 			currentIndex = 0;
 		}
@@ -83,7 +91,8 @@ public class AnimationSequence extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 	}
 
 	/*
@@ -91,7 +100,8 @@ public class AnimationSequence extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
@@ -100,7 +110,8 @@ public class AnimationSequence extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		currentIndex = 0;
 		currentElement = elements.get(currentIndex);
 	}
@@ -108,9 +119,11 @@ public class AnimationSequence extends AnimationElement {
 	/**
 	 * Sets the repeating.
 	 *
-	 * @param b the new repeating
+	 * @param b
+	 *            the new repeating
 	 */
-	public void setRepeating(boolean b) {
+	public void setRepeating(boolean b)
+	{
 		repeating = b;
 	}
 
@@ -121,19 +134,26 @@ public class AnimationSequence extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
-		if (currentElement == null) {
+	public void updateAnimationState(float tpf)
+	{
+		if (currentElement == null)
+		{
 			return;
 		}
-		if (currentElement.isFinished()) {
+		if (currentElement.isFinished())
+		{
 			currentElement = getNextElement();
-			if (currentElement != null) {
+			if (currentElement != null)
+			{
 				currentElement.reset();
 			}
 		}
-		if (currentElement == null) {
+		if (currentElement == null)
+		{
 			finished = true;
-		} else {
+		}
+		else
+		{
 			currentElement.updateState(tpf);
 		}
 	}
@@ -143,16 +163,23 @@ public class AnimationSequence extends AnimationElement {
 	 *
 	 * @return the next element
 	 */
-	private AnimationElement getNextElement() {
-		if (repeating) {
+	private AnimationElement getNextElement()
+	{
+		if (repeating)
+		{
 			currentIndex++;
 			currentIndex = currentIndex % elements.size();
 			return elements.get(currentIndex);
-		} else {
+		}
+		else
+		{
 			currentIndex++;
-			if (currentIndex > (elements.size() - 1)) {
+			if (currentIndex > (elements.size() - 1))
+			{
 				return null;
-			} else {
+			}
+			else
+			{
 				return elements.get(currentIndex);
 			}
 		}

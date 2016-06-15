@@ -10,7 +10,8 @@ import multiplicity3.csys.stage.IStage;
 /**
  * The Class MultiplicityEnvironment.
  */
-public class MultiplicityEnvironment {
+public class MultiplicityEnvironment
+{
 
 	/** The instance. */
 	private static MultiplicityEnvironment instance;
@@ -21,7 +22,8 @@ public class MultiplicityEnvironment {
 	/**
 	 * Instantiates a new multiplicity environment.
 	 */
-	private MultiplicityEnvironment() {
+	private MultiplicityEnvironment()
+	{
 		stages = new HashMap<String, IStage>();
 	}
 
@@ -30,9 +32,12 @@ public class MultiplicityEnvironment {
 	 *
 	 * @return the multiplicity environment
 	 */
-	public static MultiplicityEnvironment get() {
-		synchronized (MultiplicityEnvironment.class) {
-			if (instance == null) {
+	public static MultiplicityEnvironment get()
+	{
+		synchronized (MultiplicityEnvironment.class)
+		{
+			if (instance == null)
+			{
 				instance = new MultiplicityEnvironment();
 			}
 		}
@@ -42,12 +47,16 @@ public class MultiplicityEnvironment {
 	/**
 	 * Adds the stage.
 	 *
-	 * @param name the name
-	 * @param stage the stage
+	 * @param name
+	 *            the name
+	 * @param stage
+	 *            the stage
 	 * @return true, if successful
 	 */
-	public boolean addStage(String name, IStage stage) {
-		if (stages.containsKey(name)) {
+	public boolean addStage(String name, IStage stage)
+	{
+		if (stages.containsKey(name))
+		{
 			return false;
 		}
 
@@ -60,10 +69,13 @@ public class MultiplicityEnvironment {
 	 *
 	 * @return the local stages
 	 */
-	public List<IStage> getLocalStages() {
+	public List<IStage> getLocalStages()
+	{
 		List<IStage> localStages = new ArrayList<IStage>();
-		for (IStage stage : stages.values()) {
-			if (stage.isLocal()) {
+		for (IStage stage : stages.values())
+		{
+			if (stage.isLocal())
+			{
 				localStages.add(stage);
 			}
 		}
@@ -73,10 +85,12 @@ public class MultiplicityEnvironment {
 	/**
 	 * Gets the stage.
 	 *
-	 * @param name the name
+	 * @param name
+	 *            the name
 	 * @return the stage
 	 */
-	public IStage getStage(String name) {
+	public IStage getStage(String name)
+	{
 
 		return null;
 	}
@@ -86,7 +100,8 @@ public class MultiplicityEnvironment {
 	 *
 	 * @return the stage count
 	 */
-	public int getStageCount() {
+	public int getStageCount()
+	{
 		return stages.size();
 	}
 }

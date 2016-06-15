@@ -15,109 +15,126 @@ import synergynet3.feedbacksystem.defaultfeedbacktypes.AudioFeedback;
 /**
  * The Class CacheTidy.
  */
-public class CacheTidy {
+public class CacheTidy
+{
 
 	/**
 	 * Creates the student cache.
 	 *
-	 * @param studentID the student id
+	 * @param studentID
+	 *            the student id
 	 */
-	public static void createStudentCache(String studentID) {
+	public static void createStudentCache(String studentID)
+	{
 		CacheOrganisation.getSpecificStudentIconDir(studentID);
 	}
 
 	/**
 	 * Removes the student cache.
 	 *
-	 * @param studentID the student id
+	 * @param studentID
+	 *            the student id
 	 */
-	public static void removeStudentCache(String studentID) {
-		String cacheLocation = CacheOrganisation
-				.getSpecificStudentDir(studentID);
+	public static void removeStudentCache(String studentID)
+	{
+		String cacheLocation = CacheOrganisation.getSpecificStudentDir(studentID);
 		deleteCache(cacheLocation);
 	}
 
 	/**
 	 * Removes the unused student files.
 	 *
-	 * @param hostname the hostname
+	 * @param hostname
+	 *            the hostname
 	 */
-	public static void removeUnusedStudentFiles(String hostname) {
+	public static void removeUnusedStudentFiles(String hostname)
+	{
 		File studentsCacheDir = new File(CacheOrganisation.getStudentsDir());
-		if (studentsCacheDir.isDirectory()) {
-			for (File folder : studentsCacheDir.listFiles()) {
-				if (folder.isFile()) {
-					if (!folder.delete()) {
+		if (studentsCacheDir.isDirectory())
+		{
+			for (File folder : studentsCacheDir.listFiles())
+			{
+				if (folder.isFile())
+				{
+					if (!folder.delete())
+					{
 						folder.deleteOnExit();
 					}
-				} else if (folder.isDirectory()) {
+				}
+				else if (folder.isDirectory())
+				{
 					String studentID = folder.getName();
 					File[] cachedFiles = folder.listFiles();
 					ArrayList<File> toRemove = new ArrayList<File>();
-					ArrayList<GalleryItemDatabaseFormat> galleryItems = DatabaseActivity
-							.getStudentGallery(studentID, hostname);
-					for (File cachedFile : cachedFiles) {
-						if (cachedFile.isFile() && !cachedFile.isDirectory()) {
+					ArrayList<GalleryItemDatabaseFormat> galleryItems = DatabaseActivity.getStudentGallery(studentID, hostname);
+					for (File cachedFile : cachedFiles)
+					{
+						if (cachedFile.isFile() && !cachedFile.isDirectory())
+						{
 							boolean present = false;
-							for (GalleryItemDatabaseFormat galleryItem : galleryItems) {
+							for (GalleryItemDatabaseFormat galleryItem : galleryItems)
+							{
 								String type = galleryItem.getType();
-								if (type.equalsIgnoreCase(CachableImage.CACHABLE_TYPE)) {
-									String imageFileName = (String) (galleryItem
-											.getValues().get(0));
-									if (imageFileName.equals(cachedFile
-											.getName())) {
-										present = true;
-										break;
-									}
-								} else if (type
-										.equalsIgnoreCase(ScreenshotContainer.CACHABLE_TYPE)) {
-									String imageFileName = (String) galleryItem
-											.getValues().get(0);
-									if (imageFileName.equals(cachedFile
-											.getName())) {
-										present = true;
-
-										break;
-									}
-								} else if (type
-										.equalsIgnoreCase(MediaPlayer.CACHABLE_TYPE)) {
-									String mediaFileName = (String) galleryItem
-											.getValues().get(1);
-									if (mediaFileName.equals(cachedFile
-											.getName())) {
-										present = true;
-										break;
-									}
-								} else if (type
-										.equalsIgnoreCase(AudioContainer.CACHABLE_TYPE)) {
-									String audioFileName = (String) galleryItem
-											.getValues().get(0);
-									if (audioFileName.equals(cachedFile
-											.getName())) {
+								if (type.equalsIgnoreCase(CachableImage.CACHABLE_TYPE))
+								{
+									String imageFileName = (String) (galleryItem.getValues().get(0));
+									if (imageFileName.equals(cachedFile.getName()))
+									{
 										present = true;
 										break;
 									}
 								}
-								for (Object[] feedbackItem : galleryItem
-										.getFeedbackItems()) {
-									if (feedbackItem[0]
-											.equals(AudioFeedback.CACHABLE_TYPE)) {
+								else if (type.equalsIgnoreCase(ScreenshotContainer.CACHABLE_TYPE))
+								{
+									String imageFileName = (String) galleryItem.getValues().get(0);
+									if (imageFileName.equals(cachedFile.getName()))
+									{
+										present = true;
+
+										break;
+									}
+								}
+								else if (type.equalsIgnoreCase(MediaPlayer.CACHABLE_TYPE))
+								{
+									String mediaFileName = (String) galleryItem.getValues().get(1);
+									if (mediaFileName.equals(cachedFile.getName()))
+									{
+										present = true;
+										break;
+									}
+								}
+								else if (type.equalsIgnoreCase(AudioContainer.CACHABLE_TYPE))
+								{
+									String audioFileName = (String) galleryItem.getValues().get(0);
+									if (audioFileName.equals(cachedFile.getName()))
+									{
+										present = true;
+										break;
+									}
+								}
+								for (Object[] feedbackItem : galleryItem.getFeedbackItems())
+								{
+									if (feedbackItem[0].equals(AudioFeedback.CACHABLE_TYPE))
+									{
 										String audioFileName = (String) feedbackItem[2];
-										if (audioFileName.equals(cachedFile
-												.getName())) {
+										if (audioFileName.equals(cachedFile.getName()))
+										{
 											present = true;
 											break;
 										}
 									}
 								}
 							}
-							if (!present) {
+							if (!present)
+							{
 								toRemove.add(cachedFile);
 							}
 						}
 					}
-					for (File unusedFile : toRemove) {
-						if (!unusedFile.delete()) {
+					for (File unusedFile : toRemove)
+					{
+						if (!unusedFile.delete())
+						{
 							unusedFile.deleteOnExit();
 						}
 					}
@@ -129,12 +146,16 @@ public class CacheTidy {
 	/**
 	 * Delete cache.
 	 *
-	 * @param cacheLocation the cache location
+	 * @param cacheLocation
+	 *            the cache location
 	 */
-	private static void deleteCache(String cacheLocation) {
+	private static void deleteCache(String cacheLocation)
+	{
 		File cacheFolder = new File(cacheLocation);
-		if (cacheFolder.isDirectory()) {
-			if (!removeDirectory(cacheFolder)) {
+		if (cacheFolder.isDirectory())
+		{
+			if (!removeDirectory(cacheFolder))
+			{
 				cacheFolder.deleteOnExit();
 			}
 		}
@@ -143,29 +164,41 @@ public class CacheTidy {
 	/**
 	 * Removes the directory.
 	 *
-	 * @param directory the directory
+	 * @param directory
+	 *            the directory
 	 * @return true, if successful
 	 */
-	private static boolean removeDirectory(File directory) {
-		if (directory == null) {
+	private static boolean removeDirectory(File directory)
+	{
+		if (directory == null)
+		{
 			return false;
 		}
-		if (!directory.exists()) {
+		if (!directory.exists())
+		{
 			return true;
 		}
-		if (!directory.isDirectory()) {
+		if (!directory.isDirectory())
+		{
 			return false;
 		}
 		String[] list = directory.list();
-		if (list != null) {
-			for (int i = 0; i < list.length; i++) {
+		if (list != null)
+		{
+			for (int i = 0; i < list.length; i++)
+			{
 				File entry = new File(directory, list[i]);
-				if (entry.isDirectory()) {
-					if (!removeDirectory(entry)) {
+				if (entry.isDirectory())
+				{
+					if (!removeDirectory(entry))
+					{
 						return false;
 					}
-				} else {
-					if (!entry.delete()) {
+				}
+				else
+				{
+					if (!entry.delete())
+					{
 						entry.deleteOnExit();
 						return false;
 					}

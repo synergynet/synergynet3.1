@@ -12,8 +12,8 @@ import synergynet3.web.shared.messages.PerformActionMessage;
 /**
  * The Class NumberNetStudentTableClusteredData.
  */
-public class NumberNetStudentTableClusteredData extends
-		StudentTableClusteredDevice {
+public class NumberNetStudentTableClusteredData extends StudentTableClusteredDevice
+{
 
 	/** The device type. */
 	public static String deviceType = "student";
@@ -54,33 +54,24 @@ public class NumberNetStudentTableClusteredData extends
 	/**
 	 * Instantiates a new number net student table clustered data.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	public NumberNetStudentTableClusteredData(String deviceName) {
+	public NumberNetStudentTableClusteredData(String deviceName)
+	{
 		super(deviceName);
 
-		calculatorVisibleControl = getDistributedPropertyMap()
-				.createDistributedProperty("calculatorvisible");
-		graphingModeControl = getDistributedPropertyMap()
-				.createDistributedProperty("graphingmode");
-		scoresVisibleControl = getDistributedPropertyMap()
-				.createDistributedProperty("scoresvisible");
-		incorrectExpressionsVisibleControl = getDistributedPropertyMap()
-				.createDistributedProperty("incorrectexpressionsvisible");
-		correctExpressionsVisibleControl = getDistributedPropertyMap()
-				.createDistributedProperty("correctexpressionsvisible");
-		othersIncorrectExpressionsVisibleControl = getDistributedPropertyMap()
-				.createDistributedProperty("othersincorrectexpressionsvisible");
-		othersCorrectExpressionsVisibleControl = getDistributedPropertyMap()
-				.createDistributedProperty("otherscorrectexpressionsvisible");
-		targetValueControl = getDistributedPropertyMap()
-				.createDistributedProperty("targetvalue");
-		participantListControl = getDistributedPropertyMap()
-				.createDistributedProperty("participantlist");
-		calculatorKeyStateMap = getDistributedPropertyMap()
-				.createDistributedProperty("calculatorKeyState");
-		resetGraphingLinesControl = getDistributedPropertyMap()
-				.createDistributedProperty("resetGraphingLinesControl");
+		calculatorVisibleControl = getDistributedPropertyMap().createDistributedProperty("calculatorvisible");
+		graphingModeControl = getDistributedPropertyMap().createDistributedProperty("graphingmode");
+		scoresVisibleControl = getDistributedPropertyMap().createDistributedProperty("scoresvisible");
+		incorrectExpressionsVisibleControl = getDistributedPropertyMap().createDistributedProperty("incorrectexpressionsvisible");
+		correctExpressionsVisibleControl = getDistributedPropertyMap().createDistributedProperty("correctexpressionsvisible");
+		othersIncorrectExpressionsVisibleControl = getDistributedPropertyMap().createDistributedProperty("othersincorrectexpressionsvisible");
+		othersCorrectExpressionsVisibleControl = getDistributedPropertyMap().createDistributedProperty("otherscorrectexpressionsvisible");
+		targetValueControl = getDistributedPropertyMap().createDistributedProperty("targetvalue");
+		participantListControl = getDistributedPropertyMap().createDistributedProperty("participantlist");
+		calculatorKeyStateMap = getDistributedPropertyMap().createDistributedProperty("calculatorKeyState");
+		resetGraphingLinesControl = getDistributedPropertyMap().createDistributedProperty("resetGraphingLinesControl");
 	}
 
 	/**
@@ -88,7 +79,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the calculator key state map
 	 */
-	public DistributedProperty<Map<CalculatorKey, Boolean>> getCalculatorKeyStateMap() {
+	public DistributedProperty<Map<CalculatorKey, Boolean>> getCalculatorKeyStateMap()
+	{
 		return calculatorKeyStateMap;
 	}
 
@@ -97,7 +89,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the calculator visible control variable
 	 */
-	public DistributedProperty<Boolean> getCalculatorVisibleControlVariable() {
+	public DistributedProperty<Boolean> getCalculatorVisibleControlVariable()
+	{
 		return calculatorVisibleControl;
 	}
 
@@ -106,7 +99,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the correct expressions visible control variable
 	 */
-	public DistributedProperty<Boolean> getCorrectExpressionsVisibleControlVariable() {
+	public DistributedProperty<Boolean> getCorrectExpressionsVisibleControlVariable()
+	{
 		return correctExpressionsVisibleControl;
 	}
 
@@ -115,7 +109,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the graphing mode control
 	 */
-	public DistributedProperty<Boolean> getGraphingModeControl() {
+	public DistributedProperty<Boolean> getGraphingModeControl()
+	{
 		return graphingModeControl;
 	}
 
@@ -124,7 +119,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the incorrect expressions visible control variable
 	 */
-	public DistributedProperty<Boolean> getIncorrectExpressionsVisibleControlVariable() {
+	public DistributedProperty<Boolean> getIncorrectExpressionsVisibleControlVariable()
+	{
 		return incorrectExpressionsVisibleControl;
 	}
 
@@ -133,7 +129,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the others correct expressions visible control variable
 	 */
-	public DistributedProperty<Boolean> getOthersCorrectExpressionsVisibleControlVariable() {
+	public DistributedProperty<Boolean> getOthersCorrectExpressionsVisibleControlVariable()
+	{
 		return othersCorrectExpressionsVisibleControl;
 	}
 
@@ -142,7 +139,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the others incorrect expressions visible control variable
 	 */
-	public DistributedProperty<Boolean> getOthersIncorrectExpressionsVisibleControlVariable() {
+	public DistributedProperty<Boolean> getOthersIncorrectExpressionsVisibleControlVariable()
+	{
 		return othersIncorrectExpressionsVisibleControl;
 	}
 
@@ -151,7 +149,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the participant list control variable
 	 */
-	public DistributedProperty<List<Participant>> getParticipantListControlVariable() {
+	public DistributedProperty<List<Participant>> getParticipantListControlVariable()
+	{
 		return participantListControl;
 	}
 
@@ -160,7 +159,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the reset graphing lines control
 	 */
-	public DistributedProperty<PerformActionMessage> getResetGraphingLinesControl() {
+	public DistributedProperty<PerformActionMessage> getResetGraphingLinesControl()
+	{
 		return resetGraphingLinesControl;
 	}
 
@@ -169,7 +169,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the scores visible control variable
 	 */
-	public DistributedProperty<Boolean> getScoresVisibleControlVariable() {
+	public DistributedProperty<Boolean> getScoresVisibleControlVariable()
+	{
 		return scoresVisibleControl;
 	}
 
@@ -178,7 +179,8 @@ public class NumberNetStudentTableClusteredData extends
 	 *
 	 * @return the target value control variable
 	 */
-	public DistributedProperty<Double> getTargetValueControlVariable() {
+	public DistributedProperty<Double> getTargetValueControlVariable()
+	{
 		return targetValueControl;
 	}
 }

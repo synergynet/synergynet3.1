@@ -8,11 +8,11 @@ import synergynet3.apps.numbernet.model.ExpressionSession;
 /**
  * The Class DefaultValidationChecker.
  */
-public class DefaultValidationChecker implements IValidationChecker {
+public class DefaultValidationChecker implements IValidationChecker
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(DefaultValidationChecker.class.getName());
+	private static final Logger log = Logger.getLogger(DefaultValidationChecker.class.getName());
 
 	/** The expression session. */
 	private ExpressionSession expressionSession;
@@ -20,7 +20,8 @@ public class DefaultValidationChecker implements IValidationChecker {
 	/**
 	 * Instantiates a new default validation checker.
 	 */
-	public DefaultValidationChecker() {
+	public DefaultValidationChecker()
+	{
 	}
 
 	/*
@@ -30,20 +31,24 @@ public class DefaultValidationChecker implements IValidationChecker {
 	 * .lang.String)
 	 */
 	@Override
-	public ValidationResult isValid(String expression) {
+	public ValidationResult isValid(String expression)
+	{
 		expression = expression.trim();
-		try {
-			if (expression.equals(expressionSession
-					.getCurrentTargetValueAsString())) {
+		try
+		{
+			if (expression.equals(expressionSession.getCurrentTargetValueAsString()))
+			{
 				return ValidationResult.IDENTICAL;
 			}
-			if (expressionSession.containsExpression(expression)) {
+			if (expressionSession.containsExpression(expression))
+			{
 				return ValidationResult.DUPLICATE;
 			}
 			return ValidationResult.VALID;
-		} catch (Exception e) {
-			log.log(Level.FINE, "Expression " + expression
-					+ " causes an exception " + e);
+		}
+		catch (Exception e)
+		{
+			log.log(Level.FINE, "Expression " + expression + " causes an exception " + e);
 			return ValidationResult.INVALID;
 		}
 	}
@@ -51,9 +56,11 @@ public class DefaultValidationChecker implements IValidationChecker {
 	/**
 	 * Sets the current expression session.
 	 *
-	 * @param expressionSession the new current expression session
+	 * @param expressionSession
+	 *            the new current expression session
 	 */
-	public void setCurrentExpressionSession(ExpressionSession expressionSession) {
+	public void setCurrentExpressionSession(ExpressionSession expressionSession)
+	{
 		this.expressionSession = expressionSession;
 	}
 

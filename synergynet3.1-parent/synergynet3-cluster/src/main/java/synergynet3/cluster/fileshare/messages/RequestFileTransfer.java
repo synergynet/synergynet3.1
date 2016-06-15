@@ -5,7 +5,8 @@ import synergynet3.cluster.fileshare.localfilecache.MD5Hash;
 /**
  * The Class RequestFileTransfer.
  */
-public class RequestFileTransfer extends FileDistributionMessage {
+public class RequestFileTransfer extends FileDistributionMessage
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 7140665603093675333L;
@@ -22,12 +23,15 @@ public class RequestFileTransfer extends FileDistributionMessage {
 	/**
 	 * Instantiates a new request file transfer.
 	 *
-	 * @param deviceAsking the device asking
-	 * @param idOfFile the id of file
-	 * @param deviceThatHasFile the device that has file
+	 * @param deviceAsking
+	 *            the device asking
+	 * @param idOfFile
+	 *            the id of file
+	 * @param deviceThatHasFile
+	 *            the device that has file
 	 */
-	public RequestFileTransfer(String deviceAsking, MD5Hash idOfFile,
-			String deviceThatHasFile) {
+	public RequestFileTransfer(String deviceAsking, MD5Hash idOfFile, String deviceThatHasFile)
+	{
 		this.deviceAsking = deviceAsking;
 		this.idOfFile = idOfFile;
 		this.deviceThatHasFile = deviceThatHasFile;
@@ -38,7 +42,8 @@ public class RequestFileTransfer extends FileDistributionMessage {
 	 *
 	 * @return the string
 	 */
-	public String deviceThatHasFile() {
+	public String deviceThatHasFile()
+	{
 		return deviceThatHasFile;
 	}
 
@@ -47,7 +52,8 @@ public class RequestFileTransfer extends FileDistributionMessage {
 	 *
 	 * @return the device asking
 	 */
-	public String getDeviceAsking() {
+	public String getDeviceAsking()
+	{
 		return deviceAsking;
 	}
 
@@ -56,7 +62,8 @@ public class RequestFileTransfer extends FileDistributionMessage {
 	 *
 	 * @return the ID of file
 	 */
-	public MD5Hash getIDOfFile() {
+	public MD5Hash getIDOfFile()
+	{
 		return idOfFile;
 	}
 }

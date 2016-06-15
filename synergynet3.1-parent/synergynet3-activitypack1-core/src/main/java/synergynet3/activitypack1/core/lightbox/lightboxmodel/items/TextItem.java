@@ -6,7 +6,8 @@ import java.io.Serializable;
 /**
  * The Class TextItem.
  */
-public class TextItem extends LightBoxItem implements Serializable {
+public class TextItem extends LightBoxItem implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -8639066683140974098L;
@@ -23,7 +24,8 @@ public class TextItem extends LightBoxItem implements Serializable {
 	/**
 	 * Instantiates a new text item.
 	 */
-	public TextItem() {
+	public TextItem()
+	{
 	}
 
 	/**
@@ -31,7 +33,8 @@ public class TextItem extends LightBoxItem implements Serializable {
 	 *
 	 * @return the font size
 	 */
-	public int getFontSize() {
+	public int getFontSize()
+	{
 		return this.fontSize;
 	}
 
@@ -40,7 +43,8 @@ public class TextItem extends LightBoxItem implements Serializable {
 	 *
 	 * @return the size
 	 */
-	public Float getSize() {
+	public Float getSize()
+	{
 		return this.size;
 	}
 
@@ -49,34 +53,41 @@ public class TextItem extends LightBoxItem implements Serializable {
 	 *
 	 * @return the text
 	 */
-	public String getText() {
+	public String getText()
+	{
 		return this.text;
 	}
 
 	/**
 	 * Sets the font size.
 	 *
-	 * @param fontSize the new font size
+	 * @param fontSize
+	 *            the new font size
 	 */
-	public void setFontSize(int fontSize) {
+	public void setFontSize(int fontSize)
+	{
 		this.fontSize = fontSize;
 	}
 
 	/**
 	 * Sets the size.
 	 *
-	 * @param size the new size
+	 * @param size
+	 *            the new size
 	 */
-	public void setSize(Float size) {
+	public void setSize(Float size)
+	{
 		this.size = size;
 	}
 
 	/**
 	 * Sets the text.
 	 *
-	 * @param text the new text
+	 * @param text
+	 *            the new text
 	 */
-	public void setText(String text) {
+	public void setText(String text)
+	{
 		this.text = text;
 	}
 

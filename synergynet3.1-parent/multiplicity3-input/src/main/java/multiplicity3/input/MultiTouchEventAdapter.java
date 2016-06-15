@@ -6,7 +6,8 @@ import multiplicity3.input.events.MultiTouchObjectEvent;
 /**
  * The Class MultiTouchEventAdapter.
  */
-public class MultiTouchEventAdapter implements IMultiTouchEventListener {
+public class MultiTouchEventAdapter implements IMultiTouchEventListener
+{
 
 	/*
 	 * (non-Javadoc)
@@ -15,7 +16,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -25,7 +27,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -35,7 +38,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -45,7 +49,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -55,7 +60,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -65,7 +71,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -75,7 +82,8 @@ public class MultiTouchEventAdapter implements IMultiTouchEventListener {
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 }

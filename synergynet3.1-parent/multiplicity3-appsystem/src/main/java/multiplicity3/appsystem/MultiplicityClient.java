@@ -34,7 +34,8 @@ import com.jme3.scene.Spatial;
 /**
  * The Class MultiplicityClient.
  */
-public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
+public class MultiplicityClient extends JMEAppRoot implements IQueueOwner
+{
 
 	/** The asset manager. */
 	public static AssetManager assetManager;
@@ -43,8 +44,7 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	private static MultiplicityClient instance;
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(MultiplicityClient.class
-			.getName());
+	private static final Logger log = Logger.getLogger(MultiplicityClient.class.getName());
 
 	/** The current app. */
 	private IMultiplicityApp currentApp;
@@ -61,7 +61,8 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	/**
 	 * Instantiates a new multiplicity client.
 	 */
-	private MultiplicityClient() {
+	private MultiplicityClient()
+	{
 		super();
 	}
 
@@ -70,9 +71,12 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 *
 	 * @return the multiplicity client
 	 */
-	public static MultiplicityClient get() {
-		synchronized (MultiplicityClient.class) {
-			if (instance == null) {
+	public static MultiplicityClient get()
+	{
+		synchronized (MultiplicityClient.class)
+		{
+			if (instance == null)
+			{
 				instance = new MultiplicityClient();
 			}
 			return instance;
@@ -84,7 +88,8 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 *
 	 * @return the shared asset manager
 	 */
-	public static AssetManager getSharedAssetManager() {
+	public static AssetManager getSharedAssetManager()
+	{
 		return assetManager;
 	}
 
@@ -92,12 +97,16 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 * (non-Javadoc)
 	 * @see com.jme3.app.Application#destroy()
 	 */
-	public void destroy() {
-		if (currentApp != null) {
+	@Override
+	public void destroy()
+	{
+		if (currentApp != null)
+		{
 			currentApp.shouldStop();
 			currentApp.onDestroy();
 		}
-		if (source != null) {
+		if (source != null)
+		{
 			source.endListening();
 		}
 		super.destroy();
@@ -106,15 +115,17 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	/**
 	 * Gets the home directory for app.
 	 *
-	 * @param app the app
-	 * @param shouldCreateIfDoesNotExist the should create if does not exist
+	 * @param app
+	 *            the app
+	 * @param shouldCreateIfDoesNotExist
+	 *            the should create if does not exist
 	 * @return the home directory for app
 	 */
-	public File getHomeDirectoryForApp(IMultiplicityApp app,
-			boolean shouldCreateIfDoesNotExist) {
-		File appHomeDirectory = new File(getMultiplicityAppsDirectory(),
-				app.getFriendlyAppName());
-		if (shouldCreateIfDoesNotExist) {
+	public File getHomeDirectoryForApp(IMultiplicityApp app, boolean shouldCreateIfDoesNotExist)
+	{
+		File appHomeDirectory = new File(getMultiplicityAppsDirectory(), app.getFriendlyAppName());
+		if (shouldCreateIfDoesNotExist)
+		{
 			appHomeDirectory.mkdirs();
 		}
 		return appHomeDirectory;
@@ -125,10 +136,13 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 * @see com.jme3.app.Application#handleError(java.lang.String,
 	 * java.lang.Throwable)
 	 */
-	public void handleError(String errMsg, Throwable t) {
+	@Override
+	public void handleError(String errMsg, Throwable t)
+	{
 		log.severe(errMsg);
 		log.severe("Exception was: " + t);
-		for (StackTraceElement ste : t.getStackTrace()) {
+		for (StackTraceElement ste : t.getStackTrace())
+		{
 			log.severe(ste.toString());
 		}
 	}
@@ -136,21 +150,26 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	/**
 	 * Sets the current app.
 	 *
-	 * @param app the new current app
+	 * @param app
+	 *            the new current app
 	 */
-	public void setCurrentApp(final IMultiplicityApp app) {
-		this.enqueue(new Callable<Void>() {
+	public void setCurrentApp(final IMultiplicityApp app)
+	{
+		this.enqueue(new Callable<Void>()
+		{
 			@Override
-			public Void call() throws Exception {
-				if (currentApp == app) {
+			public Void call() throws Exception
+			{
+				if (currentApp == app)
+				{
 					return null;
 				}
-				if (currentApp != null) {
+				if (currentApp != null)
+				{
 					currentApp.shouldStop();
-					for (int i = 0; i < MultiplicityEnvironment.get()
-							.getLocalStages().size(); i++) {
-						IStage stage = MultiplicityEnvironment.get()
-								.getLocalStages().get(i);
+					for (int i = 0; i < MultiplicityEnvironment.get().getLocalStages().size(); i++)
+					{
+						IStage stage = MultiplicityEnvironment.get().getLocalStages().get(i);
 						stage.removeAllItems(true);
 					}
 				}
@@ -170,7 +189,8 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 * @see multiplicity3.appsystem.jme.JMEAppRoot#simpleInitApp()
 	 */
 	@Override
-	public void simpleInitApp() {
+	public void simpleInitApp()
+	{
 		assetManager = this.getAssetManager();
 		multiplicityRootNode.detachAllChildren();
 
@@ -180,8 +200,7 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 
 		// establish 0,0 in center
 		// TODO: manage this through the stage?
-		multiplicityRootNode.setLocalTranslation(getCamera().getWidth() / 2,
-				getCamera().getHeight() / 2, 0);
+		multiplicityRootNode.setLocalTranslation(getCamera().getWidth() / 2, getCamera().getHeight() / 2, 0);
 
 		JMEStage stage = new JMEStage("localstage", UUID.randomUUID());
 		// JMEStageDelegate delegate = new JMEStageDelegate(stage);
@@ -189,21 +208,28 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 		multiplicityRootNode.attachChild(stage);
 		stage.setZOrder(0);
 
-		try {
-			stage.setContentFactory(new JME3ContentSystemFactory(renderer,
-					audioRenderer, assetManager, updateList));
-		} catch (ClassNotFoundException e1) {
+		try
+		{
+			stage.setContentFactory(new JME3ContentSystemFactory(renderer, audioRenderer, assetManager, updateList));
+		}
+		catch (ClassNotFoundException e1)
+		{
 			e1.printStackTrace();
-		} catch (IOException e1) {
+		}
+		catch (IOException e1)
+		{
 			e1.printStackTrace();
-		} catch (ContentTypeAlreadyBoundException e1) {
+		}
+		catch (ContentTypeAlreadyBoundException e1)
+		{
 			e1.printStackTrace();
-		} catch (ContentTypeInvalidException e1) {
+		}
+		catch (ContentTypeInvalidException e1)
+		{
 			e1.printStackTrace();
 		}
 
-		stage.setPickSystem(new ContentSystemPicker(multiplicityRootNode,
-				camera.getWidth(), camera.getHeight()));
+		stage.setPickSystem(new ContentSystemPicker(multiplicityRootNode, camera.getWidth(), camera.getHeight()));
 		stage.setAnimationSystem(AnimationSystem.getInstance());
 		stage.setDisplayDimensions(camera.getWidth(), camera.getHeight());
 
@@ -219,16 +245,13 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 		int displayWidth = getCamera().getWidth();
 		int displayHeight = getCamera().getHeight();
 
-		source = MultiTouchInputUtility.getInputSource(inputManager,
-				displayWidth, displayHeight);
+		source = MultiTouchInputUtility.getInputSource(inputManager, displayWidth, displayHeight);
 		mtInput = new MultiTouchInputComponent(source);
-		mtInput.registerMultiTouchEventListener(new PickedItemDispatcher(
-				multiplicityRootNode, stage));
+		mtInput.registerMultiTouchEventListener(new PickedItemDispatcher(multiplicityRootNode, stage));
 
 		getInputManager().setCursorVisible(source.requiresMouseDisplay());
 
-		MultiplicityClientActionResponder mar = new MultiplicityClientActionResponder(
-				getInputManager(), stage);
+		MultiplicityClientActionResponder mar = new MultiplicityClientActionResponder(getInputManager(), stage);
 		getInputManager().addListener(mar, mar.getActionNamesSupported());
 		// printNode(guiNode);
 	}
@@ -237,14 +260,20 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 * (non-Javadoc)
 	 * @see multiplicity3.appsystem.jme.JMEAppRoot#simpleUpdate(float)
 	 */
-	public void simpleUpdate(float tpf) {
-		try {
+	@Override
+	public void simpleUpdate(float tpf)
+	{
+		try
+		{
 			source.update(tpf);
 			AnimationSystem.getInstance().update(tpf);
-			for (IUpdateable item : updateList) {
+			for (IUpdateable item : updateList)
+			{
 				item.update(tpf);
 			}
-		} catch (MultiTouchInputException e) {
+		}
+		catch (MultiTouchInputException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -254,7 +283,8 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 *
 	 * @return the multiplicity apps directory
 	 */
-	private File getMultiplicityAppsDirectory() {
+	private File getMultiplicityAppsDirectory()
+	{
 		return new File(getMultiplicityHomeDirectory(), "applications");
 	}
 
@@ -263,31 +293,41 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	 *
 	 * @return the multiplicity home directory
 	 */
-	private File getMultiplicityHomeDirectory() {
+	private File getMultiplicityHomeDirectory()
+	{
 		return new File(System.getProperty("user.home"), ".multiplicity3");
 	}
 
 	/**
 	 * Inits the multi touch input.
 	 */
-	private void initMultiTouchInput() {
+	private void initMultiTouchInput()
+	{
 		getContext().getMouseInput().setCursorVisible(true);
 	}
 
 	/**
 	 * Prints the node.
 	 *
-	 * @param n the n
-	 * @param depth the depth
+	 * @param n
+	 *            the n
+	 * @param depth
+	 *            the depth
 	 */
-	private void printNode(Node n, int depth) {
+	private void printNode(Node n, int depth)
+	{
 		printSpaces(depth);
 		System.out.println(n.getName() + " " + n.getClass());
-		if (n.getChildren().size() > 0) {
-			for (Spatial t : n.getChildren()) {
-				if (t instanceof Node) {
+		if (n.getChildren().size() > 0)
+		{
+			for (Spatial t : n.getChildren())
+			{
+				if (t instanceof Node)
+				{
 					printNode((Node) t, depth + 3);
-				} else {
+				}
+				else
+				{
 					printSpaces(depth + 3);
 					System.out.println(t.getName() + " " + t.getClass());
 				}
@@ -298,10 +338,13 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	/**
 	 * Prints the spaces.
 	 *
-	 * @param n the n
+	 * @param n
+	 *            the n
 	 */
-	private void printSpaces(int n) {
-		for (int i = 0; i < n; i++) {
+	private void printSpaces(int n)
+	{
+		for (int i = 0; i < n; i++)
+		{
 			System.out.print(' ');
 		}
 	}
@@ -309,9 +352,11 @@ public class MultiplicityClient extends JMEAppRoot implements IQueueOwner {
 	/**
 	 * Prints the node.
 	 *
-	 * @param n the n
+	 * @param n
+	 *            the n
 	 */
-	protected void printNode(Node n) {
+	protected void printNode(Node n)
+	{
 		printNode(n, 0);
 	}
 

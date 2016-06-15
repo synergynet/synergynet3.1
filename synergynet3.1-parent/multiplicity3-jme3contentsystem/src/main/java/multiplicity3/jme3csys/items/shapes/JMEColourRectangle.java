@@ -25,12 +25,11 @@ import com.jme3.scene.VertexBuffer.Type;
  * The Class JMEColourRectangle.
  */
 @ImplementsContentItem(target = IColourRectangle.class)
-public class JMEColourRectangle extends JMEItem implements IColourRectangle,
-		IInitable {
+public class JMEColourRectangle extends JMEItem implements IColourRectangle, IInitable
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger.getLogger(JMEColourRectangle.class
-			.getName());
+	private static final Logger log = Logger.getLogger(JMEColourRectangle.class.getName());
 
 	/** The bottom left. */
 	private ColorRGBA bottomLeft = ColorRGBA.White;
@@ -56,10 +55,13 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	/**
 	 * Instantiates a new JME colour rectangle.
 	 *
-	 * @param name the name
-	 * @param uuid the uuid
+	 * @param name
+	 *            the name
+	 * @param uuid
+	 *            the uuid
 	 */
-	public JMEColourRectangle(String name, UUID uuid) {
+	public JMEColourRectangle(String name, UUID uuid)
+	{
 		super(name, uuid);
 	}
 
@@ -68,7 +70,9 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * @see
 	 * multiplicity3.csys.items.shapes.IColourRectangle#enableTransparency()
 	 */
-	public void enableTransparency() {
+	@Override
+	public void enableTransparency()
+	{
 		mat.getAdditionalRenderState().setBlendMode(BlendMode.Alpha);
 	}
 
@@ -77,7 +81,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getHeight()
 	 */
 	@Override
-	public float getHeight() {
+	public float getHeight()
+	{
 		return quad.getHeight();
 	}
 
@@ -95,7 +100,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * @see multiplicity3.csys.items.item.IItem#getManipulableSpatial()
 	 */
 	@Override
-	public Spatial getManipulableSpatial() {
+	public Spatial getManipulableSpatial()
+	{
 		return quadGeometry;
 	}
 
@@ -104,7 +110,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getSize()
 	 */
 	@Override
-	public Vector2f getSize() {
+	public Vector2f getSize()
+	{
 		return new Vector2f(quad.getWidth(), quad.getHeight());
 	}
 
@@ -113,7 +120,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * @see multiplicity3.csys.items.shapes.IRectangularItem#getWidth()
 	 */
 	@Override
-	public float getWidth() {
+	public float getWidth()
+	{
 		return quad.getWidth();
 	}
 
@@ -124,7 +132,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * .AssetManager)
 	 */
 	@Override
-	public void initializeGeometry(AssetManager assetManager) {
+	public void initializeGeometry(AssetManager assetManager)
+	{
 		quad = new CenteredQuad(100, 100);
 		quadGeometry = new Geometry("_quad_geom", quad);
 
@@ -148,23 +157,28 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * (multiplicity3.csys.gfx.Gradient)
 	 */
 	@Override
-	public void setGradientBackground(Gradient g) {
-		switch (g.getDirection()) {
-			case HORIZONTAL: {
+	public void setGradientBackground(Gradient g)
+	{
+		switch (g.getDirection())
+		{
+			case HORIZONTAL:
+			{
 				topLeft = g.getFrom();
 				bottomLeft = g.getFrom();
 				topRight = g.getTo();
 				bottomRight = g.getTo();
 				break;
 			}
-			case VERTICAL: {
+			case VERTICAL:
+			{
 				topLeft = g.getFrom();
 				topRight = g.getFrom();
 				bottomLeft = g.getTo();
 				bottomRight = g.getTo();
 				break;
 			}
-			case DIAGONAL: {
+			case DIAGONAL:
+			{
 				topLeft = g.getFrom();
 				topRight = g.getFrom();
 				bottomLeft = g.getFrom();
@@ -181,7 +195,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * float)
 	 */
 	@Override
-	public void setSize(float width, float height) {
+	public void setSize(float width, float height)
+	{
 		quad = new CenteredQuad(width, height);
 		quadGeometry.setMesh(quad);
 		float[] colorArray = new float[4 * 4];
@@ -196,7 +211,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * .Vector2f)
 	 */
 	@Override
-	public void setSize(Vector2f size) {
+	public void setSize(Vector2f size)
+	{
 		setSize(size.x, size.y);
 	}
 
@@ -207,7 +223,8 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	 * (com.jme3.math.ColorRGBA)
 	 */
 	@Override
-	public void setSolidBackgroundColour(ColorRGBA colorRGBA) {
+	public void setSolidBackgroundColour(ColorRGBA colorRGBA)
+	{
 		this.topLeft = colorRGBA;
 		this.topRight = colorRGBA;
 		this.bottomLeft = colorRGBA;
@@ -218,9 +235,9 @@ public class JMEColourRectangle extends JMEItem implements IColourRectangle,
 	/**
 	 * Update colours.
 	 */
-	private void updateColours() {
-		FloatBuffer fb = (FloatBuffer) quadGeometry.getMesh()
-				.getBuffer(Type.Color).getData();
+	private void updateColours()
+	{
+		FloatBuffer fb = (FloatBuffer) quadGeometry.getMesh().getBuffer(Type.Color).getData();
 		fb.rewind();
 		fb.put(bottomLeft.r);
 		fb.put(bottomLeft.g);

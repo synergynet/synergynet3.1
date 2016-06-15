@@ -5,7 +5,8 @@ import java.io.Serializable;
 /**
  * The Class ResourceIdentifier.
  */
-public class ResourceIdentifier implements Serializable {
+public class ResourceIdentifier implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = 5375357594780526289L;
@@ -16,9 +17,11 @@ public class ResourceIdentifier implements Serializable {
 	/**
 	 * Instantiates a new resource identifier.
 	 *
-	 * @param uniqueID the unique id
+	 * @param uniqueID
+	 *            the unique id
 	 */
-	public ResourceIdentifier(String uniqueID) {
+	public ResourceIdentifier(String uniqueID)
+	{
 		this.uniqueID = uniqueID;
 	}
 
@@ -27,7 +30,8 @@ public class ResourceIdentifier implements Serializable {
 	 *
 	 * @return the id
 	 */
-	public String getID() {
+	public String getID()
+	{
 		return this.uniqueID;
 	}
 }

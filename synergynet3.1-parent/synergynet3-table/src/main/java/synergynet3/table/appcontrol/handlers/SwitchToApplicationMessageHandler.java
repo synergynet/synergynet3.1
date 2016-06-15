@@ -12,12 +12,11 @@ import synergynet3.table.appcontrol.AppFactory;
 /**
  * The Class SwitchToApplicationMessageHandler.
  */
-public class SwitchToApplicationMessageHandler implements
-		AppControlMessageHandler {
+public class SwitchToApplicationMessageHandler implements AppControlMessageHandler
+{
 
 	/** The Constant log. */
-	private static final Logger log = Logger
-			.getLogger(SwitchToApplicationMessageHandler.class.getName());
+	private static final Logger log = Logger.getLogger(SwitchToApplicationMessageHandler.class.getName());
 
 	/*
 	 * (non-Javadoc)
@@ -26,18 +25,26 @@ public class SwitchToApplicationMessageHandler implements
 	 * (synergynet3.cluster.xmpp.messaging.appcontrol.AppControlMessage)
 	 */
 	@Override
-	public void handleMessage(AppControlMessage msg) {
+	public void handleMessage(AppControlMessage msg)
+	{
 		SwitchToApplication switchMessage = (SwitchToApplication) msg;
 		String appClassName = switchMessage.getClassname();
 		IMultiplicityApp app;
-		try {
+		try
+		{
 			app = AppFactory.instantiateAppForClassName(appClassName);
 			MultiplicityClient.get().setCurrentApp(app);
-		} catch (ClassNotFoundException e) {
+		}
+		catch (ClassNotFoundException e)
+		{
 			log.log(Level.SEVERE, "Error switching to app " + appClassName, e);
-		} catch (InstantiationException e) {
+		}
+		catch (InstantiationException e)
+		{
 			log.log(Level.SEVERE, "Error switching to app " + appClassName, e);
-		} catch (IllegalAccessException e) {
+		}
+		catch (IllegalAccessException e)
+		{
 			log.log(Level.SEVERE, "Error switching to app " + appClassName, e);
 		}
 	}

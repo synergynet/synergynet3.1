@@ -9,17 +9,22 @@ import multiplicity3.csys.items.keyboard.model.KeyboardDefinition;
 /**
  * The Class TestKeyboard.
  */
-public class TestKeyboard {
+public class TestKeyboard
+{
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(new Runnable() {
+	public static void main(String[] args)
+	{
+		SwingUtilities.invokeLater(new Runnable()
+		{
 			@Override
-			public void run() {
+			public void run()
+			{
 				JFrame jf = new JFrame();
 				KeyboardDefinition kd = new SimpleAlphaKeyboardDefinition();
 				KeyboardViewPanel kvp = new KeyboardViewPanel(kd);

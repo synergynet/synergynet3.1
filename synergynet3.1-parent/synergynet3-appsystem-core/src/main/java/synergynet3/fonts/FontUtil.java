@@ -3,7 +3,8 @@ package synergynet3.fonts;
 /**
  * The Class FontUtil.
  */
-public class FontUtil {
+public class FontUtil
+{
 
 	/** The Constant RESOURCES_DIR. */
 	private static final String RESOURCES_DIR = "synergynet3/fonts/";
@@ -11,12 +12,15 @@ public class FontUtil {
 	/**
 	 * Gets the font.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the font
 	 */
-	public static String getFont(FontColour colour) {
+	public static String getFont(FontColour colour)
+	{
 		String font = RESOURCES_DIR;
-		switch (colour) {
+		switch (colour)
+		{
 			case Blue:
 				font += "arial64_blue.fnt";
 				break;
@@ -57,12 +61,16 @@ public class FontUtil {
 	/**
 	 * Gets the font colour from string.
 	 *
-	 * @param fontColourString the font colour string
+	 * @param fontColourString
+	 *            the font colour string
 	 * @return the font colour from string
 	 */
-	public static FontColour getFontColourFromString(String fontColourString) {
-		for (FontColour fontColour : FontColour.values()) {
-			if (fontColourString.equalsIgnoreCase(fontColour.toString())) {
+	public static FontColour getFontColourFromString(String fontColourString)
+	{
+		for (FontColour fontColour : FontColour.values())
+		{
+			if (fontColourString.equalsIgnoreCase(fontColour.toString()))
+			{
 				return fontColour;
 			}
 		}

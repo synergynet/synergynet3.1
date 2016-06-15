@@ -6,13 +6,16 @@ import java.util.concurrent.Future;
 /**
  * The Interface IQueueProcessor.
  */
-public interface IQueueProcessor {
+public interface IQueueProcessor
+{
 
 	/**
 	 * Enqueue.
 	 *
-	 * @param <V> the value type
-	 * @param callable the callable
+	 * @param <V>
+	 *            the value type
+	 * @param callable
+	 *            the callable
 	 * @return the future
 	 */
 	<V> Future<V> enqueue(Callable<V> callable);

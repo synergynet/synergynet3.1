@@ -10,7 +10,8 @@ import multiplicity3.config.PreferencesItem;
 /**
  * The Class NetworkConfigPrefsItem.
  */
-public class NetworkConfigPrefsItem implements PreferencesItem {
+public class NetworkConfigPrefsItem implements PreferencesItem
+{
 
 	/** The Constant HTTP_PROXY_ENABLED. */
 	private static final String HTTP_PROXY_ENABLED = "HTTP_PROXY_ENABLED";
@@ -22,15 +23,15 @@ public class NetworkConfigPrefsItem implements PreferencesItem {
 	private static final String HTTP_PROXY_PORT = "HTTP_PROXY_PORT";
 
 	/** The Constant prefs. */
-	private static final Preferences prefs = ConfigurationApplication
-			.getPreferences(NetworkConfigPrefsItem.class);
+	private static final Preferences prefs = ConfigurationApplication.getPreferences(NetworkConfigPrefsItem.class);
 
 	/*
 	 * (non-Javadoc)
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		return new NetworkPreferencesPanel(this);
 	}
 
@@ -39,7 +40,8 @@ public class NetworkConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Network";
 	}
 
@@ -48,7 +50,8 @@ public class NetworkConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the proxy enabled
 	 */
-	public boolean getProxyEnabled() {
+	public boolean getProxyEnabled()
+	{
 		return prefs.getBoolean(HTTP_PROXY_ENABLED, false);
 	}
 
@@ -57,7 +60,8 @@ public class NetworkConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the proxy host
 	 */
-	public String getProxyHost() {
+	public String getProxyHost()
+	{
 		return prefs.get(HTTP_PROXY_HOST, "");
 	}
 
@@ -66,34 +70,41 @@ public class NetworkConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the proxy port
 	 */
-	public int getProxyPort() {
+	public int getProxyPort()
+	{
 		return prefs.getInt(HTTP_PROXY_PORT, 8080);
 	}
 
 	/**
 	 * Sets the proxy enabled.
 	 *
-	 * @param b the new proxy enabled
+	 * @param b
+	 *            the new proxy enabled
 	 */
-	public void setProxyEnabled(boolean b) {
+	public void setProxyEnabled(boolean b)
+	{
 		prefs.putBoolean(HTTP_PROXY_ENABLED, b);
 	}
 
 	/**
 	 * Sets the proxy host.
 	 *
-	 * @param host the new proxy host
+	 * @param host
+	 *            the new proxy host
 	 */
-	public void setProxyHost(String host) {
+	public void setProxyHost(String host)
+	{
 		prefs.put(HTTP_PROXY_HOST, host);
 	}
 
 	/**
 	 * Sets the proxy port.
 	 *
-	 * @param port the new proxy port
+	 * @param port
+	 *            the new proxy port
 	 */
-	public void setProxyPort(int port) {
+	public void setProxyPort(int port)
+	{
 		prefs.putInt(HTTP_PROXY_PORT, port);
 	}
 

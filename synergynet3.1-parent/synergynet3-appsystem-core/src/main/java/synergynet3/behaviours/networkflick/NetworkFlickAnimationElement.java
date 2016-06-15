@@ -36,7 +36,8 @@ import com.jme3.scene.Spatial;
  * trajectories when an item bounces off a display border and detects when an
  * item should be transferred. Initiates network transfers when required.
  */
-public class NetworkFlickAnimationElement extends AnimationElement {
+public class NetworkFlickAnimationElement extends AnimationElement
+{
 
 	/**
 	 * How far an item needs to travel off screen to be transferred.
@@ -110,10 +111,13 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * the flick motion by repositioning the managed item using JME's animation
 	 * system.
 	 *
-	 * @param item The item to be influenced by this animation.
-	 * @param stage The stage the item currently resides in.
+	 * @param item
+	 *            The item to be influenced by this animation.
+	 * @param stage
+	 *            The stage the item currently resides in.
 	 */
-	public NetworkFlickAnimationElement(IItem item, IStage stage) {
+	public NetworkFlickAnimationElement(IItem item, IStage stage)
+	{
 		this.item = item;
 		this.stage = stage;
 	}
@@ -121,17 +125,22 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	/**
 	 * Bounce.
 	 *
-	 * @param vX the v x
-	 * @param vY the v y
-	 * @param tpf the tpf
-	 * @param bouncePosition the bounce position
+	 * @param vX
+	 *            the v x
+	 * @param vY
+	 *            the v y
+	 * @param tpf
+	 *            the tpf
+	 * @param bouncePosition
+	 *            the bounce position
 	 */
-	public void bounce(float vX, float vY, float tpf,
-			RelativePosition bouncePosition) {
+	public void bounce(float vX, float vY, float tpf, RelativePosition bouncePosition)
+	{
 
 		boolean boostNeeded = false;
 
-		if ((currentVelocity == null) || finished) {
+		if ((currentVelocity == null) || finished)
+		{
 			moveWithVelocity(new Vector2f());
 			boostNeeded = true;
 		}
@@ -139,56 +148,69 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 		float xVelocity = currentVelocity.x;
 		float yVelocity = currentVelocity.y;
 
-		switch (bouncePosition) {
+		switch (bouncePosition)
+		{
 			case TOPLEFT:
-				if (xVelocity > 0) {
+				if (xVelocity > 0)
+				{
 					xVelocity = -xVelocity * reboundEnergyFactor;
 				}
-				if (yVelocity < 0) {
+				if (yVelocity < 0)
+				{
 					yVelocity = -yVelocity * reboundEnergyFactor;
 				}
 				break;
 			case TOP:
-				if (yVelocity < 0) {
+				if (yVelocity < 0)
+				{
 					yVelocity = -yVelocity * reboundEnergyFactor;
 				}
 				break;
 			case TOPRIGHT:
-				if (xVelocity < 0) {
+				if (xVelocity < 0)
+				{
 					xVelocity = -xVelocity * reboundEnergyFactor;
 				}
-				if (yVelocity < 0) {
+				if (yVelocity < 0)
+				{
 					yVelocity = -yVelocity * reboundEnergyFactor;
 				}
 				break;
 			case LEFT:
-				if (xVelocity > 0) {
+				if (xVelocity > 0)
+				{
 					xVelocity = -xVelocity * reboundEnergyFactor;
 				}
 				break;
 			case RIGHT:
-				if (xVelocity < 0) {
+				if (xVelocity < 0)
+				{
 					xVelocity = -xVelocity * reboundEnergyFactor;
 				}
 				break;
 			case BOTTOMLEFT:
-				if (xVelocity > 0) {
+				if (xVelocity > 0)
+				{
 					xVelocity = -xVelocity * reboundEnergyFactor;
 				}
-				if (yVelocity > 0) {
+				if (yVelocity > 0)
+				{
 					yVelocity = -yVelocity * reboundEnergyFactor;
 				}
 				break;
 			case BOTTOM:
-				if (yVelocity > 0) {
+				if (yVelocity > 0)
+				{
 					yVelocity = -yVelocity * reboundEnergyFactor;
 				}
 				break;
 			case BOTTOMRIGHT:
-				if (xVelocity < 0) {
+				if (xVelocity < 0)
+				{
 					xVelocity = -xVelocity * reboundEnergyFactor;
 				}
-				if (yVelocity > 0) {
+				if (yVelocity > 0)
+				{
 					yVelocity = -yVelocity * reboundEnergyFactor;
 				}
 				break;
@@ -201,7 +223,8 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 		currentVelocity.setX(xVelocity);
 		currentVelocity.setY(yVelocity);
 
-		if (boostNeeded) {
+		if (boostNeeded)
+		{
 			AnimationSystem.getInstance().add(this);
 		}
 
@@ -214,7 +237,8 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * )
 	 */
 	@Override
-	public void elementStart(float tpf) {
+	public void elementStart(float tpf)
+	{
 	}
 
 	/**
@@ -223,7 +247,8 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @return A float representing the deceleration at which the managed item's
 	 *         momentum is reduced.
 	 */
-	public float getDeceleration() {
+	public float getDeceleration()
+	{
 		return this.deceleration;
 	}
 
@@ -235,18 +260,23 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @return A float representing the largest of the managed item's width or
 	 *         height.
 	 */
-	public float getMaxDimension() {
-		try {
-			float x = ((BoundingBox) item.getManipulableSpatial()
-					.getWorldBound()).getXExtent();
-			float y = ((BoundingBox) item.getManipulableSpatial()
-					.getWorldBound()).getYExtent();
-			if (x > y) {
+	public float getMaxDimension()
+	{
+		try
+		{
+			float x = ((BoundingBox) item.getManipulableSpatial().getWorldBound()).getXExtent();
+			float y = ((BoundingBox) item.getManipulableSpatial().getWorldBound()).getYExtent();
+			if (x > y)
+			{
 				return x;
-			} else {
+			}
+			else
+			{
 				return y;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return maxDim * item.getRelativeScale();
 		}
 	}
@@ -256,17 +286,20 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#isFinished()
 	 */
 	@Override
-	public boolean isFinished() {
+	public boolean isFinished()
+	{
 		return finished;
 	}
 
 	/**
 	 * This method effectively initiates the flick of the managed item.
 	 *
-	 * @param velocity The direction and momentum with which the managed item is
-	 *            to be flicked.
+	 * @param velocity
+	 *            The direction and momentum with which the managed item is to
+	 *            be flicked.
 	 */
-	public void moveWithVelocity(Vector2f velocity) {
+	public void moveWithVelocity(Vector2f velocity)
+	{
 		this.currentVelocity = velocity.clone();
 		this.finished = false;
 	}
@@ -276,7 +309,8 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @see multiplicity3.csys.animation.elements.AnimationElement#reset()
 	 */
 	@Override
-	public void reset() {
+	public void reset()
+	{
 		finished = true;
 		currentVelocity = new Vector2f();
 		message = null;
@@ -285,10 +319,12 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	/**
 	 * Sets the deceleration at which the managed item's momentum is reduced.
 	 *
-	 * @param drag The deceleration at which the managed item's momentum is
+	 * @param drag
+	 *            The deceleration at which the managed item's momentum is
 	 *            reduced.
 	 */
-	public void setDeceleration(float deceleration) {
+	public void setDeceleration(float deceleration)
+	{
 		this.deceleration = deceleration;
 	}
 
@@ -296,9 +332,11 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * Sets the predetermined max dimension of the managed item. This is used
 	 * for items which may not have a bounding box.
 	 *
-	 * @param maxDim The predetermined max dimension of the managed item
+	 * @param maxDim
+	 *            The predetermined max dimension of the managed item
 	 */
-	public void setMaxDimension(float maxDim) {
+	public void setMaxDimension(float maxDim)
+	{
 		this.maxDim = maxDim;
 
 	}
@@ -310,70 +348,89 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * (float)
 	 */
 	@Override
-	public void updateAnimationState(float tpf) {
-		if (message == null) {
-			if (!finished) {
-				item.setWorldLocation(item.getWorldLocation().add(
-						currentVelocity.mult(tpf)));
+	public void updateAnimationState(float tpf)
+	{
+		if (message == null)
+		{
+			if (!finished)
+			{
+				item.setWorldLocation(item.getWorldLocation().add(currentVelocity.mult(tpf)));
 
 				boolean outside = false;
 
-				if (item.getWorldLocation().x > stage.getDisplayWidth()) {
+				if (item.getWorldLocation().x > stage.getDisplayWidth())
+				{
 					outside = true;
-					if (currentVelocity.x > 0) {
-						if (!initiateTransfer()) {
+					if (currentVelocity.x > 0)
+					{
+						if (!initiateTransfer())
+						{
 							currentVelocity.setX(-currentVelocity.getX());
 						}
 					}
-				} else if (item.getWorldLocation().x < 0) {
+				}
+				else if (item.getWorldLocation().x < 0)
+				{
 					outside = true;
-					if (currentVelocity.x < 0) {
-						if (!initiateTransfer()) {
+					if (currentVelocity.x < 0)
+					{
+						if (!initiateTransfer())
+						{
 							currentVelocity.setX(-currentVelocity.getX());
 						}
 					}
 				}
 
-				if (!finished) {
-					if (item.getWorldLocation().y > stage.getDisplayHeight()) {
+				if (!finished)
+				{
+					if (item.getWorldLocation().y > stage.getDisplayHeight())
+					{
 						outside = true;
-						if (currentVelocity.y > 0) {
-							if (!initiateTransfer()) {
+						if (currentVelocity.y > 0)
+						{
+							if (!initiateTransfer())
+							{
 								currentVelocity.setY(-currentVelocity.getY());
 							}
 						}
-					} else if (item.getWorldLocation().y < 0) {
+					}
+					else if (item.getWorldLocation().y < 0)
+					{
 						outside = true;
-						if (currentVelocity.y < 0) {
-							if (!initiateTransfer()) {
+						if (currentVelocity.y < 0)
+						{
+							if (!initiateTransfer())
+							{
 								currentVelocity.setY(-currentVelocity.getY());
 							}
 						}
 					}
 
-					if (!finished
-							&& !(outside && (currentVelocity.length() < 1f))) {
-						Vector2f reduceBy = currentVelocity.normalize().mult(
-								getDeceleration() * tpf);
+					if (!finished && !(outside && (currentVelocity.length() < 1f)))
+					{
+						Vector2f reduceBy = currentVelocity.normalize().mult(getDeceleration() * tpf);
 						currentVelocity.subtractLocal(reduceBy);
 
-						if (currentVelocity.length() < 1f) {
+						if (currentVelocity.length() < 1f)
+						{
 							finished = true;
 						}
 					}
 				}
 			}
-		} else {
+		}
+		else
+		{
 
-			if (!finished && !(currentVelocity.length() < 1f)) {
-				Vector2f reduceBy = currentVelocity.normalize().mult(
-						getDeceleration() * tpf);
+			if (!finished && !(currentVelocity.length() < 1f))
+			{
+				Vector2f reduceBy = currentVelocity.normalize().mult(getDeceleration() * tpf);
 				currentVelocity.subtractLocal(reduceBy);
 			}
 
-			item.setWorldLocation(item.getWorldLocation().add(
-					currentVelocity.mult(tpf)));
-			if (exitLoc.distance(item.getWorldLocation()) > (getMaxDimension() * (TRANSFER_DISTANCE_RATIO / 2))) {
+			item.setWorldLocation(item.getWorldLocation().add(currentVelocity.mult(tpf)));
+			if (exitLoc.distance(item.getWorldLocation()) > (getMaxDimension() * (TRANSFER_DISTANCE_RATIO / 2)))
+			{
 				transfer();
 			}
 		}
@@ -383,20 +440,21 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * Log the reflecting of an item off the boundary if it is not being
 	 * transferred.
 	 */
-	private boolean bounceBack() {
+	private boolean bounceBack()
+	{
 		Vector2f loc = item.getWorldLocation();
-		if (NetworkFlickLogging.LOGGING_ENABLED) {
-			NetworkFlickLogging.generateInaccurateBounceMessage(item.getName(),
-					loc);
+		if (NetworkFlickLogging.LOGGING_ENABLED)
+		{
+			NetworkFlickLogging.generateInaccurateBounceMessage(item.getName(), loc);
 		}
-		if (NetworkFlickLogging.BOUNCE_LIMIT > 0) {
+		if (NetworkFlickLogging.BOUNCE_LIMIT > 0)
+		{
 			inaccurateBounces++;
-			if (inaccurateBounces >= NetworkFlickLogging.BOUNCE_LIMIT) {
+			if (inaccurateBounces >= NetworkFlickLogging.BOUNCE_LIMIT)
+			{
 				finished = true;
 				stage.removeItem(item);
-				NetworkFlickLogging
-						.generateRemovalDueToInaccurateBounceMessage(
-								item.getName(), loc);
+				NetworkFlickLogging.generateRemovalDueToInaccurateBounceMessage(item.getName(), loc);
 				return false;
 			}
 		}
@@ -406,12 +464,15 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	/**
 	 * Gets the latency.
 	 *
-	 * @param remoteTable the remote table
+	 * @param remoteTable
+	 *            the remote table
 	 * @return the latency
 	 */
-	private long getLatency(String remoteTable) {
+	private long getLatency(String remoteTable)
+	{
 		long latency = AppSystemControlComms.get().getLatency(remoteTable);
-		if (latency < 0) {
+		if (latency < 0)
+		{
 			latency = 0;
 		}
 		return 0;
@@ -424,9 +485,9 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @return A float representing the speed at which the managed item is
 	 *         currently travelling in pixels per second.
 	 */
-	private float getSpeed() {
-		return FastMath.sqrt(FastMath.sqr(currentVelocity.x)
-				+ FastMath.sqr(currentVelocity.y));
+	private float getSpeed()
+	{
+		return FastMath.sqrt(FastMath.sqr(currentVelocity.x) + FastMath.sqr(currentVelocity.y));
 	}
 
 	/**
@@ -440,19 +501,18 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @return A boolean value representing whether the managed item is to be
 	 *         transfered.
 	 */
-	private boolean initiateTransfer() {
-		if (!SynergyNetApp.networkFlickEnabled) {
+	private boolean initiateTransfer()
+	{
+		if (!SynergyNetApp.networkFlickEnabled)
+		{
 			return false;
 		}
-		if (((item instanceof IItemCachable) || FeedbackSystem
-				.isItemFeedbackContainer(item))
-				&& FeedbackSystem.isItemFeedbackEligible(item)) {
+		if (((item instanceof IItemCachable) || FeedbackSystem.isItemFeedbackContainer(item)) && FeedbackSystem.isItemFeedbackEligible(item))
+		{
 
 			float distance = -1;
 
-			Ray ray = new Ray(new Vector3f(item.getRelativeLocation().x,
-					item.getRelativeLocation().y, 0), new Vector3f(
-					currentVelocity.x, currentVelocity.y, 0));
+			Ray ray = new Ray(new Vector3f(item.getRelativeLocation().x, item.getRelativeLocation().y, 0), new Vector3f(currentVelocity.x, currentVelocity.y, 0));
 			Spatial targetTable = null;
 			Vector2f locationFromTargetTableCentre = null;
 			float targetAngle = 0;
@@ -460,71 +520,60 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 			float rot = 0;
 			String targetTableID = "";
 
-			for (Spatial table : VirtualTableUtilities.otherTables.values()) {
+			for (Spatial table : VirtualTableUtilities.otherTables.values())
+			{
 
 				CollisionResults results = new CollisionResults();
 				ray.collideWith(table.getWorldBound(), results);
-				if (results.size() > 0) {
+				if (results.size() > 0)
+				{
 					CollisionResult result = results.getClosestCollision();
 					Vector3f interactionLocation = result.getContactPoint();
-					Vector2f closestTargetLocation = new Vector2f(
-							interactionLocation.x, interactionLocation.y);
+					Vector2f closestTargetLocation = new Vector2f(interactionLocation.x, interactionLocation.y);
 
-					if ((distance == -1)
-							|| (distance > targetLocation.distance(item
-									.getRelativeLocation()))) {
+					if ((distance == -1) || (distance > targetLocation.distance(item.getRelativeLocation())))
+					{
 
 						targetTable = table;
 						targetLocation = closestTargetLocation;
 
-						targetTableID = VirtualTableUtilities
-								.getIDForTable(targetTable);
-						rot = VirtualTableUtilities.otherTablesOrientation
-								.get(targetTableID);
+						targetTableID = VirtualTableUtilities.getIDForTable(targetTable);
+						rot = VirtualTableUtilities.otherTablesOrientation.get(targetTableID);
 
-						if (BehaviourUtilities.FLICK_TYPE != FLICKTYPE.INSTANT) {
-							interactionLocation = interactionLocation
-									.add(ray.origin
-											.subtract(interactionLocation)
-											.normalize()
-											.mult(getMaxDimension()
-													* (TRANSFER_DISTANCE_RATIO / 2)));
+						if (BehaviourUtilities.FLICK_TYPE != FLICKTYPE.INSTANT)
+						{
+							interactionLocation = interactionLocation.add(ray.origin.subtract(interactionLocation).normalize().mult(getMaxDimension() * (TRANSFER_DISTANCE_RATIO / 2)));
 						}
 
-						locationFromTargetTableCentre = new Vector2f(
-								interactionLocation.x
-										- table.getWorldTranslation().x,
-								interactionLocation.y
-										- table.getWorldTranslation().y);
+						locationFromTargetTableCentre = new Vector2f(interactionLocation.x - table.getWorldTranslation().x, interactionLocation.y - table.getWorldTranslation().y);
 
-						locationFromTargetTableCentre.rotateAroundOrigin(
-								SynergyNetApp.localDevicePosition
-										.getOrientation(), true);
-						locationFromTargetTableCentre.rotateAroundOrigin(rot,
-								false);
+						locationFromTargetTableCentre.rotateAroundOrigin(SynergyNetApp.localDevicePosition.getOrientation(), true);
+						locationFromTargetTableCentre.rotateAroundOrigin(rot, false);
 
-						targetAngle = item.getRelativeRotation()
-								+ (rot - SynergyNetApp.localDevicePosition
-										.getOrientation());
+						targetAngle = item.getRelativeRotation() + (rot - SynergyNetApp.localDevicePosition.getOrientation());
 
-						targetScale = item.getRelativeScale()
-								* VirtualTableUtilities.otherTablesScaleChanges
-										.get(targetTableID);
+						targetScale = item.getRelativeScale() * VirtualTableUtilities.otherTablesScaleChanges.get(targetTableID);
 					}
 				}
 			}
 
-			if (targetTable != null) {
-				if (!withinStoppingDistance()) {
+			if (targetTable != null)
+			{
+				if (!withinStoppingDistance())
+				{
 					targetTable = null;
 				}
-			} else {
-				if (!bounceBack()) {
+			}
+			else
+			{
+				if (!bounceBack())
+				{
 					return false;
 				}
 			}
 
-			if (targetTable != null) {
+			if (targetTable != null)
+			{
 
 				final String id = SynergyNetCluster.get().getIdentity();
 				final String finalTargetTableID = targetTableID;
@@ -533,51 +582,40 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 				final float finalTargetAngle = targetAngle;
 				final float finalTargetScale = targetScale;
 
-				Thread cachingThread = new Thread(new Runnable() {
-					public void run() {
+				Thread cachingThread = new Thread(new Runnable()
+				{
+					@Override
+					public void run()
+					{
 
 						Vector2f newFlickDirection = currentVelocity.clone();
-						newFlickDirection.rotateAroundOrigin(
-								SynergyNetApp.localDevicePosition
-										.getOrientation(), true);
+						newFlickDirection.rotateAroundOrigin(SynergyNetApp.localDevicePosition.getOrientation(), true);
 						newFlickDirection.rotateAroundOrigin(finalRot, false);
 
-						float width = FeedbackSystem
-								.getFedbackEligbleItemDimensions(item).x;
-						float height = FeedbackSystem
-								.getFedbackEligbleItemDimensions(item).y;
+						float width = FeedbackSystem.getFedbackEligbleItemDimensions(item).x;
+						float height = FeedbackSystem.getFedbackEligbleItemDimensions(item).y;
 						FeedbackContainer feedbackContained = null;
-						if (FeedbackSystem.isItemFeedbackContainer(item)) {
-							feedbackContained = FeedbackSystem
-									.getFeedbackContainer(item);
+						if (FeedbackSystem.isItemFeedbackContainer(item))
+						{
+							feedbackContained = FeedbackSystem.getFeedbackContainer(item);
 						}
-						Object[] info = { width, height, feedbackContained };
+						Object[] info =
+						{ width, height, feedbackContained };
 
-						GalleryItemDatabaseFormat galleryItem = ItemCaching
-								.deconstructItem(
-										item,
-										info,
-										CacheOrganisation.TRANSFER_DIR
-												+ File.separator
-												+ CacheOrganisation.NETWORK_FLICK_DIR);
+						GalleryItemDatabaseFormat galleryItem = ItemCaching.deconstructItem(item, info, CacheOrganisation.TRANSFER_DIR + File.separator + CacheOrganisation.NETWORK_FLICK_DIR);
 
-						float locationFromTargetTableCentreXinMetres = SynergyNetPositioning
-								.getMetreValue((int) finalLocationFromTargetTableCentre.x);
-						float locationFromTargetTableCentreYinMetres = SynergyNetPositioning
-								.getMetreValue((int) finalLocationFromTargetTableCentre.y);
+						float locationFromTargetTableCentreXinMetres = SynergyNetPositioning.getMetreValue((int) finalLocationFromTargetTableCentre.x);
+						float locationFromTargetTableCentreYinMetres = SynergyNetPositioning.getMetreValue((int) finalLocationFromTargetTableCentre.y);
 
-						if (!id.equals(finalTargetTableID)) {
+						if (!id.equals(finalTargetTableID))
+						{
 
 							exitLoc = item.getWorldLocation();
 
-							message = new FlickMessage(finalTargetTableID, id,
-									galleryItem,
-									locationFromTargetTableCentreXinMetres,
-									locationFromTargetTableCentreYinMetres,
-									finalTargetAngle, finalTargetScale,
-									newFlickDirection.x, newFlickDirection.y);
+							message = new FlickMessage(finalTargetTableID, id, galleryItem, locationFromTargetTableCentreXinMetres, locationFromTargetTableCentreYinMetres, finalTargetAngle, finalTargetScale, newFlickDirection.x, newFlickDirection.y);
 
-							if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.INSTANT) {
+							if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.INSTANT)
+							{
 								transfer();
 							}
 						}
@@ -586,7 +624,8 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 				});
 				cachingThread.start();
 
-				if (!id.equals(targetTableID)) {
+				if (!id.equals(targetTableID))
+				{
 					return true;
 				}
 			}
@@ -600,58 +639,69 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * its transmission through the cluster to the appropriate device. The
 	 * managed item is then removed from the application.
 	 */
-	private void transfer() {
+	private void transfer()
+	{
 
 		Vector2f worldLoc = item.getWorldLocation();
 		Vector2f localLoc = item.getRelativeLocation();
-		if (NetworkFlickLogging.LOGGING_ENABLED) {
-			NetworkFlickLogging.generateFlickSentMessage(item.getName(),
-					message.getTargetTableID(), worldLoc);
+		if (NetworkFlickLogging.LOGGING_ENABLED)
+		{
+			NetworkFlickLogging.generateFlickSentMessage(item.getName(), message.getTargetTableID(), worldLoc);
 		}
 		finished = true;
 		IItem parent = item.getParentItem();
-		try {
-			if (item instanceof MediaPlayer) {
+		try
+		{
+			if (item instanceof MediaPlayer)
+			{
 				((MediaPlayer) item).destroy();
 			}
 			parent.removeItem(item);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 		}
 
-		if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.PROPORTIONAL) {
+		if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.PROPORTIONAL)
+		{
 
 			float distanceToTravel = localLoc.distance(targetLocation);
-			float velocityOnArrival = FastMath.sqrt(FastMath.sqr(getSpeed())
-					+ (2 * -getDeceleration() * distanceToTravel));
-			final long timeToTravel = (long) (((FastMath.abs(getSpeed()) - FastMath
-					.abs(velocityOnArrival)) / FastMath.abs(getDeceleration())) * 1000f);
+			float velocityOnArrival = FastMath.sqrt(FastMath.sqr(getSpeed()) + (2 * -getDeceleration() * distanceToTravel));
+			final long timeToTravel = (long) (((FastMath.abs(getSpeed()) - FastMath.abs(velocityOnArrival)) / FastMath.abs(getDeceleration())) * 1000f);
 
 			float speedChange = velocityOnArrival / getSpeed();
-			if (speedChange <= 0) {
+			if (speedChange <= 0)
+			{
 				message.setXDir(speedChange * message.getXDir());
 				message.setYDir(speedChange * message.getYDir());
 			}
 
 			final long latency = getLatency(message.getTargetTableID());
 
-			Runnable messageDispatch = new Runnable() {
-				public void run() {
-					try {
+			Runnable messageDispatch = new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					try
+					{
 						Thread.sleep(timeToTravel - latency);
 
-						AppSystemControlComms.get().networkFlick(message,
-								message.getTargetTableID());
+						AppSystemControlComms.get().networkFlick(message, message.getTargetTableID());
 						message = null;
 
-					} catch (InterruptedException ie) {
+					}
+					catch (InterruptedException ie)
+					{
 					}
 				}
 			};
 			Thread sendThread = new Thread(messageDispatch);
 			sendThread.start();
-		} else {
-			AppSystemControlComms.get().networkFlick(message,
-					message.getTargetTableID());
+		}
+		else
+		{
+			AppSystemControlComms.get().networkFlick(message, message.getTargetTableID());
 			message = null;
 		}
 
@@ -668,37 +718,42 @@ public class NetworkFlickAnimationElement extends AnimationElement {
 	 * @return A boolean value representing whether the managed item has enough
 	 *         momentum to travel entirely off screen.
 	 */
-	private boolean withinStoppingDistance() {
+	private boolean withinStoppingDistance()
+	{
 
-		float stoppingDistance = -FastMath.sqr(getSpeed())
-				/ (2 * -getDeceleration());
+		float stoppingDistance = -FastMath.sqr(getSpeed()) / (2 * -getDeceleration());
 		float travelDistance = 0;
-		if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.INSTANT) {
+		if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.INSTANT)
+		{
 			return true;
-		} else if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.PROPORTIONAL) {
-			travelDistance = item.getRelativeLocation()
-					.distance(targetLocation);
-		} else {
+		}
+		else if (BehaviourUtilities.FLICK_TYPE == FLICKTYPE.PROPORTIONAL)
+		{
+			travelDistance = item.getRelativeLocation().distance(targetLocation);
+		}
+		else
+		{
 			travelDistance = getMaxDimension() * TRANSFER_DISTANCE_RATIO;
 		}
 
-		if (stoppingDistance > travelDistance) {
+		if (stoppingDistance > travelDistance)
+		{
 			return true;
 		}
 
 		Vector2f loc = item.getWorldLocation();
-		if (NetworkFlickLogging.LOGGING_ENABLED) {
-			NetworkFlickLogging.generateLackOfMomentumBounceMessage(
-					item.getName(), loc);
+		if (NetworkFlickLogging.LOGGING_ENABLED)
+		{
+			NetworkFlickLogging.generateLackOfMomentumBounceMessage(item.getName(), loc);
 		}
-		if (NetworkFlickLogging.BOUNCE_LIMIT > 0) {
+		if (NetworkFlickLogging.BOUNCE_LIMIT > 0)
+		{
 			momentumBounces++;
-			if (momentumBounces >= NetworkFlickLogging.BOUNCE_LIMIT) {
+			if (momentumBounces >= NetworkFlickLogging.BOUNCE_LIMIT)
+			{
 				finished = true;
 				stage.removeItem(item);
-				NetworkFlickLogging
-						.generateRemovalDueToLackOfMomentumBounceMessage(
-								item.getName(), loc);
+				NetworkFlickLogging.generateRemovalDueToLackOfMomentumBounceMessage(item.getName(), loc);
 				return false;
 			}
 		}
