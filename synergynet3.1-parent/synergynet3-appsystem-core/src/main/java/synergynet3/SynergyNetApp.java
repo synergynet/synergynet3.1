@@ -56,6 +56,7 @@ import synergynet3.web.shared.DevicesSelected;
 
 import com.db4o.ext.Db4oIOException;
 import com.hazelcast.config.Config;
+import com.hazelcast.config.Join;
 import com.hazelcast.config.NetworkConfig;
 import com.hazelcast.core.Hazelcast;
 import com.jme3.math.ColorRGBA;
@@ -773,16 +774,34 @@ abstract public class SynergyNetApp implements IMultiplicityApp, IScreenShotter,
 
 		if (NETWORKING)
 		{
+			
+			WebConfigPrefsItem webconfig = new WebConfigPrefsItem();
+			Config cfg = new Config();
+			NetworkConfig network = cfg.getNetworkConfig();
 
-			String clusterInterface = new WebConfigPrefsItem().getClusterInterface();
+			String clusterInterface = webconfig.getClusterInterface();
 			if (!clusterInterface.equals(""))
 			{
-				Config cfg = new Config();
-				NetworkConfig network = cfg.getNetworkConfig();
 				network.getInterfaces().setEnabled(true).addInterface(clusterInterface);
 				Hazelcast.init(cfg);
 			}
 
+			//Check if webconfig has TCP/IP enabled 
+			if (!webconfig.getJoinModeMulticasting())
+			{
+			
+				//Disable multicasting
+				Join join = network.getJoin();
+				join.getMulticastConfig().setEnabled( false );
+				
+				//Add IPs of members to look for, collected from the config
+				join.getTcpIpConfig().addMember(webconfig.getTcpIPs()).setEnabled( true );
+				
+				//Increase waiting time to a minute
+				join.getTcpIpConfig().setConnectionTimeoutSeconds(60);
+				
+			}
+			
 			localDevicePosition = SynergyNetPositioning.getLocalDeviceLocationFull();
 		}
 

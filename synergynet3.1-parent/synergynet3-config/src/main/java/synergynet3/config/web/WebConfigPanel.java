@@ -119,6 +119,29 @@ public class WebConfigPanel extends JPanel
 
 		setName("Form");
 
+		webServerDirLabel = new JLabel("Cluster host address: ");
+		webServerDirField = new JTextField();
+		webServerDirField.setText(prefs.getClusterHost());
+		webServerDirField.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				store();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				store();
+			}
+
+			private void store()
+			{
+				prefs.setClusterHost(webServerDirField.getText());
+			}
+		});
+		
 		webServerPortLabel = new JLabel("Cluster port: ");
 		webServerPortField = new JTextField();
 		webServerPortField.setText(prefs.getPort() + "");
@@ -153,11 +176,11 @@ public class WebConfigPanel extends JPanel
 				}
 			}
 		});
-
-		webServerDirLabel = new JLabel("Cluster host address: ");
-		webServerDirField = new JTextField();
-		webServerDirField.setText(prefs.getClusterHost());
-		webServerDirField.addKeyListener(new KeyAdapter()
+		
+		clusterInterfaceLabel = new JLabel("Cluster interface: ");
+		clusterInterfaceField = new JTextField();
+		clusterInterfaceField.setText(prefs.getClusterInterface());
+		clusterInterfaceField.addKeyListener(new KeyAdapter()
 		{
 			@Override
 			public void keyReleased(KeyEvent e)
@@ -173,9 +196,13 @@ public class WebConfigPanel extends JPanel
 
 			private void store()
 			{
-				prefs.setClusterHost(webServerDirField.getText());
+				prefs.setClusterInterface(clusterInterfaceField.getText());
 			}
 		});
+		
+		//TODO: Controls for choosing between Multicasting and TCP/IP
+		
+		//TODO: Controls for defining IPs (hidden when Multicasting is selected)
 
 		clusterNameLabel = new JLabel("Device username: ");
 		clusterUsernameField = new JTextField();
@@ -197,29 +224,6 @@ public class WebConfigPanel extends JPanel
 			private void store()
 			{
 				prefs.setClusterUserName(clusterUsernameField.getText());
-			}
-		});
-
-		clusterInterfaceLabel = new JLabel("Cluster interface: ");
-		clusterInterfaceField = new JTextField();
-		clusterInterfaceField.setText(prefs.getClusterInterface());
-		clusterInterfaceField.addKeyListener(new KeyAdapter()
-		{
-			@Override
-			public void keyReleased(KeyEvent e)
-			{
-				store();
-			}
-
-			@Override
-			public void keyTyped(KeyEvent e)
-			{
-				store();
-			}
-
-			private void store()
-			{
-				prefs.setClusterInterface(clusterInterfaceField.getText());
 			}
 		});
 
@@ -321,6 +325,11 @@ public class WebConfigPanel extends JPanel
 		webServerPortLabel.setBounds(new Rectangle(30, y, 130, 24));
 		webServerPortField.setBounds(new Rectangle(215, y, 80, 24));
 
+		y += 30;
+
+		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
+		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
+
 		y += 60;
 
 		clusterNameLabel.setBounds(new Rectangle(30, y, 130, 24));
@@ -330,11 +339,6 @@ public class WebConfigPanel extends JPanel
 
 		clusterPasswordLabel.setBounds(new Rectangle(30, y, 130, 24));
 		clusterPasswordField.setBounds(new Rectangle(215, y, 150, 24));
-
-		y += 30;
-
-		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
-		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
 
 		y += 80;
 
