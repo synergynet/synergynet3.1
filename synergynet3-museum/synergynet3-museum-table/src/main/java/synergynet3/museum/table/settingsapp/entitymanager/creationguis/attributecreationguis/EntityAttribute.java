@@ -3,7 +3,8 @@ package synergynet3.museum.table.settingsapp.entitymanager.creationguis.attribut
 /**
  * The Enum EntityAttribute.
  */
-public enum EntityAttribute {
+public enum EntityAttribute
+{
 	// Facts, Questions, Links
 	/** The Facts. */
 	Facts,

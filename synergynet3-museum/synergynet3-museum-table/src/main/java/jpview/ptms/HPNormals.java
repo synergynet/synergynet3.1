@@ -11,7 +11,8 @@ import jpview.graphics.Vec3f;
 /**
  * Original code by Hans Wolters Java port by Cliff Lyon
  */
-public class HPNormals {
+public class HPNormals
+{
 
 	/** The Constant zerotol. */
 	public static final double zerotol = 1.0e-5;
@@ -22,11 +23,14 @@ public class HPNormals {
 	/**
 	 * Compute maximum on circle.
 	 *
-	 * @param a the a
-	 * @param normal the normal
+	 * @param a
+	 *            the a
+	 * @param normal
+	 *            the normal
 	 * @return the int
 	 */
-	public static int computeMaximumOnCircle(double[] a, double[] normal) {
+	public static int computeMaximumOnCircle(double[] a, double[] normal)
+	{
 		double db0, db1, db2, db3, db4;
 		double val1;
 		double[] zeros = new double[4];
@@ -43,35 +47,46 @@ public class HPNormals {
 		db4 = a[2] + a[3];
 
 		/** polynomial is constant on circle, pick (0,1) as a solution */
-		if ((Math.abs(db0) < zerotol) && (Math.abs(db1) < zerotol)
-				&& (Math.abs(db2) < zerotol) && (Math.abs(db3) < zerotol)) {
+		if ((Math.abs(db0) < zerotol) && (Math.abs(db1) < zerotol) && (Math.abs(db2) < zerotol) && (Math.abs(db3) < zerotol))
+		{
 			normal[0] = 0.0;
 			normal[1] = 1.0;
 			return 1;
 		}
 
-		if (db0 != 0) {
-			double[] c = new double[] { db4, db3, db2, db1, db0 };
-			nroots = GraphicsGems.SolveQuartic(c, zeros);
-		} else if (db1 != 0) {
-			double[] c = new double[] { db4, db3, db2, db1 };
-			nroots = GraphicsGems.SolveCubic(c, zeros);
-		} else /** TODO case where db2 is zero */
+		if (db0 != 0)
 		{
-			double[] c = new double[] { db4, db3, db2 };
+			double[] c = new double[]
+			{ db4, db3, db2, db1, db0 };
+			nroots = GraphicsGems.SolveQuartic(c, zeros);
+		}
+		else if (db1 != 0)
+		{
+			double[] c = new double[]
+			{ db4, db3, db2, db1 };
+			nroots = GraphicsGems.SolveCubic(c, zeros);
+		}
+		else
+		/** TODO case where db2 is zero */
+		{
+			double[] c = new double[]
+			{ db4, db3, db2 };
 			nroots = GraphicsGems.SolveQuadric(c, zeros);
 		}
-		if (nroots <= 0) {
+		if (nroots <= 0)
+		{
 			return -1;
 		}
 
-		switch (nroots) {
+		switch (nroots)
+		{
 			case 1:
 				index = 0;
 				break;
 			default:
 				double[] vals = new double[nroots];
-				for (int i = 0; i < vals.length; i++) {
+				for (int i = 0; i < vals.length; i++)
+				{
 					vals[i] = evalPoly(a, zeros[i]);
 				}
 				index = Utils.indexOfMax(vals);
@@ -86,8 +101,7 @@ public class HPNormals {
 		 */
 
 		normal[0] = (2 * zeros[index]) / (1 + (zeros[index] * zeros[index]));
-		normal[1] = (1 - (zeros[index] * zeros[index]))
-				/ (1 + (zeros[index] * zeros[index]));
+		normal[1] = (1 - (zeros[index] * zeros[index])) / (1 + (zeros[index] * zeros[index]));
 
 		/**
 		 * test the correctness of solution:
@@ -95,14 +109,15 @@ public class HPNormals {
 
 		maxval = -1000;
 
-		for (int k = 0; k <= 20; k++) {
+		for (int k = 0; k <= 20; k++)
+		{
 			inc = ((1 / 9.0) / 20) * k;
 			arg = Math.PI * ((26.0 / 18.0) + inc);
 			u = Math.cos(arg);
 			v = Math.sin(arg);
-			polyval = (a[0] * u * u) + (a[1] * v * v) + (a[2] * u * v)
-					+ (a[3] * u) + (a[4] * v) + a[5];
-			if (maxval < polyval) {
+			polyval = (a[0] * u * u) + (a[1] * v * v) + (a[2] * u * v) + (a[3] * u) + (a[4] * v) + a[5];
+			if (maxval < polyval)
+			{
 				maxval = polyval;
 				maxu = u;
 				maxv = v;
@@ -110,7 +125,8 @@ public class HPNormals {
 		}
 
 		val1 = evalPoly(a, zeros[index]);
-		if (maxval > val1) {
+		if (maxval > val1)
+		{
 			normal[0] = maxu;
 			normal[1] = maxv;
 		}
@@ -120,24 +136,28 @@ public class HPNormals {
 	/**
 	 * Eval poly.
 	 *
-	 * @param a the a
-	 * @param t the t
+	 * @param a
+	 *            the a
+	 * @param t
+	 *            the t
 	 * @return the double
 	 */
-	public static double evalPoly(double[] a, double t) {
+	public static double evalPoly(double[] a, double t)
+	{
 		double u = (2 * t) / (1 + (t * t));
 		double v = (1 - (t * t)) / (1 + (t * t));
-		return (a[0] * u * u) + (a[1] * v * v) + (a[2] * u * v) + (a[3] * u)
-				+ (a[4] * v) + a[5];
+		return (a[0] * u * u) + (a[1] * v * v) + (a[2] * u * v) + (a[3] * u) + (a[4] * v) + a[5];
 	}
 
 	/**
 	 * Gets the normals.
 	 *
-	 * @param coeff the coeff
+	 * @param coeff
+	 *            the coeff
 	 * @return the normals
 	 */
-	public static Vec3f[] getNormals(int[][] coeff) {
+	public static Vec3f[] getNormals(int[][] coeff)
+	{
 
 		Vec3f[] normals = new Vec3f[coeff.length];
 		double[] a;
@@ -146,7 +166,8 @@ public class HPNormals {
 		int stat;
 		int maxfound;
 
-		for (int i = 0; i < normals.length; i++) {
+		for (int i = 0; i < normals.length; i++)
+		{
 			double[] normal = new double[3];
 			a = new double[6];
 			a[0] = coeff[i][0];
@@ -175,24 +196,28 @@ public class HPNormals {
 			 */
 
 			/** zero denominator in upcoming computations */
-			if (Math.abs((a[2] * a[2]) - (4 * a[1] * a[0])) < zerotol) {
+			if (Math.abs((a[2] * a[2]) - (4 * a[1] * a[0])) < zerotol)
+			{
 				normal[0] = 0;
 				normal[1] = 0;
-			} else {
-				if (Math.abs(a[2]) < zerotol) {
+			}
+			else
+			{
+				if (Math.abs(a[2]) < zerotol)
+				{
 					normal[0] = (-1.0 * a[3]) / (2.0 * a[0]);
 					normal[1] = (-1.0 * a[4]) / (2.0 * a[1]);
-				} else {
-					normal[0] = ((2.0 * a[1] * a[3]) - (a[2] * a[4]))
-							/ ((a[2] * a[2]) - (4.0 * a[1] * a[0]));
+				}
+				else
+				{
+					normal[0] = ((2.0 * a[1] * a[3]) - (a[2] * a[4])) / ((a[2] * a[2]) - (4.0 * a[1] * a[0]));
 					normal[1] = ((-2.0 * a[0] * normal[0]) - a[3]) / a[2];
 				}
 			}
 
 			/** polynomial is constant we are done, set normal to be at 0,0,1 */
-			if ((Math.abs(a[0]) < zerotol) && (Math.abs(a[1]) < zerotol)
-					&& (Math.abs(a[2]) < zerotol) && (Math.abs(a[3]) < zerotol)
-					&& (Math.abs(a[4]) < zerotol)) {
+			if ((Math.abs(a[0]) < zerotol) && (Math.abs(a[1]) < zerotol) && (Math.abs(a[2]) < zerotol) && (Math.abs(a[3]) < zerotol) && (Math.abs(a[4]) < zerotol))
+			{
 				normal[0] = 0.0;
 				normal[1] = 0.0;
 				normal[2] = 1.0;
@@ -202,7 +227,8 @@ public class HPNormals {
 			 * theoretically. first check if the vector (normal[0],normal[1]) is
 			 * greater than 1
 			 */
-			else {
+			else
+			{
 				length2d = (normal[0] * normal[0]) + (normal[1] * normal[0]);
 
 				/*
@@ -210,10 +236,12 @@ public class HPNormals {
 				 * p_uu*p_vv-p_uv*p_uv <0 -> saddle or minimum if this is the
 				 * case then we should always look at boundary
 				 */
-				if ((((4 * a[0] * a[1]) - (a[2] * a[2])) > eps)
-						&& (a[0] < -eps)) {
+				if ((((4 * a[0] * a[1]) - (a[2] * a[2])) > eps) && (a[0] < -eps))
+				{
 					maxfound = 1;
-				} else {
+				}
+				else
+				{
 					maxfound = 0;
 				}
 
@@ -230,27 +258,31 @@ public class HPNormals {
 				 * lab book
 				 */
 
-				if ((length2d > (1 - eps)) || (maxfound == 0)) {
+				if ((length2d > (1 - eps)) || (maxfound == 0))
+				{
 					stat = computeMaximumOnCircle(a, normal);
 					if (stat == -1) // failed
 					{
 						length2d = Math.sqrt(length2d);
-						if (length2d > zerotol) {
+						if (length2d > zerotol)
+						{
 							normal[0] /= length2d;
 							normal[1] /= length2d;
 						}
 					}
 				}
 				disc = 1.0 - (normal[0] * normal[0]) - (normal[1] * normal[1]);
-				if (disc < 0.0) {
+				if (disc < 0.0)
+				{
 					normal[2] = 0;
-				} else {
+				}
+				else
+				{
 					normal[2] = (float) Math.sqrt(disc);
 				}
 			}
 			normal = Utils.normalize3(normal);
-			normals[i] = new Vec3f((float) normal[0], (float) normal[1],
-					(float) normal[2]);
+			normals[i] = new Vec3f((float) normal[0], (float) normal[1], (float) normal[2]);
 		}
 		return normals;
 	}
@@ -258,10 +290,12 @@ public class HPNormals {
 	/**
 	 * Gets the normals.
 	 *
-	 * @param ptm the ptm
+	 * @param ptm
+	 *            the ptm
 	 * @return the normals
 	 */
-	public static Vec3f[] getNormals(LRGBPTM ptm) {
+	public static Vec3f[] getNormals(LRGBPTM ptm)
+	{
 		return HPNormals.getNormals(ptm.getCoefficients());
 	}
 }

@@ -30,7 +30,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class EntityManager.
  */
-public class EntityManager {
+public class EntityManager
+{
 
 	/** The Constant APPROVED. */
 	public static final String APPROVED = "Approved";
@@ -77,19 +78,23 @@ public class EntityManager {
 	/**
 	 * Instantiates a new entity manager.
 	 *
-	 * @param stage the stage
-	 * @param displayWidth the display width
-	 * @param displayHeight the display height
-	 * @param displayOffset the display offset
-	 * @param app the app
+	 * @param stage
+	 *            the stage
+	 * @param displayWidth
+	 *            the display width
+	 * @param displayHeight
+	 *            the display height
+	 * @param displayOffset
+	 *            the display offset
+	 * @param app
+	 *            the app
 	 */
-	public EntityManager(IStage stage, float displayWidth, float displayHeight,
-			Vector2f displayOffset, MuseumApp app) {
+	public EntityManager(IStage stage, float displayWidth, float displayHeight, Vector2f displayOffset, MuseumApp app)
+	{
 		this.stage = stage;
 		this.app = app;
 		imageSizeLimit = stage.getDisplayWidth() / 4;
-		mapManager = new POIManager(stage, displayWidth, displayHeight,
-				displayOffset, this);
+		mapManager = new POIManager(stage, displayWidth, displayHeight, displayOffset, this);
 	}
 
 	/**
@@ -97,7 +102,8 @@ public class EntityManager {
 	 *
 	 * @return true, if successful
 	 */
-	public boolean areRecordingPromptsVisible() {
+	public boolean areRecordingPromptsVisible()
+	{
 		return recordingPromptsVisible;
 	}
 
@@ -106,42 +112,48 @@ public class EntityManager {
 	 *
 	 * @return the entities
 	 */
-	public HashMap<String, EntityItem> getEntities() {
+	public HashMap<String, EntityItem> getEntities()
+	{
 		return entities;
 	}
 
 	/**
 	 * Load all content.
 	 *
-	 * @param contentFolderLocation the content folder location
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param contentFolderLocation
+	 *            the content folder location
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public void loadAllContent(String contentFolderLocation)
-			throws ContentTypeNotBoundException {
-		File contentDir = new File(contentFolderLocation + File.separator
-				+ ENTITIES);
-		if (contentDir.isDirectory()) {
-			for (File entityFolder : contentDir.listFiles()) {
-				if (entityFolder.isDirectory()) {
+	public void loadAllContent(String contentFolderLocation) throws ContentTypeNotBoundException
+	{
+		File contentDir = new File(contentFolderLocation + File.separator + ENTITIES);
+		if (contentDir.isDirectory())
+		{
+			for (File entityFolder : contentDir.listFiles())
+			{
+				if (entityFolder.isDirectory())
+				{
 					loadEntityContent(entityFolder);
 				}
 			}
 		}
 
-		for (LensVisiblePOI eventPOI : mapManager.getlensVisiblePOIs()) {
+		for (LensVisiblePOI eventPOI : mapManager.getlensVisiblePOIs())
+		{
 			stage.getZOrderManager().bringToTop(eventPOI.getPoi());
-			eventPOI.getPoi().getZOrderManager()
-					.setBringToTopPropagatesUp(false);
+			eventPOI.getPoi().getZOrderManager().setBringToTopPropagatesUp(false);
 		}
-		for (IImage poi : mapManager.getPOIs()) {
+		for (IImage poi : mapManager.getPOIs())
+		{
 			stage.getZOrderManager().bringToTop(poi);
 			stage.getZOrderManager().ignoreItemClickedBehaviour(poi);
 			poi.getZOrderManager().setBringToTopPropagatesUp(false);
 		}
 
 		mapManager.generateBackground();
-		if ((mapManager.getlensVisiblePOIs().size() > 0)
-				&& (LensUtils.getLenses().length > 0)) {
+		if ((mapManager.getlensVisiblePOIs().size() > 0) && (LensUtils.getLenses().length > 0))
+		{
 			mapManager.generateLensButton();
 		}
 	}
@@ -149,11 +161,14 @@ public class EntityManager {
 	/**
 	 * Sets the user recording prompt labels visibility.
 	 *
-	 * @param visibility the new user recording prompt labels visibility
+	 * @param visibility
+	 *            the new user recording prompt labels visibility
 	 */
-	public void setUserRecordingPromptLabelsVisibility(boolean visibility) {
+	public void setUserRecordingPromptLabelsVisibility(boolean visibility)
+	{
 		recordingPromptsVisible = visibility;
-		for (EntityItem entityItem : entities.values()) {
+		for (EntityItem entityItem : entities.values())
+		{
 			entityItem.setUserRecordingPromptLabelVisibility(visibility);
 		}
 	}
@@ -161,16 +176,18 @@ public class EntityManager {
 	/**
 	 * Load entity content.
 	 *
-	 * @param folder the folder
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param folder
+	 *            the folder
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void loadEntityContent(File folder)
-			throws ContentTypeNotBoundException {
+	private void loadEntityContent(File folder) throws ContentTypeNotBoundException
+	{
 		ArrayList<IItem> items = loadMedia(folder, false);
 		ArrayList<IItem> userGeneratedItems = new ArrayList<IItem>();
-		File approvedContentFolder = new File(folder.getAbsolutePath()
-				+ File.separator + RECORDINGS + File.separator + APPROVED);
-		if (approvedContentFolder.isDirectory()) {
+		File approvedContentFolder = new File(folder.getAbsolutePath() + File.separator + RECORDINGS + File.separator + APPROVED);
+		if (approvedContentFolder.isDirectory())
+		{
 			userGeneratedItems.addAll(loadMedia(approvedContentFolder, true));
 		}
 		parseEntityXmlFile(folder, items, userGeneratedItems);
@@ -179,43 +196,47 @@ public class EntityManager {
 	/**
 	 * Load media.
 	 *
-	 * @param folder the folder
-	 * @param isUserContent the is user content
+	 * @param folder
+	 *            the folder
+	 * @param isUserContent
+	 *            the is user content
 	 * @return the array list
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private ArrayList<IItem> loadMedia(File folder, boolean isUserContent)
-			throws ContentTypeNotBoundException {
+	private ArrayList<IItem> loadMedia(File folder, boolean isUserContent) throws ContentTypeNotBoundException
+	{
 		ArrayList<IItem> items = new ArrayList<IItem>();
-		for (File file : folder.listFiles()) {
-			if (!XML_CHECK.isFileOfSearchType(file)) {
-				ColorRGBA borderCol = MuseumAppPreferences
-						.getEntityBorderColour();
-				if (isUserContent) {
-					borderCol = MuseumAppPreferences
-							.getUserGeneratedContentColour();
+		for (File file : folder.listFiles())
+		{
+			if (!XML_CHECK.isFileOfSearchType(file))
+			{
+				ColorRGBA borderCol = MuseumAppPreferences.getEntityBorderColour();
+				if (isUserContent)
+				{
+					borderCol = MuseumAppPreferences.getUserGeneratedContentColour();
 				}
 				borderCol.a = 1;
 				IItem item = null;
-				if (VIDEO_CHECK.isFileOfSearchType(file)
-						|| AUDIO_CHECK.isFileOfSearchType(file)
-						|| OBJ_CHECK.isFileOfSearchType(file)) {
-					item = AdditionalSynergyNetUtilities.generateItemFromFile(
-							file, stage, -1, imageSizeLimit * 2, borderCol,
-							0.3f, 1f);
+				if (VIDEO_CHECK.isFileOfSearchType(file) || AUDIO_CHECK.isFileOfSearchType(file) || OBJ_CHECK.isFileOfSearchType(file))
+				{
+					item = AdditionalSynergyNetUtilities.generateItemFromFile(file, stage, -1, imageSizeLimit * 2, borderCol, 0.3f, 1f);
 					// if(item != null)item.setRelativeScale(0.5f);
-				} else if (PTM_CHECK.isFileOfSearchType(file)) {
-					item = new PTMViewerItem(stage, file, borderCol,
-							imageSizeLimit, 0.5f, 2.2f).asItem();
-				} else {
-					item = AdditionalSynergyNetUtilities.generateItemFromFile(
-							file, stage, -1, imageSizeLimit, borderCol, 0.5f,
-							2f);
 				}
-				if (item != null) {
+				else if (PTM_CHECK.isFileOfSearchType(file))
+				{
+					item = new PTMViewerItem(stage, file, borderCol, imageSizeLimit, 0.5f, 2.2f).asItem();
+				}
+				else
+				{
+					item = AdditionalSynergyNetUtilities.generateItemFromFile(file, stage, -1, imageSizeLimit, borderCol, 0.5f, 2f);
+				}
+				if (item != null)
+				{
 					stage.removeItem(item);
 					items.add(item);
-					if (item instanceof IMediaPlayer) {
+					if (item instanceof IMediaPlayer)
+					{
 						((IMediaPlayer) item).setBackgroundColour(borderCol);
 					}
 				}
@@ -227,66 +248,75 @@ public class EntityManager {
 	/**
 	 * Parses the entity xml file.
 	 *
-	 * @param folder the folder
-	 * @param items the items
-	 * @param userGenerated the user generated
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param folder
+	 *            the folder
+	 * @param items
+	 *            the items
+	 * @param userGenerated
+	 *            the user generated
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void parseEntityXmlFile(File folder, ArrayList<IItem> items,
-			ArrayList<IItem> userGenerated) throws ContentTypeNotBoundException {
+	private void parseEntityXmlFile(File folder, ArrayList<IItem> items, ArrayList<IItem> userGenerated) throws ContentTypeNotBoundException
+	{
 
 		Entity entity = new Entity(folder.getAbsolutePath());
-		if (!entity.getName().equals("")) {
+		if (!entity.getName().equals(""))
+		{
 
 			String name = entity.getName();
 
-			for (String fact : entity.getFacts()) {
+			for (String fact : entity.getFacts())
+			{
 				items.add(LabelGenerator.generateFact(fact, stage));
 			}
 
-			for (String link : entity.getLinked()) {
+			for (String link : entity.getLinked())
+			{
 				items.add(LabelGenerator.generateLink(link, name, stage, app));
 			}
 
 			ArrayList<UserRecordingPromptLabel> userRecordingPromptLabels = new ArrayList<UserRecordingPromptLabel>();
 
-			if (MuseumAppPreferences.areUserRecordingsEnabled()) {
+			if (MuseumAppPreferences.areUserRecordingsEnabled())
+			{
 				int accept = -1;
-				if (MuseumAppPreferences.isSinglePrompt()) {
-					accept = FastMath.nextRandomInt(0,
-							MuseumAppPreferences.getPrompts().length - 1);
+				if (MuseumAppPreferences.isSinglePrompt())
+				{
+					accept = FastMath.nextRandomInt(0, MuseumAppPreferences.getPrompts().length - 1);
 				}
-				for (int i = 0; i < MuseumAppPreferences.getPrompts().length; i++) {
-					if ((accept == -1) || (accept == i)) {
-						UserRecordingPromptLabel userRecordingPromptLabel = new UserRecordingPromptLabel(
-								stage, folder, this,
-								MuseumAppPreferences.getPrompts()[i]);
+				for (int i = 0; i < MuseumAppPreferences.getPrompts().length; i++)
+				{
+					if ((accept == -1) || (accept == i))
+					{
+						UserRecordingPromptLabel userRecordingPromptLabel = new UserRecordingPromptLabel(stage, folder, this, MuseumAppPreferences.getPrompts()[i]);
 						items.add(userRecordingPromptLabel.getTextItem());
 						userRecordingPromptLabels.add(userRecordingPromptLabel);
 					}
 				}
 			}
 
-			EntityItem entityItem = new EntityItem(stage, name, items,
-					userGenerated, app);
-			for (UserRecordingPromptLabel userRecordingPromptLabel : userRecordingPromptLabels) {
-				userRecordingPromptLabel.setEntityItem(entityItem
-						.getCentralItem());
-				entityItem
-						.addUserRecordingPromptLabel(userRecordingPromptLabel);
+			EntityItem entityItem = new EntityItem(stage, name, items, userGenerated, app);
+			for (UserRecordingPromptLabel userRecordingPromptLabel : userRecordingPromptLabels)
+			{
+				userRecordingPromptLabel.setEntityItem(entityItem.getCentralItem());
+				entityItem.addUserRecordingPromptLabel(userRecordingPromptLabel);
 			}
 
 			entities.put(name, entityItem);
 
-			if (entity.getType() == EntityType.LensedPOI) {
-				for (String lens : entity.getLensValues()) {
-					stage.addItem(mapManager.generateLensedPOI(entity.getX(),
-							entity.getY(), lens, name));
+			if (entity.getType() == EntityType.LensedPOI)
+			{
+				for (String lens : entity.getLensValues())
+				{
+					stage.addItem(mapManager.generateLensedPOI(entity.getX(), entity.getY(), lens, name));
 				}
-			} else if (entity.getType() == EntityType.POI) {
-				if (MuseumAppPreferences.areLocationsEnabled()) {
-					stage.addItem(mapManager.generatePOI(entity.getX(),
-							entity.getY(), name));
+			}
+			else if (entity.getType() == EntityType.POI)
+			{
+				if (MuseumAppPreferences.areLocationsEnabled())
+				{
+					stage.addItem(mapManager.generatePOI(entity.getX(), entity.getY(), name));
 				}
 			}
 		}

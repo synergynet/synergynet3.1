@@ -24,7 +24,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class DemoTrackedApp.
  */
-public class DemoTrackedApp extends TrackedApp {
+public class DemoTrackedApp extends TrackedApp
+{
 
 	/** The cursors. */
 	private HashMap<Long, IRoundedBorder> cursors = new HashMap<Long, IRoundedBorder>();
@@ -32,11 +33,15 @@ public class DemoTrackedApp extends TrackedApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws SocketException the socket exception
+	 * @param args
+	 *            the arguments
+	 * @throws SocketException
+	 *             the socket exception
 	 */
-	public static void main(String[] args) throws SocketException {
-		if (args.length > 0) {
+	public static void main(String[] args) throws SocketException
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -56,15 +61,12 @@ public class DemoTrackedApp extends TrackedApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
-		if (cursors.containsKey(event.getCursorID())) {
-			cursors.get(event.getCursorID()).setRelativeLocation(
-					new Vector2f((event.getPosition().x * displayWidth)
-							- (displayWidth / 2),
-							(event.getPosition().y * displayHeight)
-									- (displayHeight / 2)));
-			stage.getZOrderManager().bringToTop(
-					cursors.get(event.getCursorID()));
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
+		if (cursors.containsKey(event.getCursorID()))
+		{
+			cursors.get(event.getCursorID()).setRelativeLocation(new Vector2f((event.getPosition().x * displayWidth) - (displayWidth / 2), (event.getPosition().y * displayHeight) - (displayHeight / 2)));
+			stage.getZOrderManager().bringToTop(cursors.get(event.getCursorID()));
 		}
 	}
 
@@ -75,30 +77,31 @@ public class DemoTrackedApp extends TrackedApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 		super.cursorPressed(event);
-		try {
+		try
+		{
 			int uniqueID = 0;
-			if (touches.containsKey(event.getCursorID())) {
+			if (touches.containsKey(event.getCursorID()))
+			{
 				uniqueID = touches.get(event.getCursorID());
 			}
-			if (!frozen || isTeacher(uniqueID)) {
-				IRoundedBorder touchBorder = contentFactory.create(
-						IRoundedBorder.class, "border", UUID.randomUUID());
+			if (!frozen || isTeacher(uniqueID))
+			{
+				IRoundedBorder touchBorder = contentFactory.create(IRoundedBorder.class, "border", UUID.randomUUID());
 				touchBorder.setBorderWidth(10);
 				touchBorder.setSize(50, 50);
-				touchBorder.setRelativeLocation(new Vector2f((event
-						.getPosition().x * displayWidth) - (displayWidth / 2),
-						(event.getPosition().y * displayHeight)
-								- (displayHeight / 2)));
+				touchBorder.setRelativeLocation(new Vector2f((event.getPosition().x * displayWidth) - (displayWidth / 2), (event.getPosition().y * displayHeight) - (displayHeight / 2)));
 				touchBorder.setColor(getUserColour(uniqueID));
 				stage.addItem(touchBorder);
 				stage.getZOrderManager().bringToTop(touchBorder);
 				cursors.put(event.getCursorID(), touchBorder);
 			}
-		} catch (ContentTypeNotBoundException e) {
-			AdditionalSynergyNetUtilities.log(Level.SEVERE,
-					"Content Type Not Bound", e);
+		}
+		catch (ContentTypeNotBoundException e)
+		{
+			AdditionalSynergyNetUtilities.log(Level.SEVERE, "Content Type Not Bound", e);
 		}
 	}
 
@@ -109,9 +112,11 @@ public class DemoTrackedApp extends TrackedApp {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
 		super.cursorReleased(event);
-		if (cursors.containsKey(event.getCursorID())) {
+		if (cursors.containsKey(event.getCursorID()))
+		{
 			stage.removeItem(cursors.get(event.getCursorID()));
 			cursors.remove(event.getCursorID());
 		}
@@ -124,7 +129,8 @@ public class DemoTrackedApp extends TrackedApp {
 	 * .input.MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		input.registerMultiTouchEventListener(this);
 		super.shouldStart(input, iqo);
 	}
@@ -134,7 +140,8 @@ public class DemoTrackedApp extends TrackedApp {
 	 * @see synergynet3.SynergyNetApp#getSpecificFriendlyAppName()
 	 */
 	@Override
-	protected String getSpecificFriendlyAppName() {
+	protected String getSpecificFriendlyAppName()
+	{
 		return "TrackingDemo";
 	}
 
@@ -143,8 +150,8 @@ public class DemoTrackedApp extends TrackedApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 		feedbackTypes.add(SimpleTrafficLightFeedback.class);
 		feedbackTypes.add(AudioFeedback.class);
 		feedbackTypes.add(SmilieFeedback.class);

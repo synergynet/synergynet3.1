@@ -20,15 +20,19 @@ import synergynet3.museum.table.utils.LensUtils;
 /**
  * The Class LensSelectorGUI.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class LensSelectorGUI {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class LensSelectorGUI
+{
 
 	/**
 	 * Instantiates a new lens selector gui.
 	 *
-	 * @param parentGUI the parent gui
+	 * @param parentGUI
+	 *            the parent gui
 	 */
-	public LensSelectorGUI(final EntityCreatorGUI parentGUI) {
+	public LensSelectorGUI(final EntityCreatorGUI parentGUI)
+	{
 
 		int w = 400;
 
@@ -80,21 +84,26 @@ public class LensSelectorGUI {
 
 		JButton okButton = new JButton();
 		okButton.setText("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 
-				if (entityComboBox.getSelectedIndex() < 0) {
-					JOptionPane.showMessageDialog(jf,
-							"Cannot add an empty lens.");
-				} else {
-					String targetName = (String) entityComboBox
-							.getSelectedItem();
-					if (parentGUI.entity.getLensValues().contains(targetName)) {
-						JOptionPane.showMessageDialog(jf,
-								"The POI is already visible under this lens.");
-					} else {
-						parentGUI.entity.getLensValues().add(
-								(String) entityComboBox.getSelectedItem());
+				if (entityComboBox.getSelectedIndex() < 0)
+				{
+					JOptionPane.showMessageDialog(jf, "Cannot add an empty lens.");
+				}
+				else
+				{
+					String targetName = (String) entityComboBox.getSelectedItem();
+					if (parentGUI.entity.getLensValues().contains(targetName))
+					{
+						JOptionPane.showMessageDialog(jf, "The POI is already visible under this lens.");
+					}
+					else
+					{
+						parentGUI.entity.getLensValues().add((String) entityComboBox.getSelectedItem());
 						parentGUI.updateLensList();
 						jf.setVisible(false);
 						parentGUI.relatedFrames.remove(jf);
@@ -110,14 +119,16 @@ public class LensSelectorGUI {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				jf.setVisible(false);
 				parentGUI.relatedFrames.remove(jf);
 			}
 		});
-		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding,
-				height));
+		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 		jf.getContentPane().add(cancelButton);
 
 		jf.setVisible(true);

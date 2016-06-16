@@ -14,36 +14,46 @@ import com.hazelcast.core.Member;
 /**
  * The Class EarlyYearsSync.
  */
-public class EarlyYearsSync {
+public class EarlyYearsSync
+{
 
 	/** The c. */
 	private EarlyYearsDeviceControl c;
 
 	/** The change activty action. */
-	private DistributedPropertyChangedAction<EarlyYearsActivity> changeActivtyAction = new DistributedPropertyChangedAction<EarlyYearsActivity>() {
+	private DistributedPropertyChangedAction<EarlyYearsActivity> changeActivtyAction = new DistributedPropertyChangedAction<EarlyYearsActivity>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member member,
-				EarlyYearsActivity oldValue, EarlyYearsActivity newValue) {
+		public void distributedPropertyDidChange(Member member, EarlyYearsActivity oldValue, EarlyYearsActivity newValue)
+		{
 			sneyNode.setActivity(newValue);
 		}
 	};
 
 	/** The change corner number action. */
-	private DistributedPropertyChangedAction<Integer> changeCornerNumberAction = new DistributedPropertyChangedAction<Integer>() {
+	private DistributedPropertyChangedAction<Integer> changeCornerNumberAction = new DistributedPropertyChangedAction<Integer>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member member,
-				Integer oldValue, Integer newValue) {
-			if (newValue == null) {
+		public void distributedPropertyDidChange(Member member, Integer oldValue, Integer newValue)
+		{
+			if (newValue == null)
+			{
 				return;
 			}
-			if (sneyNode instanceof TrainTracksTrackedApp) {
+			if (sneyNode instanceof TrainTracksTrackedApp)
+			{
 				oldValue = ((TrainTracksTrackedApp) sneyNode).getNumOfCorners();
-				if (oldValue < newValue) {
-					for (int i = 0; i < (newValue - oldValue); i++) {
+				if (oldValue < newValue)
+				{
+					for (int i = 0; i < (newValue - oldValue); i++)
+					{
 						((TrainTracksTrackedApp) sneyNode).addCorner();
 					}
-				} else if ((oldValue > newValue) && (newValue >= 0)) {
-					for (int i = 0; i < (oldValue - newValue); i++) {
+				}
+				else if ((oldValue > newValue) && (newValue >= 0))
+				{
+					for (int i = 0; i < (oldValue - newValue); i++)
+					{
 						((TrainTracksTrackedApp) sneyNode).removeCorner();
 					}
 				}
@@ -52,21 +62,29 @@ public class EarlyYearsSync {
 	};
 
 	/** The change cross number action. */
-	private DistributedPropertyChangedAction<Integer> changeCrossNumberAction = new DistributedPropertyChangedAction<Integer>() {
+	private DistributedPropertyChangedAction<Integer> changeCrossNumberAction = new DistributedPropertyChangedAction<Integer>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member member,
-				Integer oldValue, Integer newValue) {
-			if (newValue == null) {
+		public void distributedPropertyDidChange(Member member, Integer oldValue, Integer newValue)
+		{
+			if (newValue == null)
+			{
 				return;
 			}
-			if (sneyNode instanceof TrainTracksTrackedApp) {
+			if (sneyNode instanceof TrainTracksTrackedApp)
+			{
 				oldValue = ((TrainTracksTrackedApp) sneyNode).getNumOfCrosses();
-				if (oldValue < newValue) {
-					for (int i = 0; i < (newValue - oldValue); i++) {
+				if (oldValue < newValue)
+				{
+					for (int i = 0; i < (newValue - oldValue); i++)
+					{
 						((TrainTracksTrackedApp) sneyNode).addCross();
 					}
-				} else if ((oldValue > newValue) && (newValue >= 0)) {
-					for (int i = 0; i < (oldValue - newValue); i++) {
+				}
+				else if ((oldValue > newValue) && (newValue >= 0))
+				{
+					for (int i = 0; i < (oldValue - newValue); i++)
+					{
 						((TrainTracksTrackedApp) sneyNode).removeCross();
 					}
 				}
@@ -75,15 +93,21 @@ public class EarlyYearsSync {
 	};
 
 	/** The change road mode action. */
-	private DistributedPropertyChangedAction<PerformActionMessage> changeRoadModeAction = new DistributedPropertyChangedAction<PerformActionMessage>() {
+	private DistributedPropertyChangedAction<PerformActionMessage> changeRoadModeAction = new DistributedPropertyChangedAction<PerformActionMessage>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member m,
-				PerformActionMessage oldValue, PerformActionMessage newValue) {
-			if (!newValue.messageAlreadyReceived()) {
-				if (sneyNode instanceof TrainTracksTrackedApp) {
-					if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE) {
+		public void distributedPropertyDidChange(Member m, PerformActionMessage oldValue, PerformActionMessage newValue)
+		{
+			if (!newValue.messageAlreadyReceived())
+			{
+				if (sneyNode instanceof TrainTracksTrackedApp)
+				{
+					if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE)
+					{
 						((TrainTracksTrackedApp) sneyNode).setMode(true);
-					} else {
+					}
+					else
+					{
 						((TrainTracksTrackedApp) sneyNode).setMode(false);
 					}
 				}
@@ -92,18 +116,22 @@ public class EarlyYearsSync {
 	};
 
 	/** The change show teacher control action. */
-	private DistributedPropertyChangedAction<PerformActionMessage> changeShowTeacherControlAction = new DistributedPropertyChangedAction<PerformActionMessage>() {
+	private DistributedPropertyChangedAction<PerformActionMessage> changeShowTeacherControlAction = new DistributedPropertyChangedAction<PerformActionMessage>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member member,
-				PerformActionMessage oldValue, PerformActionMessage newValue) {
-			if (!newValue.messageAlreadyReceived()) {
-				if (sneyNode instanceof EnvironmentExplorerTrackedApp) {
-					if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE) {
-						((EnvironmentExplorerTrackedApp) sneyNode)
-								.setTeacherControlVisibility(true);
-					} else {
-						((EnvironmentExplorerTrackedApp) sneyNode)
-								.setTeacherControlVisibility(false);
+		public void distributedPropertyDidChange(Member member, PerformActionMessage oldValue, PerformActionMessage newValue)
+		{
+			if (!newValue.messageAlreadyReceived())
+			{
+				if (sneyNode instanceof EnvironmentExplorerTrackedApp)
+				{
+					if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE)
+					{
+						((EnvironmentExplorerTrackedApp) sneyNode).setTeacherControlVisibility(true);
+					}
+					else
+					{
+						((EnvironmentExplorerTrackedApp) sneyNode).setTeacherControlVisibility(false);
 					}
 				}
 			}
@@ -111,22 +139,29 @@ public class EarlyYearsSync {
 	};
 
 	/** The change straight number action. */
-	private DistributedPropertyChangedAction<Integer> changeStraightNumberAction = new DistributedPropertyChangedAction<Integer>() {
+	private DistributedPropertyChangedAction<Integer> changeStraightNumberAction = new DistributedPropertyChangedAction<Integer>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member member,
-				Integer oldValue, Integer newValue) {
-			if (newValue == null) {
+		public void distributedPropertyDidChange(Member member, Integer oldValue, Integer newValue)
+		{
+			if (newValue == null)
+			{
 				return;
 			}
-			if (sneyNode instanceof TrainTracksTrackedApp) {
-				oldValue = ((TrainTracksTrackedApp) sneyNode)
-						.getNumOfStraights();
-				if (oldValue < newValue) {
-					for (int i = 0; i < (newValue - oldValue); i++) {
+			if (sneyNode instanceof TrainTracksTrackedApp)
+			{
+				oldValue = ((TrainTracksTrackedApp) sneyNode).getNumOfStraights();
+				if (oldValue < newValue)
+				{
+					for (int i = 0; i < (newValue - oldValue); i++)
+					{
 						((TrainTracksTrackedApp) sneyNode).addStraight();
 					}
-				} else if ((oldValue > newValue) && (newValue >= 0)) {
-					for (int i = 0; i < (oldValue - newValue); i++) {
+				}
+				else if ((oldValue > newValue) && (newValue >= 0))
+				{
+					for (int i = 0; i < (oldValue - newValue); i++)
+					{
 						((TrainTracksTrackedApp) sneyNode).removeStraight();
 					}
 				}
@@ -140,11 +175,13 @@ public class EarlyYearsSync {
 	/**
 	 * Instantiates a new early years sync.
 	 *
-	 * @param c the c
-	 * @param earlyYearsApp the early years app
+	 * @param c
+	 *            the c
+	 * @param earlyYearsApp
+	 *            the early years app
 	 */
-	public EarlyYearsSync(EarlyYearsDeviceControl c,
-			EarlyYearsTrackedApp earlyYearsApp) {
+	public EarlyYearsSync(EarlyYearsDeviceControl c, EarlyYearsTrackedApp earlyYearsApp)
+	{
 		this.c = c;
 		this.sneyNode = earlyYearsApp;
 		addSync();
@@ -153,41 +190,37 @@ public class EarlyYearsSync {
 	/**
 	 * Re sync.
 	 *
-	 * @param sneyNode the sney node
+	 * @param sneyNode
+	 *            the sney node
 	 */
-	public void reSync(EarlyYearsTrackedApp sneyNode) {
+	public void reSync(EarlyYearsTrackedApp sneyNode)
+	{
 		this.sneyNode = sneyNode;
 	}
 
 	/**
 	 * Stop.
 	 */
-	public void stop() {
+	public void stop()
+	{
 		c.getActivity().unregisterChangeListener(changeActivtyAction);
-		c.getRailWayCornerNumControl().unregisterChangeListener(
-				changeCornerNumberAction);
-		c.getRailWayCrossNumControl().unregisterChangeListener(
-				changeCrossNumberAction);
-		c.getRailWayStraightNumControl().unregisterChangeListener(
-				changeStraightNumberAction);
-		c.getExploreShowTeacherConsoleControl().unregisterChangeListener(
-				changeShowTeacherControlAction);
+		c.getRailWayCornerNumControl().unregisterChangeListener(changeCornerNumberAction);
+		c.getRailWayCrossNumControl().unregisterChangeListener(changeCrossNumberAction);
+		c.getRailWayStraightNumControl().unregisterChangeListener(changeStraightNumberAction);
+		c.getExploreShowTeacherConsoleControl().unregisterChangeListener(changeShowTeacherControlAction);
 		c.getRoadModeControl().unregisterChangeListener(changeRoadModeAction);
 	}
 
 	/**
 	 * Adds the sync.
 	 */
-	private void addSync() {
+	private void addSync()
+	{
 		c.getActivity().registerChangeListener(changeActivtyAction);
-		c.getRailWayCornerNumControl().registerChangeListener(
-				changeCornerNumberAction);
-		c.getRailWayCrossNumControl().registerChangeListener(
-				changeCrossNumberAction);
-		c.getRailWayStraightNumControl().registerChangeListener(
-				changeStraightNumberAction);
-		c.getExploreShowTeacherConsoleControl().registerChangeListener(
-				changeShowTeacherControlAction);
+		c.getRailWayCornerNumControl().registerChangeListener(changeCornerNumberAction);
+		c.getRailWayCrossNumControl().registerChangeListener(changeCrossNumberAction);
+		c.getRailWayStraightNumControl().registerChangeListener(changeStraightNumberAction);
+		c.getExploreShowTeacherConsoleControl().registerChangeListener(changeShowTeacherControlAction);
 		c.getRoadModeControl().registerChangeListener(changeRoadModeAction);
 	}
 

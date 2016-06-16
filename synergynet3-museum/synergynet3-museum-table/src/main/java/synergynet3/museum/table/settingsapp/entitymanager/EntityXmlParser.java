@@ -12,7 +12,8 @@ import synergynet3.museum.table.utils.EntityXmlFields;
 /**
  * The Class EntityXmlParser.
  */
-public class EntityXmlParser extends DefaultHandler {
+public class EntityXmlParser extends DefaultHandler
+{
 
 	/** The current flag. */
 	private String currentFlag = "";
@@ -44,7 +45,8 @@ public class EntityXmlParser extends DefaultHandler {
 	/**
 	 * Instantiates a new entity xml parser.
 	 */
-	public EntityXmlParser() {
+	public EntityXmlParser()
+	{
 		super();
 	}
 
@@ -53,23 +55,38 @@ public class EntityXmlParser extends DefaultHandler {
 	 * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
 	 */
 	@Override
-	public void characters(char ch[], int start, int length)
-			throws SAXException {
-		if (currentFlag.equalsIgnoreCase(EntityXmlFields.NAME)) {
+	public void characters(char ch[], int start, int length) throws SAXException
+	{
+		if (currentFlag.equalsIgnoreCase(EntityXmlFields.NAME))
+		{
 			name = new String(ch, start, length);
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.X)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.X))
+		{
 			x = Float.parseFloat(new String(ch, start, length));
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.Y)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.Y))
+		{
 			y = Float.parseFloat(new String(ch, start, length));
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.LENS)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.LENS))
+		{
 			lenses.add(new String(ch, start, length));
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.FACT)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.FACT))
+		{
 			facts.add(new String(ch, start, length));
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.LINK)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.LINK))
+		{
 			linked.add(new String(ch, start, length));
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.IMAGE)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.IMAGE))
+		{
 			image = new String(ch, start, length);
-		} else if (currentFlag.equalsIgnoreCase(EntityXmlFields.ENTITY_TYPE)) {
+		}
+		else if (currentFlag.equalsIgnoreCase(EntityXmlFields.ENTITY_TYPE))
+		{
 			entityType = EntityType.valueOf(new String(ch, start, length));
 		}
 	}
@@ -80,8 +97,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 * java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void endElement(String uri, String localName, String qName)
-			throws SAXException {
+	public void endElement(String uri, String localName, String qName) throws SAXException
+	{
 		currentFlag = "";
 	}
 
@@ -90,7 +107,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the entity type
 	 */
-	public EntityType getEntityType() {
+	public EntityType getEntityType()
+	{
 		return entityType;
 	}
 
@@ -99,7 +117,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the facts
 	 */
-	public ArrayList<String> getFacts() {
+	public ArrayList<String> getFacts()
+	{
 		return facts;
 	}
 
@@ -108,7 +127,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the image
 	 */
-	public String getImage() {
+	public String getImage()
+	{
 		return image;
 	}
 
@@ -117,7 +137,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the lenses
 	 */
-	public ArrayList<String> getLenses() {
+	public ArrayList<String> getLenses()
+	{
 		return lenses;
 	}
 
@@ -126,7 +147,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the linked
 	 */
-	public ArrayList<String> getLinked() {
+	public ArrayList<String> getLinked()
+	{
 		return linked;
 	}
 
@@ -135,7 +157,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
@@ -144,7 +167,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the x
 	 */
-	public float getX() {
+	public float getX()
+	{
 		return x;
 	}
 
@@ -153,7 +177,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 *
 	 * @return the y
 	 */
-	public float getY() {
+	public float getY()
+	{
 		return y;
 	}
 
@@ -163,8 +188,8 @@ public class EntityXmlParser extends DefaultHandler {
 	 * java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
 	@Override
-	public void startElement(String uri, String localName, String qName,
-			Attributes attributes) throws SAXException {
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
+	{
 		currentFlag = qName;
 	}
 

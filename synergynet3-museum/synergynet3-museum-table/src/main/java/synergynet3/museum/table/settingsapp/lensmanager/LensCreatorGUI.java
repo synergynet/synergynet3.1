@@ -24,8 +24,10 @@ import synergynet3.museum.table.utils.LensUtils;
 /**
  * The Class LensCreatorGUI.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class LensCreatorGUI {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class LensCreatorGUI
+{
 
 	/** The jf. */
 	protected JFrame jf;
@@ -33,11 +35,13 @@ public class LensCreatorGUI {
 	/**
 	 * Instantiates a new lens creator gui.
 	 *
-	 * @param lensFileName the lens file name
-	 * @param mainGUI the main gui
+	 * @param lensFileName
+	 *            the lens file name
+	 * @param mainGUI
+	 *            the main gui
 	 */
-	public LensCreatorGUI(final String lensFileName,
-			final LensManagerGUI mainGUI) {
+	public LensCreatorGUI(final String lensFileName, final LensManagerGUI mainGUI)
+	{
 		int w = 350;
 
 		int xPadding = 10;
@@ -57,13 +61,13 @@ public class LensCreatorGUI {
 		String title = "Create";
 		String name = "";
 
-		if (!lensFileName.equals("")) {
+		if (!lensFileName.equals(""))
+		{
 			title = "Edit";
 
-			File file = new File(MuseumAppPreferences.getContentFolder()
-					+ File.separator + LensUtils.LENSES_FOLDER + File.separator
-					+ lensFileName + ".xml");
-			if (file.exists()) {
+			File file = new File(MuseumAppPreferences.getContentFolder() + File.separator + LensUtils.LENSES_FOLDER + File.separator + lensFileName + ".xml");
+			if (file.exists())
+			{
 				LensXmlManager lensXmlManager = new LensXmlManager(file);
 				lensXmlManager.regenerate();
 				name = lensXmlManager.getName();
@@ -103,8 +107,7 @@ public class LensCreatorGUI {
 
 		JLabel colourLabel = new JLabel("Colour:");
 		colourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
-		final JComboBox colourComboBox = new JComboBox(
-				SettingsUtil.COLOUR_CHOICE);
+		final JComboBox colourComboBox = new JComboBox(SettingsUtil.COLOUR_CHOICE);
 		colourComboBox.setSelectedItem(colour);
 		colourLabel.setBounds(new Rectangle(x, y, labelWidth, height));
 		colourLabel.setHorizontalAlignment(SwingConstants.RIGHT);
@@ -120,55 +123,59 @@ public class LensCreatorGUI {
 
 		JButton okButton = new JButton();
 		okButton.setText("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				String name = textField.getText();
 				name = SettingsUtil.removeSpecialChars(name);
-				if (name.equals("")) {
+				if (name.equals(""))
+				{
 					JOptionPane.showMessageDialog(jf, "No name is given.");
-				} else {
-					if (mainGUI.listContainsValue(name)
-							&& !name.equals(lensFileName)) {
-						JOptionPane.showMessageDialog(jf,
-								"This name is already in use.");
-					} else {
-						String selectedColour = (String) colourComboBox
-								.getSelectedItem();
+				}
+				else
+				{
+					if (mainGUI.listContainsValue(name) && !name.equals(lensFileName))
+					{
+						JOptionPane.showMessageDialog(jf, "This name is already in use.");
+					}
+					else
+					{
+						String selectedColour = (String) colourComboBox.getSelectedItem();
 
-						if (!lensFileName.equals("")) {
-							if (!name.equals(lensFileName)) {
-								File file = new File(MuseumAppPreferences
-										.getContentFolder()
-										+ File.separator
-										+ LensUtils.LENSES_FOLDER
-										+ File.separator + lensFileName);
-								if (file.exists()) {
-									if (!file.delete()) {
+						if (!lensFileName.equals(""))
+						{
+							if (!name.equals(lensFileName))
+							{
+								File file = new File(MuseumAppPreferences.getContentFolder() + File.separator + LensUtils.LENSES_FOLDER + File.separator + lensFileName);
+								if (file.exists())
+								{
+									if (!file.delete())
+									{
 										file.deleteOnExit();
 									}
 								}
 							}
 						}
 
-						try {
-							String fileLoc = MuseumAppPreferences
-									.getContentFolder()
-									+ File.separator
-									+ LensUtils.LENSES_FOLDER
-									+ File.separator
-									+ name + ".xml";
+						try
+						{
+							String fileLoc = MuseumAppPreferences.getContentFolder() + File.separator + LensUtils.LENSES_FOLDER + File.separator + name + ".xml";
 							File file = new File(fileLoc);
-							if (!file.exists()) {
+							if (!file.exists())
+							{
 								file.createNewFile();
 							}
 
-							LensXmlManager lensXmlManager = new LensXmlManager(
-									file);
+							LensXmlManager lensXmlManager = new LensXmlManager(file);
 							lensXmlManager.setName(name);
 							lensXmlManager.setColour(selectedColour);
 							lensXmlManager.saveXML();
 
-						} catch (IOException e) {
+						}
+						catch (IOException e)
+						{
 							e.printStackTrace();
 						}
 
@@ -185,13 +192,15 @@ public class LensCreatorGUI {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				jf.setVisible(false);
 			}
 		});
-		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding,
-				height));
+		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 		jf.getContentPane().add(cancelButton);
 
 		jf.setVisible(true);

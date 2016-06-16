@@ -9,7 +9,8 @@ import jpview.ptms.PTM;
 /**
  * @author clyon
  */
-public interface PixelTransformOp {
+public interface PixelTransformOp
+{
 
 	/**
 	 * Clear cache.
@@ -29,18 +30,24 @@ public interface PixelTransformOp {
 	/**
 	 * Transform pixels.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
 	 */
 	public void transformPixels(int[] pixels, PTM ptm);
 
 	/**
 	 * Transform pixels.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
 	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY);
 }

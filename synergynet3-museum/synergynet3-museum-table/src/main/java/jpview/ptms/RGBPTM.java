@@ -11,7 +11,8 @@ import jpview.graphics.Vec3f;
  * @author clyon TODO To change the template for this generated type comment go
  *         to Window - Preferences - Java - Code Style - Code Templates
  */
-public class RGBPTM implements PTM {
+public class RGBPTM implements PTM
+{
 
 	/** The coefficients. */
 	private int[][][] coefficients;
@@ -43,7 +44,8 @@ public class RGBPTM implements PTM {
 	/**
 	 * Instantiates a new rgbptm.
 	 */
-	public RGBPTM() {
+	public RGBPTM()
+	{
 		super();
 	}
 
@@ -51,7 +53,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#blue(int)
 	 */
-	public int blue(int i) {
+	@Override
+	public int blue(int i)
+	{
 		return 0;
 	}
 
@@ -59,11 +63,15 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#computeNormals()
 	 */
-	public void computeNormals() {
-		if (null == normals) {
+	@Override
+	public void computeNormals()
+	{
+		if (null == normals)
+		{
 			normals = new Vec3f[3][];
 
-			for (int i = 0; i < normals.length; i++) {
+			for (int i = 0; i < normals.length; i++)
+			{
 				normals[i] = HPNormals.getNormals(coefficients[i]);
 			}
 		}
@@ -74,7 +82,8 @@ public class RGBPTM implements PTM {
 	 *
 	 * @return the channel normals
 	 */
-	public Vec3f[][] getChannelNormals() {
+	public Vec3f[][] getChannelNormals()
+	{
 		computeNormals();
 		return normals;
 	}
@@ -84,7 +93,8 @@ public class RGBPTM implements PTM {
 	 * where: block is the color channel (RED=0, GREEN=1, BLUE=2) offset is the
 	 * index of the pixel i is the index of the coefficients (a0...a5)
 	 */
-	public int[][][] getCoefficients() {
+	public int[][][] getCoefficients()
+	{
 		return coefficients;
 	}
 
@@ -92,7 +102,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getDGain()
 	 */
-	public float getDGain() {
+	@Override
+	public float getDGain()
+	{
 		return m_dGain;
 	}
 
@@ -100,7 +112,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getEnvironmentMap()
 	 */
-	public EnvironmentMap getEnvironmentMap() {
+	@Override
+	public EnvironmentMap getEnvironmentMap()
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -109,7 +123,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getEnvironmentMapCache()
 	 */
-	public int[] getEnvironmentMapCache() {
+	@Override
+	public int[] getEnvironmentMapCache()
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -118,7 +134,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getEnvironmentMapMap()
 	 */
-	public int[] getEnvironmentMapMap() {
+	@Override
+	public int[] getEnvironmentMapMap()
+	{
 		// TODO Auto-generated method stub
 		return null;
 	}
@@ -127,7 +145,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getExp()
 	 */
-	public int getExp() {
+	@Override
+	public int getExp()
+	{
 		return EXP;
 	}
 
@@ -135,7 +155,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getHeight()
 	 */
-	public int getHeight() {
+	@Override
+	public int getHeight()
+	{
 		return height;
 	}
 
@@ -143,7 +165,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getKDiff()
 	 */
-	public float getKDiff() {
+	@Override
+	public float getKDiff()
+	{
 		return KDIFF;
 	}
 
@@ -151,7 +175,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getKSpec()
 	 */
-	public float getKSpec() {
+	@Override
+	public float getKSpec()
+	{
 		return KSPEC;
 	}
 
@@ -159,7 +185,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getLuminance()
 	 */
-	public float getLuminance() {
+	@Override
+	public float getLuminance()
+	{
 		return LUM;
 	}
 
@@ -167,7 +195,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getNormals()
 	 */
-	public Vec3f[] getNormals() {
+	@Override
+	public Vec3f[] getNormals()
+	{
 		return null;
 	}
 
@@ -176,7 +206,8 @@ public class RGBPTM implements PTM {
 	 *
 	 * @return the normals blue
 	 */
-	public Vec3f[] getNormalsBlue() {
+	public Vec3f[] getNormalsBlue()
+	{
 		return normals[2];
 	}
 
@@ -185,7 +216,8 @@ public class RGBPTM implements PTM {
 	 *
 	 * @return the normals green
 	 */
-	public Vec3f[] getNormalsGreen() {
+	public Vec3f[] getNormalsGreen()
+	{
 		return normals[1];
 	}
 
@@ -194,7 +226,8 @@ public class RGBPTM implements PTM {
 	 *
 	 * @return the normals red
 	 */
-	public Vec3f[] getNormalsRed() {
+	public Vec3f[] getNormalsRed()
+	{
 		return normals[0];
 	}
 
@@ -202,7 +235,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getType()
 	 */
-	public int getType() {
+	@Override
+	public int getType()
+	{
 		return PTM.RGB;
 	}
 
@@ -210,7 +245,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getWidth()
 	 */
-	public int getWidth() {
+	@Override
+	public int getWidth()
+	{
 		return width;
 	}
 
@@ -218,7 +255,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getZ()
 	 */
-	public int getZ() {
+	@Override
+	public int getZ()
+	{
 		// TODO Auto-generated method stub
 		return 0;
 	}
@@ -227,7 +266,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#green(int)
 	 */
-	public int green(int i) {
+	@Override
+	public int green(int i)
+	{
 		return 0;
 	}
 
@@ -235,7 +276,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#normal(int)
 	 */
-	public Vec3f normal(int i) {
+	@Override
+	public Vec3f normal(int i)
+	{
 		return null;
 	}
 
@@ -243,7 +286,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#normal(int, int)
 	 */
-	public Vec3f normal(int x, int y) {
+	@Override
+	public Vec3f normal(int x, int y)
+	{
 		return null;
 	}
 
@@ -251,7 +296,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#recache()
 	 */
-	public void recache() {
+	@Override
+	public void recache()
+	{
 		// TODO Auto-generated method stub
 	}
 
@@ -259,7 +306,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#red(int)
 	 */
-	public int red(int i) {
+	@Override
+	public int red(int i)
+	{
 		return 0;
 	}
 
@@ -267,17 +316,23 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#release()
 	 */
-	public void release() {
+	@Override
+	public void release()
+	{
 		// TODO Auto-generated method stub
 	}
 
 	/**
 	 * Resize the PTM.
 	 *
-	 * @param w Width after resizing.
-	 * @param h Height after resizing.
+	 * @param w
+	 *            Width after resizing.
+	 * @param h
+	 *            Height after resizing.
 	 */
-	public void resize(int w, int h) {
+	@Override
+	public void resize(int w, int h)
+	{
 		int[][][] coeffs = new int[3][w * h][6];
 
 		int xp, yp;
@@ -285,15 +340,18 @@ public class RGBPTM implements PTM {
 		float sy = (float) height / (float) h;
 
 		// resize coefficients
-		for (int channel = 0; channel < 3; channel++) {
-			for (int i = 0; i < 6; i++) {
-				for (int y = 0; y < h; y++) {
-					for (int x = 0; x < w; x++) {
+		for (int channel = 0; channel < 3; channel++)
+		{
+			for (int i = 0; i < 6; i++)
+			{
+				for (int y = 0; y < h; y++)
+				{
+					for (int x = 0; x < w; x++)
+					{
 						xp = (int) (sx * x);
 						yp = (int) (sy * y);
 
-						coeffs[channel][x + (y * w)][i] = coefficients[channel][xp
-								+ (yp * width)][i];
+						coeffs[channel][x + (y * w)][i] = coefficients[channel][xp + (yp * width)][i];
 					}
 				}
 			}
@@ -311,9 +369,11 @@ public class RGBPTM implements PTM {
 	/**
 	 * Sets the coeff.
 	 *
-	 * @param c the new coeff
+	 * @param c
+	 *            the new coeff
 	 */
-	public void setCoeff(int[][][] c) {
+	public void setCoeff(int[][][] c)
+	{
 		coefficients = c;
 	}
 
@@ -321,7 +381,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setDGain(float)
 	 */
-	public void setDGain(float f) {
+	@Override
+	public void setDGain(float f)
+	{
 		m_dGain = f;
 	}
 
@@ -329,7 +391,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setEnvironmentMap(jpview.graphics.EnvironmentMap)
 	 */
-	public void setEnvironmentMap(EnvironmentMap em) {
+	@Override
+	public void setEnvironmentMap(EnvironmentMap em)
+	{
 		// TODO Auto-generated method stub
 	}
 
@@ -337,16 +401,20 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setExp(int)
 	 */
-	public void setExp(int i) {
+	@Override
+	public void setExp(int i)
+	{
 		EXP = i;
 	}
 
 	/**
 	 * Sets the height.
 	 *
-	 * @param height the new height
+	 * @param height
+	 *            the new height
 	 */
-	public void setHeight(int height) {
+	public void setHeight(int height)
+	{
 		this.height = height;
 	}
 
@@ -354,7 +422,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setKDiff(float)
 	 */
-	public void setKDiff(float f) {
+	@Override
+	public void setKDiff(float f)
+	{
 		KDIFF = f;
 	}
 
@@ -362,7 +432,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setKSpec(float)
 	 */
-	public void setKSpec(float f) {
+	@Override
+	public void setKSpec(float f)
+	{
 		KSPEC = f;
 	}
 
@@ -370,16 +442,20 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setLuminance(float)
 	 */
-	public void setLuminance(float f) {
+	@Override
+	public void setLuminance(float f)
+	{
 		LUM = f;
 	}
 
 	/**
 	 * Sets the width.
 	 *
-	 * @param width the new width
+	 * @param width
+	 *            the new width
 	 */
-	public void setWidth(int width) {
+	public void setWidth(int width)
+	{
 		this.width = width;
 	}
 
@@ -387,7 +463,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setZ(int)
 	 */
-	public void setZ(int z) {
+	@Override
+	public void setZ(int z)
+	{
 		// TODO Auto-generated method stub
 	}
 
@@ -395,7 +473,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#useEnv()
 	 */
-	public boolean useEnv() {
+	@Override
+	public boolean useEnv()
+	{
 		// TODO Auto-generated method stub
 		return false;
 	}
@@ -404,7 +484,9 @@ public class RGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#useEnv(boolean)
 	 */
-	public void useEnv(boolean b) {
+	@Override
+	public void useEnv(boolean b)
+	{
 		// TODO Auto-generated method stub
 	}
 }

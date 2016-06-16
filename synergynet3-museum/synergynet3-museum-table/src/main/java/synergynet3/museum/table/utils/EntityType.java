@@ -3,7 +3,8 @@ package synergynet3.museum.table.utils;
 /**
  * The Enum EntityType.
  */
-public enum EntityType {
+public enum EntityType
+{
 
 	/** The Free. */
 	Free,

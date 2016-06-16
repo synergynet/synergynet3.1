@@ -26,8 +26,10 @@ import synergynet3.museum.table.utils.LensUtils;
 /**
  * The Class LensManagerGUI.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class LensManagerGUI {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class LensManagerGUI
+{
 
 	/** The content folder loc. */
 	private static String contentFolderLoc;
@@ -44,14 +46,15 @@ public class LensManagerGUI {
 	/**
 	 * Instantiates a new lens manager gui.
 	 */
-	public LensManagerGUI() {
+	public LensManagerGUI()
+	{
 		instance = this;
 		contentFolderLoc = MuseumAppPreferences.getContentFolder();
 
 		File f = new File(contentFolderLoc);
-		if (!f.isDirectory() || contentFolderLoc.equals("")) {
-			JOptionPane.showMessageDialog(jf,
-					"The shared content folder is not set up correctly.");
+		if (!f.isDirectory() || contentFolderLoc.equals(""))
+		{
+			JOptionPane.showMessageDialog(jf, "The shared content folder is not set up correctly.");
 			return;
 		}
 
@@ -88,8 +91,10 @@ public class LensManagerGUI {
 	 *
 	 * @return true, if is visible
 	 */
-	public boolean isVisible() {
-		if (jf == null) {
+	public boolean isVisible()
+	{
+		if (jf == null)
+		{
 			return false;
 		}
 		return jf.isVisible();
@@ -98,13 +103,17 @@ public class LensManagerGUI {
 	/**
 	 * List contains value.
 	 *
-	 * @param newValue the new value
+	 * @param newValue
+	 *            the new value
 	 * @return true, if successful
 	 */
-	public boolean listContainsValue(String newValue) {
-		for (int i = 0; i < lensList.getModel().getSize(); i++) {
+	public boolean listContainsValue(String newValue)
+	{
+		for (int i = 0; i < lensList.getModel().getSize(); i++)
+		{
 			String item = (String) lensList.getModel().getElementAt(i);
-			if (newValue.equals(item)) {
+			if (newValue.equals(item))
+			{
 				return true;
 			}
 		}
@@ -114,8 +123,10 @@ public class LensManagerGUI {
 	/**
 	 * Show.
 	 */
-	public void show() {
-		if (jf != null) {
+	public void show()
+	{
+		if (jf != null)
+		{
 			jf.setVisible(true);
 		}
 	}
@@ -123,11 +134,14 @@ public class LensManagerGUI {
 	/**
 	 * Update list.
 	 */
-	public void updateList() {
+	public void updateList()
+	{
 		String[] contents = LensUtils.getLenses();
-		Arrays.sort(contents, new Comparator<String>() {
+		Arrays.sort(contents, new Comparator<String>()
+		{
 			@Override
-			public int compare(String o1, String o2) {
+			public int compare(String o1, String o2)
+			{
 				return o1.compareToIgnoreCase(o2);
 			}
 		});
@@ -137,11 +151,14 @@ public class LensManagerGUI {
 	/**
 	 * Generate list box and controls.
 	 *
-	 * @param panelWidth the panel width
-	 * @param panelHeight the panel height
+	 * @param panelWidth
+	 *            the panel width
+	 * @param panelHeight
+	 *            the panel height
 	 * @return the j panel
 	 */
-	private JPanel generateListBoxAndControls(int panelWidth, int panelHeight) {
+	private JPanel generateListBoxAndControls(int panelWidth, int panelHeight)
+	{
 
 		JPanel panel = new JPanel();
 		String[] lensArray = LensUtils.getLenses();
@@ -157,15 +174,20 @@ public class LensManagerGUI {
 		JButton createButton = new JButton();
 		createButton.setText("Create");
 
-		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				new LensCreatorGUI("", instance);
 			}
 		};
 
-		createButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		createButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				createClicker.click(null);
 			}
 		});
@@ -173,18 +195,24 @@ public class LensManagerGUI {
 		JButton editButton = new JButton();
 		editButton.setText("Edit");
 
-		final IgnoreDoubleClick editClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick editClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (lensList.getSelectedIndex() != -1) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (lensList.getSelectedIndex() != -1)
+				{
 					String lensName = (String) lensList.getSelectedValue();
 					new LensCreatorGUI(lensName, instance);
 				}
 			}
 		};
 
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		editButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				editClicker.click(null);
 			}
 		});
@@ -192,20 +220,20 @@ public class LensManagerGUI {
 		JButton removeButton = new JButton();
 		removeButton.setText("Remove");
 
-		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (lensList.getSelectedIndex() != -1) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (lensList.getSelectedIndex() != -1)
+				{
 					String lensName = (String) lensList.getSelectedValue();
-					int reply = JOptionPane.showConfirmDialog(null,
-							"Are you sure you want to remove \n " + lensName
-									+ "?", "Remove from lenses",
-							JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						File file = new File(contentFolderLoc + File.separator
-								+ LensUtils.LENSES_FOLDER + File.separator
-								+ lensName + ".xml");
-						if (!file.delete()) {
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove \n " + lensName + "?", "Remove from lenses", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
+					{
+						File file = new File(contentFolderLoc + File.separator + LensUtils.LENSES_FOLDER + File.separator + lensName + ".xml");
+						if (!file.delete())
+						{
 							file.deleteOnExit();
 						}
 						updateList();
@@ -214,8 +242,11 @@ public class LensManagerGUI {
 			}
 		};
 
-		removeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		removeButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				removeClicker.click(null);
 			}
 		});
@@ -235,8 +266,7 @@ public class LensManagerGUI {
 
 		panel.setLayout(null);
 
-		listScroller
-				.setBounds(new Rectangle(x, y, listBoxWidth, listBoxHeight));
+		listScroller.setBounds(new Rectangle(x, y, listBoxWidth, listBoxHeight));
 
 		x = panelWidth - buttonWidth;
 		y = panelHeight / 4;

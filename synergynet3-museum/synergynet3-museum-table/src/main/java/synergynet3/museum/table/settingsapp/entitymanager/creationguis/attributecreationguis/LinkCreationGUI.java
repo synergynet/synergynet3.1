@@ -22,19 +22,24 @@ import synergynet3.museum.table.utils.Entity;
 /**
  * The Class LinkCreationGUI.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class LinkCreationGUI {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class LinkCreationGUI
+{
 
 	/**
 	 * Instantiates a new link creation gui.
 	 *
-	 * @param linkedTo the linked to
-	 * @param parentGUI the parent gui
+	 * @param linkedTo
+	 *            the linked to
+	 * @param parentGUI
+	 *            the parent gui
 	 */
-	public LinkCreationGUI(final String linkedTo,
-			final EntityCreatorGUI parentGUI) {
+	public LinkCreationGUI(final String linkedTo, final EntityCreatorGUI parentGUI)
+	{
 		String titlePrefix = "Edit ";
-		if (linkedTo.equals("")) {
+		if (linkedTo.equals(""))
+		{
 			titlePrefix = "Create ";
 		}
 
@@ -79,12 +84,12 @@ public class LinkCreationGUI {
 		Arrays.sort(entitiesArray);
 		final JComboBox entityComboBox = new JComboBox(entitiesArray);
 
-		if (!linkedTo.equals("")) {
-			Entity previouslyLinkedEntity = EntityManagerGUI.entities
-					.get(linkedTo);
-			if (previouslyLinkedEntity != null) {
-				entityComboBox
-						.setSelectedItem(previouslyLinkedEntity.getName());
+		if (!linkedTo.equals(""))
+		{
+			Entity previouslyLinkedEntity = EntityManagerGUI.entities.get(linkedTo);
+			if (previouslyLinkedEntity != null)
+			{
+				entityComboBox.setSelectedItem(previouslyLinkedEntity.getName());
 			}
 		}
 
@@ -97,28 +102,34 @@ public class LinkCreationGUI {
 
 		JButton okButton = new JButton();
 		okButton.setText("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 
-				if (!linkedTo.equals("")) {
+				if (!linkedTo.equals(""))
+				{
 					parentGUI.entity.getLinked().remove(linkedTo);
 				}
-				if (entityComboBox.getSelectedIndex() < 0) {
-					JOptionPane.showMessageDialog(jf,
-							"Cannot add an empty link.");
-				} else {
-					String targetName = (String) entityComboBox
-							.getSelectedItem();
-					if (targetName.equals(parentGUI.entity.getName())) {
-						JOptionPane.showMessageDialog(jf,
-								"Cannot link an entity to itself.");
-					} else if (parentGUI.entity.getLinked()
-							.contains(targetName) && (targetName != linkedTo)) {
-						JOptionPane.showMessageDialog(jf,
-								"This link already exists.");
-					} else {
-						parentGUI.entity.getLinked().add(
-								(String) entityComboBox.getSelectedItem());
+				if (entityComboBox.getSelectedIndex() < 0)
+				{
+					JOptionPane.showMessageDialog(jf, "Cannot add an empty link.");
+				}
+				else
+				{
+					String targetName = (String) entityComboBox.getSelectedItem();
+					if (targetName.equals(parentGUI.entity.getName()))
+					{
+						JOptionPane.showMessageDialog(jf, "Cannot link an entity to itself.");
+					}
+					else if (parentGUI.entity.getLinked().contains(targetName) && (targetName != linkedTo))
+					{
+						JOptionPane.showMessageDialog(jf, "This link already exists.");
+					}
+					else
+					{
+						parentGUI.entity.getLinked().add((String) entityComboBox.getSelectedItem());
 						parentGUI.updateList(EntityAttribute.Links);
 						jf.setVisible(false);
 						parentGUI.relatedFrames.remove(jf);
@@ -133,14 +144,16 @@ public class LinkCreationGUI {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				jf.setVisible(false);
 				parentGUI.relatedFrames.remove(jf);
 			}
 		});
-		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding,
-				height));
+		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 		jf.getContentPane().add(cancelButton);
 
 		jf.setVisible(true);

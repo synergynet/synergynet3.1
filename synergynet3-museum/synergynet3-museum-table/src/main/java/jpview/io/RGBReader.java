@@ -17,7 +17,8 @@ import jpview.ptms.RGBPTM;
 /**
  * @author Default
  */
-public class RGBReader implements PTMReader {
+public class RGBReader implements PTMReader
+{
 
 	/** The __in. */
 	private ProgressMonitorInputStream __in;
@@ -35,7 +36,8 @@ public class RGBReader implements PTMReader {
 	private String version = null;
 
 	/** Creates a new instance of LRGBReader */
-	public RGBReader(InputStream in) {
+	public RGBReader(InputStream in)
+	{
 		__in = new ProgressMonitorInputStream(null, "Reading...", in);
 		__in.getProgressMonitor().setMillisToDecideToPopup(0);
 		__in.getProgressMonitor().setMillisToPopup(0);
@@ -44,13 +46,18 @@ public class RGBReader implements PTMReader {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String args[]) {
-		try {
+	public static void main(String args[])
+	{
+		try
+		{
 			RGBReader me = new RGBReader(new FileInputStream(new File(args[0])));
 			me.readPTM();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -59,13 +66,16 @@ public class RGBReader implements PTMReader {
 	 * (non-Javadoc)
 	 * @see jpview.io.PTMReader#readPTM()
 	 */
-	public PTM readPTM() throws java.io.IOException {
+	@Override
+	public PTM readPTM() throws java.io.IOException
+	{
 
 		ptm = new RGBPTM();
 
 		// try {
 
-		if (reset) {
+		if (reset)
+		{
 			version = PTMIO.getLine(__in);
 			debug("Version: " + version);
 			String type = PTMIO.getLine(__in);
@@ -87,7 +97,8 @@ public class RGBReader implements PTMReader {
 		/* scale */
 		sa = PTMIO.getLine(__in).split(" ");
 		float[] scale = new float[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			scale[i] = Float.parseFloat(sa[i]);
 		}
 
@@ -96,7 +107,8 @@ public class RGBReader implements PTMReader {
 		/* bias */
 		sa = PTMIO.getLine(__in).split(" ");
 		int[] bias = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			bias[i] = Integer.parseInt(sa[i]);
 		}
 
@@ -118,14 +130,17 @@ public class RGBReader implements PTMReader {
 		int RED = 0;
 		int BLUE = 2;
 
-		for (int block = RED; block <= BLUE; block++) {
-			for (int h = ptm.getHeight() - 1; h >= 0; h--) {
-				for (int w = 0; w < ptm.getWidth(); w++) {
+		for (int block = RED; block <= BLUE; block++)
+		{
+			for (int h = ptm.getHeight() - 1; h >= 0; h--)
+			{
+				for (int w = 0; w < ptm.getWidth(); w++)
+				{
 					offset = (h * ptm.getWidth()) + w;
-					for (int i = 0; i < 6; i++) {
+					for (int i = 0; i < 6; i++)
+					{
 						int c = __in.read();
-						colors[block][offset][i] = (int) PTMIO.cFinal(c,
-								bias[i], scale[i]);
+						colors[block][offset][i] = (int) PTMIO.cFinal(c, bias[i], scale[i]);
 					}
 				}
 			}
@@ -148,28 +163,35 @@ public class RGBReader implements PTMReader {
 	/**
 	 * Sets the debug.
 	 *
-	 * @param b the new debug
+	 * @param b
+	 *            the new debug
 	 */
-	public void setDebug(boolean b) {
+	public void setDebug(boolean b)
+	{
 		DEBUG = b;
 	}
 
 	/**
 	 * Sets the version.
 	 *
-	 * @param s the new version
+	 * @param s
+	 *            the new version
 	 */
-	public void setVersion(String s) {
+	public void setVersion(String s)
+	{
 		version = s;
 	}
 
 	/**
 	 * Debug.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 */
-	private void debug(String s) {
-		if (DEBUG) {
+	private void debug(String s)
+	{
+		if (DEBUG)
+		{
 			System.out.println(s);
 		}
 	}
@@ -177,9 +199,11 @@ public class RGBReader implements PTMReader {
 	/**
 	 * Reset.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	protected void reset(boolean b) {
+	protected void reset(boolean b)
+	{
 		reset = b;
 	}
 

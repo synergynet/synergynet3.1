@@ -9,7 +9,8 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * The Class AppearanceXmlParser.
  */
-public class AppearanceXmlParser extends DefaultHandler {
+public class AppearanceXmlParser extends DefaultHandler
+{
 
 	/** The appearance values. */
 	private HashMap<String, String> appearanceValues = new HashMap<String, String>();
@@ -23,7 +24,8 @@ public class AppearanceXmlParser extends DefaultHandler {
 	/**
 	 * Instantiates a new appearance xml parser.
 	 */
-	public AppearanceXmlParser() {
+	public AppearanceXmlParser()
+	{
 		super();
 	}
 
@@ -32,15 +34,16 @@ public class AppearanceXmlParser extends DefaultHandler {
 	 * @see org.xml.sax.helpers.DefaultHandler#characters(char[], int, int)
 	 */
 	@Override
-	public void characters(char ch[], int start, int length)
-			throws SAXException {
-		if (AppearanceConfigPrefsItem.getDefaults().containsKey(currentFlag)) {
+	public void characters(char ch[], int start, int length) throws SAXException
+	{
+		if (AppearanceConfigPrefsItem.getDefaults().containsKey(currentFlag))
+		{
 			String previous = "";
-			if (appearanceValues.containsKey(currentFlag)) {
+			if (appearanceValues.containsKey(currentFlag))
+			{
 				previous = appearanceValues.get(currentFlag);
 			}
-			appearanceValues.put(currentFlag, previous
-					+ new String(ch, start, length));
+			appearanceValues.put(currentFlag, previous + new String(ch, start, length));
 		}
 	}
 
@@ -50,14 +53,14 @@ public class AppearanceXmlParser extends DefaultHandler {
 	 * java.lang.String, java.lang.String)
 	 */
 	@Override
-	public void endElement(String uri, String localName, String qName)
-			throws SAXException {
+	public void endElement(String uri, String localName, String qName) throws SAXException
+	{
 		currentFlag = "";
-		if (linkText) {
-			if (!appearanceValues
-					.containsKey(AppearanceConfigPrefsItem.ENTITY_LINK_TEXT)) {
-				appearanceValues.put(
-						AppearanceConfigPrefsItem.ENTITY_LINK_TEXT, "");
+		if (linkText)
+		{
+			if (!appearanceValues.containsKey(AppearanceConfigPrefsItem.ENTITY_LINK_TEXT))
+			{
+				appearanceValues.put(AppearanceConfigPrefsItem.ENTITY_LINK_TEXT, "");
 			}
 			linkText = false;
 		}
@@ -66,14 +69,17 @@ public class AppearanceXmlParser extends DefaultHandler {
 	/**
 	 * @return the appearanceValues
 	 */
-	public HashMap<String, String> getAppearanceValues() {
+	public HashMap<String, String> getAppearanceValues()
+	{
 		return appearanceValues;
 	}
 
 	/**
-	 * @param appearanceValues the appearanceValues to set
+	 * @param appearanceValues
+	 *            the appearanceValues to set
 	 */
-	public void setAppearanceValues(HashMap<String, String> appearanceValues) {
+	public void setAppearanceValues(HashMap<String, String> appearanceValues)
+	{
 		this.appearanceValues = appearanceValues;
 	}
 
@@ -83,10 +89,11 @@ public class AppearanceXmlParser extends DefaultHandler {
 	 * java.lang.String, java.lang.String, org.xml.sax.Attributes)
 	 */
 	@Override
-	public void startElement(String uri, String localName, String qName,
-			Attributes attributes) throws SAXException {
+	public void startElement(String uri, String localName, String qName, Attributes attributes) throws SAXException
+	{
 		currentFlag = qName;
-		if (currentFlag.equals(AppearanceConfigPrefsItem.ENTITY_LINK_TEXT)) {
+		if (currentFlag.equals(AppearanceConfigPrefsItem.ENTITY_LINK_TEXT))
+		{
 			linkText = true;
 		}
 	}

@@ -21,7 +21,8 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * The Class AppearanceXmlManager.
  */
-public class AppearanceXmlManager extends DefaultHandler {
+public class AppearanceXmlManager extends DefaultHandler
+{
 
 	/** The Constant APPEARANCE_FILENAME. */
 	private static final String APPEARANCE_FILENAME = "appearance.xml";
@@ -41,20 +42,25 @@ public class AppearanceXmlManager extends DefaultHandler {
 	/**
 	 * Instantiates a new appearance xml manager.
 	 *
-	 * @param workspace the workspace
+	 * @param workspace
+	 *            the workspace
 	 */
-	public AppearanceXmlManager(String workspace) {
+	public AppearanceXmlManager(String workspace)
+	{
 
-		appearanceFile = new File(workspace + File.separator
-				+ APPEARANCE_FOLDER + File.separator + APPEARANCE_FILENAME);
-		if (!appearanceFile.exists()) {
-			if (new File(workspace).isDirectory()) {
-				File apperanceFolder = new File(workspace + File.separator
-						+ APPEARANCE_FOLDER);
-				if (!apperanceFolder.isDirectory()) {
+		appearanceFile = new File(workspace + File.separator + APPEARANCE_FOLDER + File.separator + APPEARANCE_FILENAME);
+		if (!appearanceFile.exists())
+		{
+			if (new File(workspace).isDirectory())
+			{
+				File apperanceFolder = new File(workspace + File.separator + APPEARANCE_FOLDER);
+				if (!apperanceFolder.isDirectory())
+				{
 					apperanceFolder.mkdirs();
 				}
-			} else {
+			}
+			else
+			{
 				validWorkspace = false;
 			}
 		}
@@ -64,10 +70,13 @@ public class AppearanceXmlManager extends DefaultHandler {
 	/**
 	 * Regenerate.
 	 */
-	public void regenerate() {
-		if (appearanceFile.exists()) {
+	public void regenerate()
+	{
+		if (appearanceFile.exists())
+		{
 
-			try {
+			try
+			{
 				SAXParserFactory factory = SAXParserFactory.newInstance();
 				SAXParser saxParser = factory.newSAXParser();
 
@@ -76,11 +85,17 @@ public class AppearanceXmlManager extends DefaultHandler {
 
 				appearanceValues = handler.getAppearanceValues();
 
-			} catch (ParserConfigurationException e) {
+			}
+			catch (ParserConfigurationException e)
+			{
 				e.printStackTrace();
-			} catch (SAXException e) {
+			}
+			catch (SAXException e)
+			{
 				e.printStackTrace();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -89,24 +104,27 @@ public class AppearanceXmlManager extends DefaultHandler {
 	/**
 	 * Save xml.
 	 */
-	public void saveXML() {
-		try {
-			if (validWorkspace) {
-				if (!appearanceFile.exists()) {
+	public void saveXML()
+	{
+		try
+		{
+			if (validWorkspace)
+			{
+				if (!appearanceFile.exists())
+				{
 					appearanceFile.createNewFile();
 				}
 
 				OutputStream outputStream = new FileOutputStream(appearanceFile);
 
-				XMLStreamWriter out = XMLOutputFactory.newInstance()
-						.createXMLStreamWriter(
-								new OutputStreamWriter(outputStream, "utf-8"));
+				XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(new OutputStreamWriter(outputStream, "utf-8"));
 				out.writeStartDocument();
 				out.writeCharacters("\n");
 				out.writeStartElement(AppearanceConfigPrefsItem.APPEARANCE_NODE);
 				out.writeCharacters("\n");
 
-				for (Entry<String, String> entry : appearanceValues.entrySet()) {
+				for (Entry<String, String> entry : appearanceValues.entrySet())
+				{
 					out.writeStartElement(entry.getKey());
 					out.writeCharacters(entry.getValue());
 					out.writeEndElement();
@@ -122,9 +140,13 @@ public class AppearanceXmlManager extends DefaultHandler {
 
 			}
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (XMLStreamException e) {
+		}
+		catch (XMLStreamException e)
+		{
 			e.printStackTrace();
 		}
 	}

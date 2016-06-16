@@ -40,8 +40,10 @@ import synergynet3.museum.table.utils.Entity;
 /**
  * The Class EntityManagerGUI.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class EntityManagerGUI {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class EntityManagerGUI
+{
 
 	/** The entities. */
 	public static HashMap<String, Entity> entities;
@@ -64,15 +66,16 @@ public class EntityManagerGUI {
 	/**
 	 * Instantiates a new entity manager gui.
 	 */
-	public EntityManagerGUI() {
+	public EntityManagerGUI()
+	{
 		entities = new HashMap<String, Entity>();
 		instance = this;
 		contentFolderLoc = MuseumAppPreferences.getContentFolder();
 
 		File f = new File(contentFolderLoc);
-		if (!f.isDirectory() || contentFolderLoc.equals("")) {
-			JOptionPane.showMessageDialog(jf,
-					"The shared content folder is not set up correctly.");
+		if (!f.isDirectory() || contentFolderLoc.equals(""))
+		{
+			JOptionPane.showMessageDialog(jf, "The shared content folder is not set up correctly.");
 			return;
 		}
 
@@ -109,40 +112,47 @@ public class EntityManagerGUI {
 	 *
 	 * @return the entities
 	 */
-	public static String[] getEntities() {
+	public static String[] getEntities()
+	{
 		return getEntities(true);
 	}
 
 	/**
 	 * Gets the entities.
 	 *
-	 * @param tidy the tidy
+	 * @param tidy
+	 *            the tidy
 	 * @return the entities
 	 */
-	public static String[] getEntities(boolean tidy) {
+	public static String[] getEntities(boolean tidy)
+	{
 		ArrayList<Entity> entitiesArray = new ArrayList<Entity>();
-		File entitiesFolder = new File(contentFolderLoc + File.separator
-				+ EntityManager.ENTITIES);
-		if (!entitiesFolder.isDirectory()) {
+		File entitiesFolder = new File(contentFolderLoc + File.separator + EntityManager.ENTITIES);
+		if (!entitiesFolder.isDirectory())
+		{
 			entitiesFolder.mkdir();
 		}
 
-		for (File folder : entitiesFolder.listFiles()) {
-			if (folder.isDirectory()) {
-				Entity entity = new Entity(contentFolderLoc + File.separator
-						+ EntityManager.ENTITIES + File.separator
-						+ folder.getName());
-				if (!entity.getName().equals("")) {
+		for (File folder : entitiesFolder.listFiles())
+		{
+			if (folder.isDirectory())
+			{
+				Entity entity = new Entity(contentFolderLoc + File.separator + EntityManager.ENTITIES + File.separator + folder.getName());
+				if (!entity.getName().equals(""))
+				{
 					entities.put(entity.getName(), entity);
 					entitiesArray.add(entity);
-				} else if (tidy) {
+				}
+				else if (tidy)
+				{
 					deleteDirectory(folder);
 				}
 			}
 		}
 		String[] toReturn = new String[entities.size()];
 		int i = 0;
-		for (String s : entities.keySet()) {
+		for (String s : entities.keySet())
+		{
 			toReturn[i] = s;
 			i++;
 		}
@@ -152,12 +162,17 @@ public class EntityManagerGUI {
 	/**
 	 * Delete directory.
 	 *
-	 * @param directory the directory
+	 * @param directory
+	 *            the directory
 	 */
-	private static void deleteDirectory(File directory) {
-		try {
+	private static void deleteDirectory(File directory)
+	{
+		try
+		{
 			FileUtils.deleteDirectory(directory);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -167,8 +182,10 @@ public class EntityManagerGUI {
 	 *
 	 * @return true, if is visible
 	 */
-	public boolean isVisible() {
-		if (jf == null) {
+	public boolean isVisible()
+	{
+		if (jf == null)
+		{
 			return false;
 		}
 		return jf.isVisible();
@@ -177,8 +194,10 @@ public class EntityManagerGUI {
 	/**
 	 * Show.
 	 */
-	public void show() {
-		if (jf != null) {
+	public void show()
+	{
+		if (jf != null)
+		{
 			jf.setVisible(true);
 		}
 	}
@@ -186,11 +205,14 @@ public class EntityManagerGUI {
 	/**
 	 * Update list.
 	 */
-	public void updateList() {
+	public void updateList()
+	{
 		String[] contents = getEntities();
-		Arrays.sort(contents, new Comparator<String>() {
+		Arrays.sort(contents, new Comparator<String>()
+		{
 			@Override
-			public int compare(String o1, String o2) {
+			public int compare(String o1, String o2)
+			{
 				return o1.compareToIgnoreCase(o2);
 			}
 		});
@@ -200,11 +222,14 @@ public class EntityManagerGUI {
 	/**
 	 * Generate list box and controls.
 	 *
-	 * @param panelWidth the panel width
-	 * @param panelHeight the panel height
+	 * @param panelWidth
+	 *            the panel width
+	 * @param panelHeight
+	 *            the panel height
 	 * @return the j panel
 	 */
-	private JPanel generateListBoxAndControls(int panelWidth, int panelHeight) {
+	private JPanel generateListBoxAndControls(int panelWidth, int panelHeight)
+	{
 
 		JPanel panel = new JPanel();
 		String[] entitiesArray = getEntities();
@@ -213,19 +238,21 @@ public class EntityManagerGUI {
 		entityList = new JList(entitiesArray);
 		entityList.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
 		entityList.setLayoutOrientation(JList.VERTICAL);
-		entityList.setCellRenderer(new DefaultListCellRenderer() {
+		entityList.setCellRenderer(new DefaultListCellRenderer()
+		{
 			private static final long serialVersionUID = 7479206168623862158L;
 
 			@Override
-			public Component getListCellRendererComponent(JList list,
-					Object value, int index, boolean isSelected,
-					boolean cellHasFocus) {
-				Component c = super.getListCellRendererComponent(list, value,
-						index, isSelected, cellHasFocus);
+			public Component getListCellRendererComponent(JList list, Object value, int index, boolean isSelected, boolean cellHasFocus)
+			{
+				Component c = super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
 				String name = (String) value;
-				if (hasContentAwaitingApproval(name)) {
+				if (hasContentAwaitingApproval(name))
+				{
 					c.setFont(c.getFont().deriveFont(Font.BOLD));
-				} else {
+				}
+				else
+				{
 					c.setFont(c.getFont().deriveFont(Font.PLAIN));
 				}
 				return c;
@@ -239,15 +266,20 @@ public class EntityManagerGUI {
 		JButton createButton = new JButton();
 		createButton.setText("Create");
 
-		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				new EntityCreatorGUI(null, instance);
 			}
 		};
 
-		createButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		createButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				createClicker.click(null);
 			}
 		});
@@ -255,10 +287,13 @@ public class EntityManagerGUI {
 		JButton editButton = new JButton();
 		editButton.setText("Edit");
 
-		final IgnoreDoubleClick editClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick editClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (entityList.getSelectedIndex() != -1) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (entityList.getSelectedIndex() != -1)
+				{
 					String entityName = (String) entityList.getSelectedValue();
 					Entity entity = entities.get(entityName);
 					entity.regenerate();
@@ -267,8 +302,11 @@ public class EntityManagerGUI {
 			}
 		};
 
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		editButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				editClicker.click(null);
 			}
 		});
@@ -276,19 +314,20 @@ public class EntityManagerGUI {
 		JButton removeButton = new JButton();
 		removeButton.setText("Remove");
 
-		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (entityList.getSelectedIndex() != -1) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (entityList.getSelectedIndex() != -1)
+				{
 					String entityName = (String) entityList.getSelectedValue();
-					int reply = JOptionPane.showConfirmDialog(null,
-							"Are you sure you want to remove \n " + entityName
-									+ "?", "Remove from entities",
-							JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						if (entities.containsKey(entityName)) {
-							deleteDirectory(new File(entities.get(entityName)
-									.getLocation()));
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove \n " + entityName + "?", "Remove from entities", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
+					{
+						if (entities.containsKey(entityName))
+						{
+							deleteDirectory(new File(entities.get(entityName).getLocation()));
 							entities.remove(entityName);
 							updateList();
 						}
@@ -297,17 +336,24 @@ public class EntityManagerGUI {
 			}
 		};
 
-		removeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		removeButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				removeClicker.click(null);
 			}
 		});
 
 		JButton moderateButton = new JButton();
 		moderateButton.setText("Moderate");
-		moderateButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				if (entityList.getSelectedIndex() != -1) {
+		moderateButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
+				if (entityList.getSelectedIndex() != -1)
+				{
 					String entityName = (String) entityList.getSelectedValue();
 					String location = entities.get(entityName).getLocation();
 					new ModerationGUI(entityName, location, instance);
@@ -330,8 +376,7 @@ public class EntityManagerGUI {
 
 		panel.setLayout(null);
 
-		listScroller
-				.setBounds(new Rectangle(x, y, listBoxWidth, listBoxHeight));
+		listScroller.setBounds(new Rectangle(x, y, listBoxWidth, listBoxHeight));
 
 		x = panelWidth - buttonWidth;
 		y = panelHeight / 4;
@@ -364,19 +409,25 @@ public class EntityManagerGUI {
 	/**
 	 * Checks for content awaiting approval.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 * @return true, if successful
 	 */
-	private boolean hasContentAwaitingApproval(String s) {
-		if (entities.containsKey(s)) {
+	private boolean hasContentAwaitingApproval(String s)
+	{
+		if (entities.containsKey(s))
+		{
 			String loc = entities.get(s).getLocation();
-			File recordingFolder = new File(loc + File.separator
-					+ EntityManager.RECORDINGS);
-			if (recordingFolder.isDirectory()) {
+			File recordingFolder = new File(loc + File.separator + EntityManager.RECORDINGS);
+			if (recordingFolder.isDirectory())
+			{
 				File[] files = recordingFolder.listFiles();
-				for (File f : files) {
-					if (!f.isDirectory()) {
-						if (AUDIO_CHECK.isFileOfSearchType(f)) {
+				for (File f : files)
+				{
+					if (!f.isDirectory())
+					{
+						if (AUDIO_CHECK.isFileOfSearchType(f))
+						{
 							return true;
 						}
 					}

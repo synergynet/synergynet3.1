@@ -10,7 +10,8 @@ import jpview.ptms.PTM;
 /**
  * @author clyon
  */
-public class LocalLightOp implements PixelTransformOp {
+public class LocalLightOp implements PixelTransformOp
+{
 
 	/** The __height. */
 	private int __height;
@@ -31,25 +32,33 @@ public class LocalLightOp implements PixelTransformOp {
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#clearCache()
 	 */
-	public void clearCache() {
+	@Override
+	public void clearCache()
+	{
 		;
 	}
 
 	/**
 	 * Creates the length lookup.
 	 */
-	public void createLengthLookup() {
+	public void createLengthLookup()
+	{
 		l_lookup = new int[__width * __height * 5];
-		for (int i = 0; i < __width; i++) {
-			for (int j = 0; j < __height; j++) {
+		for (int i = 0; i < __width; i++)
+		{
+			for (int j = 0; j < __height; j++)
+			{
 				float lx = i;
 				float ly = j;
 
 				float tanLen;
 
-				if (!isFlashLight) {
+				if (!isFlashLight)
+				{
 					tanLen = 1 / (float) Math.sqrt((lx * lx) + (ly * ly) + Z);
-				} else {
+				}
+				else
+				{
 					tanLen = 1 / (float) Math.sqrt(lx + lx + ly + ly + Z);
 				}
 				lx *= tanLen;
@@ -67,23 +76,29 @@ public class LocalLightOp implements PixelTransformOp {
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#forceUpdate()
 	 */
-	public void forceUpdate() {
+	@Override
+	public void forceUpdate()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#release()
 	 */
-	public void release() {
+	@Override
+	public void release()
+	{
 		l_lookup = null;
 	}
 
 	/**
 	 * Sets the flashlight.
 	 *
-	 * @param b the new flashlight
+	 * @param b
+	 *            the new flashlight
 	 */
-	public void setFlashlight(boolean b) {
+	public void setFlashlight(boolean b)
+	{
 		isFlashLight = b;
 		l_lookup = null;
 	}
@@ -93,7 +108,9 @@ public class LocalLightOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm)
+	{
 		transformPixels(pixels, ptm, ptm.getWidth() / 4, ptm.getHeight() / 4);
 	}
 
@@ -102,28 +119,40 @@ public class LocalLightOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM, int, int)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 
 		boolean beFast = false;
 
-		if (pixels.length < (ptm.getWidth() * ptm.getHeight())) {
+		if (pixels.length < (ptm.getWidth() * ptm.getHeight()))
+		{
 			beFast = true;
 		}
 
-		switch (ptm.getType()) {
+		switch (ptm.getType())
+		{
 			case PTM.LRGB:
-				if (!beFast) {
-					if (!ptm.useEnv()) {
+				if (!beFast)
+				{
+					if (!ptm.useEnv())
+					{
 						LRGBXform(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
-					} else {
+					}
+					else
+					{
 						LRGBXformEnv(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
 					}
-				} else {
-					if (!ptm.useEnv()) {
+				}
+				else
+				{
+					if (!ptm.useEnv())
+					{
 						LRGBXformFast(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
-					} else {
-						LRGBXformEnvFast(pixels, ((LRGBPTM) ptm), mouseX,
-								mouseY);
+					}
+					else
+					{
+						LRGBXformEnvFast(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
 					}
 				}
 				break;
@@ -137,17 +166,23 @@ public class LocalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXform(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY) {
+	private void LRGBXform(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 
 		__width = ptm.getWidth();
 		__height = ptm.getHeight();
 
-		if ((l_lookup == null) || (Z != ptm.getZ())) {
+		if ((l_lookup == null) || (Z != ptm.getZ()))
+		{
 			Z = ptm.getZ();
 			createLengthLookup();
 
@@ -172,18 +207,15 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** -x, -y * */
 
-		for (int x = myW; --x >= _lightX;) {
+		for (int x = myW; --x >= _lightX;)
+		{
 			xoff = x - _lightX;
-			for (int y = myH; --y >= _lightY;) {
+			for (int y = myH; --y >= _lightY;)
+			{
 				offset = (y * myW) + x;
 				yoff = y - _lightY;
 				int i = ((xoff * __width) + yoff) * 5;
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * -local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * -local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * local2[i + 4]) >> 8) + ((myC[offset][3] * -local2[i + 0]) >> 8) + ((myC[offset][4] * -local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -197,23 +229,29 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -223,18 +261,15 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** +x, -y * */
 
-		for (int x = _lightX; --x >= 0;) {
+		for (int x = _lightX; --x >= 0;)
+		{
 			xoff = _lightX - x;
-			for (int y = myH; --y >= _lightY;) {
+			for (int y = myH; --y >= _lightY;)
+			{
 				offset = (y * myW) + x;
 				yoff = y - _lightY;
 				int i = ((xoff * __width) + yoff) * 5;
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * -local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * -local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * -local2[i + 4]) >> 8) + ((myC[offset][3] * local2[i + 0]) >> 8) + ((myC[offset][4] * -local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -248,22 +283,28 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -273,22 +314,19 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** -x, +y * */
 
-		for (int x = myW; --x >= _lightX;) {
+		for (int x = myW; --x >= _lightX;)
+		{
 
 			xoff = x - _lightX;
 
-			for (int y = _lightY; --y >= 0;) {
+			for (int y = _lightY; --y >= 0;)
+			{
 				offset = (y * myW) + x;
 				yoff = _lightY - y;
 
 				int i = ((xoff * __width) + yoff) * 5;
 
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * -local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * -local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * -local2[i + 4]) >> 8) + ((myC[offset][3] * -local2[i + 0]) >> 8) + ((myC[offset][4] * local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -302,22 +340,28 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -327,21 +371,18 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** +x, +y * */
 
-		for (int x = _lightX; --x >= 0;) {
+		for (int x = _lightX; --x >= 0;)
+		{
 			xoff = _lightX - x;
 
-			for (int y = _lightY; --y >= 0;) {
+			for (int y = _lightY; --y >= 0;)
+			{
 				offset = (y * myW) + x;
 				yoff = _lightY - y;
 
 				int i = ((xoff * __width) + yoff) * 5;
 
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * local2[i + 4]) >> 8) + ((myC[offset][3] * local2[i + 0]) >> 8) + ((myC[offset][4] * local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -355,23 +396,29 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -383,17 +430,23 @@ public class LocalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform env.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformEnv(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY) {
+	private void LRGBXformEnv(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 
 		__width = ptm.getWidth();
 		__height = ptm.getHeight();
 
-		if ((l_lookup == null) || (Z != ptm.getZ())) {
+		if ((l_lookup == null) || (Z != ptm.getZ()))
+		{
 			Z = ptm.getZ();
 			createLengthLookup();
 		}
@@ -421,7 +474,8 @@ public class LocalLightOp implements PixelTransformOp {
 		map = ptm.getEnvironmentMapMap();
 		rotatedEnv = ptm.getEnvironmentMap().rotatedMap();
 
-		if ((map == null) || (rotatedEnv == null)) {
+		if ((map == null) || (rotatedEnv == null))
+		{
 			LRGBXform(pixels, ptm, mouseX, mouseY);
 			return;
 		}
@@ -430,18 +484,15 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** -x, -y * */
 
-		for (int x = myW; --x >= _lightX;) {
+		for (int x = myW; --x >= _lightX;)
+		{
 			xoff = x - _lightX;
-			for (int y = myH; --y >= _lightY;) {
+			for (int y = myH; --y >= _lightY;)
+			{
 				offset = (y * myW) + x;
 				yoff = y - _lightY;
 				int i = ((xoff * __width) + yoff) * 5;
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * -local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * -local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * local2[i + 4]) >> 8) + ((myC[offset][3] * -local2[i + 0]) >> 8) + ((myC[offset][4] * -local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -460,23 +511,29 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * ((m * _eg) >> 8)) >> 16;
 				blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -486,18 +543,15 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** +x, -y * */
 
-		for (int x = _lightX; --x >= 0;) {
+		for (int x = _lightX; --x >= 0;)
+		{
 			xoff = _lightX - x;
-			for (int y = myH; --y >= _lightY;) {
+			for (int y = myH; --y >= _lightY;)
+			{
 				offset = (y * myW) + x;
 				yoff = y - _lightY;
 				int i = ((xoff * __width) + yoff) * 5;
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * -local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * -local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * -local2[i + 4]) >> 8) + ((myC[offset][3] * local2[i + 0]) >> 8) + ((myC[offset][4] * -local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -516,22 +570,28 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * ((m * _eg) >> 8)) >> 16;
 				blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -541,22 +601,19 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** -x, +y * */
 
-		for (int x = myW; --x >= _lightX;) {
+		for (int x = myW; --x >= _lightX;)
+		{
 
 			xoff = x - _lightX;
 
-			for (int y = _lightY; --y >= 0;) {
+			for (int y = _lightY; --y >= 0;)
+			{
 				offset = (y * myW) + x;
 				yoff = _lightY - y;
 
 				int i = ((xoff * __width) + yoff) * 5;
 
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * -local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * -local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * -local2[i + 4]) >> 8) + ((myC[offset][3] * -local2[i + 0]) >> 8) + ((myC[offset][4] * local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -575,22 +632,28 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * ((m * _eg) >> 8)) >> 16;
 				blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -600,20 +663,17 @@ public class LocalLightOp implements PixelTransformOp {
 
 		/** +x, +y * */
 
-		for (int x = _lightX; --x >= 0;) {
+		for (int x = _lightX; --x >= 0;)
+		{
 			xoff = _lightX - x;
 
-			for (int y = _lightY; --y >= 0;) {
+			for (int y = _lightY; --y >= 0;)
+			{
 				offset = (y * myW) + x;
 				yoff = _lightY - y;
 
 				int i = ((xoff * __width) + yoff) * 5;
-				intensity = ((myC[offset][0] * local2[i + 2]) >> 8)
-						+ ((myC[offset][1] * local2[i + 3]) >> 8)
-						+ ((myC[offset][2] * local2[i + 4]) >> 8)
-						+ ((myC[offset][3] * local2[i + 0]) >> 8)
-						+ ((myC[offset][4] * local2[i + 1]) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2]) >> 8) + ((myC[offset][1] * local2[i + 3]) >> 8) + ((myC[offset][2] * local2[i + 4]) >> 8) + ((myC[offset][3] * local2[i + 0]) >> 8) + ((myC[offset][4] * local2[i + 1]) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -632,23 +692,29 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * ((m * _eg) >> 8)) >> 16;
 				blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -660,18 +726,23 @@ public class LocalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform env fast.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformEnvFast(int[] pixels, LRGBPTM ptm, int mouseX,
-			int mouseY) {
+	private void LRGBXformEnvFast(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 
 		__width = ptm.getWidth();
 		__height = ptm.getHeight();
 
-		if ((l_lookup == null) || (Z != ptm.getZ())) {
+		if ((l_lookup == null) || (Z != ptm.getZ()))
+		{
 			Z = ptm.getZ();
 			createLengthLookup();
 
@@ -700,7 +771,8 @@ public class LocalLightOp implements PixelTransformOp {
 		map = ptm.getEnvironmentMapMap();
 		rotatedEnv = ptm.getEnvironmentMap().rotatedMap();
 
-		if ((map == null) || (rotatedEnv == null)) {
+		if ((map == null) || (rotatedEnv == null))
+		{
 			LRGBXform(pixels, ptm, mouseX, mouseY);
 			return;
 		}
@@ -709,25 +781,36 @@ public class LocalLightOp implements PixelTransformOp {
 		int _x = 0, _y = 0, _off = 0;
 		int s1 = 1, s2 = 1, s3 = 1, s4 = 1, s5 = 1;
 
-		for (int x = 0; x < myW; x += 2) {
+		for (int x = 0; x < myW; x += 2)
+		{
 			xoff = Math.abs(x - _lightX);
-			if ((x - _lightX) > 0) {
+			if ((x - _lightX) > 0)
+			{
 				s4 = -1;
-			} else {
+			}
+			else
+			{
 				s4 = 1;
 			}
 
 			_y = 0;
-			for (int y = 0; y < myH; y += 2) {
-				if ((y - _lightY) > 0) {
+			for (int y = 0; y < myH; y += 2)
+			{
+				if ((y - _lightY) > 0)
+				{
 					s5 = -1;
-				} else {
+				}
+				else
+				{
 					s5 = 1;
 				}
 
-				if (s4 != s5) {
+				if (s4 != s5)
+				{
 					s3 = -1;
-				} else {
+				}
+				else
+				{
 					s3 = 1;
 				}
 
@@ -736,12 +819,7 @@ public class LocalLightOp implements PixelTransformOp {
 				yoff = Math.abs(y - _lightY);
 				int i = ((xoff * __width) + yoff) * 5;
 
-				intensity = ((myC[offset][0] * local2[i + 2] * s1) >> 8)
-						+ ((myC[offset][1] * local2[i + 3] * s2) >> 8)
-						+ ((myC[offset][2] * local2[i + 4] * s3) >> 8)
-						+ ((myC[offset][3] * local2[i + 0] * s4) >> 8)
-						+ ((myC[offset][4] * local2[i + 1] * s5) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2] * s1) >> 8) + ((myC[offset][1] * local2[i + 3] * s2) >> 8) + ((myC[offset][2] * local2[i + 4] * s3) >> 8) + ((myC[offset][3] * local2[i + 0] * s4) >> 8) + ((myC[offset][4] * local2[i + 1] * s5) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -760,23 +838,29 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * ((m * _eg) >> 8)) >> 16;
 				blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -791,16 +875,22 @@ public class LocalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform fast.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformFast(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY) {
+	private void LRGBXformFast(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 		__width = ptm.getWidth();
 		__height = ptm.getHeight();
 
-		if ((l_lookup == null) || (Z != ptm.getZ())) {
+		if ((l_lookup == null) || (Z != ptm.getZ()))
+		{
 			Z = ptm.getZ();
 			createLengthLookup();
 		}
@@ -825,25 +915,36 @@ public class LocalLightOp implements PixelTransformOp {
 
 		int s1 = 1, s2 = 1, s3 = 1, s4 = 1, s5 = 1;
 
-		for (int x = 0; x < myW; x += 2) {
+		for (int x = 0; x < myW; x += 2)
+		{
 			xoff = Math.abs(x - _lightX);
-			if ((x - _lightX) > 0) {
+			if ((x - _lightX) > 0)
+			{
 				s4 = -1;
-			} else {
+			}
+			else
+			{
 				s4 = 1;
 			}
 
 			_y = 0;
-			for (int y = 0; y < myH; y += 2) {
-				if ((y - _lightY) > 0) {
+			for (int y = 0; y < myH; y += 2)
+			{
+				if ((y - _lightY) > 0)
+				{
 					s5 = -1;
-				} else {
+				}
+				else
+				{
 					s5 = 1;
 				}
 
-				if (s4 != s5) {
+				if (s4 != s5)
+				{
 					s3 = -1;
-				} else {
+				}
+				else
+				{
 					s3 = 1;
 				}
 
@@ -852,12 +953,7 @@ public class LocalLightOp implements PixelTransformOp {
 				yoff = Math.abs(y - _lightY);
 				int i = ((xoff * __width) + yoff) * 5;
 
-				intensity = ((myC[offset][0] * local2[i + 2] * s1) >> 8)
-						+ ((myC[offset][1] * local2[i + 3] * s2) >> 8)
-						+ ((myC[offset][2] * local2[i + 4] * s3) >> 8)
-						+ ((myC[offset][3] * local2[i + 0] * s4) >> 8)
-						+ ((myC[offset][4] * local2[i + 1] * s5) >> 8)
-						+ (myC[offset][5]);
+				intensity = ((myC[offset][0] * local2[i + 2] * s1) >> 8) + ((myC[offset][1] * local2[i + 3] * s2) >> 8) + ((myC[offset][2] * local2[i + 4] * s3) >> 8) + ((myC[offset][3] * local2[i + 0] * s4) >> 8) + ((myC[offset][4] * local2[i + 1] * s5) >> 8) + (myC[offset][5]);
 
 				pixel = myC[offset][6];
 
@@ -871,23 +967,29 @@ public class LocalLightOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 

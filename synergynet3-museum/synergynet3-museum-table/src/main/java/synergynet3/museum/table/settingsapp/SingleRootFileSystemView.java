@@ -7,7 +7,8 @@ import javax.swing.filechooser.FileSystemView;
 /**
  * The Class SingleRootFileSystemView.
  */
-public class SingleRootFileSystemView extends FileSystemView {
+public class SingleRootFileSystemView extends FileSystemView
+{
 
 	/** The root. */
 	File root;
@@ -18,9 +19,11 @@ public class SingleRootFileSystemView extends FileSystemView {
 	/**
 	 * Instantiates a new single root file system view.
 	 *
-	 * @param root the root
+	 * @param root
+	 *            the root
 	 */
-	public SingleRootFileSystemView(File root) {
+	public SingleRootFileSystemView(File root)
+	{
 		super();
 		this.root = root;
 		roots[0] = root;
@@ -31,7 +34,8 @@ public class SingleRootFileSystemView extends FileSystemView {
 	 * @see javax.swing.filechooser.FileSystemView#createNewFolder(java.io.File)
 	 */
 	@Override
-	public File createNewFolder(File containingDir) {
+	public File createNewFolder(File containingDir)
+	{
 		File folder = new File(containingDir, "New Folder");
 		folder.mkdir();
 		return folder;
@@ -42,7 +46,8 @@ public class SingleRootFileSystemView extends FileSystemView {
 	 * @see javax.swing.filechooser.FileSystemView#getDefaultDirectory()
 	 */
 	@Override
-	public File getDefaultDirectory() {
+	public File getDefaultDirectory()
+	{
 		return root;
 	}
 
@@ -51,7 +56,8 @@ public class SingleRootFileSystemView extends FileSystemView {
 	 * @see javax.swing.filechooser.FileSystemView#getHomeDirectory()
 	 */
 	@Override
-	public File getHomeDirectory() {
+	public File getHomeDirectory()
+	{
 		return root;
 	}
 
@@ -60,7 +66,8 @@ public class SingleRootFileSystemView extends FileSystemView {
 	 * @see javax.swing.filechooser.FileSystemView#getRoots()
 	 */
 	@Override
-	public File[] getRoots() {
+	public File[] getRoots()
+	{
 		return roots;
 	}
 }

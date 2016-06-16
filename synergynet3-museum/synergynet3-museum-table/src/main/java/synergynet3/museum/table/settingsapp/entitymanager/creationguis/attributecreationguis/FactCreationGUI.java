@@ -20,21 +20,25 @@ import synergynet3.museum.table.settingsapp.entitymanager.creationguis.EntityCre
 /**
  * The Class FactCreationGUI.
  */
-public class FactCreationGUI {
+public class FactCreationGUI
+{
 
 	/**
 	 * Instantiates a new fact creation gui.
 	 *
-	 * @param factText the fact text
-	 * @param parentGUI the parent gui
+	 * @param factText
+	 *            the fact text
+	 * @param parentGUI
+	 *            the parent gui
 	 */
-	public FactCreationGUI(final String factText,
-			final EntityCreatorGUI parentGUI) {
+	public FactCreationGUI(final String factText, final EntityCreatorGUI parentGUI)
+	{
 
 		String factLabel = "Fact";
 
 		String titlePrefix = "Edit ";
-		if (factText.equals("")) {
+		if (factText.equals(""))
+		{
 			titlePrefix = "Create ";
 		}
 
@@ -86,13 +90,19 @@ public class FactCreationGUI {
 
 		JButton okButton = new JButton();
 		okButton.setText("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				if (textField.getText().equals("")) {
-					JOptionPane.showMessageDialog(jf,
-							"Cannot add an empty fact.");
-				} else {
-					if (!factText.equals("")) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
+				if (textField.getText().equals(""))
+				{
+					JOptionPane.showMessageDialog(jf, "Cannot add an empty fact.");
+				}
+				else
+				{
+					if (!factText.equals(""))
+					{
 						parentGUI.entity.getFacts().remove(factText);
 					}
 					parentGUI.entity.getFacts().add(textField.getText());
@@ -111,14 +121,16 @@ public class FactCreationGUI {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				jf.setVisible(false);
 				parentGUI.relatedFrames.remove(jf);
 			}
 		});
-		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding,
-				height));
+		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 		jf.getContentPane().add(cancelButton);
 
 		jf.setVisible(true);

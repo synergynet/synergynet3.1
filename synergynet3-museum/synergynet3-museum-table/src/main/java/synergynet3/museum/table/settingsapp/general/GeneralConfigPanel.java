@@ -31,7 +31,8 @@ import synergynet3.museum.table.settingsapp.lensmanager.LensManagerGUI;
 /**
  * The Class GeneralConfigPanel.
  */
-public class GeneralConfigPanel extends JPanel {
+public class GeneralConfigPanel extends JPanel
+{
 
 	/** The backgroundloc. */
 	public static String BACKGROUNDLOC = "Background";
@@ -54,9 +55,11 @@ public class GeneralConfigPanel extends JPanel {
 	/**
 	 * Instantiates a new general config panel.
 	 *
-	 * @param serverConfigPrefsItem the server config prefs item
+	 * @param serverConfigPrefsItem
+	 *            the server config prefs item
 	 */
-	public GeneralConfigPanel(GeneralConfigPrefsItem serverConfigPrefsItem) {
+	public GeneralConfigPanel(GeneralConfigPrefsItem serverConfigPrefsItem)
+	{
 		this.prefs = serverConfigPrefsItem;
 		initComponents();
 	}
@@ -64,14 +67,17 @@ public class GeneralConfigPanel extends JPanel {
 	/**
 	 * Browse folders.
 	 *
-	 * @param jFileChooser the j file chooser
+	 * @param jFileChooser
+	 *            the j file chooser
 	 * @return the string
 	 */
-	private String browseFolders(JFileChooser jFileChooser) {
+	private String browseFolders(JFileChooser jFileChooser)
+	{
 		String toReturn = "";
 		int returnVal = jFileChooser.showOpenDialog(this);
 
-		if (returnVal == JFileChooser.APPROVE_OPTION) {
+		if (returnVal == JFileChooser.APPROVE_OPTION)
+		{
 			File file = jFileChooser.getSelectedFile();
 			toReturn = file.getAbsolutePath();
 		}
@@ -81,17 +87,24 @@ public class GeneralConfigPanel extends JPanel {
 	/**
 	 * Gets the int from text field.
 	 *
-	 * @param tf the tf
-	 * @param previousValue the previous value
+	 * @param tf
+	 *            the tf
+	 * @param previousValue
+	 *            the previous value
 	 * @return the int from text field
 	 */
-	private int getIntFromTextField(JTextField tf, int previousValue) {
-		if (tf.getText().length() > 0) {
-			try {
+	private int getIntFromTextField(JTextField tf, int previousValue)
+	{
+		if (tf.getText().length() > 0)
+		{
+			try
+			{
 				int num = Integer.parseInt(tf.getText());
 				tf.setForeground(Color.black);
 				return num;
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 				tf.setForeground(Color.red);
 			}
 		}
@@ -101,17 +114,24 @@ public class GeneralConfigPanel extends JPanel {
 	/**
 	 * Gets the int from text field.
 	 *
-	 * @param tf the tf
-	 * @param previousValue the previous value
+	 * @param tf
+	 *            the tf
+	 * @param previousValue
+	 *            the previous value
 	 * @return the int from text field
 	 */
-	private String getIntFromTextField(JTextField tf, String previousValue) {
-		if (tf.getText().length() > 0) {
-			try {
+	private String getIntFromTextField(JTextField tf, String previousValue)
+	{
+		if (tf.getText().length() > 0)
+		{
+			try
+			{
 				Integer.parseInt(tf.getText());
 				tf.setForeground(Color.black);
 				return tf.getText();
-			} catch (NumberFormatException ex) {
+			}
+			catch (NumberFormatException ex)
+			{
 				tf.setForeground(Color.red);
 			}
 		}
@@ -121,54 +141,57 @@ public class GeneralConfigPanel extends JPanel {
 	/**
 	 * Inits the components.
 	 */
-	private void initComponents() {
+	private void initComponents()
+	{
 
 		JLabel enableLabel = new JLabel("Enable: ");
-		Font labelFont = new Font(enableLabel.getFont().getName(), Font.ITALIC,
-				enableLabel.getFont().getSize());
+		Font labelFont = new Font(enableLabel.getFont().getName(), Font.ITALIC, enableLabel.getFont().getSize());
 
 		final JCheckBox locationsCheckbox = new JCheckBox();
 		locationsCheckbox.setText("Locations");
 		locationsCheckbox.setSelected(prefs.getLocationsEnabled());
-		locationsCheckbox
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						prefs.setLocationsEnabled(locationsCheckbox
-								.isSelected());
-					}
-				});
+		locationsCheckbox.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				prefs.setLocationsEnabled(locationsCheckbox.isSelected());
+			}
+		});
 
 		final JCheckBox userRecordingsCheckbox = new JCheckBox();
 		userRecordingsCheckbox.setText("User Recordings");
 		userRecordingsCheckbox.setSelected(prefs.getUserRecordingsEnabled());
-		userRecordingsCheckbox
-				.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						prefs.setUserRecordingsEnabled(userRecordingsCheckbox
-								.isSelected());
-					}
-				});
+		userRecordingsCheckbox.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				prefs.setUserRecordingsEnabled(userRecordingsCheckbox.isSelected());
+			}
+		});
 
 		JLabel adminPINLabel = new JLabel("Admin PIN: ");
 		final JTextField adminPinTextField = new JTextField();
 		adminPinTextField.setText(prefs.getAdminPIN());
-		adminPinTextField.addKeyListener(new KeyAdapter() {
+		adminPinTextField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefs.setAdminPIN(getIntFromTextField(adminPinTextField,
-						prefs.getAdminPIN()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefs.setAdminPIN(getIntFromTextField(adminPinTextField, prefs.getAdminPIN()));
 			}
 		});
 
-		JLabel maxRecordingLengthLabel = new JLabel(
-				"Max Recording Length (seconds): ");
+		JLabel maxRecordingLengthLabel = new JLabel("Max Recording Length (seconds): ");
 		final JTextField maxRecordingLengthField = new JTextField();
 		maxRecordingLengthField.setText("" + prefs.getMaxRecordingTime());
-		maxRecordingLengthField.addKeyListener(new KeyAdapter() {
+		maxRecordingLengthField.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				prefs.setMaxRecordingTime(getIntFromTextField(
-						maxRecordingLengthField, prefs.getMaxRecordingTime()));
+			public void keyReleased(KeyEvent e)
+			{
+				prefs.setMaxRecordingTime(getIntFromTextField(maxRecordingLengthField, prefs.getMaxRecordingTime()));
 			}
 		});
 
@@ -177,16 +200,18 @@ public class GeneralConfigPanel extends JPanel {
 		txtContentLocation.setText(setTruncatedText(prefs.getContentFolder()));
 		txtContentLocation.setFont(labelFont);
 
-		final JFileChooser contentFileChooser = new JFileChooser(new File(
-				prefs.getContentFolder()));
+		final JFileChooser contentFileChooser = new JFileChooser(new File(prefs.getContentFolder()));
 		contentFileChooser.setDialogTitle("Browse for Workspace");
 		contentFileChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
 		contentFileChooser.setAcceptAllFileFilterUsed(false);
 
 		JButton contentFolderBrowseButton = new JButton();
 		contentFolderBrowseButton.setText("Browse");
-		contentFolderBrowseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		contentFolderBrowseButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				String file = browseFolders(contentFileChooser);
 				txtContentLocation.setText(setTruncatedText(file));
 				AppearanceConfigPrefsItem.savetoXML();
@@ -198,54 +223,66 @@ public class GeneralConfigPanel extends JPanel {
 		JButton viewContentsButton = new JButton();
 		viewContentsButton.setText("View Background Image Folder");
 
-		final IgnoreDoubleClick clickerBackground = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick clickerBackground = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				Desktop desktop = null;
-				File contentFolder = new File(
-						MuseumAppPreferences.getContentFolder());
-				if (contentFolder.exists()) {
-					File file = new File(
-							MuseumAppPreferences.getContentFolder()
-									+ File.separator + BACKGROUNDLOC);
-					if (!file.exists()) {
+				File contentFolder = new File(MuseumAppPreferences.getContentFolder());
+				if (contentFolder.exists())
+				{
+					File file = new File(MuseumAppPreferences.getContentFolder() + File.separator + BACKGROUNDLOC);
+					if (!file.exists())
+					{
 						file.mkdir();
 					}
-					if (Desktop.isDesktopSupported()) {
+					if (Desktop.isDesktopSupported())
+					{
 						desktop = Desktop.getDesktop();
 					}
-					try {
+					try
+					{
 						desktop.open(file);
-					} catch (IOException e) {
+					}
+					catch (IOException e)
+					{
 					}
 				}
 			}
 		};
 
-		viewContentsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		viewContentsButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				clickerBackground.click(null);
 			}
 		});
-		JButton helpMap = SettingsUtil
-				.generateHelpButton(
-						MuseumSettingsApp.jf,
-						"Place a single image in this folder for it to be used as the app's background."
-								+ "\nLeave the folder empty to use the background colour.");
+		JButton helpMap = SettingsUtil.generateHelpButton(MuseumSettingsApp.jf, "Place a single image in this folder for it to be used as the app's background." + "\nLeave the folder empty to use the background colour.");
 
 		JButton entityManagerButton = new JButton();
 		entityManagerButton.setText("Entity Manager");
-				entityManagerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		entityManagerButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				boolean generateNew = false;
-				if (entityManager == null) {
+				if (entityManager == null)
+				{
 					generateNew = true;
-				} else {
-					if (!entityManager.isVisible()) {
+				}
+				else
+				{
+					if (!entityManager.isVisible())
+					{
 						generateNew = true;
 					}
 				}
-				if (generateNew) {
+				if (generateNew)
+				{
 					entityManager = new EntityManagerGUI();
 					entityManager.show();
 				}
@@ -254,17 +291,25 @@ public class GeneralConfigPanel extends JPanel {
 
 		JButton lensManagerButton = new JButton();
 		lensManagerButton.setText("Lens Manager");
-				lensManagerButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		lensManagerButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				boolean generateNew = false;
-				if (lensManagerGUI == null) {
+				if (lensManagerGUI == null)
+				{
 					generateNew = true;
-				} else {
-					if (!lensManagerGUI.isVisible()) {
+				}
+				else
+				{
+					if (!lensManagerGUI.isVisible())
+					{
 						generateNew = true;
 					}
 				}
-				if (generateNew) {
+				if (generateNew)
+				{
 					lensManagerGUI = new LensManagerGUI();
 					lensManagerGUI.show();
 				}
@@ -272,8 +317,8 @@ public class GeneralConfigPanel extends JPanel {
 		});
 
 		final JCheckBox metricsCheckbox = new JCheckBox();
-				metricsCheckbox.setText("Collect additional metrics");
-				metricsCheckbox.setSelected(prefs.getMetricsEnabled());
+		metricsCheckbox.setText("Collect additional metrics");
+		metricsCheckbox.setSelected(prefs.getMetricsEnabled());
 
 		final JLabel metricsLabel = new JLabel("Metrics Folder: ");
 
@@ -281,37 +326,40 @@ public class GeneralConfigPanel extends JPanel {
 		metricsLocation.setText(setTruncatedText(prefs.getMetricsFolder()));
 		metricsLocation.setFont(labelFont);
 
-		final JFileChooser metricsFolderChooser = new JFileChooser(new File(
-				prefs.getMetricsFolder()));
+		final JFileChooser metricsFolderChooser = new JFileChooser(new File(prefs.getMetricsFolder()));
 		metricsFolderChooser.setDialogTitle("Browse for metrics location");
-				metricsFolderChooser
-				.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-				metricsFolderChooser.setAcceptAllFileFilterUsed(false);
+		metricsFolderChooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		metricsFolderChooser.setAcceptAllFileFilterUsed(false);
 
 		final JButton metricsFolderBrowseButton = new JButton();
 		metricsFolderBrowseButton.setText("Browse");
-		metricsFolderBrowseButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		metricsFolderBrowseButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				String file = browseFolders(metricsFolderChooser);
 				metricsLocation.setText(setTruncatedText(file));
 				prefs.setMetricsFolder(file);
 			}
 		});
 
-		metricsCheckbox.addActionListener(new java.awt.event.ActionListener() {
-					public void actionPerformed(java.awt.event.ActionEvent evt) {
-						prefs.setMetricsEnabled(metricsCheckbox.isSelected());
+		metricsCheckbox.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				prefs.setMetricsEnabled(metricsCheckbox.isSelected());
 				metricsLabel.setEnabled(metricsCheckbox.isSelected());
-						metricsLocation.setEnabled(metricsCheckbox.isSelected());
-						metricsFolderBrowseButton.setEnabled(metricsCheckbox
-						.isSelected());
-
-			}
-				});
-
-		metricsLabel.setEnabled(metricsCheckbox.isSelected());
 				metricsLocation.setEnabled(metricsCheckbox.isSelected());
 				metricsFolderBrowseButton.setEnabled(metricsCheckbox.isSelected());
+
+			}
+		});
+
+		metricsLabel.setEnabled(metricsCheckbox.isSelected());
+		metricsLocation.setEnabled(metricsCheckbox.isSelected());
+		metricsFolderBrowseButton.setEnabled(metricsCheckbox.isSelected());
 
 		setLayout(null);
 
@@ -327,17 +375,14 @@ public class GeneralConfigPanel extends JPanel {
 		int buttonWidth = 120;
 		int checkButtonWidth = 175;
 
-		int locationWidth = (((buttonWidth * 4) + xPadding) - buttonWidth)
-				- xPadding;
+		int locationWidth = (((buttonWidth * 4) + xPadding) - buttonWidth) - xPadding;
 
 		enableLabel.setBounds(new Rectangle(x, y, labelWidth, height));
 		enableLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		x += labelWidth + xPadding;
-		locationsCheckbox.setBounds(new Rectangle(x, y, checkButtonWidth,
-				height));
+		locationsCheckbox.setBounds(new Rectangle(x, y, checkButtonWidth, height));
 		x += checkButtonWidth + xPadding;
-		userRecordingsCheckbox.setBounds(new Rectangle(x, y, checkButtonWidth,
-				height));
+		userRecordingsCheckbox.setBounds(new Rectangle(x, y, checkButtonWidth, height));
 
 		x = xPadding;
 		y += height + yPadding;
@@ -347,12 +392,10 @@ public class GeneralConfigPanel extends JPanel {
 		x += labelWidth + xPadding;
 		adminPinTextField.setBounds(new Rectangle(x, y, textBoxWidth, height));
 		x += textBoxWidth + xPadding;
-		maxRecordingLengthLabel.setBounds(new Rectangle(x, y, labelWidth * 2,
-				height));
+		maxRecordingLengthLabel.setBounds(new Rectangle(x, y, labelWidth * 2, height));
 		maxRecordingLengthLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		x += (labelWidth * 2) + xPadding;
-		maxRecordingLengthField.setBounds(new Rectangle(x, y, textBoxWidth,
-				height));
+		maxRecordingLengthField.setBounds(new Rectangle(x, y, textBoxWidth, height));
 
 		x = xPadding;
 		y += height + yPadding;
@@ -360,18 +403,15 @@ public class GeneralConfigPanel extends JPanel {
 		contentLocationLabel.setBounds(new Rectangle(x, y, labelWidth, height));
 		contentLocationLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 		x += labelWidth + xPadding;
-		txtContentLocation
-				.setBounds(new Rectangle(x, y, locationWidth, height));
+		txtContentLocation.setBounds(new Rectangle(x, y, locationWidth, height));
 		x += locationWidth + xPadding;
-		contentFolderBrowseButton.setBounds(new Rectangle(x, y, buttonWidth,
-				height));
+		contentFolderBrowseButton.setBounds(new Rectangle(x, y, buttonWidth, height));
 
 		x = xPadding;
 		y += height + yPadding;
 
 		x += labelWidth + xPadding;
-		viewContentsButton.setBounds(new Rectangle(x, y, buttonWidth * 2,
-				height));
+		viewContentsButton.setBounds(new Rectangle(x, y, buttonWidth * 2, height));
 		x += (buttonWidth * 2) + xPadding;
 		helpMap.setBounds(new Rectangle(x, y, height, height));
 
@@ -380,13 +420,11 @@ public class GeneralConfigPanel extends JPanel {
 		y += height + yPadding;
 		x += labelWidth + xPadding;
 
-		entityManagerButton.setBounds(new Rectangle(x, y, buttonWidth * 2,
-				height));
+		entityManagerButton.setBounds(new Rectangle(x, y, buttonWidth * 2, height));
 
 		x += (buttonWidth * 2) + xPadding;
 
-		lensManagerButton
-				.setBounds(new Rectangle(x, y, buttonWidth * 2, height));
+		lensManagerButton.setBounds(new Rectangle(x, y, buttonWidth * 2, height));
 
 		x = xPadding;
 		y += height + yPadding;
@@ -403,8 +441,7 @@ public class GeneralConfigPanel extends JPanel {
 		x += labelWidth + xPadding;
 		metricsLocation.setBounds(new Rectangle(x, y, locationWidth, height));
 		x += locationWidth + xPadding;
-		metricsFolderBrowseButton.setBounds(new Rectangle(x, y, buttonWidth,
-				height));
+		metricsFolderBrowseButton.setBounds(new Rectangle(x, y, buttonWidth, height));
 
 		add(enableLabel);
 		add(locationsCheckbox);
@@ -435,15 +472,16 @@ public class GeneralConfigPanel extends JPanel {
 	/**
 	 * Sets the truncated text.
 	 *
-	 * @param loc the loc
+	 * @param loc
+	 *            the loc
 	 * @return the string
 	 */
-	private String setTruncatedText(String loc) {
+	private String setTruncatedText(String loc)
+	{
 		String truncatedFile = loc;
-		if (truncatedFile.length() > textLimit) {
-			truncatedFile = "..."
-					+ truncatedFile.substring(truncatedFile.length()
-							- textLimit, truncatedFile.length());
+		if (truncatedFile.length() > textLimit)
+		{
+			truncatedFile = "..." + truncatedFile.substring(truncatedFile.length() - textLimit, truncatedFile.length());
 		}
 		return truncatedFile;
 	}

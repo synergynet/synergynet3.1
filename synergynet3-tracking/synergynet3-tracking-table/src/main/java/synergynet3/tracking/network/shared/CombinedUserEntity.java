@@ -6,7 +6,8 @@ import java.util.ArrayList;
 /**
  * The Class CombinedUserEntity.
  */
-public class CombinedUserEntity implements Serializable {
+public class CombinedUserEntity implements Serializable
+{
 
 	/** The Constant ID_TOKEN. */
 	public static final String ID_TOKEN = "_-_";
@@ -29,11 +30,15 @@ public class CombinedUserEntity implements Serializable {
 	/**
 	 * Instantiates a new combined user entity.
 	 *
-	 * @param ID the id
-	 * @param userLocation the user location
-	 * @param uniqueID the unique id
+	 * @param ID
+	 *            the id
+	 * @param userLocation
+	 *            the user location
+	 * @param uniqueID
+	 *            the unique id
 	 */
-	public CombinedUserEntity(String ID, UserLocation userLocation, int uniqueID) {
+	public CombinedUserEntity(String ID, UserLocation userLocation, int uniqueID)
+	{
 		this.uniqueID = uniqueID;
 		addUserID(ID);
 		this.userLocation = userLocation;
@@ -42,24 +47,32 @@ public class CombinedUserEntity implements Serializable {
 	/**
 	 * Generate user id string.
 	 *
-	 * @param userID the user id
-	 * @param tableID the table id
+	 * @param userID
+	 *            the user id
+	 * @param tableID
+	 *            the table id
 	 * @return the string
 	 */
-	public static String generateUserIDString(int userID, String tableID) {
+	public static String generateUserIDString(int userID, String tableID)
+	{
 		return userID + CombinedUserEntity.ID_TOKEN + tableID;
 	}
 
 	/**
 	 * Gets the tracker source from id.
 	 *
-	 * @param ID the id
+	 * @param ID
+	 *            the id
 	 * @return the tracker source from id
 	 */
-	public static String getTrackerSourceFromID(String ID) {
-		try {
+	public static String getTrackerSourceFromID(String ID)
+	{
+		try
+		{
 			return ID.split(CombinedUserEntity.ID_TOKEN)[1];
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return "";
 		}
 	}
@@ -67,13 +80,18 @@ public class CombinedUserEntity implements Serializable {
 	/**
 	 * Gets the user id from id.
 	 *
-	 * @param ID the id
+	 * @param ID
+	 *            the id
 	 * @return the user id from id
 	 */
-	public static int getUserIDFromID(String ID) {
-		try {
+	public static int getUserIDFromID(String ID)
+	{
+		try
+		{
 			return Integer.parseInt(ID.split(CombinedUserEntity.ID_TOKEN)[0]);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return -1;
 		}
 	}
@@ -81,10 +99,13 @@ public class CombinedUserEntity implements Serializable {
 	/**
 	 * Adds the user id.
 	 *
-	 * @param ID the id
+	 * @param ID
+	 *            the id
 	 */
-	public void addUserID(String ID) {
-		if (!userIDs.contains(ID)) {
+	public void addUserID(String ID)
+	{
+		if (!userIDs.contains(ID))
+		{
 			userIDs.add(ID);
 		}
 	}
@@ -92,53 +113,64 @@ public class CombinedUserEntity implements Serializable {
 	/**
 	 * @return the uniqueID
 	 */
-	public int getUniqueID() {
+	public int getUniqueID()
+	{
 		return uniqueID;
 	}
 
 	/**
 	 * @return the userIDs
 	 */
-	public ArrayList<String> getUserIDs() {
+	public ArrayList<String> getUserIDs()
+	{
 		return userIDs;
 	}
 
 	/**
 	 * @return the userLocation
 	 */
-	public UserLocation getUserLocation() {
+	public UserLocation getUserLocation()
+	{
 		return userLocation;
 	}
 
 	/**
 	 * @return the isTeacher
 	 */
-	public boolean isTeacher() {
+	public boolean isTeacher()
+	{
 		return isTeacher;
 	}
 
 	/**
 	 * Removes the user id.
 	 *
-	 * @param ID the id
+	 * @param ID
+	 *            the id
 	 */
-	public void removeUserID(String ID) {
-		if (userIDs.contains(ID)) {
+	public void removeUserID(String ID)
+	{
+		if (userIDs.contains(ID))
+		{
 			userIDs.remove(ID);
 		}
 	}
 
 	/**
-	 * @param isTeacher the isTeacher to set
+	 * @param isTeacher
+	 *            the isTeacher to set
 	 */
-	public void setTeacher(boolean isTeacher) {
+	public void setTeacher(boolean isTeacher)
+	{
 		this.isTeacher = isTeacher;
 	}
 
 	/**
-	 * @param userLocation the userLocation to set
+	 * @param userLocation
+	 *            the userLocation to set
 	 */
-	public void setUserLocation(UserLocation userLocation) {
+	public void setUserLocation(UserLocation userLocation)
+	{
 		this.userLocation = userLocation;
 	}
 

@@ -14,34 +14,43 @@ import jpview.Utils;
  *
  * @author clyon
  */
-public class Vec3f {
+public class Vec3f
+{
 
 	/** The _f. */
 	private float[] _f = null;
 
 	/** Creates a new instance of Vec3 */
-	public Vec3f() {
+	public Vec3f()
+	{
 		_f = new float[3];
 	}
 
 	/**
 	 * Creates an new Vec3f object using the provided float values
 	 *
-	 * @param x first float value
-	 * @param y second float value
-	 * @param z third float value
+	 * @param x
+	 *            first float value
+	 * @param y
+	 *            second float value
+	 * @param z
+	 *            third float value
 	 */
-	public Vec3f(float x, float y, float z) {
-		_f = new float[] { x, y, z };
+	public Vec3f(float x, float y, float z)
+	{
+		_f = new float[]
+		{ x, y, z };
 	}
 
 	/**
 	 * Creates a new Vec3f object using the provided float [] as the underlying
 	 * values.
 	 *
-	 * @param f an array of 3 float values.
+	 * @param f
+	 *            an array of 3 float values.
 	 */
-	public Vec3f(float[] f) {
+	public Vec3f(float[] f)
+	{
 		_f = f;
 	}
 
@@ -51,15 +60,16 @@ public class Vec3f {
 	 *
 	 * @return a new Vec3f object with the pixels r,b,g values as the elements
 	 *         of the Vec3f
-	 * @param pixel the 32 bit pixel value
+	 * @param pixel
+	 *            the 32 bit pixel value
 	 */
-	public static Vec3f convertPixel(int pixel) {
+	public static Vec3f convertPixel(int pixel)
+	{
 		int red = (pixel >> 16) & 0xff;
 		int green = (pixel >> 8) & 0xff;
 		int blue = (pixel) & 0xff;
-		float[] a = new float[] { (((red) * 2.0f) - 255.0f) / 255.0f,
-				(((green) * 2.0f) - 255.0f) / 255.0f,
-				(((blue) * 2.0f) - 255.0f) / 255.0f };
+		float[] a = new float[]
+		{ (((red) * 2.0f) - 255.0f) / 255.0f, (((green) * 2.0f) - 255.0f) / 255.0f, (((blue) * 2.0f) - 255.0f) / 255.0f };
 		Vec3f v = new Vec3f(a);
 		// v.normalize();
 		return v;
@@ -69,13 +79,17 @@ public class Vec3f {
 	 * Returns a vector representing the reflection of the provided incedent
 	 * vector.
 	 *
-	 * @param normal The normal vector for the particular poiont.
-	 * @param incedent The vector representing incedent light.
+	 * @param normal
+	 *            The normal vector for the particular poiont.
+	 * @param incedent
+	 *            The vector representing incedent light.
 	 * @return The reflection of the incendent vector.
 	 */
-	public static Vec3f reflect(Vec3f normal, Vec3f incedent) {
+	public static Vec3f reflect(Vec3f normal, Vec3f incedent)
+	{
 		// R = 2 * N.I * N - I
-		if ((normal == null) || (incedent == null)) {
+		if ((normal == null) || (incedent == null))
+		{
 			return null;
 		}
 		Vec3f lhs = normal.scale(normal.dot(incedent) * 2);
@@ -89,21 +103,24 @@ public class Vec3f {
 	 *
 	 * @return The cross product of this Vec3f and the Vec3f provided to the
 	 *         method.
-	 * @param v The Vec3f object representing the right-hand side of the cross
+	 * @param v
+	 *            The Vec3f object representing the right-hand side of the cross
 	 *            product
 	 */
-	public Vec3f cross(Vec3f v) {
-		return new Vec3f((y() * v.z()) - (z() * v.y()), (z() * v.x())
-				- (x() * v.z()), (x() * v.y()) - (y() * v.x()));
+	public Vec3f cross(Vec3f v)
+	{
+		return new Vec3f((y() * v.z()) - (z() * v.y()), (z() * v.x()) - (x() * v.z()), (x() * v.y()) - (y() * v.x()));
 	}
 
 	/**
 	 * Returns the difference of two vectors.
 	 *
 	 * @return This difference of this vector and the provided vector
-	 * @param v The vector representing the right-hand side of the difference.
+	 * @param v
+	 *            The vector representing the right-hand side of the difference.
 	 */
-	public Vec3f diff(Vec3f v) {
+	public Vec3f diff(Vec3f v)
+	{
 		return new Vec3f(x() - v.x(), y() - v.y(), z() - v.z());
 	}
 
@@ -111,25 +128,27 @@ public class Vec3f {
 	 * Returns the dot product of this Vec3f and the Vec3f provided to the
 	 * method
 	 *
-	 * @param vector The Vec3f object representing the right-hand side of the
-	 *            dot product
+	 * @param vector
+	 *            The Vec3f object representing the right-hand side of the dot
+	 *            product
 	 * @return The dot product of this Vec3f and the Vec3f provided to the
 	 *         method.
 	 */
-	public float dot(Vec3f vector) {
-		return ((_f[0] * vector.x()) + (_f[1] * vector.y()) + (_f[2] * vector
-				.z()));
+	public float dot(Vec3f vector)
+	{
+		return ((_f[0] * vector.x()) + (_f[1] * vector.y()) + (_f[2] * vector.z()));
 	}
 
 	/**
 	 * Returns true if this vector is the same as the provided vector
 	 *
-	 * @param that The vector to be compared with this vector
+	 * @param that
+	 *            The vector to be compared with this vector
 	 * @return true if the this vector and the provided vector are equivalent.
 	 */
-	public boolean equals(Vec3f that) {
-		return ((this.x() == that.x()) && (this.y() == that.y()) && (this.z() == that
-				.z()));
+	public boolean equals(Vec3f that)
+	{
+		return ((this.x() == that.x()) && (this.y() == that.y()) && (this.z() == that.z()));
 	}
 
 	/**
@@ -137,7 +156,8 @@ public class Vec3f {
 	 *
 	 * @return the length of the vector as a float
 	 */
-	public float len() {
+	public float len()
+	{
 		return (float) Math.sqrt(dot(this));
 	}
 
@@ -146,7 +166,8 @@ public class Vec3f {
 	 *
 	 * @return the normalized vector.
 	 */
-	public Vec3f normalize() {
+	public Vec3f normalize()
+	{
 		float len = len();
 		_f[0] /= len;
 		_f[1] /= len;
@@ -157,7 +178,8 @@ public class Vec3f {
 	/**
 	 * Perturbs the normal slightly
 	 */
-	public void perturb() {
+	public void perturb()
+	{
 		_f[0] += (_f[0] * (Math.random() - 0.5f)) / 10.0f;
 		_f[1] += (_f[1] * (Math.random() - 0.5f)) / 10.0f;
 		_f[2] += (_f[2] * (Math.random() - 0.5f)) / 10.0f;
@@ -167,21 +189,25 @@ public class Vec3f {
 	/**
 	 * Scales this vector by the provided float value
 	 *
-	 * @param s the amount by which each component of the vector is multiplied
+	 * @param s
+	 *            the amount by which each component of the vector is multiplied
 	 * @return a new scaled vector (the underlying vector does not change)
 	 */
-	public Vec3f scale(float s) {
+	public Vec3f scale(float s)
+	{
 		return new Vec3f(_f[0] * s, _f[1] * s, _f[2] * s);
 	}
 
 	/**
 	 * Adds two Vec3f objects together
 	 *
-	 * @param v The vector to which this vector will be added
+	 * @param v
+	 *            The vector to which this vector will be added
 	 * @return a new vector representing the sum of this vector and the provided
 	 *         vector. (this vector is unchanged)
 	 */
-	public Vec3f sum(Vec3f v) {
+	public Vec3f sum(Vec3f v)
+	{
 		return new Vec3f(x() + v.x(), y() + v.y(), z() + v.z());
 	}
 
@@ -190,7 +216,8 @@ public class Vec3f {
 	 *
 	 * @return the underlying float [] used for the object.
 	 */
-	public float[] toFloat() {
+	public float[] toFloat()
+	{
 		return _f;
 	}
 
@@ -200,7 +227,8 @@ public class Vec3f {
 	 *
 	 * @return The 32 bit pixel representation of this vector.
 	 */
-	public int toPixel() {
+	public int toPixel()
+	{
 		float r = ((_f[0] + 1.0f) / 2.0f) * 255.0f;
 		float g = ((_f[1] + 1.0f) / 2.0f) * 255.0f;
 		float b = ((_f[2] + 1.0f) / 2.0f) * 255.0f;
@@ -215,15 +243,20 @@ public class Vec3f {
 	 *
 	 * @return a human-readable String representation of this vector
 	 */
-	public String toString() {
+	@Override
+	public String toString()
+	{
 		DecimalFormat format = new DecimalFormat("0.000");
 		StringBuffer sb = new StringBuffer();
 		sb.append("(");
-		for (int i = 0; i < _f.length; i++) {
-			if (i > 0) {
+		for (int i = 0; i < _f.length; i++)
+		{
+			if (i > 0)
+			{
 				sb.append(", ");
 			}
-			if (_f[i] >= 0) {
+			if (_f[i] >= 0)
+			{
 				sb.append(" ");
 			}
 			sb.append(format.format(_f[i]));
@@ -237,16 +270,19 @@ public class Vec3f {
 	 *
 	 * @return the x component of the vector (x,y,z)
 	 */
-	public float x() {
+	public float x()
+	{
 		return _f[0];
 	}
 
 	/**
 	 * Sets the x component of the vector (x,y,z) to the provided value
 	 *
-	 * @param f the x component of the vector (x,y,z)
+	 * @param f
+	 *            the x component of the vector (x,y,z)
 	 */
-	public void x(float f) {
+	public void x(float f)
+	{
 		_f[0] = f;
 	}
 
@@ -255,16 +291,19 @@ public class Vec3f {
 	 *
 	 * @return the y component of the vector (x,y,z)
 	 */
-	public float y() {
+	public float y()
+	{
 		return _f[1];
 	}
 
 	/**
 	 * Sets the y component of the vector (x,y,z) to the provided value
 	 *
-	 * @param f the y component of the vector (x,y,z)
+	 * @param f
+	 *            the y component of the vector (x,y,z)
 	 */
-	public void y(float f) {
+	public void y(float f)
+	{
 		_f[1] = f;
 	}
 
@@ -273,16 +312,19 @@ public class Vec3f {
 	 *
 	 * @return the z component of the vector (x,y,z)
 	 */
-	public float z() {
+	public float z()
+	{
 		return _f[2];
 	}
 
 	/**
 	 * Sets the z component of the vector (x,y,z) to the provided value
 	 *
-	 * @param f the z component of the vector (x,y,z)
+	 * @param f
+	 *            the z component of the vector (x,y,z)
 	 */
-	public void z(float f) {
+	public void z(float f)
+	{
 		_f[2] = f;
 	}
 }

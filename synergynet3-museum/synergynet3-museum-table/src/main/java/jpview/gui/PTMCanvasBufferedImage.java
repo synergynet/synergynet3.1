@@ -17,7 +17,8 @@ import java.awt.image.DataBufferInt;
 /**
  * @author Default
  */
-public final class PTMCanvasBufferedImage extends PTMCanvas {
+public final class PTMCanvasBufferedImage extends PTMCanvas
+{
 	/**
 	 *
 	 */
@@ -41,7 +42,8 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 	protected float ratio = 0;
 
 	/** Creates a new instance of PTMCanvas */
-	public PTMCanvasBufferedImage(int width, int height) {
+	public PTMCanvasBufferedImage(int width, int height)
+	{
 		desiredWidth = width;
 		desiredHeight = height;
 		cachedWidth = width;
@@ -59,7 +61,9 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 	 * (non-Javadoc)
 	 * @see jpview.gui.PTMCanvas#detail()
 	 */
-	public void detail() {
+	@Override
+	public void detail()
+	{
 		isFast = false;
 		int w = cachedWidth;
 		int h = cachedHeight;
@@ -70,7 +74,8 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 	/**
 	 * Dump avg values.
 	 */
-	public void dumpAvgValues() {
+	public void dumpAvgValues()
+	{
 		/*
 		 * int r=0, g=0, b=0; for ( int i = 0; i < pixels.length; i++ ) { r += (
 		 * ( pixels[ i ] >> 16 ) & 0xff ); g += ( ( pixels[ i ] >> 8 ) & 0xff );
@@ -86,7 +91,8 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 	 *
 	 * @return the image
 	 */
-	public BufferedImage getImage() {
+	public BufferedImage getImage()
+	{
 		return image;
 	}
 
@@ -94,10 +100,13 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 	 * (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
-	public void paintComponent(Graphics g) {
+	@Override
+	public void paintComponent(Graphics g)
+	{
 		Graphics2D g2d = (Graphics2D) g;
 
-		if (!fixed) {
+		if (!fixed)
+		{
 			Rectangle r = this.getParent().getBounds();
 			float rectangleRatio = ((float) r.width) / r.height;
 			int imageWidth = image.getWidth();
@@ -106,15 +115,16 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 			if (ratio <= rectangleRatio) /* image too wide */
 			{
 				desiredWidth = r.width;
-				desiredHeight = Math.round(((float) (r.width * imageHeight))
-						/ imageWidth);
-			} else {
+				desiredHeight = Math.round(((float) (r.width * imageHeight)) / imageWidth);
+			}
+			else
+			{
 				desiredHeight = r.height;
-				desiredWidth = Math.round(((float) (r.height * imageWidth))
-						/ imageHeight);
+				desiredWidth = Math.round(((float) (r.height * imageWidth)) / imageHeight);
 			}
 
-			if ((desiredWidth > maxWidth) || (desiredHeight > maxHeight)) {
+			if ((desiredWidth > maxWidth) || (desiredHeight > maxHeight))
+			{
 				desiredWidth = maxWidth;
 				desiredHeight = maxHeight;
 			}
@@ -127,14 +137,15 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 		// desiredHeight = Math.min(r.height,image.getHeight());
 		// desiredWidth = Math.min(r.width,image.getWidth());
 
-		if (hints) {
-			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION,
-					RenderingHints.VALUE_INTERPOLATION_BICUBIC);
+		if (hints)
+		{
+			g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
 		}
 
 		int w1 = 0, h1 = 0;
 
-		if (fixed) {
+		if (fixed)
+		{
 			Rectangle r = this.getParent().getBounds();
 			w1 = (r.width - displayWidth) / 2;
 			h1 = (r.height - displayHeight) / 2;
@@ -149,7 +160,9 @@ public final class PTMCanvasBufferedImage extends PTMCanvas {
 	 * (non-Javadoc)
 	 * @see jpview.gui.PTMCanvas#speed()
 	 */
-	public void speed() {
+	@Override
+	public void speed()
+	{
 		isFast = true;
 		int w = cachedWidth / 2;
 		int h = cachedHeight / 2;

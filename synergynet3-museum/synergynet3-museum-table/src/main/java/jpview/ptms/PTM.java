@@ -10,7 +10,8 @@ import jpview.graphics.Vec3f;
 /**
  * @author clyon
  */
-public interface PTM {
+public interface PTM
+{
 
 	/** The Constant LRGB. */
 	public static final int LRGB = 1;
@@ -24,7 +25,8 @@ public interface PTM {
 	/**
 	 * Blue.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the int
 	 */
 	public int blue(int i);
@@ -128,7 +130,8 @@ public interface PTM {
 	/**
 	 * Green.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the int
 	 */
 	public int green(int i);
@@ -136,7 +139,8 @@ public interface PTM {
 	/**
 	 * Normal.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the vec3f
 	 */
 	public Vec3f normal(int i);
@@ -144,8 +148,10 @@ public interface PTM {
 	/**
 	 * Normal.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 * @return the vec3f
 	 */
 	public Vec3f normal(int x, int y);
@@ -158,7 +164,8 @@ public interface PTM {
 	/**
 	 * Red.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the int
 	 */
 	public int red(int i);
@@ -171,57 +178,66 @@ public interface PTM {
 	/**
 	 * Resize.
 	 *
-	 * @param w the w
-	 * @param h the h
+	 * @param w
+	 *            the w
+	 * @param h
+	 *            the h
 	 */
 	public void resize(int w, int h);
 
 	/**
 	 * Sets the d gain.
 	 *
-	 * @param f the new d gain
+	 * @param f
+	 *            the new d gain
 	 */
 	public void setDGain(float f);
 
 	/**
 	 * Sets the environment map.
 	 *
-	 * @param em the new environment map
+	 * @param em
+	 *            the new environment map
 	 */
 	public void setEnvironmentMap(EnvironmentMap em);
 
 	/**
 	 * Sets the exp.
 	 *
-	 * @param i the new exp
+	 * @param i
+	 *            the new exp
 	 */
 	public void setExp(int i);
 
 	/**
 	 * Sets the k diff.
 	 *
-	 * @param f the new k diff
+	 * @param f
+	 *            the new k diff
 	 */
 	public void setKDiff(float f);
 
 	/**
 	 * Sets the k spec.
 	 *
-	 * @param f the new k spec
+	 * @param f
+	 *            the new k spec
 	 */
 	public void setKSpec(float f);
 
 	/**
 	 * Sets the luminance.
 	 *
-	 * @param f the new luminance
+	 * @param f
+	 *            the new luminance
 	 */
 	public void setLuminance(float f);
 
 	/**
 	 * Sets the z.
 	 *
-	 * @param z the new z
+	 * @param z
+	 *            the new z
 	 */
 	public void setZ(int z);
 
@@ -235,7 +251,8 @@ public interface PTM {
 	/**
 	 * Use env.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
 	public void useEnv(boolean b);
 }

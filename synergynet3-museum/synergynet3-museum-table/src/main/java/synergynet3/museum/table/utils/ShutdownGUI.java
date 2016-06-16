@@ -29,7 +29,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class ShutdownGUI.
  */
-public class ShutdownGUI implements KeyboardOutput {
+public class ShutdownGUI implements KeyboardOutput
+{
 
 	/** The Constant FIELD_HEIGHT. */
 	private static final float FIELD_HEIGHT = 60f;
@@ -76,80 +77,82 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * Instantiates a new shutdown gui.
 	 *
-	 * @param stage the stage
-	 * @param displayWidth the display width
-	 * @param displayHeight the display height
-	 * @param buttonWidth the button width
-	 * @param textScale the text scale
-	 * @param code the code
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param stage
+	 *            the stage
+	 * @param displayWidth
+	 *            the display width
+	 * @param displayHeight
+	 *            the display height
+	 * @param buttonWidth
+	 *            the button width
+	 * @param textScale
+	 *            the text scale
+	 * @param code
+	 *            the code
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public ShutdownGUI(final IStage stage, float displayWidth,
-			float displayHeight, float buttonWidth, float textScale,
-			final String code) throws ContentTypeNotBoundException {
+	public ShutdownGUI(final IStage stage, float displayWidth, float displayHeight, float buttonWidth, float textScale, final String code) throws ContentTypeNotBoundException
+	{
 
-		cornerButton = stage.getContentFactory().create(IImage.class,
-				"closeButton", UUID.randomUUID());
-		cornerButton.setImage(ImageUtils.getImage(
-				MuseumAppPreferences.getCloseButtonColour(),
-				ImageUtils.RESOURCE_DIR + "entitybuttons/close/",
-				"_close_button.png"));
-		cornerButton.setSize(LabelGenerator.TEXT_HEIGHT / 2,
-				LabelGenerator.TEXT_HEIGHT / 2);
-		cornerButton
-				.setRelativeLocation(new Vector2f(
-						((stage.getDisplayWidth() / 2) - (cornerButton
-								.getWidth() / 2)),
-						((stage.getDisplayHeight() / 2) - (cornerButton
-								.getHeight() / 2))));
+		cornerButton = stage.getContentFactory().create(IImage.class, "closeButton", UUID.randomUUID());
+		cornerButton.setImage(ImageUtils.getImage(MuseumAppPreferences.getCloseButtonColour(), ImageUtils.RESOURCE_DIR + "entitybuttons/close/", "_close_button.png"));
+		cornerButton.setSize(LabelGenerator.TEXT_HEIGHT / 2, LabelGenerator.TEXT_HEIGHT / 2);
+		cornerButton.setRelativeLocation(new Vector2f(((stage.getDisplayWidth() / 2) - (cornerButton.getWidth() / 2)), ((stage.getDisplayHeight() / 2) - (cornerButton.getHeight() / 2))));
 
-		cornerButton.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
+		cornerButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
 
-					private boolean held = true;
-					private Date lastUpdated = new Date();
+			private boolean held = true;
+			private Date lastUpdated = new Date();
 
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				lastUpdated = new Date();
+				held = true;
+
+				Thread timeoutThread = new Thread(new Runnable()
+				{
 					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						lastUpdated = new Date();
-						held = true;
-
-						Thread timeoutThread = new Thread(new Runnable() {
-							public void run() {
-								while (held) {
-									try {
-										Thread.sleep(100);
-									} catch (InterruptedException e) {
-										e.printStackTrace();
-									}
-									if (((new Date().getTime() - lastUpdated
-											.getTime()) > HOLD) && held) {
-										setVisibility(true, stage);
-										held = false;
-									}
-								}
+					public void run()
+					{
+						while (held)
+						{
+							try
+							{
+								Thread.sleep(100);
 							}
-						});
-						timeoutThread.start();
+							catch (InterruptedException e)
+							{
+								e.printStackTrace();
+							}
+							if (((new Date().getTime() - lastUpdated.getTime()) > HOLD) && held)
+							{
+								setVisibility(true, stage);
+								held = false;
+							}
+						}
 					}
-
-					@Override
-					public void cursorReleased(MultiTouchCursorEvent event) {
-						held = false;
-					}
-
 				});
+				timeoutThread.start();
+			}
+
+			@Override
+			public void cursorReleased(MultiTouchCursorEvent event)
+			{
+				held = false;
+			}
+
+		});
 		stage.addItem(cornerButton);
 		stage.getZOrderManager().bringToTop(cornerButton);
 		stage.getZOrderManager().unregisterForZOrdering(cornerButton);
 
 		screenItems.add(generateFullScreenBackground(stage));
 
-		IColourRectangle background = stage.getContentFactory().create(
-				IColourRectangle.class, "recorderContainerBg",
-				UUID.randomUUID());
-		background.setSolidBackgroundColour(MuseumAppPreferences
-				.getShutdownControlsBackgroundColour());
+		IColourRectangle background = stage.getContentFactory().create(IColourRectangle.class, "recorderContainerBg", UUID.randomUUID());
+		background.setSolidBackgroundColour(MuseumAppPreferences.getShutdownControlsBackgroundColour());
 		background.setSize(WIDTH, HEIGHT);
 		background.setInteractionEnabled(false);
 		background.setVisible(false);
@@ -158,24 +161,18 @@ public class ShutdownGUI implements KeyboardOutput {
 		stage.getZOrderManager().unregisterForZOrdering(background);
 		screenItems.add(background);
 
-		IRoundedBorder frameBorder = stage.getContentFactory().create(
-				IRoundedBorder.class, "containerBorder", UUID.randomUUID());
+		IRoundedBorder frameBorder = stage.getContentFactory().create(IRoundedBorder.class, "containerBorder", UUID.randomUUID());
 		frameBorder.setBorderWidth(5);
 		frameBorder.setSize(WIDTH, HEIGHT);
-		frameBorder.setColor(MuseumAppPreferences
-				.getShutdownControlsBorderColour());
+		frameBorder.setColor(MuseumAppPreferences.getShutdownControlsBorderColour());
 		frameBorder.setVisible(false);
 		stage.addItem(frameBorder);
 		stage.getZOrderManager().bringToTop(frameBorder);
 		stage.getZOrderManager().unregisterForZOrdering(frameBorder);
 		screenItems.add(frameBorder);
 
-		ISimpleKeypad keypad = stage.getContentFactory().create(
-				ISimpleKeypad.class, "keyboard", UUID.randomUUID());
-		keypad.setColours(INVISIBLE,
-				MuseumAppPreferences.getShutdownControlsBackgroundColour(),
-				MuseumAppPreferences.getShutdownControlsBorderColour(),
-				INVISIBLE, MuseumAppPreferences.getShutdownControlsFontColour());
+		ISimpleKeypad keypad = stage.getContentFactory().create(ISimpleKeypad.class, "keyboard", UUID.randomUUID());
+		keypad.setColours(INVISIBLE, MuseumAppPreferences.getShutdownControlsBackgroundColour(), MuseumAppPreferences.getShutdownControlsBorderColour(), INVISIBLE, MuseumAppPreferences.getShutdownControlsFontColour());
 		keypad.setButtonSizeAndSpacing(55, 65);
 		keypad.setMovable(false);
 		keypad.generateKeys(stage, this);
@@ -187,10 +184,8 @@ public class ShutdownGUI implements KeyboardOutput {
 		pinField = generateTextbox(stage);
 		screenItems.add(pinField);
 
-		ITextbox label = stage.getContentFactory().create(ITextbox.class,
-				"textLabel", UUID.randomUUID());
-		label.setColours(INVISIBLE, INVISIBLE,
-				MuseumAppPreferences.getShutdownControlsFontColour());
+		ITextbox label = stage.getContentFactory().create(ITextbox.class, "textLabel", UUID.randomUUID());
+		label.setColours(INVISIBLE, INVISIBLE, MuseumAppPreferences.getShutdownControlsFontColour());
 		label.setMovable(false);
 		label.setWidth(WIDTH);
 		label.setHeight(FIELD_HEIGHT);
@@ -200,45 +195,41 @@ public class ShutdownGUI implements KeyboardOutput {
 		stage.addItem(label);
 		screenItems.add(label);
 
-		IButtonbox okButton = generateOkButton("OK", buttonWidth - 20,
-				FIELD_HEIGHT, stage);
+		IButtonbox okButton = generateOkButton("OK", buttonWidth - 20, FIELD_HEIGHT, stage);
 		okButton.setVisible(false);
-		okButton.getListener().getMultiTouchDispatcher()
-				.addListener(new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						if (enteredCode.equals(code)) {
-							MultiplicityClient.get().stop();
-						} else {
-							warning.setVisible(true);
-							stage.getZOrderManager().bringToTop(warning);
-						}
-					}
-				});
+		okButton.getListener().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				if (enteredCode.equals(code))
+				{
+					MultiplicityClient.get().stop();
+				}
+				else
+				{
+					warning.setVisible(true);
+					stage.getZOrderManager().bringToTop(warning);
+				}
+			}
+		});
 		stage.addItem(okButton);
 		screenItems.add(okButton);
 
-		warning = generateErrorMessage("Incorrect", okButton.getWidth(),
-				FIELD_HEIGHT, stage);
+		warning = generateErrorMessage("Incorrect", okButton.getWidth(), FIELD_HEIGHT, stage);
 
-		IImage backButton = stage.getContentFactory().create(IImage.class,
-				"closeButton", UUID.randomUUID());
-		backButton.setImage(ImageUtils.getImage(
-				MuseumAppPreferences.getCloseButtonColour(),
-				ImageUtils.RESOURCE_DIR + "entitybuttons/close/",
-				"_close_button.png"));
-		backButton.setSize(LabelGenerator.TEXT_HEIGHT / 2,
-				LabelGenerator.TEXT_HEIGHT / 2);
-		backButton.setRelativeLocation(new Vector2f(
-				((WIDTH / 2) - (cornerButton.getWidth() / 2)),
-				((HEIGHT / 2) - (cornerButton.getHeight() / 2))));
-		backButton.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						setVisibility(false, stage);
-					}
-				});
+		IImage backButton = stage.getContentFactory().create(IImage.class, "closeButton", UUID.randomUUID());
+		backButton.setImage(ImageUtils.getImage(MuseumAppPreferences.getCloseButtonColour(), ImageUtils.RESOURCE_DIR + "entitybuttons/close/", "_close_button.png"));
+		backButton.setSize(LabelGenerator.TEXT_HEIGHT / 2, LabelGenerator.TEXT_HEIGHT / 2);
+		backButton.setRelativeLocation(new Vector2f(((WIDTH / 2) - (cornerButton.getWidth() / 2)), ((HEIGHT / 2) - (cornerButton.getHeight() / 2))));
+		backButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				setVisibility(false, stage);
+			}
+		});
 		backButton.setVisible(false);
 		stage.addItem(backButton);
 		screenItems.add(backButton);
@@ -261,28 +252,36 @@ public class ShutdownGUI implements KeyboardOutput {
 	 * @see
 	 * synergynet3.keyboard.KeyboardOutput#onKeyboardOutput(java.lang.String)
 	 */
-	public void onKeyboardOutput(String letter) {
+	@Override
+	public void onKeyboardOutput(String letter)
+	{
 
 		lastUpdated = new Date();
 
-		if (warning.isVisible()) {
+		if (warning.isVisible())
+		{
 			warning.setVisible(false);
 		}
 
-		if (letter.equalsIgnoreCase(KeyboardSpecialKeys.BACKSPACE.toString())) {
-			if (enteredCode.length() != 0) {
-				enteredCode = enteredCode
-						.substring(0, enteredCode.length() - 1);
+		if (letter.equalsIgnoreCase(KeyboardSpecialKeys.BACKSPACE.toString()))
+		{
+			if (enteredCode.length() != 0)
+			{
+				enteredCode = enteredCode.substring(0, enteredCode.length() - 1);
 			}
-		} else if (letter
-				.equalsIgnoreCase(KeyboardSpecialKeys.ENTER.toString())) {
+		}
+		else if (letter.equalsIgnoreCase(KeyboardSpecialKeys.ENTER.toString()))
+		{
 
-		} else {
+		}
+		else
+		{
 			enteredCode += letter;
 		}
 
 		String blankedCode = "";
-		for (int i = 0; i < enteredCode.length(); i++) {
+		for (int i = 0; i < enteredCode.length(); i++)
+		{
 			blankedCode += "*";
 		}
 
@@ -292,21 +291,22 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * Generate error message.
 	 *
-	 * @param text the text
-	 * @param width the width
-	 * @param height the height
-	 * @param stage the stage
+	 * @param text
+	 *            the text
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param stage
+	 *            the stage
 	 * @return the i textbox
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private ITextbox generateErrorMessage(String text, float width,
-			float height, IStage stage) throws ContentTypeNotBoundException {
-		ITextbox error = stage.getContentFactory().create(ITextbox.class,
-				"textLabel", UUID.randomUUID());
-		error.setColours(
-				MuseumAppPreferences.getShutdownControlsBackgroundColour(),
-				MuseumAppPreferences.getErrorColourAsRGBA(),
-				MuseumAppPreferences.getErrorColourAsFontColour());
+	private ITextbox generateErrorMessage(String text, float width, float height, IStage stage) throws ContentTypeNotBoundException
+	{
+		ITextbox error = stage.getContentFactory().create(ITextbox.class, "textLabel", UUID.randomUUID());
+		error.setColours(MuseumAppPreferences.getShutdownControlsBackgroundColour(), MuseumAppPreferences.getErrorColourAsRGBA(), MuseumAppPreferences.getErrorColourAsFontColour());
 		error.setMovable(false);
 		error.setWidth(width);
 		error.setHeight(height);
@@ -320,19 +320,18 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * Generate full screen background.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 * @return the i colour rectangle
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private IColourRectangle generateFullScreenBackground(IStage stage)
-			throws ContentTypeNotBoundException {
-		IColourRectangle background = stage.getContentFactory().create(
-				IColourRectangle.class, "test", UUID.randomUUID());
+	private IColourRectangle generateFullScreenBackground(IStage stage) throws ContentTypeNotBoundException
+	{
+		IColourRectangle background = stage.getContentFactory().create(IColourRectangle.class, "test", UUID.randomUUID());
 		background.setSize(stage.getDisplayWidth(), stage.getDisplayHeight());
 		background.enableTransparency();
-		background.setGradientBackground(new Gradient(MuseumAppPreferences
-				.getShutdownBackgroundColour(), MuseumAppPreferences
-				.getShutdownBackgroundColour(), GradientDirection.DIAGONAL));
+		background.setGradientBackground(new Gradient(MuseumAppPreferences.getShutdownBackgroundColour(), MuseumAppPreferences.getShutdownBackgroundColour(), GradientDirection.DIAGONAL));
 		background.setVisible(false);
 		background.setInteractionEnabled(false);
 		stage.addItem(background);
@@ -342,23 +341,22 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * Generate ok button.
 	 *
-	 * @param text the text
-	 * @param buttonWidth the button width
-	 * @param buttonHeight the button height
-	 * @param stage the stage
+	 * @param text
+	 *            the text
+	 * @param buttonWidth
+	 *            the button width
+	 * @param buttonHeight
+	 *            the button height
+	 * @param stage
+	 *            the stage
 	 * @return the i buttonbox
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private IButtonbox generateOkButton(String text, float buttonWidth,
-			float buttonHeight, IStage stage)
-			throws ContentTypeNotBoundException {
-		IButtonbox okButton = stage.getContentFactory().create(
-				IButtonbox.class, "okButton", UUID.randomUUID());
-		okButton.setText(text,
-				MuseumAppPreferences.getShutdownControlsBackgroundColour(),
-				MuseumAppPreferences.getShutdownControlsBorderColour(),
-				MuseumAppPreferences.getShutdownControlsFontColour(),
-				buttonWidth - 20, 60, stage);
+	private IButtonbox generateOkButton(String text, float buttonWidth, float buttonHeight, IStage stage) throws ContentTypeNotBoundException
+	{
+		IButtonbox okButton = stage.getContentFactory().create(IButtonbox.class, "okButton", UUID.randomUUID());
+		okButton.setText(text, MuseumAppPreferences.getShutdownControlsBackgroundColour(), MuseumAppPreferences.getShutdownControlsBorderColour(), MuseumAppPreferences.getShutdownControlsFontColour(), buttonWidth - 20, 60, stage);
 		okButton.setVisible(false);
 		stage.addItem(okButton);
 		return okButton;
@@ -367,19 +365,16 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * Generate textbox.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 * @return the i buttonbox
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private IButtonbox generateTextbox(IStage stage)
-			throws ContentTypeNotBoundException {
-		IButtonbox textBox = stage.getContentFactory().create(IButtonbox.class,
-				"textBox", UUID.randomUUID());
-		textBox.setText("",
-				MuseumAppPreferences.getShutdownControlsBackgroundColour(),
-				MuseumAppPreferences.getShutdownControlsBorderColour(),
-				MuseumAppPreferences.getShutdownControlsFontColour(),
-				WIDTH / 2, 60, stage);
+	private IButtonbox generateTextbox(IStage stage) throws ContentTypeNotBoundException
+	{
+		IButtonbox textBox = stage.getContentFactory().create(IButtonbox.class, "textBox", UUID.randomUUID());
+		textBox.setText("", MuseumAppPreferences.getShutdownControlsBackgroundColour(), MuseumAppPreferences.getShutdownControlsBorderColour(), MuseumAppPreferences.getShutdownControlsFontColour(), WIDTH / 2, 60, stage);
 		textBox.setInteractionEnabled(false);
 		textBox.setVisible(false);
 		stage.addItem(textBox);
@@ -389,12 +384,16 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * Sets the visibility.
 	 *
-	 * @param visibility the visibility
-	 * @param stage the stage
+	 * @param visibility
+	 *            the visibility
+	 * @param stage
+	 *            the stage
 	 */
-	private void setVisibility(boolean visibility, IStage stage) {
+	private void setVisibility(boolean visibility, IStage stage)
+	{
 		onVisibilityChanged(visibility, stage);
-		for (IItem item : screenItems) {
+		for (IItem item : screenItems)
+		{
 			item.setVisible(visibility);
 			stage.getZOrderManager().bringToTop(item);
 		}
@@ -403,30 +402,44 @@ public class ShutdownGUI implements KeyboardOutput {
 	/**
 	 * On visibility changed.
 	 *
-	 * @param visibility the visibility
-	 * @param stage the stage
+	 * @param visibility
+	 *            the visibility
+	 * @param stage
+	 *            the stage
 	 */
-	protected void onVisibilityChanged(boolean visibility, final IStage stage) {
+	protected void onVisibilityChanged(boolean visibility, final IStage stage)
+	{
 
-		if (visibility) {
+		if (visibility)
+		{
 			open = true;
 			lastUpdated = new Date();
-			Thread timeoutThread = new Thread(new Runnable() {
-				public void run() {
-					while (open) {
-						try {
+			Thread timeoutThread = new Thread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					while (open)
+					{
+						try
+						{
 							Thread.sleep(100);
-						} catch (InterruptedException e) {
+						}
+						catch (InterruptedException e)
+						{
 							e.printStackTrace();
 						}
-						if ((new Date().getTime() - lastUpdated.getTime()) > TIME_OUT) {
+						if ((new Date().getTime() - lastUpdated.getTime()) > TIME_OUT)
+						{
 							setVisibility(false, stage);
 						}
 					}
 				}
 			});
 			timeoutThread.start();
-		} else {
+		}
+		else
+		{
 			open = false;
 		}
 

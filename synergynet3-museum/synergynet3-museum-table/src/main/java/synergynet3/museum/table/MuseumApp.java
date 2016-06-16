@@ -17,7 +17,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class MuseumApp.
  */
-public class MuseumApp extends SynergyNetApp {
+public class MuseumApp extends SynergyNetApp
+{
 
 	/** The Constant BUTTON_WIDTH. */
 	private final static float BUTTON_WIDTH = 200f;
@@ -37,9 +38,11 @@ public class MuseumApp extends SynergyNetApp {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
+	public static void main(String[] args)
+	{
 		SynergyNetApp.NETWORKING = false;
 		SynergyNetApp.ONE_MEDIA_AT_A_TIME = true;
 		MultiplicityClient client = MultiplicityClient.get();
@@ -51,25 +54,33 @@ public class MuseumApp extends SynergyNetApp {
 	/**
 	 * Close tree.
 	 *
-	 * @param toClose the to close
+	 * @param toClose
+	 *            the to close
 	 */
-	public void closeTree(String toClose) {
+	public void closeTree(String toClose)
+	{
 		entityManager.getEntities().get(toClose).setVisible(false);
 	}
 
 	/**
 	 * Focus shift.
 	 *
-	 * @param from the from
-	 * @param to the to
-	 * @param loc the loc
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
+	 * @param loc
+	 *            the loc
 	 */
-	public void focusShift(String from, String to, Vector2f loc) {
+	public void focusShift(String from, String to, Vector2f loc)
+	{
 		closeTree(from);
 
 		EntityItem entityTo = entityManager.getEntities().get(to);
-		if (entityTo != null) {
-			if (!entityTo.isVisible()) {
+		if (entityTo != null)
+		{
+			if (!entityTo.isVisible())
+			{
 				entityTo.regenerate(loc.x, loc.y);
 				entityTo.setVisible(true);
 			}
@@ -81,7 +92,8 @@ public class MuseumApp extends SynergyNetApp {
 	 *
 	 * @return the entity manager
 	 */
-	public EntityManager getEntityManager() {
+	public EntityManager getEntityManager()
+	{
 		return entityManager;
 	};
 
@@ -90,7 +102,8 @@ public class MuseumApp extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#getSpecificFriendlyAppName()
 	 */
 	@Override
-	public String getSpecificFriendlyAppName() {
+	public String getSpecificFriendlyAppName()
+	{
 		return "MuseumStart";
 	}
 
@@ -99,7 +112,8 @@ public class MuseumApp extends SynergyNetApp {
 	 * @see synergynet3.SynergyNetApp#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
+	public void onDestroy()
+	{
 		EntityTidy.stopTidying();
 		super.onDestroy();
 	}
@@ -108,29 +122,30 @@ public class MuseumApp extends SynergyNetApp {
 	 * (non-Javadoc)
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
-	protected void loadDefaultContent() {
+	@Override
+	protected void loadDefaultContent()
+	{
 
 		displayWidth = stage.getDisplayWidth();
 		displayHeight = stage.getDisplayHeight();
 
-		Vector2f displayOffset = new Vector2f(stage.getDisplayWidth() / 2,
-				stage.getDisplayHeight() / 2);
+		Vector2f displayOffset = new Vector2f(stage.getDisplayWidth() / 2, stage.getDisplayHeight() / 2);
 
-		try {
-			new ShutdownGUI(stage, displayWidth, displayHeight, BUTTON_WIDTH,
-					TEXT_SCALE, MuseumAppPreferences.getAdminPIN());
+		try
+		{
+			new ShutdownGUI(stage, displayWidth, displayHeight, BUTTON_WIDTH, TEXT_SCALE, MuseumAppPreferences.getAdminPIN());
 
-			entityManager = new EntityManager(stage, displayWidth,
-					displayHeight, displayOffset, this);
+			entityManager = new EntityManager(stage, displayWidth, displayHeight, displayOffset, this);
 			EntityTidy.createThread(entityManager);
 
 			File f = new File(MuseumAppPreferences.getContentFolder());
-			if (f.isDirectory()
-					&& !f.getName().equals(GeneralConfigPanel.BACKGROUNDLOC)) {
-				entityManager.loadAllContent(MuseumAppPreferences
-						.getContentFolder());
+			if (f.isDirectory() && !f.getName().equals(GeneralConfigPanel.BACKGROUNDLOC))
+			{
+				entityManager.loadAllContent(MuseumAppPreferences.getContentFolder());
 			}
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}

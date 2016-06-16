@@ -37,8 +37,8 @@ import com.jme3.scene.shape.Box;
 /**
  * The Class TrackedApp.
  */
-abstract public class TrackedApp extends SynergyNetApp implements
-		IMultiTouchEventListener {
+abstract public class TrackedApp extends SynergyNetApp implements IMultiTouchEventListener
+{
 
 	/** The body threshold distance. */
 	public static float BODY_THRESHOLD_DISTANCE = 1;
@@ -50,8 +50,7 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	public static float TABLE_HEIGHT = 1f;
 
 	/** The table orientation. */
-	public static float TABLE_LOCATION_X, TABLE_LOCATION_Y,
-			TABLE_ORIENTATION = 0;
+	public static float TABLE_LOCATION_X, TABLE_LOCATION_Y, TABLE_ORIENTATION = 0;
 
 	/** The Constant SLEEP_TIME. */
 	private static final int SLEEP_TIME = 2000;
@@ -72,12 +71,18 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	private boolean selectionActionMadeRecently = false;
 
 	/** The selection action made timer. */
-	private Runnable selectionActionMadeTimer = new Runnable() {
-		public void run() {
-			try {
+	private Runnable selectionActionMadeTimer = new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
 				Thread.sleep(SLEEP_TIME);
 				selectionActionMadeRecently = false;
-			} catch (InterruptedException ie) {
+			}
+			catch (InterruptedException ie)
+			{
 			}
 		}
 	};
@@ -109,10 +114,12 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Gets the real value.
 	 *
-	 * @param value the value
+	 * @param value
+	 *            the value
 	 * @return the real value
 	 */
-	public static float getRealValue(float value) {
+	public static float getRealValue(float value)
+	{
 		DisplayPrefsItem displayPrefs = new DisplayPrefsItem();
 		return value * (displayPrefs.getRealWidth() / displayPrefs.getWidth());
 	}
@@ -120,34 +127,34 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Initialise tracking app args.
 	 *
-	 * @param args the args
+	 * @param args
+	 *            the args
 	 */
-	public static void initialiseTrackingAppArgs(String[] args) {
+	public static void initialiseTrackingAppArgs(String[] args)
+	{
 
-		try {
-			BODY_THRESHOLD_DISTANCE = Float.parseFloat(ManagementFactory
-					.getRuntimeMXBean().getSystemProperties()
-					.get("bodythreshold"));
-		} catch (Exception e) {
-			System.out
-					.println("No body threshold argument given, using default.");
+		try
+		{
+			BODY_THRESHOLD_DISTANCE = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("bodythreshold"));
+		}
+		catch (Exception e)
+		{
+			System.out.println("No body threshold argument given, using default.");
 		}
 
-		BODY_THRESHOLD_DISTANCE = SynergyNetPositioning
-				.getPixelValue(BODY_THRESHOLD_DISTANCE);
+		BODY_THRESHOLD_DISTANCE = SynergyNetPositioning.getPixelValue(BODY_THRESHOLD_DISTANCE);
 		System.out.println("Body Threshold: " + BODY_THRESHOLD_DISTANCE);
 
-		try {
-			HAND_THRESHOLD_DISTANCE = Float.parseFloat(ManagementFactory
-					.getRuntimeMXBean().getSystemProperties()
-					.get("handthreshold"));
-		} catch (Exception e) {
-			System.out
-					.println("No hand threshold argument given, using default.");
+		try
+		{
+			HAND_THRESHOLD_DISTANCE = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("handthreshold"));
+		}
+		catch (Exception e)
+		{
+			System.out.println("No hand threshold argument given, using default.");
 		}
 
-		HAND_THRESHOLD_DISTANCE = SynergyNetPositioning
-				.getPixelValue(HAND_THRESHOLD_DISTANCE);
+		HAND_THRESHOLD_DISTANCE = SynergyNetPositioning.getPixelValue(HAND_THRESHOLD_DISTANCE);
 		System.out.println("Hand Threshold: " + HAND_THRESHOLD_DISTANCE);
 	}
 
@@ -158,7 +165,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -168,7 +176,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorClicked(MultiTouchCursorEvent event) {
+	public void cursorClicked(MultiTouchCursorEvent event)
+	{
 	}
 
 	/*
@@ -178,54 +187,62 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorPressed(MultiTouchCursorEvent event) {
+	public void cursorPressed(MultiTouchCursorEvent event)
+	{
 		CombinedUserEntity userToStore = null;
 
 		float distance = -1;
 
-		for (CombinedUserEntity user : userLocations) {
+		for (CombinedUserEntity user : userLocations)
+		{
 			UserLocation userLocation = user.getUserLocation();
 			float[] userLocs = userLocation.getLocationOfUser();
-			Vector3f touchLoc = new Vector3f(event.getPosition().x
-					* displayWidth, event.getPosition().y * displayHeight,
-					TABLE_HEIGHT);
+			Vector3f touchLoc = new Vector3f(event.getPosition().x * displayWidth, event.getPosition().y * displayHeight, TABLE_HEIGHT);
 
-			if (userLocation.getUserState() == USERSTATE.BODY) {
+			if (userLocation.getUserState() == USERSTATE.BODY)
+			{
 				Vector2f userLoc = new Vector2f(userLocs[0], userLocs[1]);
-				float distanceTemp = userLoc.distance(new Vector2f(touchLoc.x,
-						touchLoc.y));
-				if (distanceTemp < BODY_THRESHOLD_DISTANCE) {
-					if ((distance == -1) || (distanceTemp < distance)) {
+				float distanceTemp = userLoc.distance(new Vector2f(touchLoc.x, touchLoc.y));
+				if (distanceTemp < BODY_THRESHOLD_DISTANCE)
+				{
+					if ((distance == -1) || (distanceTemp < distance))
+					{
 						distance = distanceTemp;
 						userToStore = user;
 					}
 				}
-			} else if (userLocation.getUserState() == USERSTATE.ONE_HAND) {
-				Vector3f userLoc = new Vector3f(userLocs[0], userLocs[1],
-						userLocs[2]);
+			}
+			else if (userLocation.getUserState() == USERSTATE.ONE_HAND)
+			{
+				Vector3f userLoc = new Vector3f(userLocs[0], userLocs[1], userLocs[2]);
 				float distanceTemp = userLoc.distance(touchLoc);
-				if (distanceTemp < HAND_THRESHOLD_DISTANCE) {
-					if ((distance == -1) || (distanceTemp < distance)) {
+				if (distanceTemp < HAND_THRESHOLD_DISTANCE)
+				{
+					if ((distance == -1) || (distanceTemp < distance))
+					{
 						distance = distanceTemp;
 						userToStore = user;
 					}
 				}
-			} else if (userLocation.getUserState() == USERSTATE.TWO_HANDS) {
+			}
+			else if (userLocation.getUserState() == USERSTATE.TWO_HANDS)
+			{
 
-				Vector3f handOneLoc = new Vector3f(userLocs[0], userLocs[1],
-						userLocs[2]);
-				Vector3f handTwoLoc = new Vector3f(userLocs[3], userLocs[4],
-						userLocs[5]);
+				Vector3f handOneLoc = new Vector3f(userLocs[0], userLocs[1], userLocs[2]);
+				Vector3f handTwoLoc = new Vector3f(userLocs[3], userLocs[4], userLocs[5]);
 
 				float distanceTemp = handOneLoc.distance(touchLoc);
 				float distanceTempTwo = handTwoLoc.distance(touchLoc);
 
-				if (distanceTempTwo < distanceTemp) {
+				if (distanceTempTwo < distanceTemp)
+				{
 					distanceTemp = distanceTempTwo;
 				}
 
-				if (distanceTemp < HAND_THRESHOLD_DISTANCE) {
-					if ((distance == -1) || (distanceTemp < distance)) {
+				if (distanceTemp < HAND_THRESHOLD_DISTANCE)
+				{
+					if ((distance == -1) || (distanceTemp < distance))
+					{
 						distance = distanceTemp;
 						userToStore = user;
 					}
@@ -234,17 +251,25 @@ abstract public class TrackedApp extends SynergyNetApp implements
 		}
 
 		boolean isTeacher = false;
-		if (userToStore != null) {
+		if (userToStore != null)
+		{
 			isTeacher = userToStore.isTeacher();
 
-			if (gestureMode && isTeacher) {
-				if (individualMode) {
-					if (isSelected) {
+			if (gestureMode && isTeacher)
+			{
+				if (individualMode)
+				{
+					if (isSelected)
+					{
 						deselected();
-					} else {
+					}
+					else
+					{
 						selected();
 					}
-				} else {
+				}
+				else
+				{
 					gestureIndividualModeEnabled();
 					selected();
 				}
@@ -260,8 +285,10 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorReleased(MultiTouchCursorEvent event) {
-		if (touches.containsKey(event.getCursorID())) {
+	public void cursorReleased(MultiTouchCursorEvent event)
+	{
+		if (touches.containsKey(event.getCursorID()))
+		{
 			touches.remove(event.getCursorID());
 		}
 	}
@@ -269,7 +296,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Gesturea all mode enabled.
 	 */
-	public void gestureaAllModeEnabled() {
+	public void gestureaAllModeEnabled()
+	{
 		gestureMode = true;
 		isSelected = true;
 		individualMode = false;
@@ -279,8 +307,10 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Gesture individual mode enabled.
 	 */
-	public void gestureIndividualModeEnabled() {
-		if (!individualMode) {
+	public void gestureIndividualModeEnabled()
+	{
+		if (!individualMode)
+		{
 			gestureMode = true;
 			individualMode = true;
 			hideSelectionBorder();
@@ -290,7 +320,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Gesture mode disabled.
 	 */
-	public void gestureModeDisabled() {
+	public void gestureModeDisabled()
+	{
 		gestureMode = false;
 		isSelected = false;
 		individualMode = false;
@@ -300,10 +331,12 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Localise vector.
 	 *
-	 * @param vec the vec
+	 * @param vec
+	 *            the vec
 	 * @return the vector2f
 	 */
-	public Vector2f localiseVector(Vector2f vec) {
+	public Vector2f localiseVector(Vector2f vec)
+	{
 
 		vec.setX(vec.x - TABLE_LOCATION_X);
 		vec.setY(vec.y - TABLE_LOCATION_Y);
@@ -326,7 +359,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectAdded(MultiTouchObjectEvent event) {
+	public void objectAdded(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -336,7 +370,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectChanged(MultiTouchObjectEvent event) {
+	public void objectChanged(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -346,7 +381,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * .input.events.MultiTouchObjectEvent)
 	 */
 	@Override
-	public void objectRemoved(MultiTouchObjectEvent event) {
+	public void objectRemoved(MultiTouchObjectEvent event)
+	{
 	}
 
 	/*
@@ -354,8 +390,10 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * @see synergynet3.SynergyNetApp#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
-		if (trackingSync != null) {
+	public void onDestroy()
+	{
+		if (trackingSync != null)
+		{
 			trackingSync.stop();
 		}
 		super.onDestroy();
@@ -364,15 +402,16 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Sets the user locations.
 	 *
-	 * @param remoteUserLocations the new user locations
+	 * @param remoteUserLocations
+	 *            the new user locations
 	 */
-	public void setUserLocations(
-			ArrayList<CombinedUserEntity> remoteUserLocations) {
+	public void setUserLocations(ArrayList<CombinedUserEntity> remoteUserLocations)
+	{
 		userLocations = new ArrayList<CombinedUserEntity>();
 
-		for (CombinedUserEntity user : remoteUserLocations) {
-			UserLocation userLocation = localiseUserLocation(user
-					.getUserLocation());
+		for (CombinedUserEntity user : remoteUserLocations)
+		{
+			UserLocation userLocation = localiseUserLocation(user.getUserLocation());
 			user.setUserLocation(userLocation);
 			userLocations.add(user);
 		}
@@ -384,7 +423,8 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	 * MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		super.shouldStart(input, iqo);
 		this.input = input;
 
@@ -392,54 +432,58 @@ abstract public class TrackedApp extends SynergyNetApp implements
 		displayHeight = (int) (stage.getWorldLocation().y * 2);
 
 		trackingTableIdentity = SynergyNetCluster.get().getIdentity();
-		TrackingDeviceControl trackingDeviceController = new TrackingDeviceControl(
-				trackingTableIdentity);
+		TrackingDeviceControl trackingDeviceController = new TrackingDeviceControl(trackingTableIdentity);
 		trackingSync = new TrackedAppSync(trackingDeviceController, this);
 
 		TABLE_LOCATION_X = localDevicePosition.getXinMetres();
 		TABLE_LOCATION_Y = localDevicePosition.getYinMetres();
 		TABLE_ORIENTATION = localDevicePosition.getOrientation();
-		TABLE_HEIGHT = SynergyNetPositioning.getPixelValue(localDevicePosition
-				.getInterfaceHeightFromFloorinMetres());
+		TABLE_HEIGHT = SynergyNetPositioning.getPixelValue(localDevicePosition.getInterfaceHeightFromFloorinMetres());
 
-		Box box = new Box(new Vector3f(), displayWidth / 2, displayHeight / 2,
-				100);
+		Box box = new Box(new Vector3f(), displayWidth / 2, displayHeight / 2, 100);
 		tableRep = new Geometry("localTable", box);
-		tableRep.setLocalTranslation(displayWidth / 2, displayHeight / 2,
-				TABLE_HEIGHT);
+		tableRep.setLocalTranslation(displayWidth / 2, displayHeight / 2, TABLE_HEIGHT);
 	}
 
 	/**
 	 * User pointing.
 	 *
-	 * @param pointDirection the point direction
+	 * @param pointDirection
+	 *            the point direction
 	 */
-	public void userPointing(PointDirection pointDirection) {
-		if (!selectionActionMadeRecently) {
-			Vector3f startPoint = generateLocalised3dVector(pointDirection
-					.getStartPoint());
-			Vector3f endPoint = generateLocalised3dVector(pointDirection
-					.getEndPoint());
+	public void userPointing(PointDirection pointDirection)
+	{
+		if (!selectionActionMadeRecently)
+		{
+			Vector3f startPoint = generateLocalised3dVector(pointDirection.getStartPoint());
+			Vector3f endPoint = generateLocalised3dVector(pointDirection.getEndPoint());
 
 			startPoint.setX(startPoint.getX() - (displayWidth / 2));
 			startPoint.setY(startPoint.getY() - (displayHeight / 2));
 			endPoint.setX(endPoint.getX() - (displayWidth / 2));
 			endPoint.setY(endPoint.getY() - (displayHeight / 2));
 
-			Vector3f direction = generatorVectorBetween(startPoint, endPoint)
-					.normalize();
+			Vector3f direction = generatorVectorBetween(startPoint, endPoint).normalize();
 			Ray ray = new Ray(endPoint, direction);
 			CollisionResults results = new CollisionResults();
 			ray.collideWith(tableRep.getWorldBound(), results);
-			if (results.size() > 0) {
-				if (gestureMode) {
-					if (individualMode) {
-						if (isSelected) {
+			if (results.size() > 0)
+			{
+				if (gestureMode)
+				{
+					if (individualMode)
+					{
+						if (isSelected)
+						{
 							deselected();
-						} else {
+						}
+						else
+						{
 							selected();
 						}
-					} else {
+					}
+					else
+					{
 						gestureIndividualModeEnabled();
 						selected();
 					}
@@ -451,12 +495,13 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Deselected.
 	 */
-	private void deselected() {
-		if (!selectionActionMadeRecently) {
+	private void deselected()
+	{
+		if (!selectionActionMadeRecently)
+		{
 			isSelected = false;
 			hideSelectionBorder();
-			TrackingControlComms.get().announceDeSelection(
-					trackingTableIdentity);
+			TrackingControlComms.get().announceDeSelection(trackingTableIdentity);
 			selectionActionMade();
 		}
 	}
@@ -464,33 +509,38 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Generate localised3d vector.
 	 *
-	 * @param vectorRep the vector rep
+	 * @param vectorRep
+	 *            the vector rep
 	 * @return the vector3f
 	 */
-	private Vector3f generateLocalised3dVector(float[] vectorRep) {
+	private Vector3f generateLocalised3dVector(float[] vectorRep)
+	{
 		Vector2f originTemp = new Vector2f(vectorRep[0], vectorRep[1]);
 		originTemp = localiseVector(originTemp);
-		return new Vector3f(originTemp.x, originTemp.y,
-				SynergyNetPositioning.getPixelValue(vectorRep[2]));
+		return new Vector3f(originTemp.x, originTemp.y, SynergyNetPositioning.getPixelValue(vectorRep[2]));
 	}
 
 	/**
 	 * Generator vector between.
 	 *
-	 * @param from the from
-	 * @param to the to
+	 * @param from
+	 *            the from
+	 * @param to
+	 *            the to
 	 * @return the vector3f
 	 */
-	private Vector3f generatorVectorBetween(Vector3f from, Vector3f to) {
-		return new Vector3f(to.getX() - from.getX(), to.getY() - from.getY(),
-				to.getZ() - from.getZ());
+	private Vector3f generatorVectorBetween(Vector3f from, Vector3f to)
+	{
+		return new Vector3f(to.getX() - from.getX(), to.getY() - from.getY(), to.getZ() - from.getZ());
 	}
 
 	/**
 	 * Hide selection border.
 	 */
-	private void hideSelectionBorder() {
-		if (selectionBorder != null) {
+	private void hideSelectionBorder()
+	{
+		if (selectionBorder != null)
+		{
 			stage.removeItem(selectionBorder);
 			selectionBorder = null;
 		}
@@ -499,49 +549,40 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Localise user location.
 	 *
-	 * @param userLocation the user location
+	 * @param userLocation
+	 *            the user location
 	 * @return the user location
 	 */
-	private UserLocation localiseUserLocation(UserLocation userLocation) {
-		if (userLocation.getUserState() == USERSTATE.BODY) {
+	private UserLocation localiseUserLocation(UserLocation userLocation)
+	{
+		if (userLocation.getUserState() == USERSTATE.BODY)
+		{
 
-			Vector2f bodyLoc = new Vector2f(
-					userLocation.getLocationOfUser()[0],
-					userLocation.getLocationOfUser()[1]);
+			Vector2f bodyLoc = new Vector2f(userLocation.getLocationOfUser()[0], userLocation.getLocationOfUser()[1]);
 			bodyLoc = localiseVector(bodyLoc);
 
 			userLocation.setUserBodyLocation(bodyLoc.x, bodyLoc.y);
 
-		} else if (userLocation.getUserState() == USERSTATE.ONE_HAND) {
+		}
+		else if (userLocation.getUserState() == USERSTATE.ONE_HAND)
+		{
 
-			Vector2f handLoc = new Vector2f(
-					userLocation.getLocationOfUser()[0],
-					userLocation.getLocationOfUser()[1]);
+			Vector2f handLoc = new Vector2f(userLocation.getLocationOfUser()[0], userLocation.getLocationOfUser()[1]);
 			handLoc = localiseVector(handLoc);
 
-			userLocation.setSingleUserHandLocation(handLoc.x, handLoc.y,
-					SynergyNetPositioning.getPixelValue(userLocation
-							.getLocationOfUser()[2]));
+			userLocation.setSingleUserHandLocation(handLoc.x, handLoc.y, SynergyNetPositioning.getPixelValue(userLocation.getLocationOfUser()[2]));
 
-		} else if (userLocation.getUserState() == USERSTATE.TWO_HANDS) {
+		}
+		else if (userLocation.getUserState() == USERSTATE.TWO_HANDS)
+		{
 
-			Vector2f handOneLoc = new Vector2f(
-					userLocation.getLocationOfUser()[0],
-					userLocation.getLocationOfUser()[1]);
+			Vector2f handOneLoc = new Vector2f(userLocation.getLocationOfUser()[0], userLocation.getLocationOfUser()[1]);
 			handOneLoc = localiseVector(handOneLoc);
 
-			Vector2f handTwoLoc = new Vector2f(
-					userLocation.getLocationOfUser()[3],
-					userLocation.getLocationOfUser()[4]);
+			Vector2f handTwoLoc = new Vector2f(userLocation.getLocationOfUser()[3], userLocation.getLocationOfUser()[4]);
 			handTwoLoc = localiseVector(handTwoLoc);
 
-			userLocation
-					.setBothUserHandLocations(handOneLoc.x, handOneLoc.y,
-							SynergyNetPositioning.getPixelValue(userLocation
-									.getLocationOfUser()[2]), handTwoLoc.x,
-							handTwoLoc.y, SynergyNetPositioning
-									.getPixelValue(userLocation
-											.getLocationOfUser()[5]));
+			userLocation.setBothUserHandLocations(handOneLoc.x, handOneLoc.y, SynergyNetPositioning.getPixelValue(userLocation.getLocationOfUser()[2]), handTwoLoc.x, handTwoLoc.y, SynergyNetPositioning.getPixelValue(userLocation.getLocationOfUser()[5]));
 
 		}
 		return userLocation;
@@ -550,8 +591,10 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Selected.
 	 */
-	private void selected() {
-		if (!selectionActionMadeRecently) {
+	private void selected()
+	{
+		if (!selectionActionMadeRecently)
+		{
 			isSelected = true;
 			showSelectionBorder(new ColorRGBA(1f, 1f, 1f, 1f));
 			TrackingControlComms.get().announceSelection(trackingTableIdentity);
@@ -562,8 +605,10 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Selection action made.
 	 */
-	private void selectionActionMade() {
-		if (!selectionActionMadeRecently) {
+	private void selectionActionMade()
+	{
+		if (!selectionActionMadeRecently)
+		{
 			selectionActionMadeRecently = true;
 			new Thread(selectionActionMadeTimer).start();
 		}
@@ -572,21 +617,26 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Show selection border.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 */
-	private void showSelectionBorder(ColorRGBA colour) {
-		if (selectionBorder != null) {
+	private void showSelectionBorder(ColorRGBA colour)
+	{
+		if (selectionBorder != null)
+		{
 			hideSelectionBorder();
 		}
-		try {
-			selectionBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "selectionBorder", UUID.randomUUID());
+		try
+		{
+			selectionBorder = stage.getContentFactory().create(IRoundedBorder.class, "selectionBorder", UUID.randomUUID());
 			selectionBorder.setBorderWidth(30f);
 			selectionBorder.setSize(displayWidth - 30, displayHeight - 30);
 			selectionBorder.setColor(colour);
 			stage.addItem(selectionBorder);
 			selectionBorder.setInteractionEnabled(false);
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -594,12 +644,16 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Gets the user.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 * @return the user
 	 */
-	protected CombinedUserEntity getUser(int userID) {
-		for (CombinedUserEntity user : userLocations) {
-			if (user.getUniqueID() == userID) {
+	protected CombinedUserEntity getUser(int userID)
+	{
+		for (CombinedUserEntity user : userLocations)
+		{
+			if (user.getUniqueID() == userID)
+			{
 				return user;
 			}
 		}
@@ -609,20 +663,24 @@ abstract public class TrackedApp extends SynergyNetApp implements
 	/**
 	 * Gets the user colour.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 * @return the user colour
 	 */
-	protected ColorRGBA getUserColour(int userID) {
+	protected ColorRGBA getUserColour(int userID)
+	{
 		return UserColourUtils.getRGBAColour(userID);
 	}
 
 	/**
 	 * Checks if is teacher.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 * @return true, if is teacher
 	 */
-	protected boolean isTeacher(int userID) {
+	protected boolean isTeacher(int userID)
+	{
 		return getUser(userID).isTeacher();
 	}
 

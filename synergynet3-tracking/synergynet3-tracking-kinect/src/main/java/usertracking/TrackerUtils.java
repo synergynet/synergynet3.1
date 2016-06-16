@@ -3,7 +3,8 @@ package usertracking;
 /**
  * The Class TrackerUtils.
  */
-public class TrackerUtils {
+public class TrackerUtils
+{
 
 	/** The Constant MESSAGE_TOKEN. */
 	private final static String MESSAGE_TOKEN = "-#-";
@@ -17,17 +18,23 @@ public class TrackerUtils {
 	/**
 	 * Creates the teacher status message.
 	 *
-	 * @param id the id
-	 * @param tableID the table id
-	 * @param isTeacher the is teacher
+	 * @param id
+	 *            the id
+	 * @param tableID
+	 *            the table id
+	 * @param isTeacher
+	 *            the is teacher
 	 * @return the string
 	 */
-	public static String createTeacherStatusMessage(int id, String tableID,
-			boolean isTeacher) {
+	public static String createTeacherStatusMessage(int id, String tableID, boolean isTeacher)
+	{
 		String toReturn = id + MESSAGE_TOKEN;
-		if (isTeacher) {
+		if (isTeacher)
+		{
 			toReturn += TEACHER_STATUS_MESSAGE_IS_TEACHER + MESSAGE_TOKEN;
-		} else {
+		}
+		else
+		{
 			toReturn += TEACHER_STATUS_MESSAGE_IS_STUDENT + MESSAGE_TOKEN;
 		}
 		toReturn += tableID;
@@ -37,24 +44,32 @@ public class TrackerUtils {
 	/**
 	 * Creates the unique id to trackers message.
 	 *
-	 * @param id the id
-	 * @param uniqueID the unique id
+	 * @param id
+	 *            the id
+	 * @param uniqueID
+	 *            the unique id
 	 * @return the string
 	 */
-	public static String createUniqueIDToTrackersMessage(int id, long uniqueID) {
+	public static String createUniqueIDToTrackersMessage(int id, long uniqueID)
+	{
 		return id + MESSAGE_TOKEN + uniqueID;
 	}
 
 	/**
 	 * Gets the table id from teacher status message.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 * @return the table id from teacher status message
 	 */
-	public static String getTableIdFromTeacherStatusMessage(String message) {
-		try {
+	public static String getTableIdFromTeacherStatusMessage(String message)
+	{
+		try
+		{
 			return message.split(MESSAGE_TOKEN)[2];
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return "";
 		}
 	}
@@ -62,19 +77,25 @@ public class TrackerUtils {
 	/**
 	 * Gets the teacher status from teacher status message.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 * @return the teacher status from teacher status message
 	 */
-	public static boolean getTeacherStatusFromTeacherStatusMessage(
-			String message) {
-		try {
-			if (message.split(MESSAGE_TOKEN)[1]
-					.equals(TEACHER_STATUS_MESSAGE_IS_TEACHER)) {
+	public static boolean getTeacherStatusFromTeacherStatusMessage(String message)
+	{
+		try
+		{
+			if (message.split(MESSAGE_TOKEN)[1].equals(TEACHER_STATUS_MESSAGE_IS_TEACHER))
+			{
 				return true;
-			} else {
+			}
+			else
+			{
 				return false;
 			}
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return false;
 		}
 	}
@@ -82,13 +103,18 @@ public class TrackerUtils {
 	/**
 	 * Gets the unique id from message.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 * @return the unique id from message
 	 */
-	public static int getUniqueIDFromMessage(String message) {
-		try {
+	public static int getUniqueIDFromMessage(String message)
+	{
+		try
+		{
 			return Integer.parseInt(message.split(MESSAGE_TOKEN)[1]);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return 0;
 		}
 	}
@@ -96,13 +122,18 @@ public class TrackerUtils {
 	/**
 	 * Gets the user id from message.
 	 *
-	 * @param message the message
+	 * @param message
+	 *            the message
 	 * @return the user id from message
 	 */
-	public static int getUserIdFromMessage(String message) {
-		try {
+	public static int getUserIdFromMessage(String message)
+	{
+		try
+		{
 			return Integer.parseInt(message.split(MESSAGE_TOKEN)[0]);
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			return -1;
 		}
 	}

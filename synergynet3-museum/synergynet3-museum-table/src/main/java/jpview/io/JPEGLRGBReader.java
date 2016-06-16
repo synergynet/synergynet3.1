@@ -22,7 +22,8 @@ import jpview.ptms.PTM;
 /**
  * @author Default
  */
-public class JPEGLRGBReader implements PTMReader {
+public class JPEGLRGBReader implements PTMReader
+{
 
 	/** The __in. */
 	private InputStream __in = null;
@@ -36,28 +37,38 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Instantiates a new JPEGLRGB reader.
 	 *
-	 * @param inputStream the input stream
+	 * @param inputStream
+	 *            the input stream
 	 */
-	public JPEGLRGBReader(InputStream inputStream) {
+	public JPEGLRGBReader(InputStream inputStream)
+	{
 		__in = inputStream;
 	}
 
 	/**
 	 * Combine.
 	 *
-	 * @param green the green
-	 * @param _blue the _blue
+	 * @param green
+	 *            the green
+	 * @param _blue
+	 *            the _blue
 	 * @return the int[]
 	 */
-	public static int[] combine(int[] green, byte[] _blue) {
+	public static int[] combine(int[] green, byte[] _blue)
+	{
 		int[] blue = new int[_blue.length];
-		for (int b = 0; b < blue.length; b++) {
-			if (_blue[b] > 0) {
+		for (int b = 0; b < blue.length; b++)
+		{
+			if (_blue[b] > 0)
+			{
 				blue[b] = (green[b] + _blue[b]) - 128;
-			} else {
+			}
+			else
+			{
 				blue[b] = green[b] + _blue[b] + 128;
 			}
-			if (blue[b] < 0) {
+			if (blue[b] < 0)
+			{
 				blue[b] += 256;
 			}
 		}
@@ -67,12 +78,15 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Convert.
 	 *
-	 * @param a the a
+	 * @param a
+	 *            the a
 	 * @return the int[]
 	 */
-	public static int[] convert(byte[] a) {
+	public static int[] convert(byte[] a)
+	{
 		int[] aa = new int[a.length];
-		for (int i = 0; i < a.length; i++) {
+		for (int i = 0; i < a.length; i++)
+		{
 			aa[i] = Utils.unsignedByteToInt(a[i]);
 		}
 		return aa;
@@ -81,14 +95,19 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Index of.
 	 *
-	 * @param question the question
-	 * @param a the a
+	 * @param question
+	 *            the question
+	 * @param a
+	 *            the a
 	 * @return the int
 	 */
-	public static int indexOf(int question, int[] a) {
+	public static int indexOf(int question, int[] a)
+	{
 		int answer = -1;
-		for (int i = 0; i < a.length; i++) {
-			if (a[i] == question) {
+		for (int i = 0; i < a.length; i++)
+		{
+			if (a[i] == question)
+			{
 				answer = i;
 			}
 		}
@@ -98,17 +117,17 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Invert.
 	 *
-	 * @param source the source
+	 * @param source
+	 *            the source
 	 * @return the buffered image
 	 */
-	public static BufferedImage invert(BufferedImage source) {
-		BufferedImage target = new BufferedImage(source.getWidth(),
-				source.getHeight(), source.getType());
-		byte[] data = ((DataBufferByte) source.getRaster().getDataBuffer())
-				.getData();
-		byte[] targ = ((DataBufferByte) target.getRaster().getDataBuffer())
-				.getData();
-		for (int i = 0; i < data.length; i++) {
+	public static BufferedImage invert(BufferedImage source)
+	{
+		BufferedImage target = new BufferedImage(source.getWidth(), source.getHeight(), source.getType());
+		byte[] data = ((DataBufferByte) source.getRaster().getDataBuffer()).getData();
+		byte[] targ = ((DataBufferByte) target.getRaster().getDataBuffer()).getData();
+		for (int i = 0; i < data.length; i++)
+		{
 			targ[i] = (byte) ((255 - (data[i] + 128)) - 128);
 		}
 		return target;
@@ -117,12 +136,15 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Invert.
 	 *
-	 * @param source the source
+	 * @param source
+	 *            the source
 	 * @return the int[]
 	 */
-	public static int[] invert(int[] source) {
+	public static int[] invert(int[] source)
+	{
 		int[] target = new int[source.length];
-		for (int i = 0; i < source.length; i++) {
+		for (int i = 0; i < source.length; i++)
+		{
 			target[i] = ((255 - (source[i] + 128)) - 128);
 		}
 		return target;
@@ -131,14 +153,19 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		try {
+	public static void main(String[] args)
+	{
+		try
+		{
 			FileInputStream fis = new FileInputStream(new File(args[0]));
 			JPEGLRGBReader me = new JPEGLRGBReader(fis);
 			me.readPTM();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -146,11 +173,14 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Prints the first20.
 	 *
-	 * @param a the a
+	 * @param a
+	 *            the a
 	 */
-	static void printFirst20(byte[] a) {
+	static void printFirst20(byte[] a)
+	{
 		System.out.print(a[0]);
-		for (int i = 1; i < 20; i++) {
+		for (int i = 1; i < 20; i++)
+		{
 			System.out.print("," + a[i]);
 		}
 		System.out.println();
@@ -159,11 +189,14 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Prints the first20.
 	 *
-	 * @param a the a
+	 * @param a
+	 *            the a
 	 */
-	static void printFirst20(int[] a) {
+	static void printFirst20(int[] a)
+	{
 		System.out.print(a[0]);
-		for (int i = 1; i < 20; i++) {
+		for (int i = 1; i < 20; i++)
+		{
 			System.out.print("," + a[i]);
 		}
 		System.out.println();
@@ -172,11 +205,14 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Prints the first20.
 	 *
-	 * @param a the a
+	 * @param a
+	 *            the a
 	 */
-	static void printFirst20(short[] a) {
+	static void printFirst20(short[] a)
+	{
 		System.out.print(a[0]);
-		for (int i = 1; i < 20; i++) {
+		for (int i = 1; i < 20; i++)
+		{
 			System.out.print("," + a[i]);
 		}
 		System.out.println();
@@ -186,12 +222,15 @@ public class JPEGLRGBReader implements PTMReader {
 	 * (non-Javadoc)
 	 * @see jpview.io.PTMReader#readPTM()
 	 */
-	public PTM readPTM() throws java.io.IOException {
+	@Override
+	public PTM readPTM() throws java.io.IOException
+	{
 
 		LRGBPTM ptm = new LRGBPTM();
 
 		// try {
-		if (reset) {
+		if (reset)
+		{
 			String version = PTMIO.getLine(__in);
 			debug("Version: " + version);
 			String type = PTMIO.getLine(__in);
@@ -209,14 +248,16 @@ public class JPEGLRGBReader implements PTMReader {
 		/* scale */
 		String[] sa = PTMIO.getLine(in).split(" ");
 		float[] scale = new float[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			scale[i] = Float.parseFloat(sa[i]);
 		}
 
 		/* bias */
 		sa = PTMIO.getLine(in).split(" ");
 		int[] bias = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			bias[i] = Integer.parseInt(sa[i]);
 		}
 
@@ -224,7 +265,8 @@ public class JPEGLRGBReader implements PTMReader {
 
 		sa = PTMIO.getLine(in).split(" ");
 		int[] xforms = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			xforms[i] = Integer.parseInt(sa[i]);
 		}
 
@@ -234,25 +276,29 @@ public class JPEGLRGBReader implements PTMReader {
 
 		sa = PTMIO.getLine(in).split(" ");
 		int[] order = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			order[i] = Integer.parseInt(sa[i]);
 		}
 
 		sa = PTMIO.getLine(in).split(" ");
 		int[] referencePlane = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			referencePlane[i] = Integer.parseInt(sa[i]);
 		}
 
 		sa = PTMIO.getLine(in).split(" ");
 		int[] compressedSize = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			compressedSize[i] = Integer.parseInt(sa[i]);
 		}
 
 		sa = PTMIO.getLine(in).split(" ");
 		int[] sideInformation = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			sideInformation[i] = Integer.parseInt(sa[i]);
 		}
 
@@ -261,14 +307,16 @@ public class JPEGLRGBReader implements PTMReader {
 
 		byte[][] bufs = new byte[9][];
 
-		for (int i = 0; i < compressedSize.length; i++) {
+		for (int i = 0; i < compressedSize.length; i++)
+		{
 
 			/**
 			 * Read the plane
 			 */
 			byte[] buf = new byte[compressedSize[i]];
 			/* buffering is unreliable - do this byte by byte */
-			for (int b = 0; b < buf.length; b++) {
+			for (int b = 0; b < buf.length; b++)
+			{
 				buf[b] = (byte) in.read();
 			}
 
@@ -279,18 +327,17 @@ public class JPEGLRGBReader implements PTMReader {
 			/* re-orient */
 			AffineTransform tx = AffineTransform.getScaleInstance(1, -1);
 			tx.translate(0, -height);
-			AffineTransformOp op = new AffineTransformOp(tx,
-					AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+			AffineTransformOp op = new AffineTransformOp(tx, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
 			bufferedImage = op.filter(bufferedImage, null);
-			bufs[i] = ((DataBufferByte) bufferedImage.getRaster()
-					.getDataBuffer()).getData();
+			bufs[i] = ((DataBufferByte) bufferedImage.getRaster().getDataBuffer()).getData();
 
 			/**
 			 * read the side info
 			 */
 
 			byte[] buf2 = new byte[sideInformation[i]];
-			for (int b = 0; b < buf2.length; b++) {
+			for (int b = 0; b < buf2.length; b++)
+			{
 				buf2[b] = (byte) in.read();
 			}
 			info[i] = new ByteArrayInputStream(buf2);
@@ -298,20 +345,27 @@ public class JPEGLRGBReader implements PTMReader {
 
 		int[][] coef = new int[9][];
 
-		for (int i = 0; i < 9; i++) {
+		for (int i = 0; i < 9; i++)
+		{
 			int index = indexOf(i, order);
 			debug("index: " + index);
-			if (referencePlane[index] < 0) {
+			if (referencePlane[index] < 0)
+			{
 				debug(" > ref plane");
 				coef[index] = convert(bufs[index]);
-			} else if (xforms[index] == 0) {
+			}
+			else if (xforms[index] == 0)
+			{
 				debug(" > ref combine w/" + referencePlane[index]);
 				coef[index] = combine(coef[referencePlane[index]], bufs[index]);
-			} else if (xforms[index] == 1) {
+			}
+			else if (xforms[index] == 1)
+			{
 				debug(" > ref invert+combine w/" + referencePlane[index]);
-				coef[index] = combine(invert(coef[referencePlane[index]]),
-						bufs[index]);
-			} else {
+				coef[index] = combine(invert(coef[referencePlane[index]]), bufs[index]);
+			}
+			else
+			{
 				System.out.println("Error, unhandled format");
 				return null;
 			}
@@ -324,21 +378,17 @@ public class JPEGLRGBReader implements PTMReader {
 		ptm.setWidth(width);
 		ptm.setHeight(height);
 		int[][] coefficients = new int[6][width * height];
-		for (int h = height - 1; h >= 0; h--) {
-			for (int w = 0; w < ptm.getWidth(); w++) {
+		for (int h = height - 1; h >= 0; h--)
+		{
+			for (int w = 0; w < ptm.getWidth(); w++)
+			{
 				int off = (ptm.getWidth() * h) + w;
-				coefficients[0][off] = (int) PTMIO.cFinal(coef[0][off],
-						bias[0], scale[0]);
-				coefficients[1][off] = (int) PTMIO.cFinal(coef[1][off],
-						bias[1], scale[1]);
-				coefficients[2][off] = (int) PTMIO.cFinal(coef[2][off],
-						bias[2], scale[2]);
-				coefficients[3][off] = (int) PTMIO.cFinal(coef[3][off],
-						bias[3], scale[3]);
-				coefficients[4][off] = (int) PTMIO.cFinal(coef[4][off],
-						bias[4], scale[4]);
-				coefficients[5][off] = (int) PTMIO.cFinal(coef[5][off],
-						bias[5], scale[5]);
+				coefficients[0][off] = (int) PTMIO.cFinal(coef[0][off], bias[0], scale[0]);
+				coefficients[1][off] = (int) PTMIO.cFinal(coef[1][off], bias[1], scale[1]);
+				coefficients[2][off] = (int) PTMIO.cFinal(coef[2][off], bias[2], scale[2]);
+				coefficients[3][off] = (int) PTMIO.cFinal(coef[3][off], bias[3], scale[3]);
+				coefficients[4][off] = (int) PTMIO.cFinal(coef[4][off], bias[4], scale[4]);
+				coefficients[5][off] = (int) PTMIO.cFinal(coef[5][off], bias[5], scale[5]);
 			}
 		}
 		ptm.setA0(coefficients[0]);
@@ -355,8 +405,10 @@ public class JPEGLRGBReader implements PTMReader {
 		/* pixels */
 		int[] rgb = new int[width * height];
 		int rr = 0, gg = 0, bb = 0;
-		for (int h = height - 1; h >= 0; h--) {
-			for (int w = 0; w < width; w++) {
+		for (int h = height - 1; h >= 0; h--)
+		{
+			for (int w = 0; w < width; w++)
+			{
 				int off = (ptm.getWidth() * h) + w;
 				rr = red[off] & 0xff;
 				gg = green[off] & 0xff;
@@ -383,13 +435,19 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Correct coeff.
 	 *
-	 * @param c the c
-	 * @param b the b
-	 * @param w the w
-	 * @param h the h
+	 * @param c
+	 *            the c
+	 * @param b
+	 *            the b
+	 * @param w
+	 *            the w
+	 * @param h
+	 *            the h
 	 */
-	private void correctCoeff(int[] c, ByteArrayInputStream b, int w, int h) {
-		while (b.available() > 0) {
+	private void correctCoeff(int[] c, ByteArrayInputStream b, int w, int h)
+	{
+		while (b.available() > 0)
+		{
 			int p3 = b.read();
 			int p2 = b.read();
 			int p1 = b.read();
@@ -407,10 +465,13 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Debug.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 */
-	private void debug(String s) {
-		if (debug) {
+	private void debug(String s)
+	{
+		if (debug)
+		{
 			System.out.println(s);
 		}
 	}
@@ -418,9 +479,11 @@ public class JPEGLRGBReader implements PTMReader {
 	/**
 	 * Reset.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	protected void reset(boolean b) {
+	protected void reset(boolean b)
+	{
 		reset = b;
 	}
 

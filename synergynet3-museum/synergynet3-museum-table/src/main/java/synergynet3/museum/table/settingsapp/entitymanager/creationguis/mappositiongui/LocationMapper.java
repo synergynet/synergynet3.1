@@ -30,7 +30,8 @@ import com.jme3.math.ColorRGBA;
 /**
  * The Class LocationMapper.
  */
-public class LocationMapper {
+public class LocationMapper
+{
 
 	/** The map height. */
 	private int mapHeight = 540;
@@ -47,15 +48,19 @@ public class LocationMapper {
 	/**
 	 * Instantiates a new location mapper.
 	 *
-	 * @param xOnMapIn the x on map in
-	 * @param yOnMapIn the y on map in
-	 * @param parentGUI the parent gui
-	 * @param modifiableGUI the modifiable gui
+	 * @param xOnMapIn
+	 *            the x on map in
+	 * @param yOnMapIn
+	 *            the y on map in
+	 * @param parentGUI
+	 *            the parent gui
+	 * @param modifiableGUI
+	 *            the modifiable gui
 	 */
-	public LocationMapper(float xOnMapIn, float yOnMapIn,
-			final EntityCreatorGUI parentGUI,
-			final ModifiableXandYFields modifiableGUI) {
-		try {
+	public LocationMapper(float xOnMapIn, float yOnMapIn, final EntityCreatorGUI parentGUI, final ModifiableXandYFields modifiableGUI)
+	{
+		try
+		{
 			this.xOnMap = xOnMapIn;
 			this.yOnMap = yOnMapIn;
 
@@ -86,8 +91,7 @@ public class LocationMapper {
 			int x = (displayWidth / 2) - (labelWidth / 2);
 			int y = yPadding;
 
-			JLabel textLabel = new JLabel(
-					"Click on the map to position the entity.");
+			JLabel textLabel = new JLabel("Click on the map to position the entity.");
 			textLabel.setBounds(new Rectangle(x, y, labelWidth, height));
 			textLabel.setHorizontalAlignment(SwingConstants.RIGHT);
 			jf.getContentPane().add(textLabel);
@@ -98,39 +102,44 @@ public class LocationMapper {
 			int targetX = (int) (((xOnMap * mapWidth) + xPadding) - (pointLabelWidth / 2));
 			int targetY = (int) ((((1 - yOnMap) * mapHeight) + height + (yPadding * 2)) - (pointLabelHeight / 2));
 
-			pointLabel.setBounds(new Rectangle(targetX, targetY,
-					pointLabelWidth, pointLabelHeight));
+			pointLabel.setBounds(new Rectangle(targetX, targetY, pointLabelWidth, pointLabelHeight));
 
-			MouseListener pointListener = new MouseListener() {
-				public void mouseClicked(MouseEvent e) {
+			MouseListener pointListener = new MouseListener()
+			{
+				@Override
+				public void mouseClicked(MouseEvent e)
+				{
 				}
 
-				public void mouseEntered(MouseEvent e) {
+				@Override
+				public void mouseEntered(MouseEvent e)
+				{
 				}
 
-				public void mouseExited(MouseEvent e) {
+				@Override
+				public void mouseExited(MouseEvent e)
+				{
 				}
 
-				public void mousePressed(MouseEvent e) {
+				@Override
+				public void mousePressed(MouseEvent e)
+				{
 
 					float eventX = e.getPoint().x;
 					float eventY = e.getPoint().y;
 
-					xOnMap = Float.parseFloat(String.format("%.3f", eventX
-							/ mapWidth));
-					yOnMap = Float.parseFloat(String.format("%.3f",
-							1 - (eventY / (mapHeight))));
+					xOnMap = Float.parseFloat(String.format("%.3f", eventX / mapWidth));
+					yOnMap = Float.parseFloat(String.format("%.3f", 1 - (eventY / (mapHeight))));
 
-					int targetX = (e.getPoint().x + xPadding)
-							- (pointLabelWidth / 2);
-					int targetY = (e.getPoint().y + height + (yPadding * 2))
-							- (pointLabelHeight / 2);
+					int targetX = (e.getPoint().x + xPadding) - (pointLabelWidth / 2);
+					int targetY = (e.getPoint().y + height + (yPadding * 2)) - (pointLabelHeight / 2);
 
-					pointLabel.setBounds(new Rectangle(targetX, targetY,
-							pointLabelWidth, pointLabelHeight));
+					pointLabel.setBounds(new Rectangle(targetX, targetY, pointLabelWidth, pointLabelHeight));
 				}
 
-				public void mouseReleased(MouseEvent e) {
+				@Override
+				public void mouseReleased(MouseEvent e)
+				{
 				}
 			};
 
@@ -140,13 +149,13 @@ public class LocationMapper {
 			boolean backgroundImageFound = false;
 
 			File file = MuseumAppPreferences.getBackgroundImage();
-			if (file != null) {
-				if (file.exists()) {
+			if (file != null)
+			{
+				if (file.exists())
+				{
 					BufferedImage backgroundImage = ImageIO.read(file);
 
-					JLabel picLabel = new JLabel(new ImageIcon(((new ImageIcon(
-							backgroundImage)).getImage()).getScaledInstance(
-							mapWidth, mapHeight, java.awt.Image.SCALE_SMOOTH)));
+					JLabel picLabel = new JLabel(new ImageIcon(((new ImageIcon(backgroundImage)).getImage()).getScaledInstance(mapWidth, mapHeight, java.awt.Image.SCALE_SMOOTH)));
 					picLabel.addMouseListener(pointListener);
 					jf.getContentPane().add(pointLabel);
 
@@ -158,11 +167,10 @@ public class LocationMapper {
 				}
 			}
 
-			if (!backgroundImageFound) {
-				ColorRGBA colourRGBA = MuseumAppPreferences
-						.getBackgroundColour();
-				Color colour = new Color(colourRGBA.r, colourRGBA.g,
-						colourRGBA.b, colourRGBA.a);
+			if (!backgroundImageFound)
+			{
+				ColorRGBA colourRGBA = MuseumAppPreferences.getBackgroundColour();
+				Color colour = new Color(colourRGBA.r, colourRGBA.g, colourRGBA.b, colourRGBA.a);
 
 				JPanel panel = new JPanel();
 				panel.setBackground(colour);
@@ -180,8 +188,11 @@ public class LocationMapper {
 
 			JButton okButton = new JButton();
 			okButton.setText("OK");
-			okButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
+			okButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent evt)
+				{
 					modifiableGUI.updateXandYFields(xOnMap, yOnMap);
 
 					jf.setVisible(false);
@@ -195,35 +206,41 @@ public class LocationMapper {
 
 			JButton cancelButton = new JButton();
 			cancelButton.setText("Cancel");
-			cancelButton.addActionListener(new ActionListener() {
-				public void actionPerformed(ActionEvent evt) {
+			cancelButton.addActionListener(new ActionListener()
+			{
+				@Override
+				public void actionPerformed(ActionEvent evt)
+				{
 					jf.setVisible(false);
 					parentGUI.relatedFrames.remove(jf);
 				}
 			});
-			cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth
-					- xPadding, height));
+			cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 			jf.getContentPane().add(cancelButton);
 
 			jf.setVisible(true);
 
 			parentGUI.relatedFrames.add(jf);
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 		}
 	}
 
 	/**
 	 * @return the xOnMap
 	 */
-	public float getxOnMap() {
+	public float getxOnMap()
+	{
 		return xOnMap;
 	}
 
 	/**
 	 * @return the yOnMap
 	 */
-	public float getyOnMap() {
+	public float getyOnMap()
+	{
 		return yOnMap;
 	}
 

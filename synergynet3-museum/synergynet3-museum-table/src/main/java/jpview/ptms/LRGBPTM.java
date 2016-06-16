@@ -10,7 +10,8 @@ import jpview.graphics.Vec3f;
 /**
  * @author clyon
  */
-public class LRGBPTM implements PTM {
+public class LRGBPTM implements PTM
+{
 
 	/** The dgain. */
 	private float DGAIN = 3.5f;
@@ -55,14 +56,17 @@ public class LRGBPTM implements PTM {
 	protected int[] environmentMapMap = null;
 
 	/** Creates a new instance of PTMDataBuffer */
-	public LRGBPTM() {
+	public LRGBPTM()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#blue(int)
 	 */
-	public int blue(int i) {
+	@Override
+	public int blue(int i)
+	{
 		return coefficients[i][6] & 0xff;
 	}
 
@@ -70,7 +74,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#computeNormals()
 	 */
-	public void computeNormals() {
+	@Override
+	public void computeNormals()
+	{
 		normals = HPNormals.getNormals(this);
 	}
 
@@ -78,13 +84,19 @@ public class LRGBPTM implements PTM {
 	 * This function updates the current PTM with the data of the given sub-ptm.
 	 * The sub-ptm is stretched to the desired dimensions.
 	 *
-	 * @param offx Horizontal offset
-	 * @param offy Vertical offset
-	 * @param w Target width
-	 * @param h Target height
-	 * @param ptm Sub-ptm
+	 * @param offx
+	 *            Horizontal offset
+	 * @param offy
+	 *            Vertical offset
+	 * @param w
+	 *            Target width
+	 * @param h
+	 *            Target height
+	 * @param ptm
+	 *            Sub-ptm
 	 */
-	public void drawSubPtm(int offx, int offy, int w, int h, PTM ptm) {
+	public void drawSubPtm(int offx, int offy, int w, int h, PTM ptm)
+	{
 		// PTM must be of LRGB type
 		assert (ptm.getType() == PTM.LRGB);
 		assert ((offx + w) <= width);
@@ -109,8 +121,10 @@ public class LRGBPTM implements PTM {
 		int xprime, yprime;
 		int sourceW = ptm.getWidth();
 		int sourceH = ptm.getHeight();
-		for (int y = offy; y < (offy + h); y++) {
-			for (int x = offx; x < (offx + w); x++) {
+		for (int y = offy; y < (offy + h); y++)
+		{
+			for (int x = offx; x < (offx + w); x++)
+			{
 				xp = x * sx;
 				yp = y * sy;
 
@@ -122,16 +136,13 @@ public class LRGBPTM implements PTM {
 
 				// Coefficients interpolation
 
-				if ((xp < (sourceW - 1)) && (yp < (sourceH - 1))) {
+				if ((xp < (sourceW - 1)) && (yp < (sourceH - 1)))
+				{
 					offset = xprime + (yprime * sourceW);
 
-					for (int i = 0; i < 6; i++) {
-						coefficients[x + (y * width)][i] = (int) (((1.0f - alpha)
-								* (1.0f - beta) * coeff[offset][i])
-								+ (alpha * (1.0f - beta) * coeff[offset + 1][i])
-								+ ((1.0f - alpha) * beta * coeff[offset
-										+ sourceW][i]) + (alpha * beta * coeff[offset
-								+ 1 + sourceW][i]));
+					for (int i = 0; i < 6; i++)
+					{
+						coefficients[x + (y * width)][i] = (int) (((1.0f - alpha) * (1.0f - beta) * coeff[offset][i]) + (alpha * (1.0f - beta) * coeff[offset + 1][i]) + ((1.0f - alpha) * beta * coeff[offset + sourceW][i]) + (alpha * beta * coeff[offset + 1 + sourceW][i]));
 					}
 
 					// RGB interpolation
@@ -145,41 +156,39 @@ public class LRGBPTM implements PTM {
 					r10 = rgb10 & 0x00ff0000;
 					r11 = rgb11 & 0x00ff0000;
 
-					r = (int) (((1.0f - alpha) * (1.0f - beta) * r00)
-							+ (alpha * (1.0f - beta) * r01)
-							+ ((1.0f - alpha) * beta * r10) + (alpha * beta * r11));
+					r = (int) (((1.0f - alpha) * (1.0f - beta) * r00) + (alpha * (1.0f - beta) * r01) + ((1.0f - alpha) * beta * r10) + (alpha * beta * r11));
 
 					g00 = rgb00 & 0x0000ff00;
 					g01 = rgb01 & 0x0000ff00;
 					g10 = rgb10 & 0x0000ff00;
 					g11 = rgb11 & 0x0000ff00;
 
-					g = (int) (((1.0f - alpha) * (1.0f - beta) * g00)
-							+ (alpha * (1.0f - beta) * g01)
-							+ ((1.0f - alpha) * beta * g10) + (alpha * beta * g11));
+					g = (int) (((1.0f - alpha) * (1.0f - beta) * g00) + (alpha * (1.0f - beta) * g01) + ((1.0f - alpha) * beta * g10) + (alpha * beta * g11));
 
 					b00 = rgb00 & 0x000000ff;
 					b01 = rgb01 & 0x000000ff;
 					b10 = rgb10 & 0x000000ff;
 					b11 = rgb11 & 0x000000ff;
 
-					b = (int) (((1.0f - alpha) * (1.0f - beta) * b00)
-							+ (alpha * (1.0f - beta) * b01)
-							+ ((1.0f - alpha) * beta * b10) + (alpha * beta * b11));
+					b = (int) (((1.0f - alpha) * (1.0f - beta) * b00) + (alpha * (1.0f - beta) * b01) + ((1.0f - alpha) * beta * b10) + (alpha * beta * b11));
 
 					coefficients[x + (y * width)][6] = (r << 16) | (g << 8) | b;
-				} else {
-					if ((xprime + 1) >= sourceW) {
+				}
+				else
+				{
+					if ((xprime + 1) >= sourceW)
+					{
 						xprime--;
 					}
 
-					if ((yprime + 1) >= sourceH) {
+					if ((yprime + 1) >= sourceH)
+					{
 						yprime--;
 					}
 
-					for (int i = 0; i < 7; i++) {
-						coefficients[x + (y * width)][i] = coeff[xprime
-								+ (yprime * sourceW)][i];
+					for (int i = 0; i < 7; i++)
+					{
+						coefficients[x + (y * width)][i] = coeff[xprime + (yprime * sourceW)][i];
 					}
 				}
 			}
@@ -190,11 +199,15 @@ public class LRGBPTM implements PTM {
 	 * This functions updates the current PTM with the data of the given
 	 * sub-ptm.
 	 *
-	 * @param offx Horizontal offset
-	 * @param offy Vertical offset
-	 * @param ptm Sub-ptm
+	 * @param offx
+	 *            Horizontal offset
+	 * @param offy
+	 *            Vertical offset
+	 * @param ptm
+	 *            Sub-ptm
 	 */
-	public void drawSubPtm(int offx, int offy, PTM ptm) {
+	public void drawSubPtm(int offx, int offy, PTM ptm)
+	{
 		assert (ptm.getType() == PTM.LRGB);
 		assert (offx >= 0);
 		assert (offy >= 0);
@@ -204,9 +217,12 @@ public class LRGBPTM implements PTM {
 
 		int offset = 0;
 		// int w = ptm.getWidth();
-		for (int y = offy; y < (offy + ptm.getHeight()); y++) {
-			for (int x = offx; x < (offx + ptm.getWidth()); x++) {
-				for (int i = 0; i < 7; i++) {
+		for (int y = offy; y < (offy + ptm.getHeight()); y++)
+		{
+			for (int x = offx; x < (offx + ptm.getWidth()); x++)
+			{
+				for (int i = 0; i < 7; i++)
+				{
 					coefficients[x + (y * width)][i] = coeff[offset][i];
 				}
 
@@ -220,25 +236,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the a0
 	 */
-	public int[] getA0() {
+	public int[] getA0()
+	{
 		return getA0(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the a0.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the a0
 	 */
-	public int[] getA0(int left, int top, int right, int bottom) {
+	public int[] getA0(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][0];
 				offset++;
@@ -253,25 +277,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the a1
 	 */
-	public int[] getA1() {
+	public int[] getA1()
+	{
 		return getA1(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the a1.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the a1
 	 */
-	public int[] getA1(int left, int top, int right, int bottom) {
+	public int[] getA1(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][1];
 				offset++;
@@ -286,25 +318,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the a2
 	 */
-	public int[] getA2() {
+	public int[] getA2()
+	{
 		return getA2(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the a2.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the a2
 	 */
-	public int[] getA2(int left, int top, int right, int bottom) {
+	public int[] getA2(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][2];
 				offset++;
@@ -319,25 +359,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the a3
 	 */
-	public int[] getA3() {
+	public int[] getA3()
+	{
 		return getA3(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the a3.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the a3
 	 */
-	public int[] getA3(int left, int top, int right, int bottom) {
+	public int[] getA3(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][3];
 				offset++;
@@ -352,25 +400,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the a4
 	 */
-	public int[] getA4() {
+	public int[] getA4()
+	{
 		return getA4(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the a4.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the a4
 	 */
-	public int[] getA4(int left, int top, int right, int bottom) {
+	public int[] getA4(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][4];
 				offset++;
@@ -385,25 +441,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the a5
 	 */
-	public int[] getA5() {
+	public int[] getA5()
+	{
 		return getA5(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the a5.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the a5
 	 */
-	public int[] getA5(int left, int top, int right, int bottom) {
+	public int[] getA5(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][5];
 				offset++;
@@ -420,7 +484,8 @@ public class LRGBPTM implements PTM {
 	 * coefficients[i][5] --> coefficient a5 of the i-th pixel
 	 * coefficients[i][6] --> RGB color encoded as 0x00RRGGBB
 	 */
-	public int[][] getCoefficients() {
+	public int[][] getCoefficients()
+	{
 		return coefficients;
 	}
 
@@ -428,7 +493,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getDGain()
 	 */
-	public float getDGain() {
+	@Override
+	public float getDGain()
+	{
 		return DGAIN;
 	}
 
@@ -436,7 +503,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getEnvironmentMap()
 	 */
-	public EnvironmentMap getEnvironmentMap() {
+	@Override
+	public EnvironmentMap getEnvironmentMap()
+	{
 		return em;
 	}
 
@@ -444,8 +513,11 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getEnvironmentMapCache()
 	 */
-	public int[] getEnvironmentMapCache() {
-		if (this.environmentMapCache == null) {
+	@Override
+	public int[] getEnvironmentMapCache()
+	{
+		if (this.environmentMapCache == null)
+		{
 			createEnvironmentMapCache();
 		}
 		return this.environmentMapCache;
@@ -455,8 +527,11 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getEnvironmentMapMap()
 	 */
-	public int[] getEnvironmentMapMap() {
-		if (this.environmentMapMap == null) {
+	@Override
+	public int[] getEnvironmentMapMap()
+	{
+		if (this.environmentMapMap == null)
+		{
 			createEnvironmentMapMap();
 		}
 		return this.environmentMapMap;
@@ -466,7 +541,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getExp()
 	 */
-	public int getExp() {
+	@Override
+	public int getExp()
+	{
 		return EXP;
 	}
 
@@ -474,7 +551,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getHeight()
 	 */
-	public int getHeight() {
+	@Override
+	public int getHeight()
+	{
 		return height;
 	}
 
@@ -482,7 +561,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getKDiff()
 	 */
-	public float getKDiff() {
+	@Override
+	public float getKDiff()
+	{
 		return KDIFF;
 	}
 
@@ -490,7 +571,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getKSpec()
 	 */
-	public float getKSpec() {
+	@Override
+	public float getKSpec()
+	{
 		return KSPEC;
 	}
 
@@ -498,7 +581,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getLuminance()
 	 */
-	public float getLuminance() {
+	@Override
+	public float getLuminance()
+	{
 		return LUM;
 	}
 
@@ -506,8 +591,11 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getNormals()
 	 */
-	public Vec3f[] getNormals() {
-		if (normals == null) {
+	@Override
+	public Vec3f[] getNormals()
+	{
+		if (normals == null)
+		{
 			computeNormals();
 		}
 
@@ -519,25 +607,33 @@ public class LRGBPTM implements PTM {
 	 *
 	 * @return the rgb
 	 */
-	public int[] getRGB() {
+	public int[] getRGB()
+	{
 		return getRGB(0, 0, width - 1, height - 1);
 	}
 
 	/**
 	 * Gets the rgb.
 	 *
-	 * @param left the left
-	 * @param top the top
-	 * @param right the right
-	 * @param bottom the bottom
+	 * @param left
+	 *            the left
+	 * @param top
+	 *            the top
+	 * @param right
+	 *            the right
+	 * @param bottom
+	 *            the bottom
 	 * @return the rgb
 	 */
-	public int[] getRGB(int left, int top, int right, int bottom) {
+	public int[] getRGB(int left, int top, int right, int bottom)
+	{
 		int[] buffer = new int[((right - left) + 1) * ((bottom - top) + 1)];
 
 		int x, y, offset = 0, offset2;
-		for (y = top; y <= bottom; y++) {
-			for (x = left; x <= right; x++) {
+		for (y = top; y <= bottom; y++)
+		{
+			for (x = left; x <= right; x++)
+			{
 				offset2 = x + (y * width);
 				buffer[offset] = coefficients[offset2][6];
 				offset++;
@@ -551,7 +647,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getType()
 	 */
-	public int getType() {
+	@Override
+	public int getType()
+	{
 		return PTM.LRGB;
 	}
 
@@ -559,7 +657,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getWidth()
 	 */
-	public int getWidth() {
+	@Override
+	public int getWidth()
+	{
 		return width;
 	}
 
@@ -567,7 +667,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#getZ()
 	 */
-	public int getZ() {
+	@Override
+	public int getZ()
+	{
 		return Z;
 	}
 
@@ -575,7 +677,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#green(int)
 	 */
-	public int green(int i) {
+	@Override
+	public int green(int i)
+	{
 		return (coefficients[i][6] >> 8) & 0xff;
 	}
 
@@ -583,7 +687,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#normal(int)
 	 */
-	public Vec3f normal(int i) {
+	@Override
+	public Vec3f normal(int i)
+	{
 		return normals[i];
 	}
 
@@ -591,12 +697,17 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#normal(int, int)
 	 */
-	public Vec3f normal(int x, int y) {
+	@Override
+	public Vec3f normal(int x, int y)
+	{
 		Vec3f n = null;
 
-		try {
+		try
+		{
 			return normals[(y * width) + x];
-		} catch (java.lang.ArrayIndexOutOfBoundsException e) {
+		}
+		catch (java.lang.ArrayIndexOutOfBoundsException e)
+		{
 		}
 
 		return n;
@@ -606,7 +717,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#recache()
 	 */
-	public void recache() {
+	@Override
+	public void recache()
+	{
 		this.environmentMapCache = null;
 		this.environmentMapMap = null;
 	}
@@ -615,7 +728,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#red(int)
 	 */
-	public int red(int i) {
+	@Override
+	public int red(int i)
+	{
 		return (coefficients[i][6] >> 16) & 0xff;
 	}
 
@@ -623,15 +738,20 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#release()
 	 */
-	public void release() {
-		if (em != null) {
+	@Override
+	public void release()
+	{
+		if (em != null)
+		{
 			em.release();
 		}
 		em = null;
 		environmentMapCache = null;
 		environmentMapMap = null;
-		if (normals != null) {
-			for (int i = 0; i < normals.length; i++) {
+		if (normals != null)
+		{
+			for (int i = 0; i < normals.length; i++)
+			{
 				normals[i] = null;
 			}
 			normals = null;
@@ -642,11 +762,16 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Resize the PTM.
 	 *
-	 * @param w Width after resizing
-	 * @param h Height after resizing
+	 * @param w
+	 *            Width after resizing
+	 * @param h
+	 *            Height after resizing
 	 */
-	public void resize(int w, int h) {
-		if (coefficients != null) {
+	@Override
+	public void resize(int w, int h)
+	{
+		if (coefficients != null)
+		{
 			int[][] coeffs = new int[w * h][7];
 
 			int xp, yp;
@@ -654,9 +779,12 @@ public class LRGBPTM implements PTM {
 			float sy = (float) height / (float) h;
 
 			// resize coefficients only
-			for (int i = 0; i < 6; i++) {
-				for (int y = 0; y < h; y++) {
-					for (int x = 0; x < w; x++) {
+			for (int i = 0; i < 6; i++)
+			{
+				for (int y = 0; y < h; y++)
+				{
+					for (int x = 0; x < w; x++)
+					{
 						xp = (int) (sx * x);
 						yp = (int) (sy * y);
 
@@ -666,8 +794,10 @@ public class LRGBPTM implements PTM {
 			}
 
 			// resize RGB plane
-			for (int y = 0; y < h; y++) {
-				for (int x = 0; x < w; x++) {
+			for (int y = 0; y < h; y++)
+			{
+				for (int x = 0; x < w; x++)
+				{
 					xp = (int) (sx * x);
 					yp = (int) (sy * y);
 
@@ -683,12 +813,15 @@ public class LRGBPTM implements PTM {
 	}
 
 	/** settors */
-	public void setA0(int[] a) {
-		if (coefficients == null) {
+	public void setA0(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][0] = a[i];
 		}
 	}
@@ -696,14 +829,18 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Sets the a1.
 	 *
-	 * @param a the new a1
+	 * @param a
+	 *            the new a1
 	 */
-	public void setA1(int[] a) {
-		if (coefficients == null) {
+	public void setA1(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][1] = a[i];
 		}
 
@@ -712,14 +849,18 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Sets the a2.
 	 *
-	 * @param a the new a2
+	 * @param a
+	 *            the new a2
 	 */
-	public void setA2(int[] a) {
-		if (coefficients == null) {
+	public void setA2(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][2] = a[i];
 		}
 
@@ -728,14 +869,18 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Sets the a3.
 	 *
-	 * @param a the new a3
+	 * @param a
+	 *            the new a3
 	 */
-	public void setA3(int[] a) {
-		if (coefficients == null) {
+	public void setA3(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][3] = a[i];
 		}
 	}
@@ -743,14 +888,18 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Sets the a4.
 	 *
-	 * @param a the new a4
+	 * @param a
+	 *            the new a4
 	 */
-	public void setA4(int[] a) {
-		if (coefficients == null) {
+	public void setA4(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][4] = a[i];
 		}
 	}
@@ -758,14 +907,18 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Sets the a5.
 	 *
-	 * @param a the new a5
+	 * @param a
+	 *            the new a5
 	 */
-	public void setA5(int[] a) {
-		if (coefficients == null) {
+	public void setA5(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][5] = a[i];
 		}
 	}
@@ -774,10 +927,14 @@ public class LRGBPTM implements PTM {
 	 * Set LRGBPTM coefficients. If coeff is null the coefficients are
 	 * allocated.
 	 */
-	public void setCoefficients(int[][] coeff) {
-		if (coeff == null) {
+	public void setCoefficients(int[][] coeff)
+	{
+		if (coeff == null)
+		{
 			coefficients = new int[width * height][7];
-		} else {
+		}
+		else
+		{
 			assert ((width * height * 7) == coeff.length);
 			coefficients = coeff;
 		}
@@ -787,7 +944,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setDGain(float)
 	 */
-	public void setDGain(float f) {
+	@Override
+	public void setDGain(float f)
+	{
 		DGAIN = Math.max(f, 1.0f);
 	}
 
@@ -795,7 +954,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setEnvironmentMap(jpview.graphics.EnvironmentMap)
 	 */
-	public void setEnvironmentMap(EnvironmentMap map) {
+	@Override
+	public void setEnvironmentMap(EnvironmentMap map)
+	{
 		em = map;
 	}
 
@@ -803,16 +964,20 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setExp(int)
 	 */
-	public void setExp(int i) {
+	@Override
+	public void setExp(int i)
+	{
 		EXP = i;
 	}
 
 	/**
 	 * Sets the height.
 	 *
-	 * @param h the new height
+	 * @param h
+	 *            the new height
 	 */
-	public void setHeight(int h) {
+	public void setHeight(int h)
+	{
 		height = h;
 	}
 
@@ -820,7 +985,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setKDiff(float)
 	 */
-	public void setKDiff(float f) {
+	@Override
+	public void setKDiff(float f)
+	{
 		KDIFF = f;
 	}
 
@@ -828,7 +995,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setKSpec(float)
 	 */
-	public void setKSpec(float f) {
+	@Override
+	public void setKSpec(float f)
+	{
 		KSPEC = f;
 	}
 
@@ -836,21 +1005,27 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setLuminance(float)
 	 */
-	public void setLuminance(float f) {
+	@Override
+	public void setLuminance(float f)
+	{
 		LUM = f;
 	}
 
 	/**
 	 * Sets the rgb.
 	 *
-	 * @param a the new rgb
+	 * @param a
+	 *            the new rgb
 	 */
-	public void setRGB(int[] a) {
-		if (coefficients == null) {
+	public void setRGB(int[] a)
+	{
+		if (coefficients == null)
+		{
 			coefficients = new int[a.length][7];
 		}
 
-		for (int i = 0; i < coefficients.length; i++) {
+		for (int i = 0; i < coefficients.length; i++)
+		{
 			coefficients[i][6] = a[i];
 		}
 	}
@@ -858,9 +1033,11 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Sets the width.
 	 *
-	 * @param w the new width
+	 * @param w
+	 *            the new width
 	 */
-	public void setWidth(int w) {
+	public void setWidth(int w)
+	{
 		width = w;
 	}
 
@@ -868,7 +1045,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#setZ(int)
 	 */
-	public void setZ(int z) {
+	@Override
+	public void setZ(int z)
+	{
 		Z = z;
 	}
 
@@ -876,7 +1055,9 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#useEnv()
 	 */
-	public boolean useEnv() {
+	@Override
+	public boolean useEnv()
+	{
 		return useEnv;
 	}
 
@@ -884,25 +1065,30 @@ public class LRGBPTM implements PTM {
 	 * (non-Javadoc)
 	 * @see jpview.ptms.PTM#useEnv(boolean)
 	 */
-	public void useEnv(boolean b) {
+	@Override
+	public void useEnv(boolean b)
+	{
 		useEnv = b;
 	}
 
 	/**
 	 * Creates the environment map cache.
 	 */
-	private void createEnvironmentMapCache() {
+	private void createEnvironmentMapCache()
+	{
 		environmentMapCache = new int[width * height];
 
-		if (normals == null) {
+		if (normals == null)
+		{
 			this.computeNormals();
 		}
 
-		if (this.em == null) {
-			System.out
-			.println("Can't compute environment map cache, no environment map");
+		if (this.em == null)
+		{
+			System.out.println("Can't compute environment map cache, no environment map");
 		}
-		for (int i = 0; i < normals.length; i++) {
+		for (int i = 0; i < normals.length; i++)
+		{
 			environmentMapCache[i] = this.em.getPixel(normals[i]);
 		}
 	}
@@ -910,19 +1096,22 @@ public class LRGBPTM implements PTM {
 	/**
 	 * Creates the environment map map.
 	 */
-	private void createEnvironmentMapMap() {
+	private void createEnvironmentMapMap()
+	{
 		environmentMapMap = new int[width * height];
 
-		if (normals == null) {
+		if (normals == null)
+		{
 			this.computeNormals();
 		}
 
-		if (this.em == null) {
-			System.out
-			.println("Can't compute environment map cache, no environment map");
+		if (this.em == null)
+		{
+			System.out.println("Can't compute environment map cache, no environment map");
 		}
 
-		for (int i = 0; i < normals.length; i++) {
+		for (int i = 0; i < normals.length; i++)
+		{
 			environmentMapMap[i] = this.em.getMapIndex(normals[i]);
 		}
 	}
@@ -930,20 +1119,24 @@ public class LRGBPTM implements PTM {
 	/**
 	 * X.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the int
 	 */
-	protected int x(int i) {
+	protected int x(int i)
+	{
 		return i % width;
 	}
 
 	/**
 	 * Y.
 	 *
-	 * @param i the i
+	 * @param i
+	 *            the i
 	 * @return the int
 	 */
-	protected int y(int i) {
+	protected int y(int i)
+	{
 		return i / height;
 	}
 

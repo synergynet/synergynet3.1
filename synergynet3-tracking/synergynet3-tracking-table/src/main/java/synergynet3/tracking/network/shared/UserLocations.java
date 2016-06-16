@@ -6,7 +6,8 @@ import java.util.ArrayList;
 /**
  * The Class UserLocations.
  */
-public class UserLocations implements Serializable {
+public class UserLocations implements Serializable
+{
 
 	/** The Constant serialVersionUID. */
 	private static final long serialVersionUID = -5757410165005878179L;
@@ -20,55 +21,66 @@ public class UserLocations implements Serializable {
 	/**
 	 * Instantiates a new user locations.
 	 *
-	 * @param source the source
+	 * @param source
+	 *            the source
 	 */
-	public UserLocations(String source) {
+	public UserLocations(String source)
+	{
 		this.source = source;
 	}
 
 	/**
 	 * Adds the.
 	 *
-	 * @param userLocation the user location
+	 * @param userLocation
+	 *            the user location
 	 */
-	public void add(UserLocation userLocation) {
+	public void add(UserLocation userLocation)
+	{
 		userLocations.add(userLocation);
 	}
 
 	/**
 	 * Clear.
 	 */
-	public void clear() {
+	public void clear()
+	{
 		userLocations.clear();
 	}
 
 	/**
 	 * @return the source
 	 */
-	public String getSource() {
+	public String getSource()
+	{
 		return source;
 	}
 
 	/**
 	 * @return the userLocations
 	 */
-	public ArrayList<UserLocation> getUserLocations() {
+	public ArrayList<UserLocation> getUserLocations()
+	{
 		return userLocations;
 	}
 
 	/**
 	 * Removes the.
 	 *
-	 * @param userLocation the user location
+	 * @param userLocation
+	 *            the user location
 	 */
-	public void remove(UserLocation userLocation) {
+	public void remove(UserLocation userLocation)
+	{
 		userLocations.remove(userLocation);
 	}
 
 	/**
-	 * @param source the source to set
+	 * @param source
+	 *            the source to set
 	 */
-	public void setSource(String source) {
+	public void setSource(String source)
+	{
 		this.source = source;
 	}
 

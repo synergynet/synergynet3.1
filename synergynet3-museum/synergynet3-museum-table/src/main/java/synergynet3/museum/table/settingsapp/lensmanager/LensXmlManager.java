@@ -19,7 +19,8 @@ import org.xml.sax.helpers.DefaultHandler;
 /**
  * The Class LensXmlManager.
  */
-public class LensXmlManager extends DefaultHandler {
+public class LensXmlManager extends DefaultHandler
+{
 
 	/** The colour. */
 	private String colour = "";
@@ -36,32 +37,39 @@ public class LensXmlManager extends DefaultHandler {
 	/**
 	 * Instantiates a new lens xml manager.
 	 *
-	 * @param file the file
+	 * @param file
+	 *            the file
 	 */
-	public LensXmlManager(File file) {
+	public LensXmlManager(File file)
+	{
 		this.file = file;
 	}
 
 	/**
 	 * @return the colour
 	 */
-	public String getColour() {
+	public String getColour()
+	{
 		return colour;
 	}
 
 	/**
 	 * @return the name
 	 */
-	public String getName() {
+	public String getName()
+	{
 		return name;
 	}
 
 	/**
 	 * Regenerate.
 	 */
-	public void regenerate() {
-		if (file.exists()) {
-			try {
+	public void regenerate()
+	{
+		if (file.exists())
+		{
+			try
+			{
 				SAXParserFactory factory = SAXParserFactory.newInstance();
 				SAXParser saxParser = factory.newSAXParser();
 
@@ -71,11 +79,17 @@ public class LensXmlManager extends DefaultHandler {
 				name = handler.getName();
 				colour = handler.getColour();
 
-			} catch (ParserConfigurationException e) {
+			}
+			catch (ParserConfigurationException e)
+			{
 				e.printStackTrace();
-			} catch (SAXException e) {
+			}
+			catch (SAXException e)
+			{
 				e.printStackTrace();
-			} catch (IOException e) {
+			}
+			catch (IOException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -84,18 +98,20 @@ public class LensXmlManager extends DefaultHandler {
 	/**
 	 * Save xml.
 	 */
-	public void saveXML() {
-		try {
-			if (validWorkspace) {
-				if (!file.exists()) {
+	public void saveXML()
+	{
+		try
+		{
+			if (validWorkspace)
+			{
+				if (!file.exists())
+				{
 					file.createNewFile();
 				}
 
 				OutputStream outputStream = new FileOutputStream(file);
 
-				XMLStreamWriter out = XMLOutputFactory.newInstance()
-						.createXMLStreamWriter(
-								new OutputStreamWriter(outputStream, "utf-8"));
+				XMLStreamWriter out = XMLOutputFactory.newInstance().createXMLStreamWriter(new OutputStreamWriter(outputStream, "utf-8"));
 				out.writeStartDocument();
 				out.writeCharacters("\n");
 				out.writeStartElement(LensXmlFields.LENS_NODE);
@@ -120,24 +136,32 @@ public class LensXmlManager extends DefaultHandler {
 
 			}
 
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (XMLStreamException e) {
+		}
+		catch (XMLStreamException e)
+		{
 			e.printStackTrace();
 		}
 	}
 
 	/**
-	 * @param colour the colour to set
+	 * @param colour
+	 *            the colour to set
 	 */
-	public void setColour(String colour) {
+	public void setColour(String colour)
+	{
 		this.colour = colour;
 	}
 
 	/**
-	 * @param name the name to set
+	 * @param name
+	 *            the name to set
 	 */
-	public void setName(String name) {
+	public void setName(String name)
+	{
 		this.name = name;
 	}
 

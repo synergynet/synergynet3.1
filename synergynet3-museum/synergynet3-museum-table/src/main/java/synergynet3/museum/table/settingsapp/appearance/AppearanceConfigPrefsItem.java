@@ -10,14 +10,14 @@ import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
 /**
  * The Class AppearanceConfigPrefsItem.
  */
-public class AppearanceConfigPrefsItem implements PreferencesItem {
+public class AppearanceConfigPrefsItem implements PreferencesItem
+{
 
 	/** The Constant APPEARANCE_NODE. */
 	public static final String APPEARANCE_NODE = "Appearance";
 
 	/** The appearance xml manager. */
-	public static AppearanceXmlManager appearanceXMLManager = new AppearanceXmlManager(
-			MuseumAppPreferences.getContentFolder());
+	public static AppearanceXmlManager appearanceXMLManager = new AppearanceXmlManager(MuseumAppPreferences.getContentFolder());
 
 	// background
 	/** The Constant BG_COLOUR. */
@@ -203,13 +203,13 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the defaults
 	 */
-	public static HashMap<String, String> getDefaults() {
+	public static HashMap<String, String> getDefaults()
+	{
 		HashMap<String, String> map = new HashMap<String, String>();
 		map.put(AppearanceConfigPrefsItem.BG_COLOUR, "Black");
 		map.put(AppearanceConfigPrefsItem.ENTITY_BG_COLOUR, "Black");
 		map.put(AppearanceConfigPrefsItem.ENTITY_BORDER_COLOUR, "Black");
-		map.put(AppearanceConfigPrefsItem.ENTITY_USER_GENERATED_COLOUR,
-				"Dark Grey");
+		map.put(AppearanceConfigPrefsItem.ENTITY_USER_GENERATED_COLOUR, "Dark Grey");
 		map.put(AppearanceConfigPrefsItem.ENTITY_FONT_COLOUR, "Orange");
 		map.put(AppearanceConfigPrefsItem.ENTITY_SPREAD, "" + 200);
 		map.put(AppearanceConfigPrefsItem.ENTITY_LINK_BG_COLOUR, "Blue");
@@ -220,35 +220,24 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 		map.put(AppearanceConfigPrefsItem.POI_COLOUR, "Red");
 		map.put(AppearanceConfigPrefsItem.POI_BORDER_COLOUR, "White");
 		map.put(AppearanceConfigPrefsItem.RECORDER_BG_COLOUR, "Black");
-		map.put(AppearanceConfigPrefsItem.RECORDER_ACTIVE_BUTTON_BORDER_COLOUR,
-				"Orange");
-		map.put(AppearanceConfigPrefsItem.RECORDER_INACTIVE_BUTTON_BORDER_COLOUR,
-				"Dark Grey");
-		map.put(AppearanceConfigPrefsItem.RECORDER_ACTIVE_BUTTON_FONT_COLOUR,
-				"Orange");
-		map.put(AppearanceConfigPrefsItem.RECORDER_INACTIVE_BUTTON_FONT_COLOUR,
-				"Dark Grey");
+		map.put(AppearanceConfigPrefsItem.RECORDER_ACTIVE_BUTTON_BORDER_COLOUR, "Orange");
+		map.put(AppearanceConfigPrefsItem.RECORDER_INACTIVE_BUTTON_BORDER_COLOUR, "Dark Grey");
+		map.put(AppearanceConfigPrefsItem.RECORDER_ACTIVE_BUTTON_FONT_COLOUR, "Orange");
+		map.put(AppearanceConfigPrefsItem.RECORDER_INACTIVE_BUTTON_FONT_COLOUR, "Dark Grey");
 		map.put(AppearanceConfigPrefsItem.RECORDER_FONT_COLOUR, "Orange");
-		map.put(AppearanceConfigPrefsItem.RECORDER_TEXT,
-				"Record your thoughts or stories here.  What you record may be used in future exhibits.");
+		map.put(AppearanceConfigPrefsItem.RECORDER_TEXT, "Record your thoughts or stories here.  What you record may be used in future exhibits.");
 		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_BG_COLOUR, "Black");
-		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_KEYBOARD_BUTTON_BG_COLOUR,
-				"Black");
-		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_KEYBOARD_BUTTON_BORDER_COLOUR,
-				"Orange");
-		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_KEYBOARD_BUTTON_FONT_COLOUR,
-				"Orange");
-		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_SCROLLBOX_FONT_COLOUR,
-				"White");
+		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_KEYBOARD_BUTTON_BG_COLOUR, "Black");
+		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_KEYBOARD_BUTTON_BORDER_COLOUR, "Orange");
+		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_KEYBOARD_BUTTON_FONT_COLOUR, "Orange");
+		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_SCROLLBOX_FONT_COLOUR, "White");
 		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_FONT_COLOUR, "Orange");
-		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_TEXT,
-				"If you'd like to help us out by providing more information for future exhibits please leave some contact details:");
+		map.put(AppearanceConfigPrefsItem.TEXT_INPUT_TEXT, "If you'd like to help us out by providing more information for future exhibits please leave some contact details:");
 		map.put(AppearanceConfigPrefsItem.METRIC_BG_COLOUR, "Black");
 		map.put(AppearanceConfigPrefsItem.METRIC_BORDER_COLOUR, "Black");
 		map.put(AppearanceConfigPrefsItem.METRIC_BUTTON_COLOUR, "Orange");
 		map.put(AppearanceConfigPrefsItem.METRIC_FONT_COLOUR, "Orange");
-		map.put(AppearanceConfigPrefsItem.METRIC_TEXT,
-				"Providing the following additional information about this recording will help us improve this exhibit.");
+		map.put(AppearanceConfigPrefsItem.METRIC_TEXT, "Providing the following additional information about this recording will help us improve this exhibit.");
 		map.put(AppearanceConfigPrefsItem.LENS_CLOSE_COLOUR, "Red");
 		map.put(AppearanceConfigPrefsItem.LENS_BORDER_COLOUR, "Black");
 		map.put(AppearanceConfigPrefsItem.LENS_BG_COLOUR, "Black");
@@ -261,16 +250,11 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 		map.put(AppearanceConfigPrefsItem.CLOSE_BUTTON_COLOUR, "Red");
 		map.put(AppearanceConfigPrefsItem.SHUTDOWN_BG_COLOUR, "Dark Grey");
 		map.put(AppearanceConfigPrefsItem.SHUTDOWN_CONTROLS_BG_COLOUR, "Black");
-		map.put(AppearanceConfigPrefsItem.SHUTDOWN_CONTROLS_BORDER_COLOUR,
-				"White");
-		map.put(AppearanceConfigPrefsItem.SHUTDOWN_CONTROLS_FONT_COLOUR,
-				"White");
-		map.put(AppearanceConfigPrefsItem.SHUTDOWN_INSTRUCTIONS_TEXT,
-				"Enter the admin PIN for shutdown:");
+		map.put(AppearanceConfigPrefsItem.SHUTDOWN_CONTROLS_BORDER_COLOUR, "White");
+		map.put(AppearanceConfigPrefsItem.SHUTDOWN_CONTROLS_FONT_COLOUR, "White");
+		map.put(AppearanceConfigPrefsItem.SHUTDOWN_INSTRUCTIONS_TEXT, "Enter the admin PIN for shutdown:");
 		map.put(AppearanceConfigPrefsItem.ERROR_MESSAGE_COLOUR, "Red");
-		map.put(AppearanceConfigPrefsItem.RECORDING_PROMPTS,
-				"Record your thoughts" + PROMPT_TOKEN
-						+ "What do you like about this?");
+		map.put(AppearanceConfigPrefsItem.RECORDING_PROMPTS, "Record your thoughts" + PROMPT_TOKEN + "What do you like about this?");
 		map.put(AppearanceConfigPrefsItem.RECORDING_SINGLE_PROMPT, NO);
 		return map;
 	}
@@ -278,23 +262,30 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 	/**
 	 * Gets the default value.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 * @return the default value
 	 */
-	public static String getDefaultValue(String key) {
+	public static String getDefaultValue(String key)
+	{
 		return defaultAppearanceValues.get(key);
 	}
 
 	/**
 	 * Gets the value.
 	 *
-	 * @param key the key
+	 * @param key
+	 *            the key
 	 * @return the value
 	 */
-	public static String getValue(String key) {
-		if (appearanceXMLManager.appearanceValues.containsKey(key)) {
+	public static String getValue(String key)
+	{
+		if (appearanceXMLManager.appearanceValues.containsKey(key))
+		{
 			return appearanceXMLManager.appearanceValues.get(key);
-		} else {
+		}
+		else
+		{
 			return defaultAppearanceValues.get(key);
 		}
 	}
@@ -302,26 +293,30 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 	/**
 	 * Load from xml.
 	 */
-	public static void loadFromXML() {
-		appearanceXMLManager = new AppearanceXmlManager(
-				MuseumAppPreferences.getContentFolder());
+	public static void loadFromXML()
+	{
+		appearanceXMLManager = new AppearanceXmlManager(MuseumAppPreferences.getContentFolder());
 		panel.updateValues();
 	}
 
 	/**
 	 * Saveto xml.
 	 */
-	public static void savetoXML() {
+	public static void savetoXML()
+	{
 		appearanceXMLManager.saveXML();
 	}
 
 	/**
 	 * Sets the value.
 	 *
-	 * @param key the key
-	 * @param value the value
+	 * @param key
+	 *            the key
+	 * @param value
+	 *            the value
 	 */
-	public static void setValue(String key, String value) {
+	public static void setValue(String key, String value)
+	{
 		appearanceXMLManager.appearanceValues.put(key, value);
 	}
 
@@ -330,7 +325,8 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		panel = new AppearanceConfigPanel(this);
 		loadFromXML();
 		return panel;
@@ -341,7 +337,8 @@ public class AppearanceConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "Appearance";
 	}
 

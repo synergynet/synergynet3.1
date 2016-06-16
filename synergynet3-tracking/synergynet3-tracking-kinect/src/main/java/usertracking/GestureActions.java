@@ -20,62 +20,70 @@ import com.jme3.math.Vector3f;
 /**
  * The Class GestureActions.
  */
-public class GestureActions {
+public class GestureActions
+{
 
 	/** The pose thread. */
-	public static Thread poseThread = new Thread(new Runnable() {
-		public void run() {
-			try {
-				while (TrackerPanel.isRunning) {
+	public static Thread poseThread = new Thread(new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
+				while (TrackerPanel.isRunning)
+				{
 					Thread.sleep(SLEEP_TIME);
-					if (kinectAttention) {
-						if (checkIfTimerHasExpired(timeOutCountStartTime,
-								TIME_OUT + POSE_TIME)) {
-							UserTracker
-									.writeToAnnouncementBox("Entity "
-											+ UserTracker.GESTURING_USER
-											+ " took too long to perform a gesture.\n\t  They are no longer in control.");
+					if (kinectAttention)
+					{
+						if (checkIfTimerHasExpired(timeOutCountStartTime, TIME_OUT + POSE_TIME))
+						{
+							UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " took too long to perform a gesture.\n\t  They are no longer in control.");
 							disableGestureControl();
-						} else if (checkIfTimerHasExpired(oneHandUpActive,
-								ATTENTION_DISMISS_TIME)) {
-							UserTracker
-									.writeToAnnouncementBox("Entity "
-											+ UserTracker.GESTURING_USER
-											+ " held one arm in the air.\n\t  They are no longer in control.");
+						}
+						else if (checkIfTimerHasExpired(oneHandUpActive, ATTENTION_DISMISS_TIME))
+						{
+							UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " held one arm in the air.\n\t  They are no longer in control.");
 							disableGestureControl();
 							resetPoseDetection();
-						} else if (checkIfTimerHasExpired(twoHandsUpActive,
-								POSE_TIME)) {
+						}
+						else if (checkIfTimerHasExpired(twoHandsUpActive, POSE_TIME))
+						{
 							freezeTables();
 							resetPoseDetection();
-						} else if (checkIfTimerHasExpired(handsTogetherActive,
-								POSE_TIME)) {
+						}
+						else if (checkIfTimerHasExpired(handsTogetherActive, POSE_TIME))
+						{
 							screenshotTables();
 							resetPoseDetection();
-						} else if (checkIfTimerHasExpired(
-								rightHandPointingActive, POINT_TIME)) {
+						}
+						else if (checkIfTimerHasExpired(rightHandPointingActive, POINT_TIME))
+						{
 							sendPointInfoToTables(Poses.rightHandPoint);
 							timeOutCountStartTime = new Date();
 							UserTracker.clearSequences();
 							resetPoseDetection();
-						} else if (checkIfTimerHasExpired(
-								leftHandPointingActive, POINT_TIME)) {
+						}
+						else if (checkIfTimerHasExpired(leftHandPointingActive, POINT_TIME))
+						{
 							sendPointInfoToTables(Poses.leftHandPoint);
 							UserTracker.clearSequences();
 							resetPoseDetection();
 						}
-					} else {
+					}
+					else
+					{
 						int holdingOneHandUp = checkIfOneHandUpTimersHaveExpired();
-						if (holdingOneHandUp > -1) {
-							UserTracker
-									.writeToAnnouncementBox("Entity "
-											+ TrackerNetworking.uniqueIDs[holdingOneHandUp]
-											+ " held an arm in the air.\n\t  They are now in control.");
+						if (holdingOneHandUp > -1)
+						{
+							UserTracker.writeToAnnouncementBox("Entity " + TrackerNetworking.uniqueIDs[holdingOneHandUp] + " held an arm in the air.\n\t  They are now in control.");
 							resetPoseDetection();
 						}
 					}
 				}
-			} catch (InterruptedException ie) {
+			}
+			catch (InterruptedException ie)
+			{
 			}
 		}
 	});
@@ -139,15 +147,20 @@ public class GestureActions {
 	 *
 	 * @return the int
 	 */
-	public static int checkIfOneHandUpTimersHaveExpired() {
-		for (Entry<Integer, Date> timer : usersRightHandsUpActive.entrySet()) {
-			if ((new Date().getTime() - timer.getValue().getTime()) > ATTENTION_GET_TIME) {
+	public static int checkIfOneHandUpTimersHaveExpired()
+	{
+		for (Entry<Integer, Date> timer : usersRightHandsUpActive.entrySet())
+		{
+			if ((new Date().getTime() - timer.getValue().getTime()) > ATTENTION_GET_TIME)
+			{
 				enableGestureControl(timer.getKey());
 				return timer.getKey();
 			}
 		}
-		for (Entry<Integer, Date> timer : usersLeftHandsUpActive.entrySet()) {
-			if ((new Date().getTime() - timer.getValue().getTime()) > ATTENTION_GET_TIME) {
+		for (Entry<Integer, Date> timer : usersLeftHandsUpActive.entrySet())
+		{
+			if ((new Date().getTime() - timer.getValue().getTime()) > ATTENTION_GET_TIME)
+			{
 				enableGestureControl(timer.getKey());
 				return timer.getKey();
 			}
@@ -158,15 +171,20 @@ public class GestureActions {
 	/**
 	 * Check if timer has expired.
 	 *
-	 * @param poseStartTime the pose start time
-	 * @param timeOut the time out
+	 * @param poseStartTime
+	 *            the pose start time
+	 * @param timeOut
+	 *            the time out
 	 * @return true, if successful
 	 */
-	public static boolean checkIfTimerHasExpired(Date poseStartTime, int timeOut) {
-		if (poseStartTime == null) {
+	public static boolean checkIfTimerHasExpired(Date poseStartTime, int timeOut)
+	{
+		if (poseStartTime == null)
+		{
 			return false;
 		}
-		if ((new Date().getTime() - poseStartTime.getTime()) > timeOut) {
+		if ((new Date().getTime() - poseStartTime.getTime()) > timeOut)
+		{
 			return true;
 		}
 		return false;
@@ -175,7 +193,8 @@ public class GestureActions {
 	/**
 	 * Disable gesture control.
 	 */
-	public static void disableGestureControl() {
+	public static void disableGestureControl()
+	{
 		timeOutCountStartTime = null;
 		TrackerNetworking.disableTableSelectedMode();
 		TrackerNetworking.gestureControlBroadcast(-1);
@@ -184,21 +203,26 @@ public class GestureActions {
 	/**
 	 * Enable gesture control.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 */
-	public static void enableGestureControl(int userID) {
-		if (UserTracker.GESTURING_USER > 0) {
+	public static void enableGestureControl(int userID)
+	{
+		if (UserTracker.GESTURING_USER > 0)
+		{
 			return;
 		}
 		int uniqueID = TrackerNetworking.uniqueIDs[userID];
-		if (uniqueID == 0) {
+		if (uniqueID == 0)
+		{
 			return;
 		}
-		new Thread() {
-			public void run() {
-				Applet.newAudioClip(
-						GestureActions.class.getResource("selected.wav"))
-						.play();
+		new Thread()
+		{
+			@Override
+			public void run()
+			{
+				Applet.newAudioClip(GestureActions.class.getResource("selected.wav")).play();
 			}
 		}.start();
 		timeOutCountStartTime = new Date();
@@ -209,11 +233,14 @@ public class GestureActions {
 	/**
 	 * Gesture control update.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 */
-	public static void gestureControlUpdate(int userID) {
+	public static void gestureControlUpdate(int userID)
+	{
 		kinectAttention = false;
-		if (userID == -1) {
+		if (userID == -1)
+		{
 			UserTracker.GESTURING_USER = -1;
 			UserTracker.SELECTED_TABLES.clear();
 			usersRightHandsUpActive.clear();
@@ -222,7 +249,9 @@ public class GestureActions {
 			twoHandsUpActive = null;
 			handsTogetherActive = null;
 			TrackerNetworking.cancelPosesAndClearGestureSequences();
-		} else {
+		}
+		else
+		{
 			UserTracker.GESTURING_USER = userID;
 			UserTracker.SELECTED_TABLES.clear();
 			UserTracker.SELECTED_TABLES.add(UserTracker.ALL_TABLES);
@@ -230,8 +259,10 @@ public class GestureActions {
 
 			int localUserIdTemp = -1;
 
-			for (int i = 0; i < TrackerNetworking.uniqueIDs.length; i++) {
-				if (TrackerNetworking.uniqueIDs[i] == userID) {
+			for (int i = 0; i < TrackerNetworking.uniqueIDs.length; i++)
+			{
+				if (TrackerNetworking.uniqueIDs[i] == userID)
+				{
 					localUserIdTemp = i;
 					break;
 				}
@@ -239,22 +270,30 @@ public class GestureActions {
 
 			final int localUserId = localUserIdTemp;
 
-			new Thread(new Runnable() {
-				public void run() {
-					try {
+			new Thread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					try
+					{
 						Thread.sleep(POSE_TIME / 2);
-					} catch (InterruptedException e) {
+					}
+					catch (InterruptedException e)
+					{
 						e.printStackTrace();
 					}
 
 					TrackerNetworking.cancelPosesAndClearGestureSequences();
 					kinectAttention = true;
-					if (localUserId > -1) {
-						if (isPoseActive(PoseName.LH_UP, localUserId)
-								&& isPoseActive(PoseName.RH_UP, localUserId)) {
+					if (localUserId > -1)
+					{
+						if (isPoseActive(PoseName.LH_UP, localUserId) && isPoseActive(PoseName.RH_UP, localUserId))
+						{
 							twoHandsUpActive = new Date();
-						} else if (isPoseActive(PoseName.LH_UP, localUserId)
-								|| isPoseActive(PoseName.RH_UP, localUserId)) {
+						}
+						else if (isPoseActive(PoseName.LH_UP, localUserId) || isPoseActive(PoseName.RH_UP, localUserId))
+						{
 							oneHandUpActive = new Date();
 						}
 					}
@@ -266,67 +305,82 @@ public class GestureActions {
 	/**
 	 * Perform gesture.
 	 *
-	 * @param userID the user id
-	 * @param gest the gest
-	 * @param isActivated the is activated
+	 * @param userID
+	 *            the user id
+	 * @param gest
+	 *            the gest
+	 * @param isActivated
+	 *            the is activated
 	 */
-	public static void performGesture(int userID, PoseName gest,
-			boolean isActivated) {
+	public static void performGesture(int userID, PoseName gest, boolean isActivated)
+	{
 
-		if (UserTracker.GESTURING_USER == TrackerNetworking.uniqueIDs[userID]) {
-			if (kinectAttention) {
+		if (UserTracker.GESTURING_USER == TrackerNetworking.uniqueIDs[userID])
+		{
+			if (kinectAttention)
+			{
 
-				switch (gest) {
-				//
-				// case HORIZ_WAVE_RIGHT: {
-				//
-				// break;
-				// }
-				//
-				// case VERT_WAVE_RIGHT: {
-				//
-				// break;
-				// }
-				//
-				// case HORIZ_WAVE_LEFT: {
-				//
-				// break;
-				// }
-				//
-				// case VERT_WAVE_LEFT: {
-				//
-				// break;
-				// }
-				//
-					case PUSH_RIGHT: {
+				switch (gest)
+				{
+					//
+					// case HORIZ_WAVE_RIGHT: {
+					//
+					// break;
+					// }
+					//
+					// case VERT_WAVE_RIGHT: {
+					//
+					// break;
+					// }
+					//
+					// case HORIZ_WAVE_LEFT: {
+					//
+					// break;
+					// }
+					//
+					// case VERT_WAVE_LEFT: {
+					//
+					// break;
+					// }
+					//
+					case PUSH_RIGHT:
+					{
 						sendTableContentsToProjectors();
 						break;
 					}
 
-					case PUSH_LEFT: {
+					case PUSH_LEFT:
+					{
 						sendTableContentsToProjectors();
 						break;
 					}
 
-					case PULL_RIGHT: {
+					case PULL_RIGHT:
+					{
 						sendProjectedContentsToTables();
 						break;
 					}
 
-					case PULL_LEFT: {
+					case PULL_LEFT:
+					{
 						sendProjectedContentsToTables();
 						break;
 					}
 
-					case SWEEP_OUT: {
+					case SWEEP_OUT:
+					{
 						tidyTables();
 						break;
 					}
 
-					case HANDS_NEAR: {
-						if (isActivated) {
+					case HANDS_NEAR:
+					{
+						if (isActivated)
+						{
 							handsTogetherActive = new Date();
-						} else {
+						}
+						else
+						{
 							handsTogetherActive = null;
 						}
 						break;
@@ -372,12 +426,14 @@ public class GestureActions {
 					// break;
 					// }
 					//
-					case POINT_RIGHT: {
+					case POINT_RIGHT:
+					{
 						pointing(PoseName.POINT_RIGHT, userID, isActivated);
 						break;
 					}
 
-					case POINT_LEFT: {
+					case POINT_LEFT:
+					{
 						pointing(PoseName.POINT_LEFT, userID, isActivated);
 						break;
 					}
@@ -392,9 +448,9 @@ public class GestureActions {
 					// break;
 					// }
 					//
-					case RH_UP: {
-						handUpDuringActivation(PoseName.LH_UP, userID,
-								isActivated);
+					case RH_UP:
+					{
+						handUpDuringActivation(PoseName.LH_UP, userID, isActivated);
 						break;
 					}
 					//
@@ -414,48 +470,53 @@ public class GestureActions {
 					// break;
 					// }
 					//
-					case LH_UP: {
-						handUpDuringActivation(PoseName.RH_UP, userID,
-								isActivated);
+					case LH_UP:
+					{
+						handUpDuringActivation(PoseName.RH_UP, userID, isActivated);
 						break;
 					}
 					default:
 						break;
 
-				// case LH_OUT_H: {
-				//
-				// break;
-				// }
-				//
-				// case LH_IN_H: {
-				//
-				// break;
-				// }
-				//
-				// case LH_DOWN: {
-				//
-				// break;
-				// }
-				//
-				// case RE_UP: {
-				//
-				// break;
-				// }
-				//
-				// case LE_UP: {
-				//
-				// break;
-				// }
+						// case LH_OUT_H: {
+						//
+						// break;
+						// }
+						//
+						// case LH_IN_H: {
+						//
+						// break;
+						// }
+						//
+						// case LH_DOWN: {
+						//
+						// break;
+						// }
+						//
+						// case RE_UP: {
+						//
+						// break;
+						// }
+						//
+						// case LE_UP: {
+						//
+						// break;
+						// }
 				}
 			}
-		} else if (UserTracker.GESTURING_USER == -1) {
-			switch (gest) {
-				case RH_UP: {
+		}
+		else if (UserTracker.GESTURING_USER == -1)
+		{
+			switch (gest)
+			{
+				case RH_UP:
+				{
 					rightHandUpPreActivation(userID, isActivated);
 					break;
 				}
 
-				case LH_UP: {
+				case LH_UP:
+				{
 					leftHandUpPreActivation(userID, isActivated);
 					break;
 				}
@@ -468,7 +529,8 @@ public class GestureActions {
 	/**
 	 * Reset pose detection.
 	 */
-	public static void resetPoseDetection() {
+	public static void resetPoseDetection()
+	{
 		usersRightHandsUpActive.clear();
 		usersLeftHandsUpActive.clear();
 		oneHandUpActive = null;
@@ -483,21 +545,22 @@ public class GestureActions {
 	/**
 	 * Freeze tables.
 	 */
-	private static void freezeTables() {
+	private static void freezeTables()
+	{
 
-		UserTracker.writeToAnnouncementBox("Entity "
-				+ UserTracker.GESTURING_USER
-				+ " held both hands in the air.\n\t  Freezing tables.");
+		UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " held both hands in the air.\n\t  Freezing tables.");
 
-		if (!noTableSelected()) {
-			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES)) {
-				AppSystemControlComms.get().allTablesFreeze(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE));
-			} else {
-				for (String table : UserTracker.SELECTED_TABLES) {
-					AppSystemControlComms.get().specificTablesFreeze(
-							new PerformActionMessage(MESSAGESTATE.ACTIVATE),
-							table);
+		if (!noTableSelected())
+		{
+			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES))
+			{
+				AppSystemControlComms.get().allTablesFreeze(new PerformActionMessage(MESSAGESTATE.ACTIVATE));
+			}
+			else
+			{
+				for (String table : UserTracker.SELECTED_TABLES)
+				{
+					AppSystemControlComms.get().specificTablesFreeze(new PerformActionMessage(MESSAGESTATE.ACTIVATE), table);
 				}
 			}
 			disableGestureControl();
@@ -507,35 +570,53 @@ public class GestureActions {
 	/**
 	 * Hand up during activation.
 	 *
-	 * @param poseToCheck the pose to check
-	 * @param userID the user id
-	 * @param isActivated the is activated
+	 * @param poseToCheck
+	 *            the pose to check
+	 * @param userID
+	 *            the user id
+	 * @param isActivated
+	 *            the is activated
 	 */
-	private static void handUpDuringActivation(PoseName poseToCheck,
-			int userID, boolean isActivated) {
-		if (isActivated) {
-			if (isPoseActive(poseToCheck, userID)) {
-				if (oneHandUpActive != null) {
+	private static void handUpDuringActivation(PoseName poseToCheck, int userID, boolean isActivated)
+	{
+		if (isActivated)
+		{
+			if (isPoseActive(poseToCheck, userID))
+			{
+				if (oneHandUpActive != null)
+				{
 					oneHandUpActive = null;
 				}
-				if (twoHandsUpActive == null) {
+				if (twoHandsUpActive == null)
+				{
 					twoHandsUpActive = new Date();
 				}
-			} else {
-				if (oneHandUpActive == null) {
+			}
+			else
+			{
+				if (oneHandUpActive == null)
+				{
 					oneHandUpActive = new Date();
 				}
 			}
-		} else {
-			if (twoHandsUpActive != null) {
+		}
+		else
+		{
+			if (twoHandsUpActive != null)
+			{
 				twoHandsUpActive = null;
 			}
-			if (isPoseActive(poseToCheck, userID)) {
-				if (oneHandUpActive == null) {
+			if (isPoseActive(poseToCheck, userID))
+			{
+				if (oneHandUpActive == null)
+				{
 					oneHandUpActive = new Date();
 				}
-			} else {
-				if (oneHandUpActive != null) {
+			}
+			else
+			{
+				if (oneHandUpActive != null)
+				{
 					oneHandUpActive = null;
 				}
 			}
@@ -545,12 +626,16 @@ public class GestureActions {
 	/**
 	 * Checks if is pose active.
 	 *
-	 * @param pose the pose
-	 * @param userID the user id
+	 * @param pose
+	 *            the pose
+	 * @param userID
+	 *            the user id
 	 * @return true, if is pose active
 	 */
-	private static boolean isPoseActive(PoseName pose, int userID) {
-		if (!Poses.poseActivity.get(pose).containsKey(userID)) {
+	private static boolean isPoseActive(PoseName pose, int userID)
+	{
+		if (!Poses.poseActivity.get(pose).containsKey(userID))
+		{
 			Poses.poseActivity.get(pose).put(userID, false);
 			return false;
 		}
@@ -560,16 +645,24 @@ public class GestureActions {
 	/**
 	 * Left hand up pre activation.
 	 *
-	 * @param userID the user id
-	 * @param isActivated the is activated
+	 * @param userID
+	 *            the user id
+	 * @param isActivated
+	 *            the is activated
 	 */
-	private static void leftHandUpPreActivation(int userID, boolean isActivated) {
-		if (isActivated) {
-			if (!usersLeftHandsUpActive.containsKey(userID)) {
+	private static void leftHandUpPreActivation(int userID, boolean isActivated)
+	{
+		if (isActivated)
+		{
+			if (!usersLeftHandsUpActive.containsKey(userID))
+			{
 				usersLeftHandsUpActive.put(userID, new Date());
 			}
-		} else {
-			if (usersLeftHandsUpActive.containsKey(userID)) {
+		}
+		else
+		{
+			if (usersLeftHandsUpActive.containsKey(userID))
+			{
 				usersLeftHandsUpActive.remove(userID);
 			}
 		}
@@ -580,8 +673,10 @@ public class GestureActions {
 	 *
 	 * @return true, if successful
 	 */
-	private static boolean noTableSelected() {
-		if (UserTracker.SELECTED_TABLES.size() == 0) {
+	private static boolean noTableSelected()
+	{
+		if (UserTracker.SELECTED_TABLES.size() == 0)
+		{
 			disableGestureControl();
 			return true;
 		}
@@ -591,99 +686,99 @@ public class GestureActions {
 	/**
 	 * Pointing.
 	 *
-	 * @param poseToCheck the pose to check
-	 * @param userID the user id
-	 * @param isActivated the is activated
+	 * @param poseToCheck
+	 *            the pose to check
+	 * @param userID
+	 *            the user id
+	 * @param isActivated
+	 *            the is activated
 	 */
-	private static void pointing(PoseName poseToCheck, int userID,
-			boolean isActivated) {
-		if (isActivated) {
-			if (poseToCheck == PoseName.POINT_RIGHT) {
-				if (rightHandPointingCurrent != null) {
+	private static void pointing(PoseName poseToCheck, int userID, boolean isActivated)
+	{
+		if (isActivated)
+		{
+			if (poseToCheck == PoseName.POINT_RIGHT)
+			{
+				if (rightHandPointingCurrent != null)
+				{
 					boolean movedOrDeviated = false;
-					Vector3f currentStartPoint = new Vector3f(
-							Poses.rightHandPoint.getStartPoint()[0],
-							Poses.rightHandPoint.getStartPoint()[1],
-							Poses.rightHandPoint.getStartPoint()[2]);
-					Vector3f originalStartPoint = new Vector3f(
-							rightHandPointingCurrent.getStartPoint()[0],
-							rightHandPointingCurrent.getStartPoint()[1],
-							rightHandPointingCurrent.getStartPoint()[2]);
-					float startPointMovement = currentStartPoint
-							.distance(originalStartPoint);
-					if (startPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000)) {
+					Vector3f currentStartPoint = new Vector3f(Poses.rightHandPoint.getStartPoint()[0], Poses.rightHandPoint.getStartPoint()[1], Poses.rightHandPoint.getStartPoint()[2]);
+					Vector3f originalStartPoint = new Vector3f(rightHandPointingCurrent.getStartPoint()[0], rightHandPointingCurrent.getStartPoint()[1], rightHandPointingCurrent.getStartPoint()[2]);
+					float startPointMovement = currentStartPoint.distance(originalStartPoint);
+					if (startPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000))
+					{
 						movedOrDeviated = true;
-					} else {
-						Vector3f currentEndPoint = new Vector3f(
-								Poses.rightHandPoint.getEndPoint()[0],
-								Poses.rightHandPoint.getEndPoint()[1],
-								Poses.rightHandPoint.getEndPoint()[2]);
-						Vector3f originalEndPoint = new Vector3f(
-								rightHandPointingCurrent.getEndPoint()[0],
-								rightHandPointingCurrent.getEndPoint()[1],
-								rightHandPointingCurrent.getEndPoint()[2]);
-						float endPointMovement = currentEndPoint
-								.distance(originalEndPoint);
-						if (endPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000)) {
+					}
+					else
+					{
+						Vector3f currentEndPoint = new Vector3f(Poses.rightHandPoint.getEndPoint()[0], Poses.rightHandPoint.getEndPoint()[1], Poses.rightHandPoint.getEndPoint()[2]);
+						Vector3f originalEndPoint = new Vector3f(rightHandPointingCurrent.getEndPoint()[0], rightHandPointingCurrent.getEndPoint()[1], rightHandPointingCurrent.getEndPoint()[2]);
+						float endPointMovement = currentEndPoint.distance(originalEndPoint);
+						if (endPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000))
+						{
 							movedOrDeviated = true;
 						}
 					}
 
-					if (movedOrDeviated) {
+					if (movedOrDeviated)
+					{
 						rightHandPointingCurrent = Poses.rightHandPoint;
 						rightHandPointingActive = new Date();
 					}
 
-				} else {
+				}
+				else
+				{
 					rightHandPointingCurrent = Poses.rightHandPoint;
 					rightHandPointingActive = new Date();
 				}
-			} else {
-				if (leftHandPointingCurrent != null) {
+			}
+			else
+			{
+				if (leftHandPointingCurrent != null)
+				{
 					boolean movedOrDeviated = false;
-					Vector3f currentStartPoint = new Vector3f(
-							Poses.leftHandPoint.getStartPoint()[0],
-							Poses.leftHandPoint.getStartPoint()[1],
-							Poses.leftHandPoint.getStartPoint()[2]);
-					Vector3f originalStartPoint = new Vector3f(
-							leftHandPointingCurrent.getStartPoint()[0],
-							leftHandPointingCurrent.getStartPoint()[1],
-							leftHandPointingCurrent.getStartPoint()[2]);
-					float startPointMovement = currentStartPoint
-							.distance(originalStartPoint);
-					if (startPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000)) {
+					Vector3f currentStartPoint = new Vector3f(Poses.leftHandPoint.getStartPoint()[0], Poses.leftHandPoint.getStartPoint()[1], Poses.leftHandPoint.getStartPoint()[2]);
+					Vector3f originalStartPoint = new Vector3f(leftHandPointingCurrent.getStartPoint()[0], leftHandPointingCurrent.getStartPoint()[1], leftHandPointingCurrent.getStartPoint()[2]);
+					float startPointMovement = currentStartPoint.distance(originalStartPoint);
+					if (startPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000))
+					{
 						movedOrDeviated = true;
-					} else {
-						Vector3f currentEndPoint = new Vector3f(
-								Poses.leftHandPoint.getEndPoint()[0],
-								Poses.leftHandPoint.getEndPoint()[1],
-								Poses.leftHandPoint.getEndPoint()[2]);
-						Vector3f originalEndPoint = new Vector3f(
-								leftHandPointingCurrent.getEndPoint()[0],
-								leftHandPointingCurrent.getEndPoint()[1],
-								leftHandPointingCurrent.getEndPoint()[2]);
-						float endPointMovement = currentEndPoint
-								.distance(originalEndPoint);
-						if (endPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000)) {
+					}
+					else
+					{
+						Vector3f currentEndPoint = new Vector3f(Poses.leftHandPoint.getEndPoint()[0], Poses.leftHandPoint.getEndPoint()[1], Poses.leftHandPoint.getEndPoint()[2]);
+						Vector3f originalEndPoint = new Vector3f(leftHandPointingCurrent.getEndPoint()[0], leftHandPointingCurrent.getEndPoint()[1], leftHandPointingCurrent.getEndPoint()[2]);
+						float endPointMovement = currentEndPoint.distance(originalEndPoint);
+						if (endPointMovement > (POINT_MOVEMENT_THRESHOLD * 1000))
+						{
 							movedOrDeviated = true;
 						}
 					}
 
-					if (movedOrDeviated) {
+					if (movedOrDeviated)
+					{
 						leftHandPointingCurrent = Poses.leftHandPoint;
 						leftHandPointingActive = new Date();
 					}
 
-				} else {
+				}
+				else
+				{
 					leftHandPointingCurrent = Poses.leftHandPoint;
 					leftHandPointingActive = new Date();
 				}
 			}
-		} else {
-			if (poseToCheck == PoseName.POINT_RIGHT) {
+		}
+		else
+		{
+			if (poseToCheck == PoseName.POINT_RIGHT)
+			{
 				rightHandPointingCurrent = null;
 				rightHandPointingActive = null;
-			} else {
+			}
+			else
+			{
 				leftHandPointingCurrent = null;
 				leftHandPointingActive = null;
 			}
@@ -693,16 +788,24 @@ public class GestureActions {
 	/**
 	 * Right hand up pre activation.
 	 *
-	 * @param userID the user id
-	 * @param isActivated the is activated
+	 * @param userID
+	 *            the user id
+	 * @param isActivated
+	 *            the is activated
 	 */
-	private static void rightHandUpPreActivation(int userID, boolean isActivated) {
-		if (isActivated) {
-			if (!usersRightHandsUpActive.containsKey(userID)) {
+	private static void rightHandUpPreActivation(int userID, boolean isActivated)
+	{
+		if (isActivated)
+		{
+			if (!usersRightHandsUpActive.containsKey(userID))
+			{
 				usersRightHandsUpActive.put(userID, new Date());
 			}
-		} else {
-			if (usersRightHandsUpActive.containsKey(userID)) {
+		}
+		else
+		{
+			if (usersRightHandsUpActive.containsKey(userID))
+			{
 				usersRightHandsUpActive.remove(userID);
 			}
 		}
@@ -711,25 +814,22 @@ public class GestureActions {
 	/**
 	 * Screenshot tables.
 	 */
-	private static void screenshotTables() {
+	private static void screenshotTables()
+	{
 
-		UserTracker
-				.writeToAnnouncementBox("Entity "
-						+ UserTracker.GESTURING_USER
-						+ " held both hands together.\n\t  Sending screenshots to projectors.");
+		UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " held both hands together.\n\t  Sending screenshots to projectors.");
 
-		if (!noTableSelected()) {
-			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES)) {
-				AppSystemControlComms.get()
-						.allTablesSendScreenshotsToProjectors(
-								toStringArray(AppSystemControlComms.get()
-										.getProjectorsList()));
-			} else {
-				for (String table : UserTracker.SELECTED_TABLES) {
-					AppSystemControlComms.get()
-							.specificTablesSendScreenshotsToProjectors(
-									toStringArray(AppSystemControlComms.get()
-											.getProjectorsList()), table);
+		if (!noTableSelected())
+		{
+			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES))
+			{
+				AppSystemControlComms.get().allTablesSendScreenshotsToProjectors(toStringArray(AppSystemControlComms.get().getProjectorsList()));
+			}
+			else
+			{
+				for (String table : UserTracker.SELECTED_TABLES)
+				{
+					AppSystemControlComms.get().specificTablesSendScreenshotsToProjectors(toStringArray(AppSystemControlComms.get().getProjectorsList()), table);
 				}
 			}
 			disableGestureControl();
@@ -739,31 +839,24 @@ public class GestureActions {
 	/**
 	 * Send point info to tables.
 	 *
-	 * @param pointDirection the point direction
+	 * @param pointDirection
+	 *            the point direction
 	 */
-	private static void sendPointInfoToTables(PointDirection pointDirection) {
-		if (pointDirection != null) {
+	private static void sendPointInfoToTables(PointDirection pointDirection)
+	{
+		if (pointDirection != null)
+		{
 
-			UserTracker.writeToAnnouncementBox("Entity "
-					+ UserTracker.GESTURING_USER
-					+ " seen pointing.\n\t  Sending selection info to tables.");
+			UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " seen pointing.\n\t  Sending selection info to tables.");
 
-			Vector3f startPoint = TrackerPositioning.toRealWorldVectorInM(
-					pointDirection.getStartPoint()[0],
-					pointDirection.getStartPoint()[1],
-					pointDirection.getStartPoint()[2]);
-			Vector3f endPoint = TrackerPositioning.toRealWorldVectorInM(
-					pointDirection.getEndPoint()[0],
-					pointDirection.getEndPoint()[1],
-					pointDirection.getEndPoint()[2]);
+			Vector3f startPoint = TrackerPositioning.toRealWorldVectorInM(pointDirection.getStartPoint()[0], pointDirection.getStartPoint()[1], pointDirection.getStartPoint()[2]);
+			Vector3f endPoint = TrackerPositioning.toRealWorldVectorInM(pointDirection.getEndPoint()[0], pointDirection.getEndPoint()[1], pointDirection.getEndPoint()[2]);
 
 			PointDirection worldPointDirection = new PointDirection();
-			worldPointDirection.setStartPoint(startPoint.x, startPoint.y,
-					startPoint.z);
+			worldPointDirection.setStartPoint(startPoint.x, startPoint.y, startPoint.z);
 			worldPointDirection.setEndPoint(endPoint.x, endPoint.y, endPoint.z);
 
-			TrackingControlComms.get().announcePointingGesture(
-					worldPointDirection);
+			TrackingControlComms.get().announcePointingGesture(worldPointDirection);
 		}
 
 	}
@@ -771,21 +864,20 @@ public class GestureActions {
 	/**
 	 * Send projected contents to tables.
 	 */
-	private static void sendProjectedContentsToTables() {
+	private static void sendProjectedContentsToTables()
+	{
 
-		UserTracker
-				.writeToAnnouncementBox("Entity "
-						+ UserTracker.GESTURING_USER
-						+ " performed a pull gesture.\n\t  Sending projector contents to tables.");
+		UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " performed a pull gesture.\n\t  Sending projector contents to tables.");
 
-		if (!noTableSelected()) {
-			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES)) {
-				ProjectorControlComms.get().allProjectorsSendContentsToTables(
-						toStringArray(AppSystemControlComms.get()
-								.getTablesList()));
-			} else {
-				ProjectorControlComms.get().allProjectorsSendContentsToTables(
-						toStringArray(UserTracker.SELECTED_TABLES));
+		if (!noTableSelected())
+		{
+			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES))
+			{
+				ProjectorControlComms.get().allProjectorsSendContentsToTables(toStringArray(AppSystemControlComms.get().getTablesList()));
+			}
+			else
+			{
+				ProjectorControlComms.get().allProjectorsSendContentsToTables(toStringArray(UserTracker.SELECTED_TABLES));
 			}
 			disableGestureControl();
 		}
@@ -795,24 +887,22 @@ public class GestureActions {
 	/**
 	 * Send table contents to projectors.
 	 */
-	private static void sendTableContentsToProjectors() {
+	private static void sendTableContentsToProjectors()
+	{
 
-		UserTracker
-				.writeToAnnouncementBox("Entity "
-						+ UserTracker.GESTURING_USER
-						+ " performed a push gesture.\n\t  Sending table contents to projectors.");
+		UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " performed a push gesture.\n\t  Sending table contents to projectors.");
 
-		if (!noTableSelected()) {
-			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES)) {
-				AppSystemControlComms.get().allTablesSendContentsToProjectors(
-						toStringArray(AppSystemControlComms.get()
-								.getProjectorsList()));
-			} else {
-				for (String table : UserTracker.SELECTED_TABLES) {
-					AppSystemControlComms.get()
-							.specificTablesSendContentsToProjectors(
-									toStringArray(AppSystemControlComms.get()
-											.getProjectorsList()), table);
+		if (!noTableSelected())
+		{
+			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES))
+			{
+				AppSystemControlComms.get().allTablesSendContentsToProjectors(toStringArray(AppSystemControlComms.get().getProjectorsList()));
+			}
+			else
+			{
+				for (String table : UserTracker.SELECTED_TABLES)
+				{
+					AppSystemControlComms.get().specificTablesSendContentsToProjectors(toStringArray(AppSystemControlComms.get().getProjectorsList()), table);
 				}
 			}
 			disableGestureControl();
@@ -823,22 +913,22 @@ public class GestureActions {
 	/**
 	 * Tidy tables.
 	 */
-	private static void tidyTables() {
+	private static void tidyTables()
+	{
 
-		UserTracker.writeToAnnouncementBox("Entity "
-				+ UserTracker.GESTURING_USER
-				+ " performed a sweep gesture.\n\t  Tidying tables.");
+		UserTracker.writeToAnnouncementBox("Entity " + UserTracker.GESTURING_USER + " performed a sweep gesture.\n\t  Tidying tables.");
 
-		if (!noTableSelected()) {
-			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES)) {
-				AppSystemControlComms.get().allTablesRemoveAdditionalContent(
-						new PerformActionMessage(MESSAGESTATE.ACTIVATE));
-			} else {
-				for (String table : UserTracker.SELECTED_TABLES) {
-					AppSystemControlComms.get()
-							.specificTableRemoveAdditionalContent(
-									new PerformActionMessage(
-											MESSAGESTATE.ACTIVATE), table);
+		if (!noTableSelected())
+		{
+			if (UserTracker.SELECTED_TABLES.contains(UserTracker.ALL_TABLES))
+			{
+				AppSystemControlComms.get().allTablesRemoveAdditionalContent(new PerformActionMessage(MESSAGESTATE.ACTIVATE));
+			}
+			else
+			{
+				for (String table : UserTracker.SELECTED_TABLES)
+				{
+					AppSystemControlComms.get().specificTableRemoveAdditionalContent(new PerformActionMessage(MESSAGESTATE.ACTIVATE), table);
 				}
 			}
 			disableGestureControl();
@@ -848,12 +938,15 @@ public class GestureActions {
 	/**
 	 * To string array.
 	 *
-	 * @param tablesList the tables list
+	 * @param tablesList
+	 *            the tables list
 	 * @return the string[]
 	 */
-	private static String[] toStringArray(List<String> tablesList) {
+	private static String[] toStringArray(List<String> tablesList)
+	{
 		String[] result = new String[tablesList.size()];
-		for (int i = 0; i < tablesList.size(); i++) {
+		for (int i = 0; i < tablesList.size(); i++)
+		{
 			result[i] = tablesList.get(i);
 		}
 		return result;

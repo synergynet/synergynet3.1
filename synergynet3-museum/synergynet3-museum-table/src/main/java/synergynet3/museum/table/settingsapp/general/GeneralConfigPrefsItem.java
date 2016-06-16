@@ -9,7 +9,8 @@ import multiplicity3.config.PreferencesItem;
 /**
  * The Class GeneralConfigPrefsItem.
  */
-public class GeneralConfigPrefsItem implements PreferencesItem {
+public class GeneralConfigPrefsItem implements PreferencesItem
+{
 
 	/** The Constant ADMIN_PIN. */
 	private static final String ADMIN_PIN = "ADMIN_PIN";
@@ -30,8 +31,7 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	private static final String METRICS_LOC = "METRICS_LOC";
 
 	/** The Constant prefs. */
-	private static final Preferences prefs = Preferences
-			.userNodeForPackage(GeneralConfigPrefsItem.class);
+	private static final Preferences prefs = Preferences.userNodeForPackage(GeneralConfigPrefsItem.class);
 
 	/** The Constant USER_RECORDINGS. */
 	private static final String USER_RECORDINGS = "USER_RECORDINGS";
@@ -41,7 +41,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the admin pin
 	 */
-	public String getAdminPIN() {
+	public String getAdminPIN()
+	{
 		return prefs.get(ADMIN_PIN, "1234");
 	}
 
@@ -50,7 +51,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanel()
 	 */
 	@Override
-	public JPanel getConfigurationPanel() {
+	public JPanel getConfigurationPanel()
+	{
 		return new GeneralConfigPanel(this);
 	}
 
@@ -59,7 +61,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 * @see multiplicity3.config.PreferencesItem#getConfigurationPanelName()
 	 */
 	@Override
-	public String getConfigurationPanelName() {
+	public String getConfigurationPanelName()
+	{
 		return "General";
 	}
 
@@ -68,7 +71,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the content folder
 	 */
-	public String getContentFolder() {
+	public String getContentFolder()
+	{
 		return prefs.get(CONTENT_FOLDER, "");
 	}
 
@@ -77,7 +81,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the locations enabled
 	 */
-	public boolean getLocationsEnabled() {
+	public boolean getLocationsEnabled()
+	{
 		return prefs.getBoolean(LOCATIONS, true);
 	}
 
@@ -86,7 +91,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the max recording time
 	 */
-	public int getMaxRecordingTime() {
+	public int getMaxRecordingTime()
+	{
 		return prefs.getInt(MAX_RECORDING_TIME, 300);
 	}
 
@@ -95,7 +101,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the metrics enabled
 	 */
-	public boolean getMetricsEnabled() {
+	public boolean getMetricsEnabled()
+	{
 		return prefs.getBoolean(METRICS, false);
 	}
 
@@ -104,7 +111,8 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the metrics folder
 	 */
-	public String getMetricsFolder() {
+	public String getMetricsFolder()
+	{
 		return prefs.get(METRICS_LOC, "");
 	}
 
@@ -113,70 +121,85 @@ public class GeneralConfigPrefsItem implements PreferencesItem {
 	 *
 	 * @return the user recordings enabled
 	 */
-	public boolean getUserRecordingsEnabled() {
+	public boolean getUserRecordingsEnabled()
+	{
 		return prefs.getBoolean(USER_RECORDINGS, true);
 	}
 
 	/**
 	 * Sets the admin pin.
 	 *
-	 * @param s the new admin pin
+	 * @param s
+	 *            the new admin pin
 	 */
-	public void setAdminPIN(String s) {
+	public void setAdminPIN(String s)
+	{
 		prefs.put(ADMIN_PIN, s);
 	}
 
 	/**
 	 * Sets the content folder.
 	 *
-	 * @param s the new content folder
+	 * @param s
+	 *            the new content folder
 	 */
-	public void setContentFolder(String s) {
+	public void setContentFolder(String s)
+	{
 		prefs.put(CONTENT_FOLDER, s);
 	}
 
 	/**
 	 * Sets the locations enabled.
 	 *
-	 * @param b the new locations enabled
+	 * @param b
+	 *            the new locations enabled
 	 */
-	public void setLocationsEnabled(boolean b) {
+	public void setLocationsEnabled(boolean b)
+	{
 		prefs.putBoolean(LOCATIONS, b);
 	}
 
 	/**
 	 * Sets the max recording time.
 	 *
-	 * @param i the new max recording time
+	 * @param i
+	 *            the new max recording time
 	 */
-	public void setMaxRecordingTime(int i) {
+	public void setMaxRecordingTime(int i)
+	{
 		prefs.putInt(MAX_RECORDING_TIME, i);
 	}
 
 	/**
 	 * Sets the metrics enabled.
 	 *
-	 * @param b the new metrics enabled
+	 * @param b
+	 *            the new metrics enabled
 	 */
-	public void setMetricsEnabled(boolean b) {
+	public void setMetricsEnabled(boolean b)
+	{
 		prefs.putBoolean(METRICS, b);
 	}
 
 	/**
 	 * Sets the metrics folder.
 	 *
-	 * @param s the new metrics folder
+	 * @param s
+	 *            the new metrics folder
 	 */
-	public void setMetricsFolder(String s) {
+	public void setMetricsFolder(String s)
+	{
 		prefs.put(METRICS_LOC, s);
 	}
 
 	/**
 	 * Sets the user recordings enabled.
 	 *
-	 * @param b the new user recordings enabled
+	 * @param b
+	 *            the new user recordings enabled
 	 */
-	public void setUserRecordingsEnabled(boolean b) {
+	public void setUserRecordingsEnabled(boolean b)
+	{
 		prefs.putBoolean(USER_RECORDINGS, b);
 	}
 

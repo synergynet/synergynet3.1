@@ -28,7 +28,8 @@ import usertracking.networking.TrackerSync;
 /**
  * The Class UserTracker.
  */
-public class UserTracker extends JFrame {
+public class UserTracker extends JFrame
+{
 
 	/** The Constant ALL_TABLES. */
 	public static final String ALL_TABLES = "all";
@@ -46,8 +47,7 @@ public class UserTracker extends JFrame {
 	public static float TRACKER_HEIGHT = 2048f;
 
 	/** The tracker orientation. */
-	public static float TRACKER_LOCATION_X, TRACKER_LOCATION_Y,
-			TRACKER_ORIENTATION = 0;
+	public static float TRACKER_LOCATION_X, TRACKER_LOCATION_Y, TRACKER_ORIENTATION = 0;
 
 	/** The tracker sync. */
 	public static TrackerSync trackerSync;
@@ -73,11 +73,11 @@ public class UserTracker extends JFrame {
 	/**
 	 * Instantiates a new user tracker.
 	 */
-	public UserTracker() {
+	public UserTracker()
+	{
 		super("User Tracker");
 
-		SynergyNetPosition pos = TrackerPositioning
-				.getLocalDeviceLocationPosOnly();
+		SynergyNetPosition pos = TrackerPositioning.getLocalDeviceLocationPosOnly();
 		TRACKER_LOCATION_X = pos.getXinMetres();
 		TRACKER_LOCATION_Y = pos.getYinMetres();
 		TRACKER_ORIENTATION = pos.getOrientation();
@@ -88,13 +88,14 @@ public class UserTracker extends JFrame {
 
 		announcementBox = new JTextArea();
 		JScrollPane scroll = new JScrollPane(announcementBox);
-		scroll.getVerticalScrollBar().addAdjustmentListener(
-				new AdjustmentListener() {
-					public void adjustmentValueChanged(AdjustmentEvent e) {
-						announcementBox.select(
-								announcementBox.getHeight() + 1000, 0);
-					}
-				});
+		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener()
+		{
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e)
+			{
+				announcementBox.select(announcementBox.getHeight() + 1000, 0);
+			}
+		});
 
 		announcementBox.setEditable(false);
 		announcementBox.setText("Tracker started." + "\n  ");
@@ -109,30 +110,33 @@ public class UserTracker extends JFrame {
 		add(teacherControlPanel);
 		add(scroll);
 
-		ActionListener actionListener = new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
+		ActionListener actionListener = new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent actionEvent)
+			{
 				trackPanel.closeDown();
 			}
 		};
 
 		KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-		rootPane.registerKeyboardAction(actionListener, stroke,
-				JComponent.WHEN_IN_FOCUSED_WINDOW);
+		rootPane.registerKeyboardAction(actionListener, stroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
 
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
 				trackPanel.closeDown();
 			}
 		});
 
 		setResizable(false);
-		setSize(trackPanel.getWidth(), trackPanel.getHeight()
-				+ teacherControlPanel.getHeight());
+		setSize(trackPanel.getWidth(), trackPanel.getHeight() + teacherControlPanel.getHeight());
 		setLocationRelativeTo(null);
 		setVisible(true);
 
-		TrackingDeviceControl trackingDeviceController = new TrackingDeviceControl(
-				SynergyNetCluster.get().getIdentity());
+		TrackingDeviceControl trackingDeviceController = new TrackingDeviceControl(SynergyNetCluster.get().getIdentity());
 		trackerSync = new TrackerSync(trackingDeviceController);
 
 		GestureActions.poseThread.start();
@@ -142,26 +146,32 @@ public class UserTracker extends JFrame {
 	/**
 	 * Clear sequences.
 	 */
-	public static void clearSequences() {
+	public static void clearSequences()
+	{
 		trackPanel.clearSequences();
 	}
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[])
+	{
 		new UserTracker();
 	}
 
 	/**
 	 * Write to announcement box.
 	 *
-	 * @param announcement the announcement
+	 * @param announcement
+	 *            the announcement
 	 */
-	public static void writeToAnnouncementBox(String announcement) {
-		if (announcementBox != null) {
+	public static void writeToAnnouncementBox(String announcement)
+	{
+		if (announcementBox != null)
+		{
 			String previousAnnouncements = announcementBox.getText();
 			previousAnnouncements += " - " + announcement + "\n  ";
 			announcementBox.setText(previousAnnouncements);

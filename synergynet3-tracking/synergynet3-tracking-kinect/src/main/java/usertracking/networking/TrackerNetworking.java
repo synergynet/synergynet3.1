@@ -15,7 +15,8 @@ import com.jme3.math.Vector3f;
 /**
  * The Class TrackerNetworking.
  */
-public class TrackerNetworking {
+public class TrackerNetworking
+{
 
 	/** The teacher statuses. */
 	public static boolean[] teacherStatuses = new boolean[50];
@@ -32,8 +33,10 @@ public class TrackerNetworking {
 	/**
 	 * Broadcast clear user locations.
 	 */
-	public static void broadcastClearUserLocations() {
-		synchronized (userLocations) {
+	public static void broadcastClearUserLocations()
+	{
+		synchronized (userLocations)
+		{
 			userLocations.clear();
 			TrackingControlComms.get().broadcastUserLocations(userLocations);
 		}
@@ -42,8 +45,10 @@ public class TrackerNetworking {
 	/**
 	 * Broadcast user locations.
 	 */
-	public static void broadcastUserLocations() {
-		synchronized (userLocations) {
+	public static void broadcastUserLocations()
+	{
+		synchronized (userLocations)
+		{
 			TrackingControlComms.get().broadcastUserLocations(userLocations);
 		}
 	}
@@ -51,7 +56,8 @@ public class TrackerNetworking {
 	/**
 	 * Cancel poses and clear gesture sequences.
 	 */
-	public static void cancelPosesAndClearGestureSequences() {
+	public static void cancelPosesAndClearGestureSequences()
+	{
 		GestureActions.resetPoseDetection();
 		UserTracker.clearSequences();
 	}
@@ -59,35 +65,38 @@ public class TrackerNetworking {
 	/**
 	 * Disable table selected mode.
 	 */
-	public static void disableTableSelectedMode() {
-		TrackingControlComms.get().setTableSelectdModeDisabled(
-				new PerformActionMessage(MESSAGESTATE.ACTIVATE));
+	public static void disableTableSelectedMode()
+	{
+		TrackingControlComms.get().setTableSelectdModeDisabled(new PerformActionMessage(MESSAGESTATE.ACTIVATE));
 	}
 
 	/**
 	 * Enable all tables selected mode.
 	 */
-	public static void enableAllTablesSelectedMode() {
-		TrackingControlComms.get().setAllTablesSelectedModeEnabled(
-				new PerformActionMessage(MESSAGESTATE.ACTIVATE));
+	public static void enableAllTablesSelectedMode()
+	{
+		TrackingControlComms.get().setAllTablesSelectedModeEnabled(new PerformActionMessage(MESSAGESTATE.ACTIVATE));
 	}
 
 	/**
 	 * Gesture control broadcast.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 */
-	public static void gestureControlBroadcast(int userID) {
-		TrackingControlComms.get().setGestureControlBroadcast(userID,
-				getIdentity());
+	public static void gestureControlBroadcast(int userID)
+	{
+		TrackingControlComms.get().setGestureControlBroadcast(userID, getIdentity());
 	}
 
 	/**
 	 * Gesture control receive.
 	 *
-	 * @param newValue the new value
+	 * @param newValue
+	 *            the new value
 	 */
-	public static void gestureControlReceive(Integer newValue) {
+	public static void gestureControlReceive(Integer newValue)
+	{
 		GestureActions.gestureControlUpdate(newValue);
 	}
 
@@ -96,8 +105,10 @@ public class TrackerNetworking {
 	 *
 	 * @return the identity
 	 */
-	public static String getIdentity() {
-		if (identity == null) {
+	public static String getIdentity()
+	{
+		if (identity == null)
+		{
 			identity = SynergyNetCluster.get().getIdentity();
 		}
 		return identity;
@@ -106,13 +117,18 @@ public class TrackerNetworking {
 	/**
 	 * Gets the user location.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 * @return the user location
 	 */
-	public static UserLocation getUserLocation(int userID) {
-		synchronized (TrackerNetworking.userLocations) {
-			for (UserLocation userLoc : userLocations.getUserLocations()) {
-				if (userID == userLoc.getID()) {
+	public static UserLocation getUserLocation(int userID)
+	{
+		synchronized (TrackerNetworking.userLocations)
+		{
+			for (UserLocation userLoc : userLocations.getUserLocations())
+			{
+				if (userID == userLoc.getID())
+				{
 					return userLoc;
 				}
 			}
@@ -126,18 +142,24 @@ public class TrackerNetworking {
 	/**
 	 * Removes the user location.
 	 *
-	 * @param userID the user id
+	 * @param userID
+	 *            the user id
 	 */
-	public static void removeUserLocation(int userID) {
-		synchronized (TrackerNetworking.userLocations) {
+	public static void removeUserLocation(int userID)
+	{
+		synchronized (TrackerNetworking.userLocations)
+		{
 			UserLocation contained = null;
-			for (UserLocation userLoc : userLocations.getUserLocations()) {
-				if (userID == userLoc.getID()) {
+			for (UserLocation userLoc : userLocations.getUserLocations())
+			{
+				if (userID == userLoc.getID())
+				{
 					contained = userLoc;
 					break;
 				}
 			}
-			if (contained != null) {
+			if (contained != null)
+			{
 				userLocations.remove(contained);
 			}
 		}
@@ -146,49 +168,58 @@ public class TrackerNetworking {
 	/**
 	 * Send teacher status update message.
 	 *
-	 * @param userID the user id
-	 * @param isTeacher the is teacher
+	 * @param userID
+	 *            the user id
+	 * @param isTeacher
+	 *            the is teacher
 	 */
-	public static void sendTeacherStatusUpdateMessage(int userID,
-			boolean isTeacher) {
-		String message = TrackerUtils.createTeacherStatusMessage(userID,
-				getIdentity(), isTeacher);
+	public static void sendTeacherStatusUpdateMessage(int userID, boolean isTeacher)
+	{
+		String message = TrackerUtils.createTeacherStatusMessage(userID, getIdentity(), isTeacher);
 		TrackingControlComms.get().updateTeacherStatus(message);
 	}
 
 	/**
 	 * Sets the both user hand locations.
 	 *
-	 * @param userID the user id
-	 * @param xOne the x one
-	 * @param yOne the y one
-	 * @param zOne the z one
-	 * @param xTwo the x two
-	 * @param yTwo the y two
-	 * @param zTwo the z two
+	 * @param userID
+	 *            the user id
+	 * @param xOne
+	 *            the x one
+	 * @param yOne
+	 *            the y one
+	 * @param zOne
+	 *            the z one
+	 * @param xTwo
+	 *            the x two
+	 * @param yTwo
+	 *            the y two
+	 * @param zTwo
+	 *            the z two
 	 */
-	public static void setBothUserHandLocations(int userID, float xOne,
-			float yOne, float zOne, float xTwo, float yTwo, float zTwo) {
+	public static void setBothUserHandLocations(int userID, float xOne, float yOne, float zOne, float xTwo, float yTwo, float zTwo)
+	{
 		UserLocation userLocation = getUserLocation(userID);
-		Vector3f handVecOne = TrackerPositioning.toRealWorldVectorInM(xOne,
-				yOne, zOne);
-		Vector3f handVecTwo = TrackerPositioning.toRealWorldVectorInM(xTwo,
-				yTwo, zTwo);
-		userLocation.setBothUserHandLocations(handVecOne.x, handVecOne.y,
-				handVecOne.z, handVecTwo.x, handVecTwo.y, handVecTwo.z);
+		Vector3f handVecOne = TrackerPositioning.toRealWorldVectorInM(xOne, yOne, zOne);
+		Vector3f handVecTwo = TrackerPositioning.toRealWorldVectorInM(xTwo, yTwo, zTwo);
+		userLocation.setBothUserHandLocations(handVecOne.x, handVecOne.y, handVecOne.z, handVecTwo.x, handVecTwo.y, handVecTwo.z);
 		setUserLocation(userLocation);
 	}
 
 	/**
 	 * Sets the single user hand location.
 	 *
-	 * @param userID the user id
-	 * @param x the x
-	 * @param y the y
-	 * @param z the z
+	 * @param userID
+	 *            the user id
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param z
+	 *            the z
 	 */
-	public static void setSingleUserHandLocation(int userID, float x, float y,
-			float z) {
+	public static void setSingleUserHandLocation(int userID, float x, float y, float z)
+	{
 		UserLocation userLocation = getUserLocation(userID);
 		Vector3f handVec = TrackerPositioning.toRealWorldVectorInM(x, y, z);
 		userLocation.setSingleUserHandLocation(handVec.x, handVec.y, handVec.z);
@@ -198,11 +229,15 @@ public class TrackerNetworking {
 	/**
 	 * Sets the user body location.
 	 *
-	 * @param userID the user id
-	 * @param x the x
-	 * @param z the z
+	 * @param userID
+	 *            the user id
+	 * @param x
+	 *            the x
+	 * @param z
+	 *            the z
 	 */
-	public static void setUserBodyLocation(int userID, float x, float z) {
+	public static void setUserBodyLocation(int userID, float x, float z)
+	{
 		UserLocation userLocation = getUserLocation(userID);
 		Vector3f bodyVec = TrackerPositioning.toRealWorldVectorInM(x, 0, z);
 		userLocation.setUserBodyLocation(bodyVec.x, bodyVec.y);
@@ -212,10 +247,13 @@ public class TrackerNetworking {
 	/**
 	 * Sets the user location.
 	 *
-	 * @param userLocIn the new user location
+	 * @param userLocIn
+	 *            the new user location
 	 */
-	public static void setUserLocation(UserLocation userLocIn) {
-		synchronized (TrackerNetworking.userLocations) {
+	public static void setUserLocation(UserLocation userLocIn)
+	{
+		synchronized (TrackerNetworking.userLocations)
+		{
 			removeUserLocation(userLocIn.getID());
 			userLocations.add(userLocIn);
 		}
@@ -224,9 +262,9 @@ public class TrackerNetworking {
 	/**
 	 * Switch to individual table select mode.
 	 */
-	public static void switchToIndividualTableSelectMode() {
+	public static void switchToIndividualTableSelectMode()
+	{
 		UserTracker.SELECTED_TABLES.remove(UserTracker.ALL_TABLES);
-		TrackingControlComms.get().setIndividualTableSelectModeEnabled(
-				new PerformActionMessage(MESSAGESTATE.ACTIVATE));
+		TrackingControlComms.get().setIndividualTableSelectModeEnabled(new PerformActionMessage(MESSAGESTATE.ACTIVATE));
 	}
 }

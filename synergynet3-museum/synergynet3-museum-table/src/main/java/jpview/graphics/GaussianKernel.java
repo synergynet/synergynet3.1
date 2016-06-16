@@ -9,7 +9,8 @@ package jpview.graphics;
  *
  * @author clyon
  */
-public class GaussianKernel {
+public class GaussianKernel
+{
 
 	/** The kernel. */
 	private float[] kernel;
@@ -21,16 +22,19 @@ public class GaussianKernel {
 	private float sigma = 1;
 
 	/** Creates a new instance of GaussianKernel */
-	public GaussianKernel() {
+	public GaussianKernel()
+	{
 		kernel = makeKernel();
 	}
 
 	/**
 	 * Creates a gaussian kernel with the provided radius
 	 *
-	 * @param r the radius for the gaussian kernel
+	 * @param r
+	 *            the radius for the gaussian kernel
 	 */
-	public GaussianKernel(int r) {
+	public GaussianKernel(int r)
+	{
 		radius = r;
 		kernel = makeKernel();
 	}
@@ -38,10 +42,13 @@ public class GaussianKernel {
 	/**
 	 * Creates a gaussian kernel with the provided radius and sigma value
 	 *
-	 * @param r the radius of the blur
-	 * @param s the sigma value for the kernel
+	 * @param r
+	 *            the radius of the blur
+	 * @param s
+	 *            the sigma value for the kernel
 	 */
-	public GaussianKernel(int r, float s) {
+	public GaussianKernel(int r, float s)
+	{
 		radius = r;
 		sigma = s;
 		kernel = makeKernel();
@@ -50,9 +57,11 @@ public class GaussianKernel {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[])
+	{
 		GaussianKernel gk = new GaussianKernel(5, 100f);
 		gk.dump();
 
@@ -61,9 +70,12 @@ public class GaussianKernel {
 	/**
 	 * Dumps a string representation of the kernel to standard out
 	 */
-	public void dump() {
-		for (int x = 0; x < radius; x++) {
-			for (int y = 0; y < radius; y++) {
+	public void dump()
+	{
+		for (int x = 0; x < radius; x++)
+		{
+			for (int y = 0; y < radius; y++)
+			{
 				System.out.print(kernel[(y * radius) + x] + "\t");
 			}
 			System.out.println();
@@ -76,7 +88,8 @@ public class GaussianKernel {
 	 *
 	 * @return the kernel values
 	 */
-	public float[] getKernel() {
+	public float[] getKernel()
+	{
 		return kernel;
 	}
 
@@ -85,20 +98,23 @@ public class GaussianKernel {
 	 *
 	 * @return the float[]
 	 */
-	private float[] makeKernel() {
+	private float[] makeKernel()
+	{
 		kernel = new float[radius * radius];
 		float sum = 0;
-		for (int y = 0; y < radius; y++) {
-			for (int x = 0; x < radius; x++) {
+		for (int y = 0; y < radius; y++)
+		{
+			for (int x = 0; x < radius; x++)
+			{
 				int off = (y * radius) + x;
 				int xx = x - (radius / 2);
 				int yy = y - (radius / 2);
-				kernel[off] = (float) Math.pow(Math.E, -((xx * xx) + (yy * yy))
-						/ (2 * (sigma * sigma)));
+				kernel[off] = (float) Math.pow(Math.E, -((xx * xx) + (yy * yy)) / (2 * (sigma * sigma)));
 				sum += kernel[off];
 			}
 		}
-		for (int i = 0; i < kernel.length; i++) {
+		for (int i = 0; i < kernel.length; i++)
+		{
 			kernel[i] /= sum;
 		}
 		return kernel;

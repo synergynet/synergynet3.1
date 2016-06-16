@@ -3,7 +3,8 @@ package synergynet3.museum.table.utils;
 /**
  * The Class EntityXmlFields.
  */
-public class EntityXmlFields {
+public class EntityXmlFields
+{
 
 	/** The Constant ENTITY_NODE. */
 	public static final String ENTITY_NODE = "entity";

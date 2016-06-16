@@ -10,27 +10,34 @@ import jpview.ptms.PTM;
 /**
  * @author clyon
  */
-public class NormalMapOp implements PixelTransformOp {
+public class NormalMapOp implements PixelTransformOp
+{
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#clearCache()
 	 */
-	public void clearCache() {
+	@Override
+	public void clearCache()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#forceUpdate()
 	 */
-	public void forceUpdate() {
+	@Override
+	public void forceUpdate()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#release()
 	 */
-	public void release() {
+	@Override
+	public void release()
+	{
 	}
 
 	/*
@@ -38,14 +45,20 @@ public class NormalMapOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm)
+	{
 		int[] localPixels = pixels;
 		// PTM localPtm = ptm;
-		for (int i = 0; i < localPixels.length; i++) {
+		for (int i = 0; i < localPixels.length; i++)
+		{
 			Vec3f N = ptm.normal(i);
-			if ((N.x() == 0) && (N.y() == 0) && (N.z() == 0)) {
+			if ((N.x() == 0) && (N.y() == 0) && (N.z() == 0))
+			{
 				localPixels[i] = 0;
-			} else {
+			}
+			else
+			{
 				localPixels[i] = N.toPixel();
 			}
 		}
@@ -56,10 +69,15 @@ public class NormalMapOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM, int, int)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY) {
-		if (pixels.length < (ptm.getWidth() * ptm.getHeight())) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
+		if (pixels.length < (ptm.getWidth() * ptm.getHeight()))
+		{
 			transformPixelsFast(pixels, ptm);
-		} else {
+		}
+		else
+		{
 			transformPixels(pixels, ptm);
 		}
 	}
@@ -67,23 +85,31 @@ public class NormalMapOp implements PixelTransformOp {
 	/**
 	 * Transform pixels fast.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
 	 */
-	public void transformPixelsFast(int[] pixels, PTM ptm) {
+	public void transformPixelsFast(int[] pixels, PTM ptm)
+	{
 		final int[] localPixels = pixels;
 		// final PTM localPtm = ptm;
 		final int height = ptm.getHeight();
 		final int width = ptm.getWidth();
 		int pixelIndex = 0;
 
-		for (int y = 0; y < height; y += 2) {
-			for (int x = 0; x < width; x += 2) {
+		for (int y = 0; y < height; y += 2)
+		{
+			for (int x = 0; x < width; x += 2)
+			{
 				int i = (y * width) + x;
 				Vec3f N = ptm.normal(i);
-				if ((N.x() == 0) && (N.y() == 0) && (N.z() == 0)) {
+				if ((N.x() == 0) && (N.y() == 0) && (N.z() == 0))
+				{
 					localPixels[pixelIndex] = 0;
-				} else {
+				}
+				else
+				{
 					localPixels[pixelIndex] = N.toPixel();
 				}
 				pixelIndex++;

@@ -11,27 +11,34 @@ import jpview.ptms.RGBPTM;
 /**
  * @author clyon
  */
-public class DirectionalLightOp implements PixelTransformOp {
+public class DirectionalLightOp implements PixelTransformOp
+{
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#clearCache()
 	 */
-	public void clearCache() {
+	@Override
+	public void clearCache()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#forceUpdate()
 	 */
-	public void forceUpdate() {
+	@Override
+	public void forceUpdate()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#release()
 	 */
-	public void release() {
+	@Override
+	public void release()
+	{
 		/** no local resources */
 	}
 
@@ -40,7 +47,9 @@ public class DirectionalLightOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm)
+	{
 		transformPixels(pixels, ptm, ptm.getWidth() / 4, ptm.getHeight() / 4);
 	}
 
@@ -49,28 +58,40 @@ public class DirectionalLightOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM, int, int)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 
 		boolean beFast = false;
 
-		if (pixels.length < (ptm.getWidth() * ptm.getHeight())) {
+		if (pixels.length < (ptm.getWidth() * ptm.getHeight()))
+		{
 			beFast = true;
 		}
 
-		switch (ptm.getType()) {
+		switch (ptm.getType())
+		{
 			case PTM.LRGB:
-				if (!beFast) {
-					if (!ptm.useEnv()) {
+				if (!beFast)
+				{
+					if (!ptm.useEnv())
+					{
 						LRGBXform(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
-					} else {
+					}
+					else
+					{
 						LRGBXformEnv(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
 					}
-				} else {
-					if (!ptm.useEnv()) {
+				}
+				else
+				{
+					if (!ptm.useEnv())
+					{
 						LRGBXformFast(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
-					} else {
-						LRGBXformEnvFast(pixels, ((LRGBPTM) ptm), mouseX,
-								mouseY);
+					}
+					else
+					{
+						LRGBXformEnvFast(pixels, ((LRGBPTM) ptm), mouseX, mouseY);
 					}
 				}
 				break;
@@ -84,12 +105,17 @@ public class DirectionalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXform(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY) {
+	private void LRGBXform(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 		int[] localPixels = pixels;
 		int w = ptm.getWidth() / 2;
 		int h = ptm.getHeight() / 2;
@@ -111,15 +137,12 @@ public class DirectionalLightOp implements PixelTransformOp {
 		final int[][] localCache = ptm.getCoefficients();
 		final int _lum = Math.round(ptm.getLuminance() * 256);
 
-		for (int i = 0; i < localCache.length; i++) {
+		for (int i = 0; i < localCache.length; i++)
+		{
 
 			/* no floats, nothing non-local */
 
-			intensity = ((localCache[i][0] * _uu) >> 8)
-					+ ((localCache[i][1] * _vv) >> 8)
-					+ ((localCache[i][2] * _uv) >> 8)
-					+ ((localCache[i][3] * _u) >> 8)
-					+ ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
+			intensity = ((localCache[i][0] * _uu) >> 8) + ((localCache[i][1] * _vv) >> 8) + ((localCache[i][2] * _uv) >> 8) + ((localCache[i][3] * _u) >> 8) + ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
 
 			pixel = localCache[i][6];
 
@@ -133,23 +156,29 @@ public class DirectionalLightOp implements PixelTransformOp {
 			green = (green * m) >> 16;
 			blue = (blue * m) >> 16;
 
-			if (red > 255) {
+			if (red > 255)
+			{
 				red = 255;
 			}
-			if (green > 255) {
+			if (green > 255)
+			{
 				green = 255;
 			}
-			if (blue > 255) {
+			if (blue > 255)
+			{
 				blue = 255;
 			}
 
-			if (red < 0) {
+			if (red < 0)
+			{
 				red = 0;
 			}
-			if (green < 0) {
+			if (green < 0)
+			{
 				green = 0;
 			}
-			if (blue < 0) {
+			if (blue < 0)
+			{
 				blue = 0;
 			}
 
@@ -160,12 +189,17 @@ public class DirectionalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform env.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformEnv(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY) {
+	private void LRGBXformEnv(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 
 		int[] localPixels = pixels;
 		int w = ptm.getWidth() / 2;
@@ -193,22 +227,20 @@ public class DirectionalLightOp implements PixelTransformOp {
 		map = ptm.getEnvironmentMapMap();
 		rotatedEnv = ptm.getEnvironmentMap().rotatedMap();
 
-		if ((map == null) || (rotatedEnv == null)) {
+		if ((map == null) || (rotatedEnv == null))
+		{
 			LRGBXform(pixels, ptm, mouseX, mouseY);
 			return;
 		}
 
 		int _er = 256, _eg = 256, _eb = 256;
 
-		for (int i = 0; i < localCache.length; i++) {
+		for (int i = 0; i < localCache.length; i++)
+		{
 
 			/* no floats, nothing non-local */
 
-			intensity = ((localCache[i][0] * _uu) >> 8)
-					+ ((localCache[i][1] * _vv) >> 8)
-					+ ((localCache[i][2] * _uv) >> 8)
-					+ ((localCache[i][3] * _u) >> 8)
-					+ ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
+			intensity = ((localCache[i][0] * _uu) >> 8) + ((localCache[i][1] * _vv) >> 8) + ((localCache[i][2] * _uv) >> 8) + ((localCache[i][3] * _u) >> 8) + ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
 
 			pixel = localCache[i][6];
 
@@ -227,23 +259,29 @@ public class DirectionalLightOp implements PixelTransformOp {
 			green = (green * ((m * _eg) >> 8)) >> 16;
 			blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-			if (red > 255) {
+			if (red > 255)
+			{
 				red = 255;
 			}
-			if (green > 255) {
+			if (green > 255)
+			{
 				green = 255;
 			}
-			if (blue > 255) {
+			if (blue > 255)
+			{
 				blue = 255;
 			}
 
-			if (red < 0) {
+			if (red < 0)
+			{
 				red = 0;
 			}
-			if (green < 0) {
+			if (green < 0)
+			{
 				green = 0;
 			}
-			if (blue < 0) {
+			if (blue < 0)
+			{
 				blue = 0;
 			}
 
@@ -254,13 +292,17 @@ public class DirectionalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform env fast.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformEnvFast(int[] pixels, LRGBPTM ptm, int mouseX,
-			int mouseY) {
+	private void LRGBXformEnvFast(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 
 		int[] localPixels = pixels;
 		int w = ptm.getWidth() / 2;
@@ -286,7 +328,8 @@ public class DirectionalLightOp implements PixelTransformOp {
 		map = ptm.getEnvironmentMapMap();
 		rotatedEnv = ptm.getEnvironmentMap().rotatedMap();
 
-		if ((map == null) || (rotatedEnv == null)) {
+		if ((map == null) || (rotatedEnv == null))
+		{
 			LRGBXformEnvFast(pixels, ptm, mouseX, mouseY);
 			return;
 		}
@@ -298,17 +341,15 @@ public class DirectionalLightOp implements PixelTransformOp {
 		int height = ptm.getHeight();
 		int width = ptm.getWidth();
 
-		for (int y = 0; y < height; y += 2) {
-			for (int x = 0; x < width; x += 2) {
+		for (int y = 0; y < height; y += 2)
+		{
+			for (int x = 0; x < width; x += 2)
+			{
 				int i = (y * width) + x;
 
 				/* no floats, nothing non-local */
 
-				intensity = ((localCache[i][0] * _uu) >> 8)
-						+ ((localCache[i][1] * _vv) >> 8)
-						+ ((localCache[i][2] * _uv) >> 8)
-						+ ((localCache[i][3] * _u) >> 8)
-						+ ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
+				intensity = ((localCache[i][0] * _uu) >> 8) + ((localCache[i][1] * _vv) >> 8) + ((localCache[i][2] * _uv) >> 8) + ((localCache[i][3] * _u) >> 8) + ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
 
 				pixel = localCache[i][6];
 
@@ -327,23 +368,29 @@ public class DirectionalLightOp implements PixelTransformOp {
 				green = (green * ((m * _eg) >> 8)) >> 16;
 				blue = (blue * ((m * _eb) >> 8)) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -355,12 +402,17 @@ public class DirectionalLightOp implements PixelTransformOp {
 	/**
 	 * LRGB xform fast.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformFast(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY) {
+	private void LRGBXformFast(int[] pixels, LRGBPTM ptm, int mouseX, int mouseY)
+	{
 		int[] localPixels = pixels;
 
 		int w = ptm.getWidth() / 2;
@@ -386,16 +438,14 @@ public class DirectionalLightOp implements PixelTransformOp {
 		int height = ptm.getHeight();
 		int width = ptm.getWidth();
 
-		for (int y = 0; y < height; y += 2) {
-			for (int x = 0; x < width; x += 2) {
+		for (int y = 0; y < height; y += 2)
+		{
+			for (int x = 0; x < width; x += 2)
+			{
 				int i = (y * width) + x;
 				/* no floats, nothing non-local */
 
-				intensity = ((localCache[i][0] * _uu) >> 8)
-						+ ((localCache[i][1] * _vv) >> 8)
-						+ ((localCache[i][2] * _uv) >> 8)
-						+ ((localCache[i][3] * _u) >> 8)
-						+ ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
+				intensity = ((localCache[i][0] * _uu) >> 8) + ((localCache[i][1] * _vv) >> 8) + ((localCache[i][2] * _uv) >> 8) + ((localCache[i][3] * _u) >> 8) + ((localCache[i][4] * _v) >> 8) + (localCache[i][5]);
 
 				pixel = localCache[i][6];
 
@@ -409,23 +459,29 @@ public class DirectionalLightOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -438,12 +494,17 @@ public class DirectionalLightOp implements PixelTransformOp {
 	/**
 	 * RGB xform.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void RGBXform(int[] pixels, RGBPTM ptm, int mouseX, int mouseY) {
+	private void RGBXform(int[] pixels, RGBPTM ptm, int mouseX, int mouseY)
+	{
 
 		int[] localPixels = pixels;
 		int w = ptm.getWidth() / 2;
@@ -467,48 +528,40 @@ public class DirectionalLightOp implements PixelTransformOp {
 
 		int RED = 0, GREEN = 1, BLUE = 2;
 
-		for (int i = 0; i < localCache[RED].length; i++) {
+		for (int i = 0; i < localCache[RED].length; i++)
+		{
 
 			/* no floats, nothing non-local */
 
-			red = ((localCache[RED][i][0] * _uu) >> 8)
-					+ ((localCache[RED][i][1] * _vv) >> 8)
-					+ ((localCache[RED][i][2] * _uv) >> 8)
-					+ ((localCache[RED][i][3] * _u) >> 8)
-					+ ((localCache[RED][i][4] * _v) >> 8)
-					+ (localCache[RED][i][5]);
+			red = ((localCache[RED][i][0] * _uu) >> 8) + ((localCache[RED][i][1] * _vv) >> 8) + ((localCache[RED][i][2] * _uv) >> 8) + ((localCache[RED][i][3] * _u) >> 8) + ((localCache[RED][i][4] * _v) >> 8) + (localCache[RED][i][5]);
 
-			green = ((localCache[GREEN][i][0] * _uu) >> 8)
-					+ ((localCache[GREEN][i][1] * _vv) >> 8)
-					+ ((localCache[GREEN][i][2] * _uv) >> 8)
-					+ ((localCache[GREEN][i][3] * _u) >> 8)
-					+ ((localCache[GREEN][i][4] * _v) >> 8)
-					+ (localCache[GREEN][i][5]);
+			green = ((localCache[GREEN][i][0] * _uu) >> 8) + ((localCache[GREEN][i][1] * _vv) >> 8) + ((localCache[GREEN][i][2] * _uv) >> 8) + ((localCache[GREEN][i][3] * _u) >> 8) + ((localCache[GREEN][i][4] * _v) >> 8) + (localCache[GREEN][i][5]);
 
-			blue = ((localCache[BLUE][i][0] * _uu) >> 8)
-					+ ((localCache[BLUE][i][1] * _vv) >> 8)
-					+ ((localCache[BLUE][i][2] * _uv) >> 8)
-					+ ((localCache[BLUE][i][3] * _u) >> 8)
-					+ ((localCache[BLUE][i][4] * _v) >> 8)
-					+ (localCache[BLUE][i][5]);
+			blue = ((localCache[BLUE][i][0] * _uu) >> 8) + ((localCache[BLUE][i][1] * _vv) >> 8) + ((localCache[BLUE][i][2] * _uv) >> 8) + ((localCache[BLUE][i][3] * _u) >> 8) + ((localCache[BLUE][i][4] * _v) >> 8) + (localCache[BLUE][i][5]);
 
-			if (red > 255) {
+			if (red > 255)
+			{
 				red = 255;
 			}
-			if (green > 255) {
+			if (green > 255)
+			{
 				green = 255;
 			}
-			if (blue > 255) {
+			if (blue > 255)
+			{
 				blue = 255;
 			}
 
-			if (red < 0) {
+			if (red < 0)
+			{
 				red = 0;
 			}
-			if (green < 0) {
+			if (green < 0)
+			{
 				green = 0;
 			}
-			if (blue < 0) {
+			if (blue < 0)
+			{
 				blue = 0;
 			}
 

@@ -11,13 +11,15 @@ import jpview.ptms.PTM;
 /**
  * @author Default
  */
-public interface PTMReader {
+public interface PTMReader
+{
 
 	/**
 	 * Read ptm.
 	 *
 	 * @return the ptm
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
 	public PTM readPTM() throws java.io.IOException;
 

@@ -12,7 +12,8 @@ import synergynet3.web.shared.messages.PerformActionMessage;
 /**
  * The Class TrackingDeviceControl.
  */
-public class TrackingDeviceControl extends StudentTableClusteredDevice {
+public class TrackingDeviceControl extends StudentTableClusteredDevice
+{
 
 	/** The all tables selected mode enabled control variable. */
 	private DistributedProperty<PerformActionMessage> allTablesSelectedModeEnabledControlVariable;
@@ -53,54 +54,35 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Instantiates a new tracking device control.
 	 *
-	 * @param deviceName the device name
+	 * @param deviceName
+	 *            the device name
 	 */
-	public TrackingDeviceControl(String deviceName) {
+	public TrackingDeviceControl(String deviceName)
+	{
 		super(deviceName);
-		trackedUserLocationsControl = getDistributedPropertyMap()
-				.createDistributedProperty(
-						"trackedIserLocationsControlVariable");
+		trackedUserLocationsControl = getDistributedPropertyMap().createDistributedProperty("trackedIserLocationsControlVariable");
 		initWithDefault(trackedUserLocationsControl, new UserLocations(""));
-		tableSelectedControl = getDistributedPropertyMap()
-				.createDistributedProperty("tableSelectedControl");
+		tableSelectedControl = getDistributedPropertyMap().createDistributedProperty("tableSelectedControl");
 		initWithDefault(tableSelectedControl, "");
-		tableDeselectedControl = getDistributedPropertyMap()
-				.createDistributedProperty("tableDeselectedControl");
+		tableDeselectedControl = getDistributedPropertyMap().createDistributedProperty("tableDeselectedControl");
 		initWithDefault(tableDeselectedControl, "");
-		allTablesSelectedModeEnabledControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty(
-						"allTablesSelectedModeEnabledControlVariable");
-		initWithDefault(allTablesSelectedModeEnabledControlVariable,
-				new PerformActionMessage());
-		individualTableSelectModeEnabledControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty(
-						"individualTableSelectModeEnabledControlVariable");
-		initWithDefault(individualTableSelectModeEnabledControlVariable,
-				new PerformActionMessage());
-		tableSelectdModeDisabledControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty(
-						"tableSelectdModeDisabledControlVariable");
-		initWithDefault(tableSelectdModeDisabledControlVariable,
-				new PerformActionMessage());
-		gestureModeControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty("gestureModeControlVariable");
+		allTablesSelectedModeEnabledControlVariable = getDistributedPropertyMap().createDistributedProperty("allTablesSelectedModeEnabledControlVariable");
+		initWithDefault(allTablesSelectedModeEnabledControlVariable, new PerformActionMessage());
+		individualTableSelectModeEnabledControlVariable = getDistributedPropertyMap().createDistributedProperty("individualTableSelectModeEnabledControlVariable");
+		initWithDefault(individualTableSelectModeEnabledControlVariable, new PerformActionMessage());
+		tableSelectdModeDisabledControlVariable = getDistributedPropertyMap().createDistributedProperty("tableSelectdModeDisabledControlVariable");
+		initWithDefault(tableSelectdModeDisabledControlVariable, new PerformActionMessage());
+		gestureModeControlVariable = getDistributedPropertyMap().createDistributedProperty("gestureModeControlVariable");
 		initWithDefault(gestureModeControlVariable, -1);
-		userLocationsControl = getDistributedPropertyMap()
-				.createDistributedProperty("userLocationsControlVariable");
-		initWithDefault(userLocationsControl,
-				new ArrayList<CombinedUserEntity>());
-		teacherStatusControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty("teacherStatusControlVariable");
+		userLocationsControl = getDistributedPropertyMap().createDistributedProperty("userLocationsControlVariable");
+		initWithDefault(userLocationsControl, new ArrayList<CombinedUserEntity>());
+		teacherStatusControlVariable = getDistributedPropertyMap().createDistributedProperty("teacherStatusControlVariable");
 		initWithDefault(teacherStatusControlVariable, "");
-		teacherStatusToTrackerControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty(
-						"teacherStatusToTrackerControlVariable");
+		teacherStatusToTrackerControlVariable = getDistributedPropertyMap().createDistributedProperty("teacherStatusToTrackerControlVariable");
 		initWithDefault(teacherStatusToTrackerControlVariable, "");
-		uniqueIDToTrackerControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty("uniqueIDToTrackerControlVariable");
+		uniqueIDToTrackerControlVariable = getDistributedPropertyMap().createDistributedProperty("uniqueIDToTrackerControlVariable");
 		initWithDefault(uniqueIDToTrackerControlVariable, "");
-		pointingControlVariable = getDistributedPropertyMap()
-				.createDistributedProperty("pointingControlVariable");
+		pointingControlVariable = getDistributedPropertyMap().createDistributedProperty("pointingControlVariable");
 		initWithDefault(pointingControlVariable, new PointDirection());
 	}
 
@@ -109,7 +91,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the all tables selected mode enabled control variable
 	 */
-	public DistributedProperty<PerformActionMessage> getAllTablesSelectedModeEnabledControlVariable() {
+	public DistributedProperty<PerformActionMessage> getAllTablesSelectedModeEnabledControlVariable()
+	{
 		return allTablesSelectedModeEnabledControlVariable;
 	}
 
@@ -118,7 +101,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the gesture control variable
 	 */
-	public DistributedProperty<Integer> getGestureControlVariable() {
+	public DistributedProperty<Integer> getGestureControlVariable()
+	{
 		return gestureModeControlVariable;
 	}
 
@@ -127,7 +111,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the individual table select mode enabled control variable
 	 */
-	public DistributedProperty<PerformActionMessage> getIndividualTableSelectModeEnabledControlVariable() {
+	public DistributedProperty<PerformActionMessage> getIndividualTableSelectModeEnabledControlVariable()
+	{
 		return individualTableSelectModeEnabledControlVariable;
 	}
 
@@ -136,7 +121,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the pointing control variable
 	 */
-	public DistributedProperty<PointDirection> getPointingControlVariable() {
+	public DistributedProperty<PointDirection> getPointingControlVariable()
+	{
 		return pointingControlVariable;
 	}
 
@@ -145,7 +131,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the table deselected control variable
 	 */
-	public DistributedProperty<String> getTableDeselectedControlVariable() {
+	public DistributedProperty<String> getTableDeselectedControlVariable()
+	{
 		return tableDeselectedControl;
 	}
 
@@ -154,7 +141,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the table selected control variable
 	 */
-	public DistributedProperty<String> getTableSelectedControlVariable() {
+	public DistributedProperty<String> getTableSelectedControlVariable()
+	{
 		return tableSelectedControl;
 	}
 
@@ -163,7 +151,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the table selected mode disabled control variable
 	 */
-	public DistributedProperty<PerformActionMessage> getTableSelectedModeDisabledControlVariable() {
+	public DistributedProperty<PerformActionMessage> getTableSelectedModeDisabledControlVariable()
+	{
 		return tableSelectdModeDisabledControlVariable;
 	}
 
@@ -172,7 +161,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the teacher status control variable
 	 */
-	public DistributedProperty<String> getTeacherStatusControlVariable() {
+	public DistributedProperty<String> getTeacherStatusControlVariable()
+	{
 		return teacherStatusControlVariable;
 	}
 
@@ -181,7 +171,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the teacher status to tracker control variable
 	 */
-	public DistributedProperty<String> getTeacherStatusToTrackerControlVariable() {
+	public DistributedProperty<String> getTeacherStatusToTrackerControlVariable()
+	{
 		return teacherStatusToTrackerControlVariable;
 	}
 
@@ -190,7 +181,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the tracked user locations control variable
 	 */
-	public DistributedProperty<UserLocations> getTrackedUserLocationsControlVariable() {
+	public DistributedProperty<UserLocations> getTrackedUserLocationsControlVariable()
+	{
 		return trackedUserLocationsControl;
 	}
 
@@ -199,7 +191,8 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the unique id to tracker control variable
 	 */
-	public DistributedProperty<String> getUniqueIDToTrackerControlVariable() {
+	public DistributedProperty<String> getUniqueIDToTrackerControlVariable()
+	{
 		return uniqueIDToTrackerControlVariable;
 	}
 
@@ -208,20 +201,23 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	 *
 	 * @return the user locations control variable
 	 */
-	public DistributedProperty<ArrayList<CombinedUserEntity>> getUserLocationsControlVariable() {
+	public DistributedProperty<ArrayList<CombinedUserEntity>> getUserLocationsControlVariable()
+	{
 		return userLocationsControl;
 	}
 
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(
-			DistributedProperty<ArrayList<CombinedUserEntity>> control,
-			ArrayList<CombinedUserEntity> defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<ArrayList<CombinedUserEntity>> control, ArrayList<CombinedUserEntity> defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -229,12 +225,15 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<Integer> control,
-			Integer defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<Integer> control, Integer defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -242,13 +241,15 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(
-			DistributedProperty<PerformActionMessage> control,
-			PerformActionMessage defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<PerformActionMessage> control, PerformActionMessage defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -256,12 +257,15 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<PointDirection> control,
-			PointDirection defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<PointDirection> control, PointDirection defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -269,12 +273,15 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<String> control,
-			String defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<String> control, String defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -282,12 +289,15 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Inits the with default.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefault(DistributedProperty<UserLocations> control,
-			UserLocations defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefault(DistributedProperty<UserLocations> control, UserLocations defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}
@@ -295,13 +305,15 @@ public class TrackingDeviceControl extends StudentTableClusteredDevice {
 	/**
 	 * Inits the with default string array.
 	 *
-	 * @param control the control
-	 * @param defaultValue the default value
+	 * @param control
+	 *            the control
+	 * @param defaultValue
+	 *            the default value
 	 */
-	protected void initWithDefaultStringArray(
-			DistributedProperty<ArrayList<String>> control,
-			ArrayList<String> defaultValue) {
-		if (null == control.getValue()) {
+	protected void initWithDefaultStringArray(DistributedProperty<ArrayList<String>> control, ArrayList<String> defaultValue)
+	{
+		if (null == control.getValue())
+		{
 			control.setValue(defaultValue);
 		}
 	}

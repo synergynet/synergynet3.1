@@ -9,7 +9,8 @@ import javax.swing.JComponent;
 /**
  * @author Default
  */
-public abstract class PTMCanvas extends JComponent {
+public abstract class PTMCanvas extends JComponent
+{
 
 	/** The Constant BUFFERED_IMAGE. */
 	public static final int BUFFERED_IMAGE = 1;
@@ -43,17 +44,26 @@ public abstract class PTMCanvas extends JComponent {
 	/**
 	 * Creates the ptm canvas.
 	 *
-	 * @param width the width
-	 * @param height the height
-	 * @param type the type
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param type
+	 *            the type
 	 * @return the PTM canvas
 	 */
-	public static PTMCanvas createPTMCanvas(int width, int height, int type) {
-		if (type == MEMORY_IMAGE_SOURCE) {
+	public static PTMCanvas createPTMCanvas(int width, int height, int type)
+	{
+		if (type == MEMORY_IMAGE_SOURCE)
+		{
 			return null; /* deprecated */
-		} else if (type == BUFFERED_IMAGE) {
+		}
+		else if (type == BUFFERED_IMAGE)
+		{
 			return new PTMCanvasBufferedImage(width, height);
-		} else {
+		}
+		else
+		{
 			return null;
 		}
 	}
@@ -61,16 +71,19 @@ public abstract class PTMCanvas extends JComponent {
 	/**
 	 * Detail.
 	 */
-	public void detail() {
+	public void detail()
+	{
 		;
 	}
 
 	/**
 	 * Fixed size.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	public void fixedSize(boolean b) {
+	public void fixedSize(boolean b)
+	{
 		fixed = b;
 	}
 
@@ -79,7 +92,8 @@ public abstract class PTMCanvas extends JComponent {
 	 *
 	 * @return the display height
 	 */
-	public int getDisplayHeight() {
+	public int getDisplayHeight()
+	{
 		return displayHeight;
 	}
 
@@ -88,7 +102,8 @@ public abstract class PTMCanvas extends JComponent {
 	 *
 	 * @return the display width
 	 */
-	public int getDisplayWidth() {
+	public int getDisplayWidth()
+	{
 		return displayWidth;
 	}
 
@@ -97,7 +112,8 @@ public abstract class PTMCanvas extends JComponent {
 	 *
 	 * @return the pixels
 	 */
-	public int[] getPixels() {
+	public int[] getPixels()
+	{
 		return pixels;
 	}
 
@@ -106,7 +122,8 @@ public abstract class PTMCanvas extends JComponent {
 	 *
 	 * @return true, if is fast
 	 */
-	public boolean isFast() {
+	public boolean isFast()
+	{
 		return isFast;
 	}
 
@@ -114,41 +131,50 @@ public abstract class PTMCanvas extends JComponent {
 	 * (non-Javadoc)
 	 * @see javax.swing.JComponent#paint(java.awt.Graphics)
 	 */
-	public void paint(java.awt.Graphics g) {
+	@Override
+	public void paint(java.awt.Graphics g)
+	{
 		this.paintComponent(g);
 	}
 
 	/**
 	 * Sets the display height.
 	 *
-	 * @param height the new display height
+	 * @param height
+	 *            the new display height
 	 */
-	public void setDisplayHeight(int height) {
+	public void setDisplayHeight(int height)
+	{
 		displayHeight = height;
 	}
 
 	/**
 	 * Sets the display width.
 	 *
-	 * @param width the new display width
+	 * @param width
+	 *            the new display width
 	 */
-	public void setDisplayWidth(int width) {
+	public void setDisplayWidth(int width)
+	{
 		displayWidth = width;
 	}
 
 	/**
 	 * Speed.
 	 */
-	public void speed() {
+	public void speed()
+	{
 		;
 	}
 
 	/**
 	 * Use hint.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	public void useHint(boolean b) {
+	public void useHint(boolean b)
+	{
 		hints = b;
 	}
 }

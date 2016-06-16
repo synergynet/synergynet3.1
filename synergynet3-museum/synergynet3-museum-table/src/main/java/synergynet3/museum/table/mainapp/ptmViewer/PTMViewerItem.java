@@ -27,7 +27,8 @@ import com.jme3.texture.plugins.AWTLoader;
 /**
  * The Class PTMViewerItem.
  */
-public class PTMViewerItem implements PTMEventDispatcher {
+public class PTMViewerItem implements PTMEventDispatcher
+{
 
 	/** Size for Border. */
 	private static final float BORDER_SIZE = 35f;
@@ -56,30 +57,41 @@ public class PTMViewerItem implements PTMEventDispatcher {
 	/**
 	 * Instantiates a new PTM viewer item.
 	 *
-	 * @param stage the stage
-	 * @param file the file
-	 * @param borderColour the border colour
-	 * @param sizeLimit the size limit
-	 * @param minScale the min scale
-	 * @param maxScale the max scale
+	 * @param stage
+	 *            the stage
+	 * @param file
+	 *            the file
+	 * @param borderColour
+	 *            the border colour
+	 * @param sizeLimit
+	 *            the size limit
+	 * @param minScale
+	 *            the min scale
+	 * @param maxScale
+	 *            the max scale
 	 */
-	public PTMViewerItem(IStage stage, File file, ColorRGBA borderColour,
-			float sizeLimit, float minScale, float maxScale) {
+	public PTMViewerItem(IStage stage, File file, ColorRGBA borderColour, float sizeLimit, float minScale, float maxScale)
+	{
 		this.borderColour = borderColour;
 		this.sizeLimit = sizeLimit;
 		// Generate PTMCanvas with file
-		try {
+		try
+		{
 			ptm = PTMIO.getPTMParser(new FileInputStream(file)).readPTM();
-			canvas = (PTMCanvasBufferedImage) PTMCanvas.createPTMCanvas(
-					ptm.getWidth(), ptm.getHeight(), PTMCanvas.BUFFERED_IMAGE);
-			pixelTransformOp.transformPixels(canvas.getPixels(), ptm,
-					ptm.getWidth() / 2, ptm.getHeight() / 2);
+			canvas = (PTMCanvasBufferedImage) PTMCanvas.createPTMCanvas(ptm.getWidth(), ptm.getHeight(), PTMCanvas.BUFFERED_IMAGE);
+			pixelTransformOp.transformPixels(canvas.getPixels(), ptm, ptm.getWidth() / 2, ptm.getHeight() / 2);
 
-		} catch (FileNotFoundException e) {
+		}
+		catch (FileNotFoundException e)
+		{
 			e.printStackTrace();
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 
@@ -91,7 +103,8 @@ public class PTMViewerItem implements PTMEventDispatcher {
 	 *
 	 * @return the i item
 	 */
-	public IItem asItem() {
+	public IItem asItem()
+	{
 		return wrapperFrame;
 	}
 
@@ -101,59 +114,64 @@ public class PTMViewerItem implements PTMEventDispatcher {
 	 * synergynet3.museum.table.mainapp.ptmViewer.PTMEventDispatcher#generateImage
 	 * ()
 	 */
-	public void generateImage() {
-		Texture2D tex = new Texture2D(new AWTLoader().load(canvas.getImage(),
-				false));
+	@Override
+	public void generateImage()
+	{
+		Texture2D tex = new Texture2D(new AWTLoader().load(canvas.getImage(), false));
 		image.setTexture(tex);
 	}
 
 	/**
 	 * Generate ptm viewer item.
 	 *
-	 * @param stage the stage
-	 * @param canvas the canvas
-	 * @param name the name
-	 * @param minScale the min scale
-	 * @param maxScale the max scale
+	 * @param stage
+	 *            the stage
+	 * @param canvas
+	 *            the canvas
+	 * @param name
+	 *            the name
+	 * @param minScale
+	 *            the min scale
+	 * @param maxScale
+	 *            the max scale
 	 */
-	private void generatePTMViewerItem(IStage stage, PTMCanvas canvas,
-			String name, float minScale, float maxScale) {
+	private void generatePTMViewerItem(IStage stage, PTMCanvas canvas, String name, float minScale, float maxScale)
+	{
 
-		try {
-			image = stage.getContentFactory().create(IImage.class,
-					name + "Canvas", UUID.randomUUID());
+		try
+		{
+			image = stage.getContentFactory().create(IImage.class, name + "Canvas", UUID.randomUUID());
 
 			float width = canvas.getDisplayWidth();
 			float height = canvas.getDisplayHeight();
 
-			if ((width > sizeLimit) || (height > sizeLimit)) {
-				if (width < height) {
+			if ((width > sizeLimit) || (height > sizeLimit))
+			{
+				if (width < height)
+				{
 					width *= (sizeLimit / height);
 					height = sizeLimit;
-				} else {
+				}
+				else
+				{
 					height *= (sizeLimit / width);
 					width = sizeLimit;
 				}
 			}
 			image.setSize(width, height);
 
-			IRoundedBorder objectBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, name + "Border", UUID.randomUUID());
+			IRoundedBorder objectBorder = stage.getContentFactory().create(IRoundedBorder.class, name + "Border", UUID.randomUUID());
 			objectBorder.setBorderWidth(BORDER_SIZE);
 			objectBorder.setSize(width, height);
 			objectBorder.setColor(borderColour);
 
-			wrapperFrame = stage.getContentFactory().create(IContainer.class,
-					name + "Wrapper", UUID.randomUUID());
+			wrapperFrame = stage.getContentFactory().create(IContainer.class, name + "Wrapper", UUID.randomUUID());
 
 			PTMListener ptmListener = new PTMListener();
-			ptmListener.setValues(ptm, pixelTransformOp, canvas, width, height,
-					stage, wrapperFrame, this);
+			ptmListener.setValues(ptm, pixelTransformOp, canvas, width, height, stage, wrapperFrame, this);
 			image.getMultiTouchDispatcher().addListener(ptmListener);
 
-			RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker()
-					.addBehaviour(objectBorder,
-							RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker().addBehaviour(objectBorder, RotateTranslateScaleBehaviour.class);
 			rts.setItemActingOn(wrapperFrame);
 			rts.setScaleLimits(minScale, maxScale);
 
@@ -162,7 +180,9 @@ public class PTMViewerItem implements PTMEventDispatcher {
 
 			generateImage();
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 

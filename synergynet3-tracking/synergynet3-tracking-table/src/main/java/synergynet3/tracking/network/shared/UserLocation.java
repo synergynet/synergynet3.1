@@ -5,12 +5,14 @@ import java.io.Serializable;
 /**
  * The Class UserLocation.
  */
-public class UserLocation implements Serializable {
+public class UserLocation implements Serializable
+{
 
 	/**
 	 * The Enum USERSTATE.
 	 */
-	public enum USERSTATE {
+	public enum USERSTATE
+	{
 
 		/** The body. */
 		BODY,
@@ -24,16 +26,19 @@ public class UserLocation implements Serializable {
 	private static final long serialVersionUID = 8614541915205145862L;
 
 	/** The body location. */
-	private float[] bodyLocation = { 0, 0 };
+	private float[] bodyLocation =
+	{ 0, 0 };
 
 	/** The first hand location. */
-	private float[] firstHandLocation = { 0, 0, 0 };
+	private float[] firstHandLocation =
+	{ 0, 0, 0 };
 
 	/** The id. */
 	private int ID = 0;
 
 	/** The second hand location. */
-	private float[] secondHandLocation = { 0, 0, 0 };
+	private float[] secondHandLocation =
+	{ 0, 0, 0 };
 
 	/** The user state. */
 	private USERSTATE userState = USERSTATE.BODY;
@@ -41,10 +46,13 @@ public class UserLocation implements Serializable {
 	/**
 	 * Instantiates a new user location.
 	 *
-	 * @param ID the id
-	 * @param source the source
+	 * @param ID
+	 *            the id
+	 * @param source
+	 *            the source
 	 */
-	public UserLocation(int ID, String source) {
+	public UserLocation(int ID, String source)
+	{
 		this.ID = ID;
 	}
 
@@ -53,7 +61,8 @@ public class UserLocation implements Serializable {
 	 *
 	 * @return the id
 	 */
-	public int getID() {
+	public int getID()
+	{
 		return ID;
 	}
 
@@ -62,18 +71,24 @@ public class UserLocation implements Serializable {
 	 *
 	 * @return the location of user
 	 */
-	public float[] getLocationOfUser() {
-		if (userState == USERSTATE.BODY) {
+	public float[] getLocationOfUser()
+	{
+		if (userState == USERSTATE.BODY)
+		{
 			return getUserBodyLocation();
-		} else if (userState == USERSTATE.ONE_HAND) {
+		}
+		else if (userState == USERSTATE.ONE_HAND)
+		{
 			return firstHandLocation;
-		} else if (userState == USERSTATE.TWO_HANDS) {
-			float[] locationsOfUser = { firstHandLocation[0],
-					firstHandLocation[1], firstHandLocation[2],
-					secondHandLocation[0], secondHandLocation[1],
-					secondHandLocation[2] };
+		}
+		else if (userState == USERSTATE.TWO_HANDS)
+		{
+			float[] locationsOfUser =
+			{ firstHandLocation[0], firstHandLocation[1], firstHandLocation[2], secondHandLocation[0], secondHandLocation[1], secondHandLocation[2] };
 			return locationsOfUser;
-		} else {
+		}
+		else
+		{
 			return new float[0];
 		}
 	}
@@ -83,7 +98,8 @@ public class UserLocation implements Serializable {
 	 *
 	 * @return the user body location
 	 */
-	public float[] getUserBodyLocation() {
+	public float[] getUserBodyLocation()
+	{
 		return bodyLocation;
 	}
 
@@ -92,22 +108,29 @@ public class UserLocation implements Serializable {
 	 *
 	 * @return the user state
 	 */
-	public USERSTATE getUserState() {
+	public USERSTATE getUserState()
+	{
 		return userState;
 	}
 
 	/**
 	 * Sets the both user hand locations.
 	 *
-	 * @param xOne the x one
-	 * @param yOne the y one
-	 * @param zOne the z one
-	 * @param xTwo the x two
-	 * @param yTwo the y two
-	 * @param zTwo the z two
+	 * @param xOne
+	 *            the x one
+	 * @param yOne
+	 *            the y one
+	 * @param zOne
+	 *            the z one
+	 * @param xTwo
+	 *            the x two
+	 * @param yTwo
+	 *            the y two
+	 * @param zTwo
+	 *            the z two
 	 */
-	public void setBothUserHandLocations(float xOne, float yOne, float zOne,
-			float xTwo, float yTwo, float zTwo) {
+	public void setBothUserHandLocations(float xOne, float yOne, float zOne, float xTwo, float yTwo, float zTwo)
+	{
 		userState = USERSTATE.TWO_HANDS;
 
 		firstHandLocation[0] = xOne;
@@ -122,11 +145,15 @@ public class UserLocation implements Serializable {
 	/**
 	 * Sets the single user hand location.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param z the z
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param z
+	 *            the z
 	 */
-	public void setSingleUserHandLocation(float x, float y, float z) {
+	public void setSingleUserHandLocation(float x, float y, float z)
+	{
 		userState = USERSTATE.ONE_HAND;
 		firstHandLocation[0] = x;
 		firstHandLocation[1] = y;
@@ -136,10 +163,13 @@ public class UserLocation implements Serializable {
 	/**
 	 * Sets the user body location.
 	 *
-	 * @param x the x
-	 * @param y the y
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
 	 */
-	public void setUserBodyLocation(float x, float y) {
+	public void setUserBodyLocation(float x, float y)
+	{
 		userState = USERSTATE.BODY;
 		bodyLocation[0] = x;
 		bodyLocation[1] = y;

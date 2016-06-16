@@ -12,7 +12,8 @@ import jpview.ptms.RGBPTM;
 /**
  * @author clyon
  */
-public class DiffuseGainOp implements PixelTransformOp {
+public class DiffuseGainOp implements PixelTransformOp
+{
 
 	/** The dgain. */
 	private int[][] dgain = null;
@@ -30,15 +31,19 @@ public class DiffuseGainOp implements PixelTransformOp {
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#clearCache()
 	 */
-	public void clearCache() {
+	@Override
+	public void clearCache()
+	{
 	}
 
 	/**
 	 * Compute d gain coeff lrgb.
 	 *
-	 * @param ptm the ptm
+	 * @param ptm
+	 *            the ptm
 	 */
-	public void computeDGainCoeffLRGB(LRGBPTM ptm) {
+	public void computeDGainCoeffLRGB(LRGBPTM ptm)
+	{
 
 		int[][] coeff = ptm.getCoefficients();
 		Vec3f[] normals = ptm.getNormals();
@@ -46,11 +51,13 @@ public class DiffuseGainOp implements PixelTransformOp {
 		dgain = new int[coeff.length][];
 		rgb = new int[coeff.length];
 
-		for (int i = 0; i < dgain.length; i++) {
+		for (int i = 0; i < dgain.length; i++)
+		{
 			int[] ap = new int[6];
 			float lu = normals[i].x();
 			float lv = normals[i].y();
-			if (Math.sqrt((lu * lu) + (lv * lv)) > 1) {
+			if (Math.sqrt((lu * lu) + (lv * lv)) > 1)
+			{
 				lu /= (Math.sqrt((lu * lu) + (lv * lv)));
 				lv /= (Math.sqrt((lu * lu) + (lv * lv)));
 			}
@@ -62,10 +69,7 @@ public class DiffuseGainOp implements PixelTransformOp {
 			ap[2] = (int) (DGAIN * coeff[i][2]);
 			ap[3] = (int) (((1 - DGAIN) * ((2 * coeff[i][0] * lu) + (coeff[i][2] * lv))) + coeff[i][3]);
 			ap[4] = (int) (((1 - DGAIN) * ((2 * coeff[i][1] * lv) + (coeff[i][2] * lu))) + coeff[i][4]);
-			ap[5] = (int) (((1 - DGAIN) * ((coeff[i][0] * lu2)
-					+ (coeff[i][1] * lv2) + (coeff[i][2] * lu * lv)))
-					+ ((coeff[i][3] - ap[3]) * lu)
-					+ ((coeff[i][4] - ap[4]) * lv) + coeff[i][5]);
+			ap[5] = (int) (((1 - DGAIN) * ((coeff[i][0] * lu2) + (coeff[i][1] * lv2) + (coeff[i][2] * lu * lv))) + ((coeff[i][3] - ap[3]) * lu) + ((coeff[i][4] - ap[4]) * lv) + coeff[i][5]);
 			dgain[i] = ap;
 			rgb[i] = coeff[i][6];
 		}
@@ -74,9 +78,11 @@ public class DiffuseGainOp implements PixelTransformOp {
 	/**
 	 * Compute d gain coeff rgb.
 	 *
-	 * @param ptm the ptm
+	 * @param ptm
+	 *            the ptm
 	 */
-	public void computeDGainCoeffRGB(RGBPTM ptm) {
+	public void computeDGainCoeffRGB(RGBPTM ptm)
+	{
 
 		int[][][] coeff = ptm.getCoefficients();
 		Vec3f[][] normals = ptm.getChannelNormals();
@@ -84,17 +90,20 @@ public class DiffuseGainOp implements PixelTransformOp {
 		final int SIZE = ptm.getWidth() * ptm.getHeight();
 		dgain3 = new int[SIZE][3][6];
 
-		for (int i = 0; i < dgain3.length; i++) {
+		for (int i = 0; i < dgain3.length; i++)
+		{
 
 			/* the array of new coeff */
 			int[][] ap = new int[3][6];
 
-			for (int color = RED; color <= BLUE; color++) {
+			for (int color = RED; color <= BLUE; color++)
+			{
 
 				float lu = normals[color][i].x();
 				float lv = normals[color][i].y();
 
-				if (Math.sqrt((lu * lu) + (lv * lv)) > 1) {
+				if (Math.sqrt((lu * lu) + (lv * lv)) > 1)
+				{
 					lu /= (Math.sqrt((lu * lu) + (lv * lv)));
 					lv /= (Math.sqrt((lu * lu) + (lv * lv)));
 				}
@@ -106,10 +115,7 @@ public class DiffuseGainOp implements PixelTransformOp {
 				ap[color][2] = (int) (DGAIN * coeff[color][i][2]);
 				ap[color][3] = (int) (((1 - DGAIN) * ((2 * coeff[color][i][0] * lu) + (coeff[color][i][2] * lv))) + coeff[color][i][3]);
 				ap[color][4] = (int) (((1 - DGAIN) * ((2 * coeff[color][i][1] * lv) + (coeff[color][i][2] * lu))) + coeff[color][i][4]);
-				ap[color][5] = (int) (((1 - DGAIN) * ((coeff[color][i][0] * lu2)
-						+ (coeff[color][i][1] * lv2) + (coeff[color][i][2] * lu * lv)))
-								+ ((coeff[color][i][3] - ap[color][3]) * lu)
-								+ ((coeff[color][i][4] - ap[color][4]) * lv) + coeff[color][i][5]);
+				ap[color][5] = (int) (((1 - DGAIN) * ((coeff[color][i][0] * lu2) + (coeff[color][i][1] * lv2) + (coeff[color][i][2] * lu * lv))) + ((coeff[color][i][3] - ap[color][3]) * lu) + ((coeff[color][i][4] - ap[color][4]) * lv) + coeff[color][i][5]);
 				dgain3[i] = ap;
 
 			}
@@ -120,14 +126,18 @@ public class DiffuseGainOp implements PixelTransformOp {
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#forceUpdate()
 	 */
-	public void forceUpdate() {
+	@Override
+	public void forceUpdate()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#release()
 	 */
-	public void release() {
+	@Override
+	public void release()
+	{
 		dgain = null;
 		dgain3 = null;
 	}
@@ -137,7 +147,9 @@ public class DiffuseGainOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm)
+	{
 		transformPixels(pixels, ptm, ptm.getWidth() / 4, ptm.getHeight() / 4);
 	}
 
@@ -146,20 +158,27 @@ public class DiffuseGainOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM, int, int)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 
 		float f = ptm.getDGain();
-		if (f != DGAIN) {
+		if (f != DGAIN)
+		{
 			DGAIN = f;
 			dgain = null;
 			dgain3 = null;
 		}
 
-		switch (ptm.getType()) {
+		switch (ptm.getType())
+		{
 			case PTM.LRGB:
-				if (pixels.length < (ptm.getHeight() * ptm.getWidth())) {
+				if (pixels.length < (ptm.getHeight() * ptm.getWidth()))
+				{
 					LRGBXformFast(pixels, ptm, mouseX, mouseY);
-				} else {
+				}
+				else
+				{
 					LRGBXform(pixels, ptm, mouseX, mouseY);
 				}
 				break;
@@ -174,14 +193,20 @@ public class DiffuseGainOp implements PixelTransformOp {
 	/**
 	 * LRGB xform.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXform(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	private void LRGBXform(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 
-		if (dgain == null) {
+		if (dgain == null)
+		{
 			computeDGainCoeffLRGB((LRGBPTM) ptm);
 		}
 
@@ -208,11 +233,10 @@ public class DiffuseGainOp implements PixelTransformOp {
 		final int[] rgb = this.rgb;
 		final int _lum = Math.round(ptm.getLuminance() * 256);
 
-		for (int i = 0; i < localPixels.length; i++) {
+		for (int i = 0; i < localPixels.length; i++)
+		{
 
-			intensity = ((_dg[i][0] * _uu) >> 8) + ((_dg[i][1] * _vv) >> 8)
-					+ ((_dg[i][2] * _uv) >> 8) + ((_dg[i][3] * _u) >> 8)
-					+ ((_dg[i][4] * _v) >> 8) + (_dg[i][5]);
+			intensity = ((_dg[i][0] * _uu) >> 8) + ((_dg[i][1] * _vv) >> 8) + ((_dg[i][2] * _uv) >> 8) + ((_dg[i][3] * _u) >> 8) + ((_dg[i][4] * _v) >> 8) + (_dg[i][5]);
 
 			pixel = rgb[i];
 
@@ -226,23 +250,29 @@ public class DiffuseGainOp implements PixelTransformOp {
 			green = (green * m) >> 16;
 			blue = (blue * m) >> 16;
 
-			if (red > 255) {
+			if (red > 255)
+			{
 				red = 255;
 			}
-			if (green > 255) {
+			if (green > 255)
+			{
 				green = 255;
 			}
-			if (blue > 255) {
+			if (blue > 255)
+			{
 				blue = 255;
 			}
 
-			if (red < 0) {
+			if (red < 0)
+			{
 				red = 0;
 			}
-			if (green < 0) {
+			if (green < 0)
+			{
 				green = 0;
 			}
-			if (blue < 0) {
+			if (blue < 0)
+			{
 				blue = 0;
 			}
 
@@ -253,14 +283,20 @@ public class DiffuseGainOp implements PixelTransformOp {
 	/**
 	 * LRGB xform fast.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void LRGBXformFast(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	private void LRGBXformFast(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 
-		if (dgain == null) {
+		if (dgain == null)
+		{
 			computeDGainCoeffLRGB((LRGBPTM) ptm);
 		}
 
@@ -291,13 +327,13 @@ public class DiffuseGainOp implements PixelTransformOp {
 		final int height = ptm.getHeight();
 		int pixelOffset = 0;
 
-		for (int y = 0; y < height; y += 2) {
-			for (int x = 0; x < width; x += 2) {
+		for (int y = 0; y < height; y += 2)
+		{
+			for (int x = 0; x < width; x += 2)
+			{
 				int i = (y * width) + x;
 
-				intensity = ((_dg[i][0] * _uu) >> 8) + ((_dg[i][1] * _vv) >> 8)
-						+ ((_dg[i][2] * _uv) >> 8) + ((_dg[i][3] * _u) >> 8)
-						+ ((_dg[i][4] * _v) >> 8) + (_dg[i][5]);
+				intensity = ((_dg[i][0] * _uu) >> 8) + ((_dg[i][1] * _vv) >> 8) + ((_dg[i][2] * _uv) >> 8) + ((_dg[i][3] * _u) >> 8) + ((_dg[i][4] * _v) >> 8) + (_dg[i][5]);
 
 				pixel = rgb[i];
 
@@ -311,23 +347,29 @@ public class DiffuseGainOp implements PixelTransformOp {
 				green = (green * m) >> 16;
 				blue = (blue * m) >> 16;
 
-				if (red > 255) {
+				if (red > 255)
+				{
 					red = 255;
 				}
-				if (green > 255) {
+				if (green > 255)
+				{
 					green = 255;
 				}
-				if (blue > 255) {
+				if (blue > 255)
+				{
 					blue = 255;
 				}
 
-				if (red < 0) {
+				if (red < 0)
+				{
 					red = 0;
 				}
-				if (green < 0) {
+				if (green < 0)
+				{
 					green = 0;
 				}
-				if (blue < 0) {
+				if (blue < 0)
+				{
 					blue = 0;
 				}
 
@@ -339,14 +381,20 @@ public class DiffuseGainOp implements PixelTransformOp {
 	/**
 	 * RGB xform.
 	 *
-	 * @param pixels the pixels
-	 * @param ptm the ptm
-	 * @param mouseX the mouse x
-	 * @param mouseY the mouse y
+	 * @param pixels
+	 *            the pixels
+	 * @param ptm
+	 *            the ptm
+	 * @param mouseX
+	 *            the mouse x
+	 * @param mouseY
+	 *            the mouse y
 	 */
-	private void RGBXform(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	private void RGBXform(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 
-		if (dgain3 == null) {
+		if (dgain3 == null)
+		{
 			computeDGainCoeffRGB((RGBPTM) ptm);
 		}
 
@@ -373,38 +421,42 @@ public class DiffuseGainOp implements PixelTransformOp {
 		final int[][][] _dg = dgain3;
 		// final int _lum = Math.round(ptm.getLuminance()*256);
 
-		for (int i = 0; i < localPixels.length; i++) {
+		for (int i = 0; i < localPixels.length; i++)
+		{
 
-			for (int j = 0; j < 3; j++) {
+			for (int j = 0; j < 3; j++)
+			{
 
-				intensity[j] = ((_dg[i][j][0] * _uu) >> 8)
-						+ ((_dg[i][j][1] * _vv) >> 8)
-						+ ((_dg[i][j][2] * _uv) >> 8)
-						+ ((_dg[i][j][3] * _u) >> 8)
-						+ ((_dg[i][j][4] * _v) >> 8) + (_dg[i][j][5]);
+				intensity[j] = ((_dg[i][j][0] * _uu) >> 8) + ((_dg[i][j][1] * _vv) >> 8) + ((_dg[i][j][2] * _uv) >> 8) + ((_dg[i][j][3] * _u) >> 8) + ((_dg[i][j][4] * _v) >> 8) + (_dg[i][j][5]);
 			}
 
 			red = intensity[0];
 			blue = intensity[1];
 			green = intensity[2];
 
-			if (red > 255) {
+			if (red > 255)
+			{
 				red = 255;
 			}
-			if (green > 255) {
+			if (green > 255)
+			{
 				green = 255;
 			}
-			if (blue > 255) {
+			if (blue > 255)
+			{
 				blue = 255;
 			}
 
-			if (red < 0) {
+			if (red < 0)
+			{
 				red = 0;
 			}
-			if (green < 0) {
+			if (green < 0)
+			{
 				green = 0;
 			}
-			if (blue < 0) {
+			if (blue < 0)
+			{
 				blue = 0;
 			}
 

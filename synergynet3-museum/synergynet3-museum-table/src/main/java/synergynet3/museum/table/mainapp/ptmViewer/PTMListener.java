@@ -20,7 +20,8 @@ import com.jme3.math.Vector2f;
  *
  * @see PTMEvent
  */
-public class PTMListener extends MultiTouchEventAdapter {
+public class PTMListener extends MultiTouchEventAdapter
+{
 
 	/** The canvas. */
 	private PTMCanvas canvas;
@@ -50,7 +51,8 @@ public class PTMListener extends MultiTouchEventAdapter {
 	 * .input.events.MultiTouchCursorEvent)
 	 */
 	@Override
-	public void cursorChanged(MultiTouchCursorEvent event) {
+	public void cursorChanged(MultiTouchCursorEvent event)
+	{
 
 		// localisation transformation
 		Vector2f newPos = event.getPosition();
@@ -61,10 +63,8 @@ public class PTMListener extends MultiTouchEventAdapter {
 		newPos = newPos.add(new Vector2f(width / 2, height / 2));
 		newPos = newPos.mult(canvas.getDisplayWidth() / width);
 
-		pixelTransformOp.transformPixels(canvas.getPixels(), ptm,
-				Math.round(newPos.x), Math.round(newPos.y));
-		canvas.paintImmediately(0, 0, canvas.getDisplayWidth(),
-				canvas.getDisplayHeight());
+		pixelTransformOp.transformPixels(canvas.getPixels(), ptm, Math.round(newPos.x), Math.round(newPos.y));
+		canvas.paintImmediately(0, 0, canvas.getDisplayWidth(), canvas.getDisplayHeight());
 
 		ptmEventDispatcher.generateImage();
 
@@ -73,18 +73,25 @@ public class PTMListener extends MultiTouchEventAdapter {
 	/**
 	 * Sets the values.
 	 *
-	 * @param ptm the ptm
-	 * @param pixelTransformOp the pixel transform op
-	 * @param canvas the canvas
-	 * @param width the width
-	 * @param height the height
-	 * @param stage the stage
-	 * @param parentItem the parent item
-	 * @param ptmEventDispatcher the ptm event dispatcher
+	 * @param ptm
+	 *            the ptm
+	 * @param pixelTransformOp
+	 *            the pixel transform op
+	 * @param canvas
+	 *            the canvas
+	 * @param width
+	 *            the width
+	 * @param height
+	 *            the height
+	 * @param stage
+	 *            the stage
+	 * @param parentItem
+	 *            the parent item
+	 * @param ptmEventDispatcher
+	 *            the ptm event dispatcher
 	 */
-	public void setValues(PTM ptm, PixelTransformOp pixelTransformOp,
-			PTMCanvas canvas, float width, float height, IStage stage,
-			IItem parentItem, PTMEventDispatcher ptmEventDispatcher) {
+	public void setValues(PTM ptm, PixelTransformOp pixelTransformOp, PTMCanvas canvas, float width, float height, IStage stage, IItem parentItem, PTMEventDispatcher ptmEventDispatcher)
+	{
 		this.ptm = ptm;
 		this.pixelTransformOp = pixelTransformOp;
 		this.canvas = canvas;

@@ -39,7 +39,8 @@ import usertracking.networking.TrackerNetworking;
 /**
  * The Class TrackerPanel.
  */
-public class TrackerPanel extends JPanel implements Runnable {
+public class TrackerPanel extends JPanel implements Runnable
+{
 
 	/** The is running. */
 	public static volatile boolean isRunning;
@@ -86,9 +87,11 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Instantiates a new tracker panel.
 	 *
-	 * @param teacherControlPanel the teacher control panel
+	 * @param teacherControlPanel
+	 *            the teacher control panel
 	 */
-	public TrackerPanel(TeacherControlPanel teacherControlPanel) {
+	public TrackerPanel(TeacherControlPanel teacherControlPanel)
+	{
 
 		this.teacherControlPanel = teacherControlPanel;
 
@@ -101,8 +104,7 @@ public class TrackerPanel extends JPanel implements Runnable {
 
 		imWidth = depthMD.getFullXRes();
 		imHeight = depthMD.getFullYRes();
-		System.out.println("Image dimensions (" + imWidth + ", " + imHeight
-				+ ")");
+		System.out.println("Image dimensions (" + imWidth + ", " + imHeight + ")");
 
 		// create empty image bytes array of correct size and type
 		imgbytes = new byte[imWidth * imHeight * 3];
@@ -113,14 +115,16 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Clear sequences.
 	 */
-	public void clearSequences() {
+	public void clearSequences()
+	{
 		skels.clearSequences();
 	}
 
 	/**
 	 * Close down.
 	 */
-	public void closeDown() {
+	public void closeDown()
+	{
 		isRunning = false;
 	}
 
@@ -128,7 +132,9 @@ public class TrackerPanel extends JPanel implements Runnable {
 	 * (non-Javadoc)
 	 * @see javax.swing.JComponent#getPreferredSize()
 	 */
-	public Dimension getPreferredSize() {
+	@Override
+	public Dimension getPreferredSize()
+	{
 		return new Dimension(imWidth, imHeight);
 	}
 
@@ -137,7 +143,8 @@ public class TrackerPanel extends JPanel implements Runnable {
 	 *
 	 * @return the teacher control panel
 	 */
-	public TeacherControlPanel getTeacherControlPanel() {
+	public TeacherControlPanel getTeacherControlPanel()
+	{
 		return teacherControlPanel;
 	}
 
@@ -145,9 +152,11 @@ public class TrackerPanel extends JPanel implements Runnable {
 	 * (non-Javadoc)
 	 * @see javax.swing.JComponent#paintComponent(java.awt.Graphics)
 	 */
-	public void paintComponent(Graphics g) { // Draw the depth image with
-												// coloured users, skeletons,
-												// and statistics info
+	@Override
+	public void paintComponent(Graphics g)
+	{ // Draw the depth image with
+		// coloured users, skeletons,
+		// and statistics info
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 
@@ -155,14 +164,14 @@ public class TrackerPanel extends JPanel implements Runnable {
 		g2d.setFont(msgFont); // for user status and statistics
 		skels.draw(g2d);
 
-		if (UserTracker.GESTURING_USER > 0) {
+		if (UserTracker.GESTURING_USER > 0)
+		{
 
 			Color c = UserColourUtils.getColour(UserTracker.GESTURING_USER);
 
 			g2d.setColor(c);
 			g2d.setStroke(new BasicStroke(20));
-			g2d.draw(new Rectangle(10, 10, UserTracker.VIEW_WIDTH - 25,
-					UserTracker.VIEW_HEIGHT - 20));
+			g2d.draw(new Rectangle(10, 10, UserTracker.VIEW_WIDTH - 25, UserTracker.VIEW_HEIGHT - 20));
 		}
 
 	}
@@ -170,12 +179,17 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Pose.
 	 *
-	 * @param userID the user id
-	 * @param gest the gest
-	 * @param isActivated the is activated
+	 * @param userID
+	 *            the user id
+	 * @param gest
+	 *            the gest
+	 * @param isActivated
+	 *            the is activated
 	 */
-	public void pose(int userID, PoseName gest, boolean isActivated) {
-		if (teacherControlPanel.isTeacher(userID)) {
+	public void pose(int userID, PoseName gest, boolean isActivated)
+	{
+		if (teacherControlPanel.isTeacher(userID))
+		{
 			GestureActions.performGesture(userID, gest, isActivated);
 		}
 	}
@@ -184,13 +198,19 @@ public class TrackerPanel extends JPanel implements Runnable {
 	 * (non-Javadoc)
 	 * @see java.lang.Runnable#run()
 	 */
-	public void run() { // update and display the users-coloured depth image and
-						// skeletons whenever the context is updated.
+	@Override
+	public void run()
+	{ // update and display the users-coloured depth image and
+		// skeletons whenever the context is updated.
 		isRunning = true;
-		while (isRunning) {
-			try {
+		while (isRunning)
+		{
+			try
+			{
 				context.waitAnyUpdateAll();
-			} catch (StatusException e) {
+			}
+			catch (StatusException e)
+			{
 				System.out.println(e);
 				System.exit(1);
 			}
@@ -200,9 +220,12 @@ public class TrackerPanel extends JPanel implements Runnable {
 		}
 
 		// close down
-		try {
+		try
+		{
 			context.stopGeneratingAll();
-		} catch (StatusException e) {
+		}
+		catch (StatusException e)
+		{
 		}
 		context.release();
 		TrackerNetworking.broadcastClearUserLocations();
@@ -213,37 +236,46 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Calc histogram.
 	 *
-	 * @param depthBuf the depth buf
+	 * @param depthBuf
+	 *            the depth buf
 	 */
-	private void calcHistogram(ShortBuffer depthBuf) { // reset histogram
-		for (int i = 0; i <= maxDepth; i++) {
+	private void calcHistogram(ShortBuffer depthBuf)
+	{ // reset histogram
+		for (int i = 0; i <= maxDepth; i++)
+		{
 			histogram[i] = 0;
 		}
 
 		// record number of different depths in histogram[]
 		int numPoints = 0;
 		maxDepth = 0;
-		while (depthBuf.remaining() > 0) {
+		while (depthBuf.remaining() > 0)
+		{
 			short depthVal = depthBuf.get();
-			if (depthVal > maxDepth) {
+			if (depthVal > maxDepth)
+			{
 				maxDepth = depthVal;
 			}
-			if ((depthVal != 0) && (depthVal < MAX_DEPTH_SIZE)) { // skip
-																	// histogram[0]
+			if ((depthVal != 0) && (depthVal < MAX_DEPTH_SIZE))
+			{ // skip
+				// histogram[0]
 				histogram[depthVal]++;
 				numPoints++;
 			}
 		}
 
 		// convert into a cumulative depth count (skipping histogram[0])
-		for (int i = 1; i <= maxDepth; i++) {
+		for (int i = 1; i <= maxDepth; i++)
+		{
 			histogram[i] += histogram[i - 1];
 		}
 
 		// convert cumulative depth into the range 0.0 - 1.0f which will later
 		// be used to modify a colour from USER_COLORS[]
-		if (numPoints > 0) {
-			for (int i = 1; i <= maxDepth; i++) {
+		if (numPoints > 0)
+		{
+			for (int i = 1; i <= maxDepth; i++)
+			{
 				histogram[i] = 1.0f - (histogram[i] / numPoints);
 			}
 		}
@@ -252,27 +284,30 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Config open ni.
 	 */
-	private void configOpenNI() { // create context, depth generator, depth
-									// meta-data, user generator, scene
-									// meta-data, and skeletons
-		try {
+	private void configOpenNI()
+	{ // create context, depth generator, depth
+		// meta-data, user generator, scene
+		// meta-data, and skeletons
+		try
+		{
 			context = new Context();
 
 			// add the NITE Licence
 
-			License license = new License("PrimeSense",
-					"0KOIk2JeIBYClPWVnMoRKn5cdY4="); // vendor, key
+			License license = new License("PrimeSense", "0KOIk2JeIBYClPWVnMoRKn5cdY4="); // vendor,
+																							// key
 			context.addLicense(license);
 
 			DepthGenerator depthGen = DepthGenerator.create(context);
-			MapOutputMode mapMode = new MapOutputMode(UserTracker.VIEW_WIDTH,
-					UserTracker.VIEW_HEIGHT, 30); // xRes, yRes, FPS
+			MapOutputMode mapMode = new MapOutputMode(UserTracker.VIEW_WIDTH, UserTracker.VIEW_HEIGHT, 30); // xRes,
+																											// yRes,
+																											// FPS
 			depthGen.setMapOutputMode(mapMode);
 
 			context.setGlobalMirror(true); // set mirror mode
 			depthMD = depthGen.getMetaData(); // use depth meta-data to access
-												// depth info (avoids bug with
-												// DepthGenerator)
+			// depth info (avoids bug with
+			// DepthGenerator)
 
 			UserGenerator userGen = UserGenerator.create(context);
 			sceneMD = userGen.getUserPixels(0);
@@ -283,7 +318,9 @@ public class TrackerPanel extends JPanel implements Runnable {
 
 			context.startGeneratingAll();
 			System.out.println("Started context generating...");
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			System.out.println(e);
 			System.exit(1);
 		}
@@ -292,24 +329,23 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Draw user depths.
 	 *
-	 * @param g2d the g2d
+	 * @param g2d
+	 *            the g2d
 	 */
-	private void drawUserDepths(Graphics2D g2d) { // Create BufferedImage using
-													// the depth image bytes and
-													// a colour model, then draw
-													// it
+	private void drawUserDepths(Graphics2D g2d)
+	{ // Create BufferedImage using
+		// the depth image bytes and
+		// a colour model, then draw
+		// it
 		// define an 8-bit RGB channel colour model
-		ColorModel colorModel = new ComponentColorModel(
-				ColorSpace.getInstance(ColorSpace.CS_sRGB),
-				new int[] { 8, 8, 8 }, false, false,
-				ComponentColorModel.OPAQUE, DataBuffer.TYPE_BYTE);
+		ColorModel colorModel = new ComponentColorModel(ColorSpace.getInstance(ColorSpace.CS_sRGB), new int[]
+		{ 8, 8, 8 }, false, false, ComponentColorModel.OPAQUE, DataBuffer.TYPE_BYTE);
 
 		// fill the raster with the depth image bytes
-		DataBufferByte dataBuffer = new DataBufferByte(imgbytes, imWidth
-				* imHeight * 3);
+		DataBufferByte dataBuffer = new DataBufferByte(imgbytes, imWidth * imHeight * 3);
 
-		WritableRaster raster = Raster.createInterleavedRaster(dataBuffer,
-				imWidth, imHeight, imWidth * 3, 3, new int[] { 0, 1, 2 }, null);
+		WritableRaster raster = Raster.createInterleavedRaster(dataBuffer, imWidth, imHeight, imWidth * 3, 3, new int[]
+		{ 0, 1, 2 }, null);
 
 		// combine colour model and raster to create a BufferedImage
 		BufferedImage image = new BufferedImage(colorModel, raster, false, null);
@@ -320,10 +356,11 @@ public class TrackerPanel extends JPanel implements Runnable {
 	/**
 	 * Update user depths.
 	 */
-	private void updateUserDepths() { // build a histogram of 8-bit depth
-										// values, and convert it to depth image
-										// bytes where each user is coloured
-										// differently
+	private void updateUserDepths()
+	{ // build a histogram of 8-bit depth
+		// values, and convert it to depth image
+		// bytes where each user is coloured
+		// differently
 		ShortBuffer depthBuf = depthMD.getData().createShortBuffer();
 		calcHistogram(depthBuf);
 		depthBuf.rewind();
@@ -335,20 +372,21 @@ public class TrackerPanel extends JPanel implements Runnable {
 		// (e.g. 1, 2, 3), or 0 to denote that the pixel is part of the
 		// background.
 
-		while (depthBuf.remaining() > 0) {
+		while (depthBuf.remaining() > 0)
+		{
 			int pos = depthBuf.position();
 			short depthVal = depthBuf.get();
 			short userID = usersBuf.get();
 
 			imgbytes[3 * pos] = 0; // default colour is black when there's no
-									// depth data
+			// depth data
 			imgbytes[(3 * pos) + 1] = 0;
 			imgbytes[(3 * pos) + 2] = 0;
 
-			if (depthVal != 0) { // there is depth data
+			if (depthVal != 0)
+			{ // there is depth data
 
-				Color colour = UserColourUtils
-						.getColour(TrackerNetworking.uniqueIDs[userID]);
+				Color colour = UserColourUtils.getColour(TrackerNetworking.uniqueIDs[userID]);
 
 				// convert histogram value (0.0-1.0f) to a RGB colour
 				float histValue = histogram[depthVal];

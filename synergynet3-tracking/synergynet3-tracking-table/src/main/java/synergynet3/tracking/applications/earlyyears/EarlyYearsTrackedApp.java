@@ -21,7 +21,8 @@ import synergynet3.web.earlyyears.shared.EarlyYearsActivity;
 /**
  * The Class EarlyYearsTrackedApp.
  */
-abstract public class EarlyYearsTrackedApp extends TrackedApp {
+abstract public class EarlyYearsTrackedApp extends TrackedApp
+{
 
 	/** The early years table identity. */
 	private static String earlyYearsTableIdentity;
@@ -49,8 +50,10 @@ abstract public class EarlyYearsTrackedApp extends TrackedApp {
 	 * @see synergynet3.tracking.applications.TrackedApp#onDestroy()
 	 */
 	@Override
-	public void onDestroy() {
-		if (eySync != null) {
+	public void onDestroy()
+	{
+		if (eySync != null)
+		{
 			eySync.stop();
 		}
 		super.onDestroy();
@@ -59,27 +62,23 @@ abstract public class EarlyYearsTrackedApp extends TrackedApp {
 	/**
 	 * Sets the activity.
 	 *
-	 * @param newValue the new activity
+	 * @param newValue
+	 *            the new activity
 	 */
-	public void setActivity(EarlyYearsActivity newValue) {
-		if (newValue != syncName) {
+	public void setActivity(EarlyYearsActivity newValue)
+	{
+		if (newValue != syncName)
+		{
 
 			ArrayList<String[]> names = new ArrayList<String[]>();
 
-			for (int i = 0; i < StudentMenuUtilities.studentRepresentations
-					.size(); i++) {
+			for (int i = 0; i < StudentMenuUtilities.studentRepresentations.size(); i++)
+			{
 				String[] name = new String[4];
-				name[0] = StudentMenuUtilities.studentRepresentations.get(i)
-						.getStudentId();
-				name[1] = ""
-						+ StudentMenuUtilities.studentMenus.get(i)
-								.getRadialMenu().getRelativeLocation().x;
-				name[2] = ""
-						+ StudentMenuUtilities.studentMenus.get(i)
-								.getRadialMenu().getRelativeLocation().y;
-				name[3] = ""
-						+ StudentMenuUtilities.studentMenus.get(i)
-								.getRadialMenu().getRelativeRotation();
+				name[0] = StudentMenuUtilities.studentRepresentations.get(i).getStudentId();
+				name[1] = "" + StudentMenuUtilities.studentMenus.get(i).getRadialMenu().getRelativeLocation().x;
+				name[2] = "" + StudentMenuUtilities.studentMenus.get(i).getRadialMenu().getRelativeLocation().y;
+				name[3] = "" + StudentMenuUtilities.studentMenus.get(i).getRadialMenu().getRelativeRotation();
 				names.add(name);
 			}
 
@@ -88,15 +87,20 @@ abstract public class EarlyYearsTrackedApp extends TrackedApp {
 			cursors.clear();
 			input.unregisterMultiTouchEventListener(this);
 
-			if (newValue == EarlyYearsActivity.ENVIRONMENT_EXPLORER) {
+			if (newValue == EarlyYearsActivity.ENVIRONMENT_EXPLORER)
+			{
 				EnvironmentExplorerTrackedApp app = new EnvironmentExplorerTrackedApp();
 				app.loginAll(names);
 				MultiplicityClient.get().setCurrentApp(app);
-			} else if (newValue == EarlyYearsActivity.TRAIN_TRACKS) {
+			}
+			else if (newValue == EarlyYearsActivity.TRAIN_TRACKS)
+			{
 				TrainTracksTrackedApp app = new TrainTracksTrackedApp();
 				app.loginAll(names);
 				MultiplicityClient.get().setCurrentApp(app);
-			} else if (newValue == EarlyYearsActivity.STICKER_BOOK) {
+			}
+			else if (newValue == EarlyYearsActivity.STICKER_BOOK)
+			{
 				StickerbookTrackedApp app = new StickerbookTrackedApp();
 				app.loginAll(names);
 				MultiplicityClient.get().setCurrentApp(app);
@@ -112,7 +116,8 @@ abstract public class EarlyYearsTrackedApp extends TrackedApp {
 	 * .input.MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		super.shouldStart(input, iqo);
 		input.registerMultiTouchEventListener(this);
 
@@ -121,12 +126,14 @@ abstract public class EarlyYearsTrackedApp extends TrackedApp {
 
 		this.input = input;
 
-		if (eySync == null) {
+		if (eySync == null)
+		{
 			earlyYearsTableIdentity = SynergyNetCluster.get().getIdentity();
-			EarlyYearsDeviceControl earlyYearsDeviceController = new EarlyYearsDeviceControl(
-					earlyYearsTableIdentity);
+			EarlyYearsDeviceControl earlyYearsDeviceController = new EarlyYearsDeviceControl(earlyYearsTableIdentity);
 			eySync = new EarlyYearsSync(earlyYearsDeviceController, this);
-		} else {
+		}
+		else
+		{
 			eySync.reSync(this);
 		}
 

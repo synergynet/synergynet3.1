@@ -17,7 +17,8 @@ import jpview.ptms.PTM;
 /**
  * @author Default
  */
-public class LRGBReader implements PTMReader {
+public class LRGBReader implements PTMReader
+{
 
 	/** The __in. */
 	private InputStream __in;
@@ -35,21 +36,26 @@ public class LRGBReader implements PTMReader {
 	private String version = null;
 
 	/** Creates a new instance of LRGBReader */
-	public LRGBReader(InputStream in) {
+	public LRGBReader(InputStream in)
+	{
 		__in = in;
 	}
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String args[]) {
-		try {
-			LRGBReader me = new LRGBReader(new FileInputStream(
-					new File(args[0])));
+	public static void main(String args[])
+	{
+		try
+		{
+			LRGBReader me = new LRGBReader(new FileInputStream(new File(args[0])));
 			me.readPTM();
-		} catch (Exception e) {
+		}
+		catch (Exception e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -58,13 +64,16 @@ public class LRGBReader implements PTMReader {
 	 * (non-Javadoc)
 	 * @see jpview.io.PTMReader#readPTM()
 	 */
-	public PTM readPTM() throws java.io.IOException {
+	@Override
+	public PTM readPTM() throws java.io.IOException
+	{
 
 		ptm = new LRGBPTM();
 
 		// try {
 
-		if (reset) {
+		if (reset)
+		{
 			version = PTMIO.getLine(__in);
 			debug("Version: " + version);
 			String type = PTMIO.getLine(__in);
@@ -87,7 +96,8 @@ public class LRGBReader implements PTMReader {
 		/* scale */
 		sa = PTMIO.getLine(__in).split(" ");
 		float[] scale = new float[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			scale[i] = Float.parseFloat(sa[i]);
 		}
 
@@ -96,7 +106,8 @@ public class LRGBReader implements PTMReader {
 		/* bias */
 		sa = PTMIO.getLine(__in).split(" ");
 		int[] bias = new int[sa.length];
-		for (int i = 0; i < sa.length; i++) {
+		for (int i = 0; i < sa.length; i++)
+		{
 			bias[i] = Integer.parseInt(sa[i]);
 		}
 
@@ -110,17 +121,21 @@ public class LRGBReader implements PTMReader {
 		int r, g, b, offset;
 
 		/* coefficients */
-		for (int h = ptm.getHeight() - 1; h >= 0; h--) {
-			for (int w = 0; w < ptm.getWidth(); w++) {
+		for (int h = ptm.getHeight() - 1; h >= 0; h--)
+		{
+			for (int w = 0; w < ptm.getWidth(); w++)
+			{
 				offset = (h * ptm.getWidth()) + w;
 				int[] raw = new int[6];
-				for (int i = 0; i < 6; i++) {
+				for (int i = 0; i < 6; i++)
+				{
 					int c = __in.read();
 					raw[i] = c;
 					tmp[i][offset] = (int) PTMIO.cFinal(c, bias[i], scale[i]);
 				}
 				/* do it now */
-				if (version.equals("PTM_1.1")) {
+				if (version.equals("PTM_1.1"))
+				{
 					r = __in.read() & 0xff;
 					g = __in.read() & 0xff;
 					b = __in.read() & 0xff;
@@ -154,9 +169,12 @@ public class LRGBReader implements PTMReader {
 		// f.setVisible(true);
 		// }
 
-		if (version.equals("PTM_1.2")) {
-			for (int h = ptm.getHeight() - 1; h >= 0; h--) {
-				for (int w = 0; w < ptm.getWidth(); w++) {
+		if (version.equals("PTM_1.2"))
+		{
+			for (int h = ptm.getHeight() - 1; h >= 0; h--)
+			{
+				for (int w = 0; w < ptm.getWidth(); w++)
+				{
 					offset = (h * ptm.getWidth()) + w;
 					r = __in.read() & 0xff;
 					g = __in.read() & 0xff;
@@ -196,28 +214,35 @@ public class LRGBReader implements PTMReader {
 	/**
 	 * Sets the debug.
 	 *
-	 * @param b the new debug
+	 * @param b
+	 *            the new debug
 	 */
-	public void setDebug(boolean b) {
+	public void setDebug(boolean b)
+	{
 		DEBUG = b;
 	}
 
 	/**
 	 * Sets the version.
 	 *
-	 * @param s the new version
+	 * @param s
+	 *            the new version
 	 */
-	public void setVersion(String s) {
+	public void setVersion(String s)
+	{
 		version = s;
 	}
 
 	/**
 	 * Debug.
 	 *
-	 * @param s the s
+	 * @param s
+	 *            the s
 	 */
-	private void debug(String s) {
-		if (DEBUG) {
+	private void debug(String s)
+	{
+		if (DEBUG)
+		{
 			System.out.println(s);
 		}
 	}
@@ -225,9 +250,11 @@ public class LRGBReader implements PTMReader {
 	/**
 	 * Reset.
 	 *
-	 * @param b the b
+	 * @param b
+	 *            the b
 	 */
-	protected void reset(boolean b) {
+	protected void reset(boolean b)
+	{
 		reset = b;
 	}
 

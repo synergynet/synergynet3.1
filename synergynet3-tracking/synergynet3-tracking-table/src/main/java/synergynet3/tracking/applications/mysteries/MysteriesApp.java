@@ -17,15 +17,19 @@ import synergynet3.tracking.applications.TrackedApp;
 /**
  * The Class MysteriesApp.
  */
-public class MysteriesApp extends TrackedApp {
+public class MysteriesApp extends TrackedApp
+{
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String[] args) {
-		if (args.length > 0) {
+	public static void main(String[] args)
+	{
+		if (args.length > 0)
+		{
 			IdentityConfigPrefsItem idprefs = new IdentityConfigPrefsItem();
 			idprefs.setID(args[0]);
 		}
@@ -45,7 +49,8 @@ public class MysteriesApp extends TrackedApp {
 	 * .input.MultiTouchInputComponent, multiplicity3.appsystem.IQueueOwner)
 	 */
 	@Override
-	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo) {
+	public void shouldStart(MultiTouchInputComponent input, IQueueOwner iqo)
+	{
 		input.registerMultiTouchEventListener(this);
 		super.shouldStart(input, iqo);
 	}
@@ -55,8 +60,8 @@ public class MysteriesApp extends TrackedApp {
 	 * @see synergynet3.SynergyNetApp#loadDefaultContent()
 	 */
 	@Override
-	protected void loadDefaultContent() throws IOException,
-			ContentTypeNotBoundException {
+	protected void loadDefaultContent() throws IOException, ContentTypeNotBoundException
+	{
 
 		ProjectorTransferUtilities.get().setDecelerationOnArrival(-1);
 

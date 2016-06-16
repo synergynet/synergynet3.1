@@ -15,15 +15,19 @@ import com.hazelcast.core.Member;
 /**
  * The Class TrackedAppSync.
  */
-public class TrackedAppSync {
+public class TrackedAppSync
+{
 
 	/** The all tables selected mode enabled action. */
-	private DistributedPropertyChangedAction<PerformActionMessage> allTablesSelectedModeEnabledAction = new DistributedPropertyChangedAction<PerformActionMessage>() {
+	private DistributedPropertyChangedAction<PerformActionMessage> allTablesSelectedModeEnabledAction = new DistributedPropertyChangedAction<PerformActionMessage>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member m,
-				PerformActionMessage oldValue, PerformActionMessage newValue) {
-			if (!newValue.messageAlreadyReceived()) {
-				if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE) {
+		public void distributedPropertyDidChange(Member m, PerformActionMessage oldValue, PerformActionMessage newValue)
+		{
+			if (!newValue.messageAlreadyReceived())
+			{
+				if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE)
+				{
 					trackingNode.gestureaAllModeEnabled();
 				}
 			}
@@ -31,12 +35,15 @@ public class TrackedAppSync {
 	};
 
 	/** The individual table select mode enabled action. */
-	private DistributedPropertyChangedAction<PerformActionMessage> individualTableSelectModeEnabledAction = new DistributedPropertyChangedAction<PerformActionMessage>() {
+	private DistributedPropertyChangedAction<PerformActionMessage> individualTableSelectModeEnabledAction = new DistributedPropertyChangedAction<PerformActionMessage>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member m,
-				PerformActionMessage oldValue, PerformActionMessage newValue) {
-			if (!newValue.messageAlreadyReceived()) {
-				if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE) {
+		public void distributedPropertyDidChange(Member m, PerformActionMessage oldValue, PerformActionMessage newValue)
+		{
+			if (!newValue.messageAlreadyReceived())
+			{
+				if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE)
+				{
 					trackingNode.gestureIndividualModeEnabled();
 				}
 			}
@@ -44,21 +51,25 @@ public class TrackedAppSync {
 	};
 
 	/** The pointing action. */
-	private DistributedPropertyChangedAction<PointDirection> pointingAction = new DistributedPropertyChangedAction<PointDirection>() {
+	private DistributedPropertyChangedAction<PointDirection> pointingAction = new DistributedPropertyChangedAction<PointDirection>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member m,
-				PointDirection oldValue, PointDirection newValue) {
+		public void distributedPropertyDidChange(Member m, PointDirection oldValue, PointDirection newValue)
+		{
 			trackingNode.userPointing(newValue);
 		}
 	};
 
 	/** The table selectd mode disabled action. */
-	private DistributedPropertyChangedAction<PerformActionMessage> tableSelectdModeDisabledAction = new DistributedPropertyChangedAction<PerformActionMessage>() {
+	private DistributedPropertyChangedAction<PerformActionMessage> tableSelectdModeDisabledAction = new DistributedPropertyChangedAction<PerformActionMessage>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member m,
-				PerformActionMessage oldValue, PerformActionMessage newValue) {
-			if (!newValue.messageAlreadyReceived()) {
-				if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE) {
+		public void distributedPropertyDidChange(Member m, PerformActionMessage oldValue, PerformActionMessage newValue)
+		{
+			if (!newValue.messageAlreadyReceived())
+			{
+				if (newValue.getMessageState() == MESSAGESTATE.ACTIVATE)
+				{
 					trackingNode.gestureModeDisabled();
 				}
 			}
@@ -72,11 +83,11 @@ public class TrackedAppSync {
 	private TrackedApp trackingNode;
 
 	/** The update user locations action. */
-	private DistributedPropertyChangedAction<ArrayList<CombinedUserEntity>> updateUserLocationsAction = new DistributedPropertyChangedAction<ArrayList<CombinedUserEntity>>() {
+	private DistributedPropertyChangedAction<ArrayList<CombinedUserEntity>> updateUserLocationsAction = new DistributedPropertyChangedAction<ArrayList<CombinedUserEntity>>()
+	{
 		@Override
-		public void distributedPropertyDidChange(Member m,
-				ArrayList<CombinedUserEntity> oldValue,
-				ArrayList<CombinedUserEntity> newValue) {
+		public void distributedPropertyDidChange(Member m, ArrayList<CombinedUserEntity> oldValue, ArrayList<CombinedUserEntity> newValue)
+		{
 			trackingNode.setUserLocations(newValue);
 		}
 	};
@@ -84,10 +95,13 @@ public class TrackedAppSync {
 	/**
 	 * Instantiates a new tracked app sync.
 	 *
-	 * @param c the c
-	 * @param trackingNode the tracking node
+	 * @param c
+	 *            the c
+	 * @param trackingNode
+	 *            the tracking node
 	 */
-	public TrackedAppSync(TrackingDeviceControl c, TrackedApp trackingNode) {
+	public TrackedAppSync(TrackingDeviceControl c, TrackedApp trackingNode)
+	{
 		this.trackingDeviceControl = c;
 		this.trackingNode = trackingNode;
 		addSync();
@@ -96,36 +110,25 @@ public class TrackedAppSync {
 	/**
 	 * Stop.
 	 */
-	public void stop() {
-		trackingDeviceControl.getUserLocationsControlVariable()
-				.unregisterChangeListener(updateUserLocationsAction);
-		trackingDeviceControl.getAllTablesSelectedModeEnabledControlVariable()
-				.unregisterChangeListener(allTablesSelectedModeEnabledAction);
-		trackingDeviceControl
-				.getIndividualTableSelectModeEnabledControlVariable()
-				.unregisterChangeListener(
-						individualTableSelectModeEnabledAction);
-		trackingDeviceControl.getTableSelectedModeDisabledControlVariable()
-				.unregisterChangeListener(tableSelectdModeDisabledAction);
-		trackingDeviceControl.getPointingControlVariable()
-				.unregisterChangeListener(pointingAction);
+	public void stop()
+	{
+		trackingDeviceControl.getUserLocationsControlVariable().unregisterChangeListener(updateUserLocationsAction);
+		trackingDeviceControl.getAllTablesSelectedModeEnabledControlVariable().unregisterChangeListener(allTablesSelectedModeEnabledAction);
+		trackingDeviceControl.getIndividualTableSelectModeEnabledControlVariable().unregisterChangeListener(individualTableSelectModeEnabledAction);
+		trackingDeviceControl.getTableSelectedModeDisabledControlVariable().unregisterChangeListener(tableSelectdModeDisabledAction);
+		trackingDeviceControl.getPointingControlVariable().unregisterChangeListener(pointingAction);
 	}
 
 	/**
 	 * Adds the sync.
 	 */
-	private void addSync() {
-		trackingDeviceControl.getUserLocationsControlVariable()
-				.registerChangeListener(updateUserLocationsAction);
-		trackingDeviceControl.getAllTablesSelectedModeEnabledControlVariable()
-				.registerChangeListener(allTablesSelectedModeEnabledAction);
-		trackingDeviceControl
-				.getIndividualTableSelectModeEnabledControlVariable()
-				.registerChangeListener(individualTableSelectModeEnabledAction);
-		trackingDeviceControl.getTableSelectedModeDisabledControlVariable()
-				.registerChangeListener(tableSelectdModeDisabledAction);
-		trackingDeviceControl.getPointingControlVariable()
-				.registerChangeListener(pointingAction);
+	private void addSync()
+	{
+		trackingDeviceControl.getUserLocationsControlVariable().registerChangeListener(updateUserLocationsAction);
+		trackingDeviceControl.getAllTablesSelectedModeEnabledControlVariable().registerChangeListener(allTablesSelectedModeEnabledAction);
+		trackingDeviceControl.getIndividualTableSelectModeEnabledControlVariable().registerChangeListener(individualTableSelectModeEnabledAction);
+		trackingDeviceControl.getTableSelectedModeDisabledControlVariable().registerChangeListener(tableSelectdModeDisabledAction);
+		trackingDeviceControl.getPointingControlVariable().registerChangeListener(pointingAction);
 	}
 
 }

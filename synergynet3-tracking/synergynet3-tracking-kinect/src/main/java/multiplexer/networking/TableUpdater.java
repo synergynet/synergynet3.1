@@ -12,26 +12,33 @@ import com.jme3.math.Vector2f;
 /**
  * The Class TableUpdater.
  */
-public class TableUpdater {
+public class TableUpdater
+{
 
 	/** The update tables thread. */
-	public static Thread updateTablesThread = new Thread(new Runnable() {
-		public void run() {
-			try {
-				while (Multiplexer.isRunning) {
+	public static Thread updateTablesThread = new Thread(new Runnable()
+	{
+		@Override
+		public void run()
+		{
+			try
+			{
+				while (Multiplexer.isRunning)
+				{
 					Thread.sleep(SLEEP_TIME);
 					multiplexCheck();
-					synchronized (Multiplexer.users) {
-						TrackingControlComms
-								.get()
-								.sendUserLocationsToAllTables(Multiplexer.users);
+					synchronized (Multiplexer.users)
+					{
+						TrackingControlComms.get().sendUserLocationsToAllTables(Multiplexer.users);
 					}
 				}
 				Multiplexer.multiplexerSync.stop();
 				TableUpdater.clearUserLocations();
 				SynergyNetCluster.get().shutdown();
 				System.exit(0);
-			} catch (InterruptedException ie) {
+			}
+			catch (InterruptedException ie)
+			{
 			}
 		}
 	});
@@ -42,37 +49,42 @@ public class TableUpdater {
 	/**
 	 * Clear user locations.
 	 */
-	private static void clearUserLocations() {
+	private static void clearUserLocations()
+	{
 		Multiplexer.users.clear();
-		TrackingControlComms.get().sendUserLocationsToAllTables(
-				Multiplexer.users);
+		TrackingControlComms.get().sendUserLocationsToAllTables(Multiplexer.users);
 	}
 
 	/**
 	 * Multiplex check.
 	 */
-	private static void multiplexCheck() {
-		synchronized (Multiplexer.users) {
+	private static void multiplexCheck()
+	{
+		synchronized (Multiplexer.users)
+		{
 
 			ArrayList<CombinedUserEntity[]> toCombine = new ArrayList<CombinedUserEntity[]>();
 
-			for (CombinedUserEntity userOne : Multiplexer.users) {
-				Vector2f userOneBodyLoc = toBodyVector(userOne
-						.getUserLocation().getUserBodyLocation());
-				for (CombinedUserEntity userTwo : Multiplexer.users) {
-					if (!userOne.equals(userTwo)) {
-						Vector2f userTwoBodyLoc = toBodyVector(userTwo
-								.getUserLocation().getUserBodyLocation());
-						if (userOneBodyLoc.distance(userTwoBodyLoc) < Multiplexer.MULTIPLEXING_THRESHOLD_IN_METRES) {
-							toCombine.add(new CombinedUserEntity[] { userOne,
-									userTwo });
+			for (CombinedUserEntity userOne : Multiplexer.users)
+			{
+				Vector2f userOneBodyLoc = toBodyVector(userOne.getUserLocation().getUserBodyLocation());
+				for (CombinedUserEntity userTwo : Multiplexer.users)
+				{
+					if (!userOne.equals(userTwo))
+					{
+						Vector2f userTwoBodyLoc = toBodyVector(userTwo.getUserLocation().getUserBodyLocation());
+						if (userOneBodyLoc.distance(userTwoBodyLoc) < Multiplexer.MULTIPLEXING_THRESHOLD_IN_METRES)
+						{
+							toCombine.add(new CombinedUserEntity[]
+							{ userOne, userTwo });
 							break;
 						}
 					}
 				}
 			}
 
-			for (CombinedUserEntity[] combination : toCombine) {
+			for (CombinedUserEntity[] combination : toCombine)
+			{
 				CombinedUserEntity userOne = combination[0];
 				CombinedUserEntity userTwo = combination[1];
 
@@ -80,30 +92,35 @@ public class TableUpdater {
 
 				boolean okToContinue = true;
 
-				for (String idOne : userOne.getUserIDs()) {
-					String sourceOne = CombinedUserEntity
-							.getTrackerSourceFromID(idOne);
-					for (String idTwo : userTwo.getUserIDs()) {
-						String sourceTwo = CombinedUserEntity
-								.getTrackerSourceFromID(idTwo);
-						if (sourceOne.equals(sourceTwo)) {
+				for (String idOne : userOne.getUserIDs())
+				{
+					String sourceOne = CombinedUserEntity.getTrackerSourceFromID(idOne);
+					for (String idTwo : userTwo.getUserIDs())
+					{
+						String sourceTwo = CombinedUserEntity.getTrackerSourceFromID(idTwo);
+						if (sourceOne.equals(sourceTwo))
+						{
 							okToContinue = false;
 							break;
 						}
 					}
-					if (!okToContinue) {
+					if (!okToContinue)
+					{
 						break;
 					}
 				}
 
-				if (okToContinue) {
+				if (okToContinue)
+				{
 
-					for (String id : userTwo.getUserIDs()) {
+					for (String id : userTwo.getUserIDs())
+					{
 						userOne.getUserIDs().add(id);
 					}
 
 					boolean isTeacher = false;
-					if (userOne.isTeacher() || userTwo.isTeacher()) {
+					if (userOne.isTeacher() || userTwo.isTeacher())
+					{
 						isTeacher = true;
 					}
 
@@ -111,10 +128,7 @@ public class TableUpdater {
 					Multiplexer.users.set(indexOfUserOne, userOne);
 					Multiplexer.users.remove(userTwo);
 
-					Multiplexer.writeToAnnouncementBox("Entity "
-							+ userTwo.getUniqueID()
-							+ " has been merged into Entity "
-							+ userOne.getUniqueID());
+					Multiplexer.writeToAnnouncementBox("Entity " + userTwo.getUniqueID() + " has been merged into Entity " + userOne.getUniqueID());
 
 					TrackerUpdater.sendTeacherStatusUpdateToTrackers(userOne);
 					TrackerUpdater.sendUniqueIDUpdateToTrackers(userOne);
@@ -127,10 +141,12 @@ public class TableUpdater {
 	/**
 	 * To body vector.
 	 *
-	 * @param bodyLoc the body loc
+	 * @param bodyLoc
+	 *            the body loc
 	 * @return the vector2f
 	 */
-	private static Vector2f toBodyVector(float[] bodyLoc) {
+	private static Vector2f toBodyVector(float[] bodyLoc)
+	{
 		return new Vector2f(bodyLoc[0], bodyLoc[1]);
 	}
 

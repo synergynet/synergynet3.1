@@ -6,7 +6,8 @@ import synergynet3.museum.table.settingsapp.MuseumAppPreferences;
 /**
  * The Class EntityTidy.
  */
-public class EntityTidy {
+public class EntityTidy
+{
 
 	/** The keep tidying. */
 	private static boolean keepTidying = true;
@@ -15,28 +16,35 @@ public class EntityTidy {
 	private static long lastTidy = 0;
 
 	/** The wait time seconds. */
-	private static long WAIT_TIME_SECONDS = (MuseumAppPreferences
-			.getMaxRecordingTime() / 1000) + 30;
+	private static long WAIT_TIME_SECONDS = (MuseumAppPreferences.getMaxRecordingTime() / 1000) + 30;
 
 	/**
 	 * Creates the thread.
 	 *
-	 * @param entityManager the entity manager
+	 * @param entityManager
+	 *            the entity manager
 	 */
-	public static void createThread(final EntityManager entityManager) {
-		Thread timeoutThread = new Thread(new Runnable() {
-			public void run() {
-				while (keepTidying) {
-					try {
+	public static void createThread(final EntityManager entityManager)
+	{
+		Thread timeoutThread = new Thread(new Runnable()
+		{
+			@Override
+			public void run()
+			{
+				while (keepTidying)
+				{
+					try
+					{
 						Thread.sleep(100);
-					} catch (InterruptedException e) {
+					}
+					catch (InterruptedException e)
+					{
 						e.printStackTrace();
 					}
-					if ((lastTidy == 0)
-							|| (lastTidy != MultiTouchEvent.getLastEvent())) {
-						if (keepTidying
-								&& ((System.nanoTime() - MultiTouchEvent
-										.getLastEvent()) > (WAIT_TIME_SECONDS * 1000000000))) {
+					if ((lastTidy == 0) || (lastTidy != MultiTouchEvent.getLastEvent()))
+					{
+						if (keepTidying && ((System.nanoTime() - MultiTouchEvent.getLastEvent()) > (WAIT_TIME_SECONDS * 1000000000)))
+						{
 							tidyUp(entityManager);
 							lastTidy = MultiTouchEvent.getLastEvent();
 						}
@@ -50,17 +58,21 @@ public class EntityTidy {
 	/**
 	 * Stop tidying.
 	 */
-	public static void stopTidying() {
+	public static void stopTidying()
+	{
 		keepTidying = false;
 	}
 
 	/**
 	 * Tidy up.
 	 *
-	 * @param entityManager the entity manager
+	 * @param entityManager
+	 *            the entity manager
 	 */
-	public static void tidyUp(EntityManager entityManager) {
-		for (EntityItem entity : entityManager.getEntities().values()) {
+	public static void tidyUp(EntityManager entityManager)
+	{
+		for (EntityItem entity : entityManager.getEntities().values())
+		{
 			entity.setVisible(false);
 		}
 	}

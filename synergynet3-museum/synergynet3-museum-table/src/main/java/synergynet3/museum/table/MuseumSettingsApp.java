@@ -46,7 +46,8 @@ import synergynet3.museum.table.settingsapp.appearance.AppearanceConfigPrefsItem
 /**
  * The Class MuseumSettingsApp.
  */
-public class MuseumSettingsApp {
+public class MuseumSettingsApp
+{
 
 	/** The jf. */
 	public static JFrame jf;
@@ -60,10 +61,12 @@ public class MuseumSettingsApp {
 	/**
 	 * Gets the preferences.
 	 *
-	 * @param c the c
+	 * @param c
+	 *            the c
 	 * @return the preferences
 	 */
-	public static Preferences getPreferences(Class<? extends PreferencesItem> c) {
+	public static Preferences getPreferences(Class<? extends PreferencesItem> c)
+	{
 		return Preferences.userNodeForPackage(c);
 	}
 
@@ -72,23 +75,29 @@ public class MuseumSettingsApp {
 	 *
 	 * @return the tabbed pane
 	 */
-	public static JTabbedPane getTabbedPane() {
+	public static JTabbedPane getTabbedPane()
+	{
 		return jtp;
 	}
 
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * @param args
+	 *            the arguments
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
-	public static void main(String[] args) throws FileNotFoundException,
-			IOException, InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
+	public static void main(String[] args) throws FileNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
 		startConfigGUI();
 	}
 
@@ -96,23 +105,30 @@ public class MuseumSettingsApp {
 	 * Gets the core preferences items.
 	 *
 	 * @return the core preferences items
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private static List<PreferencesItem> getCorePreferencesItems()
-			throws IOException {
+	private static List<PreferencesItem> getCorePreferencesItems() throws IOException
+	{
 		List<PreferencesItem> items = new ArrayList<PreferencesItem>();
-		List<String> classes = FileUtils.readAsStringList(
-				MuseumSettingsApp.class
-						.getResourceAsStream(CORE_PREFS_LIST_FILE), true);
-		for (String c : classes) {
-			try {
+		List<String> classes = FileUtils.readAsStringList(MuseumSettingsApp.class.getResourceAsStream(CORE_PREFS_LIST_FILE), true);
+		for (String c : classes)
+		{
+			try
+			{
 				PreferencesItem item = getPreferencesItemForClass(c);
 				items.add(item);
-			} catch (InstantiationException e) {
+			}
+			catch (InstantiationException e)
+			{
 				e.printStackTrace();
-			} catch (IllegalAccessException e) {
+			}
+			catch (IllegalAccessException e)
+			{
 				e.printStackTrace();
-			} catch (ClassNotFoundException e) {
+			}
+			catch (ClassNotFoundException e)
+			{
 				e.printStackTrace();
 			}
 		}
@@ -122,18 +138,20 @@ public class MuseumSettingsApp {
 	/**
 	 * Gets the preferences item for class.
 	 *
-	 * @param classname the classname
+	 * @param classname
+	 *            the classname
 	 * @return the preferences item for class
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
-	 * @throws ClassNotFoundException the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
 	 */
 	@SuppressWarnings("unchecked")
-	private static PreferencesItem getPreferencesItemForClass(String classname)
-			throws InstantiationException, IllegalAccessException,
-			ClassNotFoundException {
-		Class<? extends PreferencesItem> prefsClass = (Class<? extends PreferencesItem>) Class
-				.forName(classname);
+	private static PreferencesItem getPreferencesItemForClass(String classname) throws InstantiationException, IllegalAccessException, ClassNotFoundException
+	{
+		Class<? extends PreferencesItem> prefsClass = (Class<? extends PreferencesItem>) Class.forName(classname);
 		PreferencesItem item = prefsClass.newInstance();
 		return item;
 	}
@@ -141,46 +159,56 @@ public class MuseumSettingsApp {
 	/**
 	 * Load core preferences items.
 	 *
-	 * @param jtp the jtp
-	 * @throws IOException Signals that an I/O exception has occurred.
+	 * @param jtp
+	 *            the jtp
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
 	 */
-	private static void loadCorePreferencesItems(JTabbedPane jtp)
-			throws IOException {
+	private static void loadCorePreferencesItems(JTabbedPane jtp) throws IOException
+	{
 		final List<PreferencesItem> prefsItems = getCorePreferencesItems();
-		for (PreferencesItem item : prefsItems) {
-			jtp.add(item.getConfigurationPanelName(),
-					item.getConfigurationPanel());
+		for (PreferencesItem item : prefsItems)
+		{
+			jtp.add(item.getConfigurationPanelName(), item.getConfigurationPanel());
 		}
 	}
 
 	/**
 	 * Exit.
 	 */
-	protected static void exit() {
+	protected static void exit()
+	{
 		System.exit(0);
 	}
 
 	/**
 	 * Start config gui.
 	 *
-	 * @throws FileNotFoundException the file not found exception
-	 * @throws IOException Signals that an I/O exception has occurred.
-	 * @throws ClassNotFoundException the class not found exception
-	 * @throws InstantiationException the instantiation exception
-	 * @throws IllegalAccessException the illegal access exception
+	 * @throws FileNotFoundException
+	 *             the file not found exception
+	 * @throws IOException
+	 *             Signals that an I/O exception has occurred.
+	 * @throws ClassNotFoundException
+	 *             the class not found exception
+	 * @throws InstantiationException
+	 *             the instantiation exception
+	 * @throws IllegalAccessException
+	 *             the illegal access exception
 	 */
-	protected static void startConfigGUI() throws FileNotFoundException,
-			IOException, ClassNotFoundException, InstantiationException,
-			IllegalAccessException {
+	protected static void startConfigGUI() throws FileNotFoundException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
+	{
 		jf = new JFrame("Museum App Settings");
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		jf.getContentPane().setLayout(new BorderLayout());
 
 		jtp = new JTabbedPane();
-		jtp.addKeyListener(new KeyAdapter() {
+		jtp.addKeyListener(new KeyAdapter()
+		{
 			@Override
-			public void keyReleased(KeyEvent e) {
-				if ((e.getKeyCode() == 27) || (e.getKeyCode() == 157)) {
+			public void keyReleased(KeyEvent e)
+			{
+				if ((e.getKeyCode() == 27) || (e.getKeyCode() == 157))
+				{
 					exit();
 				}
 			}
@@ -199,9 +227,11 @@ public class MuseumSettingsApp {
 		int screenY = (dim.height - h) / 2;
 		jf.setLocation(screenX, screenY);
 
-		jf.addWindowListener(new WindowAdapter() {
+		jf.addWindowListener(new WindowAdapter()
+		{
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent e)
+			{
 				AppearanceConfigPrefsItem.savetoXML();
 			}
 		});

@@ -13,31 +13,39 @@ import jpview.ptms.PTM;
 /**
  * @author clyon
  */
-public class EnvironmentMapOp implements PixelTransformOp {
+public class EnvironmentMapOp implements PixelTransformOp
+{
 
 	/** Creates a new instance of ColorChannelOp */
-	public EnvironmentMapOp() {
+	public EnvironmentMapOp()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#clearCache()
 	 */
-	public void clearCache() {
+	@Override
+	public void clearCache()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#forceUpdate()
 	 */
-	public void forceUpdate() {
+	@Override
+	public void forceUpdate()
+	{
 	}
 
 	/*
 	 * (non-Javadoc)
 	 * @see jpview.transforms.PixelTransformOp#release()
 	 */
-	public void release() {
+	@Override
+	public void release()
+	{
 	}
 
 	/*
@@ -45,7 +53,9 @@ public class EnvironmentMapOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm)
+	{
 		int[] localPixels = pixels;
 		PTM localPtm = ptm;
 		int length = localPixels.length;
@@ -59,7 +69,8 @@ public class EnvironmentMapOp implements PixelTransformOp {
 		// map = ptm.getEnvironmentMapMap();
 		// }
 
-		for (int i = 0; i < length; i++) {
+		for (int i = 0; i < length; i++)
+		{
 			// localPixels[i] = rotatedEnv[map[i]];
 			// N.perturb();
 			// Vec3f R = Vec3f.reflect(ptm.normal(i),new Vec3f(0,0,1));
@@ -68,8 +79,7 @@ public class EnvironmentMapOp implements PixelTransformOp {
 			// float v = -R.y()/m;
 			// int u1 = Math.round((u+1)*ptm.getWidth()/2);
 			// int v1 = Math.round((v+1)*ptm.getHeight()/2);
-			localPixels[i] = localPtm.getEnvironmentMap().getPixel(
-					ptm.normal(i));
+			localPixels[i] = localPtm.getEnvironmentMap().getPixel(ptm.normal(i));
 
 			// Vec3f R = Vec3f.reflect(localPtm.normal(x,y),eye);
 			// // float m = (float) Math.sqrt(2*(R.z()+1));
@@ -117,7 +127,9 @@ public class EnvironmentMapOp implements PixelTransformOp {
 	 * @see jpview.transforms.PixelTransformOp#transformPixels(int[],
 	 * jpview.ptms.PTM, int, int)
 	 */
-	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY) {
+	@Override
+	public void transformPixels(int[] pixels, PTM ptm, int mouseX, int mouseY)
+	{
 		transformPixels(pixels, ptm);
 
 	}

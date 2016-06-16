@@ -25,7 +25,8 @@ import synergynet3.tracking.network.shared.CombinedUserEntity;
 /**
  * The Class Multiplexer.
  */
-public class Multiplexer extends JFrame {
+public class Multiplexer extends JFrame
+{
 
 	/** The is running. */
 	public static boolean isRunning = true;
@@ -37,8 +38,7 @@ public class Multiplexer extends JFrame {
 	public static float MULTIPLEXING_THRESHOLD_IN_METRES = 0.1f;
 
 	/** The tracker orientation. */
-	public static float TRACKER_LOCATION_X, TRACKER_LOCATION_Y,
-			TRACKER_ORIENTATION = 0;
+	public static float TRACKER_LOCATION_X, TRACKER_LOCATION_Y, TRACKER_ORIENTATION = 0;
 
 	/** The users. */
 	public static ArrayList<CombinedUserEntity> users = new ArrayList<CombinedUserEntity>();
@@ -58,35 +58,42 @@ public class Multiplexer extends JFrame {
 	/**
 	 * Instantiates a new multiplexer.
 	 */
-	public Multiplexer() {
+	public Multiplexer()
+	{
 		super("Multiplexer");
 
 		announcementBox = new JTextArea();
 		JScrollPane scroll = new JScrollPane(announcementBox);
-		scroll.getVerticalScrollBar().addAdjustmentListener(
-				new AdjustmentListener() {
-					public void adjustmentValueChanged(AdjustmentEvent e) {
-						announcementBox.select(
-								announcementBox.getHeight() + 1000, 0);
-					}
-				});
+		scroll.getVerticalScrollBar().addAdjustmentListener(new AdjustmentListener()
+		{
+			@Override
+			public void adjustmentValueChanged(AdjustmentEvent e)
+			{
+				announcementBox.select(announcementBox.getHeight() + 1000, 0);
+			}
+		});
 
 		announcementBox.setEditable(false);
 		announcementBox.setText("Multiplexer started." + "\n  ");
 		add(scroll);
 
-		ActionListener actionListener = new ActionListener() {
-			public void actionPerformed(ActionEvent actionEvent) {
+		ActionListener actionListener = new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent actionEvent)
+			{
 				isRunning = false;
 			}
 		};
 
 		KeyStroke stroke = KeyStroke.getKeyStroke(KeyEvent.VK_ESCAPE, 0);
-		rootPane.registerKeyboardAction(actionListener, stroke,
-				JComponent.WHEN_IN_FOCUSED_WINDOW);
+		rootPane.registerKeyboardAction(actionListener, stroke, JComponent.WHEN_IN_FOCUSED_WINDOW);
 
-		addWindowListener(new WindowAdapter() {
-			public void windowClosing(WindowEvent e) {
+		addWindowListener(new WindowAdapter()
+		{
+			@Override
+			public void windowClosing(WindowEvent e)
+			{
 				isRunning = false;
 			}
 		});
@@ -96,8 +103,7 @@ public class Multiplexer extends JFrame {
 		setLocationRelativeTo(null);
 		setVisible(true);
 
-		TrackingDeviceControl multiplexerDeviceController = new TrackingDeviceControl(
-				SynergyNetCluster.get().getIdentity());
+		TrackingDeviceControl multiplexerDeviceController = new TrackingDeviceControl(SynergyNetCluster.get().getIdentity());
 		multiplexerSync = new MultiplexerSync(multiplexerDeviceController);
 
 		TableUpdater.updateTablesThread.start();
@@ -107,27 +113,31 @@ public class Multiplexer extends JFrame {
 	/**
 	 * The main method.
 	 *
-	 * @param args the arguments
+	 * @param args
+	 *            the arguments
 	 */
-	public static void main(String args[]) {
+	public static void main(String args[])
+	{
 		new Multiplexer();
-		try {
-			MULTIPLEXING_THRESHOLD_IN_METRES = Float
-					.parseFloat(ManagementFactory.getRuntimeMXBean()
-							.getSystemProperties().get("threshold"));
-		} catch (Exception e) {
+		try
+		{
+			MULTIPLEXING_THRESHOLD_IN_METRES = Float.parseFloat(ManagementFactory.getRuntimeMXBean().getSystemProperties().get("threshold"));
+		}
+		catch (Exception e)
+		{
 			writeToAnnouncementBox("No multiplexing threshold argument given, using default.");
 		}
-		writeToAnnouncementBox("Multiplexing Threshold: "
-				+ MULTIPLEXING_THRESHOLD_IN_METRES + "m");
+		writeToAnnouncementBox("Multiplexing Threshold: " + MULTIPLEXING_THRESHOLD_IN_METRES + "m");
 	}
 
 	/**
 	 * Write to announcement box.
 	 *
-	 * @param announcement the announcement
+	 * @param announcement
+	 *            the announcement
 	 */
-	public static void writeToAnnouncementBox(String announcement) {
+	public static void writeToAnnouncementBox(String announcement)
+	{
 		String previousAnnouncements = announcementBox.getText();
 		previousAnnouncements += " - " + announcement + "\n  ";
 		announcementBox.setText(previousAnnouncements);

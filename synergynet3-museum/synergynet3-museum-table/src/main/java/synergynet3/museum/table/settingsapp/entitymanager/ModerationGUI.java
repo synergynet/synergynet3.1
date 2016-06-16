@@ -26,7 +26,8 @@ import synergynet3.museum.table.mainapp.EntityManager;
 /**
  * The Class ModerationGUI.
  */
-public class ModerationGUI {
+public class ModerationGUI
+{
 
 	/** The Constant AUDIO_CHECK. */
 	private static final AudioSearchType AUDIO_CHECK = new AudioSearchType();
@@ -37,12 +38,15 @@ public class ModerationGUI {
 	/**
 	 * Instantiates a new moderation gui.
 	 *
-	 * @param name the name
-	 * @param loc the loc
-	 * @param entityManagerGUI the entity manager gui
+	 * @param name
+	 *            the name
+	 * @param loc
+	 *            the loc
+	 * @param entityManagerGUI
+	 *            the entity manager gui
 	 */
-	public ModerationGUI(String name, String loc,
-			final EntityManagerGUI entityManagerGUI) {
+	public ModerationGUI(String name, String loc, final EntityManagerGUI entityManagerGUI)
+	{
 
 		int w = 750;
 
@@ -61,11 +65,11 @@ public class ModerationGUI {
 		final String location = loc + File.separator + EntityManager.RECORDINGS;
 
 		checkAndMakeDirectory(location);
-		checkAndMakeDirectory(location + File.separator
-				+ EntityManager.APPROVED);
+		checkAndMakeDirectory(location + File.separator + EntityManager.APPROVED);
 
 		File recordingFolder = new File(location);
-		if (recordingFolder.isDirectory()) {
+		if (recordingFolder.isDirectory())
+		{
 			contentsAwaitingModeration = getNumberOfFilesAwaitingModeration(recordingFolder);
 		}
 
@@ -74,9 +78,11 @@ public class ModerationGUI {
 		jf.setSize(w, h);
 		jf.setResizable(false);
 
-		WindowListener exitListener = new WindowAdapter() {
+		WindowListener exitListener = new WindowAdapter()
+		{
 			@Override
-			public void windowClosing(WindowEvent e) {
+			public void windowClosing(WindowEvent e)
+			{
 				entityManagerGUI.updateList();
 				jf.setVisible(false);
 			}
@@ -91,13 +97,12 @@ public class ModerationGUI {
 		jf.getContentPane().setLayout(null);
 
 		String contributionText = "contribution";
-		if (contentsAwaitingModeration != 1) {
+		if (contentsAwaitingModeration != 1)
+		{
 			contributionText += "s";
 		}
 
-		JLabel textLabel = new JLabel(name + " has "
-				+ contentsAwaitingModeration + " " + contributionText
-				+ " awaiting moderation.");
+		JLabel textLabel = new JLabel(name + " has " + contentsAwaitingModeration + " " + contributionText + " awaiting moderation.");
 		textLabel.setHorizontalAlignment(SwingConstants.CENTER);
 		textLabel.setBounds(new Rectangle(x, y, labelWidth, height));
 		jf.getContentPane().add(textLabel);
@@ -107,23 +112,32 @@ public class ModerationGUI {
 		JButton okButton = new JButton();
 		okButton.setText("View Contributions");
 
-		final IgnoreDoubleClick moderateClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick moderateClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				Desktop desktop = null;
 				File file = new File(location);
-				if (Desktop.isDesktopSupported()) {
+				if (Desktop.isDesktopSupported())
+				{
 					desktop = Desktop.getDesktop();
 				}
-				try {
+				try
+				{
 					desktop.open(file);
-				} catch (IOException e) {
+				}
+				catch (IOException e)
+				{
 				}
 			}
 		};
 
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				moderateClicker.click(null);
 			}
 		});
@@ -132,10 +146,7 @@ public class ModerationGUI {
 
 		y += height + yPadding;
 
-		JLabel textLabelPartTwo = new JLabel(
-				"Move acceptable contributions into the "
-						+ EntityManager.APPROVED
-						+ " folder and delete the remaining files.");
+		JLabel textLabelPartTwo = new JLabel("Move acceptable contributions into the " + EntityManager.APPROVED + " folder and delete the remaining files.");
 		textLabelPartTwo.setHorizontalAlignment(SwingConstants.CENTER);
 		textLabelPartTwo.setBounds(new Rectangle(x, y, labelWidth, height));
 		jf.getContentPane().add(textLabelPartTwo);
@@ -145,8 +156,11 @@ public class ModerationGUI {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Done");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				entityManagerGUI.updateList();
 				jf.setVisible(false);
 			}
@@ -160,11 +174,14 @@ public class ModerationGUI {
 	/**
 	 * Check and make directory.
 	 *
-	 * @param loc the loc
+	 * @param loc
+	 *            the loc
 	 */
-	private void checkAndMakeDirectory(String loc) {
+	private void checkAndMakeDirectory(String loc)
+	{
 		File folder = new File(loc);
-		if (!folder.exists()) {
+		if (!folder.exists())
+		{
 			folder.mkdir();
 		}
 	}
@@ -172,15 +189,20 @@ public class ModerationGUI {
 	/**
 	 * Gets the number of files awaiting moderation.
 	 *
-	 * @param folder the folder
+	 * @param folder
+	 *            the folder
 	 * @return the number of files awaiting moderation
 	 */
-	private int getNumberOfFilesAwaitingModeration(File folder) {
+	private int getNumberOfFilesAwaitingModeration(File folder)
+	{
 		int toReturn = 0;
 		File[] files = folder.listFiles();
-		for (File f : files) {
-			if (!f.isDirectory()) {
-				if (AUDIO_CHECK.isFileOfSearchType(f)) {
+		for (File f : files)
+		{
+			if (!f.isDirectory())
+			{
+				if (AUDIO_CHECK.isFileOfSearchType(f))
+				{
 					toReturn++;
 				}
 			}

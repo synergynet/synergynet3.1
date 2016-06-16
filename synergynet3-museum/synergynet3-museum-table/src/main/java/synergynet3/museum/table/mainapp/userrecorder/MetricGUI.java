@@ -33,7 +33,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class MetricGUI.
  */
-public class MetricGUI {
+public class MetricGUI
+{
 
 	/** The Constant BORDER_WIDTH. */
 	private final static float BORDER_WIDTH = 3f;
@@ -69,8 +70,8 @@ public class MetricGUI {
 	private final static int WIDTH = 420;
 
 	/** The age groups. */
-	private String[] ageGroups = { "1 - 5", "6 - 12", "13 - 18", "18 - 25",
-			"25 - 40", "40 - 60", "60 - 80", "80+" };
+	private String[] ageGroups =
+	{ "1 - 5", "6 - 12", "13 - 18", "18 - 25", "25 - 40", "40 - 60", "60 - 80", "80+" };
 
 	/** The ages. */
 	private int[] ages = new int[LIMIT];
@@ -94,7 +95,8 @@ public class MetricGUI {
 	private IRoundedBorder frameBorder;
 
 	/** The gender groups. */
-	private String[] genderGroups = { "Male", "Female" };
+	private String[] genderGroups =
+	{ "Male", "Female" };
 
 	/** The genders. */
 	private int[] genders = new int[LIMIT];
@@ -141,14 +143,19 @@ public class MetricGUI {
 	/**
 	 * Instantiates a new metric gui.
 	 *
-	 * @param stage the stage
-	 * @param folder the folder
-	 * @param originalRecording the original recording
-	 * @param idIn the id in
-	 * @param promptIn the prompt in
+	 * @param stage
+	 *            the stage
+	 * @param folder
+	 *            the folder
+	 * @param originalRecording
+	 *            the original recording
+	 * @param idIn
+	 *            the id in
+	 * @param promptIn
+	 *            the prompt in
 	 */
-	public MetricGUI(final IStage stage, final File folder,
-			File originalRecording, String idIn, String promptIn) {
+	public MetricGUI(final IStage stage, final File folder, File originalRecording, String idIn, String promptIn)
+	{
 		this.originalRecording = originalRecording;
 		this.id = idIn;
 		this.prompt = promptIn;
@@ -158,17 +165,26 @@ public class MetricGUI {
 		toAddBeforeListener = new IItem[LIMIT * 6];
 		toAddAfterListener = new IItem[LIMIT * 4];
 
-		try {
+		try
+		{
 
-			Thread timeoutThread = new Thread(new Runnable() {
-				public void run() {
-					while (open) {
-						try {
+			Thread timeoutThread = new Thread(new Runnable()
+			{
+				@Override
+				public void run()
+				{
+					while (open)
+					{
+						try
+						{
 							Thread.sleep(100);
-						} catch (InterruptedException e) {
+						}
+						catch (InterruptedException e)
+						{
 							e.printStackTrace();
 						}
-						if ((new Date().getTime() - lastUpdated.getTime()) > TIME_OUT) {
+						if ((new Date().getTime() - lastUpdated.getTime()) > TIME_OUT)
+						{
 							close(stage);
 						}
 					}
@@ -176,63 +192,52 @@ public class MetricGUI {
 			});
 			timeoutThread.start();
 
-			container = stage.getContentFactory().create(IContainer.class,
-					"container", UUID.randomUUID());
-			arrowImage = getArrowImage(MuseumAppPreferences
-					.getMetricGUIButtonColourAsString());
+			container = stage.getContentFactory().create(IContainer.class, "container", UUID.randomUUID());
+			arrowImage = getArrowImage(MuseumAppPreferences.getMetricGUIButtonColourAsString());
 
-			background = stage.getContentFactory().create(
-					IColourRectangle.class, "recorderContainerBg",
-					UUID.randomUUID());
-			background.setSolidBackgroundColour(MuseumAppPreferences
-					.getMetricGUIBackgroundColour());
+			background = stage.getContentFactory().create(IColourRectangle.class, "recorderContainerBg", UUID.randomUUID());
+			background.setSolidBackgroundColour(MuseumAppPreferences.getMetricGUIBackgroundColour());
 			background.setSize(WIDTH, height);
 
-			frameBorder = stage.getContentFactory().create(
-					IRoundedBorder.class, "containerBorder", UUID.randomUUID());
+			frameBorder = stage.getContentFactory().create(IRoundedBorder.class, "containerBorder", UUID.randomUUID());
 			frameBorder.setBorderWidth(BORDER_WIDTH);
 			frameBorder.setSize(WIDTH, height);
-			frameBorder.setColor(MuseumAppPreferences
-					.getMetricGUIBorderColour());
+			frameBorder.setColor(MuseumAppPreferences.getMetricGUIBorderColour());
 
-			listener = stage.getContentFactory().create(ICachableImage.class,
-					"listener", UUID.randomUUID());
-			listener.setSize(WIDTH + (BORDER_WIDTH * 2), height
-					+ (BORDER_WIDTH * 2));
+			listener = stage.getContentFactory().create(ICachableImage.class, "listener", UUID.randomUUID());
+			listener.setSize(WIDTH + (BORDER_WIDTH * 2), height + (BORDER_WIDTH * 2));
 
 			float y = height / 2;
 
-			ITextbox textLabel = generateTextBox(stage,
-					MuseumAppPreferences.getMetricGUIText(), TEXT_SCALE);
+			ITextbox textLabel = generateTextBox(stage, MuseumAppPreferences.getMetricGUIText(), TEXT_SCALE);
 			y -= (GAP + ((textLabel.getHeight() * TEXT_SCALE) / 2));
 			textLabel.setRelativeLocation(new Vector2f(0, y));
 
 			y -= (((textLabel.getHeight() * TEXT_SCALE) / 2) + GAP + 1.5f);
 			ILine textLine = generateLine(y, 3f, stage);
 
-			ITextbox numberOfParticipantsLabel = generateTextBox(stage,
-					"How many people took part in the recording?", TEXT_SCALE);
+			ITextbox numberOfParticipantsLabel = generateTextBox(stage, "How many people took part in the recording?", TEXT_SCALE);
 			y -= (1.5f + GAP + ((numberOfParticipantsLabel.getHeight() * TEXT_SCALE) / 2));
 			numberOfParticipantsLabel.setRelativeLocation(new Vector2f(0, y));
 
-			final ITextbox participantNumberLabel = generateTextBox(stage, ""
-					+ numberOfUsers, 0.75f);
+			final ITextbox participantNumberLabel = generateTextBox(stage, "" + numberOfUsers, 0.75f);
 			y -= (((numberOfParticipantsLabel.getHeight() * TEXT_SCALE) / 2) + GAP);
 			participantNumberLabel.setRelativeLocation(new Vector2f(0, y));
 
-			ICachableImage leftButton = stage.getContentFactory().create(
-					ICachableImage.class, "down", UUID.randomUUID());
+			ICachableImage leftButton = stage.getContentFactory().create(ICachableImage.class, "down", UUID.randomUUID());
 			leftButton.setImage(arrowImage);
 			leftButton.setSize(SETTINGS_HEIGHT / 2, SETTINGS_HEIGHT / 2);
 			leftButton.setRelativeLocation(new Vector2f(-SETTINGS_HEIGHT, y));
 
-			final IgnoreDoubleClick clickerLeft = new IgnoreDoubleClick(500) {
+			final IgnoreDoubleClick clickerLeft = new IgnoreDoubleClick(500)
+			{
 				@Override
-				public void onAction(MultiTouchCursorEvent event) {
-					if (numberOfUsers > 1) {
+				public void onAction(MultiTouchCursorEvent event)
+				{
+					if (numberOfUsers > 1)
+					{
 						numberOfUsers--;
-						participantNumberLabel.getTextLabel().setText(
-								"" + numberOfUsers);
+						participantNumberLabel.getTextLabel().setText("" + numberOfUsers);
 						hideBox();
 						resize();
 					}
@@ -240,28 +245,30 @@ public class MetricGUI {
 				}
 			};
 
-			leftButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							clickerLeft.click(event);
-						}
-					});
+			leftButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					clickerLeft.click(event);
+				}
+			});
 
-			ICachableImage rightButton = stage.getContentFactory().create(
-					ICachableImage.class, "down", UUID.randomUUID());
+			ICachableImage rightButton = stage.getContentFactory().create(ICachableImage.class, "down", UUID.randomUUID());
 			rightButton.setImage(arrowImage);
 			rightButton.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
 			rightButton.setSize(SETTINGS_HEIGHT / 2, SETTINGS_HEIGHT / 2);
 			rightButton.setRelativeLocation(new Vector2f(SETTINGS_HEIGHT, y));
 
-			final IgnoreDoubleClick clickerRight = new IgnoreDoubleClick(500) {
+			final IgnoreDoubleClick clickerRight = new IgnoreDoubleClick(500)
+			{
 				@Override
-				public void onAction(MultiTouchCursorEvent event) {
-					if (numberOfUsers < LIMIT) {
+				public void onAction(MultiTouchCursorEvent event)
+				{
+					if (numberOfUsers < LIMIT)
+					{
 						numberOfUsers++;
-						participantNumberLabel.getTextLabel().setText(
-								"" + numberOfUsers);
+						participantNumberLabel.getTextLabel().setText("" + numberOfUsers);
 						showBox();
 						resize();
 					}
@@ -269,13 +276,14 @@ public class MetricGUI {
 				}
 			};
 
-			rightButton.getMultiTouchDispatcher().addListener(
-					new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							clickerRight.click(event);
-						}
-					});
+			rightButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					clickerRight.click(event);
+				}
+			});
 
 			y -= ((SETTINGS_HEIGHT / 4) + GAP + 0.5f);
 
@@ -283,53 +291,47 @@ public class MetricGUI {
 
 			ILine firstLine = generateLine(y, 1f, stage);
 
-			okButton = stage.getContentFactory().create(IButtonbox.class,
-					"enabledOkButton", UUID.randomUUID());
-			okButton.setText("Submit",
-					MuseumAppPreferences.getMetricGUIBackgroundColour(),
-					MuseumAppPreferences.getMetricGUIButtonColour(),
-					MuseumAppPreferences.getMetricGUIFontColour(),
-					BUTTON_WIDTH, ITEM_HEIGHT / 2, stage);
-			okButton.setRelativeLocation(new Vector2f(
-					(-okButton.getWidth() / 2) - (GAP / 2), (-height / 2)
-							+ (okButton.getHeight() / 2) + (GAP / 2)));
-			okButton.getListener().getMultiTouchDispatcher()
-					.addListener(new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							saveMetrics();
-							close(stage);
-							try {
-								new TextEntryGUI(stage, folder, id, prompt);
-							} catch (ContentTypeNotBoundException e) {
-								e.printStackTrace();
-							}
-						}
-					});
+			okButton = stage.getContentFactory().create(IButtonbox.class, "enabledOkButton", UUID.randomUUID());
+			okButton.setText("Submit", MuseumAppPreferences.getMetricGUIBackgroundColour(), MuseumAppPreferences.getMetricGUIButtonColour(), MuseumAppPreferences.getMetricGUIFontColour(), BUTTON_WIDTH, ITEM_HEIGHT / 2, stage);
+			okButton.setRelativeLocation(new Vector2f((-okButton.getWidth() / 2) - (GAP / 2), (-height / 2) + (okButton.getHeight() / 2) + (GAP / 2)));
+			okButton.getListener().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					saveMetrics();
+					close(stage);
+					try
+					{
+						new TextEntryGUI(stage, folder, id, prompt);
+					}
+					catch (ContentTypeNotBoundException e)
+					{
+						e.printStackTrace();
+					}
+				}
+			});
 
-			cancelButton = stage.getContentFactory().create(IButtonbox.class,
-					"cancelButton", UUID.randomUUID());
-			cancelButton.setText("Cancel",
-					MuseumAppPreferences.getMetricGUIBackgroundColour(),
-					MuseumAppPreferences.getMetricGUIButtonColour(),
-					MuseumAppPreferences.getMetricGUIFontColour(),
-					BUTTON_WIDTH, ITEM_HEIGHT / 2, stage);
-			cancelButton.setRelativeLocation(new Vector2f((cancelButton
-					.getWidth() / 2) + (GAP / 2), (-height / 2)
-					+ (cancelButton.getHeight() / 2) + (GAP / 2)));
+			cancelButton = stage.getContentFactory().create(IButtonbox.class, "cancelButton", UUID.randomUUID());
+			cancelButton.setText("Cancel", MuseumAppPreferences.getMetricGUIBackgroundColour(), MuseumAppPreferences.getMetricGUIButtonColour(), MuseumAppPreferences.getMetricGUIFontColour(), BUTTON_WIDTH, ITEM_HEIGHT / 2, stage);
+			cancelButton.setRelativeLocation(new Vector2f((cancelButton.getWidth() / 2) + (GAP / 2), (-height / 2) + (cancelButton.getHeight() / 2) + (GAP / 2)));
 			cancelButton.setVisible(true);
-			cancelButton.getListener().getMultiTouchDispatcher()
-					.addListener(new MultiTouchEventAdapter() {
-						@Override
-						public void cursorPressed(MultiTouchCursorEvent event) {
-							close(stage);
-							try {
-								new TextEntryGUI(stage, folder, id, prompt);
-							} catch (ContentTypeNotBoundException e) {
-								e.printStackTrace();
-							}
-						}
-					});
+			cancelButton.getListener().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+			{
+				@Override
+				public void cursorPressed(MultiTouchCursorEvent event)
+				{
+					close(stage);
+					try
+					{
+						new TextEntryGUI(stage, folder, id, prompt);
+					}
+					catch (ContentTypeNotBoundException e)
+					{
+						e.printStackTrace();
+					}
+				}
+			});
 
 			container.addItem(background);
 			container.addItem(frameBorder);
@@ -338,11 +340,13 @@ public class MetricGUI {
 			container.addItem(numberOfParticipantsLabel);
 			container.addItem(participantNumberLabel);
 			container.addItem(firstLine);
-			for (IItem item : toAddBeforeListener) {
+			for (IItem item : toAddBeforeListener)
+			{
 				container.addItem(item);
 			}
 			container.addItem(listener);
-			for (IItem item : toAddAfterListener) {
+			for (IItem item : toAddAfterListener)
+			{
 				container.addItem(item);
 			}
 			container.addItem(leftButton);
@@ -350,9 +354,7 @@ public class MetricGUI {
 			container.addItem(okButton);
 			container.addItem(cancelButton);
 
-			RotateTranslateScaleBehaviour rts = stage
-					.getBehaviourMaker()
-					.addBehaviour(listener, RotateTranslateScaleBehaviour.class);
+			RotateTranslateScaleBehaviour rts = stage.getBehaviourMaker().addBehaviour(listener, RotateTranslateScaleBehaviour.class);
 			rts.setItemActingOn(container);
 			rts.setScaleEnabled(false);
 
@@ -362,7 +364,9 @@ public class MetricGUI {
 
 			container.getZOrderManager().setAutoBringToTop(false);
 
-		} catch (ContentTypeNotBoundException e) {
+		}
+		catch (ContentTypeNotBoundException e)
+		{
 			e.printStackTrace();
 		}
 	}
@@ -370,9 +374,11 @@ public class MetricGUI {
 	/**
 	 * Adds the after listener.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void addAfterListener(IItem item) {
+	private void addAfterListener(IItem item)
+	{
 		toAddAfterListener[toAddAfterListenerCount] = item;
 		toAddAfterListenerCount++;
 	}
@@ -380,9 +386,11 @@ public class MetricGUI {
 	/**
 	 * Adds the before listener.
 	 *
-	 * @param item the item
+	 * @param item
+	 *            the item
 	 */
-	private void addBeforeListener(IItem item) {
+	private void addBeforeListener(IItem item)
+	{
 		toAddBeforeListener[toAddBeforeListenerCount] = item;
 		toAddBeforeListenerCount++;
 	}
@@ -390,9 +398,11 @@ public class MetricGUI {
 	/**
 	 * Close.
 	 *
-	 * @param stage the stage
+	 * @param stage
+	 *            the stage
 	 */
-	private void close(IStage stage) {
+	private void close(IStage stage)
+	{
 		open = false;
 		stage.removeItem(container);
 	}
@@ -400,34 +410,35 @@ public class MetricGUI {
 	/**
 	 * Generate box.
 	 *
-	 * @param stage the stage
-	 * @param y the y
-	 * @param i the i
+	 * @param stage
+	 *            the stage
+	 * @param y
+	 *            the y
+	 * @param i
+	 *            the i
 	 * @return the i item[]
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private IItem[] generateBox(IStage stage, float y, final int i)
-			throws ContentTypeNotBoundException {
+	private IItem[] generateBox(IStage stage, float y, final int i) throws ContentTypeNotBoundException
+	{
 		IItem[] toReturn = new IItem[10];
 		int person = i + 1;
 		genders[i] = 0;
 		ages[i] = 0;
 
-		ITextbox personLabel = generateTextBox(stage, "Person " + person + ":",
-				0.75f);
+		ITextbox personLabel = generateTextBox(stage, "Person " + person + ":", 0.75f);
 		toReturn[0] = personLabel;
 		addBeforeListener(personLabel);
 
 		y -= (0.5f + GAP + ((personLabel.getHeight() * TEXT_SCALE) / 2)) / 2;
 		personLabel.setRelativeLocation(new Vector2f(0, y));
 
-		ITextbox genderPromptLabel = generateTextBox(stage, "Gender:",
-				TEXT_SCALE);
+		ITextbox genderPromptLabel = generateTextBox(stage, "Gender:", TEXT_SCALE);
 		toReturn[1] = genderPromptLabel;
 		addBeforeListener(genderPromptLabel);
 
-		y -= (((genderPromptLabel.getHeight() * TEXT_SCALE) / 2) + GAP + ((personLabel
-				.getHeight() * TEXT_SCALE) / 2)) / 2;
+		y -= (((genderPromptLabel.getHeight() * TEXT_SCALE) / 2) + GAP + ((personLabel.getHeight() * TEXT_SCALE) / 2)) / 2;
 		genderPromptLabel.setRelativeLocation(new Vector2f(-WIDTH / 4, y));
 
 		ITextbox agePromptLabel = generateTextBox(stage, "Age:", TEXT_SCALE);
@@ -436,56 +447,45 @@ public class MetricGUI {
 
 		agePromptLabel.setRelativeLocation(new Vector2f(WIDTH / 4, y));
 
-		final ITextbox genderLabel = generateTextBox(stage, genderGroups[0],
-				TEXT_SCALE);
+		final ITextbox genderLabel = generateTextBox(stage, genderGroups[0], TEXT_SCALE);
 		toReturn[3] = genderLabel;
 		addBeforeListener(genderLabel);
 
-		y -= (((personLabel.getHeight() * TEXT_SCALE) / 2) + GAP + ((genderLabel
-				.getHeight() * TEXT_SCALE) / 2)) / 2;
+		y -= (((personLabel.getHeight() * TEXT_SCALE) / 2) + GAP + ((genderLabel.getHeight() * TEXT_SCALE) / 2)) / 2;
 		genderLabel.setRelativeLocation(new Vector2f(-WIDTH / 4, y));
 
-		ICachableImage leftGenderButton = stage.getContentFactory().create(
-				ICachableImage.class, "down", UUID.randomUUID());
+		ICachableImage leftGenderButton = stage.getContentFactory().create(ICachableImage.class, "down", UUID.randomUUID());
 		leftGenderButton.setImage(arrowImage);
 		leftGenderButton.setSize(SETTINGS_HEIGHT / 2, SETTINGS_HEIGHT / 2);
-		leftGenderButton.setRelativeLocation(new Vector2f((-WIDTH / 4)
-				- SETTINGS_HEIGHT, y));
+		leftGenderButton.setRelativeLocation(new Vector2f((-WIDTH / 4) - SETTINGS_HEIGHT, y));
 		toReturn[2] = leftGenderButton;
 		addAfterListener(leftGenderButton);
 
-		ICachableImage rightGenderButton = stage.getContentFactory().create(
-				ICachableImage.class, "down", UUID.randomUUID());
+		ICachableImage rightGenderButton = stage.getContentFactory().create(ICachableImage.class, "down", UUID.randomUUID());
 		rightGenderButton.setImage(arrowImage);
 		rightGenderButton.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
 		rightGenderButton.setSize(SETTINGS_HEIGHT / 2, SETTINGS_HEIGHT / 2);
-		rightGenderButton.setRelativeLocation(new Vector2f((-WIDTH / 4)
-				+ SETTINGS_HEIGHT, y));
+		rightGenderButton.setRelativeLocation(new Vector2f((-WIDTH / 4) + SETTINGS_HEIGHT, y));
 		toReturn[4] = rightGenderButton;
 		addAfterListener(rightGenderButton);
 
-		final ITextbox ageLabel = generateTextBox(stage, ageGroups[0],
-				TEXT_SCALE);
+		final ITextbox ageLabel = generateTextBox(stage, ageGroups[0], TEXT_SCALE);
 		ageLabel.setRelativeLocation(new Vector2f(WIDTH / 4, y));
 		toReturn[7] = ageLabel;
 		addBeforeListener(ageLabel);
 
-		ICachableImage leftAgeButton = stage.getContentFactory().create(
-				ICachableImage.class, "down", UUID.randomUUID());
+		ICachableImage leftAgeButton = stage.getContentFactory().create(ICachableImage.class, "down", UUID.randomUUID());
 		leftAgeButton.setImage(arrowImage);
 		leftAgeButton.setSize(SETTINGS_HEIGHT / 2, SETTINGS_HEIGHT / 2);
-		leftAgeButton.setRelativeLocation(new Vector2f((WIDTH / 4)
-				- SETTINGS_HEIGHT, y));
+		leftAgeButton.setRelativeLocation(new Vector2f((WIDTH / 4) - SETTINGS_HEIGHT, y));
 		toReturn[6] = leftAgeButton;
 		addAfterListener(leftAgeButton);
 
-		ICachableImage rightAgeButton = stage.getContentFactory().create(
-				ICachableImage.class, "down", UUID.randomUUID());
+		ICachableImage rightAgeButton = stage.getContentFactory().create(ICachableImage.class, "down", UUID.randomUUID());
 		rightAgeButton.setImage(arrowImage);
 		rightAgeButton.setRelativeRotation(FastMath.DEG_TO_RAD * 180);
 		rightAgeButton.setSize(SETTINGS_HEIGHT / 2, SETTINGS_HEIGHT / 2);
-		rightAgeButton.setRelativeLocation(new Vector2f((WIDTH / 4)
-				+ SETTINGS_HEIGHT, y));
+		rightAgeButton.setRelativeLocation(new Vector2f((WIDTH / 4) + SETTINGS_HEIGHT, y));
 		toReturn[8] = rightAgeButton;
 		addAfterListener(rightAgeButton);
 
@@ -494,12 +494,17 @@ public class MetricGUI {
 		toReturn[9] = line;
 		addBeforeListener(line);
 
-		final IgnoreDoubleClick clickerGenderLeft = new IgnoreDoubleClick(500) {
+		final IgnoreDoubleClick clickerGenderLeft = new IgnoreDoubleClick(500)
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (genders[i] == 0) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (genders[i] == 0)
+				{
 					genders[i] = 1;
-				} else {
+				}
+				else
+				{
 					genders[i] = 0;
 				}
 				genderLabel.getTextLabel().setText(genderGroups[genders[i]]);
@@ -507,20 +512,26 @@ public class MetricGUI {
 			}
 		};
 
-		leftGenderButton.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clickerGenderLeft.click(event);
-					}
-				});
-
-		final IgnoreDoubleClick clickerGenderRight = new IgnoreDoubleClick(500) {
+		leftGenderButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (genders[i] == 0) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clickerGenderLeft.click(event);
+			}
+		});
+
+		final IgnoreDoubleClick clickerGenderRight = new IgnoreDoubleClick(500)
+		{
+			@Override
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (genders[i] == 0)
+				{
 					genders[i] = 1;
-				} else {
+				}
+				else
+				{
 					genders[i] = 0;
 				}
 				genderLabel.getTextLabel().setText(genderGroups[genders[i]]);
@@ -528,20 +539,24 @@ public class MetricGUI {
 			}
 		};
 
-		rightGenderButton.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clickerGenderRight.click(event);
-					}
-				});
-
-		final IgnoreDoubleClick clickerAgeLeft = new IgnoreDoubleClick(500) {
+		rightGenderButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clickerGenderRight.click(event);
+			}
+		});
+
+		final IgnoreDoubleClick clickerAgeLeft = new IgnoreDoubleClick(500)
+		{
+			@Override
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				int ageGroup = ages[i];
 				ageGroup--;
-				if (ageGroup == -1) {
+				if (ageGroup == -1)
+				{
 					ageGroup = ageGroups.length - 1;
 				}
 				ages[i] = ageGroup;
@@ -550,20 +565,24 @@ public class MetricGUI {
 			}
 		};
 
-		leftAgeButton.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clickerAgeLeft.click(event);
-					}
-				});
-
-		final IgnoreDoubleClick clickerAgeRight = new IgnoreDoubleClick(500) {
+		leftAgeButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clickerAgeLeft.click(event);
+			}
+		});
+
+		final IgnoreDoubleClick clickerAgeRight = new IgnoreDoubleClick(500)
+		{
+			@Override
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				int ageGroup = ages[i];
 				ageGroup++;
-				if (ageGroup == ageGroups.length) {
+				if (ageGroup == ageGroups.length)
+				{
 					ageGroup = 0;
 				}
 				ages[i] = ageGroup;
@@ -572,13 +591,14 @@ public class MetricGUI {
 			}
 		};
 
-		rightAgeButton.getMultiTouchDispatcher().addListener(
-				new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clickerAgeRight.click(event);
-					}
-				});
+		rightAgeButton.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clickerAgeRight.click(event);
+			}
+		});
 
 		return toReturn;
 	}
@@ -586,18 +606,24 @@ public class MetricGUI {
 	/**
 	 * Generate boxes.
 	 *
-	 * @param stage the stage
-	 * @param y the y
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @param stage
+	 *            the stage
+	 * @param y
+	 *            the y
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private void generateBoxes(IStage stage, float y)
-			throws ContentTypeNotBoundException {
+	private void generateBoxes(IStage stage, float y) throws ContentTypeNotBoundException
+	{
 		boxes = new IItem[LIMIT][];
-		for (int i = 0; i < LIMIT; i++) {
+		for (int i = 0; i < LIMIT; i++)
+		{
 			boxes[i] = generateBox(stage, y, i);
 			y -= BOX_HEIGHT;
-			if (i > 0) {
-				for (IItem item : boxes[i]) {
+			if (i > 0)
+			{
+				for (IItem item : boxes[i])
+				{
 					item.setVisible(false);
 				}
 			}
@@ -607,16 +633,19 @@ public class MetricGUI {
 	/**
 	 * Generate line.
 	 *
-	 * @param y the y
-	 * @param width the width
-	 * @param stage the stage
+	 * @param y
+	 *            the y
+	 * @param width
+	 *            the width
+	 * @param stage
+	 *            the stage
 	 * @return the i line
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private ILine generateLine(float y, float width, IStage stage)
-			throws ContentTypeNotBoundException {
-		ILine line = stage.getContentFactory().create(ILine.class, "line",
-				UUID.randomUUID());
+	private ILine generateLine(float y, float width, IStage stage) throws ContentTypeNotBoundException
+	{
+		ILine line = stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 		line.setLineWidth(width);
 		line.setInteractionEnabled(false);
 		line.setLineColour(MuseumAppPreferences.getMetricGUIButtonColour());
@@ -628,18 +657,20 @@ public class MetricGUI {
 	/**
 	 * Generate text box.
 	 *
-	 * @param stage the stage
-	 * @param text the text
-	 * @param scale the scale
+	 * @param stage
+	 *            the stage
+	 * @param text
+	 *            the text
+	 * @param scale
+	 *            the scale
 	 * @return the i textbox
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	private ITextbox generateTextBox(IStage stage, String text, float scale)
-			throws ContentTypeNotBoundException {
-		ITextbox participantsCountLabel = stage.getContentFactory().create(
-				ITextbox.class, "textLabel", UUID.randomUUID());
-		participantsCountLabel.setColours(INVIS, INVIS,
-				MuseumAppPreferences.getMetricGUIFontColour());
+	private ITextbox generateTextBox(IStage stage, String text, float scale) throws ContentTypeNotBoundException
+	{
+		ITextbox participantsCountLabel = stage.getContentFactory().create(ITextbox.class, "textLabel", UUID.randomUUID());
+		participantsCountLabel.setColours(INVIS, INVIS, MuseumAppPreferences.getMetricGUIFontColour());
 		participantsCountLabel.setWidth((WIDTH - (GAP / 2)) / TEXT_SCALE);
 		participantsCountLabel.setHeight(ITEM_HEIGHT);
 		participantsCountLabel.setText(text, stage);
@@ -651,20 +682,23 @@ public class MetricGUI {
 	/**
 	 * Gets the arrow image.
 	 *
-	 * @param colour the colour
+	 * @param colour
+	 *            the colour
 	 * @return the arrow image
 	 */
-	private String getArrowImage(String colour) {
-		return ImageUtils.getImage(colour, ImageUtils.RESOURCE_DIR
-				+ "sliderarrows/", "_slider_arrow.png");
+	private String getArrowImage(String colour)
+	{
+		return ImageUtils.getImage(colour, ImageUtils.RESOURCE_DIR + "sliderarrows/", "_slider_arrow.png");
 	}
 
 	/**
 	 * Hide box.
 	 */
-	private void hideBox() {
+	private void hideBox()
+	{
 		int toHide = numberOfUsers;
-		for (IItem item : boxes[toHide]) {
+		for (IItem item : boxes[toHide])
+		{
 			item.setVisible(false);
 		}
 	}
@@ -672,7 +706,8 @@ public class MetricGUI {
 	/**
 	 * Resize.
 	 */
-	private void resize() {
+	private void resize()
+	{
 		height = 200 + (numberOfUsers * BOX_HEIGHT);
 
 		float offset = -((numberOfUsers - 1) * BOX_HEIGHT) / 2;
@@ -684,25 +719,23 @@ public class MetricGUI {
 		listener.setSize(WIDTH, height);
 		listener.setRelativeLocation(new Vector2f(0, offset));
 
-		float buttonY = -((-offset) + (height / 2))
-				+ (okButton.getHeight() / 2) + (GAP / 2);
+		float buttonY = -((-offset) + (height / 2)) + (okButton.getHeight() / 2) + (GAP / 2);
 
-		okButton.setRelativeLocation(new Vector2f((-okButton.getWidth() / 2)
-				- (GAP / 2), buttonY));
-		cancelButton.setRelativeLocation(new Vector2f(
-				(cancelButton.getWidth() / 2) + (GAP / 2), buttonY));
+		okButton.setRelativeLocation(new Vector2f((-okButton.getWidth() / 2) - (GAP / 2), buttonY));
+		cancelButton.setRelativeLocation(new Vector2f((cancelButton.getWidth() / 2) + (GAP / 2), buttonY));
 	}
 
 	/**
 	 * Save metrics.
 	 */
-	private void saveMetrics() {
+	private void saveMetrics()
+	{
 		String metricString = "Recording: " + id + ".wav";
-		metricString += "\nWorkspace: "
-				+ MuseumAppPreferences.getContentFolder();
+		metricString += "\nWorkspace: " + MuseumAppPreferences.getContentFolder();
 		metricString += "\n ";
 
-		for (int i = 0; i < numberOfUsers; i++) {
+		for (int i = 0; i < numberOfUsers; i++)
+		{
 			int person = i + 1;
 			metricString += "\nPerson " + person;
 			metricString += "\nGender: " + genderGroups[genders[i]];
@@ -710,30 +743,39 @@ public class MetricGUI {
 			metricString += "\n ";
 		}
 
-		File txtFile = new File(MuseumAppPreferences.getMetricsFolder()
-				+ File.separator + id + ".txt");
+		File txtFile = new File(MuseumAppPreferences.getMetricsFolder() + File.separator + id + ".txt");
 
 		BufferedWriter writer = null;
-		try {
+		try
+		{
 			writer = new BufferedWriter(new FileWriter(txtFile));
 			writer.write(metricString);
-		} catch (IOException e) {
+		}
+		catch (IOException e)
+		{
 			System.err.println(e);
-		} finally {
-			if (writer != null) {
-				try {
+		}
+		finally
+		{
+			if (writer != null)
+			{
+				try
+				{
 					writer.close();
-				} catch (IOException e) {
+				}
+				catch (IOException e)
+				{
 					System.err.println(e);
 				}
 			}
 		}
 
-		try {
-			SettingsUtil.copyFile(originalRecording, new File(
-					MuseumAppPreferences.getMetricsFolder() + File.separator
-							+ id + ".wav"));
-		} catch (IOException e) {
+		try
+		{
+			SettingsUtil.copyFile(originalRecording, new File(MuseumAppPreferences.getMetricsFolder() + File.separator + id + ".wav"));
+		}
+		catch (IOException e)
+		{
 			e.printStackTrace();
 		}
 
@@ -742,9 +784,11 @@ public class MetricGUI {
 	/**
 	 * Show box.
 	 */
-	private void showBox() {
+	private void showBox()
+	{
 		int toShow = numberOfUsers - 1;
-		for (IItem item : boxes[toShow]) {
+		for (IItem item : boxes[toShow])
+		{
 			item.setVisible(true);
 		}
 	}

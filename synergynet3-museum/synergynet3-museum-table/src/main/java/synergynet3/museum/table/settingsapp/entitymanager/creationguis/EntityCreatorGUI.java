@@ -47,8 +47,10 @@ import synergynet3.museum.table.utils.EntityType;
 /**
  * The Class EntityCreatorGUI.
  */
-@SuppressWarnings({ "rawtypes", "unchecked" })
-public class EntityCreatorGUI implements ModifiableXandYFields {
+@SuppressWarnings(
+{ "rawtypes", "unchecked" })
+public class EntityCreatorGUI implements ModifiableXandYFields
+{
 
 	/** The entity. */
 	public Entity entity;
@@ -101,10 +103,13 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Instantiates a new entity creator gui.
 	 *
-	 * @param entity the entity
-	 * @param mainGUI the main gui
+	 * @param entity
+	 *            the entity
+	 * @param mainGUI
+	 *            the main gui
 	 */
-	public EntityCreatorGUI(Entity entity, EntityManagerGUI mainGUI) {
+	public EntityCreatorGUI(Entity entity, EntityManagerGUI mainGUI)
+	{
 		this.entity = entity;
 		this.mainGUI = mainGUI;
 		instance = this;
@@ -114,16 +119,20 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Update lens list.
 	 */
-	public void updateLensList() {
+	public void updateLensList()
+	{
 		ArrayList<String> lensArray = entity.getLensValues();
 
 		String[] lenses = new String[lensArray.size()];
-		for (int i = 0; i < lensArray.size(); i++) {
+		for (int i = 0; i < lensArray.size(); i++)
+		{
 			lenses[i] = lensArray.get(i);
 		}
-		Arrays.sort(lenses, new Comparator<String>() {
+		Arrays.sort(lenses, new Comparator<String>()
+		{
 			@Override
-			public int compare(String o1, String o2) {
+			public int compare(String o1, String o2)
+			{
 				return o1.compareToIgnoreCase(o2);
 			}
 		});
@@ -133,11 +142,12 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Update list.
 	 *
-	 * @param attribute the attribute
+	 * @param attribute
+	 *            the attribute
 	 */
-	public void updateList(EntityAttribute attribute) {
-		String[] contents = SettingsUtil
-				.stringArrayListToStringArray(getArrayListOfAttributes(attribute));
+	public void updateList(EntityAttribute attribute)
+	{
+		String[] contents = SettingsUtil.stringArrayListToStringArray(getArrayListOfAttributes(attribute));
 		Arrays.sort(contents);
 		listItems.get(attribute).setListData(contents);
 	}
@@ -148,7 +158,8 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	 * mappositiongui.ModifiableXandYFields#updateXandYFields(float, float)
 	 */
 	@Override
-	public void updateXandYFields(float xOnMap, float yOnMap) {
+	public void updateXandYFields(float xOnMap, float yOnMap)
+	{
 		textFieldX.setText("" + xOnMap);
 		textFieldY.setText("" + yOnMap);
 	}
@@ -156,15 +167,18 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Generate generic main screen content.
 	 */
-	private void generateGenericMainScreenContent() {
+	private void generateGenericMainScreenContent()
+	{
 
-		if (entity == null) {
+		if (entity == null)
+		{
 			newEntity = true;
-			location = MuseumAppPreferences.getContentFolder() + File.separator
-					+ EntityManager.ENTITIES + File.separator + name;
+			location = MuseumAppPreferences.getContentFolder() + File.separator + EntityManager.ENTITIES + File.separator + name;
 			new File(location).mkdir();
 			entity = new Entity(location);
-		} else {
+		}
+		else
+		{
 			location = entity.getLocation();
 
 		}
@@ -179,36 +193,41 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		JButton viewContentsButton = new JButton();
 		viewContentsButton.setText("View Contents");
 
-		final IgnoreDoubleClick contentClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick contentClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				Desktop desktop = null;
 				File file = new File(location);
-				if (Desktop.isDesktopSupported()) {
+				if (Desktop.isDesktopSupported())
+				{
 					desktop = Desktop.getDesktop();
 				}
-				try {
+				try
+				{
 					desktop.open(file);
-				} catch (IOException e) {
+				}
+				catch (IOException e)
+				{
 				}
 			}
 		};
 
-		viewContentsButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		viewContentsButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				contentClicker.click(null);
 			}
 		});
 
-		JButton helpContent = SettingsUtil
-				.generateHelpButton(
-						jf,
-						"Any visible media in this folder (.jpg, .png, .gif, .wav, .wma, .mp4, .mov, .avi) will be attatched to the entity.");
+		JButton helpContent = SettingsUtil.generateHelpButton(jf, "Any visible media in this folder (.jpg, .png, .gif, .wav, .wma, .mp4, .mov, .avi) will be attatched to the entity.");
 
 		poiCheckbox = new JCheckBox();
 		poiCheckbox.setText("Show on Map");
-		boolean locationMode = ((entity.getType() == EntityType.LensedPOI) || (entity
-				.getType() == EntityType.POI));
+		boolean locationMode = ((entity.getType() == EntityType.LensedPOI) || (entity.getType() == EntityType.POI));
 		poiCheckbox.setSelected(locationMode);
 
 		lensCheckbox = new JCheckBox();
@@ -216,14 +235,20 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		boolean eventMode = (entity.getType() == EntityType.LensedPOI);
 		lensCheckbox.setSelected(eventMode);
 
-		poiCheckbox.addActionListener(new ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		poiCheckbox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
 				updateSelectedContents();
 			}
 		});
 
-		lensCheckbox.addActionListener(new ActionListener() {
-			public void actionPerformed(java.awt.event.ActionEvent evt) {
+		lensCheckbox.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
 				updateSelectedContents();
 			}
 		});
@@ -245,67 +270,92 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		JButton locationMapperButton = new JButton();
 		poiControls.add(locationMapperButton);
 		locationMapperButton.setText("Locate");
-		locationMapperButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		locationMapperButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				float xIn = 0.5f;
 				float yIn = 0.5f;
-				try {
+				try
+				{
 					xIn = Float.parseFloat(textFieldX.getText());
 					yIn = Float.parseFloat(textFieldY.getText());
-				} catch (NumberFormatException e) {
+				}
+				catch (NumberFormatException e)
+				{
 				}
 				new LocationMapper(xIn, yIn, instance, instance);
 			}
 		});
 
-		JButton helpMap = SettingsUtil.generateHelpButton(jf,
-				"Click on the map to position the entity.");
+		JButton helpMap = SettingsUtil.generateHelpButton(jf, "Click on the map to position the entity.");
 
 		JSeparator entitySeparatorTwo = new JSeparator();
 
 		JButton okButton = new JButton();
 		okButton.setText("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 
-				if (lensCheckbox.isSelected()) {
+				if (lensCheckbox.isSelected())
+				{
 					entity.setType(EntityType.LensedPOI);
 
 					float x = 0.5f;
 					float y = 0.5f;
 
-					try {
+					try
+					{
 						x = Float.parseFloat(textFieldX.getText());
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e)
+					{
 					}
 
-					try {
+					try
+					{
 						y = Float.parseFloat(textFieldY.getText());
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e)
+					{
 					}
 
 					entity.setX(x);
 					entity.setY(y);
 
-				} else if (poiCheckbox.isSelected()) {
+				}
+				else if (poiCheckbox.isSelected())
+				{
 					entity.setType(EntityType.POI);
 
 					float x = 0.5f;
 					float y = 0.5f;
 
-					try {
+					try
+					{
 						x = Float.parseFloat(textFieldX.getText());
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e)
+					{
 					}
 
-					try {
+					try
+					{
 						y = Float.parseFloat(textFieldY.getText());
-					} catch (NumberFormatException e) {
+					}
+					catch (NumberFormatException e)
+					{
 					}
 
 					entity.setX(x);
 					entity.setY(y);
-				} else {
+				}
+				else
+				{
 					entity.setType(EntityType.Free);
 				}
 
@@ -320,11 +370,16 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
-				if (newEntity) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
+				if (newEntity)
+				{
 					File file = new File(location);
-					if (!file.delete()) {
+					if (!file.delete())
+					{
 						file.deleteOnExit();
 					}
 				}
@@ -351,9 +406,9 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		int x = 0;
 		int y = yPadding;
 
-		for (EntityAttribute attribute : EntityAttribute.values()) {
-			JPanel panel = generateListBoxAndControls(attribute, panelWidth,
-					panelHeight);
+		for (EntityAttribute attribute : EntityAttribute.values())
+		{
+			JPanel panel = generateListBoxAndControls(attribute, panelWidth, panelHeight);
 			panel.setBounds(new Rectangle(x, y, panelWidth, panelHeight));
 			x += panelWidth;
 			jf.getContentPane().add(panel);
@@ -362,14 +417,12 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		x = xPadding;
 		y += panelHeight + yPadding;
 
-		entitySeparatorOne.setBounds(new Rectangle(0, y, w - (yPadding / 2),
-				height));
+		entitySeparatorOne.setBounds(new Rectangle(0, y, w - (yPadding / 2), height));
 
 		x = (w / 2) - (bigButtonWidth / 2);
 		y += yPadding;
 
-		viewContentsButton
-				.setBounds(new Rectangle(x, y, bigButtonWidth, height));
+		viewContentsButton.setBounds(new Rectangle(x, y, bigButtonWidth, height));
 
 		x += bigButtonWidth + xPadding;
 
@@ -393,8 +446,7 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		textFieldY.setBounds(new Rectangle(x, y, textFieldWidth, height));
 		x += textFieldWidth + (xPadding * 2);
 
-		locationMapperButton
-				.setBounds(new Rectangle(x, y, buttonWidth, height));
+		locationMapperButton.setBounds(new Rectangle(x, y, buttonWidth, height));
 
 		x += buttonWidth + yPadding;
 
@@ -412,8 +464,7 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		x = (w / 2) - (((smallButtonWidth * 2) + xPadding) / 2);
 		y += (height * 4) + yPadding;
 
-		entitySeparatorTwo.setBounds(new Rectangle(0, y, w - (yPadding / 2),
-				height));
+		entitySeparatorTwo.setBounds(new Rectangle(0, y, w - (yPadding / 2), height));
 
 		y += yPadding;
 
@@ -423,8 +474,7 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 
 		x += smallButtonWidth + xPadding;
 
-		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding,
-				height));
+		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 
 		jf.getContentPane().add(entitySeparatorOne);
 		jf.getContentPane().add(viewContentsButton);
@@ -456,23 +506,29 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Generate lens box and controls.
 	 *
-	 * @param panelWidth the panel width
-	 * @param panelHeight the panel height
+	 * @param panelWidth
+	 *            the panel width
+	 * @param panelHeight
+	 *            the panel height
 	 * @return the j panel
 	 */
-	private JPanel generateLensBoxAndControls(int panelWidth, int panelHeight) {
+	private JPanel generateLensBoxAndControls(int panelWidth, int panelHeight)
+	{
 
 		JPanel panel = new JPanel();
 
 		ArrayList<String> lensArray = entity.getLensValues();
 
 		String[] lenses = new String[lensArray.size()];
-		for (int i = 0; i < lensArray.size(); i++) {
+		for (int i = 0; i < lensArray.size(); i++)
+		{
 			lenses[i] = lensArray.get(i);
 		}
-		Arrays.sort(lenses, new Comparator<String>() {
+		Arrays.sort(lenses, new Comparator<String>()
+		{
 			@Override
-			public int compare(String o1, String o2) {
+			public int compare(String o1, String o2)
+			{
 				return o1.compareToIgnoreCase(o2);
 			}
 		});
@@ -489,15 +545,20 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		createButton.setText("Create");
 		lensControls.add(createButton);
 
-		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 				new LensSelectorGUI(instance);
 			}
 		};
 
-		createButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		createButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				createClicker.click(null);
 			}
 		});
@@ -506,26 +567,28 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		removeButton.setText("Remove");
 		lensControls.add(removeButton);
 
-		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (lensList.getSelectedIndex() != -1) {
-					int reply = JOptionPane
-							.showConfirmDialog(
-									null,
-									"Are you sure you want to stop the POI being visible under this lens?",
-									"Remove?", JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						entity.getLensValues().remove(
-								lensList.getSelectedValue());
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (lensList.getSelectedIndex() != -1)
+				{
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to stop the POI being visible under this lens?", "Remove?", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
+					{
+						entity.getLensValues().remove(lensList.getSelectedValue());
 						updateLensList();
 					}
 				}
 			}
 		};
 
-		removeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		removeButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				removeClicker.click(null);
 			}
 		});
@@ -548,19 +611,16 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		panelX = 0;
 		panelY = 0;
 
-		listScroller.setBounds(new Rectangle(panelX, panelY, listBoxWidth,
-				listBoxHeight));
+		listScroller.setBounds(new Rectangle(panelX, panelY, listBoxWidth, listBoxHeight));
 
 		panelX += listBoxWidth + xPadding;
 		panelY = (listBoxHeight - (height * 2)) - yPadding;
 
-		createButton.setBounds(new Rectangle(panelX, panelY, buttonWidth,
-				height));
+		createButton.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
 
 		panelY += height + yPadding;
 
-		removeButton.setBounds(new Rectangle(panelX, panelY, buttonWidth,
-				height));
+		removeButton.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
 		panel.add(listScroller);
 		panel.add(createButton);
 		panel.add(removeButton);
@@ -571,18 +631,20 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Generate list box and controls.
 	 *
-	 * @param attribute the attribute
-	 * @param panelWidth the panel width
-	 * @param panelHeight the panel height
+	 * @param attribute
+	 *            the attribute
+	 * @param panelWidth
+	 *            the panel width
+	 * @param panelHeight
+	 *            the panel height
 	 * @return the j panel
 	 */
-	private JPanel generateListBoxAndControls(final EntityAttribute attribute,
-			int panelWidth, int panelHeight) {
+	private JPanel generateListBoxAndControls(final EntityAttribute attribute, int panelWidth, int panelHeight)
+	{
 
 		JLabel titleLabel = new JLabel(attribute.toString());
 		titleLabel.setHorizontalAlignment(SwingConstants.CENTER);
-		Font labelFont = new Font(titleLabel.getFont().getName(), Font.BOLD,
-				(int) (titleLabel.getFont().getSize() * 1.5));
+		Font labelFont = new Font(titleLabel.getFont().getName(), Font.BOLD, (int) (titleLabel.getFont().getSize() * 1.5));
 		titleLabel.setFont(labelFont);
 
 		JPanel panel = new JPanel();
@@ -590,10 +652,13 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		JButton createButton = new JButton();
 		createButton.setText("Create");
 
-		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick createClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				switch (attribute) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				switch (attribute)
+				{
 					case Facts:
 						new FactCreationGUI("", instance);
 						break;
@@ -604,8 +669,11 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 			}
 		};
 
-		createButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		createButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				createClicker.click(null);
 			}
 		});
@@ -613,13 +681,16 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		JButton editButton = new JButton();
 		editButton.setText("Edit");
 
-		final IgnoreDoubleClick editClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick editClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (listItems.get(attribute).getSelectedIndex() != -1) {
-					String selectedText = (String) listItems.get(attribute)
-							.getSelectedValue();
-					switch (attribute) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (listItems.get(attribute).getSelectedIndex() != -1)
+				{
+					String selectedText = (String) listItems.get(attribute).getSelectedValue();
+					switch (attribute)
+					{
 						case Facts:
 							new FactCreationGUI(selectedText, instance);
 							break;
@@ -631,8 +702,11 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 			}
 		};
 
-		editButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		editButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				editClicker.click(null);
 			}
 		});
@@ -640,25 +714,23 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		JButton removeButton = new JButton();
 		removeButton.setText("Remove");
 
-		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick removeClicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				if (listItems.get(attribute).getSelectedIndex() != -1) {
-					int reply = JOptionPane.showConfirmDialog(null,
-							"Are you sure you want to remove this entry from "
-									+ attribute.toString() + "?", "Remove?",
-							JOptionPane.YES_NO_OPTION);
-					if (reply == JOptionPane.YES_OPTION) {
-						switch (attribute) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				if (listItems.get(attribute).getSelectedIndex() != -1)
+				{
+					int reply = JOptionPane.showConfirmDialog(null, "Are you sure you want to remove this entry from " + attribute.toString() + "?", "Remove?", JOptionPane.YES_NO_OPTION);
+					if (reply == JOptionPane.YES_OPTION)
+					{
+						switch (attribute)
+						{
 							case Facts:
-								entity.getFacts().remove(
-										listItems.get(attribute)
-												.getSelectedValue());
+								entity.getFacts().remove(listItems.get(attribute).getSelectedValue());
 								break;
 							case Links:
-								entity.getLinked().remove(
-										listItems.get(attribute)
-												.getSelectedValue());
+								entity.getLinked().remove(listItems.get(attribute).getSelectedValue());
 								break;
 						}
 						updateList(attribute);
@@ -667,8 +739,11 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 			}
 		};
 
-		removeButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		removeButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				removeClicker.click(null);
 			}
 		});
@@ -676,13 +751,15 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		ArrayList<String> attributesArrayList = getArrayListOfAttributes(attribute);
 
 		String[] attributes = new String[attributesArrayList.size()];
-		for (int i = 0; i < attributesArrayList.size(); i++) {
+		for (int i = 0; i < attributesArrayList.size(); i++)
+		{
 			attributes[i] = attributesArrayList.get(i);
 		}
 		Arrays.sort(attributes);
 
 		final DefaultListModel listModel = new DefaultListModel();
-		for (String s : attributes) {
+		for (String s : attributes)
+		{
 			listModel.addElement(s);
 		}
 
@@ -713,29 +790,24 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 		panelX = listBoxWidth - buttonWidth - xPadding;
 		panelY = yPadding;
 
-		titleLabel
-				.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
+		titleLabel.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
 
 		panelY += height + yPadding;
 
-		createButton.setBounds(new Rectangle(panelX, panelY, buttonWidth,
-				height));
+		createButton.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
 
 		panelY += height + yPadding;
 
-		editButton
-				.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
+		editButton.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
 
 		panelY += height + yPadding;
 
-		removeButton.setBounds(new Rectangle(panelX, panelY, buttonWidth,
-				height));
+		removeButton.setBounds(new Rectangle(panelX, panelY, buttonWidth, height));
 
 		panelX += buttonWidth + xPadding;
 		panelY = 0;
 
-		listScroller.setBounds(new Rectangle(panelX, panelY, listBoxWidth,
-				listBoxHeight));
+		listScroller.setBounds(new Rectangle(panelX, panelY, listBoxWidth, listBoxHeight));
 
 		panel.add(titleLabel);
 		panel.add(listScroller);
@@ -749,7 +821,8 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Generate name request box.
 	 */
-	private void generateNameRequestBox() {
+	private void generateNameRequestBox()
+	{
 
 		int w = 350;
 
@@ -795,17 +868,25 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 
 		JButton okButton = new JButton();
 		okButton.setText("OK");
-		okButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		okButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				name = textField.getText();
 				name = SettingsUtil.removeSpecialChars(name);
-				if (name.equals("")) {
+				if (name.equals(""))
+				{
 					JOptionPane.showMessageDialog(jf, "No name is given.");
-				} else {
-					if (EntityManagerGUI.entities.keySet().contains(name)) {
-						JOptionPane.showMessageDialog(jf,
-								"This name is already in use.");
-					} else {
+				}
+				else
+				{
+					if (EntityManagerGUI.entities.keySet().contains(name))
+					{
+						JOptionPane.showMessageDialog(jf, "This name is already in use.");
+					}
+					else
+					{
 						generateGenericMainScreenContent();
 						jf.setVisible(false);
 					}
@@ -819,13 +900,15 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 
 		JButton cancelButton = new JButton();
 		cancelButton.setText("Cancel");
-		cancelButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent evt) {
+		cancelButton.addActionListener(new ActionListener()
+		{
+			@Override
+			public void actionPerformed(ActionEvent evt)
+			{
 				jf.setVisible(false);
 			}
 		});
-		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding,
-				height));
+		cancelButton.setBounds(new Rectangle(x, y, smallButtonWidth - xPadding, height));
 		jf.getContentPane().add(cancelButton);
 
 		jf.setVisible(true);
@@ -834,12 +917,16 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Gets the array list of attributes.
 	 *
-	 * @param attribute the attribute
+	 * @param attribute
+	 *            the attribute
 	 * @return the array list of attributes
 	 */
-	private ArrayList<String> getArrayListOfAttributes(EntityAttribute attribute) {
-		if (entity != null) {
-			switch (attribute) {
+	private ArrayList<String> getArrayListOfAttributes(EntityAttribute attribute)
+	{
+		if (entity != null)
+		{
+			switch (attribute)
+			{
 				case Facts:
 					return entity.getFacts();
 				case Links:
@@ -852,8 +939,10 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * On close.
 	 */
-	private void onClose() {
-		for (JFrame frame : relatedFrames) {
+	private void onClose()
+	{
+		for (JFrame frame : relatedFrames)
+		{
 			frame.setVisible(false);
 		}
 	}
@@ -861,20 +950,27 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Update selected contents.
 	 */
-	private void updateSelectedContents() {
+	private void updateSelectedContents()
+	{
 		boolean selected = poiCheckbox.isSelected();
-		for (JComponent control : poiControls) {
-			if (lensControls.contains(control) && selected) {
-				if (lensCheckbox.isSelected()) {
+		for (JComponent control : poiControls)
+		{
+			if (lensControls.contains(control) && selected)
+			{
+				if (lensCheckbox.isSelected())
+				{
 					control.setEnabled(selected);
 				}
-			} else {
+			}
+			else
+			{
 				control.setEnabled(selected);
 			}
 		}
 
 		selected = lensCheckbox.isSelected();
-		for (JComponent control : lensControls) {
+		for (JComponent control : lensControls)
+		{
 			control.setEnabled(selected);
 		}
 	}
@@ -882,10 +978,14 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	/**
 	 * Generate generic content.
 	 */
-	protected void generateGenericContent() {
-		if (entity == null) {
+	protected void generateGenericContent()
+	{
+		if (entity == null)
+		{
 			generateNameRequestBox();
-		} else {
+		}
+		else
+		{
 			name = entity.getName();
 			generateGenericMainScreenContent();
 		}
@@ -896,7 +996,8 @@ public class EntityCreatorGUI implements ModifiableXandYFields {
 	 *
 	 * @return the j panel
 	 */
-	protected JPanel generateUniqueContent() {
+	protected JPanel generateUniqueContent()
+	{
 		return null;
 	}
 

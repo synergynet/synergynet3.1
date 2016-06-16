@@ -25,7 +25,8 @@ import com.jme3.math.Vector2f;
 /**
  * The Class POIManager.
  */
-public class POIManager {
+public class POIManager
+{
 
 	/** The lenses. */
 	public static ArrayList<Lens> lenses = new ArrayList<Lens>();
@@ -60,14 +61,19 @@ public class POIManager {
 	/**
 	 * Instantiates a new POI manager.
 	 *
-	 * @param stage the stage
-	 * @param displayWidth the display width
-	 * @param displayHeight the display height
-	 * @param displayOffset the display offset
-	 * @param entityManager the entity manager
+	 * @param stage
+	 *            the stage
+	 * @param displayWidth
+	 *            the display width
+	 * @param displayHeight
+	 *            the display height
+	 * @param displayOffset
+	 *            the display offset
+	 * @param entityManager
+	 *            the entity manager
 	 */
-	public POIManager(IStage stage, float displayWidth, float displayHeight,
-			Vector2f displayOffset, EntityManager entityManager) {
+	public POIManager(IStage stage, float displayWidth, float displayHeight, Vector2f displayOffset, EntityManager entityManager)
+	{
 		this.stage = stage;
 		this.displayWidth = displayWidth;
 		this.displayHeight = displayHeight;
@@ -79,18 +85,20 @@ public class POIManager {
 	/**
 	 * Generate background.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public void generateBackground() throws ContentTypeNotBoundException {
+	public void generateBackground() throws ContentTypeNotBoundException
+	{
 
-		MultiplicityClient.get().getViewPort()
-				.setBackgroundColor(MuseumAppPreferences.getBackgroundColour());
+		MultiplicityClient.get().getViewPort().setBackgroundColor(MuseumAppPreferences.getBackgroundColour());
 
 		File imageFile = MuseumAppPreferences.getBackgroundImage();
-		if (imageFile != null) {
-			if (imageFile.exists()) {
-				IImage background = stage.getContentFactory().create(
-						IImage.class, "background", UUID.randomUUID());
+		if (imageFile != null)
+		{
+			if (imageFile.exists())
+			{
+				IImage background = stage.getContentFactory().create(IImage.class, "background", UUID.randomUUID());
 				background.setImage(imageFile);
 				background.setSize(displayWidth, displayHeight);
 				background.setRelativeLocation(new Vector2f());
@@ -104,41 +112,42 @@ public class POIManager {
 	/**
 	 * Generate lens button.
 	 *
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public void generateLensButton() throws ContentTypeNotBoundException {
+	public void generateLensButton() throws ContentTypeNotBoundException
+	{
 
-		IButtonbox lensButton = stage.getContentFactory().create(
-				IButtonbox.class, "lensMakerButton", UUID.randomUUID());
-		lensButton.setText(MuseumAppPreferences.getLensButtonText(),
-				MuseumAppPreferences.getLensButtonBackgroundColour(),
-				MuseumAppPreferences.getLensButtonBorderColour(),
-				MuseumAppPreferences.getLensButtonFontColour(), 150, 60, stage);
-		lensButton.setRelativeLocation(new Vector2f(
-				(-stage.getDisplayWidth() / 2) + 10
-						+ (lensButton.getWidth() / 2), (-displayHeight / 2)
-						+ 10 + (60 / 2)));
+		IButtonbox lensButton = stage.getContentFactory().create(IButtonbox.class, "lensMakerButton", UUID.randomUUID());
+		lensButton.setText(MuseumAppPreferences.getLensButtonText(), MuseumAppPreferences.getLensButtonBackgroundColour(), MuseumAppPreferences.getLensButtonBorderColour(), MuseumAppPreferences.getLensButtonFontColour(), 150, 60, stage);
+		lensButton.setRelativeLocation(new Vector2f((-stage.getDisplayWidth() / 2) + 10 + (lensButton.getWidth() / 2), (-displayHeight / 2) + 10 + (60 / 2)));
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
-				try {
+			public void onAction(MultiTouchCursorEvent event)
+			{
+				try
+				{
 					String[] lensesToUse = new String[lensesInUse.size()];
 					lensesToUse = lensesInUse.toArray(lensesToUse);
 					lenses.add(new Lens(stage, lensesToUse, instance));
-				} catch (ContentTypeNotBoundException e) {
+				}
+				catch (ContentTypeNotBoundException e)
+				{
 					e.printStackTrace();
 				}
 			}
 		};
 
-		lensButton.getListener().getMultiTouchDispatcher()
-				.addListener(new MultiTouchEventAdapter() {
-					@Override
-					public void cursorPressed(MultiTouchCursorEvent event) {
-						clicker.click(event);
-					}
-				});
+		lensButton.getListener().getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				clicker.click(event);
+			}
+		});
 
 		lensButton.getZOrderManager().setBringToTopPropagatesUp(false);
 		stage.addItem(lensButton);
@@ -148,42 +157,39 @@ public class POIManager {
 	/**
 	 * Generate lensed poi.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param lensValue the lens value
-	 * @param name the name
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param lensValue
+	 *            the lens value
+	 * @param name
+	 *            the name
 	 * @return the i image
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public IImage generateLensedPOI(final float x, final float y,
-			String lensValue, final String name)
-			throws ContentTypeNotBoundException {
-		if (!lensesInUse.contains(lensValue)) {
+	public IImage generateLensedPOI(final float x, final float y, String lensValue, final String name) throws ContentTypeNotBoundException
+	{
+		if (!lensesInUse.contains(lensValue))
+		{
 			lensesInUse.add(lensValue);
 		}
 		String col = LensUtils.getLensColour(lensValue);
 
-		final IImage poi = stage.getContentFactory().create(IImage.class,
-				"poiBackground", UUID.randomUUID());
-		poi.setImage(ImageUtils.getImage(col,
-				ImageUtils.RESOURCE_DIR + "pois/", "_poi.png"));
-		poi.setSize(MuseumAppPreferences.getPoiWidth(),
-				MuseumAppPreferences.getPoiWidth());
+		final IImage poi = stage.getContentFactory().create(IImage.class, "poiBackground", UUID.randomUUID());
+		poi.setImage(ImageUtils.getImage(col, ImageUtils.RESOURCE_DIR + "pois/", "_poi.png"));
+		poi.setSize(MuseumAppPreferences.getPoiWidth(), MuseumAppPreferences.getPoiWidth());
 
-		final IImage poiBorder = stage.getContentFactory().create(IImage.class,
-				"poiBorder", UUID.randomUUID());
-		poiBorder.setImage(ImageUtils.getImage(
-				MuseumAppPreferences.getPOIBorderColour(),
-				ImageUtils.RESOURCE_DIR + "pois/borders/", "_poi_border.png"));
-		poiBorder.setSize(MuseumAppPreferences.getPoiWidth(),
-				MuseumAppPreferences.getPoiWidth());
+		final IImage poiBorder = stage.getContentFactory().create(IImage.class, "poiBorder", UUID.randomUUID());
+		poiBorder.setImage(ImageUtils.getImage(MuseumAppPreferences.getPOIBorderColour(), ImageUtils.RESOURCE_DIR + "pois/borders/", "_poi_border.png"));
+		poiBorder.setSize(MuseumAppPreferences.getPoiWidth(), MuseumAppPreferences.getPoiWidth());
 		poi.addItem(poiBorder);
 
 		setItemLocation(poi, x, y);
 
 		ColorRGBA colour = SettingsUtil.getColorRGBA(col);
-		final ILine line = stage.getContentFactory().create(ILine.class,
-				"line", UUID.randomUUID());
+		final ILine line = stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 		line.setLineWidth(6f);
 		line.setInteractionEnabled(false);
 		line.getZOrderManager().setAutoBringToTop(false);
@@ -192,7 +198,8 @@ public class POIManager {
 		line.setVisible(false);
 
 		final EntityItem entity = entityManager.getEntities().get(name);
-		if (entity != null) {
+		if (entity != null)
+		{
 			line.setSourceItem(entity.getCentralItem());
 			line.setDestinationItem(poi);
 			line.setVisible(false);
@@ -200,26 +207,27 @@ public class POIManager {
 			stage.addItem(line);
 		}
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 
-				Vector2f touchLoc = new Vector2f(event.getPosition().x
-						* displayWidth, event.getPosition().y * displayHeight);
-				Vector2f poiLoc = new Vector2f(x * displayWidth, y
-						* displayHeight);
-				if (touchLoc.distance(poiLoc) <= (MuseumAppPreferences
-						.getPoiWidth() / 2)) {
+				Vector2f touchLoc = new Vector2f(event.getPosition().x * displayWidth, event.getPosition().y * displayHeight);
+				Vector2f poiLoc = new Vector2f(x * displayWidth, y * displayHeight);
+				if (touchLoc.distance(poiLoc) <= (MuseumAppPreferences.getPoiWidth() / 2))
+				{
 
-					if (poi.isVisible()) {
-						EntityItem entity = entityManager.getEntities().get(
-								name);
-						if (entity != null) {
+					if (poi.isVisible())
+					{
+						EntityItem entity = entityManager.getEntities().get(name);
+						if (entity != null)
+						{
 							entity.setVisible(!entity.isVisible());
 							line.setVisible(entity.isVisible());
-							if (entity.isVisible()) {
-								entity.regenerate(poi.getRelativeLocation().x,
-										poi.getRelativeLocation().y);
+							if (entity.isVisible())
+							{
+								entity.regenerate(poi.getRelativeLocation().x, poi.getRelativeLocation().y);
 							}
 						}
 					}
@@ -229,9 +237,11 @@ public class POIManager {
 			}
 		};
 
-		poi.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter() {
+		poi.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
 			@Override
-			public void cursorPressed(MultiTouchCursorEvent event) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
 				clicker.click(event);
 			}
 		});
@@ -246,36 +256,31 @@ public class POIManager {
 	/**
 	 * Generate poi.
 	 *
-	 * @param x the x
-	 * @param y the y
-	 * @param name the name
+	 * @param x
+	 *            the x
+	 * @param y
+	 *            the y
+	 * @param name
+	 *            the name
 	 * @return the i image
-	 * @throws ContentTypeNotBoundException the content type not bound exception
+	 * @throws ContentTypeNotBoundException
+	 *             the content type not bound exception
 	 */
-	public IImage generatePOI(final float x, final float y, final String name)
-			throws ContentTypeNotBoundException {
+	public IImage generatePOI(final float x, final float y, final String name) throws ContentTypeNotBoundException
+	{
 
-		final IImage poi = stage.getContentFactory().create(IImage.class,
-				"poiBackground", UUID.randomUUID());
-		poi.setImage(ImageUtils.getImage(
-				MuseumAppPreferences.getPOIColourAsString(),
-				ImageUtils.RESOURCE_DIR + "pois/", "_poi.png"));
-		poi.setSize(MuseumAppPreferences.getPoiWidth(),
-				MuseumAppPreferences.getPoiWidth());
+		final IImage poi = stage.getContentFactory().create(IImage.class, "poiBackground", UUID.randomUUID());
+		poi.setImage(ImageUtils.getImage(MuseumAppPreferences.getPOIColourAsString(), ImageUtils.RESOURCE_DIR + "pois/", "_poi.png"));
+		poi.setSize(MuseumAppPreferences.getPoiWidth(), MuseumAppPreferences.getPoiWidth());
 
-		final IImage poiBorder = stage.getContentFactory().create(IImage.class,
-				"poiBorder", UUID.randomUUID());
-		poiBorder.setImage(ImageUtils.getImage(
-				MuseumAppPreferences.getPOIBorderColour(),
-				ImageUtils.RESOURCE_DIR + "pois/borders/", "_poi_border.png"));
-		poiBorder.setSize(MuseumAppPreferences.getPoiWidth(),
-				MuseumAppPreferences.getPoiWidth());
+		final IImage poiBorder = stage.getContentFactory().create(IImage.class, "poiBorder", UUID.randomUUID());
+		poiBorder.setImage(ImageUtils.getImage(MuseumAppPreferences.getPOIBorderColour(), ImageUtils.RESOURCE_DIR + "pois/borders/", "_poi_border.png"));
+		poiBorder.setSize(MuseumAppPreferences.getPoiWidth(), MuseumAppPreferences.getPoiWidth());
 		poi.addItem(poiBorder);
 
 		setItemLocation(poi, x, y);
 
-		final ILine line = stage.getContentFactory().create(ILine.class,
-				"line", UUID.randomUUID());
+		final ILine line = stage.getContentFactory().create(ILine.class, "line", UUID.randomUUID());
 		line.setLineWidth(6f);
 		line.setInteractionEnabled(false);
 		line.getZOrderManager().setAutoBringToTop(false);
@@ -283,39 +288,43 @@ public class POIManager {
 		line.setVisible(false);
 
 		final EntityItem entity = entityManager.getEntities().get(name);
-		if (entity != null) {
+		if (entity != null)
+		{
 			line.setSourceItem(entity.getCentralItem());
 			line.setDestinationItem(poi);
 			line.setLineVisibilityChangesWithItemVisibility(true);
 			stage.addItem(line);
 		}
 
-		final IgnoreDoubleClick clicker = new IgnoreDoubleClick() {
+		final IgnoreDoubleClick clicker = new IgnoreDoubleClick()
+		{
 			@Override
-			public void onAction(MultiTouchCursorEvent event) {
+			public void onAction(MultiTouchCursorEvent event)
+			{
 
-				Vector2f touchLoc = new Vector2f(event.getPosition().x
-						* displayWidth, event.getPosition().y * displayHeight);
-				Vector2f poiLoc = new Vector2f(x * displayWidth, y
-						* displayHeight);
-				if (touchLoc.distance(poiLoc) <= (MuseumAppPreferences
-						.getPoiWidth() / 2)) {
+				Vector2f touchLoc = new Vector2f(event.getPosition().x * displayWidth, event.getPosition().y * displayHeight);
+				Vector2f poiLoc = new Vector2f(x * displayWidth, y * displayHeight);
+				if (touchLoc.distance(poiLoc) <= (MuseumAppPreferences.getPoiWidth() / 2))
+				{
 
 					EntityItem entity = entityManager.getEntities().get(name);
-					if (entity != null) {
+					if (entity != null)
+					{
 						entity.setVisible(!entity.isVisible());
-						if (entity.isVisible()) {
-							entity.regenerate(poi.getRelativeLocation().x,
-									poi.getRelativeLocation().y);
+						if (entity.isVisible())
+						{
+							entity.regenerate(poi.getRelativeLocation().x, poi.getRelativeLocation().y);
 						}
 					}
 				}
 			}
 		};
 
-		poi.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter() {
+		poi.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
+		{
 			@Override
-			public void cursorPressed(MultiTouchCursorEvent event) {
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
 				clicker.click(event);
 			}
 		});
@@ -328,25 +337,31 @@ public class POIManager {
 	/**
 	 * @return the eventPOIs
 	 */
-	public ArrayList<LensVisiblePOI> getlensVisiblePOIs() {
+	public ArrayList<LensVisiblePOI> getlensVisiblePOIs()
+	{
 		return lensVisiblePOIs;
 	}
 
 	/**
 	 * @return the pOIs
 	 */
-	public ArrayList<IImage> getPOIs() {
+	public ArrayList<IImage> getPOIs()
+	{
 		return regularPOIs;
 	}
 
 	/**
 	 * Sets the item location.
 	 *
-	 * @param item the item
-	 * @param worldX the world x
-	 * @param worldY the world y
+	 * @param item
+	 *            the item
+	 * @param worldX
+	 *            the world x
+	 * @param worldY
+	 *            the world y
 	 */
-	private void setItemLocation(IItem item, float worldX, float worldY) {
+	private void setItemLocation(IItem item, float worldX, float worldY)
+	{
 		float x = worldX * displayWidth;
 		float y = worldY * displayHeight;
 		item.setRelativeLocation(new Vector2f(x, y).subtract(displayOffset));
