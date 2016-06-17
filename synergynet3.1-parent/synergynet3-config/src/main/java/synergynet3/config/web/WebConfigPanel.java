@@ -9,6 +9,7 @@ import java.awt.event.KeyEvent;
 import java.io.File;
 
 import javax.swing.JButton;
+import javax.swing.JCheckBox;
 import javax.swing.JFileChooser;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -28,53 +29,68 @@ public class WebConfigPanel extends JPanel
 	/** The browse button. */
 	private JButton browseButton;
 
+	/** The checkbox to enable multicast mode. */
+	private JCheckBox cbEnableMulticastMode = new JCheckBox();
+
+	/** The cb enable TCP/IP mode. */
+	private JCheckBox cbEnableTcpIPMode = new JCheckBox();
+
 	/** The clear capture cache button. */
 	private JButton clearCaptureCacheButton;
 
 	/** The clear transfer cache button. */
 	private JButton clearTransferCacheButton;
-
-	/** The file chooser. */
-	private JFileChooser jFileChooser;
-
-	/** The Web server port label. */
-	private JLabel webServerPortLabel;
-
-	/** The web server directory label. */
-	private JLabel webServerDirLabel;
+	
+	/** The cluster interface text field. */
+	private JTextField clusterInterfaceField;
 
 	/** The cluster interface label. */
 	private JLabel clusterInterfaceLabel;
 
+	/** The cluster join label. */
+	private JLabel clusterJoinMethodLabel;
+
 	/** The cluster name label. */
 	private JLabel clusterNameLabel;
 
-	/** The cluster password label. */
-	private JLabel clusterPasswordLabel;
-
-	/** The shared location Label. */
-	private JLabel sharedLocationLabel;
-
-	/** The prefs. */
-	private WebConfigPrefsItem prefs;
-
-	/** The cluster interface text field. */
-	private JTextField clusterInterfaceField;
-
 	/** The cluster password text field. */
 	private JPasswordField clusterPasswordField;
+	
+	/** The cluster password label. */
+	private JLabel clusterPasswordLabel;
 
 	/** The cluster username text field. */
 	private JTextField clusterUsernameField;
 
+	/** The IPs Label. */
+	private JLabel ipsLabel;
+
+	/** The IPs text field. */
+	private JTextField ipsField;
+
+	/** The file chooser. */
+	private JFileChooser jFileChooser;
+
+	/** The prefs. */
+	private WebConfigPrefsItem prefs;
+
 	/** The shared location text field. */
 	private JTextField sharedLocationField;
+
+	/** The shared location Label. */
+	private JLabel sharedLocationLabel;
 
 	/** The web server directory text field. */
 	private JTextField webServerDirField;
 
+	/** The web server directory label. */
+	private JLabel webServerDirLabel;
+
 	/** The web server port text field. */
 	private JTextField webServerPortField;
+
+	/** The Web server port label. */
+	private JLabel webServerPortLabel;
 
 	/**
 	 * Instantiates a new web config panel.
@@ -200,9 +216,63 @@ public class WebConfigPanel extends JPanel
 			}
 		});
 		
-		//TODO: Controls for choosing between Multicasting and TCP/IP
+		//Controls for choosing between Multicasting and TCP/IP
+		clusterJoinMethodLabel = new JLabel("Cluster join method: ");
 		
-		//TODO: Controls for defining IPs (hidden when Multicasting is selected)
+		cbEnableMulticastMode.setText("Multicast");
+		cbEnableMulticastMode.setSelected(prefs.getJoinModeMulticasting());
+		cbEnableMulticastMode.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+		cbEnableMulticastMode.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{
+				cbEnableMulticastMode.setSelected(true);
+				cbEnableTcpIPMode.setSelected(false);
+				prefs.setJoinModeMulticasting(true);
+				switchIPsVisibility();
+			
+			}
+		});
+		
+		cbEnableTcpIPMode.setText("TCP/IP");
+		cbEnableTcpIPMode.setSelected(!prefs.getJoinModeMulticasting());
+		cbEnableTcpIPMode.setHorizontalTextPosition(javax.swing.SwingConstants.LEADING);
+		cbEnableTcpIPMode.addActionListener(new java.awt.event.ActionListener()
+		{
+			@Override
+			public void actionPerformed(java.awt.event.ActionEvent evt)
+			{			
+				cbEnableTcpIPMode.setSelected(true);
+				cbEnableMulticastMode.setSelected(false);
+				prefs.setJoinModeMulticasting(false);		
+				switchIPsVisibility();
+			}
+		});
+		
+		//Controls for defining IPs (hidden when Multicasting is selected)
+		ipsLabel = new JLabel("IPs:");
+		ipsField = new JTextField();
+		ipsField.setText(prefs.getTcpIPs());
+		ipsField.addKeyListener(new KeyAdapter()
+		{
+			@Override
+			public void keyReleased(KeyEvent e)
+			{
+				store();
+			}
+
+			@Override
+			public void keyTyped(KeyEvent e)
+			{
+				store();
+			}
+
+			private void store()
+			{
+				prefs.setTcpIPst(ipsField.getText());
+			}
+		});
 
 		clusterNameLabel = new JLabel("Device username: ");
 		clusterUsernameField = new JTextField();
@@ -330,6 +400,17 @@ public class WebConfigPanel extends JPanel
 		clusterInterfaceLabel.setBounds(new Rectangle(30, y, 130, 24));
 		clusterInterfaceField.setBounds(new Rectangle(215, y, 150, 24));
 
+		y += 30;
+
+		clusterJoinMethodLabel.setBounds(new Rectangle(30, y, 150, 24));
+		cbEnableMulticastMode.setBounds(new Rectangle(215, y, 150, 24));
+		cbEnableTcpIPMode.setBounds(new Rectangle(380, y, 150, 24));
+
+		y += 30;		
+		
+		ipsLabel.setBounds(new Rectangle(235, y, 35, 24));
+		ipsField.setBounds(new Rectangle(270, y, 250, 24));
+		
 		y += 60;
 
 		clusterNameLabel.setBounds(new Rectangle(30, y, 130, 24));
@@ -355,17 +436,38 @@ public class WebConfigPanel extends JPanel
 		add(webServerDirField);
 		add(webServerPortLabel);
 		add(webServerPortField);
+		add(clusterInterfaceLabel);
+		add(clusterInterfaceField);
+		add(clusterJoinMethodLabel);
+		add(cbEnableMulticastMode);
+		add(cbEnableTcpIPMode);	
+		add(ipsLabel);
+		add(ipsField);
 		add(clusterNameLabel);
 		add(clusterUsernameField);
 		add(clusterPasswordLabel);
 		add(clusterPasswordField);
-		add(clusterInterfaceLabel);
-		add(clusterInterfaceField);
 		add(sharedLocationLabel);
 		add(sharedLocationField);
 		add(browseButton);
 		add(clearTransferCacheButton);
 		add(clearCaptureCacheButton);
+		
+		switchIPsVisibility();
+		
+	}
+	
+	/**
+	 * Change whether the field and labels are visible.
+	 */
+	private void switchIPsVisibility(){
+		if (prefs.getJoinModeMulticasting()){
+			ipsLabel.setVisible(false);
+			ipsField.setVisible(false);
+		}else{
+			ipsLabel.setVisible(true);
+			ipsField.setVisible(true);
+		}
 	}
 
 	/**
