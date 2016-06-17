@@ -89,7 +89,7 @@ public class ConfigurationApplication
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
-		startConfigGUI(620, 420);
+		startConfigGUI(620, 360);
 	}
 
 	/**
