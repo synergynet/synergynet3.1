@@ -89,7 +89,7 @@ public class ConfigurationApplication
 	 */
 	public static void main(String[] args) throws FileNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
-		startConfigGUI();
+		startConfigGUI(620, 420);
 	}
 
 	/**
@@ -174,7 +174,13 @@ public class ConfigurationApplication
 	}
 
 	/**
-	 * Start config gui.
+	 * Start config GUI.
+	 * 
+	 * @param width
+	 * 			Set the width of the GUI.
+	 * 
+	 * @param height
+	 * 			Set the height of the GUI.
 	 *
 	 * @throws FileNotFoundException
 	 *             the file not found exception
@@ -187,7 +193,7 @@ public class ConfigurationApplication
 	 * @throws IllegalAccessException
 	 *             the illegal access exception
 	 */
-	protected static void startConfigGUI() throws FileNotFoundException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
+	protected static void startConfigGUI(int width, int height) throws FileNotFoundException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		JFrame jf = new JFrame("Configuration Tool");
 		jf.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -208,7 +214,7 @@ public class ConfigurationApplication
 		loadCorePreferencesItems(jtp);
 
 		jf.getContentPane().add(jtp, BorderLayout.CENTER);
-		jf.setSize(620, 420);
+		jf.setSize(width, height);
 		jf.setVisible(true);
 	}
 

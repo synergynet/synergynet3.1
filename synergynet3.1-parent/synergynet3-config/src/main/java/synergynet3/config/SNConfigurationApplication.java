@@ -60,7 +60,7 @@ public class SNConfigurationApplication extends ConfigurationApplication
 	@SuppressWarnings("unchecked")
 	public static void main(String[] args) throws FileNotFoundException, IOException, InstantiationException, IllegalAccessException, ClassNotFoundException
 	{
-		startConfigGUI();
+		startConfigGUI(620, 520);
 
 		Class<? extends PreferencesItem> webPrefsClass = (Class<? extends PreferencesItem>) Class.forName(WEB_PREF_NAME);
 		PreferencesItem webPrefsItem = webPrefsClass.newInstance();
