@@ -151,7 +151,7 @@ public class JWinPointerTouchInput implements IMultiTouchInputSource
 		}
 	}
 	
-	public void updatedPointer(int pointerID, int eventType, int x, int y) 
+	public void updatedPointer(final int pointerID, final int eventType, final int x, final int y) 
 	{
 		Callable<Object> c = new Callable<Object>()
 		{
