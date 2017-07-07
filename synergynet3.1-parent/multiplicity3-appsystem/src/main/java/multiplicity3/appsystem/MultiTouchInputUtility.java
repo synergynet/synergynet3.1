@@ -4,6 +4,7 @@ import java.util.logging.Logger;
 
 import multiplicity3.config.display.DisplayPrefsItem;
 import multiplicity3.input.IMultiTouchInputSource;
+import multiplicity3.input.jwinpointer.JWinPointerTouchInput;
 import multiplicity3.input.luminja.LuminMultiTouchInput;
 import multiplicity3.input.simulator.jme.JMEDirectSimulator;
 import multiplicity3.input.tuio.TUIOMultiTouchInput;
@@ -60,6 +61,10 @@ public class MultiTouchInputUtility
 			else if (tabletype.equals(DisplayPrefsItem.INPUT_TYPES[4]))
 			{
 				multiTouchInput = new Win7TouchInput(tablePrefs.getWidth(), tablePrefs.getHeight(), true);
+			}
+			else if (tabletype.equals(DisplayPrefsItem.INPUT_TYPES[5]))
+			{
+				multiTouchInput = new JWinPointerTouchInput(tablePrefs.getWidth(), tablePrefs.getHeight());
 			}
 
 		}

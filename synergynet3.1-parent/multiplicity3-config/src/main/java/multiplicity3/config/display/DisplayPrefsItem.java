@@ -15,7 +15,7 @@ public class DisplayPrefsItem implements PreferencesItem
 
 	/** The Constant INPUT_TYPES. */
 	public static final String[] INPUT_TYPES =
-	{ "Mouse and Keyboard", "TUIO", "Evoluce MIM", "Windows Touch", "Windows Touch (64bit Java)" };
+	{ "Mouse and Keyboard", "TUIO", "Evoluce MIM", "Windows Touch", "Windows Touch (64bit Java)", "Alt Windows Touch (1.8 Java)"};
 
 	/** The Constant DISPLAY_ALPHA_BITS. */
 	private static final String DISPLAY_ALPHA_BITS = "DISPLAY_ALPHA_BITS";
