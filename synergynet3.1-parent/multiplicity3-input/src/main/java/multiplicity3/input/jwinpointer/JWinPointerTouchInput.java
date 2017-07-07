@@ -121,7 +121,7 @@ public class JWinPointerTouchInput implements IMultiTouchInputSource
 	@Override
 	public boolean requiresMouseDisplay()
 	{
-		return true;
+		return false;
 	}
 
 	/* (non-Javadoc)
