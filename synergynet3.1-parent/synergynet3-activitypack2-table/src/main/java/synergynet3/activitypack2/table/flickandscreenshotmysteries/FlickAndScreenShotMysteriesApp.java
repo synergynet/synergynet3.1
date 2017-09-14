@@ -294,13 +294,19 @@ public class FlickAndScreenShotMysteriesApp extends SynergyNetApp
 		// Add button which takes screenshots.
 		IImage screenshotImage = stage.getContentFactory().create(IImage.class, "screenshot", UUID.randomUUID());
 		screenshotImage.setImage(SCREENSHOT_ICON);
-		screenshotImage.setWorldLocation(new Vector2f(75, 75));
 		screenshotImage.setSize(75, 75);
+		screenshotImage.getZOrderManager().setBringToTopPropagatesUp(false);
+		screenshotImage.getZOrderManager().setAutoBringToTop(false);
+		screenshotImage.setRelativeLocation(new Vector2f((-stage.getDisplayWidth() / 2) + 75, (stage.getDisplayHeight() / 2) - 75));
 		screenshotImage.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
 		{
 			@Override
 			public void cursorClicked(MultiTouchCursorEvent event)
 			{
+				if (tableBorder != null)
+				{
+					tableBorder.setVisible(true);
+				}
 				createScreenShotItem(new Vector2f(), 0);
 			}
 		});
@@ -318,5 +324,28 @@ public class FlickAndScreenShotMysteriesApp extends SynergyNetApp
 		}
 
 	}
+	
+	/**
+	 * Creates a manipulable screenshot item using an image file and adds it to
+	 * the environment. The screenshot item is registered as feedback eligible
+	 * and made capable of being network flicked when created.
+	 *
+	 * @param screenShotFile
+	 *            Image file to create the screenshot item from.
+	 * @param loc
+	 *            Location at which the screenshot created should appear.
+	 * @param rot
+	 *            Rotation at which the screenshot created should appear.
+	 **/
+	@Override
+	public void utiliseScreenshot(File screenShotFile, Vector2f loc, float rot)
+	{
+		if (tableBorder != null)
+		{
+			tableBorder.setVisible(false);
+		}
+		super.utiliseScreenshot(screenShotFile, loc, rot);
+	}
+
 
 }
