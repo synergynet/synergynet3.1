@@ -292,11 +292,9 @@ public class FlickAndScreenShotMysteriesApp extends SynergyNetApp
 		this.enableNetworkFlick();
 		
 		// Add button which takes screenshots.
-		IImage screenshotImage = stage.getContentFactory().create(IImage.class, "screenshot", UUID.randomUUID());
+		final IImage screenshotImage = stage.getContentFactory().create(IImage.class, "screenshot", UUID.randomUUID());
 		screenshotImage.setImage(SCREENSHOT_ICON);
 		screenshotImage.setSize(75, 75);
-		screenshotImage.getZOrderManager().setBringToTopPropagatesUp(false);
-		screenshotImage.getZOrderManager().setAutoBringToTop(false);
 		screenshotImage.setRelativeLocation(new Vector2f((-stage.getDisplayWidth() / 2) + 75, (stage.getDisplayHeight() / 2) - 75));
 		screenshotImage.getMultiTouchDispatcher().addListener(new MultiTouchEventAdapter()
 		{
@@ -308,6 +306,12 @@ public class FlickAndScreenShotMysteriesApp extends SynergyNetApp
 					tableBorder.setVisible(true);
 				}
 				createScreenShotItem(new Vector2f(), 0);
+			}
+			
+			@Override
+			public void cursorPressed(MultiTouchCursorEvent event)
+			{
+				stage.getZOrderManager().sendToBottom(screenshotImage);
 			}
 		});
 		stage.addItem(screenshotImage);
